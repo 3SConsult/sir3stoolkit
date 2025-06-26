@@ -1,0 +1,41 @@
+# .github/workflows/publish-testpypi.yml
+
+name: Publish Python distribution to TestPyPI
+
+on:
+  push:
+    branches: [ main ]
+    tags:
+      - 'v*'  # optional: nur auf Versions-Tags reagieren
+
+jobs:
+  build-and-publish:
+    name: Build and publish package
+    runs-on: windows-latest  # Windows Runner statt Ubuntu
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install build tools
+        run: |
+          python -m pip install --upgrade pip
+          pip install build twine
+
+      - name: (Optional) Install dev dependencies
+        run: |
+          pip install .[dev]
+
+      - name: Build package using pyproject.toml
+        run: python -m build
+
+      - name: Publish to TestPyPI
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.TEST_PYPI_TOKEN }}
+        run: |
+          twine upload --repository-url https://test.pypi.org/legacy/ dist/*
