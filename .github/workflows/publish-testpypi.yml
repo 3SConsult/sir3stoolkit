@@ -45,3 +45,10 @@ jobs:
           TWINE_PASSWORD: ${{ secrets.MF3S_TEST_PYPI_TOKEN }}
         run: |
           twine upload --repository-url https://test.pypi.org/legacy/ dist/*
+
+      - name: Publish to PyPI
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.MF3S_PYPI_TOKEN }}
+        run: |
+          twine upload --repository-url https://upload.pypi.org/legacy/ dist/*
