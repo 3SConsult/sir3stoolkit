@@ -32,10 +32,16 @@ jobs:
 
       - name: Build package using pyproject.toml
         run: python -m build
+      
+      - name: Debug TWINE_PASSWORD (nur zum Testen, nicht in Produktion!)
+        run: echo "TWINE_PASSWORD ist gesetzt"
+        if: env.TWINE_PASSWORD != ''
+        env:
+          TWINE_PASSWORD: ${{ secrets.MF3S_TEST_PYPI_TOKEN }}
 
       - name: Publish to TestPyPI
         env:
           TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.TEST_PYPI_TOKEN }}
+          TWINE_PASSWORD: ${{ secrets.MF3S_TEST_PYPI_TOKEN }}
         run: |
           twine upload --repository-url https://test.pypi.org/legacy/ dist/*

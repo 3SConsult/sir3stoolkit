@@ -6,7 +6,7 @@
 Welcome to sir3stoolkit's documentation!
 ========================================
 
-Test 123 for v15.
+Python Toookit for SIR 3S.
 
 .. toctree::
    :maxdepth: 2
