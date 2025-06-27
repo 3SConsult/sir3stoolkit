@@ -12,8 +12,11 @@ Python Toookit for SIR 3S.
    :maxdepth: 2
    :caption: Contents:
 
+   started
    references/modules 
-
+   examples
+   releases
+   developers
 
 Indices and tables
 ==================

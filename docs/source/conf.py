@@ -20,6 +20,7 @@ author = 'misc'
 autodoc_mock_imports = ["clr", "System", "Sir3S_Repository", "Sir3S_Toolkit"]
 
 extensions = [
+    # Built-in extensions
     'sphinx.ext.autodoc',
     'sphinx.ext.autosummary',
     'sphinx.ext.doctest',
@@ -28,6 +29,11 @@ extensions = [
     'sphinx.ext.napoleon',
     'sphinx.ext.ifconfig',
     'sphinx.ext.viewcode',
+    'sphinx.ext.extlinks',
+    # Third-party extensions
+    'nbsphinx',
+    'sphinx_copybutton',
+    'sphinx_togglebutton'
 ]
 
 # generate autosummary pages
@@ -49,4 +55,5 @@ pygments_style = 'sphinx'
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 html_theme = 'sphinx_rtd_theme'
+html_favicon = '_static/favicon.ico'
 html_static_path = ['_static']
