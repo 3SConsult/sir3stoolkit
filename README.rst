@@ -9,19 +9,23 @@
 
 **SIR 3S Toolkit**
 
-**SIR 3S Toolkit** is a Python package developed by 3S Consult to give the user control over SIR 3S models via Python. The core subpackage is a Wrapper around C# and gives the user low-level control. Other subpackages built upon this core to create higher level functions for more powerful interactions with SIR 3S models.
+**SIR 3S Toolkit** is a Python package developed by 3S Consult that provides full programmatic control over SIR 3S models. At its core, the package wraps C# functionality, offering low-level access through methods like SetValue(), GetValue(), AddNewNode(), and more.
+
+Built on top of this core subpackage are additional subpackages that offer higher-level abstractions, enabling more powerful and intuitive interactions with SIR 3S models. This layered design ensures flexibility and makes the Toolkit easily extensible for future enhancements.
 
 .. image:: https://raw.githubusercontent.com/3SConsult/PT3S/master/sphinx_docs/_static/Sir3S_Splash.jpg
    :target: https://www.3sconsult.de/software/sir-3s/
    :width: 20%
    :alt: Sir3S Splash
 
+**The SIR 3S Toolkit is only of interest to users with access to SIR 3S models and a licensed SIR 3S version**
+
 Features
 --------
 
-- **Create new SIR 3S models** in Python
-- **Edit existing SIR 3S models** in Python
-- **Read from existing SIR 3S models** in Python
+- **Create** new SIR 3S models in Python
+- **Edit** existing SIR 3S models in Python
+- **Read** from existing SIR 3S models in Python
 
 Documentation
 -------------
