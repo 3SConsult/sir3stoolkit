@@ -1,0 +1,831 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Toolkit Example 1: Create new SIR 3S model &mdash; sir3stoolkit  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+      <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
+
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=f281be69"></script>
+      <script>let toggleHintShow = 'Click to show';</script>
+      <script>let toggleHintHide = 'Click to hide';</script>
+      <script>let toggleOpenOnPrint = 'true';</script>
+      <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            sir3stoolkit
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../references/modules.html">sir3stoolkit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Application Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../releases.html">Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developers.html">For Developers</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">sir3stoolkit</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Toolkit Example 1: Create new SIR 3S model</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/tutorials/Toolkit_Tutorial_Node_And_Pipes.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="Toolkit-Example-1:-Create-new-SIR-3S-model">
+<h1>Toolkit Example 1: Create new SIR 3S model<a class="headerlink" href="#Toolkit-Example-1:-Create-new-SIR-3S-model" title="Link to this heading"></a></h1>
+<p>Manually inserting NOdes and Pipes is not an Example its a tutorial and should be create as such.</p>
+This example demonstrates how to set up a new SIR 3S model. Nodes and pipes are inserted and the model is calculated.</section>
+<section id="Imports">
+<h1>Imports<a class="headerlink" href="#Imports" title="Link to this heading"></a></h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import os
+import re
+import xml.etree.ElementTree as ET
+import pandas as pd
+import matplotlib.pyplot as plt
+import random
+import math
+import sqlite3
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import clr as net
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>net.AddReference(r&quot;C:\3S\SIR 3S Entwicklung\SirGraf-90-15-00-06x64\Sir3S_Repository.Interfaces.dll&quot;) #change to local path
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;System.Reflection.RuntimeAssembly object at 0x000001F83449A180&gt;
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import PythonWrapperToolkit
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from PythonWrapperToolkit import SIR3S_Model, SIR3S_View
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s = PythonWrapperToolkit.SIR3S_Model()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Initialization complete
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import Sir3S_Repository.Interfaces as Interfaces
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Create-new-model-file">
+<h1>Create new model file<a class="headerlink" href="#Create-new-model-file" title="Link to this heading"></a></h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>try:
+    from PT3S import dxAndMxHelperFcts
+except:
+    import dxAndMxHelperFcts
+dbFilename=&quot;Toolkit_Example1&quot;
+dbFile=os.path.join(os.path.dirname(os.path.abspath(dxAndMxHelperFcts.__file__))
+                    +&#39;/Examples&#39;
+                    +&#39;/Toolkit_Examples/&#39;
+                    +dbFilename
+                    +&#39;.db3&#39;
+)
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>%%capture captured_output
+s3s.NewModel(dbName=dbFile,
+                           providerType=Interfaces.SirDBProviderType.SQLite,
+                           namedInstance=&quot;&quot;,
+                           netType=Interfaces.NetworkType.DistrictHeating,
+                           modelDescription=&quot;Toolkit_Example1&quot;,
+                           userID=&quot;&quot;,
+                           password=&quot;&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>output_str = captured_output.stdout
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Extract the first number between two hyphens from the output
+match = re.search(r&quot;New model is created with the model identifier: M-(\d+)-\d+-\d+&quot;, output_str)
+if match:
+    identifier_number = match.group(1)
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>m=1 #scaling factor for network
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Nodes">
+<h1>Nodes<a class="headerlink" href="#Nodes" title="Link to this heading"></a></h1>
+<section id="Insert-Nodes">
+<h2>Insert Nodes<a class="headerlink" href="#Insert-Nodes" title="Link to this heading"></a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.StartEditSession(SessionName=&quot;Insert nodes&quot;)
+
+node0 = s3s.InsertElement(ElementType=Interfaces.Sir3SObjectTypes.Node)
+
+node1 = s3s.InsertElement(ElementType=Interfaces.Sir3SObjectTypes.Node)
+
+node2 = s3s.InsertElement(ElementType=Interfaces.Sir3SObjectTypes.Node)
+
+node3 = s3s.InsertElement(ElementType=Interfaces.Sir3SObjectTypes.Node)
+
+node4 = s3s.InsertElement(ElementType=Interfaces.Sir3SObjectTypes.Node)
+
+node5 = s3s.InsertElement(ElementType=Interfaces.Sir3SObjectTypes.Node)
+
+s3s.EndEditSession()
+s3s.SaveChanges()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Now you can make changes to the model
+Element inserted successfully into the model with Tk: 5321099033247111201
+Element inserted successfully into the model with Tk: 4693279059508338015
+Element inserted successfully into the model with Tk: 5449145764669062959
+Element inserted successfully into the model with Tk: 5315913336781347732
+Element inserted successfully into the model with Tk: 5194369748158004646
+Element inserted successfully into the model with Tk: 5210570430448112064
+Edit Session has ended. Please open up a new session if you want to make further changes
+Changes saved successfully
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>node_tks=s3s.GetTksofElementType(Interfaces.Sir3SObjectTypes.Node)
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Set-Coordinates">
+<h2>Set Coordinates<a class="headerlink" href="#Set-Coordinates" title="Link to this heading"></a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.StartEditSession(SessionName=&quot;Set coords (x,y)&quot;)
+
+s3s.SetValue(node0, &#39;Xkor&#39;, &#39;0&#39;)
+s3s.SetValue(node0, &#39;Ykor&#39;, str(m*25))
+
+s3s.SetValue(node1, &#39;Xkor&#39;, str(m*100))
+s3s.SetValue(node1, &#39;Ykor&#39;, str(m*25))
+
+s3s.SetValue(node2, &#39;Xkor&#39;, str(m*125))
+s3s.SetValue(node2, &#39;Ykor&#39;, str(m*50))
+
+s3s.SetValue(node3, &#39;Xkor&#39;, str(m*125))
+s3s.SetValue(node3, &#39;Ykor&#39;, &#39;0&#39;)
+
+s3s.SetValue(node4, &#39;Xkor&#39;, str(m*150))
+s3s.SetValue(node4, &#39;Ykor&#39;, str(m*25))
+
+s3s.SetValue(node5, &#39;Xkor&#39;, str(m*250))
+s3s.SetValue(node5, &#39;Ykor&#39;, str(m*25))
+
+s3s.EndEditSession()
+s3s.SaveChanges()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Now you can make changes to the model
+Value is set
+Value is set
+Value is set
+Value is set
+Value is set
+Value is set
+Value is set
+Value is set
+Value is set
+Value is set
+Value is set
+Value is set
+Nothing done, because no Transaction is being in Use
+Changes saved successfully
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.StartEditSession(SessionName=&quot;Set coords (z)&quot;)
+
+for node_tk in node_tks:
+    s3s.SetValue(node_tk, &quot;Zkor&quot;, &quot;0&quot;)
+
+s3s.EndEditSession()
+s3s.SaveChanges()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Now you can make changes to the model
+Value is set
+Value is set
+Value is set
+Value is set
+Value is set
+Value is set
+Edit Session has ended. Please open up a new session if you want to make further changes
+Changes saved successfully
+</pre></div></div>
+</div>
+</section>
+</section>
+<section id="Pipes">
+<h1>Pipes<a class="headerlink" href="#Pipes" title="Link to this heading"></a></h1>
+<section id="Insert-Pipes">
+<h2>Insert Pipes<a class="headerlink" href="#Insert-Pipes" title="Link to this heading"></a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.StartEditSession(SessionName=&quot;Insert Pipes&quot;)
+
+pipe01 = s3s.InsertElement(ElementType=Interfaces.Sir3SObjectTypes.Pipe)
+s3s.ConnectConnectingElementWithNodes(pipe01, node0, node1)
+
+pipe12 = s3s.InsertElement(ElementType=Interfaces.Sir3SObjectTypes.Pipe)
+s3s.ConnectConnectingElementWithNodes(pipe12, node1, node2)
+
+pipe13 = s3s.InsertElement(ElementType=Interfaces.Sir3SObjectTypes.Pipe)
+s3s.ConnectConnectingElementWithNodes(pipe13, node1, node3)
+
+pipe23 = s3s.InsertElement(ElementType=Interfaces.Sir3SObjectTypes.Pipe)
+s3s.ConnectConnectingElementWithNodes(pipe23, node2, node3)
+
+pipe24 = s3s.InsertElement(ElementType=Interfaces.Sir3SObjectTypes.Pipe)
+s3s.ConnectConnectingElementWithNodes(pipe24, node2, node4)
+
+pipe34 = s3s.InsertElement(ElementType=Interfaces.Sir3SObjectTypes.Pipe)
+s3s.ConnectConnectingElementWithNodes(pipe34, node3, node4)
+
+pipe45 = s3s.InsertElement(ElementType=Interfaces.Sir3SObjectTypes.Pipe)
+s3s.ConnectConnectingElementWithNodes(pipe45, node4, node5)
+
+s3s.EndEditSession()
+s3s.SaveChanges()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Now you can make changes to the model
+Element inserted successfully into the model with Tk: 5293401913306684493
+Objects connected successfully
+Element inserted successfully into the model with Tk: 5088758886343064810
+Objects connected successfully
+Element inserted successfully into the model with Tk: 5586333943805392557
+Objects connected successfully
+Element inserted successfully into the model with Tk: 4642718115365895174
+Objects connected successfully
+Element inserted successfully into the model with Tk: 5609337679797668537
+Objects connected successfully
+Element inserted successfully into the model with Tk: 4681734429769829334
+Objects connected successfully
+Element inserted successfully into the model with Tk: 4706393255563735279
+Objects connected successfully
+Edit Session has ended. Please open up a new session if you want to make further changes
+Changes saved successfully
+</pre></div></div>
+</div>
+</section>
+<section id="Set-Length">
+<h2>Set Length<a class="headerlink" href="#Set-Length" title="Link to this heading"></a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.StartEditSession(SessionName=&quot;Set pipe lengths&quot;)
+
+s3s.SetValue(pipe01, &#39;L&#39;, str(m*100))
+
+s3s.SetValue(pipe12, &#39;L&#39;, str(m*math.sqrt(2*math.pow(250,2))))
+
+s3s.SetValue(pipe13, &#39;L&#39;, str(m*math.sqrt(2*math.pow(250,2))))
+
+s3s.SetValue(pipe23, &#39;L&#39;, str(m*500))
+
+s3s.SetValue(pipe24, &#39;L&#39;, str(m*math.sqrt(2*math.pow(250,2))))
+
+s3s.SetValue(pipe34, &#39;L&#39;, str(m*math.sqrt(2*math.pow(250,2))))
+
+s3s.SetValue(pipe45, &#39;L&#39;, str(m*100))
+
+s3s.EndEditSession()
+s3s.SaveChanges()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Now you can make changes to the model
+Value is set
+Value is set
+Value is set
+Value is set
+Value is set
+Value is set
+Value is set
+Edit Session has ended. Please open up a new session if you want to make further changes
+Changes saved successfully
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pipe_tks=s3s.GetTksofElementType(Interfaces.Sir3SObjectTypes.Pipe)
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Set-DN-(Workaround)">
+<h2>Set DN (Workaround)<a class="headerlink" href="#Set-DN-(Workaround)" title="Link to this heading"></a></h2>
+<p>The following way of setting the reference to DN values is only a workaround. Hopefully a better way using the Toolkit can be applied in the future.</p>
+<section id="Trigger-First-Calculation">
+<h3>Trigger First Calculation<a class="headerlink" href="#Trigger-First-Calculation" title="Link to this heading"></a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.ExecCalculation(waitForSirCalcToExit=True) # this calculation will not be properly executed it serves to ensure a xml calculation file exists
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Model Calculation is complete
+</pre></div></div>
+</div>
+</section>
+<section id="Read-Calculation-XML-file">
+<h3>Read Calculation XML file<a class="headerlink" href="#Read-Calculation-XML-file" title="Link to this heading"></a></h3>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>xml_file_path=os.path.join(os.path.dirname(os.path.abspath(dxAndMxHelperFcts.__file__))
+                    +&#39;/Examples&#39;
+                    +&#39;/Toolkit_Examples/WD&#39;
+                    +dbFilename
+                    +&#39;/B&#39;
+                    +identifier_number
+                    +&#39;\V0\BZ1\M-&#39;
+                    +identifier_number
+                    +&#39;-0-1.XML&#39;
+)
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>xml_file_path
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&#39;c:\\users\\jablonski\\3s\\pt3s/Examples/Toolkit_Created_Models/WDNew_Toolkit_Example1/B3\\V0\\BZ1\\M-3-0-1.XML&#39;
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>try:
+    tree = ET.parse(xml_file_path)
+    root = tree.getroot()
+
+    # Function to find and extract all DTRO_ROWD elements
+    def extract_table_elements(element, table_name):
+        return [child for child in element if child.tag == table_name]
+
+    # Extract all DTRO_ROWD elements
+    dtro_rowd_elements = extract_table_elements(root, &quot;DTRO_ROWD&quot;)
+
+    # Convert the DTRO_ROWD elements to a pandas DataFrame
+    def elements_to_dataframe(elements):
+        if not elements:
+            print(&quot;The table is empty or not found.&quot;)
+            return pd.DataFrame()
+
+        rows = []
+        columns = list(elements[0].attrib.keys())
+
+        for elem in elements:
+            row_data = list(elem.attrib.values())
+            rows.append(row_data)
+
+        df = pd.DataFrame(rows, columns=columns)
+        return df
+
+    # Convert the extracted elements to a DataFrame
+    dtro_rowd_df = elements_to_dataframe(dtro_rowd_elements)
+
+except FileNotFoundError:
+    print(&quot;The specified file was not found.&quot;)
+except ET.ParseError:
+    print(&quot;Error parsing the XML file.&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for pipe_tk in pipe_tks:
+    s3s.SetValue(pipe_tk, &quot;FkdtroRowd&quot;, str(dtro_rowd_df.iloc[15][&#39;pk&#39;])) #DN 150
+    print(s3s.GetValue(pipe_tk, &quot;FkdtroRowd&quot;))
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Value is set
+(&#39;5724951366993448773&#39;, &#39;string&#39;)
+Value is set
+(&#39;5724951366993448773&#39;, &#39;string&#39;)
+Value is set
+(&#39;5724951366993448773&#39;, &#39;string&#39;)
+Value is set
+(&#39;5724951366993448773&#39;, &#39;string&#39;)
+Value is set
+(&#39;5724951366993448773&#39;, &#39;string&#39;)
+Value is set
+(&#39;5724951366993448773&#39;, &#39;string&#39;)
+Value is set
+(&#39;5724951366993448773&#39;, &#39;string&#39;)
+</pre></div></div>
+</div>
+</section>
+</section>
+</section>
+<section id="Boundary-Conditions">
+<h1>Boundary Conditions<a class="headerlink" href="#Boundary-Conditions" title="Link to this heading"></a></h1>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.StartEditSession(SessionName=&quot;Set Boundary Conditions&quot;)
+
+s3s.SetValue(node0, &quot;Ktyp&quot;, &quot;PKON&quot;)
+s3s.SetValue(node0, &quot;bz.PhEin&quot;, &quot;4&quot;)
+
+s3s.SetValue(node1, &quot;Ktyp&quot;, &quot;QKON&quot;)
+s3s.SetValue(node1, &quot;QmEin&quot;, &quot;0&quot;)
+
+s3s.SetValue(node2, &quot;Ktyp&quot;, &quot;QKON&quot;)
+s3s.SetValue(node2, &quot;QmEin&quot;, &quot;0&quot;)
+
+s3s.SetValue(node3, &quot;Ktyp&quot;, &quot;QKON&quot;)
+s3s.SetValue(node3, &quot;QmEin&quot;, &quot;0&quot;)
+
+s3s.SetValue(node4, &quot;Ktyp&quot;, &quot;QKON&quot;)
+s3s.SetValue(node4, &quot;QmEin&quot;, &quot;0&quot;)
+
+s3s.SetValue(node5, &quot;Ktyp&quot;, &quot;PKON&quot;)
+s3s.SetValue(node5, &quot;bz.PhEin&quot;, &quot;3&quot;)
+
+s3s.EndEditSession()
+s3s.SaveChanges()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Now you can make changes to the model
+Value is set
+Value is set
+Value is set
+Value is set
+Value is set
+Value is set
+Value is set
+Value is set
+Value is set
+Value is set
+Value is set
+Value is set
+Edit Session has ended. Please open up a new session if you want to make further changes
+Changes saved successfully
+</pre></div></div>
+</div>
+</section>
+<section id="Calculation">
+<h1>Calculation<a class="headerlink" href="#Calculation" title="Link to this heading"></a></h1>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.ExecCalculation(waitForSirCalcToExit=True)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Model Calculation is complete
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for node_tk in node_tks:
+    print(f&quot;Node {node_tk}: x: {s3s.GetValue(node_tk, &#39;Xkor&#39;)[0]}, y: {s3s.GetValue(node_tk, &#39;Ykor&#39;)[0]}, PH: {s3s.GetValue(node_tk, &#39;Result.PH.Value&#39;)[0]}, QM: {s3s.GetValue(node_tk, &#39;Result.QM.Value&#39;)[0]}&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Node 5321099033247111201: x: 0, y: 25, PH: 4, QM: 115.7509
+Node 4693279059508338015: x: 100, y: 25, PH: 3.74013, QM: 0
+Node 5449145764669062959: x: 125, y: 50, PH: 3.5, QM: 0
+Node 5315913336781347732: x: 125, y: 0, PH: 3.5, QM: 0
+Node 5194369748158004646: x: 150, y: 25, PH: 3.25987, QM: 0
+Node 5210570430448112064: x: 250, y: 25, PH: 3, QM: -115.7509
+</pre></div></div>
+</div>
+</section>
+<section id="Reset">
+<h1>Reset<a class="headerlink" href="#Reset" title="Link to this heading"></a></h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def wipe_elements(instance):
+    # Get lists of node and pipe IDs
+    node_tks = instance.GetTksofElementType(ElementType=Interfaces.Sir3SObjectTypes.Node)
+    pipe_tks = instance.GetTksofElementType(ElementType=Interfaces.Sir3SObjectTypes.Pipe)
+
+    # Delete all nodes
+    for node_tk in node_tks:
+        instance.DeleteElement(node_tk)
+
+    # Delete all pipes
+    for pipe_tk in pipe_tks:
+        instance.DeleteElement(pipe_tk)
+
+wipe_elements(s3s)
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.SaveChanges()
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Collection-of-often-needed-Toolkit-commands">
+<h1>Collection of often needed Toolkit commands<a class="headerlink" href="#Collection-of-often-needed-Toolkit-commands" title="Link to this heading"></a></h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetPropertiesofElementType(Interfaces.Sir3SObjectTypes.Pipe)
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetPropertiesofElementType(Interfaces.Sir3SObjectTypes.Node)
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pipe_tks=s3s.GetTksofElementType(Interfaces.Sir3SObjectTypes.Pipe)
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>node_tks=s3s.GetTksofElementType(Interfaces.Sir3SObjectTypes.Node)
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dir(Interfaces.Sir3SObjectTypes)
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, misc.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
