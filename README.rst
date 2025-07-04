@@ -46,7 +46,9 @@ To install SIR 3S Toolkit, use pip:
 
 Contact
 -------
-For any questions or feedback, please contact us at `jablonski@3sconsult.de <mailto:jablonski@3sconsult.de>`_.
+If you'd like to report a bug or suggest an improvement for the Toolkit, please `open a new issue on GitHub <https://github.com/3SConsult/sir3stoolkit/issues>`_. Describe the situation in detail—whether it's a bug you encountered or a feature you'd like to see improved. Feel free to attach images or other relevant materials to help us better understand your request.
+
+For other requests, please contact us at `jablonski@3sconsult.de <mailto:jablonski@3sconsult.de>`_.
 
 License
 -------
