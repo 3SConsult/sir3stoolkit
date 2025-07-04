@@ -35,14 +35,7 @@ This Tutorial demonstrates how to create new SIR 3S Models or open already exist
 
 You can view the Notebook `here <tutorials/ToolkitTutorial2.html>`_.
 
-You can download the Notebook file :download:`here <tutorials/ToolkitTutorial2.ipynb>`.
-
-You can download the data necessary to run the Tutorial locally:
-
-.. toggle::
-
-   - `Download Tutorial_2_OpenModel.db3 <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Toolkit_Tutorial2_OpenModel.db3>`_
-
+You can download the Notebook file and data necessary to run the Tutorial locally `here <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorial2_Assets.zip>`_.
 
 .. _TtuX:
 
