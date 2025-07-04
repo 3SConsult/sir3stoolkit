@@ -13,7 +13,7 @@ Tutorials
 
 These Tutorials are meant to introduce new Toolkit users to its basic functionalities. They built on each other, so if you want a very quick overview on how Toolkit works, just view the last Tutorial.
 
-Each tutorial is available for both **viewing** and **downloading** as an `.ipynb` file. 
+Each tutorial is available for both **viewing** as an `.ipynb` file and **downloading** as a `.zip` archive containing additionally all data necessary for running the notebook on your local machine.
 
 .. _Ttu1:
 
@@ -24,7 +24,7 @@ This Tutorial demonstrates how to import the Toolkit and intialize instances of 
 
 You can view the Notebook `here <tutorials/ToolkitTutorial1.html>`_.
 
-You can download the Notebook file :download:`here <tutorials/ToolkitTutorial1.ipynb>`.
+You can download the Notebook file and data necessary to run the Tutorial locally `here <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorial1_Assets.zip>`_.
 
 .. _Ttu2:
 
@@ -37,6 +37,17 @@ You can view the Notebook `here <tutorials/ToolkitTutorial2.html>`_.
 
 You can download the Notebook file and data necessary to run the Tutorial locally `here <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorial2_Assets.zip>`_.
 
+.. _Ttu3:
+
+Tutorial 3: Getting and Setting Values
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This Tutorial demonstrates how to get and set values of object based on their tk.
+
+You can view the Notebook `here <tutorials/ToolkitTutorial3.html>`_.
+
+You can download the Notebook file and data necessary to run the Tutorial locally `here <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorial3_Assets.zip>`_.
+
 .. _TtuX:
 
 Tutorial X: Template
@@ -46,7 +57,7 @@ This tutorial does not demonstrate use cases of SIR 3S Toolkit, but serves as a 
 
 You can view the Notebook `here <tutorials/ToolkitTutorialX.html>`_.
 
-You can download the Notebook file :download:`here <tutorials/ToolkitTutorialX.ipynb>`.
+You can download the Notebook file and data necessary to run the Tutorial locally `here <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/TutorialX_Assets.zip>`_.
 
 Examples
 --------
