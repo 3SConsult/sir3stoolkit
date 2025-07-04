@@ -15,6 +15,8 @@ These Tutorials are meant to introduce new Toolkit users to its basic functional
 
 Each tutorial is available for both **viewing** as an `.ipynb` file and **downloading** as a `.zip` archive containing additionally all data necessary for running the notebook on your local machine.
 
+You can also download all tutorials and their respective data in a joint `.zip` archive at once `here <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorial1-X_Assets.zip>`_.
+
 .. _Ttu1:
 
 Tutorial 1: Importing and Initialization
