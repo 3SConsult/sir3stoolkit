@@ -24,7 +24,7 @@ Tutorial 1: Importing and Initialization
 
 This Tutorial demonstrates how to import the Toolkit and intialize instances of its classes.
 
-You can view the Notebook `here <tutorials/ToolkitTutorial1.html>`_.
+You can view the Notebook `here <tutorials/Tutorial1_Assets/ToolkitTutorial1.html>`_.
 
 You can download the Notebook file and data necessary to run the Tutorial locally `here <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorial1_Assets.zip>`_.
 
@@ -35,7 +35,7 @@ Tutorial 2: Creating or Opening a SIR 3S Model
 
 This Tutorial demonstrates how to create new SIR 3S Models or open already existing ones.
 
-You can view the Notebook `here <tutorials/ToolkitTutorial2.html>`_.
+You can view the Notebook `here <tutorials/Tutorial2_Assets/ToolkitTutorial2.html>`_.
 
 You can download the Notebook file and data necessary to run the Tutorial locally `here <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorial2_Assets.zip>`_.
 
@@ -46,7 +46,7 @@ Tutorial 3: Getting and Setting Values
 
 This Tutorial demonstrates how to get and set values of object based on their tk.
 
-You can view the Notebook `here <tutorials/ToolkitTutorial3.html>`_.
+You can view the Notebook `here <tutorials/Tutorial3_Assets/ToolkitTutorial3.html>`_.
 
 You can download the Notebook file and data necessary to run the Tutorial locally `here <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorial3_Assets.zip>`_.
 
@@ -57,7 +57,7 @@ Tutorial X: Template
 
 This tutorial does not demonstrate use cases of SIR 3S Toolkit, but serves as a template for contributors, who want to create their own Example.
 
-You can view the Notebook `here <tutorials/ToolkitTutorialX.html>`_.
+You can view the Notebook `here <tutorials/TutorialX_Assets/ToolkitTutorialX.html>`_.
 
 You can download the Notebook file and data necessary to run the Tutorial locally `here <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/TutorialX_Assets.zip>`_.
 
