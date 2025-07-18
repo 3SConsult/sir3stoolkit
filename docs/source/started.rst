@@ -41,7 +41,7 @@ Get SIR 3S Version with Toolkit Compatibility: Internal Preliminary Guide
 
 Follow these steps:
 
-1. **Get SIR 3S Version with Python Compatibility**: Copy ``S:/Softwareentwicklung/SIR 3S/Sir3S-90/Release_Intern/2024-11-26_Release_Quebec(Alpha)/SirCalc-90-15-00-12_Quebec.alpha_x64.zip`` and ``S:/Softwareentwicklung/SIR 3S/Sir3S-90/Release_Intern/2024-11-26_Release_Quebec(Alpha)/SirGraf-90-15-00-06x64.ZIP`` to your local machine preferably to ``C:/3S/SIR 3S Entwicklung``.
+1. **Get SIR 3S Version with Python Compatibility**: Copy ``S:\Softwareentwicklung\SIR 3S\Sir3S-90\Release\2025-06-27_Release_Quebec\SirCalc-90-15-02-03_Quebec_x64.zip`` and ``S:\Softwareentwicklung\SIR 3S\Sir3S-90\Release\2025-06-27_Release_Quebec\SirGraf-90-15-00-13_Quebec_x64.ZIP`` to your local machine preferably to ``C:/3S/SIR 3S Entwicklung``.
 
 2. **Unpack .zip files**: Unpack both zip-folders.
 
