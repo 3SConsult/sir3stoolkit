@@ -57,7 +57,7 @@ Tutorial 4: Getting Result Values
 
 This Tutorial demonstrates how to get result values of objects based on their tk.
 
-You can view the Notebook `here <tutorials/Tutorial4_Assets/ToolkitTutorial3.html>`_.
+You can view the Notebook `here <tutorials/Tutorial4_Assets/ToolkitTutorial4.html>`_.
 
 You can download the Notebook file and data necessary to run the Tutorial locally `here <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorial4_Assets.zip>`_.
 
