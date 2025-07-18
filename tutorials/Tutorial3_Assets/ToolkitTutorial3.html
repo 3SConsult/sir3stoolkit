@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tutorial 3: Getting and Setting Values &mdash; sir3stoolkit  documentation</title>
+  <title>Tutorial 3: Getting and Setting Non-Result Values &mdash; sir3stoolkit  documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -78,7 +78,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Tutorial 3: Getting and Setting Values</li>
+      <li class="breadcrumb-item active">Tutorial 3: Getting and Setting Non-Result Values</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../_sources/tutorials/Tutorial3_Assets/ToolkitTutorial3.ipynb.txt" rel="nofollow"> View page source</a>
       </li>
@@ -88,14 +88,14 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="Tutorial-3:-Getting-and-Setting-Values">
-<h1>Tutorial 3: Getting and Setting Values<a class="headerlink" href="#Tutorial-3:-Getting-and-Setting-Values" title="Link to this heading"></a></h1>
-<p>This Tutorial demonstrates how to get and set values of object based on their tk.</p>
+  <section id="Tutorial-3:-Getting-and-Setting-Non-Result-Values">
+<h1>Tutorial 3: Getting and Setting Non-Result Values<a class="headerlink" href="#Tutorial-3:-Getting-and-Setting-Non-Result-Values" title="Link to this heading"></a></h1>
+<p>This Tutorial demonstrates how to get and set non-result values of object based on their tk.</p>
 </section>
 <section id="Toolkit-Release">
 <h1>Toolkit Release<a class="headerlink" href="#Toolkit-Release" title="Link to this heading"></a></h1>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[156]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>#pip install sir3stoolkit
@@ -107,7 +107,7 @@
 <h1>Imports<a class="headerlink" href="#Imports" title="Link to this heading"></a></h1>
 <p>The Toolkit requires the Sir3S_Toolkit.dll included in SIR 3S installations (from Quebec and Up). Furthermore the Sir3S_Repository.Interfaces.dll is required to input native SIR 3S datatypes into some Toolkit functions.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[157]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import clr as clr
@@ -115,7 +115,7 @@
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[158]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r&quot;C:\3S\SIR 3S Entwicklung\SirGraf-90-15-00-11_Quebec_x64&quot;
@@ -123,7 +123,7 @@
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[159]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>clr.AddReference(SIR3S_SIRGRAF_DIR+r&quot;\Sir3S_Repository.Interfaces&quot;)
@@ -132,7 +132,7 @@ import Sir3S_Repository.Interfaces as Interfaces
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[160]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>clr.AddReference(SIR3S_SIRGRAF_DIR+r&quot;\Sir3S_Toolkit&quot;)
@@ -143,7 +143,7 @@ import Sir3S_Toolkit
 <section id="PythonWrapperToolkit">
 <h2>PythonWrapperToolkit<a class="headerlink" href="#PythonWrapperToolkit" title="Link to this heading"></a></h2>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[161]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import sir3stoolkit
@@ -152,7 +152,7 @@ import Sir3S_Toolkit
 </div>
 <p>The core of sir3stoolkit is a Python Wrapper around C#, that can be used to read, write, etc. to a SIR 3S Model. In the future pure python subpackages may be added.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[162]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sir3stoolkit.core import wrapper
@@ -160,7 +160,7 @@ import Sir3S_Toolkit
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[163]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sir3stoolkit
@@ -168,17 +168,17 @@ import Sir3S_Toolkit
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[163]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&lt;module &#39;sir3stoolkit&#39; from &#39;c:\\Users\\jablonski\\AppData\\Local\\anaconda3\\Lib\\site-packages\\sir3stoolkit\\__init__.py&#39;&gt;
+&lt;module &#39;sir3stoolkit&#39; from &#39;C:\\Users\\jablonski\\3S\\sir3stoolkit\\src\\sir3stoolkit\\__init__.py&#39;&gt;
 </pre></div></div>
 </div>
 <p>The <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.Initialize_Toolkit">wrapper package</a> has to be initialized with reference to a SIR Graf installation.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[164]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>wrapper.Initialize_Toolkit(SIR3S_SIRGRAF_DIR)
@@ -191,7 +191,7 @@ import Sir3S_Toolkit
 <h1>Initialization<a class="headerlink" href="#Initialization" title="Link to this heading"></a></h1>
 <p>Toolkit contains two classes: <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model">SIR3S_Model</a>(model and data) and <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_View">SIR3S_View</a>(depiction in SIR Graf). All Toolkit functionality is accessed via the methods of these classes.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[165]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s = wrapper.SIR3S_Model()
@@ -207,7 +207,7 @@ Initialization complete
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[166]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s_view = wrapper.SIR3S_View()
@@ -226,7 +226,7 @@ Initialization complete
 <section id="Open-Model">
 <h1>Open Model<a class="headerlink" href="#Open-Model" title="Link to this heading"></a></h1>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[167]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dbFilePath=r&quot;Tutorial3_Model.db3&quot;
@@ -234,7 +234,7 @@ Initialization complete
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[168]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.OpenModel(dbName=dbFilePath,
@@ -257,17 +257,17 @@ Model is open for further operation
 </div>
 <p>This model has been prepared and contains two nodes connected by a pipe.</p>
 </section>
-<section id="Getting-Values">
-<h1>Getting Values<a class="headerlink" href="#Getting-Values" title="Link to this heading"></a></h1>
+<section id="Get-Values">
+<h1>Get Values<a class="headerlink" href="#Get-Values" title="Link to this heading"></a></h1>
 <p>Our goal is to find out what the typ of the nodes is (PKON, QKON, etc.), and what length and roughness the pipe has.</p>
-<p>The <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetValue">GetValue</a> function requires a tk to the object and the internal SIR 3S attribute name of the value we want to obtain. This guide will walk you through how to obtain those.</p>
+<p>The <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetValue">GetValue()</a> function requires a tk to the object and the internal SIR 3S attribute name of the value we want to obtain. This guide will walk you through how to obtain those.</p>
 <section id="Interfaces.Sir3SObjectTypes">
 <h2>Interfaces.Sir3SObjectTypes<a class="headerlink" href="#Interfaces.Sir3SObjectTypes" title="Link to this heading"></a></h2>
-<p>First, we need to obtian the internal SIR 3S element types to later pass to our function for obtaining the attribute names.</p>
+<p>First, we need to obtain the internal SIR 3S element types to later pass to our function for obtaining the attribute names.</p>
 <p>We use the Interfaces from Sir3S_Repository.dll</p>
 <p>You can use dir() to get an overview over the different element types existing in SIR 3S.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[169]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(dir(Interfaces.Sir3SObjectTypes))
@@ -284,7 +284,7 @@ Model is open for further operation
 </div>
 <p>In our simple example we are only interested in the types of nodes and pipes.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[170]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>node_type=Interfaces.Sir3SObjectTypes.Node
@@ -292,7 +292,7 @@ Model is open for further operation
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[171]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pipe_type=Interfaces.Sir3SObjectTypes.Pipe
@@ -305,7 +305,7 @@ Model is open for further operation
 <p>Now, we obtain the tks of the nodes and pipes in this model.</p>
 <p>We use <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetTksofElementType">GetTksofElementType()</a> to create a list of all node tks in the model.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[172]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>nodes=s3s.GetTksofElementType(node_type)
@@ -313,7 +313,7 @@ Model is open for further operation
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[173]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(nodes)
@@ -330,7 +330,7 @@ Model is open for further operation
 </div>
 <p>If you dont want to predefine your element type you can also just pass it like done below</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[174]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pipes=s3s.GetTksofElementType(ElementType=Interfaces.Sir3SObjectTypes.Pipe)
@@ -338,7 +338,7 @@ Model is open for further operation
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[175]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(pipes)
@@ -359,7 +359,7 @@ Model is open for further operation
 <p>Now, we obtain the internal SIR 3S attribute names. The will be necessary for our value query.</p>
 <p>We use <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetPropertiesofElementType">GetPropertiesofElementType()</a> to create a list of all properties of nodes and pipes.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[176]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>node_properties=s3s.GetPropertiesofElementType(node_type)
@@ -367,7 +367,7 @@ Model is open for further operation
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[177]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(node_properties)
@@ -391,7 +391,7 @@ Model is open for further operation
 <h3>Node 1<a class="headerlink" href="#Node-1" title="Link to this heading"></a></h3>
 <p>As tk we just use the first tk from our nodes list.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[178]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>node1_ktyp=s3s.GetValue(nodes[0], &#39;Ktyp&#39;)
@@ -399,7 +399,7 @@ Model is open for further operation
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[179]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(node1_ktyp)
@@ -417,7 +417,7 @@ Model is open for further operation
 <p>As you can see it returns a tuple value consisting of the actual value (here: ‘PKON’) of the attribute and the attribute data type.</p>
 <p>You can access the indiviudal components as follows.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[180]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>actual_value=node1_ktyp[0]
@@ -425,7 +425,7 @@ Model is open for further operation
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[181]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(actual_value)
@@ -441,7 +441,7 @@ PKON
 </pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[182]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>data_type=node1_ktyp[1]
@@ -449,7 +449,7 @@ PKON
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[183]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(data_type)
@@ -469,7 +469,7 @@ string
 <h3>Node 2<a class="headerlink" href="#Node-2" title="Link to this heading"></a></h3>
 <p>Now we use the second tk from our nodes list.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[184]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>node2_ktyp_actual_value=s3s.GetValue(nodes[1], &#39;Ktyp&#39;)[0]
@@ -477,7 +477,7 @@ string
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[185]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(node2_ktyp_actual_value)
@@ -497,7 +497,7 @@ QKON
 <h3>Pipe<a class="headerlink" href="#Pipe" title="Link to this heading"></a></h3>
 <p>For the pipe we will just ignore the datatypes of the attributes and instantly just access the value.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[186]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(node_properties)
@@ -513,7 +513,7 @@ QKON
 </pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[187]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pipe_length=s3s.GetValue(pipes[0], &#39;L&#39;)[0]
@@ -521,7 +521,7 @@ QKON
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[34]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[188]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(pipe_length)
@@ -533,11 +533,11 @@ QKON
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-5
+10
 </pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[189]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pipe_roughness=s3s.GetValue(pipes[0], &#39;RAU&#39;)[0]
@@ -545,7 +545,7 @@ QKON
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[36]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[190]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(pipe_roughness)
@@ -563,136 +563,16 @@ QKON
 </section>
 </section>
 </section>
-<section id="WORK-IN-PROGRESS-BELOW">
-<h1>WORK IN PROGRESS BELOW<a class="headerlink" href="#WORK-IN-PROGRESS-BELOW" title="Link to this heading"></a></h1>
-</section>
-<section id="Getting-Result-Values">
-<h1>Getting Result Values<a class="headerlink" href="#Getting-Result-Values" title="Link to this heading"></a></h1>
-<section id="GetResultProperties_from_elementKey()">
-<h2>GetResultProperties_from_elementKey()<a class="headerlink" href="#GetResultProperties_from_elementKey()" title="Link to this heading"></a></h2>
+<section id="Set-Values">
+<h1>Set Values<a class="headerlink" href="#Set-Values" title="Link to this heading"></a></h1>
+<p>You can use the <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.SetValue">SetValue()</a> function to change non-result values of objects based on their tk.</p>
+<section id="Node">
+<h2>Node<a class="headerlink" href="#Node" title="Link to this heading"></a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[37]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[191]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetResultProperties_from_elementType(pipe_type, False)
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[37]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-[&#39;A&#39;,
- &#39;ACALC&#39;,
- &#39;CPI&#39;,
- &#39;CPK&#39;,
- &#39;DH&#39;,
- &#39;DP&#39;,
- &#39;DRAGRED&#39;,
- &#39;DRAKONZ&#39;,
- &#39;DSI&#39;,
- &#39;DSK&#39;,
- &#39;DTTR&#39;,
- &#39;DWVERL&#39;,
- &#39;DWVERLABS&#39;,
- &#39;ETAAV&#39;,
- &#39;FS&#39;,
- &#39;HR&#39;,
- &#39;HVEC&#39;,
- &#39;IAKTIV&#39;,
- &#39;IRTRENN&#39;,
- &#39;JV&#39;,
- &#39;JV2&#39;,
- &#39;LAMBDA&#39;,
- &#39;LECKEINAUS&#39;,
- &#39;LECKMENGE&#39;,
- &#39;LECKORT&#39;,
- &#39;LINEPACK&#39;,
- &#39;LINEPACKGEOM&#39;,
- &#39;LINEPACKRATE&#39;,
- &#39;MAINELEMENT&#39;,
- &#39;MAV&#39;,
- &#39;MI&#39;,
- &#39;MK&#39;,
- &#39;MKOND&#39;,
- &#39;MMAX_INST&#39;,
- &#39;MMIN_INST&#39;,
- &#39;MVEC&#39;,
- &#39;MVECMAX_INST&#39;,
- &#39;MVECMIN_INST&#39;,
- &#39;PAV&#39;,
- &#39;PDAMPF&#39;,
- &#39;PHR&#39;,
- &#39;PHVEC&#39;,
- &#39;PMAX&#39;,
- &#39;PMIN&#39;,
- &#39;PR&#39;,
- &#39;PVEC&#39;,
- &#39;PVECMAX_INST&#39;,
- &#39;PVECMIN_INST&#39;,
- &#39;QI2&#39;,
- &#39;QK2&#39;,
- &#39;QMAV&#39;,
- &#39;QMI&#39;,
- &#39;QMK&#39;,
- &#39;QMMAX_INST&#39;,
- &#39;QMMIN_INST&#39;,
- &#39;QMVEC&#39;,
- &#39;QSVB&#39;,
- &#39;RHOAV&#39;,
- &#39;RHOI&#39;,
- &#39;RHOK&#39;,
- &#39;RHOVEC&#39;,
- &#39;SVEC&#39;,
- &#39;TAV&#39;,
- &#39;TI&#39;,
- &#39;TK&#39;,
- &#39;TTRVEC&#39;,
- &#39;TVEC&#39;,
- &#39;TVECMAX_INST&#39;,
- &#39;TVECMIN_INST&#39;,
- &#39;VAV&#39;,
- &#39;VI&#39;,
- &#39;VK&#39;,
- &#39;VMAX_INST&#39;,
- &#39;VMIN_INST&#39;,
- &#39;VOLDA&#39;,
- &#39;WALTERI&#39;,
- &#39;WALTERK&#39;,
- &#39;WVL&#39;,
- &#39;ZAUS&#39;,
- &#39;ZEIN&#39;,
- &#39;ZHKNR&#39;,
- &#39;ZVEC&#39;]
-</pre></div></div>
-</div>
-</section>
-<section id="GetResultValue()">
-<h2>GetResultValue()<a class="headerlink" href="#GetResultValue()" title="Link to this heading"></a></h2>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[38]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetResultValue(pipes[0], &#39;PMIN&#39;)
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[38]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-(&#39;&#39;, &#39;&#39;)
-</pre></div></div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[39]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>1/0
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(s3s.GetValue(nodes[0], &#39;Ktyp&#39;))
 </pre></div>
 </div>
 </div>
@@ -701,120 +581,109 @@ QKON
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-<span class="ansi-red-intense-fg ansi-bold">---------------------------------------------------------------------------</span>
-<span class="ansi-red-intense-fg ansi-bold">ZeroDivisionError</span>                         Traceback (most recent call last)
-Cell <span class="ansi-green-intense-fg ansi-bold">In[39], line 1</span>
-<span class="ansi-green-intense-fg ansi-bold">----&gt; 1</span> <span style="color: rgb(98,98,98)">1</span><span style="color: rgb(98,98,98)">/</span><span style="color: rgb(98,98,98)">0</span>
-
-<span class="ansi-red-intense-fg ansi-bold">ZeroDivisionError</span>: division by zero
+(&#39;PKON&#39;, &#39;string&#39;)
+</pre></div></div>
+</div>
+<p>Here we change a node from PKON to QKON</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[192]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.SetValue(nodes[0], &#39;Ktyp&#39;, &#39;QKON&#39;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Value is set
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[193]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(s3s.GetValue(nodes[0], &#39;Ktyp&#39;))
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(&#39;QKON&#39;, &#39;string&#39;)
+</pre></div></div>
+</div>
+</section>
+<section id="id1">
+<h2>Pipe<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[194]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(s3s.GetValue(pipes[0], &#39;RAU&#39;)[0])
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+3
+</pre></div></div>
+</div>
+<p>Here we change the roughness of a pipe from value 3 to 6.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[195]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.SetValue(pipes[0], &#39;RAU&#39;, &#39;6&#39;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Value is set
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[196]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(s3s.GetValue(pipes[0], &#39;RAU&#39;)[0])
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+6
 </pre></div></div>
 </div>
 </section>
 </section>
-<section id="Model-Creation">
-<h1>Model Creation<a class="headerlink" href="#Model-Creation" title="Link to this heading"></a></h1>
+<section id="Save-Changes">
+<h1>Save Changes<a class="headerlink" href="#Save-Changes" title="Link to this heading"></a></h1>
+<p>If you want your changes made to the model to be saved use the <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.SaveChanges">SaveChanges()</a> function.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[197]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dbFilePath=r&quot;Tutorial3_Model.db3&quot;
-</pre></div>
-</div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.NewModel(dbName=dbFilePath,
-                           providerType=Interfaces.SirDBProviderType.SQLite,
-                           namedInstance=&quot;&quot;,
-                           netType=Interfaces.NetworkType.DistrictHeating,
-                           modelDescription=&quot;Tutorial 3 Model&quot;,
-                           userID=&quot;&quot;,
-                           password=&quot;&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>#s3s.SaveChanges()
 </pre></div>
 </div>
 </div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-New model is created with the model identifier: M-1-0-1
-</pre></div></div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>nodeA=s3s.AddNewNode(&quot;-1&quot;, &quot;Node A&quot;, &quot;PKON&quot;, 0.0, 0.0, 0.0, 10.0, 5.0, &quot;Node A Description&quot;, &quot;A&quot;, 1)
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-New node added
-</pre></div></div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>nodeB=s3s.AddNewNode(&quot;-1&quot;, &quot;Node B&quot;, &quot;QKON&quot;, 10.0, 10.0, 0.0, 5.0, 5.0, &quot;Node B Description&quot;, &quot;B&quot;, 1)
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-New node added
-</pre></div></div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.AddNewPipe(&quot;-1&quot;, nodeA, nodeB, 5.0, &quot;LINESTRING (120 76, 500 300, 620 480)&quot;, &quot;ST&quot;, &quot;50&quot;, 3.0, &quot;AB&quot;, &quot;Pipe from A to B&quot;, 1)
-</pre></div>
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-New pipe added
-</pre></div></div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-&#39;4722505344321420574&#39;
-</pre></div></div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.SaveChanges()
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-Changes saved successfully
-</pre></div></div>
-</div>
+<p>Now you are able to access values from SIR 3S objects based on their tk, but using the above methods only works for non-result values.</p>
+<p>Now follows: Tutorial 4: Getting Result Values</p>
 </section>
 
 
