@@ -1,89 +1,67 @@
 Getting Started
 ===============
 
+This guide is your first step towards understanding and utilizing the SIR 3S Toolkit.
+
 .. note::
-    This documentation is still WORK IN PROGRESS.
-
-Welcome to the Getting Started guide for the SIR 3S Toolkit! This guide is your first step towards understanding and utilizing the Toolkit. The purpose of the Toolkit and its applications will be explained.
-
-**The SIR 3S Toolkit is only of interest to users with access to SIR 3S models and a licensed SIR 3S version**
+    In order to use the SIR 3S Toolkit, access to SIR 3S models and a licensed SIR 3S version are necessary.
 
 What is SIR 3S Toolkit?
 -----------------------
 
-SIR 3S Toolkit is a Python package developed by 3S Consult that provides full programmatic control over SIR 3S models. At its core, the package wraps C# functionality, offering low-level access through methods like SetValue(), GetValue(), AddNewNode(), and more.
+**SIR 3S Toolkit** is a Python package that provides a programming interface for SIR 3S - 
+a software for the simulation, analysis and optimization of flow processes in gas/water/heat supply networks, 
+plants, pipelines and caverns.
 
-Built on top of this core are additional subpackages that offer higher-level abstractions, enabling more powerful and intuitive interactions with SIR 3S models. This layered design ensures flexibility and makes the Toolkit easily extensible for future enhancements.
+While SIR 3S itself is a graphical user interface (GUI) based application that is primarily operated through manual user input, 
+the SIR 3S Toolkit adds a powerful layer of automation and programmability. It enables users to interact with SIR 3S models through 
+Python code, making it possible to develop custom workflows, perform batch simulations, and integrate SIR 3S into larger analytical 
+or operational pipelines.
 
-Why is the Toolkit valuable when Working with SIR 3S?
------------------------------------------------------
+At its core, the package wraps basic functionality of SIR 3S, offering a low-level access to the creation, modification and simulation of SIR 3S models. 
+Several method operations of the kind Get, Set, Add, Delete, Insert and many more are provided for this aim.
+This gives you a variety of opportunities, e.g.:
 
-When working solely with SIR 3S, you're bound by its many—but still limited—capabilities. The SIR 3S Toolkit breaks those boundaries, giving you full control over your model with all the flexibility Python offers.
+* You can build models solely from scratch, defining nodes, pipes, and more, flexibly adapted to your available data sources, thus extending SIR 3S's built-in import tools.
 
-Whether you're setting up a model from scratch—defining nodes, pipes, and more—you can do it entirely in Python, tailored to your database and logic, rather than relying on SIR 3S's built-in import tools. For analysis, you can open your model in Python and craft custom algorithms when the built-in functions fall short. And if your algorithm needs to make changes based on its findings, the Toolkit is ready to handle that too.
+* The analysis of model data and simulation results can leverage the entire Python data science ecosystem, enabling powerful insights using tools like pandas, NumPy, and others.
+
+On top of this core, higher-level functionality is provided, enabling more powerful and intuitive interactions with SIR 3S models. 
 
 What is the difference between SIR 3S Toolkit and PT3S?
 -------------------------------------------------------
 
-Since SIR 3S already offers `PT3S <https://github.com/3SConsult/PT3S>`_ as a Python package for accessing model data, you might wonder: why use the Toolkit if you're already working with PT3S?
+Since SIR 3S already offers `PT3S <https://github.com/3SConsult/PT3S>`_ as a Python package for accessing model data, you might wonder: why use the SIR 3S Toolkit if you're already working with PT3S?
 
-PT3S provides powerful access to a model's database and calculation results by reading .mx and .db3 files via SQL. However, it operates from the outside—offering read-only access to exposed data structures. What it doesn't offer is a straightforward way to create, modify, or interact with core SIR 3S objects like nodes, pipes, and more.
+PT3S provides powerful access to a model's database and calculation results by reading .mx and .db3 files via SQL directly. However, it operates from the outside — offering read-only access to exposed data structures. What it doesn't offer is a straightforward way to create, modify, or interact with core SIR 3S objects like nodes, pipes, and more.
 
 That's where the SIR 3S Toolkit comes in. It goes beyond file access and interacts directly with the internal structure of a SIR 3S model, enabling full programmatic control over model creation, editing, and analysis.
-
-If you want maximal Python capabilities concerning your SIR 3S model, it is advised to use both packages. In the future it is possible that the PT3S functionalities will slowly be integrated into the Toolkit.
-
-
-Get SIR 3S Version with Toolkit Compatibility: Internal Preliminary Guide
--------------------------------------------------------------------------
-
-.. note:: This guide can be deleted after the official public release of 90-15 Quebec.
-
-Follow these steps:
-
-1. **Get SIR 3S Version with Python Compatibility**: Copy ``S:\Softwareentwicklung\SIR 3S\Sir3S-90\Release\2025-06-27_Release_Quebec\SirCalc-90-15-02-03_Quebec_x64.zip`` and ``S:\Softwareentwicklung\SIR 3S\Sir3S-90\Release\2025-06-27_Release_Quebec\SirGraf-90-15-00-13_Quebec_x64.ZIP`` to your local machine preferably to ``C:/3S/SIR 3S Entwicklung``.
-
-2. **Unpack .zip files**: Unpack both zip-folders.
-
-3. **Get Common folder with Python for new SIR 3S Version**: Copy ``S:/Softwareentwicklung/SIR 3S/Sir3S-90/Common`` to your local machine preferably to ``C:/3S/SIR 3S Entwicklung``.
-
-4. **Unpack .zip files**: Unpack the python zip folder in the Common folder. Make sure that ``C:/3S/SIR 3S Entwicklung/Common/Python312/python.exe`` exists.
-
-5. **Get License for SIR 3S 90**: Copy ``SIR3S-90.LIC`` from ``T:/SCRATCH/Jablonski`` to ``C:/3S/SIR 3S Entwicklung/Common``.
-
-6. **Upgrade pip and install numpy**: Open a cmd and enter the following commands:
-
-   .. code-block:: bash
-
-       cd "C:/3S/SIR 3S Entwicklung/Common/Python312"
-       #python.exe -m pip install --upgrade pip (if needed)
-       python.exe -m pip install numpy
-
-7. **Continue** with the step 2 of Install Toolkit
+ 
+If you want to make full use of Python's capabilities for working with your SIR 3S model, 
+it is currently recommended to use both packages. In the future it is possible 
+that the PT3S functionalities will be integrated into the SIR 3S Toolkit.
 
 .. _installing-toolkit-label: 
 
-Install Toolkit
----------------
+Installation
+------------
 
-To install the Toolkit, follow these steps:
+To install the SIR 3S Toolkit, follow these steps:
 
-1. **Obtain SIR 3S:** The Toolkit requires an installed SIR 3S version of 90-15 Quebec or higher. As this is the first version with Python capabilities and the included ``Sir3S_Toolkit.dll``
+1. **Obtain SIR 3S:** The SIR 3S Toolkit requires an installed SIR 3S version of 90-15 Quebec or higher, which includes the ``Sir3S_Toolkit.dll``.
 
-2. **Install Toolkit via pip in SIR 3S Environment:** Open a cmd and enter the following commands, to install the Toolkit in the Python environment in the ``Common`` folder of your SIR 3S installation:
+2. **Install the SIR 3S Toolkit via pip in SIR 3S Environment:** Open a cmd and enter the following commands to install the SIR 3S Toolkit in the Python environment in the ``Common`` folder of your SIR 3S installation:
 
    .. code-block:: bash
 
-       cd "C:/3S/SIR 3S Entwicklung/Common/Python312" #change to your local path
+       cd "C:/3S/Common/Python312" # change to your local path
        python.exe -m pip install sir3stoolkit
 
 
-3. **Optional: Install Toolkit via pip in other Environment:** Open a cmd in the desired environment and enter the following commands, to install the Toolkit in another Python environment:
+3. **Optional: Install the SIR 3S Toolkit via pip in another Python environment:** Open a cmd in the desired Python environment (e.g. Anaconda Python installation) and enter the following commands to install the SIR 3S Toolkit:
 
    .. code-block:: bash
 
        pip install sir3stoolkit
        
-If you encounter issues with that, located the python.exe file of the environment and follow step 1.
-
-We now invite you to visit the :doc:`examples` page to understand basic Toolkit functionalities.
+To learn how the SIR 3S Toolkit is used in practice, take a look at the :doc:`examples` page.
