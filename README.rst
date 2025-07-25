@@ -18,14 +18,14 @@ At its core, the package wraps basic functionality of SIR 3S, offering a low-lev
 
 On top of this core, higher-level functionality is provided, enabling more powerful and intuitive interactions with SIR 3S models. 
 
-This layered design ensures flexibility and makes the **SIR 3S Toolkit** easily extensible for future enhancements.
+This layered design ensures flexibility and makes the SIR 3S Toolkit easily extensible for future enhancements.
 
 .. image:: https://raw.githubusercontent.com/3SConsult/PT3S/master/sphinx_docs/_static/Sir3S_Splash.jpg
    :target: https://www.3sconsult.de/software/sir-3s/
    :width: 20%
    :alt: Sir3S Splash
 
-In order to use the **SIR 3S Toolkit**, access to SIR 3S models and a licensed SIR 3S version are necessary.
+In order to use the SIR 3S Toolkit, access to SIR 3S models and a licensed SIR 3S version are necessary.
 
 Features
 --------
@@ -41,12 +41,12 @@ For detailed documentation, visit `SIR 3S Toolkit Documentation <https://3sconsu
 
 PyPI
 ----
-You can find the **SIR 3S Toolkit** package on `PyPI <https://pypi.org/project/sir3stoolkit/>`_.
+You can find the SIR 3S Toolkit package on `PyPI <https://pypi.org/project/sir3stoolkit/>`_.
 
 Installation
 ------------
 
-To install the **SIR 3S Toolkit**, use pip:
+To install the SIR 3S Toolkit, use pip:
 
    .. code-block:: bash
 
@@ -54,7 +54,7 @@ To install the **SIR 3S Toolkit**, use pip:
 
 Contact
 -------
-If you'd like to report a bug or suggest an improvement for the **SIR 3S Toolkit**, please `open a new issue on GitHub <https://github.com/3SConsult/sir3stoolkit/issues>`_. Describe the situation in detail — whether it's a bug you encountered or a feature you'd like to see improved. Feel free to attach images or other relevant materials to help us better understand your request.
+If you'd like to report a bug or suggest an improvement for the SIR 3S Toolkit, please `open a new issue on GitHub <https://github.com/3SConsult/sir3stoolkit/issues>`_. Describe the situation in detail — whether it's a bug you encountered or a feature you'd like to see improved. Feel free to attach images or other relevant materials to help us better understand your request.
 
 For other requests, please contact us at `jablonski@3sconsult.de <mailto:jablonski@3sconsult.de>`_.
 
