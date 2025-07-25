@@ -13,7 +13,7 @@ What is SIR 3S Toolkit?
 a software for the simulation, analysis and optimization of flow processes in gas/water/heat supply networks, 
 plants, pipelines and caverns.
 
-While SIR 3S itself is a graphical user interface (GUI)-based application that is primarily operated through manual user input, 
+While SIR 3S itself is a graphical user interface (GUI) based application that is primarily operated through manual user input, 
 the SIR 3S Toolkit adds a powerful layer of automation and programmability. It enables users to interact with SIR 3S models through 
 Python code, making it possible to develop custom workflows, perform batch simulations, and integrate SIR 3S into larger analytical 
 or operational pipelines.
@@ -22,11 +22,9 @@ At its core, the package wraps basic functionality of SIR 3S, offering a low-lev
 Several method operations of the kind Get, Set, Add, Delete, Insert and many more are provided for this aim.
 This gives you a variety of opportunities, e.g.:
 
-* You can build models solely from scratch, defining nodes, pipes, and more, flexibly adapted 
-to your available data sources, thus extending SIR 3S's built-in import tools.
+* You can build models solely from scratch, defining nodes, pipes, and more, flexibly adapted to your available data sources, thus extending SIR 3S's built-in import tools.
 
-* The analysis of model data and simulation results can leverage the entire Python data science 
-ecosystem, enabling powerful insights using tools like pandas, NumPy, and others.
+* The analysis of model data and simulation results can leverage the entire Python data science ecosystem, enabling powerful insights using tools like pandas, NumPy, and others.
 
 On top of this core, higher-level functionality is provided, enabling more powerful and intuitive interactions with SIR 3S models. 
 
@@ -50,13 +48,13 @@ Installation
 
 To install the SIR 3S Toolkit, follow these steps:
 
-1. **Obtain SIR 3S:** The SIR 3S Toolkit requires an installed SIR 3S version of 90-15 Quebec or higher, which includes the ``Sir3S_Toolkit.dll``
+1. **Obtain SIR 3S:** The SIR 3S Toolkit requires an installed SIR 3S version of 90-15 Quebec or higher, which includes the ``Sir3S_Toolkit.dll``.
 
 2. **Install the SIR 3S Toolkit via pip in SIR 3S Environment:** Open a cmd and enter the following commands to install the SIR 3S Toolkit in the Python environment in the ``Common`` folder of your SIR 3S installation:
 
    .. code-block:: bash
 
-       cd "C:/3S/SIR 3S Entwicklung/Common/Python312" #change to your local path
+       cd "C:/3S/Common/Python312" # change to your local path
        python.exe -m pip install sir3stoolkit
 
 
@@ -66,6 +64,4 @@ To install the SIR 3S Toolkit, follow these steps:
 
        pip install sir3stoolkit
        
-If you encounter issues with that, located the python.exe file of the environment and follow step 1.
-
-We now invite you to visit the :doc:`examples` page to understand basic Toolkit functionalities.
+To learn how the SIR 3S Toolkit is used in practice, take a look at the :doc:`examples` page.
