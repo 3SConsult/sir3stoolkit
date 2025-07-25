@@ -14,11 +14,7 @@ The included networks illustrate typical topologies of SIR 3S models.
 Tutorials
 ---------
 
-.. TODO: T6: InsertElements; T7: Calculation
-
 These tutorials are designed to introduce new users to the basic functionalities of the SIR 3S Toolkit. 
-They build on each other, so if you want a very quick overview on how SIR 3S Toolkit works, 
-just view the last tutorial.
 
 Each tutorial is available for **viewing** as an `.ipynb` file and for **downloading** as a `.zip` archive, 
 which also includes all necessary data files.
@@ -60,6 +56,17 @@ Tutorial 4: Getting result values
 This tutorial demonstrates how to get result values of objects based on their tk.
 
 View: `Notebook <tutorials/Tutorial4_Assets/ToolkitTutorial4.html>`_ | Download: `ZIP archive <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorial4_Assets.zip>`_.
+
+.. _Ttu5:
+
+Tutorial 5: Change a SIR 3S model
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This Tutorial demonstrates how to change SIR 3S models properly by grouping changes and saving them.
+
+View: `Notebook <tutorials/Tutorial5_Assets/ToolkitTutorial5.html>`_ | Download: `ZIP archive <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorial5_Assets.zip>`_.
+
+.. TODO: T6: InsertElements; T7: Calculation
 
 .. _TtuX:
 
