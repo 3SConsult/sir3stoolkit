@@ -10,6 +10,8 @@ This can either be a pure python update that can be obtained using ``pip install
 90.15.1 (To Be Released)
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
+**Important** next version of SIR 3S Toolkit after 90.15.0.1.dev1 should be named 90.15.1 and then we can continue in a normal way to 90.15.2.
+
 First official public version.
 
 Early Development Versions

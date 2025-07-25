@@ -11,6 +11,8 @@ Tutorials are meant to introduce new Toolkit users to its basic functionalities.
 Tutorials
 ---------
 
+.. TODO: T6: InsertElements; T7: Calculation
+
 These Tutorials are meant to introduce new Toolkit users to its basic functionalities. They built on each other, so if you want a very quick overview on how Toolkit works, just view the last Tutorial.
 
 Each tutorial is available for both **viewing** as an `.ipynb` file and **downloading** as a `.zip` archive containing additionally all data necessary for running the notebook on your local machine.
@@ -60,6 +62,16 @@ This Tutorial demonstrates how to get result values of objects based on their tk
 You can view the Notebook `here <tutorials/Tutorial4_Assets/ToolkitTutorial4.html>`_.
 
 You can download the Notebook file and data necessary to run the Tutorial locally `here <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorial4_Assets.zip>`_.
+
+Tutorial 5: Change Models
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This Tutorial demonstrates how to change model files properly by grouping changes and saving them.
+
+You can view the Notebook `here <tutorials/Tutorial5_Assets/ToolkitTutorial5.html>`_.
+
+You can download the Notebook file and data necessary to run the Tutorial locally `here <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorial5_Assets.zip>`_.
+
 
 .. _TtuX:
 
