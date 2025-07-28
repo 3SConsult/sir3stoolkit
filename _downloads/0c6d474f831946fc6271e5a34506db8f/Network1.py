@@ -1,17 +1,13 @@
-import clr as net
-from PythonWrapperToolkit import SIR3S_Model
-import Sir3S_Repository.Interfaces as Interfaces
-net.AddReference("Sir3S_Repository.Interfaces")
-import Sir3S_Repository.Interfaces
-model = SIR3S_Model()
+from sir3stoolkit.core import wrapper
+model = wrapper.SIR3S_Model()
 
 # Abbreviations for ObjectTypes used
-TNode = Sir3S_Repository.Interfaces.Sir3SObjectTypes.Node
-TPipe = Sir3S_Repository.Interfaces.Sir3SObjectTypes.Pipe
-TPump = Sir3S_Repository.Interfaces.Sir3SObjectTypes.Pump
-TTank = Sir3S_Repository.Interfaces.Sir3SObjectTypes.OpenContainer
+TNode = model.ObjectTypes.Node
+TPipe = model.ObjectTypes.Pipe
+TPump = model.ObjectTypes.Pump
+TTank = model.ObjectTypes.OpenContainer
 
-#Create Nodes and Pipes
+# Create Nodes and Pipes
 model.StartEditSession("Insert Elements")
 
 # Add nodes
@@ -51,7 +47,7 @@ model.AddNewBypassElement("-1", node2, 500, 850, 255, 1, TTank, "Tank", "Storage
 model.EndEditSession();
 
 #Add text
-text = model.InsertElement(Sir3S_Repository.Interfaces.Sir3SObjectTypes.Text, "RefBspText")
+text = model.InsertElement(model.ObjectTypes.Text, "RefBspText")
 model.SetGeometryInformation(text, "POINT(750 850 0)")
 model.SetValue(text, "Graftext", "Network 1 createed by SIR 3S PythonToolkit")
 model.SetElementColor_RGB(text, 255,0,0,True)       
