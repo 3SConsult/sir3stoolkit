@@ -3,17 +3,8 @@
 """
 Created on Fri Nov 22 14:46:49 2024
 
-@author: Giriyan
+@author: Nischal Giriyan
 """
-
-#**********************************************************************************
-# IMPORTANT NOTICE FOR USER MANUAL (2024-12-06 NTC): 
-# The Meaning and Limitations of all Method-Parameters
-# are literally written in the Definition of the Interface 'ISir3SToolkitModel'.
-# So it may be helpful to copy/paste them when writing the User Manual.
-#
-# AFTER SEVERAL ATTEMPTS (maybe 26), VISUAL STUDIO FORCED ME (NTC) TO USE Python3.9
-#**********************************************************************************
 
 import sys
 from turtle import fillcolor
@@ -22,11 +13,14 @@ import random
 import inspect
 import os
 import System
+import enum
 from collections import namedtuple
 import numpy as np
+from System.Reflection import Assembly
 
 # Global variables
 SIR3S_SIRGRAF_DIR = None
+
 
 # User defined types
 textProperties = namedtuple("textProperties", ["x", "y", "color", "textContent", "angle_degree", "faceName", 
@@ -40,6 +34,53 @@ numericalDisplayProperties = namedtuple("numericalDisplayProperties", ["x", "y",
 fontInformation = namedtuple("fontInformation", ["textContent", "color", "angle_degree", "faceName", 
                                        "heightPt", "isBold", "isItalic", "isUnderline"])
 
+
+# User defined Enum class using EnumMeta
+
+class DotNetEnumMeta(enum.EnumMeta):
+    @classmethod
+    def __prepare__(metacls, cls, bases, dotnet_enum=None, assembly_ext=None):
+        classdict = super().__prepare__(cls, bases)
+
+        if dotnet_enum:
+            if assembly_ext is None:
+                raise ValueError("assembly_ext must be provided when using dotnet_enum.")
+            
+            # Load the assembly from disk
+            assembly_path = os.path.join(SIR3S_SIRGRAF_DIR, assembly_ext)
+            if not os.path.exists(assembly_path):
+                raise FileNotFoundError(f"Assembly not found at: {assembly_path}")
+
+            assembly = Assembly.LoadFrom(assembly_path)
+
+            dotnet_type = None
+            for t in assembly.GetTypes():
+                if t.Name == dotnet_enum and t.IsEnum:
+                    dotnet_type = t
+                    break
+
+            if dotnet_type is None:
+                raise ValueError(f"Could not find .NET enum '{dotnet_enum}' in assembly.")
+
+            # Populate Python enum with values from .NET enum
+            for field in dotnet_type.GetFields():
+                if not field.IsSpecialName:
+                    classdict[field.Name] = int(field.GetRawConstantValue())
+
+        return classdict
+
+    def __new__(metacls, cls, bases, classdict, **kwargs):
+        return super().__new__(metacls, cls, bases, classdict)
+
+
+def create_dotnet_enum(name: str, dotnet_enum: str, assembly_ext: str):
+    return DotNetEnumMeta(
+        name,
+        (enum.Enum,),
+        DotNetEnumMeta.__prepare__(name, (enum.Enum,), dotnet_enum=dotnet_enum, assembly_ext=assembly_ext),
+        dotnet_enum=dotnet_enum,
+        assembly_ext=assembly_ext
+    )
 
 # CAUTION: User should call this function before creating any instances of the classes provoded through this library !!!
 #          Failed to do so will result in incorrect initialization of classes and object model that are key components to
@@ -58,9 +99,7 @@ def Initialize_Toolkit(basePath: str):
    
         net.AddReference(r"System")
                 
-        net.AddReference(SIR3S_SIRGRAF_DIR+r"\Sir3S_Repository.ModelManager")  
         net.AddReference(SIR3S_SIRGRAF_DIR+r"\Sir3S_Repository.Utilities")
-        net.AddReference(SIR3S_SIRGRAF_DIR+r"\Sir3S_Repository.Interfaces")
         
         # THE COMPILED DLL FOR Sir3S_Toolkit SHOULD ALSO BE COPIED TO SIR3S_SIRGRAF_DIR
         net.AddReference(SIR3S_SIRGRAF_DIR+r"\Sir3S_Toolkit")
@@ -75,9 +114,7 @@ class SIR3S_Model:
     def __init__(self):
         # Basic imports to dlls provided by SirGraf
         # This will only work if Initialize_Toolkit() is called in the same context
-        import Sir3S_Repository.ModelManager
         import Sir3S_Repository.Utilities as Util
-        import Sir3S_Repository.Interfaces as Interfaces
         import Sir3S_Toolkit.Model as Sir3SToolkit
         
         # Create the toolkit
@@ -88,7 +125,51 @@ class SIR3S_Model:
             print("Error in initializing the toolkit")
         else:
             print("Initialization complete")
+            
+        # Create all necessay Enums for user
+        self.ObjectTypes = create_dotnet_enum("ObjectTypes", "Sir3SObjectTypes", "Sir3S_Repository.Interfaces.dll")
+        self.ProviderTypes = create_dotnet_enum("ProviderTypes", "SirDBProviderType", "Sir3S_Repository.Interfaces.dll")
+        self.NetworkType = create_dotnet_enum("NetworkType", "NetworkType", "Sir3S_Repository.Interfaces.dll")
+        self._dotnet_enum_type_objecttype = self._load_dotnet_enum("Sir3SObjectTypes", "Sir3S_Repository.Interfaces.dll")
+        self._dotnet_enum_type_providertype = self._load_dotnet_enum("SirDBProviderType", "Sir3S_Repository.Interfaces.dll")
+        self._dotnet_enum_type_networktype = self._load_dotnet_enum("NetworkType", "Sir3S_Repository.Interfaces.dll") 
         
+        # Variable to enable or disable output comments 
+        self.outputComments = True
+        
+    def _load_dotnet_enum(self, enum_name, assembly_ext):
+        if assembly_ext is None:
+            raise ValueError("assembly_ext must be provided when using dotnet_enum.")
+        
+        assembly_path = os.path.join(SIR3S_SIRGRAF_DIR, assembly_ext)
+        assembly = Assembly.LoadFrom(assembly_path)
+        for t in assembly.GetTypes():
+            if t.Name == enum_name and t.IsEnum:
+                return t
+        raise ValueError(f".NET enum '{enum_name}' not found.")
+    
+    def to_dotnet_enum(self, py_enum_member, py_enum_type):
+        if not isinstance(py_enum_member, py_enum_type):
+            raise TypeError(f"Expected {py_enum_type} member, got {type(py_enum_member)}")
+
+        # Use the integer value of Python enum member to create .NET enum
+        if (py_enum_type == self.ObjectTypes):  
+            return System.Enum.ToObject(self._dotnet_enum_type_objecttype, py_enum_member.value)
+        elif (py_enum_type == self.ProviderTypes):
+            return System.Enum.ToObject(self._dotnet_enum_type_providertype, py_enum_member.value)
+        elif (py_enum_type == self.NetworkType):
+            return System.Enum.ToObject(self._dotnet_enum_type_networktype, py_enum_member.value)
+
+    def to_python_enum(self, dotnet_enum_member, py_enum_type):
+        if dotnet_enum_member is None:
+            return None
+
+        # Get the integer value of the .NET enum
+        dotnet_value = int(dotnet_enum_member)
+
+        # Map to Python enum by value
+        return py_enum_type(dotnet_value)
+    
     def StartTransaction(self, SessionName: str):
         """
         Start a transaction with the given session name.
@@ -104,7 +185,8 @@ class SIR3S_Model:
             print(message)
         else:
             if message == "":
-                print("Now you can make changes to the model")
+                if self.outputComments:
+                    print("Now you can make changes to the model")
             else:
                 print(message)
 
@@ -121,7 +203,8 @@ class SIR3S_Model:
             print(message)
         else:
             if message == "":
-                print("Transaction has ended. Please open up a new transaction if you want to make further changes")
+                if self.outputComments:
+                    print("Transaction has ended. Please open up a new transaction if you want to make further changes")
             else:
                 print(message)
           
@@ -140,7 +223,8 @@ class SIR3S_Model:
             print(message)
         else:
             if message == "":
-                print("Now you can make changes to the model")
+                if self.outputComments:
+                    print("Now you can make changes to the model")
             else:
                 print(message)
             
@@ -157,7 +241,8 @@ class SIR3S_Model:
             print(message)
         else:
             if message == "":
-                print("Edit Session has ended. Please open up a new session if you want to make further changes")
+                if self.outputComments:
+                    print("Edit Session has ended. Please open up a new session if you want to make further changes")
             else:
                 print(message)
 
@@ -216,7 +301,8 @@ class SIR3S_Model:
         """
         isValueSet, error = self.toolkit.SetValue(Tk, propertyName, Value)
         if(isValueSet):
-            print("Value is set")
+            if self.outputComments:
+                print("Value is set")
         else:
             print(f"Error: {error}")
         
@@ -234,7 +320,8 @@ class SIR3S_Model:
         """
         result, error = self.toolkit.OpenModelXml(Path, SaveCurrentModel)
         if(result == True):
-            print("Model is open for further operation")
+            if self.outputComments:
+                print("Model is open for further operation")
         else:
             print("Error while opening the model," + error)
 
@@ -244,8 +331,8 @@ class SIR3S_Model:
 
         :param dbName: Full path to the database file.
         :type dbName: str
-        :param providerType: Provider type from the enum.
-        :type providerType: Interfaces.SirDBProviderType
+        :param providerType: Provider type from the enum (Self.ProviderTypes).
+        :type providerType: ProviderTypes
         :param Mid: Model identifier.
         :type Mid: str
         :param saveCurrentlyOpenModel: Do you want to save the current model before closing it?
@@ -260,12 +347,30 @@ class SIR3S_Model:
         :rtype: None
         :description: This is a wrapper method for OpenModel() from toolkit; Watch out for errors for more information.
         """
-        result, error = self.toolkit.OpenModel(dbName, providerType, Mid, saveCurrentlyOpenModel, namedInstance, userID, password)
+        providerType_net = self.to_dotnet_enum(providerType, self.ProviderTypes)
+        result, error = self.toolkit.OpenModel(dbName, providerType_net, Mid, saveCurrentlyOpenModel, namedInstance, userID, password)
         if(result == True):
-            print("Model is open for further operation")
+            if self.outputComments:
+                print("Model is open for further operation")
         else:
             print("Error while opening the model, " + error)
+            
+    def CloseModel(self, saveChangesBeforeClosing: bool) -> bool:
+        """
+        Closes a currently open Model.
 
+        :param saveChangesBeforeClosing: If True, the Changes would be saved before Closing
+        otherwise Changes would be discarded
+        :type saveChangesBeforeClosing: bool
+        :return: return True if model is successfully closed, False otherwise
+        :rtype: bool
+        :description: This is a wrapper method for CloseModel() from toolkit; Watch out for errors for more information.
+        """
+        isClosed, error = self.toolkit.CloseModel(saveChangesBeforeClosing)
+        if(isClosed == False):
+            print("Error while closing the model, " + error)
+        return isClosed
+        
     def ExecCalculation(self, waitForSirCalcToExit: bool):
         """
         Executes the model calculation.
@@ -280,7 +385,8 @@ class SIR3S_Model:
         if not isExecuted:
             print(f"Could not start Model Calculation: {error}")
         else:
-            print("Model Calculation is complete")
+            if self.outputComments:
+                print("Model Calculation is complete")
 
     def GetTimeStamps(self) -> tuple[list, str, str, str]:
         """
@@ -300,13 +406,14 @@ class SIR3S_Model:
         Gets all Tk's belonging to the elements of the specified type.
 
         :param ElementType: Object type defined in the enum.
-        :type ElementType: Interfaces.Sir3SObjectTypes
+        :type ElementType: ObjectTypes
         :return: List of all Tk's belonging to the elements of type 'ElementType'.
         :rtype: list
         :description: This is a wrapper method for GetAllElementKeys() from toolkit.
         """
         Tk_list = None
-        Tk_list = self.toolkit.GetAllElementKeys(ElementType)
+        ElementType_net = self.to_dotnet_enum(ElementType, self.ObjectTypes)
+        Tk_list = self.toolkit.GetAllElementKeys(ElementType_net)
         if list(Tk_list) is None:
             print(f"Couldn't retrieve any Tk of element type {ElementType}") 
         return list(Tk_list)
@@ -316,10 +423,11 @@ class SIR3S_Model:
         Gets the network type.
 
         :return: Network type defined in the enum.
-        :rtype: Interfaces.NetworkType
+        :rtype: NetworkType
         :description: This is a wrapper method for GetNetworkType() from toolkit.
         """
-        return self.toolkit.GetNetworkType()
+        netType_net = self.toolkit.GetNetworkType()
+        return self.to_python_enum(netType_net, self.NetworkType)           
 
     def IsMainContainer(self, fkCont: str) -> bool:
         """
@@ -338,13 +446,15 @@ class SIR3S_Model:
         Finds the main container of the model and returns its Key (TK).
 
         :return: Tk of the main container and object type.
-        :rtype: tuple[str, Interfaces.Sir3SObjectTypes]
+        :rtype: tuple[str, ObjectTypes]
         :description: This is a wrapper method for GetMainContainer() from toolkit.
         """
-        Tk, objType, error = self.toolkit.GetMainContainer()
+        Tk, objType_net, error = self.toolkit.GetMainContainer()
+        objType = self.to_python_enum(objType_net, self.ObjectTypes)
         if Tk == "-1":
             print("Error: " + error)
         return Tk, objType
+    
     def GetElementInfo(self, Tk: str):
         """
         Gets the element information.
@@ -366,25 +476,27 @@ class SIR3S_Model:
         Gets the total number of elements of the specified type.
 
         :param ElementType: Object type defined in the enum.
-        :type ElementType: Interfaces.Sir3SObjectTypes
+        :type ElementType: ObjectTypes
         :return: Total number of elements of type 'ElementType'.
         :rtype: int
         :description: This is a wrapper method for GetNumberOfElements() from toolkit.
         """
-        return self.toolkit.GetNumberOfElements(ElementType)
+        ElementType_net = self.to_dotnet_enum(ElementType, self.ObjectTypes)
+        return self.toolkit.GetNumberOfElements(ElementType_net)
 
     def GetPropertiesofElementType(self, ElementType) -> list:
         """
         Gets all properties belonging to the element of the specified type.
 
         :param ElementType: Object type defined in the enum.
-        :type ElementType: Interfaces.Sir3SObjectTypes
+        :type ElementType: ObjectTypes
         :return: List of all properties belonging to the element of type 'ElementType'.
         :rtype: list
         :description: This is a wrapper method for GetPropertyNames() from toolkit.
         """
         Properties_list = None
-        Properties_list = self.toolkit.GetPropertyNames(ElementType)
+        ElementType_net = self.to_dotnet_enum(ElementType, self.ObjectTypes)
+        Properties_list = self.toolkit.GetPropertyNames(ElementType_net)
         if list(Properties_list) is None:
             print(f"Couldn't retrieve any Properties for the element type {ElementType}")
         return list(Properties_list)
@@ -396,11 +508,11 @@ class SIR3S_Model:
         :param Key: The pk/tk of the element in question.
         :type Key: str
         :return: Type of object the input Key belongs to.
-        :rtype: Interfaces.Sir3SObjectTypes
+        :rtype: ObjectTypes
         :description: This is a wrapper method for GetObjectTypeOf_Key() from toolkit; Watch out for errors for more information.
         """
-        objectType = self.toolkit.GetObjectTypeOf_Key(Key)
-        return objectType
+        objectType_net = self.toolkit.GetObjectTypeOf_Key(Key)
+        return self.to_python_enum(objectType_net, self.ObjectTypes)
 
     def DeleteElement(self, Tk: str):
         """
@@ -416,25 +528,28 @@ class SIR3S_Model:
         if not isDeleted:
             print(f"Error: {error}")
         else:
-            print("Element deleted successfully")
+            if self.outputComments:
+                print("Element deleted successfully")
 
     def InsertElement(self, ElementType, IdRef: str) -> str:
         """
         Inserts a new element of the specified type.
 
         :param ElementType: Object type defined in the enum to be inserted.
-        :type ElementType: Interfaces.Sir3SObjectTypes
+        :type ElementType: ObjectTypes
         :param IdRef: Id reference.
         :type IdRef: str
         :return: Tk of the element inserted.
         :rtype: str
         :description: This is a wrapper method for InsertElement() from toolkit; Watch out for errors for more information.
         """
-        result, error = self.toolkit.InsertElement(ElementType, IdRef)
+        ElementType_net = self.to_dotnet_enum(ElementType, self.ObjectTypes)
+        result, error = self.toolkit.InsertElement(ElementType_net, IdRef)
         if result == "-1":
             print(f"Error : {error}")
         else:
-            print(f"Element inserted successfully into the model with Tk: {result}")
+            if self.outputComments:
+                print(f"Element inserted successfully into the model with Tk: {result}")
         return result
 
     def NewModel(self, dbName: str, providerType, netType, modelDescription: str, namedInstance: str, userID: str, password: str):
@@ -444,9 +559,9 @@ class SIR3S_Model:
         :param dbName: Full path to the database file.
         :type dbName: str
         :param providerType: Provider type from the enum.
-        :type providerType: Interfaces.SirDBProviderType
+        :type providerType: ProviderTypes
         :param netType: Network type.
-        :type netType: Interfaces.NetworkType
+        :type netType: NetworkType
         :param modelDescription: Description of the model to be created.
         :type modelDescription: str
         :param namedInstance: Instance name of the SQL Server.
@@ -459,11 +574,14 @@ class SIR3S_Model:
         :rtype: None
         :description: This is a wrapper method for NewModel() from toolkit; Watch out for errors for more information.
         """
-        modelIdentifier, error = self.toolkit.NewModel(dbName, providerType, netType, modelDescription, namedInstance, userID, password)
+        providerType_net = self.to_dotnet_enum(providerType, self.ProviderTypes)
+        netType_net = self.to_dotnet_enum(netType, self.NetworkType)
+        modelIdentifier, error = self.toolkit.NewModel(dbName, providerType_net, netType_net, modelDescription, namedInstance, userID, password)
         if modelIdentifier == "-1":
             print(f"Error : {error}")
         else:
-            print(f"New model is created with the model identifier: {modelIdentifier}")
+            if self.outputComments:
+                print(f"New model is created with the model identifier: {modelIdentifier}")
 
     def ConnectConnectingElementWithNodes(self, Tk: str, keyOfNodeI: str, keyOfNodeK: str):
         """
@@ -483,7 +601,8 @@ class SIR3S_Model:
         if not result:
             print("Error: " + error)
         else:
-            print("Objects connected successfully")
+            if self.outputComments:
+                print("Objects connected successfully")
 
     def ConnectBypassElementWithNode(self, Tk: str, keyOfNodeI: str):
         """
@@ -501,7 +620,8 @@ class SIR3S_Model:
         if not result:
             print("Error: " + error)
         else:
-            print("Object connected successfully")
+            if self.outputComments:
+                print("Object connected successfully")
 
     def SaveChanges(self):
         """
@@ -515,7 +635,8 @@ class SIR3S_Model:
         if not isSaved:
             print(f"Error: {error}")
         else:
-            print("Changes saved successfully")
+            if self.outputComments:
+                print("Changes saved successfully")
 
     def AddTableRow(self, tablePkTk: str):
         """
@@ -524,14 +645,16 @@ class SIR3S_Model:
         :param tablePkTk: Key of the table.
         :type tablePkTk: str
         :return: Tk of the inserted row and object type.
-        :rtype: tuple[str, Interfaces.SirDBProviderType]
+        :rtype: tuple[str, ObjectTypes]
         :description: This is a wrapper method for AddTableRow() from toolkit; Watch out for errors for more information.
         """
-        Tk, objectType, error = self.toolkit.AddTableRow(tablePkTk)
+        Tk, objectType_net, error = self.toolkit.AddTableRow(tablePkTk)
+        objectType = self.to_python_enum(objectType_net, self.ObjectTypes)
         if Tk == "-1":
             print("Error: " + error)
         else:
-            print(f"Row is added to the table with Tk: {Tk}")
+            if self.outputComments: 
+                print(f"Row is added to the table with Tk: {Tk}")
         return Tk, objectType
 
     def GetTableRows(self, tablePkTk: str):
@@ -541,10 +664,11 @@ class SIR3S_Model:
         :param tablePkTk: Key of the table.
         :type tablePkTk: str
         :return: List of Tk's of all rows of the table and object type.
-        :rtype: tuple[list, Interfaces.SirDBProviderType]
+        :rtype: tuple[list, ProviderTypes]
         :description: This is a wrapper method for GetTableRows() from toolkit; Watch out for errors for more information.
         """
-        Tk_list, objectType, error = self.toolkit.GetTableRows(tablePkTk)
+        Tk_list, objectType_net, error = self.toolkit.GetTableRows(tablePkTk)
+        objectType = self.to_python_enum(objectType_net, self.ObjectTypes)
         if Tk_list is None:
             print("Error: " + error)
         return Tk_list, objectType
@@ -561,7 +685,8 @@ class SIR3S_Model:
         if not result:
             print("Error: " + error)
         else:
-            print("Refresh successful")
+            if self.outputComments:
+                print("Refresh successful")
 
     def SetInsertPoint(self, elementKey: str, x: np.float64, y: np.float64):
         """
@@ -581,7 +706,8 @@ class SIR3S_Model:
         if not result:
             print("Error: " + error)
         else:
-            print("New point inserted")
+            if self.outputComments:
+                print("New point inserted")
 
     def SetElementColor_RGB(self, elementKey: str, red: int, green: int, blue: int, fillOrLineColor: bool):
         """
@@ -605,7 +731,8 @@ class SIR3S_Model:
         if not result:
             print("Error: " + error)
         else:
-            print("Color of the element is set")
+            if self.outputComments:
+                print("Color of the element is set")
 
     def SetElementColor(self, elementKey: str, color: int, fillOrLineColor: bool):
         """
@@ -625,7 +752,8 @@ class SIR3S_Model:
         if not result:
             print("Error: " + error)
         else:
-            print("Color of the element is set")
+            if self.outputComments:
+                print("Color of the element is set")
 
     def AlignElement(self, elementKey: str):
         """
@@ -641,7 +769,8 @@ class SIR3S_Model:
         if not result:
             print("Error: " + error)
         else:
-            print("Alignment successful")
+            if self.outputComments:
+                print("Alignment successful")
 
     def GetResultValue(self, elementKey: str, propertyName: str) -> tuple[str, str]:
         """
@@ -666,7 +795,7 @@ class SIR3S_Model:
         Gets the result properties for the specified element type.
 
         :param elementType: The element type.
-        :type elementType: Interfaces.Sir3SObjectTypes
+        :type elementType: ObjectTypes
         :param onlySelectedVectors: If True, only the names of selected vector channels for this element type shall be returned, otherwise all possible result property names for this element type shall be returned.
         :type onlySelectedVectors: bool
         :return: List of result property names of an element type.
@@ -674,7 +803,8 @@ class SIR3S_Model:
         :description: This is a wrapper method for GetResultProperties() from toolkit; Watch out for errors for more information.
         """
         Result_list = None
-        Result_list, error = self.toolkit.GetResultProperties(elementType, onlySelectedVectors)
+        elementType_net = self.to_dotnet_enum(elementType, self.ObjectTypes)
+        Result_list, error = self.toolkit.GetResultProperties(elementType_net, onlySelectedVectors)
         if Result_list is None:
             print("Error: " + error)
         return list(Result_list)
@@ -700,7 +830,7 @@ class SIR3S_Model:
         Gets the minimal result value of an element type and also the key (tk/pk) of the corresponding element.
 
         :param elementType: The element type.
-        :type elementType: Interfaces.Sir3SObjectTypes
+        :type elementType: ObjectTypes
         :param propertyName: The name of the result property.
         :type propertyName: str
         :return: The minimal result value of an element type, the key (tk/pk) of the corresponding element, and the data type of the result.
@@ -708,7 +838,8 @@ class SIR3S_Model:
         :description: This is a wrapper method for GetMinResult() from toolkit; Watch out for errors for more information.
         """
         MinResult = None
-        MinResult, tkElement, valueType, error = self.toolkit.GetMinResult(elementType, propertyName)
+        elementType_net = self.to_dotnet_enum(elementType, self.ObjectTypes)
+        MinResult, tkElement, valueType, error = self.toolkit.GetMinResult(elementType_net, propertyName)
         if MinResult is None:
             print("Error: " + error)
         return MinResult, tkElement, valueType
@@ -718,7 +849,7 @@ class SIR3S_Model:
         Gets the maximal result value of an element type and also the key (tk/pk) of the corresponding element.
 
         :param elementType: The element type.
-        :type elementType: Interfaces.Sir3SObjectTypes
+        :type elementType: ObjectTypes
         :param propertyName: The name of the result property.
         :type propertyName: str
         :return: The maximal result value of an element type, the key (tk/pk) of the corresponding element, and the data type of the result.
@@ -726,7 +857,8 @@ class SIR3S_Model:
         :description: This is a wrapper method for GetMaxResult() from toolkit; Watch out for errors for more information.
         """
         MaxResult = None
-        MaxResult, tkElement, valueType, error = self.toolkit.GetMaxResult(elementType, propertyName)
+        elementType_net = self.to_dotnet_enum(elementType, self.ObjectTypes)
+        MaxResult, tkElement, valueType, error = self.toolkit.GetMaxResult(elementType_net, propertyName)
         if MaxResult is None:
             print("Error: " + error)
         return MaxResult, tkElement, valueType
@@ -738,7 +870,7 @@ class SIR3S_Model:
         :param timestamp: The timestamp for which result is needed.
         :type timestamp: str
         :param elementType: The element type.
-        :type elementType: Interfaces.Sir3SObjectTypes
+        :type elementType: ObjectTypes
         :param propertyName: The name of the result property.
         :type propertyName: str
         :return: The minimal result value of an element type at a particular timestamp, the key (tk/pk) of the corresponding element, and the data type of the result.
@@ -746,7 +878,8 @@ class SIR3S_Model:
         :description: This is a wrapper method for GetMinResult() from toolkit; Watch out for errors for more information.
         """
         MinResult = None
-        MinResult, tkElement, valueType, error = self.toolkit.GetMinResult(timestamp, elementType, propertyName)
+        elementType_net = self.to_dotnet_enum(elementType, self.ObjectTypes)
+        MinResult, tkElement, valueType, error = self.toolkit.GetMinResult(timestamp, elementType_net, propertyName)
         if MinResult is None:
             print("Error: " + error)
         return MinResult, tkElement, valueType
@@ -758,7 +891,7 @@ class SIR3S_Model:
         :param timestamp: The timestamp for which result is needed.
         :type timestamp: str
         :param elementType: The element type.
-        :type elementType: Interfaces.Sir3SObjectTypes
+        :type elementType: ObjectTypes
         :param propertyName: The name of the result property.
         :type propertyName: str
         :return: The maximal result value of an element type at a particular timestamp, the key (tk/pk) of the corresponding element, and the data type of the result.
@@ -766,7 +899,8 @@ class SIR3S_Model:
         :description: This is a wrapper method for GetMaxResult() from toolkit; Watch out for errors for more information.
         """
         MaxResult = None
-        MaxResult, tkElement, valueType, error = self.toolkit.GetMaxResult(timestamp, elementType, propertyName)
+        elementType_net = self.to_dotnet_enum(elementType, self.ObjectTypes)
+        MaxResult, tkElement, valueType, error = self.toolkit.GetMaxResult(timestamp, elementType_net, propertyName)
         if MaxResult is None:
             print("Error: " + error)
         return MaxResult, tkElement, valueType
@@ -805,7 +939,8 @@ class SIR3S_Model:
         if Tk_new == "-1":
             print("Error: " + error)
         else:
-            print("New node added")
+            if self.outputComments:
+                print("New node added")
         return Tk_new
 
     def AddNewPipe(self, tkCont: str, tkFrom: str, tkTo: str, L: np.float32, linestring: str, material: str, dn: str, roughness: np.float32, idRef: str, description: str, kvr: int) -> str:
@@ -842,7 +977,8 @@ class SIR3S_Model:
         if Tk_new == "-1":
             print("Error: " + error)
         else:
-            print("New pipe added")
+            if self.outputComments:
+                print("New pipe added")
         return Tk_new
     
     def AddNewConnectingElement(self, tkCont: str, tkFrom: str, tkTo: str, x: np.float64, y: np.float64, z: np.float32, elementType, dn: np.float32, symbolFactor: np.float64, angleDegree: np.float32, idRef: str, description: str) -> str:
@@ -862,7 +998,7 @@ class SIR3S_Model:
         :param z: Z coordinate.
         :type z: np.float32
         :param elementType: Element type.
-        :type elementType: Interfaces.Sir3SObjectTypes
+        :type elementType: ObjectTypes
         :param dn: The nominal diameter or the Tk of the nominal diameter.
         :type dn: np.float32
         :param symbolFactor: The symbol factor of the new node.
@@ -877,11 +1013,13 @@ class SIR3S_Model:
         :rtype: str
         :description: Comfortable method for inserting a new connecting element.
         """
-        Tk_new, error = self.toolkit.AddNewConnectingElement(tkCont, tkFrom, tkTo, x, y, z, elementType, dn, symbolFactor, angleDegree, idRef, description)
+        elementType_net = self.to_dotnet_enum(elementType, self.ObjectTypes)
+        Tk_new, error = self.toolkit.AddNewConnectingElement(tkCont, tkFrom, tkTo, x, y, z, elementType_net, dn, symbolFactor, angleDegree, idRef, description)
         if Tk_new == "-1":
             print("Error: " + error)
         else:
-            print("New connecting element added")
+            if self.outputComments:
+                print("New connecting element added")
         return Tk_new
 
     def AddNewBypassElement(self, tkCont: str, tkFrom: str, x: np.float64, y: np.float64, z: np.float32, symbolFactor: np.float64, elementType, idRef: str, description: str) -> str:
@@ -901,7 +1039,7 @@ class SIR3S_Model:
         :param symbolFactor: The symbol factor of the new node.
         :type symbolFactor: np.float64
         :param elementType: Element type.
-        :type elementType: Interfaces.Sir3SObjectTypes
+        :type elementType: ObjectTypes
         :param idRef: ID in reference system.
         :type idRef: str
         :param description: Description.
@@ -910,11 +1048,13 @@ class SIR3S_Model:
         :rtype: str
         :description: Comfortable method for inserting a new bypass element.
         """
-        Tk_new, error = self.toolkit.AddNewBypassElement(tkCont, tkFrom, x, y, z, symbolFactor, elementType, idRef, description)
+        elementType_net = self.to_dotnet_enum(elementType, self.ObjectTypes)
+        Tk_new, error = self.toolkit.AddNewBypassElement(tkCont, tkFrom, x, y, z, symbolFactor, elementType_net, idRef, description)
         if Tk_new == "-1":
             print("Error: " + error)
         else:
-            print("New Bypass element added")
+            if self.outputComments:
+                print("New Bypass element added")
         return Tk_new
 
     def GetTkFromIDReference(self, IdRef: str, object_type) -> str:
@@ -924,12 +1064,13 @@ class SIR3S_Model:
         :param IdRef: ID reference of the element.
         :type IdRef: str
         :param object_type: Type of the element (like Node, Pipe, Valve, etc.).
-        :type object_type: Interfaces.Sir3SObjectTypes
+        :type object_type: ObjectTypes
         :return: TK of the element.
         :rtype: str
         :description: This is a wrapper method for GetTkFromIDReference() from toolkit; Watch out for error messages for more information.
         """
-        Tk, error = self.toolkit.GetTkFromIDReference(IdRef, object_type)
+        object_type_net = self.to_dotnet_enum(object_type, self.ObjectTypes)
+        Tk, error = self.toolkit.GetTkFromIDReference(IdRef, object_type_net)
         if Tk == "-1":
             print("Error: " + error)
         return Tk
@@ -965,7 +1106,8 @@ class SIR3S_Model:
         if not isSet:
             print("Error: " + error)
         else:
-            print("Geometry Information is set correctly")
+            if self.outputComments:
+                print("Geometry Information is set correctly")
         return isSet
 
     def AllowSirMessageBox(self, bAllow: bool):
@@ -1000,6 +1142,89 @@ class SIR3S_Model:
             print("Error: " + error)
         return fkKI, fkKK, fkKI2, fkKK2
 
+    def SetLogFilePath(self, logFilePath: str) -> bool:
+        """
+        Sets the full Path (Drive, Directory and File Name) of the Log File
+
+        :param logFilePath: The Full Path of the Log File
+        :type logFilePath: str
+        :return: isPathSet 
+        :rtype: bool
+        :description: This is a wrapper method for SetLogFilePath() from toolkit
+        """
+        isPathSet, error = self.toolkit.SetLogFilePath(logFilePath)
+        if not isPathSet:
+            print("Error: " + error)
+        return isPathSet
+    
+    def GetLogFilePath(self) -> str:
+        """
+        Gets the value of the actual full Path of the Log File
+
+        :return: logFilePath 
+        :rtype: str
+        :description: This is a wrapper method for GetLogFilePath() from toolkit
+        """
+        logFilePath = self.toolkit.GetLogFilePath()
+        return logFilePath
+    
+    def EnableOrDisableOutputComments(self, outputComments: bool):
+        """
+        Enable or disable additional output comments while using methods from SIR3S_Model class.
+        These comments could help you understand about the positive outcome of a method.
+        Default value is True
+         
+        :param outputComments: To enable pass true and to disable pass false
+        :type outputComments: bool
+        :return: None 
+        :rtype: None
+        :description: This is a helper function
+        """
+        self.outputComments = outputComments
+
+
+    def GetResultfortimestamp(self, timestamp: str, Tk: str, property: str) -> tuple[str, str]:
+        """
+        Gets the result value for a particular property of an object for a specific timestamp provided as input
+         
+        :param timestamp: Timestamp provided as input
+        :type timestamp: str
+        :param Tk: Tk of the element
+        :type Tk: str
+        :param property: Property of the element
+        :type property: str
+        :return: (value, valueType) 
+        :rtype: tuple[str, str]
+        :description: This is a helper function
+        """
+        current_timestamp = self.GetCurrentTimeStamp()
+        self.SetCurrentTimeStamp(timestamp)
+        value, valueType = self.GetResultValue(Tk, property)
+        self.SetCurrentTimeStamp(current_timestamp)
+        return value, valueType
+
+    def GetResultforAllTimestamp(self, Tk: str, property: str):
+        """
+        Gets the result values for a particular property of an object for all timestamps
+         
+        :param Tk: Tk of the element
+        :type Tk: str
+        :param property: Property of the element
+        :type property: str
+        :return: resultList 
+        :rtype: list of tuple
+        :description: This is a helper function
+        """
+        resultList = []
+        timeStamps, _, _, _ = self.GetTimeStamps()
+        current_timestamp = self.GetCurrentTimeStamp()
+        for t in timeStamps:
+            self.SetCurrentTimeStamp(t)
+            value, valueType = self.GetResultValue(Tk, property)
+            resultList.append((t, value, valueType))
+        self.SetCurrentTimeStamp(current_timestamp)
+        return resultList
+
 """
 Class definition of SIR3S_View() wrapper to access functionalities provided by SIR3S software
 This should be used inside python console plugin to give better control over the model for users
@@ -1015,9 +1240,7 @@ class SIR3S_View:
         """
         # Basic imports to dlls provided by SirGraf
         # This will only work if Initialize_Toolkit() is called in the same context
-        import Sir3S_Repository.ModelManager
         import Sir3S_Repository.Utilities as Util
-        import Sir3S_Repository.Interfaces as Interfaces
         import Sir3S_Toolkit.Model as Sir3SToolkit
         
         self.toolkit = Util.StaticUI.Toolkit
@@ -1027,7 +1250,67 @@ class SIR3S_View:
             print("Error in initializing the toolkit")
         else:
             print("Initialization complete")
+            
+        # Create all necessay Enums for user
+        self.ObjectTypes = create_dotnet_enum("ObjectTypes", "Sir3SObjectTypes", "Sir3S_Repository.Interfaces.dll")
+        self.ProviderTypes = create_dotnet_enum("ProviderTypes", "SirDBProviderType", "Sir3S_Repository.Interfaces.dll")
+        self.NetValveTypes = create_dotnet_enum("NetValveTypes", "NetValveTypes", "Sir3S_Toolkit.dll")
+        self.NetValvePostures = create_dotnet_enum("NetValvePostures", "NetValvePostures", "Sir3S_Toolkit.dll")
+        self.Hydrant_QM_SOLL = create_dotnet_enum("Hydrant_QM_SOLL", "Hydrant_QM_SOLL", "Sir3S_Toolkit.dll")
+        self.Hydrant_Type = create_dotnet_enum("Hydrant_Type", "Hydrant_Type", "Sir3S_Toolkit.dll")
+        self.Hydrant_Activity = create_dotnet_enum("Hydrant_Activity", "Hydrant_Activity", "Sir3S_Toolkit.dll")
+        self._dotnet_enum_type_objecttype = self._load_dotnet_enum("Sir3SObjectTypes", "Sir3S_Repository.Interfaces.dll")
+        self._dotnet_enum_type_providertype = self._load_dotnet_enum("SirDBProviderType", "Sir3S_Repository.Interfaces.dll")   
+        self._dotnet_enum_type_netvalvetype = self._load_dotnet_enum("NetValveTypes", "Sir3S_Toolkit.dll")
+        self._dotnet_enum_type_netvalvepostures = self._load_dotnet_enum("NetValvePostures", "Sir3S_Toolkit.dll")
+        self._dotnet_enum_type_hydrantqmsoll = self._load_dotnet_enum("Hydrant_QM_SOLL", "Sir3S_Toolkit.dll")
+        self._dotnet_enum_type_hydranttype = self._load_dotnet_enum("Hydrant_Type", "Sir3S_Toolkit.dll")
+        self._dotnet_enum_type_hydrantactivity = self._load_dotnet_enum("Hydrant_Activity", "Sir3S_Toolkit.dll")
+     
+        # Variable to enable or disable output comments 
+        self.outputComments = True
+        
+    def _load_dotnet_enum(self, enum_name, assembly_ext):
+        if assembly_ext is None:
+            raise ValueError("assembly_ext must be provided when using dotnet_enum.")
+        
+        assembly_path = os.path.join(SIR3S_SIRGRAF_DIR, assembly_ext)
+        assembly = Assembly.LoadFrom(assembly_path)
+        for t in assembly.GetTypes():
+            if t.Name == enum_name and t.IsEnum:
+                return t
+        raise ValueError(f".NET enum '{enum_name}' not found.")
+    
+    def to_dotnet_enum(self, py_enum_member, py_enum_type):
+        if not isinstance(py_enum_member, py_enum_type):
+            raise TypeError(f"Expected {py_enum_type} member, got {type(py_enum_member)}")
 
+        # Use the integer value of Python enum member to create .NET enum
+        if (py_enum_type == self.ObjectTypes):  
+            return System.Enum.ToObject(self._dotnet_enum_type_objecttype, py_enum_member.value)
+        elif (py_enum_type == self.ProviderTypes):
+            return System.Enum.ToObject(self._dotnet_enum_type_providertype, py_enum_member.value)
+        elif (py_enum_type == self.NetValveTypes):
+            return System.Enum.ToObject(self._dotnet_enum_type_netvalvetype, py_enum_member.value)
+        elif (py_enum_type == self.NetValvePostures):
+            return System.Enum.ToObject(self._dotnet_enum_type_netvalvepostures, py_enum_member.value)
+        elif (py_enum_type == self.Hydrant_QM_SOLL):
+            return System.Enum.ToObject(self._dotnet_enum_type_hydrantqmsoll, py_enum_member.value)
+        elif (py_enum_type == self.Hydrant_Activity):
+            return System.Enum.ToObject(self._dotnet_enum_type_hydrantactivity, py_enum_member.value)
+        elif (py_enum_type == self.Hydrant_Type):
+            return System.Enum.ToObject(self._dotnet_enum_type_hydranttype, py_enum_member.value)
+
+    def to_python_enum(self, dotnet_enum_member, py_enum_type):
+        if dotnet_enum_member is None:
+            return None
+
+        # Get the integer value of the .NET enum
+        dotnet_value = int(dotnet_enum_member)
+
+        # Map to Python enum by value
+        return py_enum_type(dotnet_value)
+    
     def StartTransaction(self, SessionName: str):
         """
         Start a transaction with the given session name.
@@ -1043,7 +1326,8 @@ class SIR3S_View:
             print(message)
         else:
             if message == "":
-                print("Now you can make changes to the model")
+                if self.outputComments:
+                    print("Now you can make changes to the model")
             else:
                 print(message)
 
@@ -1060,7 +1344,8 @@ class SIR3S_View:
             print(message)
         else:
             if message == "":
-                print("Transaction has ended. Please open up a new transaction if you want to make further changes")
+                if self.outputComments:
+                    print("Transaction has ended. Please open up a new transaction if you want to make further changes")
             else:
                 print(message)
 
@@ -1079,7 +1364,8 @@ class SIR3S_View:
             print(message)
         else:
             if message == "":
-                print("Now you can make changes to the model")
+                if self.outputComments:
+                    print("Now you can make changes to the model")
             else:
                 print(message)
 
@@ -1096,7 +1382,8 @@ class SIR3S_View:
             print(message)
         else:
             if message == "":
-                print("Edit Session has ended. Please open up a new session if you want to make further changes")
+                if self.outputComments:
+                    print("Edit Session has ended. Please open up a new session if you want to make further changes")
             else:
                 print(message)
 
@@ -1112,7 +1399,8 @@ class SIR3S_View:
         if not isSaved:
             print(f"Error: {error}")
         else:
-            print("Changes saved successfully")
+            if self.outputComments:
+                print("Changes saved successfully")
 
     def OpenModelXml(self, Path: str, SaveCurrentModel: bool):
         """
@@ -1128,11 +1416,10 @@ class SIR3S_View:
         """
         result, error = self.toolkit.OpenModelXml(Path, SaveCurrentModel)
         if(result == True):
-            print("Model is open for further operation")
+            if self.outputComments:
+                print("Model is open for further operation")
         else:
             print("Error while opening the model," + error)
-
-
 
     def OpenModel(self, dbName: str, providerType, Mid: str, saveCurrentlyOpenModel: bool, namedInstance: str, userID: str, password: str):
         """
@@ -1141,7 +1428,7 @@ class SIR3S_View:
         :param dbName: Full path to the database file.
         :type dbName: str
         :param providerType: Provider type from the enum.
-        :type providerType: Interfaces.SirDBProviderType
+        :type providerType: ProviderTypes
         :param Mid: Model identifier.
         :type Mid: str
         :param saveCurrentlyOpenModel: Do you want to save the current model before closing it?
@@ -1155,21 +1442,40 @@ class SIR3S_View:
         :rtype: None
         :description: This is a wrapper method for openModel() from toolkit; Watch out for errors for more information.
         """
-        result, error = self.toolkit.OpenModel(dbName, providerType, Mid, saveCurrentlyOpenModel, namedInstance, userID, password)
+        providerType_net = self.to_dotnet_enum(providerType, self.ProviderTypes)
+        result, error = self.toolkit.OpenModel(dbName, providerType_net, Mid, saveCurrentlyOpenModel, namedInstance, userID, password)
         if(result == True):
-            print("Model is open for further operation")
+            if self.outputComments:
+                print("Model is open for further operation")
         else:
             print("Error while opening the model, " + error)
 
+    def CloseModel(self, saveChangesBeforeClosing: bool) -> bool:
+        """
+        Closes a currently open Model.
+
+        :param saveChangesBeforeClosing: If True, the Changes would be saved before Closing
+        otherwise Changes would be discarded
+        :type saveChangesBeforeClosing: bool
+        :return: return True if model is successfully closed, False otherwise
+        :rtype: bool
+        :description: This is a wrapper method for CloseModel() from toolkit; Watch out for errors for more information.
+        """
+        isClosed, error = self.toolkit.CloseModel(saveChangesBeforeClosing)
+        if(isClosed == False):
+            print("Error while closing the model, " + error)
+        return isClosed
+    
     def GetMainContainer(self):
         """
         Finds the main container of the model and returns its Key (TK).
 
         :return: Tk of the main container and object type.
-        :rtype: tuple[str, Interfaces.Sir3SObjectTypes]
+        :rtype: tuple[str, ObjectTypes]
         :description: This is a wrapper method for GetMainContainer() from toolkit; Finds the Main Container of the Model and returns its Key (TK).
         """
-        Tk, objType, error = self.toolkit.GetMainContainer()
+        Tk, objType_net, error = self.toolkit.GetMainContainer()
+        objType = self.to_python_enum(objType_net, self.ObjectTypes)
         if Tk == "-1":
             print("Error: " + error)
         return Tk, objType
@@ -1198,7 +1504,35 @@ class SIR3S_View:
         if Tk == "-1":
             print("Error: " + error)
         else:
-            print("External polyline added")
+            if self.outputComments:
+                print("External polyline added")
+        return Tk
+
+    def AddExternalPolyline_using_LineString(self, wktLineString: str, iColor: int, lineWidthMM: np.float64, dashedLine: bool, containerTK: str) -> str:
+        """
+        Adds an external polyline using linestring.
+
+        :param wktLineString: A string with all Points for Geometry in WKT Format
+        i.e formatted like 'LINESTRING (120 76 0, 500 300 0,  620 480 0, 364 276 0)'.
+        :type wktLineString: str
+        :param iColor: Color of the polyline.
+        :type iColor: int
+        :param lineWidthMM: Width of the polyline in mm.
+        :type lineWidthMM: np.float64
+        :param dashedLine: Boolean indicating if the polyline is dashed.
+        :type dashedLine: bool
+        :param containerTK: Key of the container.
+        :type containerTK: str
+        :return: Tk of the added polyline.
+        :rtype: str
+        :description: This is a wrapper method for AddExternalPolyline() from toolkit; Watch out for errors for more information.
+        """
+        Tk, error = self.toolkit.AddExternalPolyline(System.String.Empty, wktLineString, iColor, lineWidthMM, dashedLine, containerTK)
+        if Tk == "-1":
+            print("Error: " + error)
+        else:
+            if self.outputComments:
+                print("External polyline added using Linestring")
         return Tk
 
     def AddExternalPolylinePoint(self, Tk: str, x: np.float64, y: np.float64):
@@ -1219,7 +1553,8 @@ class SIR3S_View:
         if not result:
             print("Error: " + error)
         else:
-            print("External poly line point added")
+            if self.outputComments:
+                print("External poly line point added")
 
     def SetExternalPolyLineWidthAndColor(self, Tk: str, lineWidthMM: np.float64, iColor: int):
         """
@@ -1239,7 +1574,8 @@ class SIR3S_View:
         if not result:
             print("Error: " + error)
         else:
-            print("External polyline width and color are set")
+            if self.outputComments:
+                print("External polyline width and color are set")
 
     def AddExternalPolygon(self, xArray: list, yArray: list, lineColor: int, fillColor: int, lineWidthMM: np.float64, isFilled: bool, containerTK: str) -> str:
         """
@@ -1267,9 +1603,40 @@ class SIR3S_View:
         if Tk == "-1":
             print("Error: " + error)
         else:
-            print("External polygon is added")
+            if self.outputComments:
+                print("External polygon is added")
         return Tk
 
+    def AddExternalPolygon_using_LineString(self, wktLineString: str, lineColor: int, fillColor: int, lineWidthMM: np.float64, isFilled: bool, containerTK: str) -> str:
+        """
+        Adds an external polygon using linestring.
+
+        :param wktLineString: A string with all Points for Geometry in WKT Format
+        i.e formatted like 'LINESTRING (120 76 0, 500 300 0,  620 480 0, 364 276 0, 120 76 0)'. 
+        THE LAST POINT SHOULD BE IDENTICAL TO THE FIRST POINT
+        :type wktLineString: str
+        :param lineColor: Color of the polygon's line.
+        :type lineColor: int
+        :param fillColor: Fill color of the polygon.
+        :type fillColor: int
+        :param lineWidthMM: Width of the polygon's line in mm.
+        :type lineWidthMM: np.float64
+        :param isFilled: Boolean indicating if the polygon is filled.
+        :type isFilled: bool
+        :param containerTK: Key of the container.
+        :type containerTK: str
+        :return: Tk of the added polygon.
+        :rtype: str
+        :description: This is a wrapper method for AddExternalPolygon() from toolkit; Watch out for errors for more information.
+        """
+        Tk, error = self.toolkit.AddExternalPolygon(System.String.Empty, wktLineString, lineColor, fillColor, lineWidthMM, isFilled, containerTK)
+        if Tk == "-1":
+            print("Error: " + error)
+        else:
+            if self.outputComments:
+                print("External polygon is added using Linestring")
+        return Tk
+    
     def AddExternalPolygonPoint(self, Tk: str, x: np.float64, y: np.float64):
         """
         Adds a point to an external polygon.
@@ -1288,7 +1655,8 @@ class SIR3S_View:
         if not result:
             print("Error: " + error)
         else:
-            print("External polygon point added")
+            if self.outputComments:
+                print("External polygon point added")
 
     def SetExternalPolygonProperties(self, Tk: str, lineWidthMM: np.float64, lineColor: int, fillColor: int, isFilled: bool):
         """
@@ -1312,7 +1680,8 @@ class SIR3S_View:
         if not result:
             print("Error: " + error)
         else:
-            print("External polygon properties are set")
+            if self.outputComments:
+                print("External polygon properties are set")
 
     def AddExternalText(self, x: np.float64, y: np.float64, textColor: int, text: str, angleDegree: np.float32, heightPt: np.float32,
                         isBold: bool, isItalic: bool, isUnderline: bool, containerTK: str):
@@ -1347,7 +1716,8 @@ class SIR3S_View:
         if Tk == "-1":
             print("Error: " + error)
         else:
-            print("External text is added")
+            if self.outputComments:
+                print("External text is added")
         return Tk
     
     def SetExternalTextText(self, Tk: str, text: str):
@@ -1366,7 +1736,8 @@ class SIR3S_View:
         if not result:
             print("Error: " + error)
         else:
-            print("External text is set")
+            if self.outputComments:
+                print("External text is set")
 
     def SetExternalTextProperties(self, Tk: str, x: np.float64, y: np.float64, textColor: int, text: str, angleDegree: np.float32, heightPt: np.float32,
                         isBold: bool, isItalic: bool,isUnderline: bool):
@@ -1401,7 +1772,8 @@ class SIR3S_View:
         if not result:
             print("Error: " + error)
         else:
-            print("External text properties are set")
+            if self.outputComments:
+                print("External text properties are set")
 
     def AddExternalArrow(self, x: np.float64, y: np.float64, lineColor: int, fillColor: int, lineWidthMM: np.float64, 
                             isFilled: bool, symbolFactor: np.float64, containerTK: str):
@@ -1432,7 +1804,8 @@ class SIR3S_View:
         if Tk == "-1":
             print("Error : " + error)
         else:
-            print("External arrow added")
+            if self.outputComments:
+                print("External arrow added")
         return Tk
 
     def SetExternalArrowProperties(self, Tk: str, x: np.float64, y: np.float64, lineColor: int, fillColor: int, lineWidthMM: np.float64, 
@@ -1464,7 +1837,8 @@ class SIR3S_View:
         if not result:
             print("Error: " + error)
         else:
-            print("External arrow properties are set")
+            if self.outputComments:
+                print("External arrow properties are set")
 
     def AddExternalRectangle(self, left: np.float64, top: np.float64, right: np.float64, bottom: np.float64,
                                 lineColor: int, fillColor: int, lineWidthMM: np.float64, 
@@ -1500,7 +1874,8 @@ class SIR3S_View:
         if Tk == "-1":
             print("Error : " + error)
         else:
-            print("External rectangle is added")
+            if self.outputComments:
+                print("External rectangle is added")
         return Tk
 
     def SetExternalRectangleProperties(self, Tk: str, left: np.float64, top: np.float64, right: np.float64, bottom: np.float64,
@@ -1537,7 +1912,8 @@ class SIR3S_View:
         if not result:
             print("Error: " + error)
         else:
-            print("External rectangle properties are set")
+            if self.outputComments:
+                print("External rectangle properties are set")
 
     def AddExternalEllipse(self, left: np.float64, top: np.float64, right: np.float64, bottom: np.float64,
                                 lineColor: int, fillColor: int, lineWidthMM: np.float64, 
@@ -1571,7 +1947,8 @@ class SIR3S_View:
         if Tk == "-1":
             print("Error : " + error)
         else:
-            print("External ellipse is added")
+            if self.outputComments:
+                print("External ellipse is added")
         return Tk
 
     def SetExternalEllipseProperties(self, Tk: str, left: np.float64, top: np.float64, right: np.float64, bottom: np.float64,
@@ -1605,7 +1982,8 @@ class SIR3S_View:
         if not result:
             print("Error: " + error)
         else:
-            print("External ellipse properties are set")
+            if self.outputComments:
+                print("External ellipse properties are set")
 
     def PrepareColoration(self):
         """
@@ -1619,7 +1997,8 @@ class SIR3S_View:
         if not result:
             print("Error: " + error)
         else:
-            print("Prepare coloration is done")
+            if self.outputComments:
+                print("Prepare coloration is done")
 
     def InitColorTable(self, iColors: list, maxColors: int) -> bool:
         """
@@ -1720,7 +2099,8 @@ class SIR3S_View:
         if not result:
             print("Error: " + error)
         else:
-            print("Colorating pipe is successful")
+            if self.outputComments:
+                print("Colorating pipe is successful")
 
     def ResetColoration(self):
         """
@@ -1734,7 +2114,8 @@ class SIR3S_View:
         if not result:
             print("Error: " + error)
         else:
-            print("Coloration reset is successful")
+            if self.outputComments:
+                print("Coloration reset is successful")
 
     def DoColoration(self):
         """
@@ -1748,7 +2129,8 @@ class SIR3S_View:
         if not result:
             print("Error: " + error)
         else:
-            print("Coloration is done")
+            if self.outputComments:
+                print("Coloration is done")
 
     def MoveElementTo(self, Tk: str, newX: np.float64, newY: np.float64):
         """
@@ -1998,7 +2380,8 @@ class SIR3S_View:
         if not result:
             print("Error: " + error)
         else:
-            print("Font is set")
+            if self.outputComments:
+                print("Font is set")
             
 
     def GetFont(self, Tk: str) -> fontInformation:
@@ -2135,7 +2518,7 @@ class SIR3S_View:
          1 = Gate Valve
          2 = Flap Valve
          3 = Plug Valve
-        :type iSymbolType: Interfaces.NetValveTypes
+        :type iSymbolType: NetValveTypes
         :param position: Position on Pipe: Possible Values are: 
           0 = at the Beginning of the Pipe (by Node Ki)
          -1 = at the End of the Pipe (by Node Kk)
@@ -2149,7 +2532,7 @@ class SIR3S_View:
         :param isPostureStatic: Option if the Posture is statically open/closed or time depemdant. 
          Enter NetValvePostures.STATIC_OPEN_CLOSE if Posture is always open / closed
          otherwise enter NetValvePostures.TIME_DEP_TABLE if the Posture depends on a Setpoint Table (SWVT)
-        :type isPostureStatic: Interfaces.NetValvePostures
+        :type isPostureStatic: NetValvePostures
         :param fkSWVT: the pk (key) of the SetPoint Table, in Case the Parameter 'isPostureStatic' is entered as NetValvePostures.TIME_DEP_TABLE
         :type fkSWVT: str
         :param openClose: Only usable in Case the Parameter 'isPostureStatic' is entered as NetValvePostures.STATIC_OPEN_CLOSE. So entering
@@ -2161,7 +2544,9 @@ class SIR3S_View:
         :rtype: str
         :description: This is a wrapper method for AddNewValveOnPipe() from toolkit; Watch out for errors for more information.
         """
-        Tk, error = self.toolkit.AddNewValveOnPipe(tkPipe, iSymbolType, position, name, description, isPostureStatic, fkSWVT, openClose, idRef)
+        iSymbolType_net = self.to_dotnet_enum(iSymbolType, self.NetValveTypes)
+        isPostureStatic_net = self.to_dotnet_enum(isPostureStatic, self.NetValvePostures)
+        Tk, error = self.toolkit.AddNewValveOnPipe(tkPipe, iSymbolType_net, position, name, description, isPostureStatic_net, fkSWVT, openClose, idRef)
         if Tk == "-1":
             print("Error : " + error)
         return Tk
@@ -2182,7 +2567,7 @@ class SIR3S_View:
         :param iType: Type of Hydrant. Possible Value are:
            1 = Subsurface
           11 = Surface
-        :type iType: Interfaces.Hydrant_Type
+        :type iType: Hydrant_Type
         :param symbolFactor: The Symbol Factor
         :type symbolFactor: np.float64
         :param fkNode: The tk (key) of a Node within the main Comntainer if the Hydrant is attached to a Node
@@ -2198,9 +2583,9 @@ class SIR3S_View:
         :param ph_soll: Set pressure at the binding point
         :type ph_soll: np.float32
         :param qm_soll: Target extraction quantity
-        :type qm_soll: Interfaces.Hydrant_QM_SOLL
+        :type qm_soll: Hydrant_QM_SOLL
         :param activity: Activity status (0=inactive | 1=calculated in the extinguishing water plugin | 2=calculated)
-        :type activity: Interfaces.Hydrant_Activity
+        :type activity: Hydrant_Activity
         :param idRef: Reference ID
         :type idRef: str
         :param name: Name of the Hydrant, max 40 Characters
@@ -2211,16 +2596,38 @@ class SIR3S_View:
         :rtype: str
         :description: This is a wrapper method for AddNewHydrant() from toolkit; Watch out for errors for more information.
         """
-        Tk, error = self.toolkit.AddNewHydrant(x, y, z, iType, symbolFactor, fkNode, L, dn, roughness, ph_min, ph_soll, qm_soll, activity, idRef, name, description)
+        iType_net = self.to_dotnet_enum(iType, self.Hydrant_Type)
+        qm_soll_net = self.to_dotnet_enum(qm_soll, self.Hydrant_QM_SOLL)
+        activity_net = self.to_dotnet_enum(activity, self.Hydrant_Activity)
+        Tk, error = self.toolkit.AddNewHydrant(x, y, z, iType_net, symbolFactor, fkNode, L, dn, roughness, ph_min, ph_soll, qm_soll_net, activity_net, idRef, name, description)
         if Tk == "-1":
             print("Error : " + error)
         return Tk
+    
+    def RemoveAllExternalVisualObjects(self):
+        """
+        Removes all External Visual Objects (external Polygones, Ellipses, Polylines, Arrows, Circles Texts) 
+        from the Model and eventually refresh Views.
+
+        :return: None
+        :rtype: None
+        :description: This is a wrapper method for RemoveAllExternalVisualObjects() from toolkit
+        """
+        self.toolkit.RemoveAllExternalVisualObjects()
+
+
+    def EnableOrDisableOutputComments(self, outputComments: bool):
+        """
+        Enable or disable additional output comments while using methods from SIR3S_Model class.
+        These comments could help you understand about the positive outcome of a method.
+        Default value is True
+         
+        :param outputComments: To enable pass true and to disable pass false
+        :type outputComments: bool
+        :return: None 
+        :rtype: None
+        :description: This is a helper function
+        """
+        self.outputComments = outputComments
         
-
 # End of file
-
-
-
-
-    
-    
