@@ -21,17 +21,17 @@
    "id": "e2d40c36",
    "metadata": {},
    "source": [
-    "# Toolkit Release"
+    "## SIR 3S Installation"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 1,
+   "execution_count": 4,
    "id": "7fb5a07b",
    "metadata": {},
    "outputs": [],
    "source": [
-    "#pip install "
+    "SIR3S_SIRGRAF_DIR = r\"C:\\3S Consult\\Sir3S-90 Entwicklerversionen\\SirGraf-90-15-00-12_Quebec_x64\""
    ]
   },
   {
@@ -39,74 +39,82 @@
    "id": "d6773e12",
    "metadata": {},
    "source": [
-    "# Imports"
+    "## Imports"
    ]
   },
   {
    "cell_type": "markdown",
-   "id": "856ffe61",
+   "id": "5df051cd-7055-4f93-bccb-d5607cfa81ab",
    "metadata": {},
    "source": [
-    "## DLL References"
+    "Note: The SIR 3S Toolkit requires the Sir3S_Toolkit.dll included in SIR 3S installations (version Quebec and higher)."
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 2,
-   "id": "1b609e22",
+   "execution_count": 7,
+   "id": "f0fd9fd1-aefa-49ba-a485-88b62151c7c9",
    "metadata": {},
    "outputs": [],
    "source": [
-    "import clr as net"
+    "import sir3stoolkit"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "4d5ba164-aec8-4592-8c0a-798b4f4baa7c",
+   "metadata": {},
+   "source": [
+    "The core of sir3stoolkit is a Python wrapper around basic functionality of SIR 3S, offering a low-level access to the creation, modification and simulation of SIR 3S models. In the future pure python subpackages may be added."
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 3,
-   "id": "88dd45d9",
+   "execution_count": 9,
+   "id": "687f2fa2-afee-4376-bd8f-5a53f288b772",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from sir3stoolkit.core import wrapper"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "id": "e75e19c1-3677-44e1-88de-af12a287e8a9",
    "metadata": {},
    "outputs": [
     {
      "data": {
       "text/plain": [
-       "<System.Reflection.RuntimeAssembly object at 0x000001869AA16480>"
+       "<module 'sir3stoolkit' from 'C:\\\\Users\\\\fischer.3S.000\\\\AppData\\\\Local\\\\anaconda3\\\\Lib\\\\site-packages\\\\sir3stoolkit\\\\__init__.py'>"
       ]
      },
-     "execution_count": 3,
+     "execution_count": 10,
      "metadata": {},
      "output_type": "execute_result"
     }
    ],
    "source": [
-    "net.AddReference(r\"C:\\3S\\SIR 3S Entwicklung\\SirGraf-90-15-00-06x64\\Sir3S_Repository.Interfaces.dll\") #change to local path if necessary"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 4,
-   "id": "b631dff6",
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "import Sir3S_Repository.Interfaces as Interfaces"
+    "sir3stoolkit"
    ]
   },
   {
    "cell_type": "markdown",
-   "id": "134689cf",
+   "id": "5cdb23ce-d1bb-4f8c-a800-fb8c026e9266",
    "metadata": {},
    "source": [
-    "## PythonWrapperToolkit\n"
+    "The wrapper package has to be initialized with reference to a SIR 3S (SirGraf) installation."
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 12,
    "id": "ee4bc044",
    "metadata": {},
    "outputs": [],
    "source": [
-    "import PythonWrapperToolkit"
+    "wrapper.Initialize_Toolkit(SIR3S_SIRGRAF_DIR)"
    ]
   },
   {
@@ -114,12 +122,12 @@
    "id": "2007993a",
    "metadata": {},
    "source": [
-    "## Additional"
+    "### Additional imports"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 14,
    "id": "60659f01",
    "metadata": {},
    "outputs": [],
@@ -128,11 +136,9 @@
    ]
   },
   {
-   "cell_type": "code",
-   "execution_count": null,
-   "id": "b6adb29f",
+   "cell_type": "markdown",
+   "id": "c3ab6600-34d9-4bfc-a816-96385dff31b0",
    "metadata": {},
-   "outputs": [],
    "source": [
     "..."
    ]
@@ -142,12 +148,12 @@
    "id": "0352dd43",
    "metadata": {},
    "source": [
-    "# Initialization"
+    "## Initialization"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 11,
+   "execution_count": 17,
    "id": "7e40a5af",
    "metadata": {},
    "outputs": [
@@ -160,7 +166,7 @@
     }
    ],
    "source": [
-    "s3s = PythonWrapperToolkit.SIR3S_Model()"
+    "s3s = wrapper.SIR3S_Model()"
    ]
   },
   {
@@ -168,13 +174,21 @@
    "id": "2d0f6dc9",
    "metadata": {},
    "source": [
-    "# Header 1"
+    "## Header 1"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "4dfd2e9a-dc8d-486d-81a0-9e01e7b79b2e",
+   "metadata": {},
+   "source": [
+    "..."
    ]
   }
  ],
  "metadata": {
   "kernelspec": {
-   "display_name": "base",
+   "display_name": "Python 3 (ipykernel)",
    "language": "python",
    "name": "python3"
   },
@@ -188,7 +202,7 @@
    "name": "python",
    "nbconvert_exporter": "python",
    "pygments_lexer": "ipython3",
-   "version": "3.11.8"
+   "version": "3.12.3"
   }
  },
  "nbformat": 4,
