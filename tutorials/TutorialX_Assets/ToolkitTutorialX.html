@@ -91,71 +91,31 @@
   <section id="Tutorial-X:-...">
 <h1>Tutorial X: …<a class="headerlink" href="#Tutorial-X:-..." title="Link to this heading"></a></h1>
 <p>This Tutorial demonstrates …</p>
-</section>
-<section id="Toolkit-Release">
-<h1>Toolkit Release<a class="headerlink" href="#Toolkit-Release" title="Link to this heading"></a></h1>
+<section id="SIR-3S-Installation">
+<h2>SIR 3S Installation<a class="headerlink" href="#SIR-3S-Installation" title="Link to this heading"></a></h2>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>#pip install sir3stoolkit
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r&quot;C:\3S Consult\Sir3S-90 Entwicklerversionen\SirGraf-90-15-00-12_Quebec_x64&quot;
 </pre></div>
 </div>
 </div>
 </section>
 <section id="Imports">
-<h1>Imports<a class="headerlink" href="#Imports" title="Link to this heading"></a></h1>
-<section id="DLL-References">
-<h2>DLL References<a class="headerlink" href="#DLL-References" title="Link to this heading"></a></h2>
-<p>The Toolkit requires the Sir3S_Toolkit.dll included in SIR 3S installations (from Quebec and Up). Furthermore the Sir3S_Repository.Interfaces.dll is required to input native SIR 3S datatypes into some Toolkit functions.</p>
+<h2>Imports<a class="headerlink" href="#Imports" title="Link to this heading"></a></h2>
+<p>Note: The SIR 3S Toolkit requires the Sir3S_Toolkit.dll included in SIR 3S installations (version Quebec and higher).</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import clr as clr
-</pre></div>
-</div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r&quot;C:\3S\SIR 3S Entwicklung\SirGraf-90-15-00-11_Quebec_x64&quot;
-</pre></div>
-</div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>clr.AddReference(SIR3S_SIRGRAF_DIR+r&quot;\Sir3S_Repository.Interfaces&quot;)
-import Sir3S_Repository.Interfaces as Interfaces
-</pre></div>
-</div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>clr.AddReference(SIR3S_SIRGRAF_DIR+r&quot;\Sir3S_Toolkit&quot;)
-import Sir3S_Toolkit
-</pre></div>
-</div>
-</div>
-</section>
-<section id="PythonWrapperToolkit">
-<h2>PythonWrapperToolkit<a class="headerlink" href="#PythonWrapperToolkit" title="Link to this heading"></a></h2>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import sir3stoolkit
 </pre></div>
 </div>
 </div>
-<p>The core of sir3stoolkit is a Python Wrapper around C#, that can be used to read, write, etc. to a SIR 3S Model. In the future pure python subpackages may be added.</p>
+<p>The core of sir3stoolkit is a Python wrapper around basic functionality of SIR 3S, offering a low-level access to the creation, modification and simulation of SIR 3S models. In the future pure python subpackages may be added.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sir3stoolkit.core import wrapper
@@ -163,7 +123,7 @@ import Sir3S_Toolkit
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sir3stoolkit
@@ -171,17 +131,17 @@ import Sir3S_Toolkit
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&lt;module &#39;sir3stoolkit&#39; from &#39;c:\\Users\\jablonski\\AppData\\Local\\anaconda3\\Lib\\site-packages\\sir3stoolkit\\__init__.py&#39;&gt;
+&lt;module &#39;sir3stoolkit&#39; from &#39;C:\\Users\\fischer.3S.000\\AppData\\Local\\anaconda3\\Lib\\site-packages\\sir3stoolkit\\__init__.py&#39;&gt;
 </pre></div></div>
 </div>
-<p>The <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.Initialize_Toolkit">wrapper package</a> has to be initialized with reference to a SIR Graf installation.</p>
+<p>The <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.Initialize_Toolkit">wrapper package</a> has to be initialized with reference to a SIR 3S (SirGraf) installation.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>wrapper.Initialize_Toolkit(SIR3S_SIRGRAF_DIR)
@@ -189,12 +149,11 @@ import Sir3S_Toolkit
 </div>
 </div>
 </section>
-</section>
 <section id="Initialization">
-<h1>Initialization<a class="headerlink" href="#Initialization" title="Link to this heading"></a></h1>
-<p>Toolkit contains two classes: <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model">SIR3S_Model</a>(model and data) and <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_View">SIR3S_View</a>(depiction in SIR Graf). All Toolkit functionality is accessed via the methods of these classes.</p>
+<h2>Initialization<a class="headerlink" href="#Initialization" title="Link to this heading"></a></h2>
+<p>The SIR 3S Toolkit contains two classes: <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model">SIR3S_Model</a> (model and data) and <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_View">SIR3S_View</a> (depiction in SIR Graf). All SIR 3S Toolkit functionality is accessed via the methods of these classes.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s = wrapper.SIR3S_Model()
@@ -210,7 +169,7 @@ Initialization complete
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s_view = wrapper.SIR3S_View()
@@ -227,10 +186,10 @@ Initialization complete
 </div>
 </section>
 <section id="Create-New-Model">
-<h1>Create New Model<a class="headerlink" href="#Create-New-Model" title="Link to this heading"></a></h1>
+<h2>Create New Model<a class="headerlink" href="#Create-New-Model" title="Link to this heading"></a></h2>
 <p>We are using the NewModel() function of SIR3S_Model() to create a new db3 file.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dbFilePath=r&quot;Toolkit_TutorialX_Model.db3&quot;
@@ -238,16 +197,16 @@ Initialization complete
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.NewModel(dbName=dbFilePath,
-                           providerType=Interfaces.SirDBProviderType.SQLite,
-                           namedInstance=&quot;&quot;,
-                           netType=Interfaces.NetworkType.Undefined,
-                           modelDescription=&quot;Tutorial X Model&quot;,
-                           userID=&quot;&quot;,
-                           password=&quot;&quot;)
+             providerType=s3s.ProviderTypes.SQLite,
+             namedInstance=&quot;&quot;,
+             netType=s3s.NetworkType.Undefined,
+             modelDescription=&quot;Tutorial X Model&quot;,
+             userID=&quot;&quot;,
+             password=&quot;&quot;)
 </pre></div>
 </div>
 </div>
@@ -256,12 +215,12 @@ Initialization complete
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-New model is created with the model identifier: M-1-0-1
+New model is created with the model identifier: M-2-0-1
 </pre></div></div>
 </div>
-<p>Now the Model has been created and is opened. All Toolkit commands now apply to this model until another one is opened. If there already existed a model file with this path and name, a new model with the same name but incremented model identifier is created.</p>
+<p>Now the model has been created and is opened. All SIR 3S Toolkit operations now apply to this model until another one is opened. If there already existed a model file with this path and name, a new model with the same name but incremented model identifier is created.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(s3s.GetNetworkType()) # to check that the model is responsive
@@ -273,14 +232,14 @@ New model is created with the model identifier: M-1-0-1
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Undefined
+NetworkType.Undefined
 </pre></div></div>
 </div>
 </section>
 <section id="Open-Model">
-<h1>Open Model<a class="headerlink" href="#Open-Model" title="Link to this heading"></a></h1>
+<h2>Open Model<a class="headerlink" href="#Open-Model" title="Link to this heading"></a></h2>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dbFilePath=r&quot;Toolkit_TutorialX_Model.db3&quot;
@@ -288,16 +247,16 @@ Undefined
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.OpenModel(dbName=dbFilePath,
-                            providerType=Interfaces.SirDBProviderType.SQLite,
-                            Mid=&quot;M-1-0-1&quot;,
-                            saveCurrentlyOpenModel=False,
-                            namedInstance=&quot;&quot;,
-                            userID=&quot;&quot;,
-                            password=&quot;&quot;)
+              providerType=s3s.ProviderTypes.SQLite,
+              Mid=&quot;M-1-0-1&quot;,
+              saveCurrentlyOpenModel=False,
+              namedInstance=&quot;&quot;,
+              userID=&quot;&quot;,
+              password=&quot;&quot;)
 </pre></div>
 </div>
 </div>
@@ -309,12 +268,12 @@ Undefined
 Model is open for further operation
 </pre></div></div>
 </div>
-<p>Now the Model has been opened the previous one was close without saving it. All Toolkit commands now apply to this model until another one is opened.</p>
+<p>Now the model has been opened and the previous one has been closed without saving it. All SIR 3S Toolkit commands now apply to this model until another one is opened.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(s3s.GetNetworkType()) # to check that the correct model is responsive, model we are trying to open was createdd with type District Heating
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(s3s.GetNetworkType()) # to check that the correct model is responsive, model we are trying to open was created with type Undefined
 </pre></div>
 </div>
 </div>
@@ -323,9 +282,11 @@ Model is open for further operation
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-DistrictHeating
+NetworkType.Undefined
 </pre></div></div>
 </div>
+<p><strong>…</strong></p>
+</section>
 </section>
 
 

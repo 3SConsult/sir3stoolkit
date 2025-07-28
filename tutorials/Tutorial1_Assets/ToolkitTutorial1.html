@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tutorial 1: Importing and Initialization &mdash; sir3stoolkit  documentation</title>
+  <title>Tutorial 1: Importing and Initialization of the SIR 3S Toolkit &mdash; sir3stoolkit  documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -78,7 +78,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Tutorial 1: Importing and Initialization</li>
+      <li class="breadcrumb-item active">Tutorial 1: Importing and Initialization of the SIR 3S Toolkit</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../_sources/tutorials/Tutorial1_Assets/ToolkitTutorial1.ipynb.txt" rel="nofollow"> View page source</a>
       </li>
@@ -88,74 +88,34 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="Tutorial-1:-Importing-and-Initialization">
-<h1>Tutorial 1: Importing and Initialization<a class="headerlink" href="#Tutorial-1:-Importing-and-Initialization" title="Link to this heading"></a></h1>
-<p>This Tutorial demonstrates how to import the Toolkit and intialize instances of its classes.</p>
-</section>
-<section id="Toolkit-Release">
-<h1>Toolkit Release<a class="headerlink" href="#Toolkit-Release" title="Link to this heading"></a></h1>
+  <section id="Tutorial-1:-Importing-and-Initialization-of-the-SIR-3S-Toolkit">
+<h1>Tutorial 1: Importing and Initialization of the SIR 3S Toolkit<a class="headerlink" href="#Tutorial-1:-Importing-and-Initialization-of-the-SIR-3S-Toolkit" title="Link to this heading"></a></h1>
+<p>This Tutorial demonstrates how to import the SIR 3S Toolkit and intialize instances of its classes.</p>
+<section id="SIR-3S-Installation">
+<h2>SIR 3S Installation<a class="headerlink" href="#SIR-3S-Installation" title="Link to this heading"></a></h2>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>#pip install sir3stoolkit
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r&quot;C:\3S Consult\Sir3S-90 Entwicklerversionen\SirGraf-90-15-00-12_Quebec_x64&quot;
 </pre></div>
 </div>
 </div>
 </section>
 <section id="Imports">
-<h1>Imports<a class="headerlink" href="#Imports" title="Link to this heading"></a></h1>
-<section id="DLL-References">
-<h2>DLL References<a class="headerlink" href="#DLL-References" title="Link to this heading"></a></h2>
-<p>The Toolkit requires the Sir3S_Toolkit.dll included in SIR 3S installations (from Quebec and Up). Furthermore the Sir3S_Repository.Interfaces.dll is required to input native SIR 3S datatypes into some Toolkit functions.</p>
+<h2>Imports<a class="headerlink" href="#Imports" title="Link to this heading"></a></h2>
+<p>Note: The SIR 3S Toolkit requires the Sir3S_Toolkit.dll included in SIR 3S installations (version Quebec and higher).</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import clr as clr
-</pre></div>
-</div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r&quot;C:\3S\SIR 3S Entwicklung\SirGraf-90-15-00-11_Quebec_x64&quot;
-</pre></div>
-</div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>clr.AddReference(SIR3S_SIRGRAF_DIR+r&quot;\Sir3S_Repository.Interfaces&quot;)
-import Sir3S_Repository.Interfaces as Interfaces
-</pre></div>
-</div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>clr.AddReference(SIR3S_SIRGRAF_DIR+r&quot;\Sir3S_Toolkit&quot;)
-import Sir3S_Toolkit
-</pre></div>
-</div>
-</div>
-</section>
-<section id="PythonWrapperToolkit">
-<h2>PythonWrapperToolkit<a class="headerlink" href="#PythonWrapperToolkit" title="Link to this heading"></a></h2>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import sir3stoolkit
 </pre></div>
 </div>
 </div>
-<p>The core of sir3stoolkit is a Python Wrapper around C#, that can be used to read, write, etc. to a SIR 3S Model. In the future pure python subpackages may be added.</p>
+<p>The core of sir3stoolkit is a Python wrapper around basic functionality of SIR 3S, offering a low-level access to the creation, modification and simulation of SIR 3S models. In the future pure python subpackages may be added.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sir3stoolkit.core import wrapper
@@ -163,7 +123,7 @@ import Sir3S_Toolkit
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sir3stoolkit
@@ -171,17 +131,17 @@ import Sir3S_Toolkit
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&lt;module &#39;sir3stoolkit&#39; from &#39;c:\\Users\\jablonski\\AppData\\Local\\anaconda3\\Lib\\site-packages\\sir3stoolkit\\__init__.py&#39;&gt;
+&lt;module &#39;sir3stoolkit&#39; from &#39;C:\\Users\\fischer.3S.000\\AppData\\Local\\anaconda3\\Lib\\site-packages\\sir3stoolkit\\__init__.py&#39;&gt;
 </pre></div></div>
 </div>
-<p>The <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.Initialize_Toolkit">wrapper package</a> has to be initialized with reference to a SIR Graf installation.</p>
+<p>The <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.Initialize_Toolkit">wrapper package</a> has to be initialized with reference to a SIR 3S (SirGraf) installation.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>wrapper.Initialize_Toolkit(SIR3S_SIRGRAF_DIR)
@@ -189,12 +149,11 @@ import Sir3S_Toolkit
 </div>
 </div>
 </section>
-</section>
 <section id="Initialization">
-<h1>Initialization<a class="headerlink" href="#Initialization" title="Link to this heading"></a></h1>
-<p>Toolkit contains two classes: <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model">SIR3S_Model</a>(model and data) and <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_View">SIR3S_View</a>(depiction in SIR Graf). All Toolkit functionality is accessed via the methods of these classes.</p>
+<h2>Initialization<a class="headerlink" href="#Initialization" title="Link to this heading"></a></h2>
+<p>The SIR 3S Toolkit contains two classes: <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model">SIR3S_Model</a> (model and data) and <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_View">SIR3S_View</a> (depiction in SirGraf). All SIR 3S Toolkit functionality is accessed via the methods of these classes.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s = wrapper.SIR3S_Model()
@@ -210,7 +169,7 @@ Initialization complete
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s_view = wrapper.SIR3S_View()
@@ -225,7 +184,8 @@ Initialization complete
 Initialization complete
 </pre></div></div>
 </div>
-<p>Now follows: Tutorial 2: Creating or Opening a SIR 3S Model</p>
+<p><strong>Next</strong>: Tutorial 2: Creating a new or opening an existing SIR 3S Model</p>
+</section>
 </section>
 
 
