@@ -90,17 +90,8 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Created on Fri Nov 22 14:46:49 2024</span>
 
-<span class="sd">@author: Giriyan</span>
+<span class="sd">@author: Nischal Giriyan</span>
 <span class="sd">&quot;&quot;&quot;</span>
-
-<span class="c1">#**********************************************************************************</span>
-<span class="c1"># IMPORTANT NOTICE FOR USER MANUAL (2024-12-06 NTC): </span>
-<span class="c1"># The Meaning and Limitations of all Method-Parameters</span>
-<span class="c1"># are literally written in the Definition of the Interface &#39;ISir3SToolkitModel&#39;.</span>
-<span class="c1"># So it may be helpful to copy/paste them when writing the User Manual.</span>
-<span class="c1">#</span>
-<span class="c1"># AFTER SEVERAL ATTEMPTS (maybe 26), VISUAL STUDIO FORCED ME (NTC) TO USE Python3.9</span>
-<span class="c1">#**********************************************************************************</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">turtle</span><span class="w"> </span><span class="kn">import</span> <span class="n">fillcolor</span>
@@ -109,11 +100,14 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">inspect</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">System</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">enum</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">namedtuple</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">System.Reflection</span><span class="w"> </span><span class="kn">import</span> <span class="n">Assembly</span>
 
 <span class="c1"># Global variables</span>
 <span class="n">SIR3S_SIRGRAF_DIR</span> <span class="o">=</span> <span class="kc">None</span>
+
 
 <span class="c1"># User defined types</span>
 <span class="n">textProperties</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;textProperties&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="s2">&quot;color&quot;</span><span class="p">,</span> <span class="s2">&quot;textContent&quot;</span><span class="p">,</span> <span class="s2">&quot;angle_degree&quot;</span><span class="p">,</span> <span class="s2">&quot;faceName&quot;</span><span class="p">,</span> 
@@ -126,6 +120,59 @@
 
 <span class="n">fontInformation</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;fontInformation&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;textContent&quot;</span><span class="p">,</span> <span class="s2">&quot;color&quot;</span><span class="p">,</span> <span class="s2">&quot;angle_degree&quot;</span><span class="p">,</span> <span class="s2">&quot;faceName&quot;</span><span class="p">,</span> 
                                        <span class="s2">&quot;heightPt&quot;</span><span class="p">,</span> <span class="s2">&quot;isBold&quot;</span><span class="p">,</span> <span class="s2">&quot;isItalic&quot;</span><span class="p">,</span> <span class="s2">&quot;isUnderline&quot;</span><span class="p">])</span>
+
+
+<span class="c1"># User defined Enum class using EnumMeta</span>
+
+<div class="viewcode-block" id="DotNetEnumMeta">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.DotNetEnumMeta">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">DotNetEnumMeta</span><span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">EnumMeta</span><span class="p">):</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__prepare__</span><span class="p">(</span><span class="n">metacls</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">dotnet_enum</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">assembly_ext</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">classdict</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__prepare__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">bases</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">dotnet_enum</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">assembly_ext</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;assembly_ext must be provided when using dotnet_enum.&quot;</span><span class="p">)</span>
+            
+            <span class="c1"># Load the assembly from disk</span>
+            <span class="n">assembly_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">SIR3S_SIRGRAF_DIR</span><span class="p">,</span> <span class="n">assembly_ext</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">assembly_path</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Assembly not found at: </span><span class="si">{</span><span class="n">assembly_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="n">assembly</span> <span class="o">=</span> <span class="n">Assembly</span><span class="o">.</span><span class="n">LoadFrom</span><span class="p">(</span><span class="n">assembly_path</span><span class="p">)</span>
+
+            <span class="n">dotnet_type</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">assembly</span><span class="o">.</span><span class="n">GetTypes</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">Name</span> <span class="o">==</span> <span class="n">dotnet_enum</span> <span class="ow">and</span> <span class="n">t</span><span class="o">.</span><span class="n">IsEnum</span><span class="p">:</span>
+                    <span class="n">dotnet_type</span> <span class="o">=</span> <span class="n">t</span>
+                    <span class="k">break</span>
+
+            <span class="k">if</span> <span class="n">dotnet_type</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Could not find .NET enum &#39;</span><span class="si">{</span><span class="n">dotnet_enum</span><span class="si">}</span><span class="s2">&#39; in assembly.&quot;</span><span class="p">)</span>
+
+            <span class="c1"># Populate Python enum with values from .NET enum</span>
+            <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">dotnet_type</span><span class="o">.</span><span class="n">GetFields</span><span class="p">():</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">field</span><span class="o">.</span><span class="n">IsSpecialName</span><span class="p">:</span>
+                    <span class="n">classdict</span><span class="p">[</span><span class="n">field</span><span class="o">.</span><span class="n">Name</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">field</span><span class="o">.</span><span class="n">GetRawConstantValue</span><span class="p">())</span>
+
+        <span class="k">return</span> <span class="n">classdict</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__new__</span><span class="p">(</span><span class="n">metacls</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">classdict</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="n">metacls</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">classdict</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="create_dotnet_enum">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.create_dotnet_enum">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_dotnet_enum</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">dotnet_enum</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">assembly_ext</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">DotNetEnumMeta</span><span class="p">(</span>
+        <span class="n">name</span><span class="p">,</span>
+        <span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">Enum</span><span class="p">,),</span>
+        <span class="n">DotNetEnumMeta</span><span class="o">.</span><span class="fm">__prepare__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">Enum</span><span class="p">,),</span> <span class="n">dotnet_enum</span><span class="o">=</span><span class="n">dotnet_enum</span><span class="p">,</span> <span class="n">assembly_ext</span><span class="o">=</span><span class="n">assembly_ext</span><span class="p">),</span>
+        <span class="n">dotnet_enum</span><span class="o">=</span><span class="n">dotnet_enum</span><span class="p">,</span>
+        <span class="n">assembly_ext</span><span class="o">=</span><span class="n">assembly_ext</span>
+    <span class="p">)</span></div>
 
 
 <span class="c1"># CAUTION: User should call this function before creating any instances of the classes provoded through this library !!!</span>
@@ -147,9 +194,7 @@
    
         <span class="n">net</span><span class="o">.</span><span class="n">AddReference</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;System&quot;</span><span class="p">)</span>
                 
-        <span class="n">net</span><span class="o">.</span><span class="n">AddReference</span><span class="p">(</span><span class="n">SIR3S_SIRGRAF_DIR</span><span class="o">+</span><span class="sa">r</span><span class="s2">&quot;\Sir3S_Repository.ModelManager&quot;</span><span class="p">)</span>  
         <span class="n">net</span><span class="o">.</span><span class="n">AddReference</span><span class="p">(</span><span class="n">SIR3S_SIRGRAF_DIR</span><span class="o">+</span><span class="sa">r</span><span class="s2">&quot;\Sir3S_Repository.Utilities&quot;</span><span class="p">)</span>
-        <span class="n">net</span><span class="o">.</span><span class="n">AddReference</span><span class="p">(</span><span class="n">SIR3S_SIRGRAF_DIR</span><span class="o">+</span><span class="sa">r</span><span class="s2">&quot;\Sir3S_Repository.Interfaces&quot;</span><span class="p">)</span>
         
         <span class="c1"># THE COMPILED DLL FOR Sir3S_Toolkit SHOULD ALSO BE COPIED TO SIR3S_SIRGRAF_DIR</span>
         <span class="n">net</span><span class="o">.</span><span class="n">AddReference</span><span class="p">(</span><span class="n">SIR3S_SIRGRAF_DIR</span><span class="o">+</span><span class="sa">r</span><span class="s2">&quot;\Sir3S_Toolkit&quot;</span><span class="p">)</span></div>
@@ -167,9 +212,7 @@
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># Basic imports to dlls provided by SirGraf</span>
         <span class="c1"># This will only work if Initialize_Toolkit() is called in the same context</span>
-        <span class="kn">import</span><span class="w"> </span><span class="nn">Sir3S_Repository.ModelManager</span>
         <span class="kn">import</span><span class="w"> </span><span class="nn">Sir3S_Repository.Utilities</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">Util</span>
-        <span class="kn">import</span><span class="w"> </span><span class="nn">Sir3S_Repository.Interfaces</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">Interfaces</span>
         <span class="kn">import</span><span class="w"> </span><span class="nn">Sir3S_Toolkit.Model</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">Sir3SToolkit</span>
         
         <span class="c1"># Create the toolkit</span>
@@ -180,7 +223,57 @@
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error in initializing the toolkit&quot;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Initialization complete&quot;</span><span class="p">)</span>
+            
+        <span class="c1"># Create all necessay Enums for user</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span> <span class="o">=</span> <span class="n">create_dotnet_enum</span><span class="p">(</span><span class="s2">&quot;ObjectTypes&quot;</span><span class="p">,</span> <span class="s2">&quot;Sir3SObjectTypes&quot;</span><span class="p">,</span> <span class="s2">&quot;Sir3S_Repository.Interfaces.dll&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ProviderTypes</span> <span class="o">=</span> <span class="n">create_dotnet_enum</span><span class="p">(</span><span class="s2">&quot;ProviderTypes&quot;</span><span class="p">,</span> <span class="s2">&quot;SirDBProviderType&quot;</span><span class="p">,</span> <span class="s2">&quot;Sir3S_Repository.Interfaces.dll&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">NetworkType</span> <span class="o">=</span> <span class="n">create_dotnet_enum</span><span class="p">(</span><span class="s2">&quot;NetworkType&quot;</span><span class="p">,</span> <span class="s2">&quot;NetworkType&quot;</span><span class="p">,</span> <span class="s2">&quot;Sir3S_Repository.Interfaces.dll&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dotnet_enum_type_objecttype</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_dotnet_enum</span><span class="p">(</span><span class="s2">&quot;Sir3SObjectTypes&quot;</span><span class="p">,</span> <span class="s2">&quot;Sir3S_Repository.Interfaces.dll&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dotnet_enum_type_providertype</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_dotnet_enum</span><span class="p">(</span><span class="s2">&quot;SirDBProviderType&quot;</span><span class="p">,</span> <span class="s2">&quot;Sir3S_Repository.Interfaces.dll&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dotnet_enum_type_networktype</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_dotnet_enum</span><span class="p">(</span><span class="s2">&quot;NetworkType&quot;</span><span class="p">,</span> <span class="s2">&quot;Sir3S_Repository.Interfaces.dll&quot;</span><span class="p">)</span> 
         
+        <span class="c1"># Variable to enable or disable output comments </span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span> <span class="o">=</span> <span class="kc">True</span>
+        
+    <span class="k">def</span><span class="w"> </span><span class="nf">_load_dotnet_enum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enum_name</span><span class="p">,</span> <span class="n">assembly_ext</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">assembly_ext</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;assembly_ext must be provided when using dotnet_enum.&quot;</span><span class="p">)</span>
+        
+        <span class="n">assembly_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">SIR3S_SIRGRAF_DIR</span><span class="p">,</span> <span class="n">assembly_ext</span><span class="p">)</span>
+        <span class="n">assembly</span> <span class="o">=</span> <span class="n">Assembly</span><span class="o">.</span><span class="n">LoadFrom</span><span class="p">(</span><span class="n">assembly_path</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">assembly</span><span class="o">.</span><span class="n">GetTypes</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">Name</span> <span class="o">==</span> <span class="n">enum_name</span> <span class="ow">and</span> <span class="n">t</span><span class="o">.</span><span class="n">IsEnum</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">t</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;.NET enum &#39;</span><span class="si">{</span><span class="n">enum_name</span><span class="si">}</span><span class="s2">&#39; not found.&quot;</span><span class="p">)</span>
+    
+<div class="viewcode-block" id="SIR3S_Model.to_dotnet_enum">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.to_dotnet_enum">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_dotnet_enum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">py_enum_member</span><span class="p">,</span> <span class="n">py_enum_type</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">py_enum_member</span><span class="p">,</span> <span class="n">py_enum_type</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Expected </span><span class="si">{</span><span class="n">py_enum_type</span><span class="si">}</span><span class="s2"> member, got </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">py_enum_member</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Use the integer value of Python enum member to create .NET enum</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">py_enum_type</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="p">):</span>  
+            <span class="k">return</span> <span class="n">System</span><span class="o">.</span><span class="n">Enum</span><span class="o">.</span><span class="n">ToObject</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dotnet_enum_type_objecttype</span><span class="p">,</span> <span class="n">py_enum_member</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">py_enum_type</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">ProviderTypes</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">System</span><span class="o">.</span><span class="n">Enum</span><span class="o">.</span><span class="n">ToObject</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dotnet_enum_type_providertype</span><span class="p">,</span> <span class="n">py_enum_member</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">py_enum_type</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">NetworkType</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">System</span><span class="o">.</span><span class="n">Enum</span><span class="o">.</span><span class="n">ToObject</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dotnet_enum_type_networktype</span><span class="p">,</span> <span class="n">py_enum_member</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SIR3S_Model.to_python_enum">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.to_python_enum">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_python_enum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dotnet_enum_member</span><span class="p">,</span> <span class="n">py_enum_type</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">dotnet_enum_member</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="c1"># Get the integer value of the .NET enum</span>
+        <span class="n">dotnet_value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">dotnet_enum_member</span><span class="p">)</span>
+
+        <span class="c1"># Map to Python enum by value</span>
+        <span class="k">return</span> <span class="n">py_enum_type</span><span class="p">(</span><span class="n">dotnet_value</span><span class="p">)</span></div>
+
+    
 <div class="viewcode-block" id="SIR3S_Model.StartTransaction">
 <a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.StartTransaction">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">StartTransaction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">SessionName</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
@@ -198,7 +291,8 @@
             <span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">message</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Now you can make changes to the model&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Now you can make changes to the model&quot;</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
@@ -218,7 +312,8 @@
             <span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">message</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Transaction has ended. Please open up a new transaction if you want to make further changes&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Transaction has ended. Please open up a new transaction if you want to make further changes&quot;</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
@@ -240,7 +335,8 @@
             <span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">message</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Now you can make changes to the model&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Now you can make changes to the model&quot;</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
@@ -260,7 +356,8 @@
             <span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">message</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Edit Session has ended. Please open up a new session if you want to make further changes&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Edit Session has ended. Please open up a new session if you want to make further changes&quot;</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
@@ -331,7 +428,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">isValueSet</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">SetValue</span><span class="p">(</span><span class="n">Tk</span><span class="p">,</span> <span class="n">propertyName</span><span class="p">,</span> <span class="n">Value</span><span class="p">)</span>
         <span class="k">if</span><span class="p">(</span><span class="n">isValueSet</span><span class="p">):</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Value is set&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Value is set&quot;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error: </span><span class="si">{</span><span class="n">error</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
 
@@ -352,7 +450,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">result</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">OpenModelXml</span><span class="p">(</span><span class="n">Path</span><span class="p">,</span> <span class="n">SaveCurrentModel</span><span class="p">)</span>
         <span class="k">if</span><span class="p">(</span><span class="n">result</span> <span class="o">==</span> <span class="kc">True</span><span class="p">):</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Model is open for further operation&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Model is open for further operation&quot;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error while opening the model,&quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span></div>
 
@@ -365,8 +464,8 @@
 
 <span class="sd">        :param dbName: Full path to the database file.</span>
 <span class="sd">        :type dbName: str</span>
-<span class="sd">        :param providerType: Provider type from the enum.</span>
-<span class="sd">        :type providerType: Interfaces.SirDBProviderType</span>
+<span class="sd">        :param providerType: Provider type from the enum (Self.ProviderTypes).</span>
+<span class="sd">        :type providerType: ProviderTypes</span>
 <span class="sd">        :param Mid: Model identifier.</span>
 <span class="sd">        :type Mid: str</span>
 <span class="sd">        :param saveCurrentlyOpenModel: Do you want to save the current model before closing it?</span>
@@ -381,13 +480,34 @@
 <span class="sd">        :rtype: None</span>
 <span class="sd">        :description: This is a wrapper method for OpenModel() from toolkit; Watch out for errors for more information.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">result</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">OpenModel</span><span class="p">(</span><span class="n">dbName</span><span class="p">,</span> <span class="n">providerType</span><span class="p">,</span> <span class="n">Mid</span><span class="p">,</span> <span class="n">saveCurrentlyOpenModel</span><span class="p">,</span> <span class="n">namedInstance</span><span class="p">,</span> <span class="n">userID</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+        <span class="n">providerType_net</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dotnet_enum</span><span class="p">(</span><span class="n">providerType</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ProviderTypes</span><span class="p">)</span>
+        <span class="n">result</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">OpenModel</span><span class="p">(</span><span class="n">dbName</span><span class="p">,</span> <span class="n">providerType_net</span><span class="p">,</span> <span class="n">Mid</span><span class="p">,</span> <span class="n">saveCurrentlyOpenModel</span><span class="p">,</span> <span class="n">namedInstance</span><span class="p">,</span> <span class="n">userID</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
         <span class="k">if</span><span class="p">(</span><span class="n">result</span> <span class="o">==</span> <span class="kc">True</span><span class="p">):</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Model is open for further operation&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Model is open for further operation&quot;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error while opening the model, &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span></div>
 
+            
+<div class="viewcode-block" id="SIR3S_Model.CloseModel">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.CloseModel">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">CloseModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">saveChangesBeforeClosing</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Closes a currently open Model.</span>
 
+<span class="sd">        :param saveChangesBeforeClosing: If True, the Changes would be saved before Closing</span>
+<span class="sd">        otherwise Changes would be discarded</span>
+<span class="sd">        :type saveChangesBeforeClosing: bool</span>
+<span class="sd">        :return: return True if model is successfully closed, False otherwise</span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        :description: This is a wrapper method for CloseModel() from toolkit; Watch out for errors for more information.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">isClosed</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">CloseModel</span><span class="p">(</span><span class="n">saveChangesBeforeClosing</span><span class="p">)</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">isClosed</span> <span class="o">==</span> <span class="kc">False</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error while closing the model, &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">isClosed</span></div>
+
+        
 <div class="viewcode-block" id="SIR3S_Model.ExecCalculation">
 <a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.ExecCalculation">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">ExecCalculation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">waitForSirCalcToExit</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
@@ -404,7 +524,8 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">isExecuted</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Could not start Model Calculation: </span><span class="si">{</span><span class="n">error</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Model Calculation is complete&quot;</span><span class="p">)</span></div>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Model Calculation is complete&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="SIR3S_Model.GetTimeStamps">
@@ -430,13 +551,14 @@
 <span class="sd">        Gets all Tk&#39;s belonging to the elements of the specified type.</span>
 
 <span class="sd">        :param ElementType: Object type defined in the enum.</span>
-<span class="sd">        :type ElementType: Interfaces.Sir3SObjectTypes</span>
+<span class="sd">        :type ElementType: ObjectTypes</span>
 <span class="sd">        :return: List of all Tk&#39;s belonging to the elements of type &#39;ElementType&#39;.</span>
 <span class="sd">        :rtype: list</span>
 <span class="sd">        :description: This is a wrapper method for GetAllElementKeys() from toolkit.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">Tk_list</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="n">Tk_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">GetAllElementKeys</span><span class="p">(</span><span class="n">ElementType</span><span class="p">)</span>
+        <span class="n">ElementType_net</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dotnet_enum</span><span class="p">(</span><span class="n">ElementType</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="p">)</span>
+        <span class="n">Tk_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">GetAllElementKeys</span><span class="p">(</span><span class="n">ElementType_net</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">list</span><span class="p">(</span><span class="n">Tk_list</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Couldn&#39;t retrieve any Tk of element type </span><span class="si">{</span><span class="n">ElementType</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> 
         <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">Tk_list</span><span class="p">)</span></div>
@@ -449,10 +571,11 @@
 <span class="sd">        Gets the network type.</span>
 
 <span class="sd">        :return: Network type defined in the enum.</span>
-<span class="sd">        :rtype: Interfaces.NetworkType</span>
+<span class="sd">        :rtype: NetworkType</span>
 <span class="sd">        :description: This is a wrapper method for GetNetworkType() from toolkit.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">GetNetworkType</span><span class="p">()</span></div>
+        <span class="n">netType_net</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">GetNetworkType</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_python_enum</span><span class="p">(</span><span class="n">netType_net</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">NetworkType</span><span class="p">)</span>           </div>
 
 
 <div class="viewcode-block" id="SIR3S_Model.IsMainContainer">
@@ -477,14 +600,16 @@
 <span class="sd">        Finds the main container of the model and returns its Key (TK).</span>
 
 <span class="sd">        :return: Tk of the main container and object type.</span>
-<span class="sd">        :rtype: tuple[str, Interfaces.Sir3SObjectTypes]</span>
+<span class="sd">        :rtype: tuple[str, ObjectTypes]</span>
 <span class="sd">        :description: This is a wrapper method for GetMainContainer() from toolkit.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">Tk</span><span class="p">,</span> <span class="n">objType</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">GetMainContainer</span><span class="p">()</span>
+        <span class="n">Tk</span><span class="p">,</span> <span class="n">objType_net</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">GetMainContainer</span><span class="p">()</span>
+        <span class="n">objType</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_python_enum</span><span class="p">(</span><span class="n">objType_net</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">Tk</span> <span class="o">==</span> <span class="s2">&quot;-1&quot;</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">Tk</span><span class="p">,</span> <span class="n">objType</span></div>
 
+    
 <div class="viewcode-block" id="SIR3S_Model.GetElementInfo">
 <a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetElementInfo">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">GetElementInfo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Tk</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
@@ -511,12 +636,13 @@
 <span class="sd">        Gets the total number of elements of the specified type.</span>
 
 <span class="sd">        :param ElementType: Object type defined in the enum.</span>
-<span class="sd">        :type ElementType: Interfaces.Sir3SObjectTypes</span>
+<span class="sd">        :type ElementType: ObjectTypes</span>
 <span class="sd">        :return: Total number of elements of type &#39;ElementType&#39;.</span>
 <span class="sd">        :rtype: int</span>
 <span class="sd">        :description: This is a wrapper method for GetNumberOfElements() from toolkit.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">GetNumberOfElements</span><span class="p">(</span><span class="n">ElementType</span><span class="p">)</span></div>
+        <span class="n">ElementType_net</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dotnet_enum</span><span class="p">(</span><span class="n">ElementType</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">GetNumberOfElements</span><span class="p">(</span><span class="n">ElementType_net</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="SIR3S_Model.GetPropertiesofElementType">
@@ -526,13 +652,14 @@
 <span class="sd">        Gets all properties belonging to the element of the specified type.</span>
 
 <span class="sd">        :param ElementType: Object type defined in the enum.</span>
-<span class="sd">        :type ElementType: Interfaces.Sir3SObjectTypes</span>
+<span class="sd">        :type ElementType: ObjectTypes</span>
 <span class="sd">        :return: List of all properties belonging to the element of type &#39;ElementType&#39;.</span>
 <span class="sd">        :rtype: list</span>
 <span class="sd">        :description: This is a wrapper method for GetPropertyNames() from toolkit.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">Properties_list</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="n">Properties_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">GetPropertyNames</span><span class="p">(</span><span class="n">ElementType</span><span class="p">)</span>
+        <span class="n">ElementType_net</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dotnet_enum</span><span class="p">(</span><span class="n">ElementType</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="p">)</span>
+        <span class="n">Properties_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">GetPropertyNames</span><span class="p">(</span><span class="n">ElementType_net</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">list</span><span class="p">(</span><span class="n">Properties_list</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Couldn&#39;t retrieve any Properties for the element type </span><span class="si">{</span><span class="n">ElementType</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">Properties_list</span><span class="p">)</span></div>
@@ -547,11 +674,11 @@
 <span class="sd">        :param Key: The pk/tk of the element in question.</span>
 <span class="sd">        :type Key: str</span>
 <span class="sd">        :return: Type of object the input Key belongs to.</span>
-<span class="sd">        :rtype: Interfaces.Sir3SObjectTypes</span>
+<span class="sd">        :rtype: ObjectTypes</span>
 <span class="sd">        :description: This is a wrapper method for GetObjectTypeOf_Key() from toolkit; Watch out for errors for more information.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">objectType</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">GetObjectTypeOf_Key</span><span class="p">(</span><span class="n">Key</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">objectType</span></div>
+        <span class="n">objectType_net</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">GetObjectTypeOf_Key</span><span class="p">(</span><span class="n">Key</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_python_enum</span><span class="p">(</span><span class="n">objectType_net</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="SIR3S_Model.DeleteElement">
@@ -570,7 +697,8 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">isDeleted</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error: </span><span class="si">{</span><span class="n">error</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Element deleted successfully&quot;</span><span class="p">)</span></div>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Element deleted successfully&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="SIR3S_Model.InsertElement">
@@ -580,18 +708,20 @@
 <span class="sd">        Inserts a new element of the specified type.</span>
 
 <span class="sd">        :param ElementType: Object type defined in the enum to be inserted.</span>
-<span class="sd">        :type ElementType: Interfaces.Sir3SObjectTypes</span>
+<span class="sd">        :type ElementType: ObjectTypes</span>
 <span class="sd">        :param IdRef: Id reference.</span>
 <span class="sd">        :type IdRef: str</span>
 <span class="sd">        :return: Tk of the element inserted.</span>
 <span class="sd">        :rtype: str</span>
 <span class="sd">        :description: This is a wrapper method for InsertElement() from toolkit; Watch out for errors for more information.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">result</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">InsertElement</span><span class="p">(</span><span class="n">ElementType</span><span class="p">,</span> <span class="n">IdRef</span><span class="p">)</span>
+        <span class="n">ElementType_net</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dotnet_enum</span><span class="p">(</span><span class="n">ElementType</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="p">)</span>
+        <span class="n">result</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">InsertElement</span><span class="p">(</span><span class="n">ElementType_net</span><span class="p">,</span> <span class="n">IdRef</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">result</span> <span class="o">==</span> <span class="s2">&quot;-1&quot;</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error : </span><span class="si">{</span><span class="n">error</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Element inserted successfully into the model with Tk: </span><span class="si">{</span><span class="n">result</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Element inserted successfully into the model with Tk: </span><span class="si">{</span><span class="n">result</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span></div>
 
 
@@ -604,9 +734,9 @@
 <span class="sd">        :param dbName: Full path to the database file.</span>
 <span class="sd">        :type dbName: str</span>
 <span class="sd">        :param providerType: Provider type from the enum.</span>
-<span class="sd">        :type providerType: Interfaces.SirDBProviderType</span>
+<span class="sd">        :type providerType: ProviderTypes</span>
 <span class="sd">        :param netType: Network type.</span>
-<span class="sd">        :type netType: Interfaces.NetworkType</span>
+<span class="sd">        :type netType: NetworkType</span>
 <span class="sd">        :param modelDescription: Description of the model to be created.</span>
 <span class="sd">        :type modelDescription: str</span>
 <span class="sd">        :param namedInstance: Instance name of the SQL Server.</span>
@@ -619,11 +749,14 @@
 <span class="sd">        :rtype: None</span>
 <span class="sd">        :description: This is a wrapper method for NewModel() from toolkit; Watch out for errors for more information.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">modelIdentifier</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">NewModel</span><span class="p">(</span><span class="n">dbName</span><span class="p">,</span> <span class="n">providerType</span><span class="p">,</span> <span class="n">netType</span><span class="p">,</span> <span class="n">modelDescription</span><span class="p">,</span> <span class="n">namedInstance</span><span class="p">,</span> <span class="n">userID</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+        <span class="n">providerType_net</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dotnet_enum</span><span class="p">(</span><span class="n">providerType</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ProviderTypes</span><span class="p">)</span>
+        <span class="n">netType_net</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dotnet_enum</span><span class="p">(</span><span class="n">netType</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">NetworkType</span><span class="p">)</span>
+        <span class="n">modelIdentifier</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">NewModel</span><span class="p">(</span><span class="n">dbName</span><span class="p">,</span> <span class="n">providerType_net</span><span class="p">,</span> <span class="n">netType_net</span><span class="p">,</span> <span class="n">modelDescription</span><span class="p">,</span> <span class="n">namedInstance</span><span class="p">,</span> <span class="n">userID</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">modelIdentifier</span> <span class="o">==</span> <span class="s2">&quot;-1&quot;</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error : </span><span class="si">{</span><span class="n">error</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;New model is created with the model identifier: </span><span class="si">{</span><span class="n">modelIdentifier</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;New model is created with the model identifier: </span><span class="si">{</span><span class="n">modelIdentifier</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="SIR3S_Model.ConnectConnectingElementWithNodes">
@@ -646,7 +779,8 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Objects connected successfully&quot;</span><span class="p">)</span></div>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Objects connected successfully&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="SIR3S_Model.ConnectBypassElementWithNode">
@@ -667,7 +801,8 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Object connected successfully&quot;</span><span class="p">)</span></div>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Object connected successfully&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="SIR3S_Model.SaveChanges">
@@ -684,7 +819,8 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">isSaved</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error: </span><span class="si">{</span><span class="n">error</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Changes saved successfully&quot;</span><span class="p">)</span></div>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Changes saved successfully&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="SIR3S_Model.AddTableRow">
@@ -696,14 +832,16 @@
 <span class="sd">        :param tablePkTk: Key of the table.</span>
 <span class="sd">        :type tablePkTk: str</span>
 <span class="sd">        :return: Tk of the inserted row and object type.</span>
-<span class="sd">        :rtype: tuple[str, Interfaces.SirDBProviderType]</span>
+<span class="sd">        :rtype: tuple[str, ObjectTypes]</span>
 <span class="sd">        :description: This is a wrapper method for AddTableRow() from toolkit; Watch out for errors for more information.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">Tk</span><span class="p">,</span> <span class="n">objectType</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">AddTableRow</span><span class="p">(</span><span class="n">tablePkTk</span><span class="p">)</span>
+        <span class="n">Tk</span><span class="p">,</span> <span class="n">objectType_net</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">AddTableRow</span><span class="p">(</span><span class="n">tablePkTk</span><span class="p">)</span>
+        <span class="n">objectType</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_python_enum</span><span class="p">(</span><span class="n">objectType_net</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">Tk</span> <span class="o">==</span> <span class="s2">&quot;-1&quot;</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Row is added to the table with Tk: </span><span class="si">{</span><span class="n">Tk</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span> 
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Row is added to the table with Tk: </span><span class="si">{</span><span class="n">Tk</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">Tk</span><span class="p">,</span> <span class="n">objectType</span></div>
 
 
@@ -716,10 +854,11 @@
 <span class="sd">        :param tablePkTk: Key of the table.</span>
 <span class="sd">        :type tablePkTk: str</span>
 <span class="sd">        :return: List of Tk&#39;s of all rows of the table and object type.</span>
-<span class="sd">        :rtype: tuple[list, Interfaces.SirDBProviderType]</span>
+<span class="sd">        :rtype: tuple[list, ProviderTypes]</span>
 <span class="sd">        :description: This is a wrapper method for GetTableRows() from toolkit; Watch out for errors for more information.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">Tk_list</span><span class="p">,</span> <span class="n">objectType</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">GetTableRows</span><span class="p">(</span><span class="n">tablePkTk</span><span class="p">)</span>
+        <span class="n">Tk_list</span><span class="p">,</span> <span class="n">objectType_net</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">GetTableRows</span><span class="p">(</span><span class="n">tablePkTk</span><span class="p">)</span>
+        <span class="n">objectType</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_python_enum</span><span class="p">(</span><span class="n">objectType_net</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">Tk_list</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">Tk_list</span><span class="p">,</span> <span class="n">objectType</span></div>
@@ -739,7 +878,8 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Refresh successful&quot;</span><span class="p">)</span></div>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Refresh successful&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="SIR3S_Model.SetInsertPoint">
@@ -762,7 +902,8 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;New point inserted&quot;</span><span class="p">)</span></div>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;New point inserted&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="SIR3S_Model.SetElementColor_RGB">
@@ -789,7 +930,8 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Color of the element is set&quot;</span><span class="p">)</span></div>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Color of the element is set&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="SIR3S_Model.SetElementColor">
@@ -812,7 +954,8 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Color of the element is set&quot;</span><span class="p">)</span></div>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Color of the element is set&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="SIR3S_Model.AlignElement">
@@ -831,7 +974,8 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Alignment successful&quot;</span><span class="p">)</span></div>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Alignment successful&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="SIR3S_Model.GetResultValue">
@@ -862,7 +1006,7 @@
 <span class="sd">        Gets the result properties for the specified element type.</span>
 
 <span class="sd">        :param elementType: The element type.</span>
-<span class="sd">        :type elementType: Interfaces.Sir3SObjectTypes</span>
+<span class="sd">        :type elementType: ObjectTypes</span>
 <span class="sd">        :param onlySelectedVectors: If True, only the names of selected vector channels for this element type shall be returned, otherwise all possible result property names for this element type shall be returned.</span>
 <span class="sd">        :type onlySelectedVectors: bool</span>
 <span class="sd">        :return: List of result property names of an element type.</span>
@@ -870,7 +1014,8 @@
 <span class="sd">        :description: This is a wrapper method for GetResultProperties() from toolkit; Watch out for errors for more information.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">Result_list</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="n">Result_list</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">GetResultProperties</span><span class="p">(</span><span class="n">elementType</span><span class="p">,</span> <span class="n">onlySelectedVectors</span><span class="p">)</span>
+        <span class="n">elementType_net</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dotnet_enum</span><span class="p">(</span><span class="n">elementType</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="p">)</span>
+        <span class="n">Result_list</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">GetResultProperties</span><span class="p">(</span><span class="n">elementType_net</span><span class="p">,</span> <span class="n">onlySelectedVectors</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">Result_list</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">Result_list</span><span class="p">)</span></div>
@@ -902,7 +1047,7 @@
 <span class="sd">        Gets the minimal result value of an element type and also the key (tk/pk) of the corresponding element.</span>
 
 <span class="sd">        :param elementType: The element type.</span>
-<span class="sd">        :type elementType: Interfaces.Sir3SObjectTypes</span>
+<span class="sd">        :type elementType: ObjectTypes</span>
 <span class="sd">        :param propertyName: The name of the result property.</span>
 <span class="sd">        :type propertyName: str</span>
 <span class="sd">        :return: The minimal result value of an element type, the key (tk/pk) of the corresponding element, and the data type of the result.</span>
@@ -910,7 +1055,8 @@
 <span class="sd">        :description: This is a wrapper method for GetMinResult() from toolkit; Watch out for errors for more information.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">MinResult</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="n">MinResult</span><span class="p">,</span> <span class="n">tkElement</span><span class="p">,</span> <span class="n">valueType</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">GetMinResult</span><span class="p">(</span><span class="n">elementType</span><span class="p">,</span> <span class="n">propertyName</span><span class="p">)</span>
+        <span class="n">elementType_net</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dotnet_enum</span><span class="p">(</span><span class="n">elementType</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="p">)</span>
+        <span class="n">MinResult</span><span class="p">,</span> <span class="n">tkElement</span><span class="p">,</span> <span class="n">valueType</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">GetMinResult</span><span class="p">(</span><span class="n">elementType_net</span><span class="p">,</span> <span class="n">propertyName</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">MinResult</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">MinResult</span><span class="p">,</span> <span class="n">tkElement</span><span class="p">,</span> <span class="n">valueType</span></div>
@@ -923,7 +1069,7 @@
 <span class="sd">        Gets the maximal result value of an element type and also the key (tk/pk) of the corresponding element.</span>
 
 <span class="sd">        :param elementType: The element type.</span>
-<span class="sd">        :type elementType: Interfaces.Sir3SObjectTypes</span>
+<span class="sd">        :type elementType: ObjectTypes</span>
 <span class="sd">        :param propertyName: The name of the result property.</span>
 <span class="sd">        :type propertyName: str</span>
 <span class="sd">        :return: The maximal result value of an element type, the key (tk/pk) of the corresponding element, and the data type of the result.</span>
@@ -931,7 +1077,8 @@
 <span class="sd">        :description: This is a wrapper method for GetMaxResult() from toolkit; Watch out for errors for more information.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">MaxResult</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="n">MaxResult</span><span class="p">,</span> <span class="n">tkElement</span><span class="p">,</span> <span class="n">valueType</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">GetMaxResult</span><span class="p">(</span><span class="n">elementType</span><span class="p">,</span> <span class="n">propertyName</span><span class="p">)</span>
+        <span class="n">elementType_net</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dotnet_enum</span><span class="p">(</span><span class="n">elementType</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="p">)</span>
+        <span class="n">MaxResult</span><span class="p">,</span> <span class="n">tkElement</span><span class="p">,</span> <span class="n">valueType</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">GetMaxResult</span><span class="p">(</span><span class="n">elementType_net</span><span class="p">,</span> <span class="n">propertyName</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">MaxResult</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">MaxResult</span><span class="p">,</span> <span class="n">tkElement</span><span class="p">,</span> <span class="n">valueType</span></div>
@@ -946,7 +1093,7 @@
 <span class="sd">        :param timestamp: The timestamp for which result is needed.</span>
 <span class="sd">        :type timestamp: str</span>
 <span class="sd">        :param elementType: The element type.</span>
-<span class="sd">        :type elementType: Interfaces.Sir3SObjectTypes</span>
+<span class="sd">        :type elementType: ObjectTypes</span>
 <span class="sd">        :param propertyName: The name of the result property.</span>
 <span class="sd">        :type propertyName: str</span>
 <span class="sd">        :return: The minimal result value of an element type at a particular timestamp, the key (tk/pk) of the corresponding element, and the data type of the result.</span>
@@ -954,7 +1101,8 @@
 <span class="sd">        :description: This is a wrapper method for GetMinResult() from toolkit; Watch out for errors for more information.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">MinResult</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="n">MinResult</span><span class="p">,</span> <span class="n">tkElement</span><span class="p">,</span> <span class="n">valueType</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">GetMinResult</span><span class="p">(</span><span class="n">timestamp</span><span class="p">,</span> <span class="n">elementType</span><span class="p">,</span> <span class="n">propertyName</span><span class="p">)</span>
+        <span class="n">elementType_net</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dotnet_enum</span><span class="p">(</span><span class="n">elementType</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="p">)</span>
+        <span class="n">MinResult</span><span class="p">,</span> <span class="n">tkElement</span><span class="p">,</span> <span class="n">valueType</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">GetMinResult</span><span class="p">(</span><span class="n">timestamp</span><span class="p">,</span> <span class="n">elementType_net</span><span class="p">,</span> <span class="n">propertyName</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">MinResult</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">MinResult</span><span class="p">,</span> <span class="n">tkElement</span><span class="p">,</span> <span class="n">valueType</span></div>
@@ -969,7 +1117,7 @@
 <span class="sd">        :param timestamp: The timestamp for which result is needed.</span>
 <span class="sd">        :type timestamp: str</span>
 <span class="sd">        :param elementType: The element type.</span>
-<span class="sd">        :type elementType: Interfaces.Sir3SObjectTypes</span>
+<span class="sd">        :type elementType: ObjectTypes</span>
 <span class="sd">        :param propertyName: The name of the result property.</span>
 <span class="sd">        :type propertyName: str</span>
 <span class="sd">        :return: The maximal result value of an element type at a particular timestamp, the key (tk/pk) of the corresponding element, and the data type of the result.</span>
@@ -977,7 +1125,8 @@
 <span class="sd">        :description: This is a wrapper method for GetMaxResult() from toolkit; Watch out for errors for more information.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">MaxResult</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="n">MaxResult</span><span class="p">,</span> <span class="n">tkElement</span><span class="p">,</span> <span class="n">valueType</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">GetMaxResult</span><span class="p">(</span><span class="n">timestamp</span><span class="p">,</span> <span class="n">elementType</span><span class="p">,</span> <span class="n">propertyName</span><span class="p">)</span>
+        <span class="n">elementType_net</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dotnet_enum</span><span class="p">(</span><span class="n">elementType</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="p">)</span>
+        <span class="n">MaxResult</span><span class="p">,</span> <span class="n">tkElement</span><span class="p">,</span> <span class="n">valueType</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">GetMaxResult</span><span class="p">(</span><span class="n">timestamp</span><span class="p">,</span> <span class="n">elementType_net</span><span class="p">,</span> <span class="n">propertyName</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">MaxResult</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">MaxResult</span><span class="p">,</span> <span class="n">tkElement</span><span class="p">,</span> <span class="n">valueType</span></div>
@@ -1019,7 +1168,8 @@
         <span class="k">if</span> <span class="n">Tk_new</span> <span class="o">==</span> <span class="s2">&quot;-1&quot;</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;New node added&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;New node added&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">Tk_new</span></div>
 
 
@@ -1059,7 +1209,8 @@
         <span class="k">if</span> <span class="n">Tk_new</span> <span class="o">==</span> <span class="s2">&quot;-1&quot;</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;New pipe added&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;New pipe added&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">Tk_new</span></div>
 
     
@@ -1082,7 +1233,7 @@
 <span class="sd">        :param z: Z coordinate.</span>
 <span class="sd">        :type z: np.float32</span>
 <span class="sd">        :param elementType: Element type.</span>
-<span class="sd">        :type elementType: Interfaces.Sir3SObjectTypes</span>
+<span class="sd">        :type elementType: ObjectTypes</span>
 <span class="sd">        :param dn: The nominal diameter or the Tk of the nominal diameter.</span>
 <span class="sd">        :type dn: np.float32</span>
 <span class="sd">        :param symbolFactor: The symbol factor of the new node.</span>
@@ -1097,11 +1248,13 @@
 <span class="sd">        :rtype: str</span>
 <span class="sd">        :description: Comfortable method for inserting a new connecting element.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">Tk_new</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">AddNewConnectingElement</span><span class="p">(</span><span class="n">tkCont</span><span class="p">,</span> <span class="n">tkFrom</span><span class="p">,</span> <span class="n">tkTo</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">elementType</span><span class="p">,</span> <span class="n">dn</span><span class="p">,</span> <span class="n">symbolFactor</span><span class="p">,</span> <span class="n">angleDegree</span><span class="p">,</span> <span class="n">idRef</span><span class="p">,</span> <span class="n">description</span><span class="p">)</span>
+        <span class="n">elementType_net</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dotnet_enum</span><span class="p">(</span><span class="n">elementType</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="p">)</span>
+        <span class="n">Tk_new</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">AddNewConnectingElement</span><span class="p">(</span><span class="n">tkCont</span><span class="p">,</span> <span class="n">tkFrom</span><span class="p">,</span> <span class="n">tkTo</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">elementType_net</span><span class="p">,</span> <span class="n">dn</span><span class="p">,</span> <span class="n">symbolFactor</span><span class="p">,</span> <span class="n">angleDegree</span><span class="p">,</span> <span class="n">idRef</span><span class="p">,</span> <span class="n">description</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">Tk_new</span> <span class="o">==</span> <span class="s2">&quot;-1&quot;</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;New connecting element added&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;New connecting element added&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">Tk_new</span></div>
 
 
@@ -1124,7 +1277,7 @@
 <span class="sd">        :param symbolFactor: The symbol factor of the new node.</span>
 <span class="sd">        :type symbolFactor: np.float64</span>
 <span class="sd">        :param elementType: Element type.</span>
-<span class="sd">        :type elementType: Interfaces.Sir3SObjectTypes</span>
+<span class="sd">        :type elementType: ObjectTypes</span>
 <span class="sd">        :param idRef: ID in reference system.</span>
 <span class="sd">        :type idRef: str</span>
 <span class="sd">        :param description: Description.</span>
@@ -1133,11 +1286,13 @@
 <span class="sd">        :rtype: str</span>
 <span class="sd">        :description: Comfortable method for inserting a new bypass element.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">Tk_new</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">AddNewBypassElement</span><span class="p">(</span><span class="n">tkCont</span><span class="p">,</span> <span class="n">tkFrom</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">symbolFactor</span><span class="p">,</span> <span class="n">elementType</span><span class="p">,</span> <span class="n">idRef</span><span class="p">,</span> <span class="n">description</span><span class="p">)</span>
+        <span class="n">elementType_net</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dotnet_enum</span><span class="p">(</span><span class="n">elementType</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="p">)</span>
+        <span class="n">Tk_new</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">AddNewBypassElement</span><span class="p">(</span><span class="n">tkCont</span><span class="p">,</span> <span class="n">tkFrom</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">symbolFactor</span><span class="p">,</span> <span class="n">elementType_net</span><span class="p">,</span> <span class="n">idRef</span><span class="p">,</span> <span class="n">description</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">Tk_new</span> <span class="o">==</span> <span class="s2">&quot;-1&quot;</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;New Bypass element added&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;New Bypass element added&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">Tk_new</span></div>
 
 
@@ -1150,12 +1305,13 @@
 <span class="sd">        :param IdRef: ID reference of the element.</span>
 <span class="sd">        :type IdRef: str</span>
 <span class="sd">        :param object_type: Type of the element (like Node, Pipe, Valve, etc.).</span>
-<span class="sd">        :type object_type: Interfaces.Sir3SObjectTypes</span>
+<span class="sd">        :type object_type: ObjectTypes</span>
 <span class="sd">        :return: TK of the element.</span>
 <span class="sd">        :rtype: str</span>
 <span class="sd">        :description: This is a wrapper method for GetTkFromIDReference() from toolkit; Watch out for error messages for more information.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">Tk</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">GetTkFromIDReference</span><span class="p">(</span><span class="n">IdRef</span><span class="p">,</span> <span class="n">object_type</span><span class="p">)</span>
+        <span class="n">object_type_net</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dotnet_enum</span><span class="p">(</span><span class="n">object_type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="p">)</span>
+        <span class="n">Tk</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">GetTkFromIDReference</span><span class="p">(</span><span class="n">IdRef</span><span class="p">,</span> <span class="n">object_type_net</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">Tk</span> <span class="o">==</span> <span class="s2">&quot;-1&quot;</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">Tk</span></div>
@@ -1197,7 +1353,8 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">isSet</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Geometry Information is set correctly&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Geometry Information is set correctly&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">isSet</span></div>
 
 
@@ -1237,6 +1394,104 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">returnValue</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">fkKI</span><span class="p">,</span> <span class="n">fkKK</span><span class="p">,</span> <span class="n">fkKI2</span><span class="p">,</span> <span class="n">fkKK2</span></div>
+
+
+<div class="viewcode-block" id="SIR3S_Model.SetLogFilePath">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.SetLogFilePath">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">SetLogFilePath</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">logFilePath</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the full Path (Drive, Directory and File Name) of the Log File</span>
+
+<span class="sd">        :param logFilePath: The Full Path of the Log File</span>
+<span class="sd">        :type logFilePath: str</span>
+<span class="sd">        :return: isPathSet </span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        :description: This is a wrapper method for SetLogFilePath() from toolkit</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">isPathSet</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">SetLogFilePath</span><span class="p">(</span><span class="n">logFilePath</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">isPathSet</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">isPathSet</span></div>
+
+    
+<div class="viewcode-block" id="SIR3S_Model.GetLogFilePath">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetLogFilePath">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">GetLogFilePath</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the value of the actual full Path of the Log File</span>
+
+<span class="sd">        :return: logFilePath </span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        :description: This is a wrapper method for GetLogFilePath() from toolkit</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logFilePath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">GetLogFilePath</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">logFilePath</span></div>
+
+    
+<div class="viewcode-block" id="SIR3S_Model.EnableOrDisableOutputComments">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.EnableOrDisableOutputComments">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">EnableOrDisableOutputComments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outputComments</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Enable or disable additional output comments while using methods from SIR3S_Model class.</span>
+<span class="sd">        These comments could help you understand about the positive outcome of a method.</span>
+<span class="sd">        Default value is True</span>
+<span class="sd">         </span>
+<span class="sd">        :param outputComments: To enable pass true and to disable pass false</span>
+<span class="sd">        :type outputComments: bool</span>
+<span class="sd">        :return: None </span>
+<span class="sd">        :rtype: None</span>
+<span class="sd">        :description: This is a helper function</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span> <span class="o">=</span> <span class="n">outputComments</span></div>
+
+
+
+<div class="viewcode-block" id="SIR3S_Model.GetResultfortimestamp">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetResultfortimestamp">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">GetResultfortimestamp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">Tk</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">property</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the result value for a particular property of an object for a specific timestamp provided as input</span>
+<span class="sd">         </span>
+<span class="sd">        :param timestamp: Timestamp provided as input</span>
+<span class="sd">        :type timestamp: str</span>
+<span class="sd">        :param Tk: Tk of the element</span>
+<span class="sd">        :type Tk: str</span>
+<span class="sd">        :param property: Property of the element</span>
+<span class="sd">        :type property: str</span>
+<span class="sd">        :return: (value, valueType) </span>
+<span class="sd">        :rtype: tuple[str, str]</span>
+<span class="sd">        :description: This is a helper function</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">current_timestamp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetCurrentTimeStamp</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SetCurrentTimeStamp</span><span class="p">(</span><span class="n">timestamp</span><span class="p">)</span>
+        <span class="n">value</span><span class="p">,</span> <span class="n">valueType</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetResultValue</span><span class="p">(</span><span class="n">Tk</span><span class="p">,</span> <span class="nb">property</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SetCurrentTimeStamp</span><span class="p">(</span><span class="n">current_timestamp</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">value</span><span class="p">,</span> <span class="n">valueType</span></div>
+
+
+<div class="viewcode-block" id="SIR3S_Model.GetResultforAllTimestamp">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetResultforAllTimestamp">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">GetResultforAllTimestamp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Tk</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">property</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the result values for a particular property of an object for all timestamps</span>
+<span class="sd">         </span>
+<span class="sd">        :param Tk: Tk of the element</span>
+<span class="sd">        :type Tk: str</span>
+<span class="sd">        :param property: Property of the element</span>
+<span class="sd">        :type property: str</span>
+<span class="sd">        :return: resultList </span>
+<span class="sd">        :rtype: list of tuple</span>
+<span class="sd">        :description: This is a helper function</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resultList</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">timeStamps</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTimeStamps</span><span class="p">()</span>
+        <span class="n">current_timestamp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetCurrentTimeStamp</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">timeStamps</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">SetCurrentTimeStamp</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+            <span class="n">value</span><span class="p">,</span> <span class="n">valueType</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetResultValue</span><span class="p">(</span><span class="n">Tk</span><span class="p">,</span> <span class="nb">property</span><span class="p">)</span>
+            <span class="n">resultList</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">t</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">valueType</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SetCurrentTimeStamp</span><span class="p">(</span><span class="n">current_timestamp</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">resultList</span></div>
 </div>
 
 
@@ -1257,9 +1512,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Basic imports to dlls provided by SirGraf</span>
         <span class="c1"># This will only work if Initialize_Toolkit() is called in the same context</span>
-        <span class="kn">import</span><span class="w"> </span><span class="nn">Sir3S_Repository.ModelManager</span>
         <span class="kn">import</span><span class="w"> </span><span class="nn">Sir3S_Repository.Utilities</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">Util</span>
-        <span class="kn">import</span><span class="w"> </span><span class="nn">Sir3S_Repository.Interfaces</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">Interfaces</span>
         <span class="kn">import</span><span class="w"> </span><span class="nn">Sir3S_Toolkit.Model</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">Sir3SToolkit</span>
         
         <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span> <span class="o">=</span> <span class="n">Util</span><span class="o">.</span><span class="n">StaticUI</span><span class="o">.</span><span class="n">Toolkit</span>
@@ -1269,7 +1522,73 @@
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error in initializing the toolkit&quot;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Initialization complete&quot;</span><span class="p">)</span>
+            
+        <span class="c1"># Create all necessay Enums for user</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span> <span class="o">=</span> <span class="n">create_dotnet_enum</span><span class="p">(</span><span class="s2">&quot;ObjectTypes&quot;</span><span class="p">,</span> <span class="s2">&quot;Sir3SObjectTypes&quot;</span><span class="p">,</span> <span class="s2">&quot;Sir3S_Repository.Interfaces.dll&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ProviderTypes</span> <span class="o">=</span> <span class="n">create_dotnet_enum</span><span class="p">(</span><span class="s2">&quot;ProviderTypes&quot;</span><span class="p">,</span> <span class="s2">&quot;SirDBProviderType&quot;</span><span class="p">,</span> <span class="s2">&quot;Sir3S_Repository.Interfaces.dll&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">NetValveTypes</span> <span class="o">=</span> <span class="n">create_dotnet_enum</span><span class="p">(</span><span class="s2">&quot;NetValveTypes&quot;</span><span class="p">,</span> <span class="s2">&quot;NetValveTypes&quot;</span><span class="p">,</span> <span class="s2">&quot;Sir3S_Toolkit.dll&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">NetValvePostures</span> <span class="o">=</span> <span class="n">create_dotnet_enum</span><span class="p">(</span><span class="s2">&quot;NetValvePostures&quot;</span><span class="p">,</span> <span class="s2">&quot;NetValvePostures&quot;</span><span class="p">,</span> <span class="s2">&quot;Sir3S_Toolkit.dll&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Hydrant_QM_SOLL</span> <span class="o">=</span> <span class="n">create_dotnet_enum</span><span class="p">(</span><span class="s2">&quot;Hydrant_QM_SOLL&quot;</span><span class="p">,</span> <span class="s2">&quot;Hydrant_QM_SOLL&quot;</span><span class="p">,</span> <span class="s2">&quot;Sir3S_Toolkit.dll&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Hydrant_Type</span> <span class="o">=</span> <span class="n">create_dotnet_enum</span><span class="p">(</span><span class="s2">&quot;Hydrant_Type&quot;</span><span class="p">,</span> <span class="s2">&quot;Hydrant_Type&quot;</span><span class="p">,</span> <span class="s2">&quot;Sir3S_Toolkit.dll&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Hydrant_Activity</span> <span class="o">=</span> <span class="n">create_dotnet_enum</span><span class="p">(</span><span class="s2">&quot;Hydrant_Activity&quot;</span><span class="p">,</span> <span class="s2">&quot;Hydrant_Activity&quot;</span><span class="p">,</span> <span class="s2">&quot;Sir3S_Toolkit.dll&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dotnet_enum_type_objecttype</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_dotnet_enum</span><span class="p">(</span><span class="s2">&quot;Sir3SObjectTypes&quot;</span><span class="p">,</span> <span class="s2">&quot;Sir3S_Repository.Interfaces.dll&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dotnet_enum_type_providertype</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_dotnet_enum</span><span class="p">(</span><span class="s2">&quot;SirDBProviderType&quot;</span><span class="p">,</span> <span class="s2">&quot;Sir3S_Repository.Interfaces.dll&quot;</span><span class="p">)</span>   
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dotnet_enum_type_netvalvetype</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_dotnet_enum</span><span class="p">(</span><span class="s2">&quot;NetValveTypes&quot;</span><span class="p">,</span> <span class="s2">&quot;Sir3S_Toolkit.dll&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dotnet_enum_type_netvalvepostures</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_dotnet_enum</span><span class="p">(</span><span class="s2">&quot;NetValvePostures&quot;</span><span class="p">,</span> <span class="s2">&quot;Sir3S_Toolkit.dll&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dotnet_enum_type_hydrantqmsoll</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_dotnet_enum</span><span class="p">(</span><span class="s2">&quot;Hydrant_QM_SOLL&quot;</span><span class="p">,</span> <span class="s2">&quot;Sir3S_Toolkit.dll&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dotnet_enum_type_hydranttype</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_dotnet_enum</span><span class="p">(</span><span class="s2">&quot;Hydrant_Type&quot;</span><span class="p">,</span> <span class="s2">&quot;Sir3S_Toolkit.dll&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dotnet_enum_type_hydrantactivity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_dotnet_enum</span><span class="p">(</span><span class="s2">&quot;Hydrant_Activity&quot;</span><span class="p">,</span> <span class="s2">&quot;Sir3S_Toolkit.dll&quot;</span><span class="p">)</span>
+     
+        <span class="c1"># Variable to enable or disable output comments </span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span> <span class="o">=</span> <span class="kc">True</span>
+        
+    <span class="k">def</span><span class="w"> </span><span class="nf">_load_dotnet_enum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enum_name</span><span class="p">,</span> <span class="n">assembly_ext</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">assembly_ext</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;assembly_ext must be provided when using dotnet_enum.&quot;</span><span class="p">)</span>
+        
+        <span class="n">assembly_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">SIR3S_SIRGRAF_DIR</span><span class="p">,</span> <span class="n">assembly_ext</span><span class="p">)</span>
+        <span class="n">assembly</span> <span class="o">=</span> <span class="n">Assembly</span><span class="o">.</span><span class="n">LoadFrom</span><span class="p">(</span><span class="n">assembly_path</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">assembly</span><span class="o">.</span><span class="n">GetTypes</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">Name</span> <span class="o">==</span> <span class="n">enum_name</span> <span class="ow">and</span> <span class="n">t</span><span class="o">.</span><span class="n">IsEnum</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">t</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;.NET enum &#39;</span><span class="si">{</span><span class="n">enum_name</span><span class="si">}</span><span class="s2">&#39; not found.&quot;</span><span class="p">)</span>
+    
+<div class="viewcode-block" id="SIR3S_View.to_dotnet_enum">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_View.to_dotnet_enum">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_dotnet_enum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">py_enum_member</span><span class="p">,</span> <span class="n">py_enum_type</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">py_enum_member</span><span class="p">,</span> <span class="n">py_enum_type</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Expected </span><span class="si">{</span><span class="n">py_enum_type</span><span class="si">}</span><span class="s2"> member, got </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">py_enum_member</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
+        <span class="c1"># Use the integer value of Python enum member to create .NET enum</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">py_enum_type</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="p">):</span>  
+            <span class="k">return</span> <span class="n">System</span><span class="o">.</span><span class="n">Enum</span><span class="o">.</span><span class="n">ToObject</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dotnet_enum_type_objecttype</span><span class="p">,</span> <span class="n">py_enum_member</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">py_enum_type</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">ProviderTypes</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">System</span><span class="o">.</span><span class="n">Enum</span><span class="o">.</span><span class="n">ToObject</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dotnet_enum_type_providertype</span><span class="p">,</span> <span class="n">py_enum_member</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">py_enum_type</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">NetValveTypes</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">System</span><span class="o">.</span><span class="n">Enum</span><span class="o">.</span><span class="n">ToObject</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dotnet_enum_type_netvalvetype</span><span class="p">,</span> <span class="n">py_enum_member</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">py_enum_type</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">NetValvePostures</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">System</span><span class="o">.</span><span class="n">Enum</span><span class="o">.</span><span class="n">ToObject</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dotnet_enum_type_netvalvepostures</span><span class="p">,</span> <span class="n">py_enum_member</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">py_enum_type</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">Hydrant_QM_SOLL</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">System</span><span class="o">.</span><span class="n">Enum</span><span class="o">.</span><span class="n">ToObject</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dotnet_enum_type_hydrantqmsoll</span><span class="p">,</span> <span class="n">py_enum_member</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">py_enum_type</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">Hydrant_Activity</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">System</span><span class="o">.</span><span class="n">Enum</span><span class="o">.</span><span class="n">ToObject</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dotnet_enum_type_hydrantactivity</span><span class="p">,</span> <span class="n">py_enum_member</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">py_enum_type</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">Hydrant_Type</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">System</span><span class="o">.</span><span class="n">Enum</span><span class="o">.</span><span class="n">ToObject</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dotnet_enum_type_hydranttype</span><span class="p">,</span> <span class="n">py_enum_member</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SIR3S_View.to_python_enum">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_View.to_python_enum">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_python_enum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dotnet_enum_member</span><span class="p">,</span> <span class="n">py_enum_type</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">dotnet_enum_member</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="c1"># Get the integer value of the .NET enum</span>
+        <span class="n">dotnet_value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">dotnet_enum_member</span><span class="p">)</span>
+
+        <span class="c1"># Map to Python enum by value</span>
+        <span class="k">return</span> <span class="n">py_enum_type</span><span class="p">(</span><span class="n">dotnet_value</span><span class="p">)</span></div>
+
+    
 <div class="viewcode-block" id="SIR3S_View.StartTransaction">
 <a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_View.StartTransaction">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">StartTransaction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">SessionName</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
@@ -1287,7 +1606,8 @@
             <span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">message</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Now you can make changes to the model&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Now you can make changes to the model&quot;</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
@@ -1307,7 +1627,8 @@
             <span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">message</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Transaction has ended. Please open up a new transaction if you want to make further changes&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Transaction has ended. Please open up a new transaction if you want to make further changes&quot;</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
@@ -1329,7 +1650,8 @@
             <span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">message</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Now you can make changes to the model&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Now you can make changes to the model&quot;</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
@@ -1349,7 +1671,8 @@
             <span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">message</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Edit Session has ended. Please open up a new session if you want to make further changes&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Edit Session has ended. Please open up a new session if you want to make further changes&quot;</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
@@ -1368,7 +1691,8 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">isSaved</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error: </span><span class="si">{</span><span class="n">error</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Changes saved successfully&quot;</span><span class="p">)</span></div>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Changes saved successfully&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="SIR3S_View.OpenModelXml">
@@ -1387,11 +1711,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">result</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">OpenModelXml</span><span class="p">(</span><span class="n">Path</span><span class="p">,</span> <span class="n">SaveCurrentModel</span><span class="p">)</span>
         <span class="k">if</span><span class="p">(</span><span class="n">result</span> <span class="o">==</span> <span class="kc">True</span><span class="p">):</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Model is open for further operation&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Model is open for further operation&quot;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error while opening the model,&quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span></div>
-
-
 
 
 <div class="viewcode-block" id="SIR3S_View.OpenModel">
@@ -1403,7 +1726,7 @@
 <span class="sd">        :param dbName: Full path to the database file.</span>
 <span class="sd">        :type dbName: str</span>
 <span class="sd">        :param providerType: Provider type from the enum.</span>
-<span class="sd">        :type providerType: Interfaces.SirDBProviderType</span>
+<span class="sd">        :type providerType: ProviderTypes</span>
 <span class="sd">        :param Mid: Model identifier.</span>
 <span class="sd">        :type Mid: str</span>
 <span class="sd">        :param saveCurrentlyOpenModel: Do you want to save the current model before closing it?</span>
@@ -1417,13 +1740,34 @@
 <span class="sd">        :rtype: None</span>
 <span class="sd">        :description: This is a wrapper method for openModel() from toolkit; Watch out for errors for more information.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">result</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">OpenModel</span><span class="p">(</span><span class="n">dbName</span><span class="p">,</span> <span class="n">providerType</span><span class="p">,</span> <span class="n">Mid</span><span class="p">,</span> <span class="n">saveCurrentlyOpenModel</span><span class="p">,</span> <span class="n">namedInstance</span><span class="p">,</span> <span class="n">userID</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+        <span class="n">providerType_net</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dotnet_enum</span><span class="p">(</span><span class="n">providerType</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ProviderTypes</span><span class="p">)</span>
+        <span class="n">result</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">OpenModel</span><span class="p">(</span><span class="n">dbName</span><span class="p">,</span> <span class="n">providerType_net</span><span class="p">,</span> <span class="n">Mid</span><span class="p">,</span> <span class="n">saveCurrentlyOpenModel</span><span class="p">,</span> <span class="n">namedInstance</span><span class="p">,</span> <span class="n">userID</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
         <span class="k">if</span><span class="p">(</span><span class="n">result</span> <span class="o">==</span> <span class="kc">True</span><span class="p">):</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Model is open for further operation&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Model is open for further operation&quot;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error while opening the model, &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span></div>
 
 
+<div class="viewcode-block" id="SIR3S_View.CloseModel">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_View.CloseModel">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">CloseModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">saveChangesBeforeClosing</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Closes a currently open Model.</span>
+
+<span class="sd">        :param saveChangesBeforeClosing: If True, the Changes would be saved before Closing</span>
+<span class="sd">        otherwise Changes would be discarded</span>
+<span class="sd">        :type saveChangesBeforeClosing: bool</span>
+<span class="sd">        :return: return True if model is successfully closed, False otherwise</span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        :description: This is a wrapper method for CloseModel() from toolkit; Watch out for errors for more information.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">isClosed</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">CloseModel</span><span class="p">(</span><span class="n">saveChangesBeforeClosing</span><span class="p">)</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">isClosed</span> <span class="o">==</span> <span class="kc">False</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error while closing the model, &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">isClosed</span></div>
+
+    
 <div class="viewcode-block" id="SIR3S_View.GetMainContainer">
 <a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_View.GetMainContainer">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">GetMainContainer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -1431,10 +1775,11 @@
 <span class="sd">        Finds the main container of the model and returns its Key (TK).</span>
 
 <span class="sd">        :return: Tk of the main container and object type.</span>
-<span class="sd">        :rtype: tuple[str, Interfaces.Sir3SObjectTypes]</span>
+<span class="sd">        :rtype: tuple[str, ObjectTypes]</span>
 <span class="sd">        :description: This is a wrapper method for GetMainContainer() from toolkit; Finds the Main Container of the Model and returns its Key (TK).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">Tk</span><span class="p">,</span> <span class="n">objType</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">GetMainContainer</span><span class="p">()</span>
+        <span class="n">Tk</span><span class="p">,</span> <span class="n">objType_net</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">GetMainContainer</span><span class="p">()</span>
+        <span class="n">objType</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_python_enum</span><span class="p">(</span><span class="n">objType_net</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">Tk</span> <span class="o">==</span> <span class="s2">&quot;-1&quot;</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">Tk</span><span class="p">,</span> <span class="n">objType</span></div>
@@ -1466,7 +1811,38 @@
         <span class="k">if</span> <span class="n">Tk</span> <span class="o">==</span> <span class="s2">&quot;-1&quot;</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;External polyline added&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;External polyline added&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Tk</span></div>
+
+
+<div class="viewcode-block" id="SIR3S_View.AddExternalPolyline_using_LineString">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_View.AddExternalPolyline_using_LineString">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">AddExternalPolyline_using_LineString</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wktLineString</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">iColor</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">lineWidthMM</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">,</span> <span class="n">dashedLine</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">containerTK</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds an external polyline using linestring.</span>
+
+<span class="sd">        :param wktLineString: A string with all Points for Geometry in WKT Format</span>
+<span class="sd">        i.e formatted like &#39;LINESTRING (120 76 0, 500 300 0,  620 480 0, 364 276 0)&#39;.</span>
+<span class="sd">        :type wktLineString: str</span>
+<span class="sd">        :param iColor: Color of the polyline.</span>
+<span class="sd">        :type iColor: int</span>
+<span class="sd">        :param lineWidthMM: Width of the polyline in mm.</span>
+<span class="sd">        :type lineWidthMM: np.float64</span>
+<span class="sd">        :param dashedLine: Boolean indicating if the polyline is dashed.</span>
+<span class="sd">        :type dashedLine: bool</span>
+<span class="sd">        :param containerTK: Key of the container.</span>
+<span class="sd">        :type containerTK: str</span>
+<span class="sd">        :return: Tk of the added polyline.</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        :description: This is a wrapper method for AddExternalPolyline() from toolkit; Watch out for errors for more information.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">Tk</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">AddExternalPolyline</span><span class="p">(</span><span class="n">System</span><span class="o">.</span><span class="n">String</span><span class="o">.</span><span class="n">Empty</span><span class="p">,</span> <span class="n">wktLineString</span><span class="p">,</span> <span class="n">iColor</span><span class="p">,</span> <span class="n">lineWidthMM</span><span class="p">,</span> <span class="n">dashedLine</span><span class="p">,</span> <span class="n">containerTK</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">Tk</span> <span class="o">==</span> <span class="s2">&quot;-1&quot;</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;External polyline added using Linestring&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">Tk</span></div>
 
 
@@ -1490,7 +1866,8 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;External poly line point added&quot;</span><span class="p">)</span></div>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;External poly line point added&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="SIR3S_View.SetExternalPolyLineWidthAndColor">
@@ -1513,7 +1890,8 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;External polyline width and color are set&quot;</span><span class="p">)</span></div>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;External polyline width and color are set&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="SIR3S_View.AddExternalPolygon">
@@ -1544,10 +1922,44 @@
         <span class="k">if</span> <span class="n">Tk</span> <span class="o">==</span> <span class="s2">&quot;-1&quot;</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;External polygon is added&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;External polygon is added&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">Tk</span></div>
 
 
+<div class="viewcode-block" id="SIR3S_View.AddExternalPolygon_using_LineString">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_View.AddExternalPolygon_using_LineString">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">AddExternalPolygon_using_LineString</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wktLineString</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">lineColor</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">fillColor</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">lineWidthMM</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">,</span> <span class="n">isFilled</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">containerTK</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds an external polygon using linestring.</span>
+
+<span class="sd">        :param wktLineString: A string with all Points for Geometry in WKT Format</span>
+<span class="sd">        i.e formatted like &#39;LINESTRING (120 76 0, 500 300 0,  620 480 0, 364 276 0, 120 76 0)&#39;. </span>
+<span class="sd">        THE LAST POINT SHOULD BE IDENTICAL TO THE FIRST POINT</span>
+<span class="sd">        :type wktLineString: str</span>
+<span class="sd">        :param lineColor: Color of the polygon&#39;s line.</span>
+<span class="sd">        :type lineColor: int</span>
+<span class="sd">        :param fillColor: Fill color of the polygon.</span>
+<span class="sd">        :type fillColor: int</span>
+<span class="sd">        :param lineWidthMM: Width of the polygon&#39;s line in mm.</span>
+<span class="sd">        :type lineWidthMM: np.float64</span>
+<span class="sd">        :param isFilled: Boolean indicating if the polygon is filled.</span>
+<span class="sd">        :type isFilled: bool</span>
+<span class="sd">        :param containerTK: Key of the container.</span>
+<span class="sd">        :type containerTK: str</span>
+<span class="sd">        :return: Tk of the added polygon.</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        :description: This is a wrapper method for AddExternalPolygon() from toolkit; Watch out for errors for more information.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">Tk</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">AddExternalPolygon</span><span class="p">(</span><span class="n">System</span><span class="o">.</span><span class="n">String</span><span class="o">.</span><span class="n">Empty</span><span class="p">,</span> <span class="n">wktLineString</span><span class="p">,</span> <span class="n">lineColor</span><span class="p">,</span> <span class="n">fillColor</span><span class="p">,</span> <span class="n">lineWidthMM</span><span class="p">,</span> <span class="n">isFilled</span><span class="p">,</span> <span class="n">containerTK</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">Tk</span> <span class="o">==</span> <span class="s2">&quot;-1&quot;</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;External polygon is added using Linestring&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Tk</span></div>
+
+    
 <div class="viewcode-block" id="SIR3S_View.AddExternalPolygonPoint">
 <a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_View.AddExternalPolygonPoint">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">AddExternalPolygonPoint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Tk</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">):</span>
@@ -1568,7 +1980,8 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;External polygon point added&quot;</span><span class="p">)</span></div>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;External polygon point added&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="SIR3S_View.SetExternalPolygonProperties">
@@ -1595,7 +2008,8 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;External polygon properties are set&quot;</span><span class="p">)</span></div>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;External polygon properties are set&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="SIR3S_View.AddExternalText">
@@ -1633,7 +2047,8 @@
         <span class="k">if</span> <span class="n">Tk</span> <span class="o">==</span> <span class="s2">&quot;-1&quot;</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;External text is added&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;External text is added&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">Tk</span></div>
 
     
@@ -1655,7 +2070,8 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;External text is set&quot;</span><span class="p">)</span></div>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;External text is set&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="SIR3S_View.SetExternalTextProperties">
@@ -1693,7 +2109,8 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;External text properties are set&quot;</span><span class="p">)</span></div>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;External text properties are set&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="SIR3S_View.AddExternalArrow">
@@ -1727,7 +2144,8 @@
         <span class="k">if</span> <span class="n">Tk</span> <span class="o">==</span> <span class="s2">&quot;-1&quot;</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error : &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;External arrow added&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;External arrow added&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">Tk</span></div>
 
 
@@ -1762,7 +2180,8 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;External arrow properties are set&quot;</span><span class="p">)</span></div>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;External arrow properties are set&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="SIR3S_View.AddExternalRectangle">
@@ -1801,7 +2220,8 @@
         <span class="k">if</span> <span class="n">Tk</span> <span class="o">==</span> <span class="s2">&quot;-1&quot;</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error : &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;External rectangle is added&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;External rectangle is added&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">Tk</span></div>
 
 
@@ -1841,7 +2261,8 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;External rectangle properties are set&quot;</span><span class="p">)</span></div>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;External rectangle properties are set&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="SIR3S_View.AddExternalEllipse">
@@ -1878,7 +2299,8 @@
         <span class="k">if</span> <span class="n">Tk</span> <span class="o">==</span> <span class="s2">&quot;-1&quot;</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error : &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;External ellipse is added&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;External ellipse is added&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">Tk</span></div>
 
 
@@ -1915,7 +2337,8 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;External ellipse properties are set&quot;</span><span class="p">)</span></div>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;External ellipse properties are set&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="SIR3S_View.PrepareColoration">
@@ -1932,7 +2355,8 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Prepare coloration is done&quot;</span><span class="p">)</span></div>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Prepare coloration is done&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="SIR3S_View.InitColorTable">
@@ -2051,7 +2475,8 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Colorating pipe is successful&quot;</span><span class="p">)</span></div>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Colorating pipe is successful&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="SIR3S_View.ResetColoration">
@@ -2068,7 +2493,8 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Coloration reset is successful&quot;</span><span class="p">)</span></div>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Coloration reset is successful&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="SIR3S_View.DoColoration">
@@ -2085,7 +2511,8 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Coloration is done&quot;</span><span class="p">)</span></div>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Coloration is done&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="SIR3S_View.MoveElementTo">
@@ -2359,7 +2786,8 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Font is set&quot;</span><span class="p">)</span></div>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Font is set&quot;</span><span class="p">)</span></div>
 
             
 
@@ -2511,7 +2939,7 @@
 <span class="sd">         1 = Gate Valve</span>
 <span class="sd">         2 = Flap Valve</span>
 <span class="sd">         3 = Plug Valve</span>
-<span class="sd">        :type iSymbolType: Interfaces.NetValveTypes</span>
+<span class="sd">        :type iSymbolType: NetValveTypes</span>
 <span class="sd">        :param position: Position on Pipe: Possible Values are: </span>
 <span class="sd">          0 = at the Beginning of the Pipe (by Node Ki)</span>
 <span class="sd">         -1 = at the End of the Pipe (by Node Kk)</span>
@@ -2525,7 +2953,7 @@
 <span class="sd">        :param isPostureStatic: Option if the Posture is statically open/closed or time depemdant. </span>
 <span class="sd">         Enter NetValvePostures.STATIC_OPEN_CLOSE if Posture is always open / closed</span>
 <span class="sd">         otherwise enter NetValvePostures.TIME_DEP_TABLE if the Posture depends on a Setpoint Table (SWVT)</span>
-<span class="sd">        :type isPostureStatic: Interfaces.NetValvePostures</span>
+<span class="sd">        :type isPostureStatic: NetValvePostures</span>
 <span class="sd">        :param fkSWVT: the pk (key) of the SetPoint Table, in Case the Parameter &#39;isPostureStatic&#39; is entered as NetValvePostures.TIME_DEP_TABLE</span>
 <span class="sd">        :type fkSWVT: str</span>
 <span class="sd">        :param openClose: Only usable in Case the Parameter &#39;isPostureStatic&#39; is entered as NetValvePostures.STATIC_OPEN_CLOSE. So entering</span>
@@ -2537,7 +2965,9 @@
 <span class="sd">        :rtype: str</span>
 <span class="sd">        :description: This is a wrapper method for AddNewValveOnPipe() from toolkit; Watch out for errors for more information.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">Tk</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">AddNewValveOnPipe</span><span class="p">(</span><span class="n">tkPipe</span><span class="p">,</span> <span class="n">iSymbolType</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">isPostureStatic</span><span class="p">,</span> <span class="n">fkSWVT</span><span class="p">,</span> <span class="n">openClose</span><span class="p">,</span> <span class="n">idRef</span><span class="p">)</span>
+        <span class="n">iSymbolType_net</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dotnet_enum</span><span class="p">(</span><span class="n">iSymbolType</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">NetValveTypes</span><span class="p">)</span>
+        <span class="n">isPostureStatic_net</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dotnet_enum</span><span class="p">(</span><span class="n">isPostureStatic</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">NetValvePostures</span><span class="p">)</span>
+        <span class="n">Tk</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">AddNewValveOnPipe</span><span class="p">(</span><span class="n">tkPipe</span><span class="p">,</span> <span class="n">iSymbolType_net</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">isPostureStatic_net</span><span class="p">,</span> <span class="n">fkSWVT</span><span class="p">,</span> <span class="n">openClose</span><span class="p">,</span> <span class="n">idRef</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">Tk</span> <span class="o">==</span> <span class="s2">&quot;-1&quot;</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error : &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">Tk</span></div>
@@ -2561,7 +2991,7 @@
 <span class="sd">        :param iType: Type of Hydrant. Possible Value are:</span>
 <span class="sd">           1 = Subsurface</span>
 <span class="sd">          11 = Surface</span>
-<span class="sd">        :type iType: Interfaces.Hydrant_Type</span>
+<span class="sd">        :type iType: Hydrant_Type</span>
 <span class="sd">        :param symbolFactor: The Symbol Factor</span>
 <span class="sd">        :type symbolFactor: np.float64</span>
 <span class="sd">        :param fkNode: The tk (key) of a Node within the main Comntainer if the Hydrant is attached to a Node</span>
@@ -2577,9 +3007,9 @@
 <span class="sd">        :param ph_soll: Set pressure at the binding point</span>
 <span class="sd">        :type ph_soll: np.float32</span>
 <span class="sd">        :param qm_soll: Target extraction quantity</span>
-<span class="sd">        :type qm_soll: Interfaces.Hydrant_QM_SOLL</span>
+<span class="sd">        :type qm_soll: Hydrant_QM_SOLL</span>
 <span class="sd">        :param activity: Activity status (0=inactive | 1=calculated in the extinguishing water plugin | 2=calculated)</span>
-<span class="sd">        :type activity: Interfaces.Hydrant_Activity</span>
+<span class="sd">        :type activity: Hydrant_Activity</span>
 <span class="sd">        :param idRef: Reference ID</span>
 <span class="sd">        :type idRef: str</span>
 <span class="sd">        :param name: Name of the Hydrant, max 40 Characters</span>
@@ -2590,21 +3020,49 @@
 <span class="sd">        :rtype: str</span>
 <span class="sd">        :description: This is a wrapper method for AddNewHydrant() from toolkit; Watch out for errors for more information.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">Tk</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">AddNewHydrant</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">iType</span><span class="p">,</span> <span class="n">symbolFactor</span><span class="p">,</span> <span class="n">fkNode</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">dn</span><span class="p">,</span> <span class="n">roughness</span><span class="p">,</span> <span class="n">ph_min</span><span class="p">,</span> <span class="n">ph_soll</span><span class="p">,</span> <span class="n">qm_soll</span><span class="p">,</span> <span class="n">activity</span><span class="p">,</span> <span class="n">idRef</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">description</span><span class="p">)</span>
+        <span class="n">iType_net</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dotnet_enum</span><span class="p">(</span><span class="n">iType</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Hydrant_Type</span><span class="p">)</span>
+        <span class="n">qm_soll_net</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dotnet_enum</span><span class="p">(</span><span class="n">qm_soll</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Hydrant_QM_SOLL</span><span class="p">)</span>
+        <span class="n">activity_net</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dotnet_enum</span><span class="p">(</span><span class="n">activity</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Hydrant_Activity</span><span class="p">)</span>
+        <span class="n">Tk</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">AddNewHydrant</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">iType_net</span><span class="p">,</span> <span class="n">symbolFactor</span><span class="p">,</span> <span class="n">fkNode</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">dn</span><span class="p">,</span> <span class="n">roughness</span><span class="p">,</span> <span class="n">ph_min</span><span class="p">,</span> <span class="n">ph_soll</span><span class="p">,</span> <span class="n">qm_soll_net</span><span class="p">,</span> <span class="n">activity_net</span><span class="p">,</span> <span class="n">idRef</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">description</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">Tk</span> <span class="o">==</span> <span class="s2">&quot;-1&quot;</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error : &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">Tk</span></div>
+
+    
+<div class="viewcode-block" id="SIR3S_View.RemoveAllExternalVisualObjects">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_View.RemoveAllExternalVisualObjects">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">RemoveAllExternalVisualObjects</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Removes all External Visual Objects (external Polygones, Ellipses, Polylines, Arrows, Circles Texts) </span>
+<span class="sd">        from the Model and eventually refresh Views.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+<span class="sd">        :description: This is a wrapper method for RemoveAllExternalVisualObjects() from toolkit</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">RemoveAllExternalVisualObjects</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="SIR3S_View.EnableOrDisableOutputComments">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_View.EnableOrDisableOutputComments">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">EnableOrDisableOutputComments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outputComments</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Enable or disable additional output comments while using methods from SIR3S_Model class.</span>
+<span class="sd">        These comments could help you understand about the positive outcome of a method.</span>
+<span class="sd">        Default value is True</span>
+<span class="sd">         </span>
+<span class="sd">        :param outputComments: To enable pass true and to disable pass false</span>
+<span class="sd">        :type outputComments: bool</span>
+<span class="sd">        :return: None </span>
+<span class="sd">        :rtype: None</span>
+<span class="sd">        :description: This is a helper function</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span> <span class="o">=</span> <span class="n">outputComments</span></div>
 </div>
 
         
-
 <span class="c1"># End of file</span>
-
-
-
-
-    
-    
 </pre></div>
 
            </div>

@@ -108,7 +108,13 @@
 <section id="module-sir3stoolkit.core.wrapper">
 <span id="sir3stoolkit-core-wrapper-module"></span><h2>sir3stoolkit.core.wrapper module<a class="headerlink" href="#module-sir3stoolkit.core.wrapper" title="Link to this heading"></a></h2>
 <p>Created on Fri Nov 22 14:46:49 2024</p>
-<p>&#64;author: Giriyan</p>
+<p>&#64;author: Nischal Giriyan</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="sir3stoolkit.core.wrapper.DotNetEnumMeta">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sir3stoolkit.core.wrapper.</span></span><span class="sig-name descname"><span class="pre">DotNetEnumMeta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bases</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classdict</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sir3stoolkit/core/wrapper.html#DotNetEnumMeta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.wrapper.DotNetEnumMeta" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">EnumType</span></code></p>
+</dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="sir3stoolkit.core.wrapper.Initialize_Toolkit">
 <span class="sig-prename descclassname"><span class="pre">sir3stoolkit.core.wrapper.</span></span><span class="sig-name descname"><span class="pre">Initialize_Toolkit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">basePath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sir3stoolkit/core/wrapper.html#Initialize_Toolkit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.wrapper.Initialize_Toolkit" title="Link to this definition"></a></dt>
@@ -131,7 +137,7 @@
 <li><p><strong>y</strong> (<em>np.float64</em>) – Y coordinate.</p></li>
 <li><p><strong>z</strong> (<em>np.float32</em>) – Z coordinate.</p></li>
 <li><p><strong>symbolFactor</strong> (<em>np.float64</em>) – The symbol factor of the new node.</p></li>
-<li><p><strong>elementType</strong> (<em>Interfaces.Sir3SObjectTypes</em>) – Element type.</p></li>
+<li><p><strong>elementType</strong> (<em>ObjectTypes</em>) – Element type.</p></li>
 <li><p><strong>idRef</strong> (<em>str</em>) – ID in reference system.</p></li>
 <li><p><strong>description</strong> (<em>str</em>) – Description.</p></li>
 </ul>
@@ -161,7 +167,7 @@
 <li><p><strong>x</strong> (<em>np.float64</em>) – X coordinate.</p></li>
 <li><p><strong>y</strong> (<em>np.float64</em>) – Y coordinate.</p></li>
 <li><p><strong>z</strong> (<em>np.float32</em>) – Z coordinate.</p></li>
-<li><p><strong>elementType</strong> (<em>Interfaces.Sir3SObjectTypes</em>) – Element type.</p></li>
+<li><p><strong>elementType</strong> (<em>ObjectTypes</em>) – Element type.</p></li>
 <li><p><strong>dn</strong> (<em>np.float32</em>) – The nominal diameter or the Tk of the nominal diameter.</p></li>
 <li><p><strong>symbolFactor</strong> (<em>np.float64</em>) – The symbol factor of the new node.</p></li>
 <li><p><strong>angleDegree</strong> (<em>np.float32</em>) – The symbol angle in degrees.</p></li>
@@ -257,7 +263,7 @@
 <dd class="field-even"><p>Tk of the inserted row and object type.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tuple[str, Interfaces.SirDBProviderType]</p>
+<dd class="field-odd"><p>tuple[str, ObjectTypes]</p>
 </dd>
 <dt class="field-even">Description<span class="colon">:</span></dt>
 <dd class="field-even"><p>This is a wrapper method for AddTableRow() from toolkit; Watch out for errors for more information.</p>
@@ -303,6 +309,22 @@
 <dd class="field-even"><p>This is a wrapper method for AllowSirMessageBox() from toolkit</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sir3stoolkit.core.wrapper.SIR3S_Model.CloseModel">
+<span class="sig-name descname"><span class="pre">CloseModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">saveChangesBeforeClosing</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/core/wrapper.html#SIR3S_Model.CloseModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.wrapper.SIR3S_Model.CloseModel" title="Link to this definition"></a></dt>
+<dd><p>Closes a currently open Model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>saveChangesBeforeClosing</strong> – If True, the Changes would be saved before Closing</p>
+</dd>
+</dl>
+<p>otherwise Changes would be discarded
+:type saveChangesBeforeClosing: bool
+:return: return True if model is successfully closed, False otherwise
+:rtype: bool
+:description: This is a wrapper method for CloseModel() from toolkit; Watch out for errors for more information.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -368,6 +390,28 @@
 </dd>
 <dt class="field-even">Description<span class="colon">:</span></dt>
 <dd class="field-even"><p>This is a wrapper method for DeleteElement() from toolkit; Watch out for errors for more information.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sir3stoolkit.core.wrapper.SIR3S_Model.EnableOrDisableOutputComments">
+<span class="sig-name descname"><span class="pre">EnableOrDisableOutputComments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">outputComments</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sir3stoolkit/core/wrapper.html#SIR3S_Model.EnableOrDisableOutputComments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.wrapper.SIR3S_Model.EnableOrDisableOutputComments" title="Link to this definition"></a></dt>
+<dd><p>Enable or disable additional output comments while using methods from SIR3S_Model class.
+These comments could help you understand about the positive outcome of a method.
+Default value is True</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>outputComments</strong> (<em>bool</em>) – To enable pass true and to disable pass false</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Description<span class="colon">:</span></dt>
+<dd class="field-even"><p>This is a helper function</p>
 </dd>
 </dl>
 </dd></dl>
@@ -511,6 +555,23 @@ Only 1 Endnodes (i.e. Tanks, Air Valves, …) : Bypass Elements in General</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="sir3stoolkit.core.wrapper.SIR3S_Model.GetLogFilePath">
+<span class="sig-name descname"><span class="pre">GetLogFilePath</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/core/wrapper.html#SIR3S_Model.GetLogFilePath"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.wrapper.SIR3S_Model.GetLogFilePath" title="Link to this definition"></a></dt>
+<dd><p>Gets the value of the actual full Path of the Log File</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>logFilePath</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>This is a wrapper method for GetLogFilePath() from toolkit</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="sir3stoolkit.core.wrapper.SIR3S_Model.GetMainContainer">
 <span class="sig-name descname"><span class="pre">GetMainContainer</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sir3stoolkit/core/wrapper.html#SIR3S_Model.GetMainContainer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.wrapper.SIR3S_Model.GetMainContainer" title="Link to this definition"></a></dt>
 <dd><p>Finds the main container of the model and returns its Key (TK).</p>
@@ -519,7 +580,7 @@ Only 1 Endnodes (i.e. Tanks, Air Valves, …) : Bypass Elements in General</p>
 <dd class="field-odd"><p>Tk of the main container and object type.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>tuple[str, Interfaces.Sir3SObjectTypes]</p>
+<dd class="field-even"><p>tuple[str, ObjectTypes]</p>
 </dd>
 <dt class="field-odd">Description<span class="colon">:</span></dt>
 <dd class="field-odd"><p>This is a wrapper method for GetMainContainer() from toolkit.</p>
@@ -534,7 +595,7 @@ Only 1 Endnodes (i.e. Tanks, Air Valves, …) : Bypass Elements in General</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>elementType</strong> (<em>Interfaces.Sir3SObjectTypes</em>) – The element type.</p></li>
+<li><p><strong>elementType</strong> (<em>ObjectTypes</em>) – The element type.</p></li>
 <li><p><strong>propertyName</strong> (<em>str</em>) – The name of the result property.</p></li>
 </ul>
 </dd>
@@ -558,7 +619,7 @@ Only 1 Endnodes (i.e. Tanks, Air Valves, …) : Bypass Elements in General</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>timestamp</strong> (<em>str</em>) – The timestamp for which result is needed.</p></li>
-<li><p><strong>elementType</strong> (<em>Interfaces.Sir3SObjectTypes</em>) – The element type.</p></li>
+<li><p><strong>elementType</strong> (<em>ObjectTypes</em>) – The element type.</p></li>
 <li><p><strong>propertyName</strong> (<em>str</em>) – The name of the result property.</p></li>
 </ul>
 </dd>
@@ -581,7 +642,7 @@ Only 1 Endnodes (i.e. Tanks, Air Valves, …) : Bypass Elements in General</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>elementType</strong> (<em>Interfaces.Sir3SObjectTypes</em>) – The element type.</p></li>
+<li><p><strong>elementType</strong> (<em>ObjectTypes</em>) – The element type.</p></li>
 <li><p><strong>propertyName</strong> (<em>str</em>) – The name of the result property.</p></li>
 </ul>
 </dd>
@@ -605,7 +666,7 @@ Only 1 Endnodes (i.e. Tanks, Air Valves, …) : Bypass Elements in General</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>timestamp</strong> (<em>str</em>) – The timestamp for which result is needed.</p></li>
-<li><p><strong>elementType</strong> (<em>Interfaces.Sir3SObjectTypes</em>) – The element type.</p></li>
+<li><p><strong>elementType</strong> (<em>ObjectTypes</em>) – The element type.</p></li>
 <li><p><strong>propertyName</strong> (<em>str</em>) – The name of the result property.</p></li>
 </ul>
 </dd>
@@ -630,7 +691,7 @@ Only 1 Endnodes (i.e. Tanks, Air Valves, …) : Bypass Elements in General</p>
 <dd class="field-odd"><p>Network type defined in the enum.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>Interfaces.NetworkType</p>
+<dd class="field-even"><p>NetworkType</p>
 </dd>
 <dt class="field-odd">Description<span class="colon">:</span></dt>
 <dd class="field-odd"><p>This is a wrapper method for GetNetworkType() from toolkit.</p>
@@ -644,7 +705,7 @@ Only 1 Endnodes (i.e. Tanks, Air Valves, …) : Bypass Elements in General</p>
 <dd><p>Gets the total number of elements of the specified type.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>ElementType</strong> (<em>Interfaces.Sir3SObjectTypes</em>) – Object type defined in the enum.</p>
+<dd class="field-odd"><p><strong>ElementType</strong> (<em>ObjectTypes</em>) – Object type defined in the enum.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Total number of elements of type ‘ElementType’.</p>
@@ -670,7 +731,7 @@ Only 1 Endnodes (i.e. Tanks, Air Valves, …) : Bypass Elements in General</p>
 <dd class="field-even"><p>Type of object the input Key belongs to.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Interfaces.Sir3SObjectTypes</p>
+<dd class="field-odd"><p>ObjectTypes</p>
 </dd>
 <dt class="field-even">Description<span class="colon">:</span></dt>
 <dd class="field-even"><p>This is a wrapper method for GetObjectTypeOf_Key() from toolkit; Watch out for errors for more information.</p>
@@ -684,7 +745,7 @@ Only 1 Endnodes (i.e. Tanks, Air Valves, …) : Bypass Elements in General</p>
 <dd><p>Gets all properties belonging to the element of the specified type.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>ElementType</strong> (<em>Interfaces.Sir3SObjectTypes</em>) – Object type defined in the enum.</p>
+<dd class="field-odd"><p><strong>ElementType</strong> (<em>ObjectTypes</em>) – Object type defined in the enum.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>List of all properties belonging to the element of type ‘ElementType’.</p>
@@ -725,7 +786,7 @@ Only 1 Endnodes (i.e. Tanks, Air Valves, …) : Bypass Elements in General</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>elementType</strong> (<em>Interfaces.Sir3SObjectTypes</em>) – The element type.</p></li>
+<li><p><strong>elementType</strong> (<em>ObjectTypes</em>) – The element type.</p></li>
 <li><p><strong>onlySelectedVectors</strong> (<em>bool</em>) – If True, only the names of selected vector channels for this element type shall be returned, otherwise all possible result property names for this element type shall be returned.</p></li>
 </ul>
 </dd>
@@ -765,6 +826,53 @@ Only 1 Endnodes (i.e. Tanks, Air Valves, …) : Bypass Elements in General</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="sir3stoolkit.core.wrapper.SIR3S_Model.GetResultforAllTimestamp">
+<span class="sig-name descname"><span class="pre">GetResultforAllTimestamp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Tk</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">property</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sir3stoolkit/core/wrapper.html#SIR3S_Model.GetResultforAllTimestamp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.wrapper.SIR3S_Model.GetResultforAllTimestamp" title="Link to this definition"></a></dt>
+<dd><p>Gets the result values for a particular property of an object for all timestamps</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Tk</strong> (<em>str</em>) – Tk of the element</p></li>
+<li><p><strong>property</strong> (<em>str</em>) – Property of the element</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>resultList</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of tuple</p>
+</dd>
+<dt class="field-even">Description<span class="colon">:</span></dt>
+<dd class="field-even"><p>This is a helper function</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sir3stoolkit.core.wrapper.SIR3S_Model.GetResultfortimestamp">
+<span class="sig-name descname"><span class="pre">GetResultfortimestamp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timestamp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Tk</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">property</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/core/wrapper.html#SIR3S_Model.GetResultfortimestamp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.wrapper.SIR3S_Model.GetResultfortimestamp" title="Link to this definition"></a></dt>
+<dd><p>Gets the result value for a particular property of an object for a specific timestamp provided as input</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>timestamp</strong> (<em>str</em>) – Timestamp provided as input</p></li>
+<li><p><strong>Tk</strong> (<em>str</em>) – Tk of the element</p></li>
+<li><p><strong>property</strong> (<em>str</em>) – Property of the element</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>(value, valueType)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple[str, str]</p>
+</dd>
+<dt class="field-even">Description<span class="colon">:</span></dt>
+<dd class="field-even"><p>This is a helper function</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="sir3stoolkit.core.wrapper.SIR3S_Model.GetTableRows">
 <span class="sig-name descname"><span class="pre">GetTableRows</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tablePkTk</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sir3stoolkit/core/wrapper.html#SIR3S_Model.GetTableRows"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.wrapper.SIR3S_Model.GetTableRows" title="Link to this definition"></a></dt>
 <dd><p>Gets all rows of the specified table.</p>
@@ -776,7 +884,7 @@ Only 1 Endnodes (i.e. Tanks, Air Valves, …) : Bypass Elements in General</p>
 <dd class="field-even"><p>List of Tk’s of all rows of the table and object type.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tuple[list, Interfaces.SirDBProviderType]</p>
+<dd class="field-odd"><p>tuple[list, ProviderTypes]</p>
 </dd>
 <dt class="field-even">Description<span class="colon">:</span></dt>
 <dd class="field-even"><p>This is a wrapper method for GetTableRows() from toolkit; Watch out for errors for more information.</p>
@@ -809,7 +917,7 @@ Only 1 Endnodes (i.e. Tanks, Air Valves, …) : Bypass Elements in General</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>IdRef</strong> (<em>str</em>) – ID reference of the element.</p></li>
-<li><p><strong>object_type</strong> (<em>Interfaces.Sir3SObjectTypes</em>) – Type of the element (like Node, Pipe, Valve, etc.).</p></li>
+<li><p><strong>object_type</strong> (<em>ObjectTypes</em>) – Type of the element (like Node, Pipe, Valve, etc.).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -830,7 +938,7 @@ Only 1 Endnodes (i.e. Tanks, Air Valves, …) : Bypass Elements in General</p>
 <dd><p>Gets all Tk’s belonging to the elements of the specified type.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>ElementType</strong> (<em>Interfaces.Sir3SObjectTypes</em>) – Object type defined in the enum.</p>
+<dd class="field-odd"><p><strong>ElementType</strong> (<em>ObjectTypes</em>) – Object type defined in the enum.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>List of all Tk’s belonging to the elements of type ‘ElementType’.</p>
@@ -874,7 +982,7 @@ Only 1 Endnodes (i.e. Tanks, Air Valves, …) : Bypass Elements in General</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>ElementType</strong> (<em>Interfaces.Sir3SObjectTypes</em>) – Object type defined in the enum to be inserted.</p></li>
+<li><p><strong>ElementType</strong> (<em>ObjectTypes</em>) – Object type defined in the enum to be inserted.</p></li>
 <li><p><strong>IdRef</strong> (<em>str</em>) – Id reference.</p></li>
 </ul>
 </dd>
@@ -918,8 +1026,8 @@ Only 1 Endnodes (i.e. Tanks, Air Valves, …) : Bypass Elements in General</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>dbName</strong> (<em>str</em>) – Full path to the database file.</p></li>
-<li><p><strong>providerType</strong> (<em>Interfaces.SirDBProviderType</em>) – Provider type from the enum.</p></li>
-<li><p><strong>netType</strong> (<em>Interfaces.NetworkType</em>) – Network type.</p></li>
+<li><p><strong>providerType</strong> (<em>ProviderTypes</em>) – Provider type from the enum.</p></li>
+<li><p><strong>netType</strong> (<em>NetworkType</em>) – Network type.</p></li>
 <li><p><strong>modelDescription</strong> (<em>str</em>) – Description of the model to be created.</p></li>
 <li><p><strong>namedInstance</strong> (<em>str</em>) – Instance name of the SQL Server.</p></li>
 <li><p><strong>userID</strong> (<em>str</em>) – User ID for authentication, only needed for ORACLE and for SQLServer only if SQLServer authentication is required.</p></li>
@@ -946,7 +1054,7 @@ Only 1 Endnodes (i.e. Tanks, Air Valves, …) : Bypass Elements in General</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>dbName</strong> (<em>str</em>) – Full path to the database file.</p></li>
-<li><p><strong>providerType</strong> (<em>Interfaces.SirDBProviderType</em>) – Provider type from the enum.</p></li>
+<li><p><strong>providerType</strong> (<em>ProviderTypes</em>) – Provider type from the enum (Self.ProviderTypes).</p></li>
 <li><p><strong>Mid</strong> (<em>str</em>) – Model identifier.</p></li>
 <li><p><strong>saveCurrentlyOpenModel</strong> (<em>bool</em>) – Do you want to save the current model before closing it?</p></li>
 <li><p><strong>namedInstance</strong> (<em>str</em>) – Instance name of the SQL Server.</p></li>
@@ -1141,6 +1249,26 @@ Only 1 Endnodes (i.e. Tanks, Air Valves, …) : Bypass Elements in General</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="sir3stoolkit.core.wrapper.SIR3S_Model.SetLogFilePath">
+<span class="sig-name descname"><span class="pre">SetLogFilePath</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logFilePath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/core/wrapper.html#SIR3S_Model.SetLogFilePath"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.wrapper.SIR3S_Model.SetLogFilePath" title="Link to this definition"></a></dt>
+<dd><p>Sets the full Path (Drive, Directory and File Name) of the Log File</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>logFilePath</strong> (<em>str</em>) – The Full Path of the Log File</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>isPathSet</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+<dt class="field-even">Description<span class="colon">:</span></dt>
+<dd class="field-even"><p>This is a wrapper method for SetLogFilePath() from toolkit</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="sir3stoolkit.core.wrapper.SIR3S_Model.SetValue">
 <span class="sig-name descname"><span class="pre">SetValue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Tk</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">propertyName</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sir3stoolkit/core/wrapper.html#SIR3S_Model.SetValue"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.wrapper.SIR3S_Model.SetValue" title="Link to this definition"></a></dt>
 <dd><p>Sets the value for the given element’s property.</p>
@@ -1203,6 +1331,16 @@ Only 1 Endnodes (i.e. Tanks, Air Valves, …) : Bypass Elements in General</p>
 </dd>
 </dl>
 </dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sir3stoolkit.core.wrapper.SIR3S_Model.to_dotnet_enum">
+<span class="sig-name descname"><span class="pre">to_dotnet_enum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">py_enum_member</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">py_enum_type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sir3stoolkit/core/wrapper.html#SIR3S_Model.to_dotnet_enum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.wrapper.SIR3S_Model.to_dotnet_enum" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sir3stoolkit.core.wrapper.SIR3S_Model.to_python_enum">
+<span class="sig-name descname"><span class="pre">to_python_enum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dotnet_enum_member</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">py_enum_type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sir3stoolkit/core/wrapper.html#SIR3S_Model.to_python_enum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.wrapper.SIR3S_Model.to_python_enum" title="Link to this definition"></a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -1322,6 +1460,33 @@ Only 1 Endnodes (i.e. Tanks, Air Valves, …) : Bypass Elements in General</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="sir3stoolkit.core.wrapper.SIR3S_View.AddExternalPolygon_using_LineString">
+<span class="sig-name descname"><span class="pre">AddExternalPolygon_using_LineString</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wktLineString</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lineColor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fillColor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lineWidthMM</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float64</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">isFilled</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">containerTK</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/core/wrapper.html#SIR3S_View.AddExternalPolygon_using_LineString"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.wrapper.SIR3S_View.AddExternalPolygon_using_LineString" title="Link to this definition"></a></dt>
+<dd><p>Adds an external polygon using linestring.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>wktLineString</strong> – A string with all Points for Geometry in WKT Format</p>
+</dd>
+</dl>
+<p>i.e formatted like ‘LINESTRING (120 76 0, 500 300 0,  620 480 0, 364 276 0, 120 76 0)’.
+THE LAST POINT SHOULD BE IDENTICAL TO THE FIRST POINT
+:type wktLineString: str
+:param lineColor: Color of the polygon’s line.
+:type lineColor: int
+:param fillColor: Fill color of the polygon.
+:type fillColor: int
+:param lineWidthMM: Width of the polygon’s line in mm.
+:type lineWidthMM: np.float64
+:param isFilled: Boolean indicating if the polygon is filled.
+:type isFilled: bool
+:param containerTK: Key of the container.
+:type containerTK: str
+:return: Tk of the added polygon.
+:rtype: str
+:description: This is a wrapper method for AddExternalPolygon() from toolkit; Watch out for errors for more information.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="sir3stoolkit.core.wrapper.SIR3S_View.AddExternalPolyline">
 <span class="sig-name descname"><span class="pre">AddExternalPolyline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xArray</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yArray</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iColor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lineWidthMM</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float64</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dashedLine</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">containerTK</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/core/wrapper.html#SIR3S_View.AddExternalPolyline"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.wrapper.SIR3S_View.AddExternalPolyline" title="Link to this definition"></a></dt>
 <dd><p>Adds an external polyline.</p>
@@ -1370,6 +1535,30 @@ Only 1 Endnodes (i.e. Tanks, Air Valves, …) : Bypass Elements in General</p>
 <dd class="field-even"><p>This is a wrapper method for AddExternalPolylinePoint() from toolkit; Watch out for errors for more information.</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sir3stoolkit.core.wrapper.SIR3S_View.AddExternalPolyline_using_LineString">
+<span class="sig-name descname"><span class="pre">AddExternalPolyline_using_LineString</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wktLineString</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iColor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lineWidthMM</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float64</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dashedLine</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">containerTK</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/core/wrapper.html#SIR3S_View.AddExternalPolyline_using_LineString"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.wrapper.SIR3S_View.AddExternalPolyline_using_LineString" title="Link to this definition"></a></dt>
+<dd><p>Adds an external polyline using linestring.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>wktLineString</strong> – A string with all Points for Geometry in WKT Format</p>
+</dd>
+</dl>
+<p>i.e formatted like ‘LINESTRING (120 76 0, 500 300 0,  620 480 0, 364 276 0)’.
+:type wktLineString: str
+:param iColor: Color of the polyline.
+:type iColor: int
+:param lineWidthMM: Width of the polyline in mm.
+:type lineWidthMM: np.float64
+:param dashedLine: Boolean indicating if the polyline is dashed.
+:type dashedLine: bool
+:param containerTK: Key of the container.
+:type containerTK: str
+:return: Tk of the added polyline.
+:rtype: str
+:description: This is a wrapper method for AddExternalPolyline() from toolkit; Watch out for errors for more information.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1557,7 +1746,7 @@ than the specified tolerance
 <li><p><strong>x</strong> (<em>np.float64</em>) – The X-Coordinate of the Hydrant</p></li>
 <li><p><strong>y</strong> (<em>np.float64</em>) – The Y-Coordinate of the Hydrant</p></li>
 <li><p><strong>z</strong> (<em>np.float32</em>) – The Z-Coordinate of the Hydrant</p></li>
-<li><p><strong>iType</strong> (<em>Interfaces.Hydrant_Type</em>) – <dl class="simple">
+<li><p><strong>iType</strong> (<em>Hydrant_Type</em>) – <dl class="simple">
 <dt>Type of Hydrant. Possible Value are:</dt><dd><p>1 = Subsurface</p>
 </dd>
 </dl>
@@ -1570,8 +1759,8 @@ than the specified tolerance
 <li><p><strong>roughness</strong> (<em>np.float32</em>) – Roughness coefficient (k-value) Connecting pipe</p></li>
 <li><p><strong>ph_min</strong> (<em>np.float32</em>) – Minimum pressure at the tapping point</p></li>
 <li><p><strong>ph_soll</strong> (<em>np.float32</em>) – Set pressure at the binding point</p></li>
-<li><p><strong>qm_soll</strong> (<em>Interfaces.Hydrant_QM_SOLL</em>) – Target extraction quantity</p></li>
-<li><p><strong>activity</strong> (<em>Interfaces.Hydrant_Activity</em>) – Activity status (0=inactive | 1=calculated in the extinguishing water plugin | 2=calculated)</p></li>
+<li><p><strong>qm_soll</strong> (<em>Hydrant_QM_SOLL</em>) – Target extraction quantity</p></li>
+<li><p><strong>activity</strong> (<em>Hydrant_Activity</em>) – Activity status (0=inactive | 1=calculated in the extinguishing water plugin | 2=calculated)</p></li>
 <li><p><strong>idRef</strong> (<em>str</em>) – Reference ID</p></li>
 <li><p><strong>name</strong> (<em>str</em>) – Name of the Hydrant, max 40 Characters</p></li>
 <li><p><strong>description</strong> (<em>str</em>) – Description, max 254 Characters</p></li>
@@ -1739,7 +1928,7 @@ Face Name will assume it to be ‘Arial’
 </p></li>
 <li><p><strong>name</strong> (<em>str</em>) – A Name for the Valve, max 40 Characters</p></li>
 <li><p><strong>description</strong> (<em>str</em>) – Description of the Valve, max 254 Characters</p></li>
-<li><p><strong>isPostureStatic</strong> (<em>Interfaces.NetValvePostures</em>) – Option if the Posture is statically open/closed or time depemdant.
+<li><p><strong>isPostureStatic</strong> (<em>NetValvePostures</em>) – Option if the Posture is statically open/closed or time depemdant.
 Enter NetValvePostures.STATIC_OPEN_CLOSE if Posture is always open / closed
 otherwise enter NetValvePostures.TIME_DEP_TABLE if the Posture depends on a Setpoint Table (SWVT)</p></li>
 <li><p><strong>fkSWVT</strong> (<em>str</em>) – the pk (key) of the SetPoint Table, in Case the Parameter ‘isPostureStatic’ is entered as NetValvePostures.TIME_DEP_TABLE</p></li>
@@ -1758,6 +1947,22 @@ in that case ‘True’, resp. ‘False’ assumes the Valve is always open resp
 <dd class="field-even"><p>This is a wrapper method for AddNewValveOnPipe() from toolkit; Watch out for errors for more information.</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sir3stoolkit.core.wrapper.SIR3S_View.CloseModel">
+<span class="sig-name descname"><span class="pre">CloseModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">saveChangesBeforeClosing</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/core/wrapper.html#SIR3S_View.CloseModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.wrapper.SIR3S_View.CloseModel" title="Link to this definition"></a></dt>
+<dd><p>Closes a currently open Model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>saveChangesBeforeClosing</strong> – If True, the Changes would be saved before Closing</p>
+</dd>
+</dl>
+<p>otherwise Changes would be discarded
+:type saveChangesBeforeClosing: bool
+:return: return True if model is successfully closed, False otherwise
+:rtype: bool
+:description: This is a wrapper method for CloseModel() from toolkit; Watch out for errors for more information.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1798,6 +2003,28 @@ in that case ‘True’, resp. ‘False’ assumes the Valve is always open resp
 </dd>
 <dt class="field-odd">Description<span class="colon">:</span></dt>
 <dd class="field-odd"><p>This is a wrapper method for DoColoration() from toolkit; Watch out for errors for more information.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sir3stoolkit.core.wrapper.SIR3S_View.EnableOrDisableOutputComments">
+<span class="sig-name descname"><span class="pre">EnableOrDisableOutputComments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">outputComments</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sir3stoolkit/core/wrapper.html#SIR3S_View.EnableOrDisableOutputComments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.wrapper.SIR3S_View.EnableOrDisableOutputComments" title="Link to this definition"></a></dt>
+<dd><p>Enable or disable additional output comments while using methods from SIR3S_Model class.
+These comments could help you understand about the positive outcome of a method.
+Default value is True</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>outputComments</strong> (<em>bool</em>) – To enable pass true and to disable pass false</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Description<span class="colon">:</span></dt>
+<dd class="field-even"><p>This is a helper function</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1914,7 +2141,7 @@ in that case ‘True’, resp. ‘False’ assumes the Valve is always open resp
 <dd class="field-odd"><p>Tk of the main container and object type.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>tuple[str, Interfaces.Sir3SObjectTypes]</p>
+<dd class="field-even"><p>tuple[str, ObjectTypes]</p>
 </dd>
 <dt class="field-odd">Description<span class="colon">:</span></dt>
 <dd class="field-odd"><p>This is a wrapper method for GetMainContainer() from toolkit; Finds the Main Container of the Model and returns its Key (TK).</p>
@@ -2067,7 +2294,7 @@ has no effect.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>dbName</strong> (<em>str</em>) – Full path to the database file.</p></li>
-<li><p><strong>providerType</strong> (<em>Interfaces.SirDBProviderType</em>) – Provider type from the enum.</p></li>
+<li><p><strong>providerType</strong> (<em>ProviderTypes</em>) – Provider type from the enum.</p></li>
 <li><p><strong>Mid</strong> (<em>str</em>) – Model identifier.</p></li>
 <li><p><strong>saveCurrentlyOpenModel</strong> (<em>bool</em>) – Do you want to save the current model before closing it?</p></li>
 <li><p><strong>namedInstance</strong> (<em>str</em>) – Instance name of the SQL Server.</p></li>
@@ -2123,6 +2350,24 @@ has no effect.</p>
 </dd>
 <dt class="field-odd">Description<span class="colon">:</span></dt>
 <dd class="field-odd"><p>This is a wrapper method for PrepareColoration() from toolkit; Watch out for errors for more information.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sir3stoolkit.core.wrapper.SIR3S_View.RemoveAllExternalVisualObjects">
+<span class="sig-name descname"><span class="pre">RemoveAllExternalVisualObjects</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sir3stoolkit/core/wrapper.html#SIR3S_View.RemoveAllExternalVisualObjects"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.wrapper.SIR3S_View.RemoveAllExternalVisualObjects" title="Link to this definition"></a></dt>
+<dd><p>Removes all External Visual Objects (external Polygones, Ellipses, Polylines, Arrows, Circles Texts)
+from the Model and eventually refresh Views.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>This is a wrapper method for RemoveAllExternalVisualObjects() from toolkit</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2451,7 +2696,22 @@ This Method only applies to Texts, numerical Displays, Block Symbols and Block R
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="sir3stoolkit.core.wrapper.SIR3S_View.to_dotnet_enum">
+<span class="sig-name descname"><span class="pre">to_dotnet_enum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">py_enum_member</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">py_enum_type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sir3stoolkit/core/wrapper.html#SIR3S_View.to_dotnet_enum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.wrapper.SIR3S_View.to_dotnet_enum" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sir3stoolkit.core.wrapper.SIR3S_View.to_python_enum">
+<span class="sig-name descname"><span class="pre">to_python_enum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dotnet_enum_member</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">py_enum_type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sir3stoolkit/core/wrapper.html#SIR3S_View.to_python_enum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.wrapper.SIR3S_View.to_python_enum" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
 </dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sir3stoolkit.core.wrapper.create_dotnet_enum">
+<span class="sig-prename descclassname"><span class="pre">sir3stoolkit.core.wrapper.</span></span><span class="sig-name descname"><span class="pre">create_dotnet_enum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dotnet_enum</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assembly_ext</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sir3stoolkit/core/wrapper.html#create_dotnet_enum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.wrapper.create_dotnet_enum" title="Link to this definition"></a></dt>
+<dd></dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="sir3stoolkit.core.wrapper.fontInformation">
