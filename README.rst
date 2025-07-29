@@ -1,11 +1,16 @@
-.. image:: https://img.shields.io/badge/License-MIT-yellow.svg
-   :target: LICENSE
-   :alt: License: MIT
-.. image:: https://img.shields.io/pypi/v/sir3stoolkit.svg
-   :target: https://pypi.org/project/sir3stoolkit/
-   :alt: PyPI version
+.. |license| image:: https://img.shields.io/badge/License-MIT-yellow.svg
+    :alt: License: MIT
+    :target: LICENSE
 
-|
+.. |supported-versions| image:: https://img.shields.io/pypi/pyversions/sir3stoolkit.svg
+    :alt: Supported Python versions
+    :target: https://pypi.org/project/sir3stoolkit
+
+.. |version| image:: https://img.shields.io/pypi/v/sir3stoolkit.svg
+    :alt: PyPI Package latest release
+    :target: https://pypi.org/project/sir3stoolkit/
+
+----
 
 SIR 3S Toolkit
 ==============
@@ -18,14 +23,14 @@ At its core, the package wraps basic functionality of SIR 3S, offering a low-lev
 
 On top of this core, higher-level functionality is provided, enabling more powerful and intuitive interactions with SIR 3S models. 
 
-This layered design ensures flexibility and makes the SIR 3S Toolkit easily extensible for future enhancements.
+This layered architecture of the SIR 3S Toolkit ensures both flexibility and extensibility for advanced applications.
 
 .. image:: https://raw.githubusercontent.com/3SConsult/PT3S/master/sphinx_docs/_static/Sir3S_Splash.jpg
    :target: https://www.3sconsult.de/software/sir-3s/
    :width: 20%
    :alt: Sir3S Splash
 
-In order to use the SIR 3S Toolkit, access to SIR 3S models and a licensed SIR 3S version are necessary.
+Note: This package is a client toolkit for the proprietary SIR 3S software. A valid license for SIR 3S is required to use this package in production.
 
 Features
 --------
