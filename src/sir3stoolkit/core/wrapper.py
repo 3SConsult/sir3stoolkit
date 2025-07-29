@@ -6,16 +6,17 @@ Created on Fri Nov 22 14:46:49 2024
 @author: Nischal Giriyan
 """
 
+import clr as net
+from collections import namedtuple
+import enum
+import inspect
+import numpy as np
+import os
+import random
 import sys
 from turtle import fillcolor
-import clr as net
-import random
-import inspect
-import os
+
 import System
-import enum
-from collections import namedtuple
-import numpy as np
 from System.Reflection import Assembly
 
 # Global variables
