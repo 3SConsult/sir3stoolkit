@@ -19,7 +19,7 @@ Python code, making it possible to develop custom workflows, perform batch simul
 or operational pipelines.
 
 At its core, the package wraps basic functionality of SIR 3S, offering a low-level access to the creation, modification and simulation of SIR 3S models. 
-Several method operations of the kind Get, Set, Add, Delete, Insert and many more are provided for this aim.
+A variety of method operations — such as Get, Set, Add, Delete, and Insert — are available to directly manipulate model components.
 This gives you a variety of opportunities, e.g.:
 
 * You can build models solely from scratch, defining nodes, pipes, and more, flexibly adapted to your available data sources, thus extending SIR 3S's built-in import tools.

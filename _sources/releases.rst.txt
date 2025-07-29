@@ -1,26 +1,32 @@
 Releases
 ========
 
-In general the SIR 3S Toolkit will first be released with the SIR 3S version 90-15 Quebec with the Toolkit version 90.15.1. Between the release of Quebec and the next major SIR 3S release, the Toolkit will receive updates. 
-This can either be a pure python update that can be obtained using ``pip install --upgrade sir3stoolkit`` or it can include changes in the C# code wrapped by the core subpackage. In this case before upgrading via pip the ``Sir3S_Toolkit.dll`` in the SIR Graf directory has to be exchanged. The release notes indicate what kind of release it is. How the dll will be published is still to be determined.
+The SIR 3S Toolkit will first be released alongside SIR 3S version 90-15 Quebec, under the version 90.15.1. 
+Between major SIR 3S releases, the Toolkit may receive interim updates to fix bugs or extend functionality.
+
+There are two types of updates:
+
+1. **Python-only updates** – Install via:
+
+   .. code-block:: bash
+
+      pip install --upgrade sir3stoolkit
+
+2. **Core updates with DLL changes** – Requires manual replacement of ``Sir3S_Toolkit.dll`` in the SirGraf directory **before** running the upgrade.
+
+
+This can either be a pure python update that can be obtained using ``pip install --upgrade sir3stoolkit`` or 
+it can include changes in the basic functionality code wrapped by the core subpackage. 
+In this case before upgrading via pip the ``Sir3S_Toolkit.dll`` in the SirGraf directory has to be exchanged. 
+The release notes indicate what kind of release it is.
 
 90-15 Quebec
 ------------
 
-90.15.1 (To Be Released)
-~~~~~~~~~~~~~~~~~~~~~~~~
+Version 90.15.1 (Initial Release)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-**Important** next version of SIR 3S Toolkit after 90.15.0.1.dev1 should be named 90.15.1 and then we can continue in a normal way to 90.15.2.
-
-First official public version.
-
-Early Development Versions
---------------------------
-
-Below versions are public, but not intended for use.
-
-90.15.0.1.dev1
-~~~~~~~~~~~~~~
-
-90.15.0.0.dev1
-~~~~~~~~~~~~~~
+- First official public release of the SIR 3S Toolkit
+- Introduced core wrapping API for SIR 3S object model (nodes, pipes, etc.)
+- Compatible with SIR 3S 90-15 Quebec (requires Sir3S_Toolkit.dll)
+- Included example workflows and basic simulation access
