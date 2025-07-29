@@ -1,12 +1,12 @@
-.. |license| image:: https://img.shields.io/badge/License-MIT-yellow.svg
+.. image:: https://img.shields.io/badge/License-MIT-yellow.svg
     :alt: License: MIT
     :target: LICENSE
 
-.. |supported-versions| image:: https://img.shields.io/pypi/pyversions/sir3stoolkit.svg
+.. image:: https://img.shields.io/pypi/pyversions/sir3stoolkit.svg
     :alt: Supported Python versions
     :target: https://pypi.org/project/sir3stoolkit
 
-.. |version| image:: https://img.shields.io/pypi/v/sir3stoolkit.svg
+.. image:: https://img.shields.io/pypi/v/sir3stoolkit.svg
     :alt: PyPI Package latest release
     :target: https://pypi.org/project/sir3stoolkit/
 
