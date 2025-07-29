@@ -12,7 +12,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='sir3stoolkit',
-    version='90.15.0.dev1',
+    version='90.15.1',
     description='SIR3S Toolkit',
     long_description='SIR3S Python Toolkit',
     author="3S Consult GmbH",
