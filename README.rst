@@ -57,6 +57,27 @@ To install the SIR 3S Toolkit, use pip:
 
       pip install sir3stoolkit
 
+Quick Start
+-----------
+
+.. code-block:: python
+
+   from sir3stoolkit.core import wrapper
+
+   SIR3S_SIRGRAF_DIR = r"C:\SIR3S\SirGraf-90-15-00-12_Quebec_x64"
+   wrapper.Initialize_Toolkit(SIR3S_SIRGRAF_DIR)
+
+   model = wrapper.SIR3S_Model()
+   model.OpenModel(dbName=r"example_model.db3", 
+                   providerType=model.ProviderTypes.SQLite, 
+                   Mid="M-1-0-1", 
+                   saveCurrentlyOpenModel=False, 
+                   namedInstance="", 
+                   userID="", 
+                   password="")
+
+   model.ExecCalculation(True)
+
 Contact
 -------
 If you'd like to report a bug or suggest an improvement for the SIR 3S Toolkit, please `open a new issue on GitHub <https://github.com/3SConsult/sir3stoolkit/issues>`_. Describe the situation in detail — whether it's a bug you encountered or a feature you'd like to see improved. Feel free to attach images or other relevant materials to help us better understand your request.
