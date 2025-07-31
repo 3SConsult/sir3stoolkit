@@ -16,7 +16,7 @@ setup(
     description='SIR3S Toolkit',
     long_description='SIR3S Python Toolkit',
     author="3S Consult GmbH",
-    author_email="giriyan@3sconsult.de",
+    author_email="sir3stoolkit@3sconsult.de",
     package_dir={'': 'src'},
     packages=find_packages(where='src'),
     python_requires='>=3.9, <4',

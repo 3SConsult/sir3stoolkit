@@ -61,7 +61,7 @@ Contact
 -------
 If you'd like to report a bug or suggest an improvement for the SIR 3S Toolkit, please `open a new issue on GitHub <https://github.com/3SConsult/sir3stoolkit/issues>`_. Describe the situation in detail — whether it's a bug you encountered or a feature you'd like to see improved. Feel free to attach images or other relevant materials to help us better understand your request.
 
-For other requests, please contact us at `jablonski@3sconsult.de <mailto:jablonski@3sconsult.de>`_.
+For other requests, please contact us at `sir3stoolkit@3sconsult.de <mailto:sir3stoolkit@3sconsult.de>`_.
 
 License
 -------
