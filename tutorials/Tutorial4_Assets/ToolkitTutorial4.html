@@ -95,7 +95,7 @@
 <section id="SIR-3S-Installation">
 <h2>SIR 3S Installation<a class="headerlink" href="#SIR-3S-Installation" title="Link to this heading"></a></h2>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[49]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r&quot;C:\3S\SIR 3S Entwicklung\SirGraf-90-15-00-16_Quebec_x64&quot; #change to local path
@@ -107,7 +107,7 @@
 <h2>Imports<a class="headerlink" href="#Imports" title="Link to this heading"></a></h2>
 <p>Note: The SIR 3S Toolkit requires the Sir3S_Toolkit.dll included in SIR 3S installations (version Quebec and higher).</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[50]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import sir3stoolkit
@@ -116,7 +116,7 @@
 </div>
 <p>The core of sir3stoolkit is a Python wrapper around basic functionality of SIR 3S, offering a low-level access to the creation, modification and simulation of SIR 3S models. In the future pure python subpackages may be added.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[51]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sir3stoolkit.core import wrapper
@@ -124,7 +124,7 @@
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[52]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sir3stoolkit
@@ -132,7 +132,7 @@
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[52]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -142,7 +142,7 @@
 </div>
 <p>The <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.Initialize_Toolkit">wrapper package</a> has to be initialized with reference to a SIR 3S (SirGraf) installation.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[53]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>wrapper.Initialize_Toolkit(SIR3S_SIRGRAF_DIR)
@@ -154,7 +154,7 @@
 <h2>Initialization<a class="headerlink" href="#Initialization" title="Link to this heading"></a></h2>
 <p>The SIR 3S Toolkit contains two classes: <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model">SIR3S_Model</a> (model and data) and <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_View">SIR3S_View</a> (depiction in SIR Graf). All SIR 3S Toolkit functionality is accessed via the methods of these classes.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[54]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s = wrapper.SIR3S_Model()
@@ -170,7 +170,7 @@ Initialization complete
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[55]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s_view = wrapper.SIR3S_View()
@@ -189,7 +189,7 @@ Initialization complete
 <section id="Open-Model">
 <h2>Open Model<a class="headerlink" href="#Open-Model" title="Link to this heading"></a></h2>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[56]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dbFilePath=r&quot;Toolkit_Tutorial4_Model.db3&quot;
@@ -197,7 +197,7 @@ Initialization complete
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[57]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.OpenModel(dbName=dbFilePath,
@@ -220,7 +220,7 @@ Model is open for further operation
 </div>
 <p>Now the model has been opened. All SIR 3S Toolkit operations now apply to this model until another one is opened.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[58]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(s3s.GetNetworkType()) # to check that the correct model is responsive, model we are trying to open was created with type Water
@@ -244,7 +244,7 @@ NetworkType.Water
 <h3>SIR 3S object types<a class="headerlink" href="#SIR-3S-object-types" title="Link to this heading"></a></h3>
 <p>As we did with non-result values, we need to obtain the internal SIR 3S object types to be passed to our function for obtaining the attribute names.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[59]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>node_type=s3s.ObjectTypes.Node
@@ -252,7 +252,7 @@ NetworkType.Water
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[60]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pipe_type=s3s.ObjectTypes.Pipe
@@ -260,7 +260,7 @@ NetworkType.Water
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[61]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pump_type = s3s.ObjectTypes.Pump
@@ -268,7 +268,7 @@ NetworkType.Water
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[62]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>container_type = s3s.ObjectTypes.OpenContainer
@@ -281,7 +281,7 @@ NetworkType.Water
 <p>As we did with non-result values, we obtain the tks of the nodes and pipes in this model.</p>
 <p>We use <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetTksofElementType">GetTksofElementType()</a> to create a list of all node tks in the model.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[63]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>nodes=s3s.GetTksofElementType(node_type)
@@ -289,7 +289,7 @@ NetworkType.Water
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[64]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for node in nodes:
@@ -299,7 +299,7 @@ NetworkType.Water
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[65]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(tk_of_interest)
@@ -319,7 +319,7 @@ NetworkType.Water
 <h3>GetResultProperties_from_elementTypes<a class="headerlink" href="#GetResultProperties_from_elementTypes" title="Link to this heading"></a></h3>
 <p>Similar to non-result values, we use <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetResultProperties_from_elementType">GetResultProperties_from_elementTypes()</a> to create a list of all result properties of the different objects that exist in our model.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[66]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>node_result_properties=s3s.GetResultProperties_from_elementType(node_type, False)
@@ -327,7 +327,7 @@ NetworkType.Water
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[67]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(node_result_properties)
@@ -343,7 +343,7 @@ NetworkType.Water
 </pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[68]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pipe_result_properties=s3s.GetResultProperties_from_elementType(pipe_type, False)
@@ -351,7 +351,7 @@ NetworkType.Water
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[69]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(pipe_result_properties)
@@ -367,7 +367,7 @@ NetworkType.Water
 </pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[70]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pump_result_properties=s3s.GetResultProperties_from_elementType(pump_type, False)
@@ -375,7 +375,7 @@ NetworkType.Water
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[71]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(pump_result_properties)
@@ -391,7 +391,7 @@ NetworkType.Water
 </pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[72]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>tank_result_properties=s3s.GetResultProperties_from_elementType(container_type, False)
@@ -399,7 +399,7 @@ NetworkType.Water
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[73]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(tank_result_properties)
@@ -419,7 +419,7 @@ NetworkType.Water
 <h3>GetResultProperties_from_elementKey<a class="headerlink" href="#GetResultProperties_from_elementKey" title="Link to this heading"></a></h3>
 <p>Alternatively, we can use <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetResultProperties_from_elementKey">GetResultProperties_from_elementKey()</a> to create a list of all result properties of one one specific object based on its tk.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[74]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>node_result_properties_alternative=s3s.GetResultProperties_from_elementKey(nodes[0])
@@ -427,7 +427,7 @@ NetworkType.Water
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[75]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(node_result_properties_alternative)
@@ -448,7 +448,7 @@ NetworkType.Water
 <p>The <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetResultValue">GetResultValue()</a> function gives the value corresponding to the currently selected timestamp for the model. You can check the current timestamp using <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetCurrentTimeStamp">GetCurrentTimeStamp()</a> and change it using
 <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.SetCurrentTimeStamp">SetCurrentTimeStamp()</a>.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[76]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetCurrentTimeStamp()
@@ -456,7 +456,7 @@ NetworkType.Water
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[76]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -466,7 +466,7 @@ NetworkType.Water
 </div>
 <p>We can check what Timestamps are available in this model using <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetTimeStamps">GetTimeStamps()</a>.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[77]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>available_timestamps=s3s.GetTimeStamps()
@@ -474,7 +474,7 @@ NetworkType.Water
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[78]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(available_timestamps)
@@ -490,7 +490,7 @@ NetworkType.Water
 </pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[79]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.SetCurrentTimeStamp(&#39;2025-07-18 11:08:35.000 +02:00&#39;)
@@ -498,7 +498,7 @@ NetworkType.Water
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[80]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetCurrentTimeStamp() # Check whether the change worked
@@ -506,7 +506,7 @@ NetworkType.Water
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[80]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -519,7 +519,7 @@ NetworkType.Water
 <h3>GetResultValue()<a class="headerlink" href="#GetResultValue()" title="Link to this heading"></a></h3>
 <p>Now we can obtain the pressure value for one of our nodes at two different timestamps</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[81]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetCurrentTimeStamp()
@@ -527,7 +527,7 @@ NetworkType.Water
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[81]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -536,7 +536,7 @@ NetworkType.Water
 </pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[34]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[82]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pressure1=s3s.GetResultValue(tk_of_interest, &#39;P&#39;)[0]
@@ -544,7 +544,7 @@ NetworkType.Water
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[83]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(pressure1)
@@ -561,7 +561,7 @@ NetworkType.Water
 </div>
 <p>Manually moving the timestamp forward by three minutes:</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[36]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[84]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.SetCurrentTimeStamp(&#39;2025-07-18 11:11:35.000 +02:00&#39;)
@@ -569,7 +569,7 @@ NetworkType.Water
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[37]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[85]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetCurrentTimeStamp() # Check whether the change worked
@@ -577,7 +577,7 @@ NetworkType.Water
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[37]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[85]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -586,7 +586,7 @@ NetworkType.Water
 </pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[38]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[86]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pressure2=s3s.GetResultValue(tk_of_interest, &#39;P&#39;)[0]
@@ -594,7 +594,7 @@ NetworkType.Water
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[39]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[87]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(pressure2)
@@ -609,9 +609,9 @@ NetworkType.Water
 8.001184
 </pre></div></div>
 </div>
-<p>Alternatively, the result can be obtained with a single, compact method call:</p>
+<p>Alternatively, the result can be obtained with the single, compact <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetResultfortimestamp">GetResultfortimestamp()</a> function.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[40]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[88]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pressure2=s3s.GetResultfortimestamp(&#39;2025-07-18 11:11:35.000 +02:00&#39;, tk_of_interest, &#39;P&#39;)[0]
@@ -619,7 +619,7 @@ NetworkType.Water
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[41]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[89]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(f&quot;Difference in Pressure 11:08 to 11:11: {float(pressure1)-float(pressure2)}&quot;)
@@ -635,9 +635,9 @@ Difference in Pressure 11:08 to 11:11: -1.496009
 </pre></div></div>
 </div>
 <p>We determined a pressure drop between the two timestamps.</p>
-<p>The pressure values for the respective node for all timestamps can be obtained like this:</p>
+<p>The pressure values for the respective node for all timestamps can be obtained using the <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetResultforAllTimestamp">GetResultforAllTimestamp()</a>funtion.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[42]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[90]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetResultforAllTimestamp(tk_of_interest, &#39;P&#39;)
@@ -645,7 +645,7 @@ Difference in Pressure 11:08 to 11:11: -1.496009
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[42]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[90]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -1338,7 +1338,7 @@ Difference in Pressure 11:08 to 11:11: -1.496009
 <h3>GetMax/MinResult()<a class="headerlink" href="#GetMax/MinResult()" title="Link to this heading"></a></h3>
 <p>The <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetMinResult">GetMinResult()</a> and <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetMaxResult">GetMaxResult()</a> functions return the min/max result value for a given property and element type over all timestamps.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[43]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[91]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetMinResult(node_type, &#39;P&#39;)
@@ -1346,7 +1346,7 @@ Difference in Pressure 11:08 to 11:11: -1.496009
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[43]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[91]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -1356,7 +1356,7 @@ Difference in Pressure 11:08 to 11:11: -1.496009
 </div>
 <p>We can see that the minimal pressure value over all nodes and timestamps is 1 and the tk of the node where it occurs is given.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[44]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[92]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetMaxResult(node_type, &#39;P&#39;)
@@ -1364,7 +1364,7 @@ Difference in Pressure 11:08 to 11:11: -1.496009
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[44]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[92]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -1378,7 +1378,7 @@ Difference in Pressure 11:08 to 11:11: -1.496009
 <h3>GetMax/MinResult_for_timestamp()<a class="headerlink" href="#GetMax/MinResult_for_timestamp()" title="Link to this heading"></a></h3>
 <p>The <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetMinResult_for_timestamp">GetMinResult_for_timestamp()</a> and <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetMaxResult_for_timestamp">GetMaxResult_for_timestamp()</a> functions return the min/max result value for a given property, element type and timestamp.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[45]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[93]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetMinResult_for_timestamp(&#39;2025-07-18 11:08:35.000 +02:00&#39;, node_type, &#39;P&#39;)
@@ -1386,7 +1386,7 @@ Difference in Pressure 11:08 to 11:11: -1.496009
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[45]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[93]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -1394,16 +1394,8 @@ Difference in Pressure 11:08 to 11:11: -1.496009
 (&#39;1&#39;, &#39;5196977599086967050&#39;, &#39;float&#39;)
 </pre></div></div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-</div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[46]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[94]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetMinResult_for_timestamp(&#39;2025-07-18 11:12:35.000 +02:00&#39;, node_type, &#39;P&#39;)
@@ -1411,7 +1403,7 @@ Difference in Pressure 11:08 to 11:11: -1.496009
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[46]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[94]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -1421,7 +1413,7 @@ Difference in Pressure 11:08 to 11:11: -1.496009
 </div>
 <p>We an observe that the min pressure value over all nodes stays the same from 8 to 12 minutes and occurs at the same node.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[47]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[95]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetMaxResult_for_timestamp(&#39;2025-07-18 11:08:35.000 +02:00&#39;,node_type, &#39;P&#39;)
@@ -1429,7 +1421,7 @@ Difference in Pressure 11:08 to 11:11: -1.496009
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[47]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[95]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -1438,7 +1430,7 @@ Difference in Pressure 11:08 to 11:11: -1.496009
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[48]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[96]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetMaxResult_for_timestamp(&#39;2025-07-18 11:12:35.000 +02:00&#39;,node_type, &#39;P&#39;)
@@ -1446,7 +1438,7 @@ Difference in Pressure 11:08 to 11:11: -1.496009
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[48]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[96]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
