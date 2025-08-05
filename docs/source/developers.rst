@@ -189,16 +189,7 @@ To load a branch locally, use:
 GitHub Workflows
 ~~~~~~~~~~~~~~~~
 
-.. note:: This section has to be adjusted for new Repository.
-
 Our GitHub repository uses workflows to facilitate certain processes by automating tasks. Workflows are defined using YAML files and are stored in the `.github/workflows` directory of our repository.
-
-.. _current-workflow-label:
-
-Current Workflows
-^^^^^^^^^^^^^^^^^
-
-All of our workflows can be triggered using :ref:`manually-triggering-workflows-label`. 
 
 We currently use the following workflows:
 
@@ -206,35 +197,25 @@ We currently use the following workflows:
    :header-rows: 1
 
    * - **Name**
-     - **Triggers (Apart from manually triggering)**
+     - **Triggers**
      - **Tasks**
-   * - Automatic Copying of HTML-Files
-     - Push to `Sir3SToolkit-Documentation/build/html/`
-     - Copies HTML files from master `Sir3SToolkit-Documentation/build/html` to gh-pages `Sir3SToolkit-Documentation/docs`
+   * - `.github/workflows/publish-testpypi.yml`
+     - Push to `main` with changes in:<br>• `pyproject.toml`<br>• `setup.py`<br>• `requirements.txt`<br>• `src/**`<br>• the workflow file itself<br>Or push of a tag starting with `v`
+     - Builds the Python package using `pyproject.toml`, installs dev dependencies, and publishes to **TestPyPI** and **PyPI** using `twine`.
+   * - `.github/workflows/deploy-docs.yml` *(assumed name)*
+     - Push to `main`
+     - Builds Sphinx documentation (including API docs via `sphinx-apidoc`) and deploys it to the `gh-pages` branch using `peaceiris/actions-gh-pages`. 
 
-.. _manually-triggering-workflows-label:
 
-Manually Triggering Workflows
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Follow these steps to manually trigger a workflow via GitHub:
-
-1. Navigate to the **Actions** tab of the Sir3SToolkit-Documentation GitHub repository.
-
-2. Select the workflow you want to trigger from the list on the left.
-
-3. Click the **Run workflow** button.
-
-4. Optionally, provide any required inputs and click **Run workflow** again to start the workflow.
-     
 Generating the Documentation
 ----------------------------
 
-.. note:: This section has to be adjusted for new Repository.
 
-The Toolkit documentation is edited in Sir3SToolkit-Documentation/source on the master branch and files hosting the documentation are located in Sir3SToolkit-Documentation/build/html on the master branch and in Sir3SToolkit-Documentation/docs on the gh-pages branch
+The Toolkit documentation is edited in sir3stoolkit/docs/source on the main branch.
 
 If you want to edit the documentation yourself, you have to install sphinx and sphinx related python packages.
+
+You find all necssary packages in the dev and sphinx optional project dependencies in `pyproject.toml<https://github.com/3SConsult/sir3stoolkit/blob/main/pyproject.toml>`
 
    .. code-block:: bash
 
@@ -242,7 +223,9 @@ If you want to edit the documentation yourself, you have to install sphinx and s
 
 To generate documentation, follow these steps:
 
-1. **Edit the documentation:** Make your changes on the rst files in the Sir3SToolkit-Documentation/source.
+1. **Edit the documentation:** Make your changes on the rst files in the sir3stoolkit/docs/source.
+
+.. note:: Our GitHub Workflow sphinx.yaml automatically builds and deploys the documentation. If you do not need to view a local build of your changes, you can jump to step 4.
 
 2. **Navigate to the Sir3SToolkit-Documentation directory:** Use the ``cd`` command.
 
@@ -260,14 +243,7 @@ To generate documentation, follow these steps:
 
       .\make.bat html
 
-.. 3. **Use Build File**: Alternatively, instead of using the ``.\make.bat html`` command, you can simply open the `Toolkit/sphinx_docs/make_html_docs.py` file and run it to generate the documentation. This method will not print any Sphinx debugging output and will save time. This alternative is recommended when making many iterative improvements to the documentation.
 
 4. **Commit the changes.** Commit all files from Sir3SToolkit-Documentation to GitHub (:ref:`commit-changes-label`).
 
-.. 5. **Get the Latest Version**: You should :ref:`get-latest-version-label` before continuing to edit local.
-
-The new documentation can be found at `https://mj3s.github.io/Sir3SToolkit-Documentation/index.html <https://mj3s.github.io/Sir3SToolkit-Documentation/index.html#>`_
-
-.. note::
-
-   The created files in Sir3SToolkit/build/html on the master branch are moved to Sir3SToolkit/docs on the gh-pages branch by one of our :ref:`github-workflow-label` and then hosted via GitHubPages. It might take a couple of minutes until the changes are visible on the website.
+The new documentation can be found at `https://3sconsult.github.io/sir3stoolkit/index.html <https://3sconsult.github.io/sir3stoolkit/index.html>`_
