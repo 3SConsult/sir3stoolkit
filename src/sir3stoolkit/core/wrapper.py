@@ -203,7 +203,7 @@ class SIR3S_Model:
         :return: None
         :rtype: None
         :description: This method is a wrapper method for EndTransaction() from toolkit. Use it after StartTransaction()
-        to close that transaction.
+            to close that transaction.
         """
         isTransactionEnded, message = self.toolkit.EndTransaction()
         if not isTransactionEnded:
@@ -242,7 +242,7 @@ class SIR3S_Model:
         :return: None
         :rtype: None
         :description: This method is a wrapper method for EndEditSession() from toolkit. Use it after StartEditSession()
-        to close that session.
+            to close that session.
         """
         isTransactionEnded, message = self.toolkit.EndEditSession()
         if not isTransactionEnded:
@@ -325,7 +325,7 @@ class SIR3S_Model:
         :return: None
         :rtype: None
         :description: This is a wrapper method for OpenModelXml() from toolkit; Watch out for error message
-        for more information.
+            for more information.
         """
         result, error = self.toolkit.OpenModelXml(Path, SaveCurrentModel)
         if result:
@@ -350,10 +350,10 @@ class SIR3S_Model:
         :param namedInstance: Instance name of the SQL Server.
         :type namedInstance: str
         :param userID: User ID for authentication, only needed for ORACLE and for SQLServer only if SQLServer
-        authentication is required.
+            authentication is required.
         :type userID: str
         :param password: Password for authentication, only needed for ORACLE and for SQLServer only if SQLServer
-        authentication is required.
+            authentication is required.
         :type password: str
         :return: None
         :rtype: None
@@ -373,7 +373,7 @@ class SIR3S_Model:
         Closes a currently open Model.
 
         :param saveChangesBeforeClosing: If True, the Changes would be saved before Closing
-        otherwise Changes would be discarded
+            otherwise Changes would be discarded
         :type saveChangesBeforeClosing: bool
         :return: return True if model is successfully closed, False otherwise
         :rtype: bool
@@ -582,10 +582,10 @@ class SIR3S_Model:
         :param namedInstance: Instance name of the SQL Server.
         :type namedInstance: str
         :param userID: User ID for authentication, only needed for ORACLE and for SQLServer only if SQLServer
-        authentication is required.
+            authentication is required.
         :type userID: str
         :param password: Password for authentication, only needed for ORACLE and for SQLServer only if SQLServer
-        authentication is required.
+            authentication is required.
         :type password: str
         :return: None
         :rtype: None
@@ -614,7 +614,7 @@ class SIR3S_Model:
         :return: None
         :rtype: None
         :description: This is a wrapper method for ConnectConnectingElementWithNodes() from toolkit; Watch out
-        for errors for more information.
+            for errors for more information.
         """
         result, error = self.toolkit.ConnectConnectingElementWithNodes(Tk, keyOfNodeI, keyOfNodeK)
         if not result:
@@ -634,7 +634,7 @@ class SIR3S_Model:
         :return: None
         :rtype: None
         :description: This is a wrapper method for ConnectBypassElementWithNode() from toolkit; Watch out for errors
-        for more information.
+            for more information.
         """
         result, error = self.toolkit.ConnectBypassElementWithNode(Tk, keyOfNodeI)
         if not result:
@@ -650,7 +650,7 @@ class SIR3S_Model:
         :return: None
         :rtype: None
         :description: This is a wrapper method for SaveChanges() from toolkit; Use it after End{EditSession/Transaction}.
-        Watch out for errors for more information.
+            Watch out for errors for more information.
         """
         isSaved, error = self.toolkit.SaveChanges()
         if not isSaved:
@@ -722,7 +722,7 @@ class SIR3S_Model:
         :return: None
         :rtype: None
         :description: Set the insert point of a symbol-object (e.g., Node, Valve, Tank, etc.). The insert point is
-        the position on which the object is placed in the view.
+            the position on which the object is placed in the view.
         """
         result, error = self.toolkit.SetInsertPoint(elementKey, x, y)
         if not result:
@@ -819,12 +819,12 @@ class SIR3S_Model:
         :param elementType: The element type.
         :type elementType: ObjectTypes
         :param onlySelectedVectors: If True, only the names of selected vector channels for this element type
-        shall be returned, otherwise all possible result property names for this element type shall be returned.
+            shall be returned, otherwise all possible result property names for this element type shall be returned.
         :type onlySelectedVectors: bool
         :return: List of result property names of an element type.
         :rtype: list
         :description: This is a wrapper method for GetResultProperties() from toolkit; Watch out for errors
-        for more information.
+            for more information.
         """
         Result_list = None
         elementType_net = self.to_dotnet_enum(elementType, self.ObjectTypes)
@@ -842,7 +842,7 @@ class SIR3S_Model:
         :return: List of all result property names of an element.
         :rtype: list
         :description: This is a wrapper method for GetResultProperties() from toolkit; Watch out for errors
-        for more information.
+            for more information.
         """
         Result_list = None
         Result_list, error = self.toolkit.GetResultProperties(elementKey)
@@ -859,7 +859,7 @@ class SIR3S_Model:
         :param propertyName: The name of the result property.
         :type propertyName: str
         :return: The minimal result value of an element type, the key (tk/pk) of the corresponding element, and the
-        data type of the result.
+            data type of the result.
         :rtype: tuple[str, str, str]
         :description: This is a wrapper method for GetMinResult() from toolkit; Watch out for errors for more information.
         """
@@ -879,7 +879,7 @@ class SIR3S_Model:
         :param propertyName: The name of the result property.
         :type propertyName: str
         :return: The maximal result value of an element type, the key (tk/pk) of the corresponding element, and the
-        data type of the result.
+            data type of the result.
         :rtype: tuple[str, str, str]
         :description: This is a wrapper method for GetMaxResult() from toolkit; Watch out for errors for more information.
         """
@@ -902,7 +902,7 @@ class SIR3S_Model:
         :param propertyName: The name of the result property.
         :type propertyName: str
         :return: The minimal result value of an element type at a particular timestamp, the key (tk/pk) of the
-        corresponding element, and the data type of the result.
+            corresponding element, and the data type of the result.
         :rtype: tuple[str, str, str]
         :description: This is a wrapper method for GetMinResult() from toolkit; Watch out for errors for more information.
         """
@@ -925,7 +925,7 @@ class SIR3S_Model:
         :param propertyName: The name of the result property.
         :type propertyName: str
         :return: The maximal result value of an element type at a particular timestamp, the key (tk/pk) of the
-        corresponding element, and the data type of the result.
+            corresponding element, and the data type of the result.
         :rtype: tuple[str, str, str]
         :description: This is a wrapper method for GetMaxResult() from toolkit; Watch out for errors for more information.
         """
@@ -942,7 +942,7 @@ class SIR3S_Model:
         Inserts a new node.
 
         :param tkCont: The TK of the container (view) in which the new object shall be inserted. Entering a value
-        of "-1" means the main view of the model.
+            of "-1" means the main view of the model.
         :type tkCont: str
         :param name: Name of the new node.
         :type name: str
@@ -982,7 +982,7 @@ class SIR3S_Model:
         Inserts a new pipe.
 
         :param tkCont: The TK of the container (view) in which the new object shall be inserted. Entering a
-        value of "-1" means the main view of the model.
+            value of "-1" means the main view of the model.
         :type tkCont: str
         :param tkFrom: Tk (key) of the start node.
         :type tkFrom: str
@@ -991,8 +991,8 @@ class SIR3S_Model:
         :param L: The pipe length, mandatory for computation.
         :type L: np.float32
         :param linestring: An optional string with intermediate points for geometry formatted
-        like 'LINESTRING (120 76, 500 300, 620 480)'.
-        The insert points of from and to will be added on both ends of the geometry.
+            like 'LINESTRING (120 76, 500 300, 620 480)'.
+            The insert points of from and to will be added on both ends of the geometry.
         :type linestring: str
         :param material: Name or Tk (key) of the pipe diameter table.
         :type material: str
@@ -1026,7 +1026,7 @@ class SIR3S_Model:
         Inserts a new connecting element.
 
         :param tkCont: The TK of the container (view) in which the new object shall be inserted. Entering a
-        value of "-1" means the main view of the model.
+            value of "-1" means the main view of the model.
         :type tkCont: str
         :param tkFrom: Tk (key) of the start node.
         :type tkFrom: str
@@ -1070,7 +1070,7 @@ class SIR3S_Model:
         Inserts a new bypass element.
 
         :param tkCont: The TK of the container (view) in which the new object shall be inserted. Entering a value
-        of "-1" means the main view of the model.
+            of "-1" means the main view of the model.
         :type tkCont: str
         :param tkFrom: Tk (key) of the start node.
         :type tkFrom: str
@@ -1113,7 +1113,7 @@ class SIR3S_Model:
         :return: TK of the element.
         :rtype: str
         :description: This is a wrapper method for GetTkFromIDReference() from toolkit; Watch out for error messages
-        for more information.
+            for more information.
         """
         object_type_net = self.to_dotnet_enum(object_type, self.ObjectTypes)
         Tk, error = self.toolkit.GetTkFromIDReference(IdRef, object_type_net)
@@ -1130,7 +1130,7 @@ class SIR3S_Model:
         :return: Geometry information of the element.
         :rtype: str
         :description: This is a wrapper method for GetGeometryInformation() from toolkit; Watch out for error messages
-        for more information.
+            for more information.
         """
         geomInfo, error = self.toolkit.GetGeometryInformation(Tk)
         if error != "":
@@ -1148,7 +1148,7 @@ class SIR3S_Model:
         :return: True if geometry information is set, False otherwise.
         :rtype: bool
         :description: This is a wrapper method for SetGeometryInformation() from toolkit; Watch out for error messages
-        for more information.
+            for more information.
         """
         isSet, error = self.toolkit.SetGeometryInformation(Tk, Wkt)
         if not isSet:
@@ -1385,7 +1385,7 @@ class SIR3S_View:
         :return: None
         :rtype: None
         :description: This method is a wrapper method for EndTransaction() from toolkit. Use it after StartTransaction()
-        to close that transaction.
+            to close that transaction.
         """
         isTransactionEnded, message = self.toolkit.EndTransaction()
         if not isTransactionEnded:
@@ -1424,7 +1424,7 @@ class SIR3S_View:
         :return: None
         :rtype: None
         :description: This method is a wrapper method for EndEditSession() from toolkit. Use it after StartEditSession()
-        to close that session.
+            to close that session.
         """
         isTransactionEnded, message = self.toolkit.EndEditSession()
         if not isTransactionEnded:
@@ -1443,7 +1443,7 @@ class SIR3S_View:
         :return: None
         :rtype: None
         :description: This is a wrapper method for SaveChanges() from toolkit; Use it after End{EditSession/Transaction}.
-        Watch out for errors for more information.
+            Watch out for errors for more information.
         """
         isSaved, error = self.toolkit.SaveChanges()
         if not isSaved:
@@ -1463,7 +1463,7 @@ class SIR3S_View:
         :return: None
         :rtype: None
         :description: This is a wrapper method for OpenModelXml() from toolkit; Watch out for error message
-        for more information.
+            for more information.
         """
         result, error = self.toolkit.OpenModelXml(Path, SaveCurrentModel)
         if result:
@@ -1488,7 +1488,7 @@ class SIR3S_View:
         :param namedInstance: Instance name of the SQL Server.
         :type namedInstance: str
         :param userID: User Id for Authentication, only needed for ORACLE and for SQLServer only if SQLServer
-        Authentication is required.
+            Authentication is required.
         :type userID: str
         :param password: Password for Authentication, only needed for ORACLE and for SQLServer Authentication is required.
         :return: None
@@ -1509,7 +1509,7 @@ class SIR3S_View:
         Closes a currently open Model.
 
         :param saveChangesBeforeClosing: If True, the Changes would be saved before Closing
-        otherwise Changes would be discarded
+            otherwise Changes would be discarded
         :type saveChangesBeforeClosing: bool
         :return: return True if model is successfully closed, False otherwise
         :rtype: bool
@@ -1527,7 +1527,7 @@ class SIR3S_View:
         :return: Tk of the main container and object type.
         :rtype: tuple[str, ObjectTypes]
         :description: This is a wrapper method for GetMainContainer() from toolkit; Finds the Main Container of the
-        Model and returns its Key (TK).
+            Model and returns its Key (TK).
         """
         Tk, objType_net, error = self.toolkit.GetMainContainer()
         objType = self.to_python_enum(objType_net, self.ObjectTypes)
@@ -1572,7 +1572,7 @@ class SIR3S_View:
         Adds an external polyline using linestring.
 
         :param wktLineString: A string with all Points for Geometry in WKT Format
-        i.e formatted like 'LINESTRING (120 76 0, 500 300 0,  620 480 0, 364 276 0)'.
+            i.e formatted like 'LINESTRING (120 76 0, 500 300 0,  620 480 0, 364 276 0)'.
         :type wktLineString: str
         :param iColor: Color of the polyline.
         :type iColor: int
@@ -1585,7 +1585,7 @@ class SIR3S_View:
         :return: Tk of the added polyline.
         :rtype: str
         :description: This is a wrapper method for AddExternalPolyline() from toolkit; Watch out for errors
-        for more information.
+            for more information.
         """
         Tk, error = self.toolkit.AddExternalPolyline(System.String.Empty, wktLineString, iColor, lineWidthMM,
                                                      dashedLine, containerTK)
@@ -1609,7 +1609,7 @@ class SIR3S_View:
         :return: None
         :rtype: None
         :description: This is a wrapper method for AddExternalPolylinePoint() from toolkit; Watch out for errors
-        for more information.
+            for more information.
         """
         result, error = self.toolkit.AddExternalPolylinePoint(Tk, x, y, System.String.Empty)
         if not result:
@@ -1631,7 +1631,7 @@ class SIR3S_View:
         :return: None
         :rtype: None
         :description: This is a wrapper method for AddExternalPolylinePoint() from toolkit; Watch out for errors
-        for more information.
+            for more information.
         """
         result, error = self.toolkit.SetExternalPolyLineWidthAndColor(Tk, lineWidthMM, iColor, System.String.Empty)
         if not result:
@@ -1662,7 +1662,7 @@ class SIR3S_View:
         :return: Tk of the added polygon.
         :rtype: str
         :description: This is a wrapper method for AddExternalPolygon() from toolkit; Watch out for errors
-        for more information.
+            for more information.
         """
         Tk, error = self.toolkit.AddExternalPolygon(System.String.Empty, xArray, yArray, lineColor, fillColor,
                                                     lineWidthMM, isFilled, containerTK)
@@ -1679,8 +1679,8 @@ class SIR3S_View:
         Adds an external polygon using linestring.
 
         :param wktLineString: A string with all Points for Geometry in WKT Format
-        i.e formatted like 'LINESTRING (120 76 0, 500 300 0,  620 480 0, 364 276 0, 120 76 0)'.
-        THE LAST POINT SHOULD BE IDENTICAL TO THE FIRST POINT
+            i.e formatted like 'LINESTRING (120 76 0, 500 300 0,  620 480 0, 364 276 0, 120 76 0)'.
+            THE LAST POINT SHOULD BE IDENTICAL TO THE FIRST POINT
         :type wktLineString: str
         :param lineColor: Color of the polygon's line.
         :type lineColor: int
@@ -1695,7 +1695,7 @@ class SIR3S_View:
         :return: Tk of the added polygon.
         :rtype: str
         :description: This is a wrapper method for AddExternalPolygon() from toolkit; Watch out for errors
-        for more information.
+            for more information.
         """
         Tk, error = self.toolkit.AddExternalPolygon(System.String.Empty, wktLineString, lineColor, fillColor, lineWidthMM,
                                                     isFilled, containerTK)
@@ -1719,7 +1719,7 @@ class SIR3S_View:
         :return: None
         :rtype: None
         :description: This is a wrapper method for AddExternalPolygonPoint() from toolkit; Watch out for errors
-        for more information.
+            for more information.
         """
         result, error = self.toolkit.AddExternalPolygonPoint(Tk, x, y, System.String.Empty)
         if not result:
@@ -1745,7 +1745,7 @@ class SIR3S_View:
         :return: None
         :rtype: None
         :description: This is a wrapper method for SetExternalPolygonProperties() from toolkit; Watch out for errors
-        for more information.
+            for more information.
         """
         result, error = self.toolkit.SetExternalPolygonProperties(Tk, lineWidthMM, lineColor, fillColor,
                                                                   isFilled, System.String.Empty)
@@ -1804,7 +1804,7 @@ class SIR3S_View:
         :return: None
         :rtype: None
         :description: This is a wrapper method for SetExternalTextText() from toolkit; Watch out for errors
-        for more information.
+            for more information.
         """
         result, error = self.toolkit.SetExternalTextText(Tk, text, System.String.Empty)
         if not result:
@@ -1842,7 +1842,7 @@ class SIR3S_View:
         :return: None
         :rtype: None
         :description: This is a wrapper method for SetExternalTextProperties() from toolkit; Watch out for errors
-        for more information.
+            for more information.
         """
         result, error = self.toolkit.SetExternalTextProperties(Tk, x, y, System.String.Empty, textColor, text, angleDegree,
                                                                heightPt, isBold, isItalic, isUnderline)
@@ -1876,7 +1876,7 @@ class SIR3S_View:
         :return: Tk of the added arrow.
         :rtype: str
         :description: This is a wrapper method for AddExternalArrow() from toolkit; Watch out for errors
-        for more information.
+            for more information.
         """
         Tk, error = self.toolkit.AddExternalArrow(System.String.Empty, x, y, lineColor, fillColor, lineWidthMM, isFilled,
                                                   symbolFactor, containerTK)
@@ -1911,7 +1911,7 @@ class SIR3S_View:
         :return: None
         :rtype: None
         :description: This is a wrapper method for AddExternalArrow() from toolkit; Watch out for errors
-        for more information.
+            for more information.
         """
         result, error = self.toolkit.SetExternalArrowProperties(Tk, System.String.Empty, x, y, lineColor,
                                                                 fillColor, lineWidthMM, isFilled, symbolFactor)
@@ -1950,7 +1950,7 @@ class SIR3S_View:
         :return: Tk of the added rectangle.
         :rtype: str
         :description: This is a wrapper method for AddExternalRectangle() from toolkit; Watch out for errors
-        for more information.
+            for more information.
         """
         Tk, error = self.toolkit.AddExternalRectangle(System.String.Empty, left, top, right, bottom, lineColor, fillColor,
                                                       lineWidthMM, isFilled, isRounded, containerTK)
@@ -1990,7 +1990,7 @@ class SIR3S_View:
         :return: None
         :rtype: None
         :description: This is a wrapper method for SetExternalRectangleProperties() from toolkit; Watch out for errors
-        for more information.
+            for more information.
         """
         result, error = self.toolkit.SetExternalRectangleProperties(Tk, System.String.Empty, left, top, right, bottom,
                                                                     lineColor, fillColor, lineWidthMM, isFilled, isRounded)
@@ -2027,7 +2027,7 @@ class SIR3S_View:
         :return: Tk of the added ellipse.
         :rtype: str
         :description: This is a wrapper method for AddExternalEllipse() from toolkit; Watch out for errors
-        for more information.
+            for more information.
         """
         Tk, error = self.toolkit.AddExternalEllipse(System.String.Empty, left, top, right, bottom, lineColor, fillColor,
                                                     lineWidthMM, isFilled, containerTK)
@@ -2064,7 +2064,7 @@ class SIR3S_View:
         :return: None
         :rtype: None
         :description: This is a wrapper method for SetExternalEllipseProperties() from toolkit; Watch out for errors
-        for more information.
+            for more information.
         """
         result, error = self.toolkit.SetExternalEllipseProperties(Tk, System.String.Empty, left, top, right, bottom,
                                                                   lineColor, fillColor, lineWidthMM, isFilled)
@@ -2081,7 +2081,7 @@ class SIR3S_View:
         :return: None
         :rtype: None
         :description: This is a wrapper method for PrepareColoration() from toolkit; Watch out for errors
-        for more information.
+            for more information.
         """
         result, error = self.toolkit.PrepareColoration(System.String.Empty)
         if not result:
@@ -2115,7 +2115,7 @@ class SIR3S_View:
         :param val: Value to get color for within range defined by min and max values.
         :type val: np.float64
         :return: Color corresponding to specified value within range defined by min and max values and index of
-        color in table.
+            color in table.
         :rtype: tuple[int, int]
         :description: This is a wrapper method for GetColor() from toolkit; Watch out for errors for more information.
         """
@@ -2138,7 +2138,7 @@ class SIR3S_View:
         :return: List of color table entries.
         :rtype: list
         :description: This is a wrapper method for GetColorTableEntries() from toolkit; Watch out for errors
-        for more information.
+            for more information.
         """
         return self.toolkit.GetColorTableEntries(result_i, result_k, scaleMin, scaleMax)
 
@@ -2158,7 +2158,7 @@ class SIR3S_View:
         :return: Boolean indicating if width scale properties were set successfully.
         :rtype: bool
         :description: This is a wrapper method for SetWidthScaleProperties() from toolkit; Watch out for errors
-        for more information.
+            for more information.
         """
         return self.toolkit.SetWidthScaleProperties(valMin, widthMin, valMax, widthMax)
 
@@ -2288,7 +2288,7 @@ class SIR3S_View:
         :param angle_degree: Angle in Degree
         :type angle_degree: np.float32
         :param faceName: Face Name of the Font (max. 32 Characters). Entering a non-installed
-        Face Name will assume it to be 'Arial'
+            Face Name will assume it to be 'Arial'
         :type faceName: str
         :param heightPt: The height in Point
         :type heightPt: np.float32
@@ -2321,7 +2321,7 @@ class SIR3S_View:
         :return: return all text properties bundled in a namedtuple 'textProperties'
         :rtype: textProperties
         :description: This is a wrapper method for GetTextProperties() from toolkit; Watch out for errors
-        for more information.
+            for more information.
         """
         (result, error, x, y, color, textContent, angle_degree, faceName, heightPt, isBold, isItalic,
          isUnderline, idRef, description) = self.toolkit.GetTextProperties(Tk)
@@ -2349,7 +2349,7 @@ class SIR3S_View:
         :param angle_degree: Angle in Degree
         :type angle_degree: np.float32
         :param faceName: Face Name of the Font (max. 32 Characters). Entering a non-installed
-        Face Name will assume it to be 'Arial'
+            Face Name will assume it to be 'Arial'
         :type faceName: str
         :param heightPt: The height in Point
         :type heightPt: np.float32
@@ -2362,13 +2362,13 @@ class SIR3S_View:
         :param description: Description of Text. Max 254 Characters
         :type description: str
         :param forResult: True if it should display a Calculation Result of an Element, False if it
-        should display an Element Property
+            should display an Element Property
         :type forResult: bool
         :param tkObserved: The tk (Key) of the Element observed by this num. Display
         :type tkObserved: str
         :param elemPropertyNameOrResult: a String representing the Result-Property or the
-        Element Property Name, depending on Parameter 'forResult'.
-        eg. "L" if a Pipe Length is observed or "QMAV" for the Result 'Average Flow Rate' on Pipe.
+            Element Property Name, depending on Parameter 'forResult'.
+            eg. "L" if a Pipe Length is observed or "QMAV" for the Result 'Average Flow Rate' on Pipe.
         :type elemPropertyNameOrResult: str
         :param prefix: Prefix (precedes the Text), max. 80 Characters
         :type prefix: str
@@ -2381,7 +2381,7 @@ class SIR3S_View:
         :return: The TK of the newly inserted numerical display, otherwise '-1'.
         :rtype: str
         :description: This is a wrapper method for AddNewNumericalDisplay() from toolkit; Watch out for errors
-        for more information.
+            for more information.
         """
         Tk, error = self.toolkit.AddNewNumericalDisplay(tkCont, x, y, color, angle_degree, faceName, heightPt,
                                                         isBold, isItalic, isUnderlined, description, forResult, tkObserved,
@@ -2419,8 +2419,8 @@ class SIR3S_View:
         :param elemResultProperty: The Property Name of a Result on the bound Element
         :type elemResultProperty: str
         :param EPS: Display Tolerance.
-        Arrow direction is only displayed if the absolute value of the data point Result value is greater
-        than the specified tolerance
+            Arrow direction is only displayed if the absolute value of the data point Result value is greater
+            than the specified tolerance
         :type EPS: np.float32
         :return: Tk of the added directional arrow.
         :rtype: str
@@ -2442,7 +2442,7 @@ class SIR3S_View:
         :return: return all the properties bundled in a namedtuple 'numericalDisplayProperties'
         :rtype: numericalDisplayProperties
         :description: This is a wrapper method for GetNumericalDisplayProperties() from toolkit; Watch out for errors
-        for more information.
+            for more information.
         """
         (result, x, y, color, angle_degree, faceName, heightPt, isBold, isItalic, isUnderline, description, forResult,
          tkObserved, elemPropertyNameOrResult,
@@ -2557,7 +2557,7 @@ class SIR3S_View:
         :param fkNode: Only for non-District Heating Networks: The tk (key) of the Node connected to the House (if any)
         :type fkNode: str
         :param fkDH_Customer: Only for District Heating Networks: The tk (key) of the DH Consumer connected
-        to the House (if any)
+            to the House (if any)
         :type fkDH_Customer: str
         :param idRef: User-defined Reference ID
         :type idRef: str
@@ -2588,18 +2588,18 @@ class SIR3S_View:
         :param fkHouse: The tk (Key) of the House the Customer is attached to (or empty String or '-1' if none)
         :type fkHouse: str
         :param consumption:  Consumption Value Q0 (NODE) or W0 (DH-Consumer).
-        The consumption Value can have different Dimensions.In Water usually Qa - i.e. [m^3/ a]. In Gas[Nm^3/ a].
-        In heat, it is usually a power in [kW] or[MW].
+            The consumption Value can have different Dimensions.In Water usually Qa - i.e. [m^3/ a]. In Gas[Nm^3/ a].
+            In heat, it is usually a power in [kW] or[MW].
         :type consumption: np.float64
         :param counterId: ID point of consumption (from reference data for identification). max 40 Characters
         :type counterId: str
         :param customerId: ID of the Customer who is the contractual Partner of the CC for this point of consumption
-        (from reference data for identification). max 40 Characters
+            (from reference data for identification). max 40 Characters
         :type customerId: str
         :param dimension: Dimension of consumption m3/a, Nm3/a, kW, kWh, MW or MWh, max 12 Characters
         :type dimension: str
         :param divisionType: Division type, max 12 Characters ( should be 'W-', 'W+', 'F-', 'G-' or 'K-'
-        depending on Netrworkm type);
+            depending on Netrworkm type);
             W- = consumer in the water network (outflow);
             W+ = "consumer" in the collection network (inflow);
             F- = consumer in the district heating network (W0);
@@ -2628,37 +2628,37 @@ class SIR3S_View:
         :param tkPipe: The tk (key) of the Pipe
         :type tkPipe: str
         :param iSymbolType: Symbol Type:
-        Possible values are:
-         1 = Gate Valve
-         2 = Flap Valve
-         3 = Plug Valve
+            Possible values are:
+            1 = Gate Valve
+            2 = Flap Valve
+            3 = Plug Valve
         :type iSymbolType: NetValveTypes
         :param position: Position on Pipe: Possible Values are:
-          0 = at the Beginning of the Pipe (by Node Ki)
-         -1 = at the End of the Pipe (by Node Kk)
-         -2 = at the Middle of the Pipe
-          or every Value in the interval [0, L] where L is the technical Length of the Pipe.
+            0 = at the Beginning of the Pipe (by Node Ki)
+            -1 = at the End of the Pipe (by Node Kk)
+            -2 = at the Middle of the Pipe
+            or every Value in the interval [0, L] where L is the technical Length of the Pipe.
         :type position: np.float32
         :param name: A Name for the Valve, max 40 Characters
         :type name: str
         :param description: Description of the Valve, max 254 Characters
         :type description: str
         :param isPostureStatic: Option if the Posture is statically open/closed or time depemdant.
-         Enter NetValvePostures.STATIC_OPEN_CLOSE if Posture is always open / closed
-         otherwise enter NetValvePostures.TIME_DEP_TABLE if the Posture depends on a Setpoint Table (SWVT)
+            Enter NetValvePostures.STATIC_OPEN_CLOSE if Posture is always open / closed
+            otherwise enter NetValvePostures.TIME_DEP_TABLE if the Posture depends on a Setpoint Table (SWVT)
         :type isPostureStatic: NetValvePostures
         :param fkSWVT: the pk (key) of the SetPoint Table, in Case the Parameter 'isPostureStatic'
-        is entered as NetValvePostures.TIME_DEP_TABLE
+            is entered as NetValvePostures.TIME_DEP_TABLE
         :type fkSWVT: str
         :param openClose: Only usable in Case the Parameter 'isPostureStatic' is entered as NetValvePostures.
-        STATIC_OPEN_CLOSE. So entering in that case 'True', resp. 'False' assumes the Valve is always open resp. closed.
+            STATIC_OPEN_CLOSE. So entering in that case 'True', resp. 'False' assumes the Valve is always open resp. closed.
         :type openClose: bool
         :param idRef: Reference ID, max 40 Characters
         :type idRef: str
         :return: returns the TK of the newly inserted Valve, otherwise '-1'.
         :rtype: str
         :description: This is a wrapper method for AddNewValveOnPipe() from toolkit; Watch out for errors
-        for more information.
+            for more information.
         """
         iSymbolType_net = self.to_dotnet_enum(iSymbolType, self.NetValveTypes)
         isPostureStatic_net = self.to_dotnet_enum(isPostureStatic, self.NetValvePostures)
@@ -2682,8 +2682,8 @@ class SIR3S_View:
         :param z: The Z-Coordinate of the Hydrant
         :type z: np.float32
         :param iType: Type of Hydrant. Possible Value are:
-           1 = Subsurface
-          11 = Surface
+            1 = Subsurface
+            11 = Surface
         :type iType: Hydrant_Type
         :param symbolFactor: The Symbol Factor
         :type symbolFactor: np.float64
