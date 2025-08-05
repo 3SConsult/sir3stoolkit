@@ -13,8 +13,9 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+
 class ExtendedSIR3S_Model(SIR3S_Model):
-    
+
     def AddNodesAndPipes(self, dfXL):
         """
         Takes a dataframe with each row representing one pipe and adds it to the model. Only dfXL
@@ -51,15 +52,15 @@ class ExtendedSIR3S_Model(SIR3S_Model):
                 if pd.notna(baujahr):
                     self.SetValue(tk_pipe, "Baujahr", str(baujahr))
             except Exception as e:
-                logger.debug(f"BAUJAHR of Pipe {tk_pipe} not assigned")
+                logger.debug(f"BAUJAHR of Pipe {tk_pipe} not assigned: {e}")
 
             try:
                 hal = dfXL.at[i, 'HAL']
                 if pd.notna(hal):
                     self.SetValue(tk_pipe, "Hal", str(hal))
-            except Exception as e: 
-                logger.debug(f"HAL of Pipe {tk_pipe} not assigned")
-            
+            except Exception as e:
+                logger.debug(f"HAL of Pipe {tk_pipe} not assigned: {e}")
+
             # 2LROHR does not work
             try:
                 partner_id = dfXL.at[i, '2LROHR_id']
@@ -71,9 +72,8 @@ class ExtendedSIR3S_Model(SIR3S_Model):
             except Exception as e:
                 logger.debug(f"2LROHR of Pipe {tk_pipe} not assigned: {e}")
 
-        
         return dfXL
-    
+
     def insert_dfPipes(self, dfPipes):
         """
         Takes a dataframe with each row representing one pipe and adds it to the model.
@@ -88,7 +88,7 @@ class ExtendedSIR3S_Model(SIR3S_Model):
             dfPipes.at[idx, 'nodeKK_id'] = climbing_index + 1
             climbing_index += 2
 
-        self.StartEditSession(SessionName="AddNodesAndPipes")        
+        self.StartEditSession(SessionName="AddNodesAndPipes")
 
         dfPipes['KVR'] = dfPipes['KVR'].astype(str).str.strip()
         dfVL = dfPipes[dfPipes['KVR'] == '1'].reset_index(drop=True)
@@ -125,7 +125,7 @@ class ExtendedSIR3S_Model(SIR3S_Model):
         from_node_tk = None
         to_node_tk = None
 
-        for node_tk in self.GetTksofElementType(ElementType=Interfaces.Sir3SObjectTypes.Node):
+        for node_tk in self.GetTksofElementType(ElementType=self.ObjectTypes.Node):
             node_name = self.GetValue(node_tk, 'Name')[0]
             if node_name == from_node_name:
                 from_node_tk = node_tk
@@ -144,17 +144,17 @@ class ExtendedSIR3S_Model(SIR3S_Model):
         pipe_tk_ret = None
 
         if Order:
-            for pipe_tk in self.GetTksofElementType(ElementType=Interfaces.Sir3SObjectTypes.Pipe):
-                if (self.GetValue(pipe_tk, 'FromNode.Name')[0] == from_node_name and 
-                    self.GetValue(pipe_tk, 'ToNode.Name')[0] == to_node_name):
+            for pipe_tk in self.GetTksofElementType(ElementType=self.ObjectTypes.Pipe):
+                if (self.GetValue(pipe_tk, 'FromNode.Name')[0] == from_node_name and
+                   self.GetValue(pipe_tk, 'ToNode.Name')[0] == to_node_name):
                     pipe_tk_ret = pipe_tk
                     break
         else:
-            for pipe_tk in self.GetTksofElementType(ElementType=Interfaces.Sir3SObjectTypes.Pipe):
+            for pipe_tk in self.GetTksofElementType(ElementType=self.ObjectTypes.Pipe):
                 from_name = self.GetValue(pipe_tk, 'FromNode.Name')[0]
                 to_name = self.GetValue(pipe_tk, 'ToNode.Name')[0]
-                if ((from_name == from_node_name and to_name == to_node_name) or 
-                    (from_name == to_node_name and to_name == from_node_name)):
+                if ((from_name == from_node_name and to_name == to_node_name) or
+                   (from_name == to_node_name and to_name == from_node_name)):
                     pipe_tk_ret = pipe_tk
                     break
 
@@ -175,7 +175,7 @@ class ExtendedSIR3S_Model(SIR3S_Model):
         logger.debug(f"{func_name}: Start.")
 
         tks = []
-        for node_tk in self.GetTksofElementType(ElementType=Interfaces.Sir3SObjectTypes.Node):
+        for node_tk in self.GetTksofElementType(ElementType=self.ObjectTypes.Node):
             current_name = self.GetValue(node_tk, 'Name')[0]
             if current_name == name:
                 tks.append(node_tk)
@@ -188,17 +188,3 @@ class ExtendedSIR3S_Model(SIR3S_Model):
                 print(f'{tk}')
 
         return tks
-
-    def Resolve_Node_Name_Duplicates(self):
-        func_name = sys._getframe().f_code.co_name
-        logger.debug(f"{func_name}: Start.")
-        logger.info(f"{func_name}: Not implemented")
-        pass
-
-    def Resolve_Node_on_Node(self, dfPipes):
-        """
-        Resolves
-        """
-        TNode=Interfaces.Sir3SObjectTypes.Node
-        node_tks=self.GetTksofElementType(TNode)
-        
