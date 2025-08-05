@@ -118,40 +118,47 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="sir3stoolkit.core.wrapper.Initialize_Toolkit">
 <span class="sig-prename descclassname"><span class="pre">sir3stoolkit.core.wrapper.</span></span><span class="sig-name descname"><span class="pre">Initialize_Toolkit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">basePath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sir3stoolkit/core/wrapper.html#Initialize_Toolkit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.wrapper.Initialize_Toolkit" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Initialize the SIR 3S Toolkit with the correct SirGraf path. The user must call this function before
+creating any instances of the classes provided here.</p>
+</dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="sir3stoolkit.core.wrapper.SIR3S_Model">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sir3stoolkit.core.wrapper.</span></span><span class="sig-name descname"><span class="pre">SIR3S_Model</span></span><a class="reference internal" href="../_modules/sir3stoolkit/core/wrapper.html#SIR3S_Model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.wrapper.SIR3S_Model" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class definition of SIR3S_Model() wrapper to access functionalities provided by SIR3S software.
+This can be used independently or by using inside python console plugin to give better control
+over the model for users.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="sir3stoolkit.core.wrapper.SIR3S_Model.AddNewBypassElement">
 <span class="sig-name descname"><span class="pre">AddNewBypassElement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tkCont</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tkFrom</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float64</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float64</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">symbolFactor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float64</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elementType</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idRef</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/core/wrapper.html#SIR3S_Model.AddNewBypassElement"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.wrapper.SIR3S_Model.AddNewBypassElement" title="Link to this definition"></a></dt>
 <dd><p>Inserts a new bypass element.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>tkCont</strong> (<em>str</em>) – The TK of the container (view) in which the new object shall be inserted. Entering a value of “-1” means the main view of the model.</p></li>
-<li><p><strong>tkFrom</strong> (<em>str</em>) – Tk (key) of the start node.</p></li>
-<li><p><strong>x</strong> (<em>np.float64</em>) – X coordinate.</p></li>
-<li><p><strong>y</strong> (<em>np.float64</em>) – Y coordinate.</p></li>
-<li><p><strong>z</strong> (<em>np.float32</em>) – Z coordinate.</p></li>
-<li><p><strong>symbolFactor</strong> (<em>np.float64</em>) – The symbol factor of the new node.</p></li>
-<li><p><strong>elementType</strong> (<em>ObjectTypes</em>) – Element type.</p></li>
-<li><p><strong>idRef</strong> (<em>str</em>) – ID in reference system.</p></li>
-<li><p><strong>description</strong> (<em>str</em>) – Description.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The key (TK) of the added bypass element, otherwise ‘-1’ if something went wrong.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-<dt class="field-even">Description<span class="colon">:</span></dt>
-<dd class="field-even"><p>Comfortable method for inserting a new bypass element.</p>
+<dd class="field-odd"><p><strong>tkCont</strong> – The TK of the container (view) in which the new object shall be inserted. Entering a value</p>
 </dd>
 </dl>
+<p>of “-1” means the main view of the model.
+:type tkCont: str
+:param tkFrom: Tk (key) of the start node.
+:type tkFrom: str
+:param x: X coordinate.
+:type x: np.float64
+:param y: Y coordinate.
+:type y: np.float64
+:param z: Z coordinate.
+:type z: np.float32
+:param symbolFactor: The symbol factor of the new node.
+:type symbolFactor: np.float64
+:param elementType: Element type.
+:type elementType: ObjectTypes
+:param idRef: ID in reference system.
+:type idRef: str
+:param description: Description.
+:type description: str
+:return: The key (TK) of the added bypass element, otherwise ‘-1’ if something went wrong.
+:rtype: str
+:description: Comfortable method for inserting a new bypass element.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -160,31 +167,36 @@
 <dd><p>Inserts a new connecting element.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>tkCont</strong> (<em>str</em>) – The TK of the container (view) in which the new object shall be inserted. Entering a value of “-1” means the main view of the model.</p></li>
-<li><p><strong>tkFrom</strong> (<em>str</em>) – Tk (key) of the start node.</p></li>
-<li><p><strong>tkTo</strong> (<em>str</em>) – Tk (key) of the end node.</p></li>
-<li><p><strong>x</strong> (<em>np.float64</em>) – X coordinate.</p></li>
-<li><p><strong>y</strong> (<em>np.float64</em>) – Y coordinate.</p></li>
-<li><p><strong>z</strong> (<em>np.float32</em>) – Z coordinate.</p></li>
-<li><p><strong>elementType</strong> (<em>ObjectTypes</em>) – Element type.</p></li>
-<li><p><strong>dn</strong> (<em>np.float32</em>) – The nominal diameter or the Tk of the nominal diameter.</p></li>
-<li><p><strong>symbolFactor</strong> (<em>np.float64</em>) – The symbol factor of the new node.</p></li>
-<li><p><strong>angleDegree</strong> (<em>np.float32</em>) – The symbol angle in degrees.</p></li>
-<li><p><strong>idRef</strong> (<em>str</em>) – ID in reference system.</p></li>
-<li><p><strong>description</strong> (<em>str</em>) – Description.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The key (TK) of the added connecting element, otherwise ‘-1’ if something went wrong.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-<dt class="field-even">Description<span class="colon">:</span></dt>
-<dd class="field-even"><p>Comfortable method for inserting a new connecting element.</p>
+<dd class="field-odd"><p><strong>tkCont</strong> – The TK of the container (view) in which the new object shall be inserted. Entering a</p>
 </dd>
 </dl>
+<p>value of “-1” means the main view of the model.
+:type tkCont: str
+:param tkFrom: Tk (key) of the start node.
+:type tkFrom: str
+:param tkTo: Tk (key) of the end node.
+:type tkTo: str
+:param x: X coordinate.
+:type x: np.float64
+:param y: Y coordinate.
+:type y: np.float64
+:param z: Z coordinate.
+:type z: np.float32
+:param elementType: Element type.
+:type elementType: ObjectTypes
+:param dn: The nominal diameter or the Tk of the nominal diameter.
+:type dn: np.float32
+:param symbolFactor: The symbol factor of the new node.
+:type symbolFactor: np.float64
+:param angleDegree: The symbol angle in degrees.
+:type angleDegree: np.float32
+:param idRef: ID in reference system.
+:type idRef: str
+:param description: Description.
+:type description: str
+:return: The key (TK) of the added connecting element, otherwise ‘-1’ if something went wrong.
+:rtype: str
+:description: Comfortable method for inserting a new connecting element.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -193,30 +205,34 @@
 <dd><p>Inserts a new node.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>tkCont</strong> (<em>str</em>) – The TK of the container (view) in which the new object shall be inserted. Entering a value of “-1” means the main view of the model.</p></li>
-<li><p><strong>name</strong> (<em>str</em>) – Name of the new node.</p></li>
-<li><p><strong>typ</strong> (<em>str</em>) – Type of the new node.</p></li>
-<li><p><strong>x</strong> (<em>np.float64</em>) – X coordinate.</p></li>
-<li><p><strong>y</strong> (<em>np.float64</em>) – Y coordinate.</p></li>
-<li><p><strong>z</strong> (<em>np.float32</em>) – Geodetic height.</p></li>
-<li><p><strong>qm_PH</strong> (<em>np.float32</em>) – Value for extraction/feeding (in case QKON) or pressure (in case PKON or PKQN).</p></li>
-<li><p><strong>symbolFactor</strong> (<em>np.float64</em>) – The symbol factor of the new node.</p></li>
-<li><p><strong>description</strong> (<em>str</em>) – Description.</p></li>
-<li><p><strong>idRef</strong> (<em>str</em>) – ID in reference system.</p></li>
-<li><p><strong>kvr</strong> (<em>int</em>) – SL/RL flag. Should be 0 (undefined), 1 (SL) or 2 (RL).</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The key (TK) of the added node, otherwise ‘-1’ if something went wrong.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-<dt class="field-even">Description<span class="colon">:</span></dt>
-<dd class="field-even"><p>Comfortable method for inserting a new node.</p>
+<dd class="field-odd"><p><strong>tkCont</strong> – The TK of the container (view) in which the new object shall be inserted. Entering a value</p>
 </dd>
 </dl>
+<p>of “-1” means the main view of the model.
+:type tkCont: str
+:param name: Name of the new node.
+:type name: str
+:param typ: Type of the new node.
+:type typ: str
+:param x: X coordinate.
+:type x: np.float64
+:param y: Y coordinate.
+:type y: np.float64
+:param z: Geodetic height.
+:type z: np.float32
+:param qm_PH: Value for extraction/feeding (in case QKON) or pressure (in case PKON or PKQN).
+:type qm_PH: np.float32
+:param symbolFactor: The symbol factor of the new node.
+:type symbolFactor: np.float64
+:param description: Description.
+:type description: str
+:param idRef: ID in reference system.
+:type idRef: str
+:param kvr: SL/RL flag. Should be 0 (undefined), 1 (SL) or 2 (RL).
+:type kvr: int
+:return: The key (TK) of the added node, otherwise ‘-1’ if something went wrong.
+:rtype: str
+:description: Comfortable method for inserting a new node.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -225,30 +241,36 @@
 <dd><p>Inserts a new pipe.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>tkCont</strong> (<em>str</em>) – The TK of the container (view) in which the new object shall be inserted. Entering a value of “-1” means the main view of the model.</p></li>
-<li><p><strong>tkFrom</strong> (<em>str</em>) – Tk (key) of the start node.</p></li>
-<li><p><strong>tkTo</strong> (<em>str</em>) – Tk (key) of the end node.</p></li>
-<li><p><strong>L</strong> (<em>np.float32</em>) – The pipe length, mandatory for computation.</p></li>
-<li><p><strong>linestring</strong> (<em>str</em>) – An optional string with intermediate points for geometry formatted like ‘LINESTRING (120 76, 500 300, 620 480)’. The insert points of from and to will be added on both ends of the geometry.</p></li>
-<li><p><strong>material</strong> (<em>str</em>) – Name or Tk (key) of the pipe diameter table.</p></li>
-<li><p><strong>dn</strong> (<em>str</em>) – The nominal diameter or the Tk of the nominal diameter.</p></li>
-<li><p><strong>roughness</strong> (<em>np.float32</em>) – Roughness of pipe.</p></li>
-<li><p><strong>description</strong> (<em>str</em>) – Description.</p></li>
-<li><p><strong>idRef</strong> (<em>str</em>) – ID in reference system.</p></li>
-<li><p><strong>kvr</strong> (<em>int</em>) – SL/RL flag. Should be 0 (undefined), 1 (SL) or 2 (RL).</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The key (TK) of the added pipe, otherwise ‘-1’ if something went wrong.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-<dt class="field-even">Description<span class="colon">:</span></dt>
-<dd class="field-even"><p>Comfortable method for inserting a new pipe.</p>
+<dd class="field-odd"><p><strong>tkCont</strong> – The TK of the container (view) in which the new object shall be inserted. Entering a</p>
 </dd>
 </dl>
+<p>value of “-1” means the main view of the model.
+:type tkCont: str
+:param tkFrom: Tk (key) of the start node.
+:type tkFrom: str
+:param tkTo: Tk (key) of the end node.
+:type tkTo: str
+:param L: The pipe length, mandatory for computation.
+:type L: np.float32
+:param linestring: An optional string with intermediate points for geometry formatted
+like ‘LINESTRING (120 76, 500 300, 620 480)’.
+The insert points of from and to will be added on both ends of the geometry.
+:type linestring: str
+:param material: Name or Tk (key) of the pipe diameter table.
+:type material: str
+:param dn: The nominal diameter or the Tk of the nominal diameter.
+:type dn: str
+:param roughness: Roughness of pipe.
+:type roughness: np.float32
+:param description: Description.
+:type description: str
+:param idRef: ID in reference system.
+:type idRef: str
+:param kvr: SL/RL flag. Should be 0 (undefined), 1 (SL) or 2 (RL).
+:type kvr: int
+:return: The key (TK) of the added pipe, otherwise ‘-1’ if something went wrong.
+:rtype: str
+:description: Comfortable method for inserting a new pipe.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -345,9 +367,10 @@
 <dd class="field-odd"><p>None</p>
 </dd>
 <dt class="field-even">Description<span class="colon">:</span></dt>
-<dd class="field-even"><p>This is a wrapper method for ConnectBypassElementWithNode() from toolkit; Watch out for errors for more information.</p>
+<dd class="field-even"><p>This is a wrapper method for ConnectBypassElementWithNode() from toolkit; Watch out for errors</p>
 </dd>
 </dl>
+<p>for more information.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -369,9 +392,10 @@
 <dd class="field-odd"><p>None</p>
 </dd>
 <dt class="field-even">Description<span class="colon">:</span></dt>
-<dd class="field-even"><p>This is a wrapper method for ConnectConnectingElementWithNodes() from toolkit; Watch out for errors for more information.</p>
+<dd class="field-even"><p>This is a wrapper method for ConnectConnectingElementWithNodes() from toolkit; Watch out</p>
 </dd>
 </dl>
+<p>for errors for more information.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -428,9 +452,10 @@ Default value is True</p>
 <dd class="field-even"><p>None</p>
 </dd>
 <dt class="field-odd">Description<span class="colon">:</span></dt>
-<dd class="field-odd"><p>This method is a wrapper method for EndEditSession() from toolkit. Use it after StartEditSession() to close that session.</p>
+<dd class="field-odd"><p>This method is a wrapper method for EndEditSession() from toolkit. Use it after StartEditSession()</p>
 </dd>
 </dl>
+<p>to close that session.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -445,9 +470,10 @@ Default value is True</p>
 <dd class="field-even"><p>None</p>
 </dd>
 <dt class="field-odd">Description<span class="colon">:</span></dt>
-<dd class="field-odd"><p>This method is a wrapper method for EndTransaction() from toolkit. Use it after StartTransaction() to close that transaction.</p>
+<dd class="field-odd"><p>This method is a wrapper method for EndTransaction() from toolkit. Use it after StartTransaction()</p>
 </dd>
 </dl>
+<p>to close that transaction.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -549,9 +575,10 @@ Only 1 Endnodes (i.e. Tanks, Air Valves, …) : Bypass Elements in General</p>
 <dd class="field-odd"><p>str</p>
 </dd>
 <dt class="field-even">Description<span class="colon">:</span></dt>
-<dd class="field-even"><p>This is a wrapper method for GetGeometryInformation() from toolkit; Watch out for error messages for more information.</p>
+<dd class="field-even"><p>This is a wrapper method for GetGeometryInformation() from toolkit; Watch out for error messages</p>
 </dd>
 </dl>
+<p>for more information.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -600,21 +627,19 @@ Only 1 Endnodes (i.e. Tanks, Air Valves, …) : Bypass Elements in General</p>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The maximal result value of an element type, the key (tk/pk) of the corresponding element, and the data type of the result.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tuple[str, str, str]</p>
-</dd>
-<dt class="field-even">Description<span class="colon">:</span></dt>
-<dd class="field-even"><p>This is a wrapper method for GetMaxResult() from toolkit; Watch out for errors for more information.</p>
+<dd class="field-even"><p>The maximal result value of an element type, the key (tk/pk) of the corresponding element, and the</p>
 </dd>
 </dl>
+<p>data type of the result.
+:rtype: tuple[str, str, str]
+:description: This is a wrapper method for GetMaxResult() from toolkit; Watch out for errors for more information.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="sir3stoolkit.core.wrapper.SIR3S_Model.GetMaxResult_for_timestamp">
 <span class="sig-name descname"><span class="pre">GetMaxResult_for_timestamp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timestamp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elementType</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">propertyName</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/core/wrapper.html#SIR3S_Model.GetMaxResult_for_timestamp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.wrapper.SIR3S_Model.GetMaxResult_for_timestamp" title="Link to this definition"></a></dt>
-<dd><p>Gets the maximal result value of an element type at a particular timestamp and also the key (tk/pk) of the corresponding element.</p>
+<dd><p>Gets the maximal result value of an element type at a particular timestamp and also the key (tk/pk) of the
+corresponding element.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -624,15 +649,12 @@ Only 1 Endnodes (i.e. Tanks, Air Valves, …) : Bypass Elements in General</p>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The maximal result value of an element type at a particular timestamp, the key (tk/pk) of the corresponding element, and the data type of the result.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tuple[str, str, str]</p>
-</dd>
-<dt class="field-even">Description<span class="colon">:</span></dt>
-<dd class="field-even"><p>This is a wrapper method for GetMaxResult() from toolkit; Watch out for errors for more information.</p>
+<dd class="field-even"><p>The maximal result value of an element type at a particular timestamp, the key (tk/pk) of the</p>
 </dd>
 </dl>
+<p>corresponding element, and the data type of the result.
+:rtype: tuple[str, str, str]
+:description: This is a wrapper method for GetMaxResult() from toolkit; Watch out for errors for more information.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -647,21 +669,19 @@ Only 1 Endnodes (i.e. Tanks, Air Valves, …) : Bypass Elements in General</p>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The minimal result value of an element type, the key (tk/pk) of the corresponding element, and the data type of the result.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tuple[str, str, str]</p>
-</dd>
-<dt class="field-even">Description<span class="colon">:</span></dt>
-<dd class="field-even"><p>This is a wrapper method for GetMinResult() from toolkit; Watch out for errors for more information.</p>
+<dd class="field-even"><p>The minimal result value of an element type, the key (tk/pk) of the corresponding element, and the</p>
 </dd>
 </dl>
+<p>data type of the result.
+:rtype: tuple[str, str, str]
+:description: This is a wrapper method for GetMinResult() from toolkit; Watch out for errors for more information.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="sir3stoolkit.core.wrapper.SIR3S_Model.GetMinResult_for_timestamp">
 <span class="sig-name descname"><span class="pre">GetMinResult_for_timestamp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timestamp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elementType</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">propertyName</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/core/wrapper.html#SIR3S_Model.GetMinResult_for_timestamp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.wrapper.SIR3S_Model.GetMinResult_for_timestamp" title="Link to this definition"></a></dt>
-<dd><p>Gets the minimal result value of an element type at a particular timestamp and also the key (tk/pk) of the corresponding element.</p>
+<dd><p>Gets the minimal result value of an element type at a particular timestamp and also the key (tk/pk) of the
+corresponding element.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -671,15 +691,12 @@ Only 1 Endnodes (i.e. Tanks, Air Valves, …) : Bypass Elements in General</p>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The minimal result value of an element type at a particular timestamp, the key (tk/pk) of the corresponding element, and the data type of the result.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tuple[str, str, str]</p>
-</dd>
-<dt class="field-even">Description<span class="colon">:</span></dt>
-<dd class="field-even"><p>This is a wrapper method for GetMinResult() from toolkit; Watch out for errors for more information.</p>
+<dd class="field-even"><p>The minimal result value of an element type at a particular timestamp, the key (tk/pk) of the</p>
 </dd>
 </dl>
+<p>corresponding element, and the data type of the result.
+:rtype: tuple[str, str, str]
+:description: This is a wrapper method for GetMinResult() from toolkit; Watch out for errors for more information.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -734,9 +751,10 @@ Only 1 Endnodes (i.e. Tanks, Air Valves, …) : Bypass Elements in General</p>
 <dd class="field-odd"><p>ObjectTypes</p>
 </dd>
 <dt class="field-even">Description<span class="colon">:</span></dt>
-<dd class="field-even"><p>This is a wrapper method for GetObjectTypeOf_Key() from toolkit; Watch out for errors for more information.</p>
+<dd class="field-even"><p>This is a wrapper method for GetObjectTypeOf_Key() from toolkit; Watch out for</p>
 </dd>
 </dl>
+<p>errors for more information.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -774,9 +792,10 @@ Only 1 Endnodes (i.e. Tanks, Air Valves, …) : Bypass Elements in General</p>
 <dd class="field-odd"><p>list</p>
 </dd>
 <dt class="field-even">Description<span class="colon">:</span></dt>
-<dd class="field-even"><p>This is a wrapper method for GetResultProperties() from toolkit; Watch out for errors for more information.</p>
+<dd class="field-even"><p>This is a wrapper method for GetResultProperties() from toolkit; Watch out for errors</p>
 </dd>
 </dl>
+<p>for more information.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -787,19 +806,16 @@ Only 1 Endnodes (i.e. Tanks, Air Valves, …) : Bypass Elements in General</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>elementType</strong> (<em>ObjectTypes</em>) – The element type.</p></li>
-<li><p><strong>onlySelectedVectors</strong> (<em>bool</em>) – If True, only the names of selected vector channels for this element type shall be returned, otherwise all possible result property names for this element type shall be returned.</p></li>
+<li><p><strong>onlySelectedVectors</strong> – If True, only the names of selected vector channels for this element type</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>List of result property names of an element type.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>list</p>
-</dd>
-<dt class="field-even">Description<span class="colon">:</span></dt>
-<dd class="field-even"><p>This is a wrapper method for GetResultProperties() from toolkit; Watch out for errors for more information.</p>
-</dd>
 </dl>
+<p>shall be returned, otherwise all possible result property names for this element type shall be returned.
+:type onlySelectedVectors: bool
+:return: List of result property names of an element type.
+:rtype: list
+:description: This is a wrapper method for GetResultProperties() from toolkit; Watch out for errors
+for more information.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -927,9 +943,10 @@ Only 1 Endnodes (i.e. Tanks, Air Valves, …) : Bypass Elements in General</p>
 <dd class="field-odd"><p>str</p>
 </dd>
 <dt class="field-even">Description<span class="colon">:</span></dt>
-<dd class="field-even"><p>This is a wrapper method for GetTkFromIDReference() from toolkit; Watch out for error messages for more information.</p>
+<dd class="field-even"><p>This is a wrapper method for GetTkFromIDReference() from toolkit; Watch out for error messages</p>
 </dd>
 </dl>
+<p>for more information.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1030,20 +1047,18 @@ Only 1 Endnodes (i.e. Tanks, Air Valves, …) : Bypass Elements in General</p>
 <li><p><strong>netType</strong> (<em>NetworkType</em>) – Network type.</p></li>
 <li><p><strong>modelDescription</strong> (<em>str</em>) – Description of the model to be created.</p></li>
 <li><p><strong>namedInstance</strong> (<em>str</em>) – Instance name of the SQL Server.</p></li>
-<li><p><strong>userID</strong> (<em>str</em>) – User ID for authentication, only needed for ORACLE and for SQLServer only if SQLServer authentication is required.</p></li>
-<li><p><strong>password</strong> (<em>str</em>) – Password for authentication, only needed for ORACLE and for SQLServer only if SQLServer authentication is required.</p></li>
+<li><p><strong>userID</strong> – User ID for authentication, only needed for ORACLE and for SQLServer only if SQLServer</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>None</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>None</p>
-</dd>
-<dt class="field-even">Description<span class="colon">:</span></dt>
-<dd class="field-even"><p>This is a wrapper method for NewModel() from toolkit; Watch out for errors for more information.</p>
-</dd>
 </dl>
+<p>authentication is required.
+:type userID: str
+:param password: Password for authentication, only needed for ORACLE and for SQLServer only if SQLServer
+authentication is required.
+:type password: str
+:return: None
+:rtype: None
+:description: This is a wrapper method for NewModel() from toolkit; Watch out for errors for more information.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1058,20 +1073,18 @@ Only 1 Endnodes (i.e. Tanks, Air Valves, …) : Bypass Elements in General</p>
 <li><p><strong>Mid</strong> (<em>str</em>) – Model identifier.</p></li>
 <li><p><strong>saveCurrentlyOpenModel</strong> (<em>bool</em>) – Do you want to save the current model before closing it?</p></li>
 <li><p><strong>namedInstance</strong> (<em>str</em>) – Instance name of the SQL Server.</p></li>
-<li><p><strong>userID</strong> (<em>str</em>) – User ID for authentication, only needed for ORACLE and for SQLServer only if SQLServer authentication is required.</p></li>
-<li><p><strong>password</strong> (<em>str</em>) – Password for authentication, only needed for ORACLE and for SQLServer only if SQLServer authentication is required.</p></li>
+<li><p><strong>userID</strong> – User ID for authentication, only needed for ORACLE and for SQLServer only if SQLServer</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>None</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>None</p>
-</dd>
-<dt class="field-even">Description<span class="colon">:</span></dt>
-<dd class="field-even"><p>This is a wrapper method for OpenModel() from toolkit; Watch out for errors for more information.</p>
-</dd>
 </dl>
+<p>authentication is required.
+:type userID: str
+:param password: Password for authentication, only needed for ORACLE and for SQLServer only if SQLServer
+authentication is required.
+:type password: str
+:return: None
+:rtype: None
+:description: This is a wrapper method for OpenModel() from toolkit; Watch out for errors for more information.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1092,9 +1105,10 @@ Only 1 Endnodes (i.e. Tanks, Air Valves, …) : Bypass Elements in General</p>
 <dd class="field-odd"><p>None</p>
 </dd>
 <dt class="field-even">Description<span class="colon">:</span></dt>
-<dd class="field-even"><p>This is a wrapper method for OpenModelXml() from toolkit; Watch out for error message for more information.</p>
+<dd class="field-even"><p>This is a wrapper method for OpenModelXml() from toolkit; Watch out for error message</p>
 </dd>
 </dl>
+<p>for more information.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1126,9 +1140,10 @@ Only 1 Endnodes (i.e. Tanks, Air Valves, …) : Bypass Elements in General</p>
 <dd class="field-even"><p>None</p>
 </dd>
 <dt class="field-odd">Description<span class="colon">:</span></dt>
-<dd class="field-odd"><p>This is a wrapper method for SaveChanges() from toolkit; Use it after End{EditSession/Transaction}. Watch out for errors for more information.</p>
+<dd class="field-odd"><p>This is a wrapper method for SaveChanges() from toolkit; Use it after End{EditSession/Transaction}.</p>
 </dd>
 </dl>
+<p>Watch out for errors for more information.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1219,9 +1234,10 @@ Only 1 Endnodes (i.e. Tanks, Air Valves, …) : Bypass Elements in General</p>
 <dd class="field-odd"><p>bool</p>
 </dd>
 <dt class="field-even">Description<span class="colon">:</span></dt>
-<dd class="field-even"><p>This is a wrapper method for SetGeometryInformation() from toolkit; Watch out for error messages for more information.</p>
+<dd class="field-even"><p>This is a wrapper method for SetGeometryInformation() from toolkit; Watch out for error messages</p>
 </dd>
 </dl>
+<p>for more information.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1243,9 +1259,10 @@ Only 1 Endnodes (i.e. Tanks, Air Valves, …) : Bypass Elements in General</p>
 <dd class="field-odd"><p>None</p>
 </dd>
 <dt class="field-even">Description<span class="colon">:</span></dt>
-<dd class="field-even"><p>Set the insert point of a symbol-object (e.g., Node, Valve, Tank, etc.). The insert point is the position on which the object is placed in the view.</p>
+<dd class="field-even"><p>Set the insert point of a symbol-object (e.g., Node, Valve, Tank, etc.). The insert point is</p>
 </dd>
 </dl>
+<p>the position on which the object is placed in the view.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1348,6 +1365,8 @@ Only 1 Endnodes (i.e. Tanks, Air Valves, …) : Bypass Elements in General</p>
 <dt class="sig sig-object py" id="sir3stoolkit.core.wrapper.SIR3S_View">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sir3stoolkit.core.wrapper.</span></span><span class="sig-name descname"><span class="pre">SIR3S_View</span></span><a class="reference internal" href="../_modules/sir3stoolkit/core/wrapper.html#SIR3S_View"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.wrapper.SIR3S_View" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class definition of SIR3S_View() wrapper to access functionalities provided by SIR3S software
+This should be used inside python console plugin to give better control over the model for users</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="sir3stoolkit.core.wrapper.SIR3S_View.AddExternalArrow">
 <span class="sig-name descname"><span class="pre">AddExternalArrow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float64</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float64</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lineColor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fillColor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lineWidthMM</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float64</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">isFilled</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">symbolFactor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float64</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">containerTK</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sir3stoolkit/core/wrapper.html#SIR3S_View.AddExternalArrow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.wrapper.SIR3S_View.AddExternalArrow" title="Link to this definition"></a></dt>
@@ -1372,9 +1391,10 @@ Only 1 Endnodes (i.e. Tanks, Air Valves, …) : Bypass Elements in General</p>
 <dd class="field-odd"><p>str</p>
 </dd>
 <dt class="field-even">Description<span class="colon">:</span></dt>
-<dd class="field-even"><p>This is a wrapper method for AddExternalArrow() from toolkit; Watch out for errors for more information.</p>
+<dd class="field-even"><p>This is a wrapper method for AddExternalArrow() from toolkit; Watch out for errors</p>
 </dd>
 </dl>
+<p>for more information.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1402,9 +1422,10 @@ Only 1 Endnodes (i.e. Tanks, Air Valves, …) : Bypass Elements in General</p>
 <dd class="field-odd"><p>str</p>
 </dd>
 <dt class="field-even">Description<span class="colon">:</span></dt>
-<dd class="field-even"><p>This is a wrapper method for AddExternalEllipse() from toolkit; Watch out for errors for more information.</p>
+<dd class="field-even"><p>This is a wrapper method for AddExternalEllipse() from toolkit; Watch out for errors</p>
 </dd>
 </dl>
+<p>for more information.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1430,9 +1451,10 @@ Only 1 Endnodes (i.e. Tanks, Air Valves, …) : Bypass Elements in General</p>
 <dd class="field-odd"><p>str</p>
 </dd>
 <dt class="field-even">Description<span class="colon">:</span></dt>
-<dd class="field-even"><p>This is a wrapper method for AddExternalPolygon() from toolkit; Watch out for errors for more information.</p>
+<dd class="field-even"><p>This is a wrapper method for AddExternalPolygon() from toolkit; Watch out for errors</p>
 </dd>
 </dl>
+<p>for more information.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1454,9 +1476,10 @@ Only 1 Endnodes (i.e. Tanks, Air Valves, …) : Bypass Elements in General</p>
 <dd class="field-odd"><p>None</p>
 </dd>
 <dt class="field-even">Description<span class="colon">:</span></dt>
-<dd class="field-even"><p>This is a wrapper method for AddExternalPolygonPoint() from toolkit; Watch out for errors for more information.</p>
+<dd class="field-even"><p>This is a wrapper method for AddExternalPolygonPoint() from toolkit; Watch out for errors</p>
 </dd>
 </dl>
+<p>for more information.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1483,7 +1506,8 @@ THE LAST POINT SHOULD BE IDENTICAL TO THE FIRST POINT
 :type containerTK: str
 :return: Tk of the added polygon.
 :rtype: str
-:description: This is a wrapper method for AddExternalPolygon() from toolkit; Watch out for errors for more information.</p>
+:description: This is a wrapper method for AddExternalPolygon() from toolkit; Watch out for errors
+for more information.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1508,9 +1532,10 @@ THE LAST POINT SHOULD BE IDENTICAL TO THE FIRST POINT
 <dd class="field-odd"><p>str</p>
 </dd>
 <dt class="field-even">Description<span class="colon">:</span></dt>
-<dd class="field-even"><p>This is a wrapper method for AddExternalPolyline() from toolkit; Watch out for errors for more information.</p>
+<dd class="field-even"><p>This is a wrapper method for AddExternalPolyline() from toolkit; Watch out for errors for</p>
 </dd>
 </dl>
+<p>more information.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1532,9 +1557,10 @@ THE LAST POINT SHOULD BE IDENTICAL TO THE FIRST POINT
 <dd class="field-odd"><p>None</p>
 </dd>
 <dt class="field-even">Description<span class="colon">:</span></dt>
-<dd class="field-even"><p>This is a wrapper method for AddExternalPolylinePoint() from toolkit; Watch out for errors for more information.</p>
+<dd class="field-even"><p>This is a wrapper method for AddExternalPolylinePoint() from toolkit; Watch out for errors</p>
 </dd>
 </dl>
+<p>for more information.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1558,7 +1584,8 @@ THE LAST POINT SHOULD BE IDENTICAL TO THE FIRST POINT
 :type containerTK: str
 :return: Tk of the added polyline.
 :rtype: str
-:description: This is a wrapper method for AddExternalPolyline() from toolkit; Watch out for errors for more information.</p>
+:description: This is a wrapper method for AddExternalPolyline() from toolkit; Watch out for errors
+for more information.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1587,9 +1614,10 @@ THE LAST POINT SHOULD BE IDENTICAL TO THE FIRST POINT
 <dd class="field-odd"><p>str</p>
 </dd>
 <dt class="field-even">Description<span class="colon">:</span></dt>
-<dd class="field-even"><p>This is a wrapper method for AddExternalRectangle() from toolkit; Watch out for errors for more information.</p>
+<dd class="field-even"><p>This is a wrapper method for AddExternalRectangle() from toolkit; Watch out for errors</p>
 </dd>
 </dl>
+<p>for more information.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1639,15 +1667,18 @@ THE LAST POINT SHOULD BE IDENTICAL TO THE FIRST POINT
 </ul>
 </dd>
 </dl>
-<p>The consumption Value can have different Dimensions.In Water usually Qa - i.e. [m^3/ a]. In Gas[Nm^3/ a]. In heat, it is usually a power in [kW] or[MW].
+<p>The consumption Value can have different Dimensions.In Water usually Qa - i.e. [m^3/ a]. In Gas[Nm^3/ a].
+In heat, it is usually a power in [kW] or[MW].
 :type consumption: np.float64
 :param counterId: ID point of consumption (from reference data for identification). max 40 Characters
 :type counterId: str
-:param customerId: ID of the Customer who is the contractual Partner of the CC for this point of consumption (from reference data for identification). max 40 Characters
+:param customerId: ID of the Customer who is the contractual Partner of the CC for this point of consumption
+(from reference data for identification). max 40 Characters
 :type customerId: str
 :param dimension: Dimension of consumption m3/a, Nm3/a, kW, kWh, MW or MWh, max 12 Characters
 :type dimension: str
-:param divisionType: Division type, max 12 Characters ( should be ‘W-’, ‘W+’, ‘F-’, ‘G-’ or ‘K-’ depending on Netrworkm type);</p>
+:param divisionType: Division type, max 12 Characters ( should be ‘W-’, ‘W+’, ‘F-’, ‘G-’ or ‘K-’
+depending on Netrworkm type);</p>
 <blockquote>
 <div><p>W- = consumer in the water network (outflow);
 W+ = “consumer” in the collection network (inflow);
@@ -1701,7 +1732,8 @@ than the specified tolerance
 :type EPS: np.float32
 :return: Tk of the added directional arrow.
 :rtype: str
-:description: This is a wrapper method for AddNewDirectionalArrow() from toolkit; Watch out for errors for more information.</p>
+:description: This is a wrapper method for AddNewDirectionalArrow() from toolkit; Watch out for errors
+for more information.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1720,20 +1752,17 @@ than the specified tolerance
 <li><p><strong>postalCode</strong> (<em>int</em>) – The Postal Code</p></li>
 <li><p><strong>dsn</strong> (<em>str</em>) – The official Number of the Street (if known), max. 80 Characters</p></li>
 <li><p><strong>fkNode</strong> (<em>str</em>) – Only for non-District Heating Networks: The tk (key) of the Node connected to the House (if any)</p></li>
-<li><p><strong>fkDH_Customer</strong> (<em>str</em>) – Only for District Heating Networks: The tk (key) of the DH Consumer connected to the House (if any)</p></li>
-<li><p><strong>idRef</strong> (<em>str</em>) – User-defined Reference ID</p></li>
+<li><p><strong>fkDH_Customer</strong> – Only for District Heating Networks: The tk (key) of the DH Consumer connected</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>returns the TK of the newly inserted House, otherwise ‘-1’.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-<dt class="field-even">Description<span class="colon">:</span></dt>
-<dd class="field-even"><p>This is a wrapper method for AddNewHouse() from toolkit; Watch out for errors for more information.</p>
-</dd>
 </dl>
+<p>to the House (if any)
+:type fkDH_Customer: str
+:param idRef: User-defined Reference ID
+:type idRef: str
+:return: returns the TK of the newly inserted House, otherwise ‘-1’.
+:rtype: str
+:description: This is a wrapper method for AddNewHouse() from toolkit; Watch out for errors for more information.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1825,7 +1854,8 @@ eg. “L” if a Pipe Length is observed or “QMAV” for the Result ‘Average
 :type absValue: bool
 :return: The TK of the newly inserted numerical display, otherwise ‘-1’.
 :rtype: str
-:description: This is a wrapper method for AddNewNumericalDisplay() from toolkit; Watch out for errors for more information.</p>
+:description: This is a wrapper method for AddNewNumericalDisplay() from toolkit; Watch out for errors
+for more information.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1931,22 +1961,21 @@ Face Name will assume it to be ‘Arial’
 <li><p><strong>isPostureStatic</strong> (<em>NetValvePostures</em>) – Option if the Posture is statically open/closed or time depemdant.
 Enter NetValvePostures.STATIC_OPEN_CLOSE if Posture is always open / closed
 otherwise enter NetValvePostures.TIME_DEP_TABLE if the Posture depends on a Setpoint Table (SWVT)</p></li>
-<li><p><strong>fkSWVT</strong> (<em>str</em>) – the pk (key) of the SetPoint Table, in Case the Parameter ‘isPostureStatic’ is entered as NetValvePostures.TIME_DEP_TABLE</p></li>
-<li><p><strong>openClose</strong> (<em>bool</em>) – Only usable in Case the Parameter ‘isPostureStatic’ is entered as NetValvePostures.STATIC_OPEN_CLOSE. So entering
-in that case ‘True’, resp. ‘False’ assumes the Valve is always open resp. closed.</p></li>
-<li><p><strong>idRef</strong> (<em>str</em>) – Reference ID, max 40 Characters</p></li>
+<li><p><strong>fkSWVT</strong> – the pk (key) of the SetPoint Table, in Case the Parameter ‘isPostureStatic’</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>returns the TK of the newly inserted Valve, otherwise ‘-1’.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-<dt class="field-even">Description<span class="colon">:</span></dt>
-<dd class="field-even"><p>This is a wrapper method for AddNewValveOnPipe() from toolkit; Watch out for errors for more information.</p>
-</dd>
 </dl>
+<p>is entered as NetValvePostures.TIME_DEP_TABLE
+:type fkSWVT: str
+:param openClose: Only usable in Case the Parameter ‘isPostureStatic’ is entered as NetValvePostures.
+STATIC_OPEN_CLOSE. So entering in that case ‘True’, resp. ‘False’ assumes the Valve is always open resp. closed.
+:type openClose: bool
+:param idRef: Reference ID, max 40 Characters
+:type idRef: str
+:return: returns the TK of the newly inserted Valve, otherwise ‘-1’.
+:rtype: str
+:description: This is a wrapper method for AddNewValveOnPipe() from toolkit; Watch out for errors
+for more information.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -2041,9 +2070,10 @@ Default value is True</p>
 <dd class="field-even"><p>None</p>
 </dd>
 <dt class="field-odd">Description<span class="colon">:</span></dt>
-<dd class="field-odd"><p>This method is a wrapper method for EndEditSession() from toolkit. Use it after StartEditSession() to close that session.</p>
+<dd class="field-odd"><p>This method is a wrapper method for EndEditSession() from toolkit. Use it after StartEditSession()</p>
 </dd>
 </dl>
+<p>to close that session.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -2058,9 +2088,10 @@ Default value is True</p>
 <dd class="field-even"><p>None</p>
 </dd>
 <dt class="field-odd">Description<span class="colon">:</span></dt>
-<dd class="field-odd"><p>This method is a wrapper method for EndTransaction() from toolkit. Use it after StartTransaction() to close that transaction.</p>
+<dd class="field-odd"><p>This method is a wrapper method for EndTransaction() from toolkit. Use it after StartTransaction()</p>
 </dd>
 </dl>
+<p>to close that transaction.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -2076,15 +2107,12 @@ Default value is True</p>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Color corresponding to specified value within range defined by min and max values and index of color in table.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tuple[int, int]</p>
-</dd>
-<dt class="field-even">Description<span class="colon">:</span></dt>
-<dd class="field-even"><p>This is a wrapper method for GetColor() from toolkit; Watch out for errors for more information.</p>
+<dd class="field-even"><p>Color corresponding to specified value within range defined by min and max values and index of</p>
 </dd>
 </dl>
+<p>color in table.
+:rtype: tuple[int, int]
+:description: This is a wrapper method for GetColor() from toolkit; Watch out for errors for more information.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -2107,9 +2135,10 @@ Default value is True</p>
 <dd class="field-odd"><p>list</p>
 </dd>
 <dt class="field-even">Description<span class="colon">:</span></dt>
-<dd class="field-even"><p>This is a wrapper method for GetColorTableEntries() from toolkit; Watch out for errors for more information.</p>
+<dd class="field-even"><p>This is a wrapper method for GetColorTableEntries() from toolkit; Watch out for errors</p>
 </dd>
 </dl>
+<p>for more information.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -2144,9 +2173,10 @@ Default value is True</p>
 <dd class="field-even"><p>tuple[str, ObjectTypes]</p>
 </dd>
 <dt class="field-odd">Description<span class="colon">:</span></dt>
-<dd class="field-odd"><p>This is a wrapper method for GetMainContainer() from toolkit; Finds the Main Container of the Model and returns its Key (TK).</p>
+<dd class="field-odd"><p>This is a wrapper method for GetMainContainer() from toolkit; Finds the Main Container of the</p>
 </dd>
 </dl>
+<p>Model and returns its Key (TK).</p>
 </dd></dl>
 
 <dl class="py method">
@@ -2164,9 +2194,10 @@ Default value is True</p>
 <dd class="field-odd"><p><a class="reference internal" href="#sir3stoolkit.core.wrapper.numericalDisplayProperties" title="sir3stoolkit.core.wrapper.numericalDisplayProperties">numericalDisplayProperties</a></p>
 </dd>
 <dt class="field-even">Description<span class="colon">:</span></dt>
-<dd class="field-even"><p>This is a wrapper method for GetNumericalDisplayProperties() from toolkit; Watch out for errors for more information.</p>
+<dd class="field-even"><p>This is a wrapper method for GetNumericalDisplayProperties() from toolkit; Watch out for errors</p>
 </dd>
 </dl>
+<p>for more information.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -2184,9 +2215,10 @@ Default value is True</p>
 <dd class="field-odd"><p><a class="reference internal" href="#sir3stoolkit.core.wrapper.textProperties" title="sir3stoolkit.core.wrapper.textProperties">textProperties</a></p>
 </dd>
 <dt class="field-even">Description<span class="colon">:</span></dt>
-<dd class="field-even"><p>This is a wrapper method for GetTextProperties() from toolkit; Watch out for errors for more information.</p>
+<dd class="field-even"><p>This is a wrapper method for GetTextProperties() from toolkit; Watch out for errors</p>
 </dd>
 </dl>
+<p>for more information.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -2298,20 +2330,16 @@ has no effect.</p>
 <li><p><strong>Mid</strong> (<em>str</em>) – Model identifier.</p></li>
 <li><p><strong>saveCurrentlyOpenModel</strong> (<em>bool</em>) – Do you want to save the current model before closing it?</p></li>
 <li><p><strong>namedInstance</strong> (<em>str</em>) – Instance name of the SQL Server.</p></li>
-<li><p><strong>userID</strong> (<em>str</em>) – User Id for Authentication, only needed for ORACLE and for SQLServer only if SQLServer Authentication is required.</p></li>
-<li><p><strong>password</strong> – Password for Authentication, only needed for ORACLE and for SQLServer Authentication is required.</p></li>
+<li><p><strong>userID</strong> – User Id for Authentication, only needed for ORACLE and for SQLServer only if SQLServer</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>None</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>None</p>
-</dd>
-<dt class="field-even">Description<span class="colon">:</span></dt>
-<dd class="field-even"><p>This is a wrapper method for openModel() from toolkit; Watch out for errors for more information.</p>
-</dd>
 </dl>
+<p>Authentication is required.
+:type userID: str
+:param password: Password for Authentication, only needed for ORACLE and for SQLServer Authentication is required.
+:return: None
+:rtype: None
+:description: This is a wrapper method for openModel() from toolkit; Watch out for errors for more information.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -2332,9 +2360,10 @@ has no effect.</p>
 <dd class="field-odd"><p>None</p>
 </dd>
 <dt class="field-even">Description<span class="colon">:</span></dt>
-<dd class="field-even"><p>This is a wrapper method for OpenModelXml() from toolkit; Watch out for error message for more information.</p>
+<dd class="field-even"><p>This is a wrapper method for OpenModelXml() from toolkit; Watch out for error message</p>
 </dd>
 </dl>
+<p>for more information.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -2349,9 +2378,10 @@ has no effect.</p>
 <dd class="field-even"><p>None</p>
 </dd>
 <dt class="field-odd">Description<span class="colon">:</span></dt>
-<dd class="field-odd"><p>This is a wrapper method for PrepareColoration() from toolkit; Watch out for errors for more information.</p>
+<dd class="field-odd"><p>This is a wrapper method for PrepareColoration() from toolkit; Watch out for errors</p>
 </dd>
 </dl>
+<p>for more information.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -2401,9 +2431,10 @@ from the Model and eventually refresh Views.</p>
 <dd class="field-even"><p>None</p>
 </dd>
 <dt class="field-odd">Description<span class="colon">:</span></dt>
-<dd class="field-odd"><p>This is a wrapper method for SaveChanges() from toolkit; Use it after End{EditSession/Transaction}. Watch out for errors for more information.</p>
+<dd class="field-odd"><p>This is a wrapper method for SaveChanges() from toolkit; Use it after End{EditSession/Transaction}.</p>
 </dd>
 </dl>
+<p>Watch out for errors for more information.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -2430,9 +2461,10 @@ from the Model and eventually refresh Views.</p>
 <dd class="field-odd"><p>None</p>
 </dd>
 <dt class="field-even">Description<span class="colon">:</span></dt>
-<dd class="field-even"><p>This is a wrapper method for AddExternalArrow() from toolkit; Watch out for errors for more information.</p>
+<dd class="field-even"><p>This is a wrapper method for AddExternalArrow() from toolkit; Watch out for errors</p>
 </dd>
 </dl>
+<p>for more information.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -2460,9 +2492,10 @@ from the Model and eventually refresh Views.</p>
 <dd class="field-odd"><p>None</p>
 </dd>
 <dt class="field-even">Description<span class="colon">:</span></dt>
-<dd class="field-even"><p>This is a wrapper method for SetExternalEllipseProperties() from toolkit; Watch out for errors for more information.</p>
+<dd class="field-even"><p>This is a wrapper method for SetExternalEllipseProperties() from toolkit; Watch out for errors</p>
 </dd>
 </dl>
+<p>for more information.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -2484,9 +2517,10 @@ from the Model and eventually refresh Views.</p>
 <dd class="field-odd"><p>None</p>
 </dd>
 <dt class="field-even">Description<span class="colon">:</span></dt>
-<dd class="field-even"><p>This is a wrapper method for AddExternalPolylinePoint() from toolkit; Watch out for errors for more information.</p>
+<dd class="field-even"><p>This is a wrapper method for AddExternalPolylinePoint() from toolkit; Watch out for errors</p>
 </dd>
 </dl>
+<p>for more information.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -2510,9 +2544,10 @@ from the Model and eventually refresh Views.</p>
 <dd class="field-odd"><p>None</p>
 </dd>
 <dt class="field-even">Description<span class="colon">:</span></dt>
-<dd class="field-even"><p>This is a wrapper method for SetExternalPolygonProperties() from toolkit; Watch out for errors for more information.</p>
+<dd class="field-even"><p>This is a wrapper method for SetExternalPolygonProperties() from toolkit; Watch out for errors</p>
 </dd>
 </dl>
+<p>for more information.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -2541,9 +2576,10 @@ from the Model and eventually refresh Views.</p>
 <dd class="field-odd"><p>None</p>
 </dd>
 <dt class="field-even">Description<span class="colon">:</span></dt>
-<dd class="field-even"><p>This is a wrapper method for SetExternalRectangleProperties() from toolkit; Watch out for errors for more information.</p>
+<dd class="field-even"><p>This is a wrapper method for SetExternalRectangleProperties() from toolkit; Watch out for errors</p>
 </dd>
 </dl>
+<p>for more information.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -2572,9 +2608,10 @@ from the Model and eventually refresh Views.</p>
 <dd class="field-odd"><p>None</p>
 </dd>
 <dt class="field-even">Description<span class="colon">:</span></dt>
-<dd class="field-even"><p>This is a wrapper method for SetExternalTextProperties() from toolkit; Watch out for errors for more information.</p>
+<dd class="field-even"><p>This is a wrapper method for SetExternalTextProperties() from toolkit; Watch out for errors</p>
 </dd>
 </dl>
+<p>for more information.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -2595,9 +2632,10 @@ from the Model and eventually refresh Views.</p>
 <dd class="field-odd"><p>None</p>
 </dd>
 <dt class="field-even">Description<span class="colon">:</span></dt>
-<dd class="field-even"><p>This is a wrapper method for SetExternalTextText() from toolkit; Watch out for errors for more information.</p>
+<dd class="field-even"><p>This is a wrapper method for SetExternalTextText() from toolkit; Watch out for errors</p>
 </dd>
 </dl>
+<p>for more information.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -2651,9 +2689,10 @@ This Method only applies to Texts, numerical Displays, Block Symbols and Block R
 <dd class="field-odd"><p>bool</p>
 </dd>
 <dt class="field-even">Description<span class="colon">:</span></dt>
-<dd class="field-even"><p>This is a wrapper method for SetWidthScaleProperties() from toolkit; Watch out for errors for more information.</p>
+<dd class="field-even"><p>This is a wrapper method for SetWidthScaleProperties() from toolkit; Watch out for errors</p>
 </dd>
 </dl>
+<p>for more information.</p>
 </dd></dl>
 
 <dl class="py method">
