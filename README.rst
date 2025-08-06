@@ -10,7 +10,7 @@
     :alt: PyPI Package latest release
     :target: https://pypi.org/project/sir3stoolkit/
 
-.. image:: https://readthedocs.org/projects/pandapipes/badge/
+.. image:: https://img.shields.io/badge/docs-latest-brightgreen.svg?logo=readthedocs&logoColor=white
    :target: https://3sconsult.github.io/sir3stoolkit/
    :alt: docs
 
