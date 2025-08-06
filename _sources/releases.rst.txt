@@ -1,7 +1,7 @@
 Releases
 ========
 
-The SIR 3S Toolkit will first be released alongside SIR 3S version 90-15 Quebec, under the version 90.15.1. 
+The SIR 3S Toolkit will first be released alongside SIR 3S version 90-15 Quebec, under the version 90.15.2. 
 Between major SIR 3S releases, the Toolkit may receive interim updates to fix bugs or extend functionality.
 
 There are two types of updates:
@@ -23,7 +23,7 @@ The release notes indicate what kind of release it is.
 90-15 Quebec
 ------------
 
-Version 90.15.1 (Initial Release)
+Version 90.15.2 (Initial Release)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 - First official public release of the SIR 3S Toolkit
