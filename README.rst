@@ -10,6 +10,10 @@
     :alt: PyPI Package latest release
     :target: https://pypi.org/project/sir3stoolkit/
 
+.. image:: https://readthedocs.org/projects/pandapipes/badge/
+   :target: https://3sconsult.github.io/sir3stoolkit/
+   :alt: docs
+
 ----
 
 SIR 3S Toolkit
