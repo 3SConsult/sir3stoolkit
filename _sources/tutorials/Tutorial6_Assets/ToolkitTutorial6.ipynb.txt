@@ -1,0 +1,503 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "id": "5556432f",
+   "metadata": {},
+   "source": [
+    "# WORK IN PROGRESS"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "5b7dbabf",
+   "metadata": {},
+   "source": [
+    "# Tutorial 6: Insert and Connect Elements"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "8899e69a",
+   "metadata": {},
+   "source": [
+    "This Tutorial demonstrates how new elements such as nodes, pipes, tanks, valves, etc. can be inserted into a SIR 3S model and connected via the SIR 3S Toolkit."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "a271e499-a4e8-4cf5-a510-7008fc501fa9",
+   "metadata": {},
+   "source": [
+    "## SIR 3S Installation"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "id": "9241d47b-641e-4c68-b8f8-adad4806d086",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "SIR3S_SIRGRAF_DIR = r\"C:\\3S\\SIR 3S Entwicklung\\SirGraf-90-15-00-16_Quebec_x64\" #change to local path"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "7887be8d",
+   "metadata": {},
+   "source": [
+    "## Imports"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "bbfb80b5",
+   "metadata": {},
+   "source": [
+    "Note: The SIR 3S Toolkit requires the Sir3S_Toolkit.dll included in SIR 3S installations (version Quebec and higher)."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "id": "48372080",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import sir3stoolkit"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "e12d61e9",
+   "metadata": {},
+   "source": [
+    "The core of sir3stoolkit is a Python wrapper around basic functionality of SIR 3S, offering a low-level access to the creation, modification and simulation of SIR 3S models. In the future pure python subpackages may be added."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "id": "f1baf699",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from sir3stoolkit.core import wrapper"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "id": "89da1276",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "<module 'sir3stoolkit' from 'C:\\\\Users\\\\jablonski\\\\3S\\\\sir3stoolkit\\\\src\\\\sir3stoolkit\\\\__init__.py'>"
+      ]
+     },
+     "execution_count": 9,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "sir3stoolkit"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "6d982834",
+   "metadata": {},
+   "source": [
+    "The [wrapper package](https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.Initialize_Toolkit) has to be initialized with reference to a SIR 3S (SirGraf) installation."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "id": "817b0ebf",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "wrapper.Initialize_Toolkit(SIR3S_SIRGRAF_DIR)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "0352dd43",
+   "metadata": {},
+   "source": [
+    "## Initialization"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "e14ffe06",
+   "metadata": {},
+   "source": [
+    "The SIR 3S Toolkit contains two classes: [SIR3S_Model](https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model) (model and data) and [SIR3S_View](https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_View) (depiction in SIR Graf). All SIR 3S Toolkit functionality is accessed via the methods of these classes."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "id": "7e40a5af",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Initialization complete\n"
+     ]
+    }
+   ],
+   "source": [
+    "s3s = wrapper.SIR3S_Model()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "id": "3770c93f",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Initialization complete\n"
+     ]
+    }
+   ],
+   "source": [
+    "s3s_view = wrapper.SIR3S_View()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "34309a14",
+   "metadata": {},
+   "source": [
+    "## Open Model"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "0918738e",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "dbFilePath=r\"Toolkit_Tutorial6_Model.db3\""
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "e984b61e",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Model is open for further operation\n"
+     ]
+    }
+   ],
+   "source": [
+    "s3s.OpenModel(dbName=dbFilePath, \n",
+    "              providerType=s3s.ProviderTypes.SQLite, \n",
+    "              Mid=\"M-1-0-1\", \n",
+    "              saveCurrentlyOpenModel=False, \n",
+    "              namedInstance=\"\", \n",
+    "              userID=\"\", \n",
+    "              password=\"\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "e2490549",
+   "metadata": {},
+   "source": [
+    "Now the model has been opened and the previous one has been closed without saving it. All SIR 3S Toolkit commands now apply to this model until another one is opened."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "8e3adb92",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "NetworkType.Undefined\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(s3s.GetNetworkType()) # to check that the correct model is responsive, model we are trying to open was created with type Undefined"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "1f2c3cb8",
+   "metadata": {},
+   "source": [
+    "## SIR 3S object types"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "34a86caf",
+   "metadata": {},
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 17,
+   "id": "1b8f7dfb",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "['AGSN_HydraulicProfile', 'AirVessel', 'Arrow', 'Atmosphere', 'BlockConnectionNode', 'CalcPari', 'CharacteristicLossTable', 'CharacteristicLossTable_Row', 'Circle', 'Compressor', 'CompressorTable', 'CompressorTable_Row', 'ControlEngineeringNexus', 'ControlMode', 'ControlPointTable', 'ControlPointTable_Row', 'ControlValve', 'ControlVariableConverter', 'ControlVariableConverterRSTE', 'CrossSectionTable', 'CrossSectionTable_Row', 'DPGR_DPKT_DatapointDpgrConnection', 'DPGR_DataPointGroup', 'DPKT_Datapoint', 'DamageRatesTable', 'DamageRatesTable_Row', 'DeadTimeElement', 'Demand', 'DifferentialRegulator', 'DirectionalArrow', 'DistrictHeatingConsumer', 'DistrictHeatingFeeder', 'Divider', 'DriveEfficiencyTable', 'DriveEfficiencyTable_Row', 'DrivePowerTable', 'DrivePowerTable_Row', 'EBES_FeederGroups', 'EfficiencyConverterTable', 'EfficiencyConverterTable_Row', 'ElementQuery', 'EnergyRecoveryTable', 'EnergyRecoveryTable_Row', 'EnvironmentTemp', 'FWBZ_DistrictHeatingReferenceValues', 'FlapValve', 'FlowControlUnit', 'FluidQualityParamSet', 'FluidQualityParamSet_OS', 'FluidThermalPropertyGroup', 'FreeDuct', 'FunctionGenerator', 'FunctionTable', 'FunctionTable_Row', 'GasComponent', 'GasMixture', 'GeneralSection', 'Gravitation', 'HeatExchanger', 'HeatFeederConsumerStation', 'HeaterCooler', 'Histeresis', 'House', 'Hydrant', 'Integrator', 'LAYR_Layer', 'LoadFactorTable', 'LoadFactorTable_Row', 'LogicalComparison', 'LogicalStorage', 'MeasuredVariableTable', 'MeasuredVariableTable_Row', 'MinMaxSelection', 'Multiplier', 'NetValve', 'Node', 'NonReturnValvesTable', 'NonReturnValvesTable_Row', 'NumericalDisplay', 'ObjectContainerSymbol', 'OpenContainer', 'Oval', 'PARZ_TransientCalculationParameters', 'PhaseSeparation', 'PidController', 'Pipe', 'PipeGroup', 'PipeTable', 'PipeTable_Row', 'PipeVertex', 'Polygon', 'Polyline', 'PressureRegulator', 'PressureZone', 'Pt1Controller', 'Pump', 'PumpCharTable', 'PumpCharTable_Row', 'PumpGroup', 'PumpOfPumpGroup', 'PumpSpeedTable', 'PumpSpeedTable_Row', 'RART_ControlMode', 'REGP_ControlParameters', 'RMES_DPTS_RmesInternalDataPoint', 'Rectangle', 'RegulatorsTable', 'RegulatorsTable_Row', 'ReturnTemperaturTable', 'ReturnTemperaturTable_Row', 'RoundRectangle', 'SIRGRAF', 'SPLZ_TimeSeries', 'SafetyValve', 'SetpointDevice', 'SolarCollector', 'StandPipe', 'Street', 'SummingPoint', 'SwitchInBlock', 'TemperatureTable', 'TemperatureTable_Row', 'Text', 'ThermalOutputTable', 'ThermalOutputTable_Row', 'ThermophysPropTable', 'ThermophysPropTable_Row', 'TransitionSymbol', 'Transmitter', 'TransportVariable', 'USCH_UserDefinedProperties', 'Unknown', 'VARA_ColorScale', 'VARA_ROWS_WidthOrScale', 'VRCT_ViewRectangle', 'Valve', 'ValveLiftTable', 'ValveLiftTable_Row', 'VarFlowTable', 'VarFlowTable_Row', 'VarPressureTable', 'VarPressureTable_Row', 'VentOpenCloseTable', 'VentOpenCloseTable_Row', 'VentValve', 'VentilatedPressureAirVessel', 'WBLZ_ThermalBalance', 'WeatherDataTable', 'WeatherDataTable_Row']\n"
+     ]
+    }
+   ],
+   "source": [
+    "object_types = [item for item in dir(s3s.ObjectTypes) if not (item.startswith('__') and item.endswith('__'))]\n",
+    "print(object_types)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "fc620bae",
+   "metadata": {},
+   "source": [
+    "## InsertElement()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "89bbcd79",
+   "metadata": {},
+   "source": [
+    "### Nodes"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "8ae2827a",
+   "metadata": {},
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "b50e88fd",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "markdown",
+   "id": "2b0838ec",
+   "metadata": {},
+   "source": [
+    "### ConnectConnectingElement()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "6759c806",
+   "metadata": {},
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "e3c0f52b",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "markdown",
+   "id": "47d78133",
+   "metadata": {},
+   "source": [
+    "### ConnectBypassElement()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "0c821e49",
+   "metadata": {},
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "b9a135e1",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "markdown",
+   "id": "1b00334d",
+   "metadata": {},
+   "source": [
+    "## DeleteElement()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "565aa293",
+   "metadata": {},
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "979c1e3d",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "markdown",
+   "id": "0785e502",
+   "metadata": {},
+   "source": [
+    "## Add specific Elements"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "4fb82373",
+   "metadata": {},
+   "source": [
+    "### AddNewNode()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "4838aa74",
+   "metadata": {},
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "dc034ec9",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "markdown",
+   "id": "98d89ae1",
+   "metadata": {},
+   "source": [
+    "### AddNewPipe()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "15ba3636",
+   "metadata": {},
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "0fa3e863",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "markdown",
+   "id": "180ae351",
+   "metadata": {},
+   "source": [
+    "### AddNewBypassElement()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "96cb2953",
+   "metadata": {},
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "9620b4e7",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "markdown",
+   "id": "7582d0ae",
+   "metadata": {},
+   "source": [
+    "### AddNewConnectingElement()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "8299e9d1",
+   "metadata": {},
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "9b6d19a8",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "markdown",
+   "id": "6fb4de39-a405-4741-92ae-4613320b93f4",
+   "metadata": {},
+   "source": [
+    "__...__"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "base",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.11.8"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
