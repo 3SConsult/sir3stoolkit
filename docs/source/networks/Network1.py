@@ -1,4 +1,8 @@
 from sir3stoolkit.core import wrapper
+
+SIR3S_SIRGRAF_DIR = r"C:\3S\SIR 3S Entwicklung\SirGraf-90-15-00-16_Quebec_x64"  # change to local path
+wrapper.Initialize_Toolkit(SIR3S_SIRGRAF_DIR)
+
 model = wrapper.SIR3S_Model()
 
 # Abbreviations for ObjectTypes used
