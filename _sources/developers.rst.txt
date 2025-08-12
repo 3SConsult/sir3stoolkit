@@ -206,6 +206,68 @@ We currently use the following workflows:
      - Push to `main`
      - Builds Sphinx documentation (including API docs via `sphinx-apidoc`) and deploys it to the `gh-pages` branch using `peaceiris/actions-gh-pages`. 
 
+Anonymization Setup for Pre-Commit Hook
+=======================================
+
+This guide explains how to set up the anonymization script as a Git pre-commit hook. It ensures that sensitive names in Jupyter notebooks are replaced before committing to the repository.
+
+Step 1: Locate the Pre-Commit Hook
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Navigate to the Git hooks directory of your local repository:
+
+::
+
+    <your_repo_root>/.git/hooks/
+
+You will find a file named ``pre-commit.sample``. Rename it to ``pre-commit`` (without any file extension). Other contents of the file can be deleted, if not needed by the user for other purposes:
+
+::
+
+    mv pre-commit.sample pre-commit
+
+Step 2: Edit the Pre-Commit Hook
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Open the ``pre-commit`` file in a text editor and replace its contents with the following:
+
+::
+
+    #!/bin/sh
+    echo "🔒 Running anonymization script..."
+    "C:/Users/<your_username>/AppData/Local/anaconda3/python.exe" docs/source/anonymize_notebooks.py
+
+    if [ $? -ne 0 ]; then
+      echo "❌ Anonymization failed. Commit aborted."
+      exit 1
+    fi
+
+Replace ``<your_username>`` with your actual Windows username or adjust the Python path to match your local installation.
+
+Step 3: Create the Names File
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+In the same directory as ``anonymize_notebooks.py`` (``docs/source/``), create a file named ``names_to_anonymize.txt``. Add one name per line that should be anonymized:
+
+::
+
+    Müller
+    Schmidt
+
+Step 4: Verify the Setup
+^^^^^^^^^^^^^^^^^^^^^^^^
+Make a small change in a Jupyter notebook that contains one of the names listed. Then run:
+
+::
+
+    git add .
+    git commit -m "Test anonymization"
+
+You should see output indicating that the anonymization script ran and which names were replaced.
+
+Troubleshooting
+^^^^^^^^^^^^^^^
+- If you see an error like ``Python not found``, verify that the Python path in the hook is correct.
+- Ensure that ``names_to_anonymize.txt`` exists and is in the correct directory.
+- The hook must be named ``pre-commit`` with no file extension.
+
 
 Generating the Documentation
 ----------------------------
