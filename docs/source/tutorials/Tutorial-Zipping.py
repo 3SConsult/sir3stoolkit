@@ -1,4 +1,4 @@
-# This script is AI-written
+# This script is AI-generated
 # cd ...\sir3stoolkit\docs\source\tutorials before running this script
 
 import os
