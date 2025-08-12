@@ -207,7 +207,7 @@ We currently use the following workflows:
      - Builds Sphinx documentation (including API docs via `sphinx-apidoc`) and deploys it to the `gh-pages` branch using `peaceiris/actions-gh-pages`. 
 
 Anonymization Setup for Pre-Commit Hook
-=======================================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This guide explains how to set up the anonymization script as a Git pre-commit hook. It ensures that sensitive names in Jupyter notebooks are replaced before committing to the repository.
 
