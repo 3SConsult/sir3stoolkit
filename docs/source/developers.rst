@@ -231,14 +231,21 @@ Open the ``pre-commit`` file in a text editor and replace its contents with the 
 
 ::
 
-    #!/bin/sh
-    echo "🔒 Running anonymization script..."
-    "C:/Users/<your_username>/AppData/Local/anaconda3/python.exe" docs/source/anonymize_notebooks.py
+      #!/bin/sh
 
-    if [ $? -ne 0 ]; then
+      echo "🔒 Running anonymization script..."
+      "C:/Users/jablonski/AppData/Local/anaconda3/python.exe" "docs/source/anonymize_notebooks.py"
+
+      if [ $? -ne 0 ]; then
       echo "❌ Anonymization failed. Commit aborted."
       exit 1
-    fi
+      fi
+
+      # Re-stage any modified notebooks
+      git ls-files -m | grep '\.ipynb$' | while read -r file; do
+      git add "$file"
+      done
+
 
 Replace ``<your_username>`` with your actual Windows username or adjust the Python path to match your local installation.
 
