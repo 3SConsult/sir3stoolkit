@@ -306,13 +306,19 @@
 <h4>Step 2: Edit the Pre-Commit Hook<a class="headerlink" href="#step-2-edit-the-pre-commit-hook" title="Link to this heading"></a></h4>
 <p>Open the <code class="docutils literal notranslate"><span class="pre">pre-commit</span></code> file in a text editor and replace its contents with the following:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/sh
+
 echo &quot;🔒 Running anonymization script...&quot;
-&quot;C:/Users/&lt;your_username&gt;/AppData/Local/anaconda3/python.exe&quot; docs/source/anonymize_notebooks.py
+&quot;C:/Users/jablonski/AppData/Local/anaconda3/python.exe&quot; &quot;docs/source/anonymize_notebooks.py&quot;
 
 if [ $? -ne 0 ]; then
-  echo &quot;❌ Anonymization failed. Commit aborted.&quot;
-  exit 1
+echo &quot;❌ Anonymization failed. Commit aborted.&quot;
+exit 1
 fi
+
+# Re-stage any modified notebooks
+git ls-files -m | grep &#39;\.ipynb$&#39; | while read -r file; do
+git add &quot;$file&quot;
+done
 </pre></div>
 </div>
 <p>Replace <code class="docutils literal notranslate"><span class="pre">&lt;your_username&gt;</span></code> with your actual Windows username or adjust the Python path to match your local installation.</p>
