@@ -234,7 +234,7 @@ Open the ``pre-commit`` file in a text editor and replace its contents with the 
       #!/bin/sh
 
       echo "🔒 Running anonymization script..."
-      "C:/Users/jablonski/AppData/Local/anaconda3/python.exe" "docs/source/anonymize_notebooks.py"
+      "C:/Users/<your_username>/AppData/Local/anaconda3/python.exe" "docs/source/anonymize_notebooks.py"
 
       if [ $? -ne 0 ]; then
       echo "❌ Anonymization failed. Commit aborted."
