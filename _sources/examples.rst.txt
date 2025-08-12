@@ -72,6 +72,15 @@ This Tutorial demonstrates how to change SIR 3S models properly by grouping chan
 
 View: `Notebook <tutorials/Tutorial5_Assets/ToolkitTutorial5.html>`_ | Download: `ZIP archive <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorial5_Assets.zip>`_.
 
+.. _Ttu6:
+
+Tutorial 6: Insert and Connect Elements
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This Tutorial demonstrates how new elements such as nodes, pipes, tanks, valves, etc. can be inserted into a SIR 3S model and connected.
+
+View: `Notebook <tutorials/Tutorial6_Assets/ToolkitTutorial6.html>`_ | Download: `ZIP archive <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorial6_Assets.zip>`_.
+
 .. _TtuX:
 
 Tutorial X: Template

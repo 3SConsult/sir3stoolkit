@@ -2,14 +2,6 @@
   "cells": [
     {
       "cell_type": "markdown",
-      "id": "5556432f",
-      "metadata": {},
-      "source": [
-        "# WORK IN PROGRESS"
-      ]
-    },
-    {
-      "cell_type": "markdown",
       "id": "5b7dbabf",
       "metadata": {},
       "source": [
@@ -21,7 +13,7 @@
       "id": "8899e69a",
       "metadata": {},
       "source": [
-        "This Tutorial demonstrates how new elements such as nodes, pipes, tanks, valves, etc. can be inserted into a SIR 3S model and connected via the SIR 3S Toolkit."
+        "This Tutorial demonstrates how new elements such as nodes, pipes, tanks, valves, etc. can be inserted into a SIR 3S model and connected."
       ]
     },
     {
@@ -34,7 +26,7 @@
     },
     {
       "cell_type": "code",
-      "execution_count": 6,
+      "execution_count": 1,
       "id": "9241d47b-641e-4c68-b8f8-adad4806d086",
       "metadata": {},
       "outputs": [],
@@ -60,7 +52,7 @@
     },
     {
       "cell_type": "code",
-      "execution_count": 7,
+      "execution_count": 2,
       "id": "48372080",
       "metadata": {},
       "outputs": [],
@@ -78,7 +70,7 @@
     },
     {
       "cell_type": "code",
-      "execution_count": 8,
+      "execution_count": 3,
       "id": "f1baf699",
       "metadata": {},
       "outputs": [],
@@ -88,17 +80,17 @@
     },
     {
       "cell_type": "code",
-      "execution_count": 9,
+      "execution_count": 4,
       "id": "89da1276",
       "metadata": {},
       "outputs": [
         {
           "data": {
             "text/plain": [
-              "<module 'sir3stoolkit' from 'C:\\\\Users\\\\aUsername\\\\3S\\\\sir3stoolkit\\\\src\\\\sir3stoolkit\\\\__init__.py'>"
+              "<module 'sir3stoolkit' from 'C:\\\\Users\\\\jablonski\\\\3S\\\\sir3stoolkit\\\\src\\\\sir3stoolkit\\\\__init__.py'>"
             ]
           },
-          "execution_count": 9,
+          "execution_count": 4,
           "metadata": {},
           "output_type": "execute_result"
         }
@@ -117,7 +109,7 @@
     },
     {
       "cell_type": "code",
-      "execution_count": 10,
+      "execution_count": 5,
       "id": "817b0ebf",
       "metadata": {},
       "outputs": [],
@@ -143,7 +135,7 @@
     },
     {
       "cell_type": "code",
-      "execution_count": 11,
+      "execution_count": 6,
       "id": "7e40a5af",
       "metadata": {},
       "outputs": [
@@ -161,7 +153,7 @@
     },
     {
       "cell_type": "code",
-      "execution_count": 12,
+      "execution_count": 7,
       "id": "3770c93f",
       "metadata": {},
       "outputs": [
@@ -178,6 +170,16 @@
       ]
     },
     {
+      "cell_type": "code",
+      "execution_count": 8,
+      "id": "2731c527",
+      "metadata": {},
+      "outputs": [],
+      "source": [
+        "dbFilePath=r\"C:\\Users\\jablonski\\3S\\Quebec_PT3S\\Example5.db3\""
+      ]
+    },
+    {
       "cell_type": "markdown",
       "id": "34309a14",
       "metadata": {},
@@ -187,7 +189,7 @@
     },
     {
       "cell_type": "code",
-      "execution_count": null,
+      "execution_count": 9,
       "id": "0918738e",
       "metadata": {},
       "outputs": [],
@@ -197,7 +199,7 @@
     },
     {
       "cell_type": "code",
-      "execution_count": null,
+      "execution_count": 10,
       "id": "e984b61e",
       "metadata": {},
       "outputs": [
@@ -205,7 +207,7 @@
           "name": "stdout",
           "output_type": "stream",
           "text": [
-            "Model is open for further operation\n"
+            "New model is created with the model identifier: M-2-0-1\n"
           ]
         }
       ],
@@ -229,7 +231,7 @@
     },
     {
       "cell_type": "code",
-      "execution_count": null,
+      "execution_count": 11,
       "id": "8e3adb92",
       "metadata": {},
       "outputs": [
@@ -237,7 +239,7 @@
           "name": "stdout",
           "output_type": "stream",
           "text": [
-            "NetworkType.Undefined\n"
+            "NetworkType.DistrictHeating\n"
           ]
         }
       ],
@@ -254,14 +256,8 @@
       ]
     },
     {
-      "cell_type": "markdown",
-      "id": "34a86caf",
-      "metadata": {},
-      "source": []
-    },
-    {
       "cell_type": "code",
-      "execution_count": 17,
+      "execution_count": 12,
       "id": "1b8f7dfb",
       "metadata": {},
       "outputs": [
@@ -283,7 +279,23 @@
       "id": "fc620bae",
       "metadata": {},
       "source": [
-        "## InsertElement()"
+        "## InsertElement() - Generic Element Creation"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "d379cb12",
+      "metadata": {},
+      "source": [
+        "We use the [InsertElement()](https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement) function with the SIR 3S datatype and IdRef value (we just use default \"-1\")."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "f6f72344",
+      "metadata": {},
+      "source": [
+        "Let's just create two nodes: one connected to a tank and the other for now just a free end connected via a pipe to the first node."
       ]
     },
     {
@@ -295,76 +307,254 @@
       ]
     },
     {
-      "cell_type": "markdown",
-      "id": "8ae2827a",
-      "metadata": {},
-      "source": [
-        "We use the [InsertElement()](https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement) function, with the SIR 3S datatype and "
-      ]
-    },
-    {
       "cell_type": "code",
-      "execution_count": null,
+      "execution_count": 13,
       "id": "b50e88fd",
       "metadata": {},
-      "outputs": [],
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": [
+            "Element inserted successfully into the model with Tk: 5143532399450102274\n"
+          ]
+        }
+      ],
       "source": [
-        "s3s.InsertElement(s3s.ObjectTypes.Node)"
+        "nodeKI=s3s.InsertElement(ElementType=s3s.ObjectTypes.Node, IdRef =\"-1\")"
       ]
     },
     {
       "cell_type": "code",
-      "execution_count": null,
-      "id": "39490708",
+      "execution_count": 14,
+      "id": "393d48c4",
       "metadata": {},
-      "outputs": [],
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": [
+            "Element inserted successfully into the model with Tk: 4815589023028819436\n"
+          ]
+        }
+      ],
       "source": [
-        "1/0"
+        "nodeKK=s3s.InsertElement(ElementType=s3s.ObjectTypes.Node, IdRef =\"-1\")"
       ]
     },
     {
       "cell_type": "markdown",
-      "id": "2b0838ec",
+      "id": "4c416e7f",
       "metadata": {},
       "source": [
-        "### ConnectConnectingElement()"
+        "### Pipe - Connecting Element"
       ]
     },
     {
       "cell_type": "markdown",
-      "id": "6759c806",
+      "id": "a4c828b2",
       "metadata": {},
-      "source": []
+      "source": [
+        "We again use [InsertElement()](https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement) to create a new element in this case a pipe. Then we connect both nodes with the pipe using the [ConnectConnectingElementWithNodes()](https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.ConnectConnectingElementWithNodes) function."
+      ]
     },
     {
       "cell_type": "code",
-      "execution_count": null,
-      "id": "e3c0f52b",
+      "execution_count": 15,
+      "id": "254dfcc5",
       "metadata": {},
-      "outputs": [],
-      "source": []
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": [
+            "Element inserted successfully into the model with Tk: 4644765040932589259\n"
+          ]
+        }
+      ],
+      "source": [
+        "pipe=s3s.InsertElement(ElementType=s3s.ObjectTypes.Pipe, IdRef =\"-1\")"
+      ]
     },
     {
-      "cell_type": "markdown",
-      "id": "47d78133",
+      "cell_type": "code",
+      "execution_count": 16,
+      "id": "93b4d366",
       "metadata": {},
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": [
+            "Objects connected successfully\n"
+          ]
+        }
+      ],
       "source": [
-        "### ConnectBypassElement()"
+        "s3s.ConnectConnectingElementWithNodes(pipe, nodeKI, nodeKK)"
       ]
     },
     {
       "cell_type": "markdown",
-      "id": "0c821e49",
+      "id": "53bc242c",
       "metadata": {},
-      "source": []
+      "source": [
+        "### Tank - Bypass Element"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "10a3e8c9",
+      "metadata": {},
+      "source": [
+        "We again use [InsertElement()](https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement) to create a new element in this case a tank. Then we connect the KI node with the tank using the [ConnectBypassElementWithNode()](https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.ConnectBypassElementWithNode) function."
+      ]
     },
     {
       "cell_type": "code",
-      "execution_count": null,
+      "execution_count": 17,
+      "id": "bbcdef46",
+      "metadata": {},
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": [
+            "Element inserted successfully into the model with Tk: 5003978130465258892\n"
+          ]
+        }
+      ],
+      "source": [
+        "tank=s3s.InsertElement(ElementType=s3s.ObjectTypes.OpenContainer, IdRef =\"-1\")"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 18,
+      "id": "2240f200",
+      "metadata": {},
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": [
+            "Object connected successfully\n"
+          ]
+        }
+      ],
+      "source": [
+        "s3s.ConnectBypassElementWithNode(tank, nodeKI)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "2a586fb1",
+      "metadata": {},
+      "source": [
+        "### Assign Property Values"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "34e0b209",
+      "metadata": {},
+      "source": [
+        "Now we have created this basic network, but it lacks defined geometry, material, supplier data. We can use the [SetValue()](ConnectBypassElementWithNode) function from Tutorial 3 to assin those values. "
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 19,
       "id": "b9a135e1",
       "metadata": {},
-      "outputs": [],
-      "source": []
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": [
+            "Value is set\n",
+            "Value is set\n",
+            "Value is set\n",
+            "Value is set\n"
+          ]
+        }
+      ],
+      "source": [
+        "s3s.SetValue(nodeKI, \"Xkor\", \"100\")\n",
+        "s3s.SetValue(nodeKI, \"Ykor\", \"100\")\n",
+        "s3s.SetValue(nodeKI, \"Ktyp\", \"PKON\")\n",
+        "s3s.SetValue(nodeKI, \"Ktyp\", \"PKON\")"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "1cd2f0eb",
+      "metadata": {},
+      "source": [
+        "... and so on for both nodes"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 20,
+      "id": "8feee922",
+      "metadata": {},
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": [
+            "Value is set\n",
+            "Value is set\n"
+          ]
+        }
+      ],
+      "source": [
+        "s3s.SetValue(pipe, \"Kvr\", \"1\")\n",
+        "s3s.SetValue(pipe, \"L\", \"10\")"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "4c550deb",
+      "metadata": {},
+      "source": [
+        "... and so on for the pipe and also the tank"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "849de8fd",
+      "metadata": {},
+      "source": [
+        "# GetNumberOfElements"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "2841167b",
+      "metadata": {},
+      "source": [
+        "As a side note. We can use the [GetNumberOfElements()](https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetNumberOfElements) function to get the number of all elements existing in our model of a specified datatype"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 21,
+      "id": "99ef5631",
+      "metadata": {},
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": [
+            "2\n"
+          ]
+        }
+      ],
+      "source": [
+        "print(s3s.GetNumberOfElements(s3s.ObjectTypes.Node))"
+      ]
     },
     {
       "cell_type": "markdown",
@@ -378,22 +568,130 @@
       "cell_type": "markdown",
       "id": "565aa293",
       "metadata": {},
-      "source": []
+      "source": [
+        "Let's delete all Elements we have created so far."
+      ]
     },
     {
       "cell_type": "code",
-      "execution_count": null,
+      "execution_count": 22,
       "id": "979c1e3d",
       "metadata": {},
-      "outputs": [],
-      "source": []
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": [
+            "Element deleted successfully\n"
+          ]
+        }
+      ],
+      "source": [
+        "s3s.DeleteElement(nodeKI)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 23,
+      "id": "08683f89",
+      "metadata": {},
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": [
+            "Element deleted successfully\n"
+          ]
+        }
+      ],
+      "source": [
+        "s3s.DeleteElement(nodeKK)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "109b28f1",
+      "metadata": {},
+      "source": [
+        "Now we can check how many nodes still exist."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 24,
+      "id": "10ecf85c",
+      "metadata": {},
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": [
+            "0\n"
+          ]
+        }
+      ],
+      "source": [
+        "print(s3s.GetNumberOfElements(s3s.ObjectTypes.Node))"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 25,
+      "id": "bfbaad10",
+      "metadata": {},
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": [
+            "Element deleted successfully\n"
+          ]
+        }
+      ],
+      "source": [
+        "s3s.DeleteElement(pipe)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 26,
+      "id": "28677ea2",
+      "metadata": {},
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": [
+            "Element deleted successfully\n"
+          ]
+        }
+      ],
+      "source": [
+        "s3s.DeleteElement(tank)"
+      ]
     },
     {
       "cell_type": "markdown",
       "id": "0785e502",
       "metadata": {},
       "source": [
-        "## Add specific Elements"
+        "## Specific Element Creation"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "bc3c17fb",
+      "metadata": {},
+      "source": [
+        "The approach used above is tedious. Therefore more specific functions exists for the insertion of elements of certain data types which contain specific paramters for that type."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "c8187754",
+      "metadata": {},
+      "source": [
+        "Let's try to build a more complex model this time. It is equivalent to Network 1. We will use template for editing models from Tutorial 5."
       ]
     },
     {
@@ -408,15 +706,57 @@
       "cell_type": "markdown",
       "id": "4838aa74",
       "metadata": {},
-      "source": []
+      "source": [
+        "We use the [AddNewNode()](https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddNewNode) function to insert several nodes. We can already specify many properties such as geometry, node type, kvr, etc.."
+      ]
     },
     {
       "cell_type": "code",
-      "execution_count": null,
+      "execution_count": 27,
       "id": "dc034ec9",
       "metadata": {},
-      "outputs": [],
-      "source": []
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": [
+            "Now you can make changes to the model\n",
+            "New node added\n",
+            "New node added\n",
+            "New node added\n",
+            "New node added\n",
+            "New node added\n",
+            "New node added\n",
+            "New node added\n",
+            "New node added\n",
+            "New node added\n",
+            "New node added\n",
+            "New node added\n",
+            "Transaction has ended. Please open up a new transaction if you want to make further changes\n",
+            "Changes saved successfully\n",
+            "Refresh successful\n"
+          ]
+        }
+      ],
+      "source": [
+        "s3s.StartTransaction(\"Inserting Nodes\") \n",
+        "\n",
+        "node10 = s3s.AddNewNode(\"-1\", \"Node10\", \"QKON\", 200, 700, 213, 0, 1, \"DNODE 10\", \"RefNode 10\", 0) \n",
+        "node11 = s3s.AddNewNode(\"-1\", \"Node11\", \"QKON\", 300, 700, 213, 0, 1, \"DNODE 11\", \"RefNode 11\", 0) \n",
+        "node12 = s3s.AddNewNode(\"-1\", \"Node12\", \"QKON\", 500, 700, 210, 0, 1, \"DNODE 12\", \"RefNode 12\", 0) \n",
+        "node13 = s3s.AddNewNode(\"-1\", \"Node13\", \"QKON\", 700, 700, 208.5, 0, 1, \"DNODE 13\", \"RefNode 13\", 0) \n",
+        "node21 = s3s.AddNewNode(\"-1\", \"Node21\", \"QKON\", 300, 400, 210, 0, 1, \"DNODE 21\", \"RefNode 21\", 0) \n",
+        "node22 = s3s.AddNewNode(\"-1\", \"Node22\", \"QKON\", 500, 400, 208.5, 0, 1, \"DNODE 22\", \"RefNode 22\", 0) \n",
+        "node23 = s3s.AddNewNode(\"-1\", \"Node23\", \"QKON\", 700, 400, 207, 0, 1, \"DNODE 23\", \"RefNode 23\", 0) \n",
+        "node31 = s3s.AddNewNode(\"-1\", \"Node31\", \"QKON\", 300, 100, 210, 0, 1, \"DNODE 31\", \"RefNode 31\", 0) \n",
+        "node32 = s3s.AddNewNode(\"-1\", \"Node32\", \"QKON\", 500, 100, 213, 0, 1, \"DNODE 32\", \"RefNode 32\", 0) \n",
+        "node9 = s3s.AddNewNode(\"-1\", \"Node9\", \"PKON\", 150, 700, 255, 0, 1, \"PNODE 9\", \"RefNode 9\", 0) \n",
+        "node2 = s3s.AddNewNode(\"-1\", \"Node2\", \"QKON\", 500, 850, 240, 0, 1, \"Tank 2\", \"RefNode 2\", 0) \n",
+        "\n",
+        "s3s.EndTransaction()\n",
+        "s3s.SaveChanges()\n",
+        "s3s.RefreshViews()"
+      ]
     },
     {
       "cell_type": "markdown",
@@ -430,15 +770,103 @@
       "cell_type": "markdown",
       "id": "15ba3636",
       "metadata": {},
-      "source": []
+      "source": [
+        "We use the [AddNewPipe()](https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddNewPipe) function to insert new pipes. This time there is no need for a seperate function to connect it to nodes, and many properties such as geometry, material, kvr, etc. are already set in this function."
+      ]
     },
     {
       "cell_type": "code",
-      "execution_count": null,
+      "execution_count": 28,
       "id": "0fa3e863",
       "metadata": {},
-      "outputs": [],
-      "source": []
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": [
+            "Now you can make changes to the model\n",
+            "New pipe added\n",
+            "New pipe added\n",
+            "New pipe added\n",
+            "New pipe added\n",
+            "New pipe added\n",
+            "New pipe added\n",
+            "New pipe added\n",
+            "New pipe added\n",
+            "New pipe added\n",
+            "New pipe added\n",
+            "New pipe added\n",
+            "New pipe added\n",
+            "Transaction has ended. Please open up a new transaction if you want to make further changes\n",
+            "Changes saved successfully\n",
+            "Refresh successful\n"
+          ]
+        }
+      ],
+      "source": [
+        "s3s.StartTransaction(\"Inserting Pipes\") \n",
+        "\n",
+        "s3s.AddNewPipe(\"-1\", node10, node11, 3160, \"LINESTRING(200 700, 300, 700)\", \"STDROHR\", \"450\", 0.25, \"Ref Pipe 10\", \"Pipe from Pump to network\", 0)\n",
+        "s3s.AddNewPipe(\"-1\", node11, node12, 1584, \"LINESTRING(300 700, 500, 700)\", \"STDROHR\", \"350\", 0.25, \"Ref Pipe 11\", \"Pipe from 11 to 12\", 0)\n",
+        "s3s.AddNewPipe(\"-1\", node12, node13, 1584, \"LINESTRING(500 700, 700, 700)\", \"STDROHR\", \"250\", 0.25, \"Ref Pipe 12\", \"Pipe from 12 to 13\", 0)\n",
+        "s3s.AddNewPipe(\"-1\", node21, node22, 1584, \"LINESTRING(300 400, 500, 400)\", \"STDROHR\", \"250\", 0.25, \"Ref Pipe 21\", \"Pipe from 21 to 22\", 0)\n",
+        "s3s.AddNewPipe(\"-1\", node22, node23, 1584, \"LINESTRING(500 400, 700, 400)\", \"STDROHR\", \"300\", 0.25, \"Ref Pipe 22\", \"Pipe from 22 to 23\", 0)\n",
+        "s3s.AddNewPipe(\"-1\", node31, node32, 1584, \"LINESTRING(300 100, 500, 100)\", \"STDROHR\", \"150\", 0.25, \"Ref Pipe 31\", \"Pipe from 31 to 32\", 0)\n",
+        "s3s.AddNewPipe(\"-1\", node2, node12,  60, \"LINESTRING(500 850, 500, 700)\", \"STDROHR\", \"450\", 0.25, \"Ref Pipe 110\", \"Pipe from Tank to network\", 0)\n",
+        "s3s.AddNewPipe(\"-1\", node11, node21, 1584, \"LINESTRING(300 700, 300, 400)\", \"STDROHR\", \"250\", 0.25, \"Ref Pipee 111\", \"Pipe from 11 to 21\", 0)\n",
+        "s3s.AddNewPipe(\"-1\", node12, node22, 1584, \"LINESTRING(500 700, 500, 400)\", \"STDROHR\", \"300\", 0.25, \"Ref Pipee 112\", \"Pipe from 12 to 22\", 0)\n",
+        "s3s.AddNewPipe(\"-1\", node13, node23, 1584, \"LINESTRING(700 700, 700, 400)\", \"STDROHR\", \"200\", 0.25, \"Ref Pipee 113\", \"Pipe from 13 to 32\", 0)\n",
+        "s3s.AddNewPipe(\"-1\", node21, node31, 1584, \"LINESTRING(300 400, 300, 100)\", \"STDROHR\", \"200\", 0.25, \"Ref Pipee 121\", \"Pipe from 21 to 31\", 0)\n",
+        "s3s.AddNewPipe(\"-1\", node22, node32, 1584, \"LINESTRING(500 400, 500, 100)\", \"STDROHR\", \"150\", 0.25, \"Ref Pipee 122\", \"Pipe from 22 to 32\", 0)\n",
+        "\n",
+        "s3s.EndTransaction()\n",
+        "s3s.SaveChanges()\n",
+        "s3s.RefreshViews()"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "e1e28ee7",
+      "metadata": {},
+      "source": [
+        "### AddNewConnectingElement()"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "65995bd4",
+      "metadata": {},
+      "source": [
+        "We use the [AddNewConnectingElement()](https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddNewConnectingElement) function to insert a new pump. This time there is no need for a seperate function to connect it to nodes. As this function covers more than just one element type it is not as specific as the previous two."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 29,
+      "id": "f2a86a91",
+      "metadata": {},
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": [
+            "Now you can make changes to the model\n",
+            "New connecting element added\n",
+            "Transaction has ended. Please open up a new transaction if you want to make further changes\n",
+            "Changes saved successfully\n",
+            "Refresh successful\n"
+          ]
+        }
+      ],
+      "source": [
+        "s3s.StartTransaction(\"Insert Pump\") \n",
+        "\n",
+        "s3s.AddNewConnectingElement(\"-1\", node9, node10, 175, 700, 0, s3s.ObjectTypes.Pump, 200, 1, 0, \"Pumpe\", \"standard pump\")\n",
+        "\n",
+        "s3s.EndTransaction()\n",
+        "s3s.SaveChanges()\n",
+        "s3s.RefreshViews()"
+      ]
     },
     {
       "cell_type": "markdown",
@@ -450,39 +878,47 @@
     },
     {
       "cell_type": "markdown",
-      "id": "96cb2953",
+      "id": "dab82dbc",
       "metadata": {},
-      "source": []
+      "source": [
+        "We use the [AddNewBypassElement()](https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddNewBypassElement) function to insert a new tank. This time there is no need for a seperate function to connect it to a node. As this function covers more than just one element type it is not that specific just like the previous one."
+      ]
     },
     {
       "cell_type": "code",
-      "execution_count": null,
+      "execution_count": 30,
       "id": "9620b4e7",
       "metadata": {},
-      "outputs": [],
-      "source": []
-    },
-    {
-      "cell_type": "markdown",
-      "id": "7582d0ae",
-      "metadata": {},
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": [
+            "Now you can make changes to the model\n",
+            "New Bypass element added\n",
+            "Transaction has ended. Please open up a new transaction if you want to make further changes\n",
+            "Changes saved successfully\n",
+            "Refresh successful\n"
+          ]
+        }
+      ],
       "source": [
-        "### AddNewConnectingElement()"
+        "s3s.StartTransaction(\"Insert Pump\") \n",
+        "\n",
+        "s3s.AddNewBypassElement(\"-1\", node2, 500, 850, 255, 1, s3s.ObjectTypes.OpenContainer, \"Tank\", \"Storage tank\")\n",
+        "\n",
+        "s3s.EndTransaction()\n",
+        "s3s.SaveChanges()\n",
+        "s3s.RefreshViews()"
       ]
     },
     {
       "cell_type": "markdown",
-      "id": "8299e9d1",
+      "id": "b6064c3a",
       "metadata": {},
-      "source": []
-    },
-    {
-      "cell_type": "code",
-      "execution_count": null,
-      "id": "9b6d19a8",
-      "metadata": {},
-      "outputs": [],
-      "source": []
+      "source": [
+        "__Next:__ Tutorial 7: Miscellaneous"
+      ]
     },
     {
       "cell_type": "markdown",
