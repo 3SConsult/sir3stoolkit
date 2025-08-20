@@ -296,7 +296,7 @@ NetworkType.Water
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>nodes=s3s.GetTksofElementType(node_type)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>nodes=s3s.GetTksofElementType(ElementType=node_type)
 </pre></div>
 </div>
 </div>
@@ -334,7 +334,7 @@ NetworkType.Water
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>node_result_properties=s3s.GetResultProperties_from_elementType(node_type, False)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>node_result_properties=s3s.GetResultProperties_from_elementType(elementType=node_type, onlySelectedVectors=False)
 </pre></div>
 </div>
 </div>
@@ -358,7 +358,7 @@ NetworkType.Water
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pipe_result_properties=s3s.GetResultProperties_from_elementType(pipe_type, False)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pipe_result_properties=s3s.GetResultProperties_from_elementType(elementType=pipe_type, onlySelectedVectors=False)
 </pre></div>
 </div>
 </div>
@@ -382,7 +382,7 @@ NetworkType.Water
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pump_result_properties=s3s.GetResultProperties_from_elementType(pump_type, False)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pump_result_properties=s3s.GetResultProperties_from_elementType(elementType=pump_type, onlySelectedVectors=False)
 </pre></div>
 </div>
 </div>
@@ -406,7 +406,7 @@ NetworkType.Water
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>tank_result_properties=s3s.GetResultProperties_from_elementType(container_type, False)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>tank_result_properties=s3s.GetResultProperties_from_elementType(elementType=container_type, onlySelectedVectors=False)
 </pre></div>
 </div>
 </div>
@@ -434,7 +434,7 @@ NetworkType.Water
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>node_result_properties_alternative=s3s.GetResultProperties_from_elementKey(nodes[0])
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>node_result_properties_alternative=s3s.GetResultProperties_from_elementKey(elementKey=nodes[0])
 </pre></div>
 </div>
 </div>
@@ -505,7 +505,7 @@ NetworkType.Water
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.SetCurrentTimeStamp(&#39;2025-07-18 11:08:35.000 +02:00&#39;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.SetCurrentTimeStamp(timestamp=&#39;2025-07-18 11:08:35.000 +02:00&#39;)
 </pre></div>
 </div>
 </div>
@@ -551,7 +551,7 @@ NetworkType.Water
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pressure1=s3s.GetResultValue(tk_of_interest, &#39;P&#39;)[0]
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pressure1=s3s.GetResultValue(elementKey=tk_of_interest, propertyName=&#39;P&#39;)[0]
 </pre></div>
 </div>
 </div>
@@ -576,7 +576,7 @@ NetworkType.Water
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[37]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.SetCurrentTimeStamp(&#39;2025-07-18 11:11:35.000 +02:00&#39;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.SetCurrentTimeStamp(timestamp=&#39;2025-07-18 11:11:35.000 +02:00&#39;)
 </pre></div>
 </div>
 </div>
@@ -601,7 +601,7 @@ NetworkType.Water
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[39]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pressure2=s3s.GetResultValue(tk_of_interest, &#39;P&#39;)[0]
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pressure2=s3s.GetResultValue(elementKey=tk_of_interest, propertyName=&#39;P&#39;)[0]
 </pre></div>
 </div>
 </div>
@@ -626,7 +626,7 @@ NetworkType.Water
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[41]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pressure2=s3s.GetResultfortimestamp(&#39;2025-07-18 11:11:35.000 +02:00&#39;, tk_of_interest, &#39;P&#39;)[0]
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pressure2=s3s.GetResultfortimestamp(timestamp=&#39;2025-07-18 11:11:35.000 +02:00&#39;, Tk=tk_of_interest, property=&#39;P&#39;)[0]
 </pre></div>
 </div>
 </div>
@@ -652,7 +652,7 @@ Difference in Pressure 11:08 to 11:11: -1.496009 bar
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[43]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetResultforAllTimestamp(tk_of_interest, &#39;P&#39;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetResultforAllTimestamp(Tk=tk_of_interest, property=&#39;P&#39;)
 </pre></div>
 </div>
 </div>
@@ -1353,7 +1353,7 @@ Difference in Pressure 11:08 to 11:11: -1.496009 bar
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[44]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetMinResult(node_type, &#39;P&#39;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetMinResult(elementType=node_type, propertyName=&#39;P&#39;)
 </pre></div>
 </div>
 </div>
@@ -1371,7 +1371,7 @@ Difference in Pressure 11:08 to 11:11: -1.496009 bar
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[45]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetMaxResult(node_type, &#39;P&#39;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetMaxResult(elementType=node_type, propertyName=&#39;P&#39;)
 </pre></div>
 </div>
 </div>
@@ -1393,7 +1393,7 @@ Difference in Pressure 11:08 to 11:11: -1.496009 bar
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[46]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetMinResult_for_timestamp(&#39;2025-07-18 11:08:35.000 +02:00&#39;, node_type, &#39;P&#39;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetMinResult_for_timestamp(timestamp=&#39;2025-07-18 11:08:35.000 +02:00&#39;, elementType=node_type, propertyName=&#39;P&#39;)
 </pre></div>
 </div>
 </div>
@@ -1410,7 +1410,7 @@ Difference in Pressure 11:08 to 11:11: -1.496009 bar
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[47]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetMinResult_for_timestamp(&#39;2025-07-18 11:12:35.000 +02:00&#39;, node_type, &#39;P&#39;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetMinResult_for_timestamp(timestamp=&#39;2025-07-18 11:12:35.000 +02:00&#39;, elementType=node_type, propertyName=&#39;P&#39;)
 </pre></div>
 </div>
 </div>
@@ -1428,7 +1428,7 @@ Difference in Pressure 11:08 to 11:11: -1.496009 bar
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[48]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>max_pressure1=s3s.GetMaxResult_for_timestamp(&#39;2025-07-18 11:08:35.000 +02:00&#39;,node_type, &#39;P&#39;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>max_pressure1=s3s.GetMaxResult_for_timestamp(timestamp=&#39;2025-07-18 11:08:35.000 +02:00&#39;, elementType= node_type, propertyName=&#39;P&#39;)
 </pre></div>
 </div>
 </div>
@@ -1436,7 +1436,7 @@ Difference in Pressure 11:08 to 11:11: -1.496009 bar
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[49]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>max_pressure2=s3s.GetMaxResult_for_timestamp(&#39;2025-07-18 11:12:35.000 +02:00&#39;,node_type, &#39;P&#39;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>max_pressure2=s3s.GetMaxResult_for_timestamp(timestamp=&#39;2025-07-18 11:12:35.000 +02:00&#39;,elementType=node_type, propertyName=&#39;P&#39;)
 </pre></div>
 </div>
 </div>

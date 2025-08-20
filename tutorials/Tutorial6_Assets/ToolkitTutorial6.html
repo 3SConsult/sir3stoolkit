@@ -188,7 +188,7 @@ Initialization complete
 <section id="Create-Model">
 <h2>Create Model<a class="headerlink" href="#Create-Model" title="Link to this heading"></a></h2>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dbFilePath=r&quot;Toolkit_Tutorial6_Model.db3&quot;
@@ -196,7 +196,7 @@ Initialization complete
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.NewModel(dbName=dbFilePath,
@@ -214,12 +214,12 @@ Initialization complete
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-New model is created with the model identifier: M-2-0-1
+New model is created with the model identifier: M-6-0-1
 </pre></div></div>
 </div>
 <p>Now the model has been opened and the previous one has been closed without saving it. All SIR 3S Toolkit commands now apply to this model until another one is opened.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(s3s.GetNetworkType()) # to check that the correct model is responsive, model we are trying to open was created with type Undefined
@@ -238,7 +238,7 @@ NetworkType.DistrictHeating
 <section id="SIR-3S-object-types">
 <h2>SIR 3S object types<a class="headerlink" href="#SIR-3S-object-types" title="Link to this heading"></a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>object_types = [item for item in dir(s3s.ObjectTypes) if not (item.startswith(&#39;__&#39;) and item.endswith(&#39;__&#39;))]
@@ -259,6 +259,27 @@ print(object_types)
 <h2>InsertElement() - Generic Element Creation<a class="headerlink" href="#InsertElement()---Generic-Element-Creation" title="Link to this heading"></a></h2>
 <p>We use the <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement">InsertElement()</a> function with the SIR 3S datatype and IdRef value (we just use default “-1”).</p>
 <p>Let’s just create two nodes: one connected to a tank and the other for now just a free end connected via a pipe to the first node.</p>
+<section id="Containers">
+<h3>Containers<a class="headerlink" href="#Containers" title="Link to this heading"></a></h3>
+<p>In SIR 3S every element exists in a specific container. If the container is not specified when creating the element it will be inserted in to the main container.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>container_A=s3s.InsertElement(s3s.ObjectTypes.ObjectContainerSymbol, IdRef=&quot;&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Element inserted successfully into the model with Tk: 5008034218814138857
+</pre></div></div>
+</div>
+<p>Here we should define the container A using <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.SetValue">SetValue()</a>, but for simplicity let’s leave that out.</p>
+</section>
 <section id="Nodes">
 <h3>Nodes<a class="headerlink" href="#Nodes" title="Link to this heading"></a></h3>
 <div class="nbinput docutils container">
@@ -274,7 +295,7 @@ print(object_types)
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Element inserted successfully into the model with Tk: 5143532399450102274
+Element inserted successfully into the model with Tk: 5370202525391386318
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
@@ -290,13 +311,13 @@ Element inserted successfully into the model with Tk: 5143532399450102274
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Element inserted successfully into the model with Tk: 4815589023028819436
+Element inserted successfully into the model with Tk: 5217089350860543576
 </pre></div></div>
 </div>
 </section>
 <section id="Pipe---Connecting-Element">
 <h3>Pipe - Connecting Element<a class="headerlink" href="#Pipe---Connecting-Element" title="Link to this heading"></a></h3>
-<p>We again use <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement">InsertElement()</a> to create a new element in this case a pipe. Then we connect both nodes with the pipe using the <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.ConnectConnectingElementWithNodes">ConnectConnectingElementWithNodes()</a> function.</p>
+<p>We again use <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement">InsertElement()</a> function to create a new element in this case a pipe. Then we connect both nodes with the pipe using the <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.ConnectConnectingElementWithNodes">ConnectConnectingElementWithNodes()</a> function.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
@@ -310,14 +331,14 @@ Element inserted successfully into the model with Tk: 4815589023028819436
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Element inserted successfully into the model with Tk: 4644765040932589259
+Element inserted successfully into the model with Tk: 5356888914134614362
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.ConnectConnectingElementWithNodes(pipe, nodeKI, nodeKK)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.ConnectConnectingElementWithNodes(Tk=pipe, keyOfNodeI=nodeKI, keyOfNodeK=nodeKK)
 </pre></div>
 </div>
 </div>
@@ -346,14 +367,14 @@ Objects connected successfully
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Element inserted successfully into the model with Tk: 5003978130465258892
+Element inserted successfully into the model with Tk: 5372199443253516317
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.ConnectBypassElementWithNode(tank, nodeKI)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.ConnectBypassElementWithNode(Tk=tank, keyOfNodeI=nodeKI)
 </pre></div>
 </div>
 </div>
@@ -373,10 +394,10 @@ Object connected successfully
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.SetValue(nodeKI, &quot;Xkor&quot;, &quot;100&quot;)
-s3s.SetValue(nodeKI, &quot;Ykor&quot;, &quot;100&quot;)
-s3s.SetValue(nodeKI, &quot;Ktyp&quot;, &quot;PKON&quot;)
-s3s.SetValue(nodeKI, &quot;Ktyp&quot;, &quot;PKON&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.SetValue(Tk=nodeKI, propertyName=&quot;Xkor&quot;, Value=&quot;100&quot;)
+s3s.SetValue(Tk=nodeKI, propertyName=&quot;Ykor&quot;, Value=&quot;100&quot;)
+s3s.SetValue(Tk=nodeKI, propertyName=&quot;Ktyp&quot;, Value=&quot;PKON&quot;)
+s3s.SetValue(Tk=nodeKI, propertyName=&quot;Ktyp&quot;, Value=&quot;PKON&quot;)
 </pre></div>
 </div>
 </div>
@@ -396,8 +417,8 @@ Value is set
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.SetValue(pipe, &quot;Kvr&quot;, &quot;1&quot;)
-s3s.SetValue(pipe, &quot;L&quot;, &quot;10&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.SetValue(Tk=pipe, propertyName=&quot;Kvr&quot;, Value=&quot;1&quot;)
+s3s.SetValue(Tk=pipe, propertyName=&quot;L&quot;, Value=&quot;10&quot;)
 </pre></div>
 </div>
 </div>
@@ -412,15 +433,185 @@ Value is set
 </div>
 <p>… and so on for the pipe and also the tank</p>
 </section>
-</section>
-<section id="GetNumberOfElements">
-<h2>GetNumberOfElements<a class="headerlink" href="#GetNumberOfElements" title="Link to this heading"></a></h2>
-<p>As a side note. We can use the <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetNumberOfElements">GetNumberOfElements()</a> function to get the number of all elements existing in our model of a specified datatype</p>
+<section id="Assign-to-container-A">
+<h3>Assign to container A<a class="headerlink" href="#Assign-to-container-A" title="Link to this heading"></a></h3>
+<p>The <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement">InsertElement()</a> function inserts elements into the main container. Let’s try to move all elements created so far into the container A we created.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(s3s.GetNumberOfElements(s3s.ObjectTypes.Node))
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.SetValue(Tk=nodeKI, propertyName=&quot;fkCont&quot;, Value=container_A)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Value is set
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.SetValue(Tk=nodeKK, propertyName=&quot;fkCont&quot;, Value=container_A)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Value is set
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.SetValue(Tk=pipe, propertyName=&quot;fkCont&quot;, Value=container_A)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Value is set
+</pre></div></div>
+</div>
+</section>
+</section>
+</section>
+<section id="GetMainContainer()">
+<h1>GetMainContainer()<a class="headerlink" href="#GetMainContainer()" title="Link to this heading"></a></h1>
+<p>We can use the <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetMainContainer">GetMainContainer()</a> function to obtain the tk of the main container.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>main_container=s3s.GetMainContainer()[0]
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(main_container)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+5404784316484532375
+</pre></div></div>
+</div>
+</section>
+<section id="IsMainContainer()">
+<h1>IsMainContainer()<a class="headerlink" href="#IsMainContainer()" title="Link to this heading"></a></h1>
+<p>We can use the <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.IsMainContainer">IsMainContainer()</a> function to check whether the provided FkCont equals the FkCont obtained by <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetMainContainer">GetMainContainer()</a>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.IsMainContainer(fkCont=container_A)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+False
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.IsMainContainer(fkCont=main_container)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+True
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.IsMainContainer(s3s.GetValue(Tk=nodeKI, propertyName=&quot;fkCont&quot;)[0])
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+False
+</pre></div></div>
+</div>
+<p>We can see that nodKI is not in the main container as we moved it to the container A.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.SetValue(Tk=nodeKI, propertyName=&quot;fkCont&quot;, Value=s3s.GetMainContainer()[0])
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Value is set
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.IsMainContainer(s3s.GetValue(Tk=nodeKI, propertyName=&quot;fkCont&quot;)[0])
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+True
+</pre></div></div>
+</div>
+<p>But we can move it back.</p>
+<section id="GetNumberOfElements">
+<h2>GetNumberOfElements<a class="headerlink" href="#GetNumberOfElements" title="Link to this heading"></a></h2>
+<p>As a side note. We can use the <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetNumberOfElements">GetNumberOfElements()</a> function to get the number of all elements existing in our model of a specified datatype</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(s3s.GetNumberOfElements(ElementType=s3s.ObjectTypes.Node))
 </pre></div>
 </div>
 </div>
@@ -437,10 +628,10 @@ Value is set
 <h2>DeleteElement()<a class="headerlink" href="#DeleteElement()" title="Link to this heading"></a></h2>
 <p>Let’s delete all Elements we have created so far.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.DeleteElement(nodeKI)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.DeleteElement(Tk=nodeKI)
 </pre></div>
 </div>
 </div>
@@ -453,10 +644,10 @@ Element deleted successfully
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.DeleteElement(nodeKK)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.DeleteElement(Tk=nodeKK)
 </pre></div>
 </div>
 </div>
@@ -470,10 +661,10 @@ Element deleted successfully
 </div>
 <p>Now we can check how many nodes still exist.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[34]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(s3s.GetNumberOfElements(s3s.ObjectTypes.Node))
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(s3s.GetNumberOfElements(ElementType=s3s.ObjectTypes.Node))
 </pre></div>
 </div>
 </div>
@@ -486,10 +677,10 @@ Element deleted successfully
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.DeleteElement(pipe)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.DeleteElement(Tk=pipe)
 </pre></div>
 </div>
 </div>
@@ -502,10 +693,10 @@ Element deleted successfully
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[36]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.DeleteElement(tank)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.DeleteElement(Tk=tank)
 </pre></div>
 </div>
 </div>
@@ -526,22 +717,22 @@ Element deleted successfully
 <h3>AddNewNode()<a class="headerlink" href="#AddNewNode()" title="Link to this heading"></a></h3>
 <p>We use the <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddNewNode">AddNewNode()</a> function to insert several nodes. We can already specify many properties such as geometry, node type, kvr, etc..</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[37]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.StartTransaction(&quot;Inserting Nodes&quot;)
 
-node10 = s3s.AddNewNode(&quot;-1&quot;, &quot;Node10&quot;, &quot;QKON&quot;, 200, 700, 213, 0, 1, &quot;DNODE 10&quot;, &quot;RefNode 10&quot;, 0)
-node11 = s3s.AddNewNode(&quot;-1&quot;, &quot;Node11&quot;, &quot;QKON&quot;, 300, 700, 213, 0, 1, &quot;DNODE 11&quot;, &quot;RefNode 11&quot;, 0)
-node12 = s3s.AddNewNode(&quot;-1&quot;, &quot;Node12&quot;, &quot;QKON&quot;, 500, 700, 210, 0, 1, &quot;DNODE 12&quot;, &quot;RefNode 12&quot;, 0)
-node13 = s3s.AddNewNode(&quot;-1&quot;, &quot;Node13&quot;, &quot;QKON&quot;, 700, 700, 208.5, 0, 1, &quot;DNODE 13&quot;, &quot;RefNode 13&quot;, 0)
-node21 = s3s.AddNewNode(&quot;-1&quot;, &quot;Node21&quot;, &quot;QKON&quot;, 300, 400, 210, 0, 1, &quot;DNODE 21&quot;, &quot;RefNode 21&quot;, 0)
-node22 = s3s.AddNewNode(&quot;-1&quot;, &quot;Node22&quot;, &quot;QKON&quot;, 500, 400, 208.5, 0, 1, &quot;DNODE 22&quot;, &quot;RefNode 22&quot;, 0)
-node23 = s3s.AddNewNode(&quot;-1&quot;, &quot;Node23&quot;, &quot;QKON&quot;, 700, 400, 207, 0, 1, &quot;DNODE 23&quot;, &quot;RefNode 23&quot;, 0)
-node31 = s3s.AddNewNode(&quot;-1&quot;, &quot;Node31&quot;, &quot;QKON&quot;, 300, 100, 210, 0, 1, &quot;DNODE 31&quot;, &quot;RefNode 31&quot;, 0)
-node32 = s3s.AddNewNode(&quot;-1&quot;, &quot;Node32&quot;, &quot;QKON&quot;, 500, 100, 213, 0, 1, &quot;DNODE 32&quot;, &quot;RefNode 32&quot;, 0)
-node9 = s3s.AddNewNode(&quot;-1&quot;, &quot;Node9&quot;, &quot;PKON&quot;, 150, 700, 255, 0, 1, &quot;PNODE 9&quot;, &quot;RefNode 9&quot;, 0)
-node2 = s3s.AddNewNode(&quot;-1&quot;, &quot;Node2&quot;, &quot;QKON&quot;, 500, 850, 240, 0, 1, &quot;Tank 2&quot;, &quot;RefNode 2&quot;, 0)
+node10 = s3s.AddNewNode(tkCont=&quot;-1&quot;, name=&quot;Node10&quot;, typ=&quot;QKON&quot;, x=200, y=700, z=213, qm_PH=0, symbolFactor=1, description=&quot;DNODE 10&quot;, idRef=&quot;RefNode 10&quot;, kvr=0)
+node11 = s3s.AddNewNode(tkCont=&quot;-1&quot;, name=&quot;Node11&quot;, typ=&quot;QKON&quot;, x=300, y=700, z=213, qm_PH=0, symbolFactor=1, description=&quot;DNODE 11&quot;, idRef=&quot;RefNode 11&quot;, kvr=0)
+node12 = s3s.AddNewNode(tkCont=&quot;-1&quot;, name=&quot;Node12&quot;, typ=&quot;QKON&quot;, x=500, y=700, z=210, qm_PH=0, symbolFactor=1, description=&quot;DNODE 12&quot;, idRef=&quot;RefNode 12&quot;, kvr=0)
+node13 = s3s.AddNewNode(tkCont=&quot;-1&quot;, name=&quot;Node13&quot;, typ=&quot;QKON&quot;, x=700, y=700, z=208.5, qm_PH=0, symbolFactor=1, description=&quot;DNODE 13&quot;, idRef=&quot;RefNode 13&quot;, kvr=0)
+node21 = s3s.AddNewNode(tkCont=&quot;-1&quot;, name=&quot;Node21&quot;, typ=&quot;QKON&quot;, x=300, y=400, z=210, qm_PH=0, symbolFactor=1, description=&quot;DNODE 21&quot;, idRef=&quot;RefNode 21&quot;, kvr=0)
+node22 = s3s.AddNewNode(tkCont=&quot;-1&quot;, name=&quot;Node22&quot;, typ=&quot;QKON&quot;, x=500, y=400, z=208.5, qm_PH=0, symbolFactor=1, description=&quot;DNODE 22&quot;, idRef=&quot;RefNode 22&quot;, kvr=0)
+node23 = s3s.AddNewNode(tkCont=&quot;-1&quot;, name=&quot;Node23&quot;, typ=&quot;QKON&quot;, x=700, y=400, z=207, qm_PH=0, symbolFactor=1, description=&quot;DNODE 23&quot;, idRef=&quot;RefNode 23&quot;, kvr=0)
+node31 = s3s.AddNewNode(tkCont=&quot;-1&quot;, name=&quot;Node31&quot;, typ=&quot;QKON&quot;, x=300, y=100, z=210, qm_PH=0, symbolFactor=1, description=&quot;DNODE 31&quot;, idRef=&quot;RefNode 31&quot;, kvr=0)
+node32 = s3s.AddNewNode(tkCont=&quot;-1&quot;, name=&quot;Node32&quot;, typ=&quot;QKON&quot;, x=500, y=100, z=213, qm_PH=0, symbolFactor=1, description=&quot;DNODE 32&quot;, idRef=&quot;RefNode 32&quot;, kvr=0)
+node9 = s3s.AddNewNode(tkCont=&quot;-1&quot;, name=&quot;Node9&quot;, typ=&quot;PKON&quot;, x=150, y=700, z=255, qm_PH=0, symbolFactor=1, description=&quot;PNODE 9&quot;, idRef=&quot;RefNode 9&quot;, kvr=0)
+node2 = s3s.AddNewNode(tkCont=&quot;-1&quot;, name=&quot;Node2&quot;, typ=&quot;QKON&quot;, x=500, y=850, z=240, qm_PH=0, symbolFactor=1, description=&quot;Tank 2&quot;, idRef=&quot;RefNode 2&quot;, kvr=0)
 
 s3s.EndTransaction()
 s3s.SaveChanges()
@@ -576,23 +767,23 @@ Refresh successful
 <h3>AddNewPipe()<a class="headerlink" href="#AddNewPipe()" title="Link to this heading"></a></h3>
 <p>We use the <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddNewPipe">AddNewPipe()</a> function to insert new pipes. This time there is no need for a seperate function to connect it to nodes, and many properties such as geometry, material, kvr, etc. are already set in this function.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[38]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.StartTransaction(&quot;Inserting Pipes&quot;)
 
-s3s.AddNewPipe(&quot;-1&quot;, node10, node11, 3160, &quot;LINESTRING(200 700, 300, 700)&quot;, &quot;STDROHR&quot;, &quot;450&quot;, 0.25, &quot;Ref Pipe 10&quot;, &quot;Pipe from Pump to network&quot;, 0)
-s3s.AddNewPipe(&quot;-1&quot;, node11, node12, 1584, &quot;LINESTRING(300 700, 500, 700)&quot;, &quot;STDROHR&quot;, &quot;350&quot;, 0.25, &quot;Ref Pipe 11&quot;, &quot;Pipe from 11 to 12&quot;, 0)
-s3s.AddNewPipe(&quot;-1&quot;, node12, node13, 1584, &quot;LINESTRING(500 700, 700, 700)&quot;, &quot;STDROHR&quot;, &quot;250&quot;, 0.25, &quot;Ref Pipe 12&quot;, &quot;Pipe from 12 to 13&quot;, 0)
-s3s.AddNewPipe(&quot;-1&quot;, node21, node22, 1584, &quot;LINESTRING(300 400, 500, 400)&quot;, &quot;STDROHR&quot;, &quot;250&quot;, 0.25, &quot;Ref Pipe 21&quot;, &quot;Pipe from 21 to 22&quot;, 0)
-s3s.AddNewPipe(&quot;-1&quot;, node22, node23, 1584, &quot;LINESTRING(500 400, 700, 400)&quot;, &quot;STDROHR&quot;, &quot;300&quot;, 0.25, &quot;Ref Pipe 22&quot;, &quot;Pipe from 22 to 23&quot;, 0)
-s3s.AddNewPipe(&quot;-1&quot;, node31, node32, 1584, &quot;LINESTRING(300 100, 500, 100)&quot;, &quot;STDROHR&quot;, &quot;150&quot;, 0.25, &quot;Ref Pipe 31&quot;, &quot;Pipe from 31 to 32&quot;, 0)
-s3s.AddNewPipe(&quot;-1&quot;, node2, node12,  60, &quot;LINESTRING(500 850, 500, 700)&quot;, &quot;STDROHR&quot;, &quot;450&quot;, 0.25, &quot;Ref Pipe 110&quot;, &quot;Pipe from Tank to network&quot;, 0)
-s3s.AddNewPipe(&quot;-1&quot;, node11, node21, 1584, &quot;LINESTRING(300 700, 300, 400)&quot;, &quot;STDROHR&quot;, &quot;250&quot;, 0.25, &quot;Ref Pipee 111&quot;, &quot;Pipe from 11 to 21&quot;, 0)
-s3s.AddNewPipe(&quot;-1&quot;, node12, node22, 1584, &quot;LINESTRING(500 700, 500, 400)&quot;, &quot;STDROHR&quot;, &quot;300&quot;, 0.25, &quot;Ref Pipee 112&quot;, &quot;Pipe from 12 to 22&quot;, 0)
-s3s.AddNewPipe(&quot;-1&quot;, node13, node23, 1584, &quot;LINESTRING(700 700, 700, 400)&quot;, &quot;STDROHR&quot;, &quot;200&quot;, 0.25, &quot;Ref Pipee 113&quot;, &quot;Pipe from 13 to 32&quot;, 0)
-s3s.AddNewPipe(&quot;-1&quot;, node21, node31, 1584, &quot;LINESTRING(300 400, 300, 100)&quot;, &quot;STDROHR&quot;, &quot;200&quot;, 0.25, &quot;Ref Pipee 121&quot;, &quot;Pipe from 21 to 31&quot;, 0)
-s3s.AddNewPipe(&quot;-1&quot;, node22, node32, 1584, &quot;LINESTRING(500 400, 500, 100)&quot;, &quot;STDROHR&quot;, &quot;150&quot;, 0.25, &quot;Ref Pipee 122&quot;, &quot;Pipe from 22 to 32&quot;, 0)
+pipeA = s3s.AddNewPipe(tkCont=&quot;-1&quot;, tkFrom=node10, tkTo=node11, L=3160, linestring=&quot;LINESTRING(200 700, 300, 700)&quot;, material=&quot;STDROHR&quot;, dn=&quot;450&quot;, roughness=0.25, idRef=&quot;Ref Pipe 10&quot;, description=&quot;Pipe from Pump to network&quot;, kvr=0)
+pipeB = s3s.AddNewPipe(tkCont=&quot;-1&quot;, tkFrom=node11, tkTo=node12, L=1584, linestring=&quot;LINESTRING(300 700, 500, 700)&quot;, material=&quot;STDROHR&quot;, dn=&quot;350&quot;, roughness=0.25, idRef=&quot;Ref Pipe 11&quot;, description=&quot;Pipe from 11 to 12&quot;, kvr=0)
+pipeC = s3s.AddNewPipe(tkCont=&quot;-1&quot;, tkFrom=node12, tkTo=node13, L=1584, linestring=&quot;LINESTRING(500 700, 700, 700)&quot;, material=&quot;STDROHR&quot;, dn=&quot;250&quot;, roughness=0.25, idRef=&quot;Ref Pipe 12&quot;, description=&quot;Pipe from 12 to 13&quot;, kvr=0)
+pipeD = s3s.AddNewPipe(tkCont=&quot;-1&quot;, tkFrom=node21, tkTo=node22, L=1584, linestring=&quot;LINESTRING(300 400, 500, 400)&quot;, material=&quot;STDROHR&quot;, dn=&quot;250&quot;, roughness=0.25, idRef=&quot;Ref Pipe 21&quot;, description=&quot;Pipe from 21 to 22&quot;, kvr=0)
+pipeE = s3s.AddNewPipe(tkCont=&quot;-1&quot;, tkFrom=node22, tkTo=node23, L=1584, linestring=&quot;LINESTRING(500 400, 700, 400)&quot;, material=&quot;STDROHR&quot;, dn=&quot;300&quot;, roughness=0.25, idRef=&quot;Ref Pipe 22&quot;, description=&quot;Pipe from 22 to 23&quot;, kvr=0)
+pipeF = s3s.AddNewPipe(tkCont=&quot;-1&quot;, tkFrom=node31, tkTo=node32, L=1584, linestring=&quot;LINESTRING(300 100, 500, 100)&quot;, material=&quot;STDROHR&quot;, dn=&quot;150&quot;, roughness=0.25, idRef=&quot;Ref Pipe 31&quot;, description=&quot;Pipe from 31 to 32&quot;, kvr=0)
+pipeG = s3s.AddNewPipe(tkCont=&quot;-1&quot;, tkFrom=node2, tkTo=node12, L=60, linestring=&quot;LINESTRING(500 850, 500, 700)&quot;, material=&quot;STDROHR&quot;, dn=&quot;450&quot;, roughness=0.25, idRef=&quot;Ref Pipe 110&quot;, description=&quot;Pipe from Tank to network&quot;, kvr=0)
+pipeH = s3s.AddNewPipe(tkCont=&quot;-1&quot;, tkFrom=node11, tkTo=node21, L=1584, linestring=&quot;LINESTRING(300 700, 300, 400)&quot;, material=&quot;STDROHR&quot;, dn=&quot;250&quot;, roughness=0.25, idRef=&quot;Ref Pipee 111&quot;, description=&quot;Pipe from 11 to 21&quot;, kvr=0)
+pipeI = s3s.AddNewPipe(tkCont=&quot;-1&quot;, tkFrom=node12, tkTo=node22, L=1584, linestring=&quot;LINESTRING(500 700, 500, 400)&quot;, material=&quot;STDROHR&quot;, dn=&quot;300&quot;, roughness=0.25, idRef=&quot;Ref Pipee 112&quot;, description=&quot;Pipe from 12 to 22&quot;, kvr=0)
+pipeJ = s3s.AddNewPipe(tkCont=&quot;-1&quot;, tkFrom=node13, tkTo=node23, L=1584, linestring=&quot;LINESTRING(700 700, 700, 400)&quot;, material=&quot;STDROHR&quot;, dn=&quot;200&quot;, roughness=0.25, idRef=&quot;Ref Pipee 113&quot;, description=&quot;Pipe from 13 to 32&quot;, kvr=0)
+pipeK = s3s.AddNewPipe(tkCont=&quot;-1&quot;, tkFrom=node21, tkTo=node31, L=1584, linestring=&quot;LINESTRING(300 400, 300, 100)&quot;, material=&quot;STDROHR&quot;, dn=&quot;200&quot;, roughness=0.25, idRef=&quot;Ref Pipee 121&quot;, description=&quot;Pipe from 21 to 31&quot;, kvr=0)
+pipeL = s3s.AddNewPipe(tkCont=&quot;-1&quot;, tkFrom=node22, tkTo=node32, L=1584, linestring=&quot;LINESTRING(500 400, 500, 100)&quot;, material=&quot;STDROHR&quot;, dn=&quot;150&quot;, roughness=0.25, idRef=&quot;Ref Pipee 122&quot;, description=&quot;Pipe from 22 to 32&quot;, kvr=0)
 
 s3s.EndTransaction()
 s3s.SaveChanges()
@@ -628,12 +819,12 @@ Refresh successful
 <h3>AddNewConnectingElement()<a class="headerlink" href="#AddNewConnectingElement()" title="Link to this heading"></a></h3>
 <p>We use the <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddNewConnectingElement">AddNewConnectingElement()</a> function to insert a new pump. This time there is no need for a seperate function to connect it to nodes. As this function covers more than just one element type it is not as specific as the previous two.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[39]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.StartTransaction(&quot;Insert Pump&quot;)
 
-s3s.AddNewConnectingElement(&quot;-1&quot;, node9, node10, 175, 700, 0, s3s.ObjectTypes.Pump, 200, 1, 0, &quot;Pumpe&quot;, &quot;standard pump&quot;)
+pump=s3s.AddNewConnectingElement(tkCont=&quot;-1&quot;, tkFrom=node9, tkTo=node10, x=175, y=700, z=0, elementType=s3s.ObjectTypes.Pump, dn=200, symbolFactor=1, angleDegree=0, idRef=&quot;Pumpe&quot;, description=&quot;standard pump&quot;)
 
 s3s.EndTransaction()
 s3s.SaveChanges()
@@ -658,12 +849,12 @@ Refresh successful
 <h3>AddNewBypassElement()<a class="headerlink" href="#AddNewBypassElement()" title="Link to this heading"></a></h3>
 <p>We use the <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddNewBypassElement">AddNewBypassElement()</a> function to insert a new tank. This time there is no need for a seperate function to connect it to a node. As this function covers more than just one element type it is not that specific just like the previous one.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[40]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.StartTransaction(&quot;Insert Pump&quot;)
 
-s3s.AddNewBypassElement(&quot;-1&quot;, node2, 500, 850, 255, 1, s3s.ObjectTypes.OpenContainer, &quot;Tank&quot;, &quot;Storage tank&quot;)
+tank=s3s.AddNewBypassElement(tkCont=&quot;-1&quot;, tkFrom=node2, x=500, y=850, z=255, symbolFactor=1, elementType=s3s.ObjectTypes.OpenContainer, idRef=&quot;Tank&quot;, description=&quot;Storage tank&quot;)
 
 s3s.EndTransaction()
 s3s.SaveChanges()
@@ -683,9 +874,216 @@ Changes saved successfully
 Refresh successful
 </pre></div></div>
 </div>
+</section>
+</section>
+<section id="GetEndNodes()">
+<h2>GetEndNodes()<a class="headerlink" href="#GetEndNodes()" title="Link to this heading"></a></h2>
+<p>As a side note: we can use the <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetEndNodes">GetEndNodes()</a> function to get the tks of nodes an element is connected to. That works for all kinds of elements with different number of nodes. The are returned in the form tuple[str, str, str, str] = fkKI, fkKK, fkKI2, fkKK2.</p>
+<p>It works for bypass elements with just one node.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[41]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetEndNodes(Tk=tank)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[41]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(&#39;5665723676294844823&#39;, &#39;-1&#39;, &#39;-1&#39;, &#39;-1&#39;)
+</pre></div></div>
+</div>
+<p>It works for connecting elements with two nodes.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[42]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetEndNodes(Tk=pump)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[42]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(&#39;5739878139344995606&#39;, &#39;5680811754375850174&#39;, &#39;-1&#39;, &#39;-1&#39;)
+</pre></div></div>
+</div>
+<p>It works for connecting elements with four nodes like heat exchangers that we have not used in this tutorial for simplicity reasons.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[43]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetGeometryInformation(Tk=pipeA)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[43]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&#39;LINESTRING Z(200 700 213, 200 700 0, 300 700 213)&#39;
+</pre></div></div>
+</div>
+</section>
+<section id="GetElementInfo()">
+<h2>GetElementInfo()<a class="headerlink" href="#GetElementInfo()" title="Link to this heading"></a></h2>
+<p>As a side note: we can use the <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetElementInfo">GetElementInfo()</a> function to obtain a short text that tells us what kind of element we consider based on the tk given and to which elements it is connected.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[44]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetElementInfo(Tk=pump)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Info: Pumpe Node9 Node10
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[45]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetElementInfo(Tk=tank)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Info: Offener Behälter Node2
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[46]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.InsertElement(ElementType=s3s.ObjectTypes.Node, IdRef=&quot;A&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Element inserted successfully into the model with Tk: 5355078431502712981
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[46]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&#39;5355078431502712981&#39;
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[47]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetValue(&#39;5655239364696389210&#39;, &quot;fkCont&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[47]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(&#39;&#39;, &#39;&#39;)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[48]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetMainContainer()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[48]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(&#39;5404784316484532375&#39;, &lt;ObjectTypes.ObjectContainerSymbol: 44&gt;)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[49]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetPropertiesofElementType(ElementType=s3s.ObjectTypes.Node)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[49]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;Name&#39;,
+ &#39;Ktyp&#39;,
+ &#39;Zkor&#39;,
+ &#39;QmEin&#39;,
+ &#39;Lfakt&#39;,
+ &#39;Fkpzon&#39;,
+ &#39;Fkfstf&#39;,
+ &#39;Fkutmp&#39;,
+ &#39;Fkfqps&#39;,
+ &#39;Fkcont&#39;,
+ &#39;Fk2lknot&#39;,
+ &#39;Beschreibung&#39;,
+ &#39;Idreferenz&#39;,
+ &#39;Iplanung&#39;,
+ &#39;Kvr&#39;,
+ &#39;Qakt&#39;,
+ &#39;Xkor&#39;,
+ &#39;Ykor&#39;,
+ &#39;NodeNamePosition&#39;,
+ &#39;ShowNodeName&#39;,
+ &#39;KvrKlartext&#39;,
+ &#39;NumberOfVERB&#39;,
+ &#39;HasBlockConnection&#39;,
+ &#39;Tk&#39;,
+ &#39;Pk&#39;,
+ &#39;IsMarked&#39;,
+ &#39;InVariant&#39;,
+ &#39;GeometriesDiffer&#39;,
+ &#39;SymbolFactor&#39;,
+ &#39;bz.Drakonz&#39;,
+ &#39;bz.Fk&#39;,
+ &#39;bz.Fkpvar&#39;,
+ &#39;bz.Fkqvar&#39;,
+ &#39;bz.Fklfkt&#39;,
+ &#39;bz.PhEin&#39;,
+ &#39;bz.Tm&#39;,
+ &#39;bz.Te&#39;,
+ &#39;bz.PhMin&#39;]
+</pre></div></div>
+</div>
 <p><strong>Next:</strong> Tutorial 7: Miscellaneous</p>
 <p><strong>…</strong></p>
-</section>
 </section>
 </section>
 
