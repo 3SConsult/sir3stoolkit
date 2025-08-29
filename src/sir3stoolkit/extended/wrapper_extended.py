@@ -14,7 +14,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-class ExtendedSIR3S_Model(SIR3S_Model):
+class Extended_SIR3S_Model(SIR3S_Model):
 
     def AddNodesAndPipes(self, dfXL):
         """
