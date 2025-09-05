@@ -2,5 +2,5 @@
 
 from . import wrapper_extended
 
-__all__ = ['wrapper_extended',
+__all__ = [
            ]
