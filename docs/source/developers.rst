@@ -62,16 +62,16 @@ To clone a GitHub repository to your local folder, follow these steps:
 General GitHub Version Control Procedure
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-These instructions lay out the different steps of the GitHub procedure around contributing to Sir3SToolkit-Documentation. Especially due to the GitHub repository currentley sitting on only one branch (master), following these basic rules is crucial. As soon as Sir3SToolkit-Documentation has a higher amount of frequent contributors, a more suitable system with multiple branches will be implemented.
+These instructions lay out the different steps of the GitHub procedure around contributing to SIR 3S Toolkit. Especially due to the GitHub repository currentley sitting on only one branch (main), following these basic rules is crucial. As soon as SIR 3S Toolkit has a higher amount of frequent contributors, a more suitable system with multiple branches will be implemented.
 
 .. note::
     Before following each step for the first time, read their instructions fully including notes like this one. If an unexpected problem occurs, you can search the :ref:`command-collection-label` for a solution.
 
-Follow these steps every time you contribute to Sir3SToolkit-Documentation:
+Follow these steps every time you contribute to SIR 3S Toolkit:
 
 1. **Get the Latest Version from GitHub**: :ref:`get-latest-version-label`
 
-2. **Edit Sir3SToolkit-Documentation**: Now you can edit the entire Sir3SToolkit-Documentation project locally. Please ensure, that nobody else is working on the project simultaneously in the same sourcefiles, because this could cause problems, when trying to commit.
+2. **Edit SIR 3S Toolkit**: Now you can edit the entire SIR 3S Toolkit project locally. Please ensure, that nobody else is working on the project simultaneously in the same sourcefiles, because this could cause problems, when trying to commit.
 
 3. **Commit Your Changes to the GitHub Repository**: :ref:`commit-changes-label`
 
@@ -86,7 +86,7 @@ To fetch the latest changes from the origin and merge them into your current bra
 
    .. code-block:: bash
 
-      cd "C:\Users\User\3S\Sir3SToolkit-Documentation"
+      cd "C:\Users\User\sir3stoolkit"
       
 2. **Pull the latest changes from the origin**: Use the ``git pull`` command. 
 
@@ -126,7 +126,7 @@ To commit your changes to the GitHub repository, follow these steps:
 
    .. code-block:: bash
 
-      cd "C:\Users\User\3S\Sir3SToolkit-Documentation"
+      cd "C:\Users\User\3S\sir3stoolkti"
 
 2. **Add files to the staging area:** Use the ``git add`` command followed by the name of the file. Use ``git add .`` to add all files.
 
@@ -147,7 +147,7 @@ To commit your changes to the GitHub repository, follow these steps:
       git push origin master
 
 .. .. note::
-    If you want to push multiple commits back to back, keep in mind that the Sir3SToolkit-Documentation GitHub repository uses :ref:`github-workflow-label` that might require you to fetch after committing to certain directories. Because workflows can automatically author commits, so fetching ensures you have the latest changes. Alternatively you can check the :ref:`current-workflow-label` utilised by the GitHub Repository and whether the might be triggered by your commit.
+    If you want to push multiple commits back to back, keep in mind that the SIR 3S Toolkit GitHub repository uses :ref:`github-workflow-label` that might require you to fetch after committing to certain directories. Because workflows can automatically author commits, so fetching ensures you have the latest changes. Alternatively you can check the :ref:`current-workflow-label` utilised by the GitHub Repository and whether the might be triggered by your commit.
 
 .. _command-collection-label:
 
@@ -296,11 +296,11 @@ To generate documentation, follow these steps:
 
 .. note:: Our GitHub Workflow sphinx.yaml automatically builds and deploys the documentation. If you do not need to view a local build of your changes, you can jump to step 4.
 
-2. **Navigate to the Sir3SToolkit-Documentation directory:** Use the ``cd`` command.
+2. **Navigate to the sir3stoolkit directory:** Use the ``cd`` command.
 
    .. code-block:: bash
 
-      cd "C:\Users\User\3S\Sir3SToolkit-Documentation"
+      cd "C:\Users\User\3S\sir3stoolkit"
 
 3. **Make an HTML build:** Use ``python3 -m sphinx.cmd.build -b html . /_build/html`` (for python env)  or ``.\make.bat html`` (for conda env (recommended to use conda shell)).
 
@@ -313,6 +313,6 @@ To generate documentation, follow these steps:
       .\make.bat html
 
 
-4. **Commit the changes.** Commit all files from Sir3SToolkit-Documentation to GitHub (:ref:`commit-changes-label`).
+4. **Commit the changes.** Commit all files from sir3stoolkit to GitHub (:ref:`commit-changes-label`).
 
 The new documentation can be found at `https://3sconsult.github.io/sir3stoolkit/index.html <https://3sconsult.github.io/sir3stoolkit/index.html>`_
