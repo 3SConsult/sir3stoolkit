@@ -3,6 +3,7 @@
 Created on Fri Jul 11 17:34:49 2025
 
 @author: Jablonski
+
 """
 
 from sir3stoolkit.core.wrapper import SIR3S_Model
@@ -19,6 +20,7 @@ class Extended_SIR3S_Model(SIR3S_Model):
     def AddNodesAndPipes(self, dfXL):
         """
         Takes a dataframe with each row representing one pipe and adds it to the model. Only dfXL
+        This function should be moved to Dataframes.py to create a general module for working with Dataframes in SIR 3S.
         """
         for i, row in dfXL.iterrows():
             kvr = int(row['KVR'])
