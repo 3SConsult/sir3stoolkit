@@ -4,7 +4,7 @@ Created on Fri Aug 29 09:22:31 2025
 
 @author: Jablonski
 """
-
+from __future__ import annotations
 from attrs import field
 from pytoolconfig import dataclass
 from sir3stoolkit.core.wrapper import SIR3S_Model
@@ -12,6 +12,8 @@ from sir3stoolkit.core.wrapper import SIR3S_Model
 import pandas as pd
 import sys
 from dataclasses import dataclass, field
+from typing import List, Optional, Union
+from enum import Enum
 
 import logging
 logger = logging.getLogger(__name__)
@@ -51,45 +53,35 @@ class Dataframes_SIR3S_Model(SIR3S_Model):
         logger.info("Generating dataframes...")
         
         logger.info("Generating df_node...")
-        _non_result_props=self.GetPropertiesofElementType(self.ObjectTypes.Node)
+        _metadata_props=self.GetPropertiesofElementType(self.ObjectTypes.Node)
         _result_props=self.GetResultProperties_from_elementType(self.ObjectTypes.Node, onlySelectedVectors=True)
-        self.data_frames.df_node = self.generate_element_dataframe(non_result_props=_non_result_props, result_props=_result_props, element_type=self.ObjectTypes.Node)
+        self.data_frames.df_node = self.generate_element_dataframe(metadata_props=_metadata_props, result_props=_result_props, element_type=self.ObjectTypes.Node)
         logger.info("df_node generated")
     
         logger.info("Generating df_pipe...")
-        _non_result_props=self.GetPropertiesofElementType(self.ObjectTypes.Pipe)
+        _metadata_props=self.GetPropertiesofElementType(self.ObjectTypes.Pipe)
         _result_props=self.GetResultProperties_from_elementType(self.ObjectTypes.Pipe, onlySelectedVectors=True)
-        self.data_frames.df_pipe = self.generate_element_dataframe(non_result_props=_non_result_props, result_props=_result_props, element_type=self.ObjectTypes.Pipe)
+        self.data_frames.df_pipe = self.generate_element_dataframe(metadata_props=_metadata_props, result_props=_result_props, element_type=self.ObjectTypes.Pipe)
         logger.info("df_pipe generated")
 
         logger.info("Dataframes generated.")
-    
-    def generate_element_dataframe(self, element_type, properties=None, timestamps=None):
-        """
-        Generate a dataframe for a given element type, including specified properties across timestamps.
 
-        Parameters
-        ----------
-        element_type : Enum or str
-            The element type to generate the dataframe for (e.g., self.ObjectTypes.Node).
-        properties : list[str], optional
-            List of property names to include. Will be internally sorted into result and non-result properties.
-        timestamps : list[str], optional
-            List of timestamps to include. Defaults to all simulations timestamps(self.GetTimeStamps()[0]) (if not available STAT timestamp(self.GetTimeStamps()[3])).
+    def _resolve_given_timestamps(self, timestamps: Optional[List[str]]) -> List[str]:
+        """
+        Resolve the list of timestamps to use:
+        - If `timestamps` is None: use all simulation timestamps (if available) else STAT.
+        - Validate against available timestamps and filter out invalid ones.
 
         Returns
         -------
-        pd.DataFrame
-            A dataframe containing the requested properties for the specified element type across timestamps.
+        List[str]
+            A list of valid timestamps (possibly empty).
         """
-
-        logger.info(f"Generating dataframe for element type: {element_type}")
-
-        # --- Default timestamp ---
+        # --- Default timestamp resolution ---
         if timestamps is None:
             logger.info("No timestamps were given. Checking available simulation timestamps (SIR3S_Model.GetTimeStamps()).")
             try:
-                simulation_timestamps, tsStat, tsMin, tsMax = self.GetTimeStamps() # tsMin and tsMax are retrived but not used, as there is no use for them this time of development
+                simulation_timestamps, tsStat, tsMin, tsMax = self.GetTimeStamps()
                 if simulation_timestamps:
                     timestamps = simulation_timestamps
                     logger.info(f"{len(timestamps)} simulation timestamps will be used.")
@@ -97,117 +89,288 @@ class Dataframes_SIR3S_Model(SIR3S_Model):
                     timestamps = [tsStat]
                     logger.info(f"No simulation timestamps found. Using stationary timestamp (STAT): {tsStat}")
                 else:
-                    logger.warning("No valid timestamps found. Dataframe will be empty.")
-                    return pd.DataFrame()
+                    logger.warning("No valid timestamps found. Proceeding with empty timestamp list.")
+                    return []
             except Exception as e:
                 logger.error(f"Error retrieving timestamps: {e}")
-                return pd.DataFrame()
+                return []
 
-
-        # --- Check validity of given timestamps ---
+        # --- Validate given timestamps ---
         try:
             all_timestamps, tsStat, tsMin, tsMax = self.GetTimeStamps()
-            available_timestamps = all_timestamps.copy()
-
+            available_timestamps = list(all_timestamps) if all_timestamps else []
             if tsStat and tsStat not in available_timestamps:
                 available_timestamps.append(tsStat)
 
             valid_timestamps = []
-            for timestamp in timestamps:
-                if timestamp in available_timestamps:
-                    valid_timestamps.append(timestamp)
+            for ts in timestamps:
+                if ts in available_timestamps:
+                    valid_timestamps.append(ts)
                 else:
                     logger.warning(
-                        f"Dataframe is created without timestamp {timestamp} "
-                        f"as it is not a valid timestamp (SIR3S_Model.GetTimeStamps())."
+                        f"Timestamp {ts} is not valid (SIR3S_Model.GetTimeStamps()). It will be excluded."
                     )
-            timestamps = valid_timestamps
-            logger.info(f"{len(timestamps)} valid timestamps will be used.")
+            logger.info(f"{len(valid_timestamps)} valid timestamps will be used.")
+            return valid_timestamps
         except Exception as e:
             logger.error(f"Error validating timestamps: {e}")
-            return pd.DataFrame()
+            return []
 
-        # --- Initialize dataframe with tks ---
-        try:
-            tks = self.GetTksofElementType(ElementType=element_type)
-            logger.info(f"Retrieved {len(tks)} tks.")
-        except Exception as e:
-            logger.error(f"Error retrieving tks: {e}")
-            return pd.DataFrame()
+    def __resolve_given_metadata_properties(
+        self,
+        element_type: Union[str, "Enum"],
+        properties: Optional[List[str]] = None,
+    ) -> List[str]:
+        """
+        Checks the validity of given list of metadata properties. If list is empty, full list of available properties will be returned
+        """
 
-        # --- Sort properties into non-result and result ---
         try:
-            available_non_result_props = self.GetPropertiesofElementType(ElementType=element_type)
+            available_metadata_props = self.GetPropertiesofElementType(ElementType=element_type)
             available_result_props = self.GetResultProperties_from_elementType(
                 elementType=element_type,
                 onlySelectedVectors=False
             )
 
-            non_result_props = []
-            result_props = []
+            metadata_props: List[str] = []
 
             if properties:
                 for prop in properties:
-                    if prop in available_non_result_props:
-                        non_result_props.append(prop)
+                    if prop in available_metadata_props:
+                        metadata_props.append(prop)
                     elif prop in available_result_props:
-                        result_props.append(prop)
+                        logger.warning(f"[Resolving Metadata Properties] Property '{prop}' is a RESULT property; excluded from metadata.")
                     else:
                         logger.warning(
-                            f"Property '{prop}' not found in either non-result (SIR3S_Model.GetPropertiesofElementType({element_type})) or result properties (SIR3S_Model.GetResultProperties_from_elementType({element_type}, onlySelectedVectors=False)) "
-                            f"of element type {element_type}. It will be excluded."
+                            f"[Resolving Metadata Properties] Property '{prop}' not found in non-result or result properties of type {element_type}. Excluding."
                         )
             else:
-                logger.info(f"No properties were given therefore dataframe is created with all available for properties for element type {element_type} (SIR3S_Model.GetPropertiesofElementType({element_type})+(SIR3S_Model.GetResultProperties_from_elementType({element_type}, onlySelectedVectors=False)).")
-                non_result_props = available_non_result_props
-                result_props = available_result_props
+                logger.info(f"[Resolving Metadata Properties] No properties given -> using ALL non-result properties for {element_type}.")
+                metadata_props = available_metadata_props
 
-            logger.info(f"{len(non_result_props)} non-result properties and {len(result_props)} result properties will be used.")
+            logger.info(f"[Resolving Metadata Properties] Using {len(metadata_props)} non-result properties.")
+       
         except Exception as e:
-            logger.error(f"Error sorting properties: {e}")
-            return pd.DataFrame()
+            logger.error(f"[Resolving Metadata Properties] Error resolving metadata properties: {e}")
         
-        # --- Retrieve non-result properties ---
-        logger.info("Retrieving non-result properties...")
-        non_result_data = {}
+        return metadata_props
+        
+    def generate_element_metadata_dataframe(
+        self,
+        element_type: Union[str, "Enum"],
+        properties: Optional[List[str]] = None,
+    ) -> pd.DataFrame:
+        """
+        Generate a dataframe with NON-RESULT (static) properties for all devices of a given element type.
+
+        Parameters
+        ----------
+        element_type : Enum or str
+            The element type (e.g., self.ObjectTypes.Node).
+        properties : list[str], optional
+            List of property names to include. If None, includes ALL available non-result properties.
+
+        Returns
+        -------
+        pd.DataFrame
+            Dataframe with one row per device (tk) and columns for requested non-result properties.
+            Columns: ["tk", <metadata_props>]
+        """
+        logger.info(f"[metadata] Generating metadata dataframe for element type: {element_type}")
+
+        # --- Collect device keys (tks) ---
         try:
-            for tk in tks:
-                row_data = {}
-                for prop in non_result_props:
-                    try:
-                        row_data[prop] = self.GetValue(Tk=tk, propertyName=prop)[0]
-                    except Exception as e:
-                        logger.warning(f"Failed to get non-result property '{prop}' for tk '{tk}': {e}")
-                non_result_data[tk] = row_data
-            logger.info("Non-result properties retrieved successfully.")
+            tks = self.GetTksofElementType(ElementType=element_type)
+            logger.info(f"[metadata] Retrieved {len(tks)} tks.")
         except Exception as e:
-            logger.error(f"Error during non-result property precomputation: {e}")
-        
-        # --- Retrieve result properties ---
-        data = []
-        logger.info("Retrieving result properties...")
-        
-        for timestamp in map(str, timestamps):
-            for tk in tks:
-                row = {"timestamp": timestamp, "tk": tk}
+            logger.error(f"[metadata] Error retrieving tks: {e}")
+            return pd.DataFrame()
 
-                # Add precomputed non-result properties
-                row.update(non_result_data.get(tk, {}))
+        # --- Resolve given metadata properties ---
+        metadata_props = self.__resolve_given_metadata_properties(element_type=element_type, properties=properties)
 
-                # Result properties
+        # --- Retrieve values ---
+        logger.info("[metadata] Retrieving non-result properties...")
+        rows = []
+        for tk in tks:
+            row = {"tk": tk}
+            for prop in metadata_props:
                 try:
-                    for prop in result_props:
-                        row[prop] = self.GetResultfortimestamp(timestamp=timestamp, Tk=tk, property=prop)[0]
+                    row[prop] = self.GetValue(Tk=tk, propertyName=prop)[0]
                 except Exception as e:
-                    logger.error(f"Error retrieving result properties for tk {tk} at timestamp {timestamp}: {e}")
+                    logger.warning(f"[metadata] Failed to get property '{prop}' for tk '{tk}': {e}")
+            rows.append(row)
 
-                data.append(row)
-        logger.info("Result properties retrieved successfully.")
-
-        df = pd.DataFrame(data)
-        logger.info(f"Dataframe generation for element type {element_type} completed.")
+        df = pd.DataFrame(rows)
+        logger.info(f"[metadata] Done. Shape: {df.shape}")
         return df
 
+    def generate_element_results_dataframe(
+        self,
+        element_type: Union[str, "Enum"],
+        properties: Optional[List[str]] = None,
+        timestamps: Optional[List[str]] = None,
+    ) -> pd.DataFrame:
+        """
+        Generate a dataframe with RESULT (time-dependent) properties for all devices and timestamps.
+
+        Parameters
+        ----------
+        element_type : Enum or str
+            The element type (e.g., self.ObjectTypes.Node).
+        properties : list[str], optional
+            List of RESULT property names (vectors) to include. If None, includes ALL available result properties.
+        timestamps : list[str], optional
+            List of timestamps to include. If None, uses all simulation timestamps (or STAT if no sims).
+
+        Returns
+        -------
+        pd.DataFrame
+            Dataframe with one row per (timestamp, tk) and columns for requested result properties.
+            Columns: ["timestamp", "tk", <result_props>]
+        """
+        logger.info(f"[results] Generating results dataframe for element type: {element_type}")
+
+        # --- Resolve timestamps (all devices × timestamps) ---
+        valid_timestamps = self._resolve_given_timestamps(timestamps)
+        if not valid_timestamps:
+            logger.warning("[results] No valid timestamps. Returning empty dataframe.")
+            return pd.DataFrame(columns=["timestamp", "tk"])
+
+        # --- Collect device keys (tks) ---
+        try:
+            tks = self.GetTksofElementType(ElementType=element_type)
+            logger.info(f"[results] Retrieved {len(tks)} tks.")
+        except Exception as e:
+            logger.error(f"[results] Error retrieving tks: {e}")
+            return pd.DataFrame(columns=["timestamp", "tk"])
+
+        # --- Determine result properties ---
+        try:
+            available_metadata_props = self.GetPropertiesofElementType(ElementType=element_type)
+            available_result_props = self.GetResultProperties_from_elementType(
+                elementType=element_type,
+                onlySelectedVectors=False
+            )
+
+            result_props: List[str] = []
+
+            if properties:
+                for prop in properties:
+                    if prop in available_result_props:
+                        result_props.append(prop)
+                    elif prop in available_metadata_props:
+                        logger.warning(f"[results] Property '{prop}' is a NON-RESULT property; excluded from results.")
+                    else:
+                        logger.warning(
+                            f"[results] Property '{prop}' not found in non-result or result properties of type {element_type}. Excluding."
+                        )
+            else:
+                logger.info(f"[results] No properties given -> using ALL result properties for {element_type}.")
+                result_props = available_result_props
+
+            logger.info(f"[results] Using {len(result_props)} result properties.")
+        except Exception as e:
+            logger.error(f"[results] Error determining result properties: {e}")
+            return pd.DataFrame(columns=["timestamp", "tk"])
+
+        # --- Retrieve result values ---
+        logger.info("[results] Retrieving result properties...")
+        data_rows = []
+        for ts in map(str, valid_timestamps):
+            for tk in tks:
+                row = {"timestamp": ts, "tk": tk}
+                for prop in result_props:
+                    try:
+                        row[prop] = self.GetResultfortimestamp(timestamp=ts, Tk=tk, property=prop)[0]
+                    except Exception as e:
+                        logger.warning(f"[results] Failed to get result '{prop}' for tk '{tk}' at '{ts}': {e}")
+                data_rows.append(row)
+
+        df = pd.DataFrame(data_rows)
+        logger.info(f"[results] Done. Shape: {df.shape}")
+        return df
+
+    def apply_metadata_property_updates(
+        self,
+        element_type: Union[str, Enum],
+        updates_df: pd.DataFrame,
+        properties_new: Optional[List[str]] = None,
+        tag: Optional[str] = "_new",
+    ) -> pd.DataFrame:
+        """
+        Apply metadata updates for a single property using a DataFrame with keys and new values.
+
+        Expects:
+        - One key column (default: 'tk'), and
+        - Exactly one column named '<metadata_property>_new' (or pass `property_name` to target one explicitly).
+
+        Parameters
+        ----------
+        element_type : Union[str, Enum]
+            The element type to update (e.g., self.ObjectTypes.Pipe).
+        updates_df : pd.DataFrame
+            Input with at least:
+            - key column (default 'tk'), and
+            - one '<property>_new' column (e.g., 'diameter_mm_new').
+        property_name : Optional[str], default None
+            If given, we will look for the column f"{property_name}_new".
+            If None, we auto-detect a single '*_new' column.
+        on : str, default 'tk'
+            Name of the key column in `updates_df`. If it's the index, it will be reset.
+        create_missing : bool, default False
+            If True, allow creating metadata rows that don't exist yet (your set-logic decides how).
+        dry_run : bool, default False
+            If True, do NOT apply; just return a normalized summary of what would be changed.
+        allow_na : bool, default True
+            If False, rows with NaN in the '<property>_new' column will be dropped (skipped).
+
+        Returns
+        -------
+        pd.DataFrame
+            A summary dataframe with columns:
+            ['tk', 'property', 'new_value'] (+ 'status' when dry_run)
+            representing the intended updates.
+
+        Notes
+        -----
+        - The actual setting of values is left to you. See the TODO block.
+        - If your class defines `self._touch(element_type)` (versioning/cache invalidation),
+        it will be called after successful updates.
+        """
+        logger.info(f"[update] Applying metadata updates for element type: {element_type}")
+
+        if updates_df is None or updates_df.empty:
+            logger.warning("[update] Empty updates_df provided. Nothing to do.")
+            return pd.DataFrame(columns=["tk", "property", "new_value"])
+
+        df = updates_df.copy()
+
+        # --- Ensure key ('tk') column is present ---
+        if tk not in df.columns:
+            if df.index.name == tk:
+                df = df.reset_index()
+                logger.info(f"[update] Using index as column.")
+            else:
+                msg = f"[update] tk not found in updates_df (nor as index)."
+                logger.error(msg)
+                raise KeyError(msg)
+
+        # --- Resolve & Validate given properties_new ---
+        logger.info("[update] Resolving & validating given properties_new...")
+        properties_new_in_index=df.columns.intersection(properties_new).tolist()
+        logger.info(f"[update] In updates_df found: {properties_new_in_index}")
+        properties_new_stripped = [p.removesuffix(tag) for p in properties_new]
+        metadata_props_new=self.__resolve_given_metadata_properties(element_type=element_type, properties=properties_new_stripped)
+        metadata_props_new_with_suffix = [p + tag for p in metadata_props_new]
+        logger.info("[update] Resolved & validated given properties_new")
+
+        # TODO
+        # --- Set metadata values in model ---
+        for tk in self.GetTksofElementType(ElementType=element_type):
+            for prop in metadata_props_new:
+                msg=self.SetValue(prop, updates_df.iloc[tk, metadata_props_new_with_suffix])
+                logger.debug
 
     def __is_a_model_open(self):
         """
