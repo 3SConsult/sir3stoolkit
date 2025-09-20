@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Example 3: Tables &mdash; sir3stoolkit  documentation</title>
+  <title>Example 2: Dataframes &mdash; sir3stoolkit  documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
@@ -78,7 +78,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Example 3: Tables</li>
+      <li class="breadcrumb-item active">Example 2: Dataframes</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/examples/Toolkit_Example2.ipynb.txt" rel="nofollow"> View page source</a>
       </li>
@@ -88,9 +88,9 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="Example-3:-Tables">
-<h1>Example 3: Tables<a class="headerlink" href="#Example-3:-Tables" title="Link to this heading"></a></h1>
-<p>Description</p>
+  <section id="Example-2:-Dataframes">
+<h1>Example 2: Dataframes<a class="headerlink" href="#Example-2:-Dataframes" title="Link to this heading"></a></h1>
+<p>This Example demonstrates the capabilities of the class Dataframes_SIR3S_Model that extends SIR3S_Model be abilities to work directley with pandas dataframes.</p>
 </section>
 <section id="Toolkit-Release">
 <h1>Toolkit Release<a class="headerlink" href="#Toolkit-Release" title="Link to this heading"></a></h1>
@@ -105,80 +105,75 @@
 </section>
 <section id="Imports">
 <h1>Imports<a class="headerlink" href="#Imports" title="Link to this heading"></a></h1>
-<section id="DLL-References">
-<h2>DLL References<a class="headerlink" href="#DLL-References" title="Link to this heading"></a></h2>
+<section id="SIR-3S-Toolkit">
+<h2>SIR 3S Toolkit<a class="headerlink" href="#SIR-3S-Toolkit" title="Link to this heading"></a></h2>
+<section id="Regular-Import/Init">
+<h3>Regular Import/Init<a class="headerlink" href="#Regular-Import/Init" title="Link to this heading"></a></h3>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import clr as net
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r&quot;C:\3S\SIR 3S Entwicklung\SirGraf-90-15-00-16_Quebec_x64&quot; #change to local path
 </pre></div>
 </div>
 </div>
-<div class="nbinput docutils container">
+<div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>net.AddReference(r&quot;C:\3S\SIR 3S Entwicklung\SirGraf-90-15-00-06x64\Sir3S_Repository.Interfaces.dll&quot;) #change to local path if necessary
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import sir3stoolkit
 </pre></div>
 </div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-&lt;System.Reflection.RuntimeAssembly object at 0x000001869AA16480&gt;
-</pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import Sir3S_Repository.Interfaces as Interfaces
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sir3stoolkit.core import wrapper
 </pre></div>
 </div>
 </div>
-</section>
-<section id="PythonWrapperToolkit">
-<h2>PythonWrapperToolkit<a class="headerlink" href="#PythonWrapperToolkit" title="Link to this heading"></a></h2>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import PythonWrapperToolkit
-</pre></div>
-</div>
-</div>
-</section>
-<section id="Additional">
-<h2>Additional<a class="headerlink" href="#Additional" title="Link to this heading"></a></h2>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import csv
-</pre></div>
-</div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>...
-</pre></div>
-</div>
-</div>
-</section>
-</section>
-<section id="Initialization">
-<h1>Initialization<a class="headerlink" href="#Initialization" title="Link to this heading"></a></h1>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s = PythonWrapperToolkit.SIR3S_Model()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sir3stoolkit
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;module &#39;sir3stoolkit&#39; from &#39;C:\\Users\\aUsername\\3S\\sir3stoolkit\\src\\sir3stoolkit\\__init__.py&#39;&gt;
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>wrapper.Initialize_Toolkit(SIR3S_SIRGRAF_DIR)
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Additional-Import/Init-for-Dataframes-class">
+<h3>Additional Import/Init for Dataframes class<a class="headerlink" href="#Additional-Import/Init-for-Dataframes-class" title="Link to this heading"></a></h3>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sir3stoolkit.extended import Dataframes
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s = Dataframes.Dataframes_SIR3S_Model()
 </pre></div>
 </div>
 </div>
@@ -191,36 +186,498 @@ Initialization complete
 </pre></div></div>
 </div>
 </section>
-<section id="Python-Read-CSV-File">
-<h1>Python Read CSV File<a class="headerlink" href="#Python-Read-CSV-File" title="Link to this heading"></a></h1>
+</section>
+<section id="Additional">
+<h2>Additional<a class="headerlink" href="#Additional" title="Link to this heading"></a></h2>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>path=&quot;&quot;
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import numpy
 </pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>with open(path, newline=&#39;&#39;) as csvfile:
-    spamreader = csv.reader(csvfile, delimiter=&#39;;&#39;, quotechar=&#39;|&#39;)
-    fwvbs = dict()
-    for row in spamreader:
-        Id = row[2]
-        W0 = row[4]
-        W0 = W0.replace(&#39;,&#39;, &#39;.&#39;)
-        fW0 = float(W0)
-        while (fW0 in fwvbs):
-            fW0 = fW0 + 0.01
-        fwvbs[fW0] = Id
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[51]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import folium
+from folium.plugins import HeatMap
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[61]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
+from shapely.geometry import Point
+import re
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+<section id="Open-Model">
+<h1>Open Model<a class="headerlink" href="#Open-Model" title="Link to this heading"></a></h1>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.OpenModel(dbName=r&quot;C:\Users\aUsername\3S\Quebec_PT3S\Example1.db3&quot;,
+              providerType=s3s.ProviderTypes.SQLite,
+              Mid=&quot;M-1-0-1&quot;,
+              saveCurrentlyOpenModel=False,
+              namedInstance=&quot;&quot;,
+              userID=&quot;&quot;,
+              password=&quot;&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Model is open for further operation
+</pre></div></div>
+</div>
+</section>
+<section id="Prepare-Data">
+<h1>Prepare Data<a class="headerlink" href="#Prepare-Data" title="Link to this heading"></a></h1>
+<section id="District-Heating-Consumer">
+<h2>District Heating Consumer<a class="headerlink" href="#District-Heating-Consumer" title="Link to this heading"></a></h2>
+<section id="Metadata">
+<h3>Metadata<a class="headerlink" href="#Metadata" title="Link to this heading"></a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_consumer_metadata=s3s.generate_element_metadata_dataframe(element_type=s3s.ObjectTypes.DistrictHeatingConsumer, properties=[], geometry=True)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+[2025-09-20 20:17:51,275] INFO in sir3stoolkit.extended.Dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.DistrictHeatingConsumer
+[2025-09-20 20:17:51,293] INFO in sir3stoolkit.extended.Dataframes: [metadata] Retrieved 337 tks.
+[2025-09-20 20:17:51,323] INFO in sir3stoolkit.extended.Dataframes: [Resolving Metadata Properties] Using 0 metadata properties.
+[2025-09-20 20:17:51,325] INFO in sir3stoolkit.extended.Dataframes: [metadata] Retrieving metadata properties [] and geometry...
+[2025-09-20 20:17:51,397] INFO in sir3stoolkit.extended.Dataframes: [metadata] Done. Shape: (337, 2)
+</pre></div></div>
+</div>
+</section>
+<section id="Result-Data">
+<h3>Result Data<a class="headerlink" href="#Result-Data" title="Link to this heading"></a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_consumer_results=s3s.generate_element_results_dataframe(s3s.ObjectTypes.DistrictHeatingConsumer, [&quot;W&quot;])
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+[2025-09-20 20:17:51,417] INFO in sir3stoolkit.extended.Dataframes: [results] Generating results dataframe for element type: ObjectTypes.DistrictHeatingConsumer
+[2025-09-20 20:17:51,421] INFO in sir3stoolkit.extended.Dataframes: [Resolving Timestamps] No timestamps were given. Checking available simulation timestamps (SIR3S_Model.GetTimeStamps()).
+[2025-09-20 20:17:51,600] INFO in sir3stoolkit.extended.Dataframes: 7 simulation timestamps will be used.
+[2025-09-20 20:17:51,806] INFO in sir3stoolkit.extended.Dataframes: [Resolving Timestamps] 7 valid timestamps will be used.
+[2025-09-20 20:17:51,812] INFO in sir3stoolkit.extended.Dataframes: [results] Retrieved 337 tks.
+[2025-09-20 20:17:51,816] INFO in sir3stoolkit.extended.Dataframes: [results] Using 1 result properties.
+[2025-09-20 20:17:51,818] INFO in sir3stoolkit.extended.Dataframes: [results] Retrieving result properties...
+[2025-09-20 20:17:52,495] INFO in sir3stoolkit.extended.Dataframes: [results] Done. Shape: (2359, 3)
+</pre></div></div>
+</div>
+</section>
+<section id="Merge">
+<h3>Merge<a class="headerlink" href="#Merge" title="Link to this heading"></a></h3>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_consumer = pd.merge(
+    df_consumer_metadata,
+    df_consumer_results,
+    on=&quot;tk&quot;,
+    how=&quot;outer&quot;
+)
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_consumer.head(3)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
-    sorted_fwvbs = dict(sorted(fwvbs.items()))
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>tk</th>
+      <th>geometry</th>
+      <th>timestamp</th>
+      <th>W</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>4611752310942477664</td>
+      <td>POINT (713675.30023234 5578705.1927566)</td>
+      <td>2023-02-13 00:00:00.000 +01:00</td>
+      <td>39.36727</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4611752310942477664</td>
+      <td>POINT (713675.30023234 5578705.1927566)</td>
+      <td>2023-02-13 01:00:00.000 +01:00</td>
+      <td>39.3675</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4611752310942477664</td>
+      <td>POINT (713675.30023234 5578705.1927566)</td>
+      <td>2023-02-13 06:00:00.000 +01:00</td>
+      <td>77.90138</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</section>
+</section>
+<section id="Pipes">
+<h2>Pipes<a class="headerlink" href="#Pipes" title="Link to this heading"></a></h2>
+<section id="id1">
+<h3>Metadata<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_metadata=s3s.generate_element_metadata_dataframe(element_type=s3s.ObjectTypes.Pipe, properties=[&quot;Di&quot;, &quot;Kvr&quot;], geometry=True)
 </pre></div>
 </div>
 </div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+[2025-09-20 20:21:21,328] INFO in sir3stoolkit.extended.Dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.Pipe
+[2025-09-20 20:21:21,332] INFO in sir3stoolkit.extended.Dataframes: [metadata] Retrieved 524 tks.
+[2025-09-20 20:21:21,335] INFO in sir3stoolkit.extended.Dataframes: [Resolving Metadata Properties] Using 2 metadata properties.
+[2025-09-20 20:21:21,336] INFO in sir3stoolkit.extended.Dataframes: [metadata] Retrieving metadata properties [&#39;Di&#39;, &#39;Kvr&#39;] and geometry...
+[2025-09-20 20:21:21,461] INFO in sir3stoolkit.extended.Dataframes: [metadata] Done. Shape: (524, 4)
+</pre></div></div>
+</div>
+</section>
+<section id="Result-data">
+<h3>Result data<a class="headerlink" href="#Result-data" title="Link to this heading"></a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_results=s3s.generate_element_results_dataframe(s3s.ObjectTypes.Pipe, [&quot;QMAV&quot;])
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+[2025-09-20 20:22:21,973] INFO in sir3stoolkit.extended.Dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
+[2025-09-20 20:22:21,974] INFO in sir3stoolkit.extended.Dataframes: [Resolving Timestamps] No timestamps were given. Checking available simulation timestamps (SIR3S_Model.GetTimeStamps()).
+[2025-09-20 20:22:22,074] INFO in sir3stoolkit.extended.Dataframes: 7 simulation timestamps will be used.
+[2025-09-20 20:22:22,165] INFO in sir3stoolkit.extended.Dataframes: [Resolving Timestamps] 7 valid timestamps will be used.
+[2025-09-20 20:22:22,167] INFO in sir3stoolkit.extended.Dataframes: [results] Retrieved 524 tks.
+[2025-09-20 20:22:22,170] INFO in sir3stoolkit.extended.Dataframes: [results] Using 1 result properties.
+[2025-09-20 20:22:22,172] INFO in sir3stoolkit.extended.Dataframes: [results] Retrieving result properties...
+[2025-09-20 20:22:23,046] INFO in sir3stoolkit.extended.Dataframes: [results] Done. Shape: (3668, 3)
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_results[&quot;QMAV&quot;]=df_pipes_results[&quot;QMAV&quot;].astype(float)
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_results[&quot;QMAV&quot;]=df_pipes_results[&quot;QMAV&quot;].abs()
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[34]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_results=df_pipes_results.rename(columns={&quot;QMAV&quot;: &quot;QMAVAbs&quot;})
+</pre></div>
+</div>
+</div>
+</section>
+<section id="id3">
+<h3>Merge<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[47]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes = pd.merge(
+    df_pipes_metadata,
+    df_pipes_results,
+    on=&quot;tk&quot;,
+    how=&quot;outer&quot;
+)
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[48]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes=df_pipes[df_pipes[&quot;Kvr&quot;] == &quot;1&quot;]
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[49]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes.head(3)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[49]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>tk</th>
+      <th>Di</th>
+      <th>Kvr</th>
+      <th>geometry</th>
+      <th>timestamp</th>
+      <th>QMAVAbs</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>7</th>
+      <td>4615723899944629797</td>
+      <td>994</td>
+      <td>1</td>
+      <td>LINESTRING (713738.296567236 5579219.90221333,...</td>
+      <td>2023-02-13 00:00:00.000 +01:00</td>
+      <td>3.667083e-10</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>4615723899944629797</td>
+      <td>994</td>
+      <td>1</td>
+      <td>LINESTRING (713738.296567236 5579219.90221333,...</td>
+      <td>2023-02-13 01:00:00.000 +01:00</td>
+      <td>0.000000e+00</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>4615723899944629797</td>
+      <td>994</td>
+      <td>1</td>
+      <td>LINESTRING (713738.296567236 5579219.90221333,...</td>
+      <td>2023-02-13 06:00:00.000 +01:00</td>
+      <td>1.047738e-09</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</section>
+</section>
+</section>
+<section id="Plot">
+<h1>Plot<a class="headerlink" href="#Plot" title="Link to this heading"></a></h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[50]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>minRadius = 2
+maxRadius = 10 * minRadius
+facRadius = 1 / 10.
+minWidthinPixel = 1
+maxWidthinPixel = 3 * minWidthinPixel
+facWidthinPixel1DN = 1 / 200
+facWidthinPixelQMAVAbs = 1 / 10
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[57]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def parse_point_string(s):
+    # Extract numbers from the string using regex
+    match = re.match(r&#39;POINT\s*\(\s*([-\d\.]+)\s+([-\d\.]+)\s*\)&#39;, s)
+    if match:
+        x, y = float(match.group(1)), float(match.group(2))
+        return Point(x, y)
+    else:
+        return None
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[58]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_consumer[&#39;geometry&#39;] = df_consumer[&#39;geometry&#39;].apply(parse_point_string)
+
+x_mean = df_consumer[&#39;geometry&#39;].apply(lambda p: p.x if p else None).mean()
+y_mean = df_consumer[&#39;geometry&#39;].apply(lambda p: p.y if p else None).mean()
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[60]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Create a folium Map
+map = folium.Map(location=(y_mean, x_mean), titles=&#39;CartoDB Positron&#39;, zoom_start=16)
+
+# Add &#39;W&#39; layer to the map
+df_consumer.loc[:, [&#39;geometry&#39;, &#39;W&#39;]].explore(
+    column=&#39;W&#39;,
+    cmap=&#39;autumn_r&#39;,
+    legend=False,
+    vmin=df_consumer[&#39;W&#39;].quantile(.025),
+    vmax=df_consumer[&#39;W&#39;].quantile(.975),
+    style_kwds={&#39;style_function&#39;: lambda x: {&#39;radius&#39;: min(max(x[&#39;properties&#39;][&#39;W&#39;] * facRadius, minRadius), maxRadius)}},
+    name=&#39;W&#39;,
+    show=False,
+    m=map
+)
+
+# Add &#39;W&#39; HeatMap layer to the map
+#HeatMap(heatMapDataW, name=&#39;Heat Map von W&#39;, radius=10, blur=5, base=True).add_to(map)
+
+# Add &#39;DI&#39; layer to the map
+df_pipes[(df_pipes[&#39;KVR&#39;].isin([1., None])) &amp; (df_pipes[&#39;DI&#39;] != 994)].loc[:, [&#39;geometry&#39;, &#39;DI&#39;]].explore(
+    column=&#39;DI&#39;,
+    cmap=&#39;gray&#39;,
+    legend=True,
+    vmin = df_pipes.loc[df_pipes[&#39;DI&#39;] != 994, &#39;DI&#39;].quantile(.2),
+    vmax = 1.5 * df_pipes.loc[df_pipes[&#39;DI&#39;] != 994, &#39;DI&#39;].quantile(1),
+    style_kwds={&#39;style_function&#39;: lambda x: {&#39;radius&#39;: min(max(x[&#39;properties&#39;][&#39;DI&#39;] * facWidthinPixel1DN, minWidthinPixel), maxWidthinPixel)}},
+    name=&#39;DI&#39;,
+    m=map
+)
+
+# Add &#39;QMAVAbs&#39; layer to the map
+df_pipes[df_pipes[&#39;KVR&#39;].isin([1., None])].loc[:, [&#39;geometry&#39;, &#39;QMAVAbs&#39;]].explore(
+    column=&#39;QMAVAbs&#39;,
+    cmap=&#39;cool&#39;,
+    legend=True,
+    vmin=df_pipes[&#39;QMAVAbs&#39;].quantile(.2),
+    vmax=df_pipes[&#39;QMAVAbs&#39;].quantile(.80),
+    style_kwds={&#39;style_function&#39;: lambda x: {&#39;weight&#39;: min(max(x[&#39;properties&#39;][&#39;QMAVAbs&#39;] * facWidthinPixelQMAVAbs, minWidthinPixel), maxWidthinPixel)}},
+    name=&#39;QMAVAbs&#39;,
+    m=map
+)
+
+# Add LayerControl to the map
+folium.LayerControl().add_to(map)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-intense-fg ansi-bold">---------------------------------------------------------------------------</span>
+<span class="ansi-red-intense-fg ansi-bold">AttributeError</span>                            Traceback (most recent call last)
+<span class="ansi-green-intense-fg ansi-bold">~\AppData\Local\Temp\ipykernel_20528\2403409117.py</span> in <span class="ansi-cyan-fg">?</span><span class="ansi-blue-intense-fg ansi-bold">()</span>
+<span class="ansi-green-fg">      1</span> <span class="ansi-red-intense-fg ansi-bold"># Create a folium Map</span>
+<span class="ansi-green-fg">      2</span> map <span class="ansi-yellow-intense-fg ansi-bold">=</span> folium<span class="ansi-yellow-intense-fg ansi-bold">.</span>Map<span class="ansi-yellow-intense-fg ansi-bold">(</span>location<span class="ansi-yellow-intense-fg ansi-bold">=</span><span class="ansi-yellow-intense-fg ansi-bold">(</span>y_mean<span class="ansi-yellow-intense-fg ansi-bold">,</span> x_mean<span class="ansi-yellow-intense-fg ansi-bold">)</span><span class="ansi-yellow-intense-fg ansi-bold">,</span> titles<span class="ansi-yellow-intense-fg ansi-bold">=</span><span class="ansi-blue-intense-fg ansi-bold">&#39;CartoDB Positron&#39;</span><span class="ansi-yellow-intense-fg ansi-bold">,</span> zoom_start<span class="ansi-yellow-intense-fg ansi-bold">=</span><span class="ansi-cyan-intense-fg ansi-bold">16</span><span class="ansi-yellow-intense-fg ansi-bold">)</span>
+<span class="ansi-green-fg">      3</span>
+<span class="ansi-green-fg">      4</span> <span class="ansi-red-intense-fg ansi-bold"># Add &#39;W&#39; layer to the map</span>
+<span class="ansi-green-intense-fg ansi-bold">----&gt; 5</span><span class="ansi-yellow-intense-fg ansi-bold"> df_consumer.loc[:, [&#39;geometry&#39;, &#39;W&#39;]].explore(
+</span><span class="ansi-green-fg">      6</span>     column<span class="ansi-yellow-intense-fg ansi-bold">=</span><span class="ansi-blue-intense-fg ansi-bold">&#39;W&#39;</span><span class="ansi-yellow-intense-fg ansi-bold">,</span>
+<span class="ansi-green-fg">      7</span>     cmap<span class="ansi-yellow-intense-fg ansi-bold">=</span><span class="ansi-blue-intense-fg ansi-bold">&#39;autumn_r&#39;</span><span class="ansi-yellow-intense-fg ansi-bold">,</span>
+<span class="ansi-green-fg">      8</span>     legend<span class="ansi-yellow-intense-fg ansi-bold">=</span><span class="ansi-green-intense-fg ansi-bold">False</span><span class="ansi-yellow-intense-fg ansi-bold">,</span>
+
+<span class="ansi-green-intense-fg ansi-bold">c:\Users\jablonski\AppData\Local\anaconda3\Lib\site-packages\pandas\core\generic.py</span> in <span class="ansi-cyan-fg">?</span><span class="ansi-blue-intense-fg ansi-bold">(self, name)</span>
+<span class="ansi-green-fg">   6295</span>             <span class="ansi-green-intense-fg ansi-bold">and</span> name <span class="ansi-green-intense-fg ansi-bold">not</span> <span class="ansi-green-intense-fg ansi-bold">in</span> self<span class="ansi-yellow-intense-fg ansi-bold">.</span>_accessors
+<span class="ansi-green-fg">   6296</span>             <span class="ansi-green-intense-fg ansi-bold">and</span> self<span class="ansi-yellow-intense-fg ansi-bold">.</span>_info_axis<span class="ansi-yellow-intense-fg ansi-bold">.</span>_can_hold_identifiers_and_holds_name<span class="ansi-yellow-intense-fg ansi-bold">(</span>name<span class="ansi-yellow-intense-fg ansi-bold">)</span>
+<span class="ansi-green-fg">   6297</span>         ):
+<span class="ansi-green-fg">   6298</span>             <span class="ansi-green-intense-fg ansi-bold">return</span> self<span class="ansi-yellow-intense-fg ansi-bold">[</span>name<span class="ansi-yellow-intense-fg ansi-bold">]</span>
+<span class="ansi-green-intense-fg ansi-bold">-&gt; 6299</span><span class="ansi-yellow-intense-fg ansi-bold">         </span><span class="ansi-green-intense-fg ansi-bold">return</span> object<span class="ansi-yellow-intense-fg ansi-bold">.</span>__getattribute__<span class="ansi-yellow-intense-fg ansi-bold">(</span>self<span class="ansi-yellow-intense-fg ansi-bold">,</span> name<span class="ansi-yellow-intense-fg ansi-bold">)</span>
+
+<span class="ansi-red-intense-fg ansi-bold">AttributeError</span>: &#39;DataFrame&#39; object has no attribute &#39;explore&#39;
+</pre></div></div>
+</div>
+<p>We need GeoDataFrame not Dataframe, need to think about whether to do both creation in the same function or not and how to get crs.</p>
 </section>
 
 
