@@ -79,7 +79,7 @@ class Dataframes_SIR3S_Model(SIR3S_Model):
         """
         # --- Default timestamp resolution ---
         if timestamps is None:
-            logger.info("No timestamps were given. Checking available simulation timestamps (SIR3S_Model.GetTimeStamps()).")
+            logger.info("[Resolving Timestamps] No timestamps were given. Checking available simulation timestamps (SIR3S_Model.GetTimeStamps()).")
             try:
                 simulation_timestamps, tsStat, tsMin, tsMax = self.GetTimeStamps()
                 if simulation_timestamps:
@@ -87,12 +87,12 @@ class Dataframes_SIR3S_Model(SIR3S_Model):
                     logger.info(f"{len(timestamps)} simulation timestamps will be used.")
                 elif tsStat:
                     timestamps = [tsStat]
-                    logger.info(f"No simulation timestamps found. Using stationary timestamp (STAT): {tsStat}")
+                    logger.info(f"[Resolving Timestamps] No simulation timestamps found. Using stationary timestamp (STAT): {tsStat}")
                 else:
-                    logger.warning("No valid timestamps found. Proceeding with empty timestamp list.")
+                    logger.warning("[Resolving Timestamps] No valid timestamps found. Proceeding with empty timestamp list.")
                     return []
             except Exception as e:
-                logger.error(f"Error retrieving timestamps: {e}")
+                logger.error(f"[Resolving Timestamps] Error retrieving timestamps: {e}")
                 return []
 
         # --- Validate given timestamps ---
@@ -108,9 +108,13 @@ class Dataframes_SIR3S_Model(SIR3S_Model):
                     valid_timestamps.append(ts)
                 else:
                     logger.warning(
-                        f"Timestamp {ts} is not valid (SIR3S_Model.GetTimeStamps()). It will be excluded."
+                        f"[Resolving Timestamps] Timestamp {ts} is not valid (SIR3S_Model.GetTimeStamps()). It will be excluded."
                     )
-            logger.info(f"{len(valid_timestamps)} valid timestamps will be used.")
+            
+            if len(valid_timestamps) == 1 and tsStat == valid_timestamps[0]:
+                logger.info(f"[Resolving Timestamps] Only static timestamp {tsStat} is available")
+            else:
+                logger.info(f"[Resolving Timestamps] {len(valid_timestamps)} valid timestamps will be used.")
             return valid_timestamps
         except Exception as e:
             logger.error(f"Error validating timestamps: {e}")
@@ -122,7 +126,9 @@ class Dataframes_SIR3S_Model(SIR3S_Model):
         properties: Optional[List[str]] = None,
     ) -> List[str]:
         """
-        Checks the validity of given list of metadata properties. If list is empty, full list of available properties will be returned
+        Checks the validity of given list of metadata properties. 
+        If properties=None => All available properties will be used
+        If properties=[] => No properties will be used
         """
 
         try:
@@ -134,7 +140,10 @@ class Dataframes_SIR3S_Model(SIR3S_Model):
 
             metadata_props: List[str] = []
 
-            if properties:
+            if properties is None:
+                logger.info(f"[Resolving Metadata Properties] No properties given → using ALL metadata properties for {element_type}.")
+                metadata_props = available_metadata_props
+            else:
                 for prop in properties:
                     if prop in available_metadata_props:
                         metadata_props.append(prop)
@@ -142,13 +151,10 @@ class Dataframes_SIR3S_Model(SIR3S_Model):
                         logger.warning(f"[Resolving Metadata Properties] Property '{prop}' is a RESULT property; excluded from metadata.")
                     else:
                         logger.warning(
-                            f"[Resolving Metadata Properties] Property '{prop}' not found in non-result or result properties of type {element_type}. Excluding."
+                            f"[Resolving Metadata Properties] Property '{prop}' not found in metadata or result properties of type {element_type}. Excluding."
                         )
-            else:
-                logger.info(f"[Resolving Metadata Properties] No properties given -> using ALL non-result properties for {element_type}.")
-                metadata_props = available_metadata_props
 
-            logger.info(f"[Resolving Metadata Properties] Using {len(metadata_props)} non-result properties.")
+            logger.info(f"[Resolving Metadata Properties] Using {len(metadata_props)} metadata properties.")
        
         except Exception as e:
             logger.error(f"[Resolving Metadata Properties] Error resolving metadata properties: {e}")
@@ -159,21 +165,23 @@ class Dataframes_SIR3S_Model(SIR3S_Model):
         self,
         element_type: Union[str, "Enum"],
         properties: Optional[List[str]] = None,
+        geometry: Optional[bool] = False,
     ) -> pd.DataFrame:
         """
-        Generate a dataframe with NON-RESULT (static) properties for all devices of a given element type.
+        Generate a dataframe with metadata (static) properties for all devices of a given element type.
 
         Parameters
         ----------
         element_type : Enum or str
             The element type (e.g., self.ObjectTypes.Node).
         properties : list[str], optional
-            List of property names to include. If None, includes ALL available non-result properties.
+            If properties=None => All available properties will be used
+            If properties=[] => No properties will be used
 
         Returns
         -------
         pd.DataFrame
-            Dataframe with one row per device (tk) and columns for requested non-result properties.
+            Dataframe with one row per device (tk) and columns for requested metadata properties.
             Columns: ["tk", <metadata_props>]
         """
         logger.info(f"[metadata] Generating metadata dataframe for element type: {element_type}")
@@ -190,7 +198,10 @@ class Dataframes_SIR3S_Model(SIR3S_Model):
         metadata_props = self.__resolve_given_metadata_properties(element_type=element_type, properties=properties)
 
         # --- Retrieve values ---
-        logger.info("[metadata] Retrieving non-result properties...")
+        if geometry:
+            logger.info(f"[metadata] Retrieving metadata properties {metadata_props} and geometry...")
+        else:
+            logger.info(f"[metadata] Retrieving metadata properties {metadata_props}...")
         rows = []
         for tk in tks:
             row = {"tk": tk}
@@ -199,6 +210,11 @@ class Dataframes_SIR3S_Model(SIR3S_Model):
                     row[prop] = self.GetValue(Tk=tk, propertyName=prop)[0]
                 except Exception as e:
                     logger.warning(f"[metadata] Failed to get property '{prop}' for tk '{tk}': {e}")
+            if geometry:
+                try:
+                    row["geometry"] = self.GetGeometryInformation(Tk=tk)
+                except Exception as e:
+                    logger.warning(f"[metadata] Failed to get geometry information for tk '{tk}': {e}")
             rows.append(row)
 
         df = pd.DataFrame(rows)
@@ -255,19 +271,19 @@ class Dataframes_SIR3S_Model(SIR3S_Model):
 
             result_props: List[str] = []
 
-            if properties:
+            if properties is None:
+                logger.info(f"[results] No properties given → using ALL result properties for {element_type}.")
+                result_props = available_result_props
+            else:
                 for prop in properties:
                     if prop in available_result_props:
                         result_props.append(prop)
                     elif prop in available_metadata_props:
-                        logger.warning(f"[results] Property '{prop}' is a NON-RESULT property; excluded from results.")
+                        logger.warning(f"[results] Property '{prop}' is a METADATA property; excluded from results.")
                     else:
                         logger.warning(
-                            f"[results] Property '{prop}' not found in non-result or result properties of type {element_type}. Excluding."
+                            f"[results] Property '{prop}' not found in metadata or result properties of type {element_type}. Excluding."
                         )
-            else:
-                logger.info(f"[results] No properties given -> using ALL result properties for {element_type}.")
-                result_props = available_result_props
 
             logger.info(f"[results] Using {len(result_props)} result properties.")
         except Exception as e:
