@@ -109,6 +109,24 @@ This Example demonstrates how to create a connected topological network of nodes
 
 View: `Notebook <examples/Toolkit_Example1.html>`_ | Download: :download:`Notebook <examples/Toolkit_Example1.ipynb>`.
 
+.. _Tex2:
+
+Example 2: Dataframes
+~~~~~~~~~~~~~~~~~~~~~
+
+This Example demonstrates how to use the Dataframes_SIR3S_Model() class extending SIR3S_Model().
+
+View: `Notebook <examples/Toolkit_Example2.html>`_ | Download: :download:`Notebook <examples/Toolkit_Example2.ipynb>`.
+
+.. _Tex3:
+
+Example 3: Pandapipes
+~~~~~~~~~~~~~~~~~~~~~
+
+This Example demonstrates how to transform a SIR 3S model to a pandapipes model using the Alternative_Models_SIR3S_Model() class extending Dataframes_SIR3S_Model().
+
+View: `Notebook <examples/Toolkit_Example3.html>`_ | Download: :download:`Notebook <examples/Toolkit_Example3.ipynb>`.
+
 .. _TexX:
 
 Example X: Template
