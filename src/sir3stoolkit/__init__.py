@@ -1,6 +1,5 @@
-# This file is part of sir3stoolkit.
-
 from . import core
+from . import mantle
+from . import crust
 
-__all__ = ['core',
-           ]
+__all__ = ['core', 'mantle', 'crust']

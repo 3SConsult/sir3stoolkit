@@ -7,13 +7,13 @@ Created on Fri Aug 29 09:22:31 2025
 from __future__ import annotations
 from attrs import field
 from pytoolconfig import dataclass
-from sir3stoolkit.core.wrapper import SIR3S_Model
 
 import pandas as pd
 import sys
 from dataclasses import dataclass, field
 from typing import List, Optional, Union
 from enum import Enum
+import io
 
 import logging
 logger = logging.getLogger(__name__)
@@ -25,6 +25,7 @@ if not logger.hasHandlers():
     handler.setFormatter(formatter)
     logger.addHandler(handler)
 
+from sir3stoolkit.core.wrapper import SIR3S_Model
 
 class Dataframes_SIR3S_Model(SIR3S_Model):
     """
@@ -154,18 +155,39 @@ class Dataframes_SIR3S_Model(SIR3S_Model):
                             f"[Resolving Metadata Properties] Property '{prop}' not found in metadata or result properties of type {element_type}. Excluding."
                         )
 
-            logger.info(f"[Resolving Metadata Properties] Using {len(metadata_props)} metadata properties.")
+            logger.debug(f"[Resolving Metadata Properties] Using {len(metadata_props)} metadata properties.")
        
         except Exception as e:
             logger.error(f"[Resolving Metadata Properties] Error resolving metadata properties: {e}")
         
         return metadata_props
+
+    def __is_get_endnodes_applicable(self, tk):
+        buffer = io.StringIO()
+        sys_stdout = sys.stdout
+        sys.stdout = buffer  # Redirect stdout
+
+        try:
+            _ = self.GetEndNodes(tk)
+        except Exception:
+            sys.stdout = sys_stdout  # Restore stdout
+            return False
+
+        sys.stdout = sys_stdout  # Restore stdout
+        output = buffer.getvalue()
+        buffer.close()
+
+        if "doesnt apply to such Type of Elements" in output:
+            return False
         
+        return True
+
     def generate_element_metadata_dataframe(
         self,
         element_type: Union[str, "Enum"],
         properties: Optional[List[str]] = None,
         geometry: Optional[bool] = False,
+        end_nodes: Optional[bool] = False
     ) -> pd.DataFrame:
         """
         Generate a dataframe with metadata (static) properties for all devices of a given element type.
@@ -177,11 +199,19 @@ class Dataframes_SIR3S_Model(SIR3S_Model):
         properties : list[str], optional
             If properties=None => All available properties will be used
             If properties=[] => No properties will be used
+        geometry : bool, optional
+            If True, includes geometric information for each element in the dataframe. Note that this is still a regular DataFrame no GeoDataFrame, to convert it you need a crs values.
+            Adds a 'geometry' column containing spatial data (WKT represenation eg. POINT (x y))
+            Default is False.
+        end_nodes : bool, optional
+            If True and supported by the element type, includes tks of end nodes as cols (fkKI, fkKK, fkKI2, fkKK2) in the dataframe.
+            Default is False.
+
 
         Returns
         -------
         pd.DataFrame
-            Dataframe with one row per device (tk) and columns for requested metadata properties.
+            Dataframe with one row per device (tk) and columns for requested metadata properties, geometry and end nodes.
             Columns: ["tk", <metadata_props>]
         """
         logger.info(f"[metadata] Generating metadata dataframe for element type: {element_type}")
@@ -189,33 +219,74 @@ class Dataframes_SIR3S_Model(SIR3S_Model):
         # --- Collect device keys (tks) ---
         try:
             tks = self.GetTksofElementType(ElementType=element_type)
-            logger.info(f"[metadata] Retrieved {len(tks)} tks.")
+            logger.info(f"[metadata] Retrieved {len(tks)} element(s) of element type {element_type}.")
         except Exception as e:
-            logger.error(f"[metadata] Error retrieving tks: {e}")
+            logger.error(f"[metadata] Error retrieving element tks: {e}")
             return pd.DataFrame()
 
         # --- Resolve given metadata properties ---
         metadata_props = self.__resolve_given_metadata_properties(element_type=element_type, properties=properties)
 
         # --- Retrieve values ---
+        to_retrieve = []
+        if metadata_props != []:
+            to_retrieve.append(f"metadata properties {metadata_props}")
         if geometry:
-            logger.info(f"[metadata] Retrieving metadata properties {metadata_props} and geometry...")
-        else:
-            logger.info(f"[metadata] Retrieving metadata properties {metadata_props}...")
+            to_retrieve.append("geometry")
+        if end_nodes:
+            to_retrieve.append("end nodes")
+            
+        logger.info(f"[metadata] Retrieving {', '.join(to_retrieve)}...")
+        
         rows = []
+
+        end_nodes_available = False
+        if end_nodes:
+            if self.__is_get_endnodes_applicable(tks[0]):
+                end_nodes_available = True
+            else:
+                logger.warning(f"[metadata] End nodes are not defined for element type {element_type}. Dataframe is created without end nodes.")
+        
         for tk in tks:
+            
             row = {"tk": tk}
+            
+            # Add metadata properties
             for prop in metadata_props:
                 try:
                     row[prop] = self.GetValue(Tk=tk, propertyName=prop)[0]
                 except Exception as e:
                     logger.warning(f"[metadata] Failed to get property '{prop}' for tk '{tk}': {e}")
+            
+            # Add geometry if requested
             if geometry:
                 try:
                     row["geometry"] = self.GetGeometryInformation(Tk=tk)
                 except Exception as e:
                     logger.warning(f"[metadata] Failed to get geometry information for tk '{tk}': {e}")
+            
+            # Add end nodes if requested
+            if end_nodes_available:
+                try:
+                    endnode_tuple = self.GetEndNodes(Tk=tk) 
+                    row["fkKI"], row["fkKK"], row["fkKI2"], row["fkKK2"] = endnode_tuple
+                except Exception as e:
+                    logger.warning(f"[metadata] Failed to get end nodes for tk '{tk}': {e}")
+
             rows.append(row)
+
+        # --- Post-processing ---
+        endnode_cols = ["fkKI", "fkKK", "fkKI2", "fkKK2"]
+        used_cols = []
+
+        for col in endnode_cols:
+            if any(row.get(col, "-1") != "-1" for row in rows):
+                used_cols.append(col)
+            else:
+                for row in rows:
+                    row.pop(col, None)
+
+        logger.info(f"[metadata] {len(used_cols)} non-empty end node columns were created)")
 
         df = pd.DataFrame(rows)
         logger.info(f"[metadata] Done. Shape: {df.shape}")
