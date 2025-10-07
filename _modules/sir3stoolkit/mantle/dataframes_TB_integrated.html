@@ -1,0 +1,336 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>sir3stoolkit.mantle.dataframes_TB_integrated &mdash; sir3stoolkit  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=f281be69"></script>
+      <script>let toggleHintShow = 'Click to show';</script>
+      <script>let toggleHintHide = 'Click to hide';</script>
+      <script>let toggleOpenOnPrint = 'true';</script>
+      <script src="../../../_static/togglebutton.js?v=4a39c7ea"></script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            sir3stoolkit
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Application Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../releases.html">Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developers.html">For Developers</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">sir3stoolkit</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">sir3stoolkit.mantle.dataframes_TB_integrated</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for sir3stoolkit.mantle.dataframes_TB_integrated</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Created on Fri Jul 11 17:34:49 2025</span>
+
+<span class="sd">@author: Jablonski</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">sir3stoolkit.core.wrapper</span><span class="w"> </span><span class="kn">import</span> <span class="n">SIR3S_Model</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="Extended_SIR3S_Model">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes_TB_integrated.Extended_SIR3S_Model">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Extended_SIR3S_Model</span><span class="p">(</span><span class="n">SIR3S_Model</span><span class="p">):</span>
+
+<div class="viewcode-block" id="Extended_SIR3S_Model.AddNodesAndPipes">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes_TB_integrated.Extended_SIR3S_Model.AddNodesAndPipes">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">AddNodesAndPipes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dfXL</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Takes a dataframe with each row representing one pipe and adds it to the model. Only dfXL</span>
+<span class="sd">        This function should be moved to Dataframes.py to create a general module for working with Dataframes in SIR 3S.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">dfXL</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+            <span class="n">kvr</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;KVR&#39;</span><span class="p">])</span>
+
+            <span class="c1"># Create KI node</span>
+            <span class="n">x_ki</span><span class="p">,</span> <span class="n">y_ki</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">tk_ki</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AddNewNode</span><span class="p">(</span>
+                <span class="s2">&quot;-1&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Node</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">KI </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">VL_or_RL</span><span class="p">(</span><span class="n">kvr</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Node</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">x_ki</span><span class="p">,</span> <span class="n">y_ki</span><span class="p">,</span>
+                <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Node</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">KI&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;ID</span><span class="si">{</span><span class="n">row</span><span class="o">.</span><span class="n">nodeKI_id</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">kvr</span>
+            <span class="p">)</span>
+            <span class="n">dfXL</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;nodeKI&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tk_ki</span>
+
+            <span class="c1"># Create KK node</span>
+            <span class="n">x_kk</span><span class="p">,</span> <span class="n">y_kk</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">tk_kk</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AddNewNode</span><span class="p">(</span>
+                <span class="s2">&quot;-1&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Node</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">KK </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">VL_or_RL</span><span class="p">(</span><span class="n">kvr</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Node</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">x_kk</span><span class="p">,</span> <span class="n">y_kk</span><span class="p">,</span>
+                <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Node</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">KK&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;ID</span><span class="si">{</span><span class="n">row</span><span class="o">.</span><span class="n">nodeKK_id</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">kvr</span>
+            <span class="p">)</span>
+            <span class="n">dfXL</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;nodeKK&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tk_kk</span>
+
+            <span class="c1"># Create pipe</span>
+            <span class="n">tk_pipe</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AddNewPipe</span><span class="p">(</span>
+                <span class="s2">&quot;-1&quot;</span><span class="p">,</span> <span class="n">tk_ki</span><span class="p">,</span> <span class="n">tk_kk</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">length</span><span class="p">,</span>
+                <span class="nb">str</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]),</span> <span class="nb">str</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;MATERIAL&#39;</span><span class="p">]),</span> <span class="nb">str</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;DN&#39;</span><span class="p">]),</span>
+                <span class="mf">1.5</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;ID</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;Pipe </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">kvr</span>
+            <span class="p">)</span>
+            <span class="n">dfXL</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;tk&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tk_pipe</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">baujahr</span> <span class="o">=</span> <span class="n">dfXL</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;BAUJAHR&#39;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">notna</span><span class="p">(</span><span class="n">baujahr</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">SetValue</span><span class="p">(</span><span class="n">tk_pipe</span><span class="p">,</span> <span class="s2">&quot;Baujahr&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">baujahr</span><span class="p">))</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;BAUJAHR of Pipe </span><span class="si">{</span><span class="n">tk_pipe</span><span class="si">}</span><span class="s2"> not assigned: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">hal</span> <span class="o">=</span> <span class="n">dfXL</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;HAL&#39;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">notna</span><span class="p">(</span><span class="n">hal</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">SetValue</span><span class="p">(</span><span class="n">tk_pipe</span><span class="p">,</span> <span class="s2">&quot;Hal&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">hal</span><span class="p">))</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;HAL of Pipe </span><span class="si">{</span><span class="n">tk_pipe</span><span class="si">}</span><span class="s2"> not assigned: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="c1"># 2LROHR does not work</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">partner_id</span> <span class="o">=</span> <span class="n">dfXL</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;2LROHR_id&#39;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">notna</span><span class="p">(</span><span class="n">partner_id</span><span class="p">):</span>
+                    <span class="n">match</span> <span class="o">=</span> <span class="n">dfXL</span><span class="p">[</span><span class="n">dfXL</span><span class="p">[</span><span class="s1">&#39;tk_id&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">partner_id</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">match</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+                        <span class="n">partner_pipe_tk</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;tk&#39;</span><span class="p">]</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">SetValue</span><span class="p">(</span><span class="n">tk_pipe</span><span class="p">,</span> <span class="s2">&quot;Fk2lrohr&quot;</span><span class="p">,</span> <span class="n">partner_pipe_tk</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;2LROHR of Pipe </span><span class="si">{</span><span class="n">tk_pipe</span><span class="si">}</span><span class="s2"> not assigned: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">dfXL</span></div>
+
+
+<div class="viewcode-block" id="Extended_SIR3S_Model.insert_dfPipes">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes_TB_integrated.Extended_SIR3S_Model.insert_dfPipes">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">insert_dfPipes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dfPipes</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Takes a dataframe with each row representing one pipe and adds it to the model.</span>
+<span class="sd">        The dataframe needs minimum of cols: geometry (LINESTRING), MATERIAL (str), DN (int), KVR (int)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">func_name</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">_getframe</span><span class="p">()</span><span class="o">.</span><span class="n">f_code</span><span class="o">.</span><span class="n">co_name</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">func_name</span><span class="si">}</span><span class="s2">: Start.&quot;</span><span class="p">)</span>
+
+        <span class="n">climbing_index</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dfPipes</span><span class="p">)):</span>
+            <span class="n">dfPipes</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="s1">&#39;nodeKI_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">climbing_index</span>
+            <span class="n">dfPipes</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="s1">&#39;nodeKK_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">climbing_index</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="n">climbing_index</span> <span class="o">+=</span> <span class="mi">2</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">StartEditSession</span><span class="p">(</span><span class="n">SessionName</span><span class="o">=</span><span class="s2">&quot;AddNodesAndPipes&quot;</span><span class="p">)</span>
+
+        <span class="n">dfPipes</span><span class="p">[</span><span class="s1">&#39;KVR&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dfPipes</span><span class="p">[</span><span class="s1">&#39;KVR&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="n">dfVL</span> <span class="o">=</span> <span class="n">dfPipes</span><span class="p">[</span><span class="n">dfPipes</span><span class="p">[</span><span class="s1">&#39;KVR&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">dfRL</span> <span class="o">=</span> <span class="n">dfPipes</span><span class="p">[</span><span class="n">dfPipes</span><span class="p">[</span><span class="s1">&#39;KVR&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">dfVL</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AddNodesAndPipes</span><span class="p">(</span><span class="n">dfVL</span><span class="p">)</span>
+        <span class="n">dfRL</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AddNodesAndPipes</span><span class="p">(</span><span class="n">dfRL</span><span class="p">)</span>
+
+        <span class="n">dfPipes</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">dfVL</span><span class="p">,</span> <span class="n">dfRL</span><span class="p">],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">EndEditSession</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SaveChanges</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">RefreshViews</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">dfPipes</span></div>
+
+
+<div class="viewcode-block" id="Extended_SIR3S_Model.Node_on_Node">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes_TB_integrated.Extended_SIR3S_Model.Node_on_Node">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">Node_on_Node</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">func_name</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">_getframe</span><span class="p">()</span><span class="o">.</span><span class="n">f_code</span><span class="o">.</span><span class="n">co_name</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">func_name</span><span class="si">}</span><span class="s2">: Start.&quot;</span><span class="p">)</span></div>
+
+        <span class="c1"># Implementation goes here</span>
+
+<div class="viewcode-block" id="Extended_SIR3S_Model.Merge_Nodes">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes_TB_integrated.Extended_SIR3S_Model.Merge_Nodes">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">Merge_Nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tk1</span><span class="p">,</span> <span class="n">tk2</span><span class="p">):</span>
+        <span class="n">func_name</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">_getframe</span><span class="p">()</span><span class="o">.</span><span class="n">f_code</span><span class="o">.</span><span class="n">co_name</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">func_name</span><span class="si">}</span><span class="s2">: Start.&quot;</span><span class="p">)</span></div>
+
+        <span class="c1"># Implementation goes here</span>
+
+<div class="viewcode-block" id="Extended_SIR3S_Model.Get_Node_Tks_From_Pipe">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes_TB_integrated.Extended_SIR3S_Model.Get_Node_Tks_From_Pipe">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">Get_Node_Tks_From_Pipe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pipe_tk</span><span class="p">):</span>
+        <span class="n">func_name</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">_getframe</span><span class="p">()</span><span class="o">.</span><span class="n">f_code</span><span class="o">.</span><span class="n">co_name</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">func_name</span><span class="si">}</span><span class="s2">: Start.&quot;</span><span class="p">)</span>
+
+        <span class="n">from_node_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetValue</span><span class="p">(</span><span class="n">pipe_tk</span><span class="p">,</span> <span class="s1">&#39;FromNode.Name&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">to_node_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetValue</span><span class="p">(</span><span class="n">pipe_tk</span><span class="p">,</span> <span class="s1">&#39;ToNode.Name&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="n">from_node_tk</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">to_node_tk</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">for</span> <span class="n">node_tk</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTksofElementType</span><span class="p">(</span><span class="n">ElementType</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="o">.</span><span class="n">Node</span><span class="p">):</span>
+            <span class="n">node_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetValue</span><span class="p">(</span><span class="n">node_tk</span><span class="p">,</span> <span class="s1">&#39;Name&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">node_name</span> <span class="o">==</span> <span class="n">from_node_name</span><span class="p">:</span>
+                <span class="n">from_node_tk</span> <span class="o">=</span> <span class="n">node_tk</span>
+            <span class="k">if</span> <span class="n">node_name</span> <span class="o">==</span> <span class="n">to_node_name</span><span class="p">:</span>
+                <span class="n">to_node_tk</span> <span class="o">=</span> <span class="n">node_tk</span>
+
+        <span class="k">return</span> <span class="n">from_node_tk</span><span class="p">,</span> <span class="n">to_node_tk</span></div>
+
+
+<div class="viewcode-block" id="Extended_SIR3S_Model.Get_Pipe_Tk_From_Nodes">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes_TB_integrated.Extended_SIR3S_Model.Get_Pipe_Tk_From_Nodes">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">Get_Pipe_Tk_From_Nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fkKI</span><span class="p">,</span> <span class="n">fkKK</span><span class="p">,</span> <span class="n">Order</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">func_name</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">_getframe</span><span class="p">()</span><span class="o">.</span><span class="n">f_code</span><span class="o">.</span><span class="n">co_name</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">func_name</span><span class="si">}</span><span class="s2">: Start.&quot;</span><span class="p">)</span>
+
+        <span class="n">from_node_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetValue</span><span class="p">(</span><span class="n">fkKI</span><span class="p">,</span> <span class="s1">&#39;Name&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">to_node_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetValue</span><span class="p">(</span><span class="n">fkKK</span><span class="p">,</span> <span class="s1">&#39;Name&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="n">pipe_tk_ret</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="n">Order</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">pipe_tk</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTksofElementType</span><span class="p">(</span><span class="n">ElementType</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="o">.</span><span class="n">Pipe</span><span class="p">):</span>
+                <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">GetValue</span><span class="p">(</span><span class="n">pipe_tk</span><span class="p">,</span> <span class="s1">&#39;FromNode.Name&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">from_node_name</span> <span class="ow">and</span>
+                   <span class="bp">self</span><span class="o">.</span><span class="n">GetValue</span><span class="p">(</span><span class="n">pipe_tk</span><span class="p">,</span> <span class="s1">&#39;ToNode.Name&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">to_node_name</span><span class="p">):</span>
+                    <span class="n">pipe_tk_ret</span> <span class="o">=</span> <span class="n">pipe_tk</span>
+                    <span class="k">break</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">pipe_tk</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTksofElementType</span><span class="p">(</span><span class="n">ElementType</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="o">.</span><span class="n">Pipe</span><span class="p">):</span>
+                <span class="n">from_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetValue</span><span class="p">(</span><span class="n">pipe_tk</span><span class="p">,</span> <span class="s1">&#39;FromNode.Name&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">to_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetValue</span><span class="p">(</span><span class="n">pipe_tk</span><span class="p">,</span> <span class="s1">&#39;ToNode.Name&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">if</span> <span class="p">((</span><span class="n">from_name</span> <span class="o">==</span> <span class="n">from_node_name</span> <span class="ow">and</span> <span class="n">to_name</span> <span class="o">==</span> <span class="n">to_node_name</span><span class="p">)</span> <span class="ow">or</span>
+                   <span class="p">(</span><span class="n">from_name</span> <span class="o">==</span> <span class="n">to_node_name</span> <span class="ow">and</span> <span class="n">to_name</span> <span class="o">==</span> <span class="n">from_node_name</span><span class="p">)):</span>
+                    <span class="n">pipe_tk_ret</span> <span class="o">=</span> <span class="n">pipe_tk</span>
+                    <span class="k">break</span>
+
+        <span class="k">return</span> <span class="n">pipe_tk_ret</span></div>
+
+
+<div class="viewcode-block" id="Extended_SIR3S_Model.VL_or_RL">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes_TB_integrated.Extended_SIR3S_Model.VL_or_RL">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">VL_or_RL</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">KVR</span><span class="p">):</span>
+        <span class="n">func_name</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">_getframe</span><span class="p">()</span><span class="o">.</span><span class="n">f_code</span><span class="o">.</span><span class="n">co_name</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">func_name</span><span class="si">}</span><span class="s2">: Start.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">KVR</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;VL&#39;</span>
+        <span class="k">elif</span> <span class="n">KVR</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;RL&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;Unknown&#39;</span></div>
+
+
+<div class="viewcode-block" id="Extended_SIR3S_Model.Check_Node_Name_Duplicates">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes_TB_integrated.Extended_SIR3S_Model.Check_Node_Name_Duplicates">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">Check_Node_Name_Duplicates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="n">func_name</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">_getframe</span><span class="p">()</span><span class="o">.</span><span class="n">f_code</span><span class="o">.</span><span class="n">co_name</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">func_name</span><span class="si">}</span><span class="s2">: Start.&quot;</span><span class="p">)</span>
+
+        <span class="n">tks</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">node_tk</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTksofElementType</span><span class="p">(</span><span class="n">ElementType</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="o">.</span><span class="n">Node</span><span class="p">):</span>
+            <span class="n">current_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetValue</span><span class="p">(</span><span class="n">node_tk</span><span class="p">,</span> <span class="s1">&#39;Name&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">current_name</span> <span class="o">==</span> <span class="n">name</span><span class="p">:</span>
+                <span class="n">tks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node_tk</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tks</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Only the node with tk </span><span class="si">{</span><span class="n">tks</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s1"> has the name </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The nodes of the following tks have the same name (</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">):&#39;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">tk</span> <span class="ow">in</span> <span class="n">tks</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">tk</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">tks</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, misc.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
