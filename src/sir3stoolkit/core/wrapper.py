@@ -1174,9 +1174,11 @@ class SIR3S_Model:
         """
         General Methot for getting the Tk (keys) of Endnodes connected to an Element.
         In SIR 3S, they exists Elements that have:
-        Only 1 Endnodes (i.e. Tanks, Air Valves, ...) : Bypass Elements in General
-              2 Endnodes (i.e. Pipes, Pumps, Flap Valves, ...): Connecting Elements in General
-              4 Endnodes (Heat Exchangers)
+        
+        - Only 1 Endnodes (i.e. Tanks, Air Valves, ...) : Bypass Elements in General
+        - 2 Endnodes (i.e. Pipes, Pumps, Flap Valves, ...): Connecting Elements in General
+        - 4 Endnodes (Heat Exchangers)
+
         This Method always return for unconnected or non-existent Sides a fkkX Value of '-1'
 
         :param Tk: The Tk (key) of the Element we need to retrieve the Endnodes
@@ -2287,8 +2289,7 @@ class SIR3S_View:
         :type textContent: str
         :param angle_degree: Angle in Degree
         :type angle_degree: np.float32
-        :param faceName: Face Name of the Font (max. 32 Characters). Entering a non-installed
-            Face Name will assume it to be 'Arial'
+        :param faceName: Face Name of the Font (max. 32 Characters). Entering a non-installed Face Name will assume it to be 'Arial'
         :type faceName: str
         :param heightPt: The height in Point
         :type heightPt: np.float32
