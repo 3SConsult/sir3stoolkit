@@ -128,18 +128,34 @@
    ]
   },
   {
-   "cell_type": "code",
-   "execution_count": null,
-   "id": "88ab07a4",
+   "cell_type": "markdown",
+   "id": "ea003338",
    "metadata": {},
-   "outputs": [],
    "source": [
-    "from sir3stoolkit.extended import dataframes"
+    "from sir3stoolkit.mantle import dataframe"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "08da19eb",
+   "metadata": {},
+   "source": [
+    "We can just import the whole mantle to get all higher level modeling functions."
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 7,
+   "id": "88ab07a4",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from sir3stoolkit.mantle import mantle"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
    "id": "0944486d",
    "metadata": {},
    "outputs": [
@@ -152,7 +168,7 @@
     }
    ],
    "source": [
-    "s3s = dataframes.Dataframes_SIR3S_Model()"
+    "s3s = mantle.Mantle_SIR3S_Model()"
    ]
   },
   {
@@ -166,44 +182,18 @@
   {
    "cell_type": "code",
    "execution_count": 9,
-   "id": "60659f01",
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "import numpy"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 10,
-   "id": "ea76d320",
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "import pandas as pd"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 51,
-   "id": "7551452e",
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "import folium\n",
-    "from folium.plugins import HeatMap"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 61,
    "id": "3a443734",
    "metadata": {},
    "outputs": [],
    "source": [
     "import pandas as pd\n",
     "from shapely.geometry import Point\n",
-    "import re"
+    "import re\n",
+    "import folium\n",
+    "from folium.plugins import HeatMap\n",
+    "import numpy as np\n",
+    "import geopandas as gpd\n",
+    "from shapely import wkt"
    ]
   },
   {
@@ -216,7 +206,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 11,
+   "execution_count": 10,
    "id": "20ff3c21",
    "metadata": {},
    "outputs": [
@@ -229,13 +219,7 @@
     }
    ],
    "source": [
-    "s3s.OpenModel(dbName=r\"C:\\Users\\aUsername\\3S\\Quebec_PT3S\\Example1.db3\",\n",
-    "              providerType=s3s.ProviderTypes.SQLite,\n",
-    "              Mid=\"M-1-0-1\",\n",
-    "              saveCurrentlyOpenModel=False,\n",
-    "              namedInstance=\"\",\n",
-    "              userID=\"\",\n",
-    "              password=\"\")"
+    "s3s.OpenModel(dbName=r\"C:\\Users\\aUsername\\3S\\PT3S\\PT3S\\Examples\\Example3.db3\",\n              providerType=s3s.ProviderTypes.SQLite,\n              Mid=\"M-1-0-1\",\n              saveCurrentlyOpenModel=False,\n              namedInstance=\"\",\n              userID=\"\",\n              password=\"\")"
    ]
   },
   {
@@ -264,7 +248,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 12,
+   "execution_count": 11,
    "id": "1c60f6cc",
    "metadata": {},
    "outputs": [
@@ -272,16 +256,84 @@
      "name": "stderr",
      "output_type": "stream",
      "text": [
-      "[2025-09-20 20:17:51,275] INFO in sir3stoolkit.extended.Dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.DistrictHeatingConsumer\n",
-      "[2025-09-20 20:17:51,293] INFO in sir3stoolkit.extended.Dataframes: [metadata] Retrieved 337 tks.\n",
-      "[2025-09-20 20:17:51,323] INFO in sir3stoolkit.extended.Dataframes: [Resolving Metadata Properties] Using 0 metadata properties.\n",
-      "[2025-09-20 20:17:51,325] INFO in sir3stoolkit.extended.Dataframes: [metadata] Retrieving metadata properties [] and geometry...\n",
-      "[2025-09-20 20:17:51,397] INFO in sir3stoolkit.extended.Dataframes: [metadata] Done. Shape: (337, 2)\n"
+      "[2025-10-07 14:23:57,478] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.DistrictHeatingConsumer\n",
+      "[2025-10-07 14:23:57,486] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieved 337 element(s) of element type ObjectTypes.DistrictHeatingConsumer.\n",
+      "[2025-10-07 14:23:57,499] DEBUG in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 0 metadata properties.\n",
+      "[2025-10-07 14:23:57,500] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving geometry...\n",
+      "[2025-10-07 14:23:57,530] INFO in sir3stoolkit.mantle.dataframes: [metadata] 0 non-empty end node columns were created)\n",
+      "[2025-10-07 14:23:57,532] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (337, 2)\n"
      ]
     }
    ],
    "source": [
     "df_consumer_metadata=s3s.generate_element_metadata_dataframe(element_type=s3s.ObjectTypes.DistrictHeatingConsumer, properties=[], geometry=True)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "id": "08c6c586",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>tk</th>\n",
+       "      <th>geometry</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>4743997951091160959</td>\n",
+       "      <td>POINT (713181.847468032 5578489.9250612)</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>5014209100699808035</td>\n",
+       "      <td>POINT (713369.326806115 5578395.12330167)</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>4627580049017248376</td>\n",
+       "      <td>POINT (713251.536184149 5578455.25247764)</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "                    tk                                   geometry\n",
+       "0  4743997951091160959   POINT (713181.847468032 5578489.9250612)\n",
+       "1  5014209100699808035  POINT (713369.326806115 5578395.12330167)\n",
+       "2  4627580049017248376  POINT (713251.536184149 5578455.25247764)"
+      ]
+     },
+     "execution_count": 12,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df_consumer_metadata.head(3)"
    ]
   },
   {
@@ -302,19 +354,90 @@
      "name": "stderr",
      "output_type": "stream",
      "text": [
-      "[2025-09-20 20:17:51,417] INFO in sir3stoolkit.extended.Dataframes: [results] Generating results dataframe for element type: ObjectTypes.DistrictHeatingConsumer\n",
-      "[2025-09-20 20:17:51,421] INFO in sir3stoolkit.extended.Dataframes: [Resolving Timestamps] No timestamps were given. Checking available simulation timestamps (SIR3S_Model.GetTimeStamps()).\n",
-      "[2025-09-20 20:17:51,600] INFO in sir3stoolkit.extended.Dataframes: 7 simulation timestamps will be used.\n",
-      "[2025-09-20 20:17:51,806] INFO in sir3stoolkit.extended.Dataframes: [Resolving Timestamps] 7 valid timestamps will be used.\n",
-      "[2025-09-20 20:17:51,812] INFO in sir3stoolkit.extended.Dataframes: [results] Retrieved 337 tks.\n",
-      "[2025-09-20 20:17:51,816] INFO in sir3stoolkit.extended.Dataframes: [results] Using 1 result properties.\n",
-      "[2025-09-20 20:17:51,818] INFO in sir3stoolkit.extended.Dataframes: [results] Retrieving result properties...\n",
-      "[2025-09-20 20:17:52,495] INFO in sir3stoolkit.extended.Dataframes: [results] Done. Shape: (2359, 3)\n"
+      "[2025-10-07 14:23:57,561] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.DistrictHeatingConsumer\n",
+      "[2025-10-07 14:23:57,562] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] No timestamps were given. Checking available simulation timestamps (SIR3S_Model.GetTimeStamps()).\n",
+      "[2025-10-07 14:23:57,649] INFO in sir3stoolkit.mantle.dataframes: 25 simulation timestamps will be used.\n",
+      "[2025-10-07 14:23:57,711] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 25 valid timestamps will be used.\n",
+      "[2025-10-07 14:23:57,713] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieved 337 tks.\n",
+      "[2025-10-07 14:23:57,714] INFO in sir3stoolkit.mantle.dataframes: [results] Using 1 result properties.\n",
+      "[2025-10-07 14:23:57,715] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result properties...\n",
+      "[2025-10-07 14:23:58,363] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (8425, 3)\n"
      ]
     }
    ],
    "source": [
     "df_consumer_results=s3s.generate_element_results_dataframe(s3s.ObjectTypes.DistrictHeatingConsumer, [\"W\"])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "id": "8e8db479",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>timestamp</th>\n",
+       "      <th>tk</th>\n",
+       "      <th>W</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>2023-02-13 00:00:00.000 +01:00</td>\n",
+       "      <td>4743997951091160959</td>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>2023-02-13 00:00:00.000 +01:00</td>\n",
+       "      <td>5014209100699808035</td>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>2023-02-13 00:00:00.000 +01:00</td>\n",
+       "      <td>4627580049017248376</td>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "                        timestamp                   tk  W\n",
+       "0  2023-02-13 00:00:00.000 +01:00  4743997951091160959  0\n",
+       "1  2023-02-13 00:00:00.000 +01:00  5014209100699808035  0\n",
+       "2  2023-02-13 00:00:00.000 +01:00  4627580049017248376  0"
+      ]
+     },
+     "execution_count": 14,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df_consumer_results.head(3)"
    ]
   },
   {
@@ -327,7 +450,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 14,
+   "execution_count": 15,
    "id": "13956e25",
    "metadata": {},
    "outputs": [],
@@ -342,7 +465,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 18,
+   "execution_count": 16,
    "id": "c5f3d755",
    "metadata": {},
    "outputs": [
@@ -379,21 +502,21 @@
        "      <td>4611752310942477664</td>\n",
        "      <td>POINT (713675.30023234 5578705.1927566)</td>\n",
        "      <td>2023-02-13 00:00:00.000 +01:00</td>\n",
-       "      <td>39.36727</td>\n",
+       "      <td>39.3675</td>\n",
        "    </tr>\n",
        "    <tr>\n",
        "      <th>1</th>\n",
        "      <td>4611752310942477664</td>\n",
        "      <td>POINT (713675.30023234 5578705.1927566)</td>\n",
        "      <td>2023-02-13 01:00:00.000 +01:00</td>\n",
-       "      <td>39.3675</td>\n",
+       "      <td>39.83363</td>\n",
        "    </tr>\n",
        "    <tr>\n",
        "      <th>2</th>\n",
        "      <td>4611752310942477664</td>\n",
        "      <td>POINT (713675.30023234 5578705.1927566)</td>\n",
-       "      <td>2023-02-13 06:00:00.000 +01:00</td>\n",
-       "      <td>77.90138</td>\n",
+       "      <td>2023-02-13 02:00:00.000 +01:00</td>\n",
+       "      <td>40.48209</td>\n",
        "    </tr>\n",
        "  </tbody>\n",
        "</table>\n",
@@ -406,12 +529,12 @@
        "2  4611752310942477664  POINT (713675.30023234 5578705.1927566)   \n",
        "\n",
        "                        timestamp         W  \n",
-       "0  2023-02-13 00:00:00.000 +01:00  39.36727  \n",
-       "1  2023-02-13 01:00:00.000 +01:00   39.3675  \n",
-       "2  2023-02-13 06:00:00.000 +01:00  77.90138  "
+       "0  2023-02-13 00:00:00.000 +01:00   39.3675  \n",
+       "1  2023-02-13 01:00:00.000 +01:00  39.83363  \n",
+       "2  2023-02-13 02:00:00.000 +01:00  40.48209  "
       ]
      },
-     "execution_count": 18,
+     "execution_count": 16,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -438,7 +561,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 22,
+   "execution_count": 43,
    "id": "6d4c590a",
    "metadata": {},
    "outputs": [
@@ -446,118 +569,23 @@
      "name": "stderr",
      "output_type": "stream",
      "text": [
-      "[2025-09-20 20:21:21,328] INFO in sir3stoolkit.extended.Dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.Pipe\n",
-      "[2025-09-20 20:21:21,332] INFO in sir3stoolkit.extended.Dataframes: [metadata] Retrieved 524 tks.\n",
-      "[2025-09-20 20:21:21,335] INFO in sir3stoolkit.extended.Dataframes: [Resolving Metadata Properties] Using 2 metadata properties.\n",
-      "[2025-09-20 20:21:21,336] INFO in sir3stoolkit.extended.Dataframes: [metadata] Retrieving metadata properties ['Di', 'Kvr'] and geometry...\n",
-      "[2025-09-20 20:21:21,461] INFO in sir3stoolkit.extended.Dataframes: [metadata] Done. Shape: (524, 4)\n"
+      "[2025-10-07 14:37:00,169] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.Pipe\n",
+      "[2025-10-07 14:37:00,170] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieved 524 element(s) of element type ObjectTypes.Pipe.\n",
+      "[2025-10-07 14:37:00,171] DEBUG in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 2 metadata properties.\n",
+      "[2025-10-07 14:37:00,172] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving metadata properties ['DN', 'Kvr'], geometry, end nodes...\n",
+      "[2025-10-07 14:37:00,267] INFO in sir3stoolkit.mantle.dataframes: [metadata] 2 non-empty end node columns were created)\n",
+      "[2025-10-07 14:37:00,267] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (524, 6)\n"
      ]
     }
    ],
    "source": [
-    "df_pipes_metadata=s3s.generate_element_metadata_dataframe(element_type=s3s.ObjectTypes.Pipe, properties=[\"Di\", \"Kvr\"], geometry=True)"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "id": "ef579444",
-   "metadata": {},
-   "source": [
-    "### Result data"
+    "df_pipes_metadata=s3s.generate_element_metadata_dataframe(element_type=s3s.ObjectTypes.Pipe, properties=[\"DN\", \"Kvr\"], geometry=True, end_nodes=True)"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 26,
-   "id": "333d9c63",
-   "metadata": {},
-   "outputs": [
-    {
-     "name": "stderr",
-     "output_type": "stream",
-     "text": [
-      "[2025-09-20 20:22:21,973] INFO in sir3stoolkit.extended.Dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe\n",
-      "[2025-09-20 20:22:21,974] INFO in sir3stoolkit.extended.Dataframes: [Resolving Timestamps] No timestamps were given. Checking available simulation timestamps (SIR3S_Model.GetTimeStamps()).\n",
-      "[2025-09-20 20:22:22,074] INFO in sir3stoolkit.extended.Dataframes: 7 simulation timestamps will be used.\n",
-      "[2025-09-20 20:22:22,165] INFO in sir3stoolkit.extended.Dataframes: [Resolving Timestamps] 7 valid timestamps will be used.\n",
-      "[2025-09-20 20:22:22,167] INFO in sir3stoolkit.extended.Dataframes: [results] Retrieved 524 tks.\n",
-      "[2025-09-20 20:22:22,170] INFO in sir3stoolkit.extended.Dataframes: [results] Using 1 result properties.\n",
-      "[2025-09-20 20:22:22,172] INFO in sir3stoolkit.extended.Dataframes: [results] Retrieving result properties...\n",
-      "[2025-09-20 20:22:23,046] INFO in sir3stoolkit.extended.Dataframes: [results] Done. Shape: (3668, 3)\n"
-     ]
-    }
-   ],
-   "source": [
-    "df_pipes_results=s3s.generate_element_results_dataframe(s3s.ObjectTypes.Pipe, [\"QMAV\"])"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 30,
-   "id": "a98578cc",
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "df_pipes_results[\"QMAV\"]=df_pipes_results[\"QMAV\"].astype(float)"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 31,
-   "id": "ce63b98a",
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "df_pipes_results[\"QMAV\"]=df_pipes_results[\"QMAV\"].abs()"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 34,
-   "id": "0708539c",
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "df_pipes_results=df_pipes_results.rename(columns={\"QMAV\": \"QMAVAbs\"})"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "id": "4a014cac",
-   "metadata": {},
-   "source": [
-    "### Merge"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 47,
-   "id": "49f5df10",
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "df_pipes = pd.merge(\n",
-    "    df_pipes_metadata,\n",
-    "    df_pipes_results,\n",
-    "    on=\"tk\",\n",
-    "    how=\"outer\"\n",
-    ")"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 48,
-   "id": "977bc8f6",
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "df_pipes=df_pipes[df_pipes[\"Kvr\"] == \"1\"]"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 49,
-   "id": "818ad39e",
+   "execution_count": 44,
+   "id": "411c7eb0",
    "metadata": {},
    "outputs": [
     {
@@ -582,7 +610,267 @@
        "    <tr style=\"text-align: right;\">\n",
        "      <th></th>\n",
        "      <th>tk</th>\n",
-       "      <th>Di</th>\n",
+       "      <th>DN</th>\n",
+       "      <th>Kvr</th>\n",
+       "      <th>geometry</th>\n",
+       "      <th>fkKI</th>\n",
+       "      <th>fkKK</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>5442010239090746007</td>\n",
+       "      <td>150</td>\n",
+       "      <td>1</td>\n",
+       "      <td>LINESTRING (713620.267807079 5578828.41875394,...</td>\n",
+       "      <td>5669301360686511351</td>\n",
+       "      <td>5397948523091900401</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>4917786378639043296</td>\n",
+       "      <td>125</td>\n",
+       "      <td>1</td>\n",
+       "      <td>LINESTRING (713602.294599536 5578860.10567987,...</td>\n",
+       "      <td>5397948523091900401</td>\n",
+       "      <td>5239335112004772156</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>4762482310382009633</td>\n",
+       "      <td>125</td>\n",
+       "      <td>1</td>\n",
+       "      <td>LINESTRING (713574.061626605 5578909.87290685,...</td>\n",
+       "      <td>5239335112004772156</td>\n",
+       "      <td>5298886695042021307</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "                    tk   DN Kvr  \\\n",
+       "0  5442010239090746007  150   1   \n",
+       "1  4917786378639043296  125   1   \n",
+       "2  4762482310382009633  125   1   \n",
+       "\n",
+       "                                            geometry                 fkKI  \\\n",
+       "0  LINESTRING (713620.267807079 5578828.41875394,...  5669301360686511351   \n",
+       "1  LINESTRING (713602.294599536 5578860.10567987,...  5397948523091900401   \n",
+       "2  LINESTRING (713574.061626605 5578909.87290685,...  5239335112004772156   \n",
+       "\n",
+       "                  fkKK  \n",
+       "0  5397948523091900401  \n",
+       "1  5239335112004772156  \n",
+       "2  5298886695042021307  "
+      ]
+     },
+     "execution_count": 44,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df_pipes_metadata.head(3)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "ef579444",
+   "metadata": {},
+   "source": [
+    "### Result data"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 19,
+   "id": "333d9c63",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "[2025-10-07 14:23:58,560] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe\n",
+      "[2025-10-07 14:23:58,561] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] No timestamps were given. Checking available simulation timestamps (SIR3S_Model.GetTimeStamps()).\n",
+      "[2025-10-07 14:23:58,614] INFO in sir3stoolkit.mantle.dataframes: 25 simulation timestamps will be used.\n",
+      "[2025-10-07 14:23:58,682] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 25 valid timestamps will be used.\n",
+      "[2025-10-07 14:23:58,682] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieved 524 tks.\n",
+      "[2025-10-07 14:23:58,682] INFO in sir3stoolkit.mantle.dataframes: [results] Using 1 result properties.\n",
+      "[2025-10-07 14:23:58,688] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result properties...\n",
+      "[2025-10-07 14:23:59,882] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (13100, 3)\n"
+     ]
+    }
+   ],
+   "source": [
+    "df_pipes_results=s3s.generate_element_results_dataframe(s3s.ObjectTypes.Pipe, [\"QMAV\"])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 20,
+   "id": "f24edb04",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>timestamp</th>\n",
+       "      <th>tk</th>\n",
+       "      <th>QMAV</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>2023-02-13 00:00:00.000 +01:00</td>\n",
+       "      <td>5442010239090746007</td>\n",
+       "      <td>52.84819</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>2023-02-13 00:00:00.000 +01:00</td>\n",
+       "      <td>4917786378639043296</td>\n",
+       "      <td>29.67386</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>2023-02-13 00:00:00.000 +01:00</td>\n",
+       "      <td>4762482310382009633</td>\n",
+       "      <td>30.2523</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "                        timestamp                   tk      QMAV\n",
+       "0  2023-02-13 00:00:00.000 +01:00  5442010239090746007  52.84819\n",
+       "1  2023-02-13 00:00:00.000 +01:00  4917786378639043296  29.67386\n",
+       "2  2023-02-13 00:00:00.000 +01:00  4762482310382009633   30.2523"
+      ]
+     },
+     "execution_count": 20,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df_pipes_results.head(3)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 21,
+   "id": "a98578cc",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df_pipes_results[\"QMAV\"]=df_pipes_results[\"QMAV\"].astype(float)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 22,
+   "id": "ce63b98a",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df_pipes_results[\"QMAV\"]=df_pipes_results[\"QMAV\"].abs()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 23,
+   "id": "0708539c",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df_pipes_results=df_pipes_results.rename(columns={\"QMAV\": \"QMAVAbs\"})"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "4a014cac",
+   "metadata": {},
+   "source": [
+    "### Merge"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 24,
+   "id": "49f5df10",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df_pipes = pd.merge(\n",
+    "    df_pipes_metadata,\n",
+    "    df_pipes_results,\n",
+    "    on=\"tk\",\n",
+    "    how=\"outer\"\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 25,
+   "id": "977bc8f6",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df_pipes=df_pipes[df_pipes[\"Kvr\"] == \"1\"]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 26,
+   "id": "b038e191",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>tk</th>\n",
+       "      <th>DN</th>\n",
        "      <th>Kvr</th>\n",
        "      <th>geometry</th>\n",
        "      <th>timestamp</th>\n",
@@ -591,54 +879,54 @@
        "  </thead>\n",
        "  <tbody>\n",
        "    <tr>\n",
-       "      <th>7</th>\n",
+       "      <th>25</th>\n",
        "      <td>4615723899944629797</td>\n",
-       "      <td>994</td>\n",
+       "      <td>999</td>\n",
        "      <td>1</td>\n",
        "      <td>LINESTRING (713738.296567236 5579219.90221333,...</td>\n",
        "      <td>2023-02-13 00:00:00.000 +01:00</td>\n",
        "      <td>3.667083e-10</td>\n",
        "    </tr>\n",
        "    <tr>\n",
-       "      <th>8</th>\n",
+       "      <th>26</th>\n",
        "      <td>4615723899944629797</td>\n",
-       "      <td>994</td>\n",
+       "      <td>999</td>\n",
        "      <td>1</td>\n",
        "      <td>LINESTRING (713738.296567236 5579219.90221333,...</td>\n",
        "      <td>2023-02-13 01:00:00.000 +01:00</td>\n",
-       "      <td>0.000000e+00</td>\n",
+       "      <td>1.440640e-09</td>\n",
        "    </tr>\n",
        "    <tr>\n",
-       "      <th>9</th>\n",
+       "      <th>27</th>\n",
        "      <td>4615723899944629797</td>\n",
-       "      <td>994</td>\n",
+       "      <td>999</td>\n",
        "      <td>1</td>\n",
        "      <td>LINESTRING (713738.296567236 5579219.90221333,...</td>\n",
-       "      <td>2023-02-13 06:00:00.000 +01:00</td>\n",
-       "      <td>1.047738e-09</td>\n",
+       "      <td>2023-02-13 02:00:00.000 +01:00</td>\n",
+       "      <td>1.414446e-09</td>\n",
        "    </tr>\n",
        "  </tbody>\n",
        "</table>\n",
        "</div>"
       ],
       "text/plain": [
-       "                    tk   Di Kvr  \\\n",
-       "7  4615723899944629797  994   1   \n",
-       "8  4615723899944629797  994   1   \n",
-       "9  4615723899944629797  994   1   \n",
+       "                     tk   DN Kvr  \\\n",
+       "25  4615723899944629797  999   1   \n",
+       "26  4615723899944629797  999   1   \n",
+       "27  4615723899944629797  999   1   \n",
        "\n",
-       "                                            geometry  \\\n",
-       "7  LINESTRING (713738.296567236 5579219.90221333,...   \n",
-       "8  LINESTRING (713738.296567236 5579219.90221333,...   \n",
-       "9  LINESTRING (713738.296567236 5579219.90221333,...   \n",
+       "                                             geometry  \\\n",
+       "25  LINESTRING (713738.296567236 5579219.90221333,...   \n",
+       "26  LINESTRING (713738.296567236 5579219.90221333,...   \n",
+       "27  LINESTRING (713738.296567236 5579219.90221333,...   \n",
        "\n",
-       "                        timestamp       QMAVAbs  \n",
-       "7  2023-02-13 00:00:00.000 +01:00  3.667083e-10  \n",
-       "8  2023-02-13 01:00:00.000 +01:00  0.000000e+00  \n",
-       "9  2023-02-13 06:00:00.000 +01:00  1.047738e-09  "
+       "                         timestamp       QMAVAbs  \n",
+       "25  2023-02-13 00:00:00.000 +01:00  3.667083e-10  \n",
+       "26  2023-02-13 01:00:00.000 +01:00  1.440640e-09  \n",
+       "27  2023-02-13 02:00:00.000 +01:00  1.414446e-09  "
       ]
      },
-     "execution_count": 49,
+     "execution_count": 26,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -649,32 +937,16 @@
   },
   {
    "cell_type": "markdown",
-   "id": "1b19e7b5",
+   "id": "6d94dcf9",
    "metadata": {},
    "source": [
-    "# Plot"
+    "### Plotting Constants"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 50,
-   "id": "496d88f1",
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "minRadius = 2\n",
-    "maxRadius = 10 * minRadius\n",
-    "facRadius = 1 / 10.\n",
-    "minWidthinPixel = 1\n",
-    "maxWidthinPixel = 3 * minWidthinPixel\n",
-    "facWidthinPixel1DN = 1 / 200\n",
-    "facWidthinPixelQMAVAbs = 1 / 10"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 57,
-   "id": "38b08927",
+   "execution_count": 27,
+   "id": "9fbad0d8",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -690,8 +962,8 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 58,
-   "id": "60ff9ae3",
+   "execution_count": 28,
+   "id": "8c4e2229",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -702,78 +974,79 @@
    ]
   },
   {
-   "cell_type": "code",
-   "execution_count": 60,
-   "id": "c2c1abac",
+   "cell_type": "markdown",
+   "id": "afd0dbcd",
    "metadata": {},
-   "outputs": [
-    {
-     "ename": "AttributeError",
-     "evalue": "'DataFrame' object has no attribute 'explore'",
-     "output_type": "error",
-     "traceback": [
-      "\u001b[1;31m---------------------------------------------------------------------------\u001b[0m",
-      "\u001b[1;31mAttributeError\u001b[0m                            Traceback (most recent call last)",
-      "\u001b[1;32m~\\AppData\\Local\\Temp\\ipykernel_20528\\2403409117.py\u001b[0m in \u001b[0;36m?\u001b[1;34m()\u001b[0m\n\u001b[0;32m      1\u001b[0m \u001b[1;31m# Create a folium Map\u001b[0m\u001b[1;33m\u001b[0m\u001b[1;33m\u001b[0m\u001b[0m\n\u001b[0;32m      2\u001b[0m \u001b[0mmap\u001b[0m \u001b[1;33m=\u001b[0m \u001b[0mfolium\u001b[0m\u001b[1;33m.\u001b[0m\u001b[0mMap\u001b[0m\u001b[1;33m(\u001b[0m\u001b[0mlocation\u001b[0m\u001b[1;33m=\u001b[0m\u001b[1;33m(\u001b[0m\u001b[0my_mean\u001b[0m\u001b[1;33m,\u001b[0m \u001b[0mx_mean\u001b[0m\u001b[1;33m)\u001b[0m\u001b[1;33m,\u001b[0m \u001b[0mtitles\u001b[0m\u001b[1;33m=\u001b[0m\u001b[1;34m'CartoDB Positron'\u001b[0m\u001b[1;33m,\u001b[0m \u001b[0mzoom_start\u001b[0m\u001b[1;33m=\u001b[0m\u001b[1;36m16\u001b[0m\u001b[1;33m)\u001b[0m\u001b[1;33m\u001b[0m\u001b[1;33m\u001b[0m\u001b[0m\n\u001b[0;32m      3\u001b[0m \u001b[1;33m\u001b[0m\u001b[0m\n\u001b[0;32m      4\u001b[0m \u001b[1;31m# Add 'W' layer to the map\u001b[0m\u001b[1;33m\u001b[0m\u001b[1;33m\u001b[0m\u001b[0m\n\u001b[1;32m----> 5\u001b[1;33m df_consumer.loc[:, ['geometry', 'W']].explore(\n\u001b[0m\u001b[0;32m      6\u001b[0m     \u001b[0mcolumn\u001b[0m\u001b[1;33m=\u001b[0m\u001b[1;34m'W'\u001b[0m\u001b[1;33m,\u001b[0m\u001b[1;33m\u001b[0m\u001b[1;33m\u001b[0m\u001b[0m\n\u001b[0;32m      7\u001b[0m     \u001b[0mcmap\u001b[0m\u001b[1;33m=\u001b[0m\u001b[1;34m'autumn_r'\u001b[0m\u001b[1;33m,\u001b[0m\u001b[1;33m\u001b[0m\u001b[1;33m\u001b[0m\u001b[0m\n\u001b[0;32m      8\u001b[0m     \u001b[0mlegend\u001b[0m\u001b[1;33m=\u001b[0m\u001b[1;32mFalse\u001b[0m\u001b[1;33m,\u001b[0m\u001b[1;33m\u001b[0m\u001b[1;33m\u001b[0m\u001b[0m\n",
-      "\u001b[1;32mc:\\Users\\jablonski\\AppData\\Local\\anaconda3\\Lib\\site-packages\\pandas\\core\\generic.py\u001b[0m in \u001b[0;36m?\u001b[1;34m(self, name)\u001b[0m\n\u001b[0;32m   6295\u001b[0m             \u001b[1;32mand\u001b[0m \u001b[0mname\u001b[0m \u001b[1;32mnot\u001b[0m \u001b[1;32min\u001b[0m \u001b[0mself\u001b[0m\u001b[1;33m.\u001b[0m\u001b[0m_accessors\u001b[0m\u001b[1;33m\u001b[0m\u001b[1;33m\u001b[0m\u001b[0m\n\u001b[0;32m   6296\u001b[0m             \u001b[1;32mand\u001b[0m \u001b[0mself\u001b[0m\u001b[1;33m.\u001b[0m\u001b[0m_info_axis\u001b[0m\u001b[1;33m.\u001b[0m\u001b[0m_can_hold_identifiers_and_holds_name\u001b[0m\u001b[1;33m(\u001b[0m\u001b[0mname\u001b[0m\u001b[1;33m)\u001b[0m\u001b[1;33m\u001b[0m\u001b[1;33m\u001b[0m\u001b[0m\n\u001b[0;32m   6297\u001b[0m         ):\n\u001b[0;32m   6298\u001b[0m             \u001b[1;32mreturn\u001b[0m \u001b[0mself\u001b[0m\u001b[1;33m[\u001b[0m\u001b[0mname\u001b[0m\u001b[1;33m]\u001b[0m\u001b[1;33m\u001b[0m\u001b[1;33m\u001b[0m\u001b[0m\n\u001b[1;32m-> 6299\u001b[1;33m         \u001b[1;32mreturn\u001b[0m \u001b[0mobject\u001b[0m\u001b[1;33m.\u001b[0m\u001b[0m__getattribute__\u001b[0m\u001b[1;33m(\u001b[0m\u001b[0mself\u001b[0m\u001b[1;33m,\u001b[0m \u001b[0mname\u001b[0m\u001b[1;33m)\u001b[0m\u001b[1;33m\u001b[0m\u001b[1;33m\u001b[0m\u001b[0m\n\u001b[0m",
-      "\u001b[1;31mAttributeError\u001b[0m: 'DataFrame' object has no attribute 'explore'"
-     ]
-    }
-   ],
    "source": [
-    "# Create a folium Map\n",
-    "map = folium.Map(location=(y_mean, x_mean), titles='CartoDB Positron', zoom_start=16)\n",
+    "### Change datatypes"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 29,
+   "id": "641a4835",
+   "metadata": {},
+   "outputs": [],
+   "source": [
     "\n",
-    "# Add 'W' layer to the map\n",
-    "df_consumer.loc[:, ['geometry', 'W']].explore(\n",
-    "    column='W',\n",
-    "    cmap='autumn_r',\n",
-    "    legend=False,\n",
-    "    vmin=df_consumer['W'].quantile(.025),\n",
-    "    vmax=df_consumer['W'].quantile(.975),\n",
-    "    style_kwds={'style_function': lambda x: {'radius': min(max(x['properties']['W'] * facRadius, minRadius), maxRadius)}},\n",
-    "    name='W',\n",
-    "    show=False,\n",
-    "    m=map\n",
-    ")\n",
-    "\n",
-    "# Add 'W' HeatMap layer to the map\n",
-    "#HeatMap(heatMapDataW, name='Heat Map von W', radius=10, blur=5, base=True).add_to(map)\n",
-    "\n",
-    "# Add 'DI' layer to the map\n",
-    "df_pipes[(df_pipes['KVR'].isin([1., None])) & (df_pipes['DI'] != 994)].loc[:, ['geometry', 'DI']].explore(\n",
-    "    column='DI',\n",
-    "    cmap='gray',\n",
-    "    legend=True,\n",
-    "    vmin = df_pipes.loc[df_pipes['DI'] != 994, 'DI'].quantile(.2),\n",
-    "    vmax = 1.5 * df_pipes.loc[df_pipes['DI'] != 994, 'DI'].quantile(1),\n",
-    "    style_kwds={'style_function': lambda x: {'radius': min(max(x['properties']['DI'] * facWidthinPixel1DN, minWidthinPixel), maxWidthinPixel)}},\n",
-    "    name='DI',\n",
-    "    m=map\n",
-    ")\n",
-    "\n",
-    "# Add 'QMAVAbs' layer to the map\n",
-    "df_pipes[df_pipes['KVR'].isin([1., None])].loc[:, ['geometry', 'QMAVAbs']].explore(\n",
-    "    column='QMAVAbs',\n",
-    "    cmap='cool',\n",
-    "    legend=True,\n",
-    "    vmin=df_pipes['QMAVAbs'].quantile(.2),\n",
-    "    vmax=df_pipes['QMAVAbs'].quantile(.80),\n",
-    "    style_kwds={'style_function': lambda x: {'weight': min(max(x['properties']['QMAVAbs'] * facWidthinPixelQMAVAbs, minWidthinPixel), maxWidthinPixel)}},\n",
-    "    name='QMAVAbs',\n",
-    "    m=map\n",
-    ")\n",
-    "\n",
-    "# Add LayerControl to the map\n",
-    "folium.LayerControl().add_to(map)"
+    "df_pipes['DN'] = pd.to_numeric(df_pipes['DN'], errors='coerce')\n",
+    "df_pipes['QMAVAbs'] = pd.to_numeric(df_pipes['QMAVAbs'], errors='coerce')\n"
    ]
   },
   {
    "cell_type": "markdown",
-   "id": "cdde386d",
+   "id": "f1f12a79",
    "metadata": {},
    "source": [
-    "We need GeoDataFrame not Dataframe, need to think about whether to do both creation in the same function or not and how to get crs."
+    "### Filter rows"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 30,
+   "id": "078de081",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df_pipes = df_pipes[df_pipes['DN'] != 999]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "de4ba784",
+   "metadata": {},
+   "source": [
+    "### Turn into gdf"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 31,
+   "id": "8766534c",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df_pipes['geometry'] = df_pipes['geometry'].apply(wkt.loads)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 32,
+   "id": "3b207191",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "gdf_pipes = gpd.GeoDataFrame(df_pipes, geometry='geometry')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 33,
+   "id": "c9ff7006",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "gdf_pipes=gdf_pipes.set_crs(epsg=4326, inplace=True)"
    ]
   }
  ],
