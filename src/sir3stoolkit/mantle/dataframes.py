@@ -418,12 +418,6 @@ class Dataframes_SIR3S_Model(SIR3S_Model):
             A summary dataframe with columns:
             ['tk', 'property', 'new_value'] (+ 'status' when dry_run)
             representing the intended updates.
-
-        Notes
-        -----
-        - The actual setting of values is left to you. See the TODO block.
-        - If your class defines `self._touch(element_type)` (versioning/cache invalidation),
-        it will be called after successful updates.
         """
         logger.info(f"[update] Applying metadata updates for element type: {element_type}")
 
