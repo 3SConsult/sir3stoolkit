@@ -23,7 +23,7 @@ The release notes indicate what kind of release it is.
 90-15 Quebec
 ------------
 
-Version 90.15.2 (Initial Release)
+Version 90.15.3 (Initial Release)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 - First official public release of the SIR 3S Toolkit

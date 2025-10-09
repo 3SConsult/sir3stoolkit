@@ -31,7 +31,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="sir3stoolkit.mantle package" href="sir3stoolkit.mantle.html" />
+    <link rel="next" title="sir3stoolkit.crust package" href="sir3stoolkit.crust.html" />
     <link rel="prev" title="sir3stoolkit package" href="sir3stoolkit.html" /> 
 </head>
 
@@ -435,6 +435,29 @@ Default value is True</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="sir3stoolkit.core.wrapper.SIR3S_Model.EnableOrDisable_ObjectTypes_TableNames_Enum">
+<span class="sig-name descname"><span class="pre">EnableOrDisable_ObjectTypes_TableNames_Enum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">enable_param</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sir3stoolkit/core/wrapper.html#SIR3S_Model.EnableOrDisable_ObjectTypes_TableNames_Enum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.wrapper.SIR3S_Model.EnableOrDisable_ObjectTypes_TableNames_Enum" title="Link to this definition"></a></dt>
+<dd><p>Enable ObjectTypes_TableNames Enum which is german version for the ObjectTypes for all applicable return values.
+User can pass True/False to this function to enabe or disable this conversion.
+If enabled user will receive all outputs of type ObjectTypes enum in the german version(i.e,. ObjectTypes_TableNames)
+Default value is False</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>enable_param</strong> (<em>bool</em>) – To enable pass true and to disable pass false</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Description<span class="colon">:</span></dt>
+<dd class="field-even"><p>This is a helper function</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="sir3stoolkit.core.wrapper.SIR3S_Model.EndEditSession">
 <span class="sig-name descname"><span class="pre">EndEditSession</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sir3stoolkit/core/wrapper.html#SIR3S_Model.EndEditSession"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.wrapper.SIR3S_Model.EndEditSession" title="Link to this definition"></a></dt>
 <dd><p>End the current edit session.</p>
@@ -531,12 +554,12 @@ to close that transaction.</p>
 <dt class="sig sig-object py" id="sir3stoolkit.core.wrapper.SIR3S_Model.GetEndNodes">
 <span class="sig-name descname"><span class="pre">GetEndNodes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Tk</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/core/wrapper.html#SIR3S_Model.GetEndNodes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.wrapper.SIR3S_Model.GetEndNodes" title="Link to this definition"></a></dt>
 <dd><p>General Methot for getting the Tk (keys) of Endnodes connected to an Element.
-In SIR 3S, they exists Elements that have:</p>
-<ul class="simple">
-<li><p>Only 1 Endnodes (i.e. Tanks, Air Valves, …) : Bypass Elements in General</p></li>
-<li><p>2 Endnodes (i.e. Pipes, Pumps, Flap Valves, …): Connecting Elements in General</p></li>
-<li><p>4 Endnodes (Heat Exchangers)</p></li>
-</ul>
+In SIR 3S, they exists Elements that have:
+Only 1 Endnodes (i.e. Tanks, Air Valves, …) : Bypass Elements in General</p>
+<blockquote>
+<div><p>2 Endnodes (i.e. Pipes, Pumps, Flap Valves, …): Connecting Elements in General
+4 Endnodes (Heat Exchangers)</p>
+</div></blockquote>
 <p>This Method always return for unconnected or non-existent Sides a fkkX Value of ‘-1’</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1374,7 +1397,7 @@ the position on which the object is placed in the view.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="sir3stoolkit.core.wrapper.SIR3S_Model.to_dotnet_enum">
-<span class="sig-name descname"><span class="pre">to_dotnet_enum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">py_enum_member</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">py_enum_type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sir3stoolkit/core/wrapper.html#SIR3S_Model.to_dotnet_enum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.wrapper.SIR3S_Model.to_dotnet_enum" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">to_dotnet_enum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">py_enum_member</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sir3stoolkit/core/wrapper.html#SIR3S_Model.to_dotnet_enum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.wrapper.SIR3S_Model.to_dotnet_enum" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -1920,23 +1943,31 @@ for more information.</p>
 :type textContent: str
 :param angle_degree: Angle in Degree
 :type angle_degree: np.float32
-:param faceName: Face Name of the Font (max. 32 Characters). Entering a non-installed Face Name will assume it to be ‘Arial’
-:type faceName: str
-:param heightPt: The height in Point
-:type heightPt: np.float32
-:param isBold: True if the Font should be bold
-:type isBold: bool
-:param isItalic: True if the Font should be italic
-:type isItalic: bool
-:param isUnderlined: True if the Font should be underlined
-:type isUnderlined: bool
-:param idRef: user-defined Reference ID. Max 40 Characters
-:type idRef: str
-:param description: Description of Text. Max 254 Characters
-:type description: str
-:return: The TK of the newly inserted Text, otherwise ‘-1’.
-:rtype: str
-:description: This is a wrapper method for AddNewText() from toolkit; Watch out for errors for more information.</p>
+:param faceName: Face Name of the Font (max. 32 Characters). Entering a non-installed</p>
+<blockquote>
+<div><p>Face Name will assume it to be ‘Arial’</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>heightPt</strong> (<em>np.float32</em>) – The height in Point</p></li>
+<li><p><strong>isBold</strong> (<em>bool</em>) – True if the Font should be bold</p></li>
+<li><p><strong>isItalic</strong> (<em>bool</em>) – True if the Font should be italic</p></li>
+<li><p><strong>isUnderlined</strong> (<em>bool</em>) – True if the Font should be underlined</p></li>
+<li><p><strong>idRef</strong> (<em>str</em>) – user-defined Reference ID. Max 40 Characters</p></li>
+<li><p><strong>description</strong> (<em>str</em>) – Description of Text. Max 254 Characters</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The TK of the newly inserted Text, otherwise ‘-1’.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+<dt class="field-even">Description<span class="colon">:</span></dt>
+<dd class="field-even"><p>This is a wrapper method for AddNewText() from toolkit; Watch out for errors for more information.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -3021,7 +3052,7 @@ for more information.</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="sir3stoolkit.html" class="btn btn-neutral float-left" title="sir3stoolkit package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="sir3stoolkit.mantle.html" class="btn btn-neutral float-right" title="sir3stoolkit.mantle package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="sir3stoolkit.crust.html" class="btn btn-neutral float-right" title="sir3stoolkit.crust package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
