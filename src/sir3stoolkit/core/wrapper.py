@@ -136,13 +136,18 @@ class SIR3S_Model:
         self.ObjectTypes = create_dotnet_enum("ObjectTypes", "Sir3SObjectTypes", "Sir3S_Repository.Interfaces.dll")
         self.ProviderTypes = create_dotnet_enum("ProviderTypes", "SirDBProviderType", "Sir3S_Repository.Interfaces.dll")
         self.NetworkType = create_dotnet_enum("NetworkType", "NetworkType", "Sir3S_Repository.Interfaces.dll")
+        self.ObjectTypes_TableNames = create_dotnet_enum("ObjectTypes_TableNames", "Sir3SObjectTypes_TableNames", "Sir3S_Repository.Interfaces.dll")
         self._dotnet_enum_type_objecttype = self._load_dotnet_enum("Sir3SObjectTypes", "Sir3S_Repository.Interfaces.dll")
         self._dotnet_enum_type_providertype = self._load_dotnet_enum("SirDBProviderType", "Sir3S_Repository.Interfaces.dll")
         self._dotnet_enum_type_networktype = self._load_dotnet_enum("NetworkType", "Sir3S_Repository.Interfaces.dll")
+        self._dotnet_enum_type_objecttype_tablenames = self._load_dotnet_enum("Sir3SObjectTypes_TableNames", "Sir3S_Repository.Interfaces.dll")
 
         # Variable to enable or disable output comments
         self.outputComments = True
 
+        # Variable to enable or disable ObjectTypes_TableNames as return values wherever applicable
+        self.IsOutput_ObjectTypes_TableNames = False
+        
     def _load_dotnet_enum(self, enum_name, assembly_ext):
         if assembly_ext is None:
             raise ValueError("assembly_ext must be provided when using dotnet_enum.")
@@ -154,17 +159,23 @@ class SIR3S_Model:
                 return t
         raise ValueError(f".NET enum '{enum_name}' not found.")
 
-    def to_dotnet_enum(self, py_enum_member, py_enum_type):
-        if not isinstance(py_enum_member, py_enum_type):
-            raise TypeError(f"Expected {py_enum_type} member, got {type(py_enum_member)}")
-
+    def to_dotnet_enum(self, py_enum_member):
+        # Extract the type of Enum
+        enum_type = type(py_enum_member)
+        
+        # Check if it's an Enum member
+        if not isinstance(py_enum_member, enum.Enum):
+            raise TypeError(f"Expected Enum member, got {enum_type}")
+        
         # Use the integer value of Python enum member to create .NET enum
-        if (py_enum_type == self.ObjectTypes):
+        if enum_type in (self.ObjectTypes, self.ObjectTypes_TableNames):
             return System.Enum.ToObject(self._dotnet_enum_type_objecttype, py_enum_member.value)
-        elif (py_enum_type == self.ProviderTypes):
+        elif (enum_type == self.ProviderTypes):
             return System.Enum.ToObject(self._dotnet_enum_type_providertype, py_enum_member.value)
-        elif (py_enum_type == self.NetworkType):
+        elif (enum_type == self.NetworkType):
             return System.Enum.ToObject(self._dotnet_enum_type_networktype, py_enum_member.value)
+        else:
+            raise TypeError(f"Unknown enum type {enum_type}")
 
     def to_python_enum(self, dotnet_enum_member, py_enum_type):
         if dotnet_enum_member is None:
@@ -359,7 +370,7 @@ class SIR3S_Model:
         :rtype: None
         :description: This is a wrapper method for OpenModel() from toolkit; Watch out for errors for more information.
         """
-        providerType_net = self.to_dotnet_enum(providerType, self.ProviderTypes)
+        providerType_net = self.to_dotnet_enum(providerType)
         result, error = self.toolkit.OpenModel(dbName, providerType_net, Mid, saveCurrentlyOpenModel,
                                                namedInstance, userID, password)
         if result:
@@ -425,7 +436,7 @@ class SIR3S_Model:
         :description: This is a wrapper method for GetAllElementKeys() from toolkit.
         """
         Tk_list = None
-        ElementType_net = self.to_dotnet_enum(ElementType, self.ObjectTypes)
+        ElementType_net = self.to_dotnet_enum(ElementType)
         Tk_list = self.toolkit.GetAllElementKeys(ElementType_net)
         if list(Tk_list) is None:
             print(f"Couldn't retrieve any Tk of element type {ElementType}")
@@ -463,7 +474,10 @@ class SIR3S_Model:
         :description: This is a wrapper method for GetMainContainer() from toolkit.
         """
         Tk, objType_net, error = self.toolkit.GetMainContainer()
-        objType = self.to_python_enum(objType_net, self.ObjectTypes)
+        if self.IsOutput_ObjectTypes_TableNames:
+            objType = self.to_python_enum(objType_net, self.ObjectTypes_TableNames)
+        else:
+            objType = self.to_python_enum(objType_net, self.ObjectTypes)
         if Tk == "-1":
             print("Error: " + error)
         return Tk, objType
@@ -494,7 +508,7 @@ class SIR3S_Model:
         :rtype: int
         :description: This is a wrapper method for GetNumberOfElements() from toolkit.
         """
-        ElementType_net = self.to_dotnet_enum(ElementType, self.ObjectTypes)
+        ElementType_net = self.to_dotnet_enum(ElementType)
         return self.toolkit.GetNumberOfElements(ElementType_net)
 
     def GetPropertiesofElementType(self, ElementType) -> list:
@@ -508,7 +522,7 @@ class SIR3S_Model:
         :description: This is a wrapper method for GetPropertyNames() from toolkit.
         """
         Properties_list = None
-        ElementType_net = self.to_dotnet_enum(ElementType, self.ObjectTypes)
+        ElementType_net = self.to_dotnet_enum(ElementType)
         Properties_list = self.toolkit.GetPropertyNames(ElementType_net)
         if list(Properties_list) is None:
             print(f"Couldn't retrieve any Properties for the element type {ElementType}")
@@ -526,7 +540,10 @@ class SIR3S_Model:
         errors for more information.
         """
         objectType_net = self.toolkit.GetObjectTypeOf_Key(Key)
-        return self.to_python_enum(objectType_net, self.ObjectTypes)
+        if self.IsOutput_ObjectTypes_TableNames:
+            return self.to_python_enum(objectType_net, self.ObjectTypes_TableNames)
+        else:
+            return self.to_python_enum(objectType_net, self.ObjectTypes)
 
     def DeleteElement(self, Tk: str):
         """
@@ -557,7 +574,7 @@ class SIR3S_Model:
         :rtype: str
         :description: This is a wrapper method for InsertElement() from toolkit; Watch out for errors for more information.
         """
-        ElementType_net = self.to_dotnet_enum(ElementType, self.ObjectTypes)
+        ElementType_net = self.to_dotnet_enum(ElementType)
         result, error = self.toolkit.InsertElement(ElementType_net, IdRef)
         if result == "-1":
             print(f"Error : {error}")
@@ -591,8 +608,8 @@ class SIR3S_Model:
         :rtype: None
         :description: This is a wrapper method for NewModel() from toolkit; Watch out for errors for more information.
         """
-        providerType_net = self.to_dotnet_enum(providerType, self.ProviderTypes)
-        netType_net = self.to_dotnet_enum(netType, self.NetworkType)
+        providerType_net = self.to_dotnet_enum(providerType)
+        netType_net = self.to_dotnet_enum(netType)
         modelIdentifier, error = self.toolkit.NewModel(dbName, providerType_net, netType_net, modelDescription,
                                                        namedInstance, userID, password)
         if modelIdentifier == "-1":
@@ -670,7 +687,10 @@ class SIR3S_Model:
         :description: This is a wrapper method for AddTableRow() from toolkit; Watch out for errors for more information.
         """
         Tk, objectType_net, error = self.toolkit.AddTableRow(tablePkTk)
-        objectType = self.to_python_enum(objectType_net, self.ObjectTypes)
+        if self.IsOutput_ObjectTypes_TableNames:
+            objectType = self.to_python_enum(objectType_net, self.ObjectTypes_TableNames)
+        else:
+             objectType = self.to_python_enum(objectType_net, self.ObjectTypes)
         if Tk == "-1":
             print("Error: " + error)
         else:
@@ -689,7 +709,10 @@ class SIR3S_Model:
         :description: This is a wrapper method for GetTableRows() from toolkit; Watch out for errors for more information.
         """
         Tk_list, objectType_net, error = self.toolkit.GetTableRows(tablePkTk)
-        objectType = self.to_python_enum(objectType_net, self.ObjectTypes)
+        if self.IsOutput_ObjectTypes_TableNames:
+            objectType = self.to_python_enum(objectType_net, self.ObjectTypes_TableNames)
+        else:
+            objectType = self.to_python_enum(objectType_net, self.ObjectTypes)
         if Tk_list is None:
             print("Error: " + error)
         return Tk_list, objectType
@@ -827,7 +850,7 @@ class SIR3S_Model:
             for more information.
         """
         Result_list = None
-        elementType_net = self.to_dotnet_enum(elementType, self.ObjectTypes)
+        elementType_net = self.to_dotnet_enum(elementType)
         Result_list, error = self.toolkit.GetResultProperties(elementType_net, onlySelectedVectors)
         if Result_list is None:
             print("Error: " + error)
@@ -864,7 +887,7 @@ class SIR3S_Model:
         :description: This is a wrapper method for GetMinResult() from toolkit; Watch out for errors for more information.
         """
         MinResult = None
-        elementType_net = self.to_dotnet_enum(elementType, self.ObjectTypes)
+        elementType_net = self.to_dotnet_enum(elementType)
         MinResult, tkElement, valueType, error = self.toolkit.GetMinResult(elementType_net, propertyName)
         if MinResult is None:
             print("Error: " + error)
@@ -884,7 +907,7 @@ class SIR3S_Model:
         :description: This is a wrapper method for GetMaxResult() from toolkit; Watch out for errors for more information.
         """
         MaxResult = None
-        elementType_net = self.to_dotnet_enum(elementType, self.ObjectTypes)
+        elementType_net = self.to_dotnet_enum(elementType)
         MaxResult, tkElement, valueType, error = self.toolkit.GetMaxResult(elementType_net, propertyName)
         if MaxResult is None:
             print("Error: " + error)
@@ -907,7 +930,7 @@ class SIR3S_Model:
         :description: This is a wrapper method for GetMinResult() from toolkit; Watch out for errors for more information.
         """
         MinResult = None
-        elementType_net = self.to_dotnet_enum(elementType, self.ObjectTypes)
+        elementType_net = self.to_dotnet_enum(elementType)
         MinResult, tkElement, valueType, error = self.toolkit.GetMinResult(timestamp, elementType_net, propertyName)
         if MinResult is None:
             print("Error: " + error)
@@ -930,7 +953,7 @@ class SIR3S_Model:
         :description: This is a wrapper method for GetMaxResult() from toolkit; Watch out for errors for more information.
         """
         MaxResult = None
-        elementType_net = self.to_dotnet_enum(elementType, self.ObjectTypes)
+        elementType_net = self.to_dotnet_enum(elementType)
         MaxResult, tkElement, valueType, error = self.toolkit.GetMaxResult(timestamp, elementType_net, propertyName)
         if MaxResult is None:
             print("Error: " + error)
@@ -1054,7 +1077,7 @@ class SIR3S_Model:
         :rtype: str
         :description: Comfortable method for inserting a new connecting element.
         """
-        elementType_net = self.to_dotnet_enum(elementType, self.ObjectTypes)
+        elementType_net = self.to_dotnet_enum(elementType)
         Tk_new, error = self.toolkit.AddNewConnectingElement(tkCont, tkFrom, tkTo, x, y, z, elementType_net,
                                                              dn, symbolFactor, angleDegree, idRef, description)
         if Tk_new == "-1":
@@ -1092,7 +1115,7 @@ class SIR3S_Model:
         :rtype: str
         :description: Comfortable method for inserting a new bypass element.
         """
-        elementType_net = self.to_dotnet_enum(elementType, self.ObjectTypes)
+        elementType_net = self.to_dotnet_enum(elementType)
         Tk_new, error = self.toolkit.AddNewBypassElement(tkCont, tkFrom, x, y, z, symbolFactor, elementType_net,
                                                          idRef, description)
         if Tk_new == "-1":
@@ -1115,7 +1138,7 @@ class SIR3S_Model:
         :description: This is a wrapper method for GetTkFromIDReference() from toolkit; Watch out for error messages
             for more information.
         """
-        object_type_net = self.to_dotnet_enum(object_type, self.ObjectTypes)
+        object_type_net = self.to_dotnet_enum(object_type)
         Tk, error = self.toolkit.GetTkFromIDReference(IdRef, object_type_net)
         if Tk == "-1":
             print("Error: " + error)
@@ -1174,11 +1197,9 @@ class SIR3S_Model:
         """
         General Methot for getting the Tk (keys) of Endnodes connected to an Element.
         In SIR 3S, they exists Elements that have:
-        
-        - Only 1 Endnodes (i.e. Tanks, Air Valves, ...) : Bypass Elements in General
-        - 2 Endnodes (i.e. Pipes, Pumps, Flap Valves, ...): Connecting Elements in General
-        - 4 Endnodes (Heat Exchangers)
-
+        Only 1 Endnodes (i.e. Tanks, Air Valves, ...) : Bypass Elements in General
+              2 Endnodes (i.e. Pipes, Pumps, Flap Valves, ...): Connecting Elements in General
+              4 Endnodes (Heat Exchangers)
         This Method always return for unconnected or non-existent Sides a fkkX Value of '-1'
 
         :param Tk: The Tk (key) of the Element we need to retrieve the Endnodes
@@ -1231,6 +1252,21 @@ class SIR3S_Model:
         :description: This is a helper function
         """
         self.outputComments = outputComments
+
+    def EnableOrDisable_ObjectTypes_TableNames_Enum(self, enable_param: bool):
+        """
+        Enable ObjectTypes_TableNames Enum which is german version for the ObjectTypes for all applicable return values.
+        User can pass True/False to this function to enabe or disable this conversion.
+        If enabled user will receive all outputs of type ObjectTypes enum in the german version(i.e,. ObjectTypes_TableNames)
+        Default value is False
+
+        :param enable_param: To enable pass true and to disable pass false
+        :type enable_param: bool
+        :return: None
+        :rtype: None
+        :description: This is a helper function
+        """
+        self.IsOutput_ObjectTypes_TableNames = enable_param
 
     def GetResultfortimestamp(self, timestamp: str, Tk: str, property: str) -> tuple[str, str]:
         """
@@ -1318,6 +1354,7 @@ class SIR3S_View:
 
         # Variable to enable or disable output comments
         self.outputComments = True
+        
 
     def _load_dotnet_enum(self, enum_name, assembly_ext):
         if assembly_ext is None:
@@ -2289,7 +2326,8 @@ class SIR3S_View:
         :type textContent: str
         :param angle_degree: Angle in Degree
         :type angle_degree: np.float32
-        :param faceName: Face Name of the Font (max. 32 Characters). Entering a non-installed Face Name will assume it to be 'Arial'
+        :param faceName: Face Name of the Font (max. 32 Characters). Entering a non-installed
+            Face Name will assume it to be 'Arial'
         :type faceName: str
         :param heightPt: The height in Point
         :type heightPt: np.float32
