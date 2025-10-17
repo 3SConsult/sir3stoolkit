@@ -29,10 +29,9 @@ This gives you a variety of opportunities, e.g.:
 .. image:: _static/images/Toolkit_structure_core_mantle.png
    :alt: Toolkit Structure
    :align: left
-   :width: 280px
+   :width: 90px
 
-On top of this core, higher-level functionality is provided in the so-called mantle, enabling more powerful and intuitive interactions with SIR 3S models. 
-|
+On top of this core, higher-level functionality is provided in the so-called mantle, enabling more powerful and intuitive interactions with SIR 3S models. \
 
 What is the difference between SIR 3S Toolkit and PT3S?
 -------------------------------------------------------
