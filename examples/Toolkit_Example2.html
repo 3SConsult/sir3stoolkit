@@ -208,7 +208,7 @@ Initialization complete
 <section id="Additional">
 <h2>Additional<a class="headerlink" href="#Additional" title="Link to this heading"></a></h2>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
@@ -219,6 +219,8 @@ from folium.plugins import HeatMap
 import numpy as np
 import geopandas as gpd
 from shapely import wkt
+import matplotlib.pyplot as plt
+import contextily as cx
 </pre></div>
 </div>
 </div>
@@ -245,7 +247,7 @@ from shapely import wkt
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Error while opening the model, Could not find any Model &#39;M-1-0-1&#39;
+Model is open for further operation
 </pre></div></div>
 </div>
 </section>
@@ -268,12 +270,12 @@ Error while opening the model, Could not find any Model &#39;M-1-0-1&#39;
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2025-10-17 12:10:08,849] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.DistrictHeatingConsumer
-[2025-10-17 12:10:08,860] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieved 0 element(s) of element type ObjectTypes.DistrictHeatingConsumer.
-[2025-10-17 12:10:08,881] DEBUG in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 0 metadata properties.
-[2025-10-17 12:10:08,881] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving geometry...
-[2025-10-17 12:10:08,881] INFO in sir3stoolkit.mantle.dataframes: [metadata] 0 non-empty end node columns were created)
-[2025-10-17 12:10:08,886] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (0, 0)
+[2025-10-17 13:22:33,659] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.DistrictHeatingConsumer
+[2025-10-17 13:22:33,667] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieved 337 element(s) of element type ObjectTypes.DistrictHeatingConsumer.
+[2025-10-17 13:22:33,691] DEBUG in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 0 metadata properties.
+[2025-10-17 13:22:33,692] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving geometry...
+[2025-10-17 13:22:33,724] INFO in sir3stoolkit.mantle.dataframes: [metadata] 0 non-empty end node columns were created)
+[2025-10-17 13:22:33,726] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (337, 2)
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
@@ -307,9 +309,26 @@ Error while opening the model, Could not find any Model &#39;M-1-0-1&#39;
   <thead>
     <tr style="text-align: right;">
       <th></th>
+      <th>tk</th>
+      <th>geometry</th>
     </tr>
   </thead>
   <tbody>
+    <tr>
+      <th>0</th>
+      <td>4743997951091160959</td>
+      <td>POINT (713181.847468032 5578489.9250612)</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>5014209100699808035</td>
+      <td>POINT (713369.326806115 5578395.12330167)</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4627580049017248376</td>
+      <td>POINT (713251.536184149 5578455.25247764)</td>
+    </tr>
   </tbody>
 </table>
 </div></div>
@@ -325,23 +344,19 @@ Error while opening the model, Could not find any Model &#39;M-1-0-1&#39;
 </pre></div>
 </div>
 </div>
-<div class="nboutput docutils container">
+<div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2025-10-17 12:10:08,969] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.DistrictHeatingConsumer
-[2025-10-17 12:10:08,971] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] No timestamps were given. Checking available simulation timestamps (SIR3S_Model.GetTimeStamps()).
-[2025-10-17 12:10:09,001] WARNING in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] No valid timestamps found. Proceeding with empty timestamp list.
-[2025-10-17 12:10:09,006] WARNING in sir3stoolkit.mantle.dataframes: [results] No valid timestamps. Returning empty dataframe.
-</pre></div></div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-Error : Object Model not set yet.
+[2025-10-17 13:22:33,759] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.DistrictHeatingConsumer
+[2025-10-17 13:22:33,760] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] No timestamps were given. Checking available simulation timestamps (SIR3S_Model.GetTimeStamps()).
+[2025-10-17 13:22:33,868] INFO in sir3stoolkit.mantle.dataframes: 25 simulation timestamps will be used.
+[2025-10-17 13:22:33,938] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 25 valid timestamps will be used.
+[2025-10-17 13:22:33,938] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieved 337 tks.
+[2025-10-17 13:22:33,942] INFO in sir3stoolkit.mantle.dataframes: [results] Using 1 result properties.
+[2025-10-17 13:22:33,943] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result properties...
+[2025-10-17 13:22:34,704] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (8425, 3)
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
@@ -377,9 +392,28 @@ Error : Object Model not set yet.
       <th></th>
       <th>timestamp</th>
       <th>tk</th>
+      <th>W</th>
     </tr>
   </thead>
   <tbody>
+    <tr>
+      <th>0</th>
+      <td>2023-02-13 00:00:00.000 +01:00</td>
+      <td>4743997951091160959</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2023-02-13 00:00:00.000 +01:00</td>
+      <td>5014209100699808035</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2023-02-13 00:00:00.000 +01:00</td>
+      <td>4627580049017248376</td>
+      <td>0</td>
+    </tr>
   </tbody>
 </table>
 </div></div>
@@ -387,7 +421,7 @@ Error : Object Model not set yet.
 </section>
 <section id="Merge">
 <h3>Merge<a class="headerlink" href="#Merge" title="Link to this heading"></a></h3>
-<div class="nbinput docutils container">
+<div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
@@ -400,64 +434,8 @@ Error : Object Model not set yet.
 </pre></div>
 </div>
 </div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-<span class="ansi-red-intense-fg ansi-bold">---------------------------------------------------------------------------</span>
-<span class="ansi-red-intense-fg ansi-bold">KeyError</span>                                  Traceback (most recent call last)
-<span class="ansi-green-intense-fg ansi-bold">~\AppData\Local\Temp\ipykernel_11388\2787625117.py</span> in <span class="ansi-cyan-fg">?</span><span class="ansi-blue-intense-fg ansi-bold">()</span>
-<span class="ansi-green-intense-fg ansi-bold">----&gt; 1</span><span class="ansi-yellow-intense-fg ansi-bold"> df_consumer = pd.merge(
-</span><span class="ansi-green-fg">      2</span>     df_consumer_metadata<span class="ansi-yellow-intense-fg ansi-bold">,</span>
-<span class="ansi-green-fg">      3</span>     df_consumer_results<span class="ansi-yellow-intense-fg ansi-bold">,</span>
-<span class="ansi-green-fg">      4</span>     on<span class="ansi-yellow-intense-fg ansi-bold">=</span><span class="ansi-blue-intense-fg ansi-bold">&#34;tk&#34;</span><span class="ansi-yellow-intense-fg ansi-bold">,</span>
-
-<span class="ansi-green-intense-fg ansi-bold">c:\Users\jablonski\AppData\Local\anaconda3\Lib\site-packages\pandas\core\reshape\merge.py</span> in <span class="ansi-cyan-fg">?</span><span class="ansi-blue-intense-fg ansi-bold">(left, right, how, on, left_on, right_on, left_index, right_index, sort, suffixes, copy, indicator, validate)</span>
-<span class="ansi-green-fg">    166</span>             validate<span class="ansi-yellow-intense-fg ansi-bold">=</span>validate<span class="ansi-yellow-intense-fg ansi-bold">,</span>
-<span class="ansi-green-fg">    167</span>             copy<span class="ansi-yellow-intense-fg ansi-bold">=</span>copy<span class="ansi-yellow-intense-fg ansi-bold">,</span>
-<span class="ansi-green-fg">    168</span>         )
-<span class="ansi-green-fg">    169</span>     <span class="ansi-green-intense-fg ansi-bold">else</span><span class="ansi-yellow-intense-fg ansi-bold">:</span>
-<span class="ansi-green-intense-fg ansi-bold">--&gt; 170</span><span class="ansi-yellow-intense-fg ansi-bold">         op = _MergeOperation(
-</span><span class="ansi-green-fg">    171</span>             left_df<span class="ansi-yellow-intense-fg ansi-bold">,</span>
-<span class="ansi-green-fg">    172</span>             right_df<span class="ansi-yellow-intense-fg ansi-bold">,</span>
-<span class="ansi-green-fg">    173</span>             how<span class="ansi-yellow-intense-fg ansi-bold">=</span>how<span class="ansi-yellow-intense-fg ansi-bold">,</span>
-
-<span class="ansi-green-intense-fg ansi-bold">c:\Users\jablonski\AppData\Local\anaconda3\Lib\site-packages\pandas\core\reshape\merge.py</span> in <span class="ansi-cyan-fg">?</span><span class="ansi-blue-intense-fg ansi-bold">(self, left, right, how, on, left_on, right_on, left_index, right_index, sort, suffixes, indicator, validate)</span>
-<span class="ansi-green-fg">    790</span>             self<span class="ansi-yellow-intense-fg ansi-bold">.</span>right_join_keys<span class="ansi-yellow-intense-fg ansi-bold">,</span>
-<span class="ansi-green-fg">    791</span>             self<span class="ansi-yellow-intense-fg ansi-bold">.</span>join_names<span class="ansi-yellow-intense-fg ansi-bold">,</span>
-<span class="ansi-green-fg">    792</span>             left_drop<span class="ansi-yellow-intense-fg ansi-bold">,</span>
-<span class="ansi-green-fg">    793</span>             right_drop<span class="ansi-yellow-intense-fg ansi-bold">,</span>
-<span class="ansi-green-intense-fg ansi-bold">--&gt; 794</span><span class="ansi-yellow-intense-fg ansi-bold">         ) = self._get_merge_keys()
-</span><span class="ansi-green-fg">    795</span>
-<span class="ansi-green-fg">    796</span>         <span class="ansi-green-intense-fg ansi-bold">if</span> left_drop<span class="ansi-yellow-intense-fg ansi-bold">:</span>
-<span class="ansi-green-fg">    797</span>             self<span class="ansi-yellow-intense-fg ansi-bold">.</span>left <span class="ansi-yellow-intense-fg ansi-bold">=</span> self<span class="ansi-yellow-intense-fg ansi-bold">.</span>left<span class="ansi-yellow-intense-fg ansi-bold">.</span>_drop_labels_or_levels<span class="ansi-yellow-intense-fg ansi-bold">(</span>left_drop<span class="ansi-yellow-intense-fg ansi-bold">)</span>
-
-<span class="ansi-green-intense-fg ansi-bold">c:\Users\jablonski\AppData\Local\anaconda3\Lib\site-packages\pandas\core\reshape\merge.py</span> in <span class="ansi-cyan-fg">?</span><span class="ansi-blue-intense-fg ansi-bold">(self)</span>
-<span class="ansi-green-fg">   1306</span>                     <span class="ansi-green-intense-fg ansi-bold">if</span> lk <span class="ansi-green-intense-fg ansi-bold">is</span> <span class="ansi-green-intense-fg ansi-bold">not</span> <span class="ansi-green-intense-fg ansi-bold">None</span><span class="ansi-yellow-intense-fg ansi-bold">:</span>
-<span class="ansi-green-fg">   1307</span>                         <span class="ansi-red-intense-fg ansi-bold"># Then we&#39;re either Hashable or a wrong-length arraylike,</span>
-<span class="ansi-green-fg">   1308</span>                         <span class="ansi-red-intense-fg ansi-bold">#  the latter of which will raise</span>
-<span class="ansi-green-fg">   1309</span>                         lk <span class="ansi-yellow-intense-fg ansi-bold">=</span> cast<span class="ansi-yellow-intense-fg ansi-bold">(</span>Hashable<span class="ansi-yellow-intense-fg ansi-bold">,</span> lk<span class="ansi-yellow-intense-fg ansi-bold">)</span>
-<span class="ansi-green-intense-fg ansi-bold">-&gt; 1310</span><span class="ansi-yellow-intense-fg ansi-bold">                         </span>left_keys<span class="ansi-yellow-intense-fg ansi-bold">.</span>append<span class="ansi-yellow-intense-fg ansi-bold">(</span>left<span class="ansi-yellow-intense-fg ansi-bold">.</span>_get_label_or_level_values<span class="ansi-yellow-intense-fg ansi-bold">(</span>lk<span class="ansi-yellow-intense-fg ansi-bold">)</span><span class="ansi-yellow-intense-fg ansi-bold">)</span>
-<span class="ansi-green-fg">   1311</span>                         join_names<span class="ansi-yellow-intense-fg ansi-bold">.</span>append<span class="ansi-yellow-intense-fg ansi-bold">(</span>lk<span class="ansi-yellow-intense-fg ansi-bold">)</span>
-<span class="ansi-green-fg">   1312</span>                     <span class="ansi-green-intense-fg ansi-bold">else</span><span class="ansi-yellow-intense-fg ansi-bold">:</span>
-<span class="ansi-green-fg">   1313</span>                         <span class="ansi-red-intense-fg ansi-bold"># work-around for merge_asof(left_index=True)</span>
-
-<span class="ansi-green-intense-fg ansi-bold">c:\Users\jablonski\AppData\Local\anaconda3\Lib\site-packages\pandas\core\generic.py</span> in <span class="ansi-cyan-fg">?</span><span class="ansi-blue-intense-fg ansi-bold">(self, key, axis)</span>
-<span class="ansi-green-fg">   1907</span>             values <span class="ansi-yellow-intense-fg ansi-bold">=</span> self<span class="ansi-yellow-intense-fg ansi-bold">.</span>xs<span class="ansi-yellow-intense-fg ansi-bold">(</span>key<span class="ansi-yellow-intense-fg ansi-bold">,</span> axis<span class="ansi-yellow-intense-fg ansi-bold">=</span>other_axes<span class="ansi-yellow-intense-fg ansi-bold">[</span><span class="ansi-cyan-intense-fg ansi-bold">0</span><span class="ansi-yellow-intense-fg ansi-bold">]</span><span class="ansi-yellow-intense-fg ansi-bold">)</span><span class="ansi-yellow-intense-fg ansi-bold">.</span>_values
-<span class="ansi-green-fg">   1908</span>         <span class="ansi-green-intense-fg ansi-bold">elif</span> self<span class="ansi-yellow-intense-fg ansi-bold">.</span>_is_level_reference<span class="ansi-yellow-intense-fg ansi-bold">(</span>key<span class="ansi-yellow-intense-fg ansi-bold">,</span> axis<span class="ansi-yellow-intense-fg ansi-bold">=</span>axis<span class="ansi-yellow-intense-fg ansi-bold">)</span><span class="ansi-yellow-intense-fg ansi-bold">:</span>
-<span class="ansi-green-fg">   1909</span>             values <span class="ansi-yellow-intense-fg ansi-bold">=</span> self<span class="ansi-yellow-intense-fg ansi-bold">.</span>axes<span class="ansi-yellow-intense-fg ansi-bold">[</span>axis<span class="ansi-yellow-intense-fg ansi-bold">]</span><span class="ansi-yellow-intense-fg ansi-bold">.</span>get_level_values<span class="ansi-yellow-intense-fg ansi-bold">(</span>key<span class="ansi-yellow-intense-fg ansi-bold">)</span><span class="ansi-yellow-intense-fg ansi-bold">.</span>_values
-<span class="ansi-green-fg">   1910</span>         <span class="ansi-green-intense-fg ansi-bold">else</span><span class="ansi-yellow-intense-fg ansi-bold">:</span>
-<span class="ansi-green-intense-fg ansi-bold">-&gt; 1911</span><span class="ansi-yellow-intense-fg ansi-bold">             </span><span class="ansi-green-intense-fg ansi-bold">raise</span> KeyError<span class="ansi-yellow-intense-fg ansi-bold">(</span>key<span class="ansi-yellow-intense-fg ansi-bold">)</span>
-<span class="ansi-green-fg">   1912</span>
-<span class="ansi-green-fg">   1913</span>         <span class="ansi-red-intense-fg ansi-bold"># Check for duplicates</span>
-<span class="ansi-green-fg">   1914</span>         <span class="ansi-green-intense-fg ansi-bold">if</span> values<span class="ansi-yellow-intense-fg ansi-bold">.</span>ndim <span class="ansi-yellow-intense-fg ansi-bold">&gt;</span> <span class="ansi-cyan-intense-fg ansi-bold">1</span><span class="ansi-yellow-intense-fg ansi-bold">:</span>
-
-<span class="ansi-red-intense-fg ansi-bold">KeyError</span>: &#39;tk&#39;
-</pre></div></div>
-</div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_consumer.head(3)
@@ -465,7 +443,8 @@ Error : Object Model not set yet.
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
 <div>
@@ -525,7 +504,7 @@ Error : Object Model not set yet.
 <section id="id1">
 <h3>Metadata<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_metadata=s3s.generate_element_metadata_dataframe(element_type=s3s.ObjectTypes.Pipe, properties=[&quot;DN&quot;, &quot;Kvr&quot;], geometry=True, end_nodes=True)
@@ -537,16 +516,16 @@ Error : Object Model not set yet.
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2025-10-17 11:58:23,709] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.Pipe
-[2025-10-17 11:58:23,713] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
-[2025-10-17 11:58:23,714] DEBUG in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 2 metadata properties.
-[2025-10-17 11:58:23,716] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving metadata properties [&#39;DN&#39;, &#39;Kvr&#39;], geometry, end nodes...
-[2025-10-17 11:58:23,824] INFO in sir3stoolkit.mantle.dataframes: [metadata] 2 non-empty end node columns were created)
-[2025-10-17 11:58:23,828] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (524, 6)
+[2025-10-17 13:22:34,775] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.Pipe
+[2025-10-17 13:22:34,784] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2025-10-17 13:22:34,786] DEBUG in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 2 metadata properties.
+[2025-10-17 13:22:34,787] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving metadata properties [&#39;DN&#39;, &#39;Kvr&#39;], geometry, end nodes...
+[2025-10-17 13:22:34,979] INFO in sir3stoolkit.mantle.dataframes: [metadata] 2 non-empty end node columns were created)
+[2025-10-17 13:22:34,979] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (524, 6)
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_metadata.head(3)
@@ -554,7 +533,8 @@ Error : Object Model not set yet.
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
 <div>
@@ -619,7 +599,7 @@ Error : Object Model not set yet.
 <section id="Result-data">
 <h3>Result data<a class="headerlink" href="#Result-data" title="Link to this heading"></a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_results=s3s.generate_element_results_dataframe(s3s.ObjectTypes.Pipe, [&quot;QMAV&quot;])
@@ -631,18 +611,18 @@ Error : Object Model not set yet.
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2025-10-17 11:58:23,855] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
-[2025-10-17 11:58:23,856] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] No timestamps were given. Checking available simulation timestamps (SIR3S_Model.GetTimeStamps()).
-[2025-10-17 11:58:23,917] INFO in sir3stoolkit.mantle.dataframes: 25 simulation timestamps will be used.
-[2025-10-17 11:58:23,987] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 25 valid timestamps will be used.
-[2025-10-17 11:58:23,995] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieved 524 tks.
-[2025-10-17 11:58:23,998] INFO in sir3stoolkit.mantle.dataframes: [results] Using 1 result properties.
-[2025-10-17 11:58:23,998] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result properties...
-[2025-10-17 11:58:25,255] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (13100, 3)
+[2025-10-17 13:22:35,016] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
+[2025-10-17 13:22:35,018] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] No timestamps were given. Checking available simulation timestamps (SIR3S_Model.GetTimeStamps()).
+[2025-10-17 13:22:35,189] INFO in sir3stoolkit.mantle.dataframes: 25 simulation timestamps will be used.
+[2025-10-17 13:22:35,287] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 25 valid timestamps will be used.
+[2025-10-17 13:22:35,315] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieved 524 tks.
+[2025-10-17 13:22:35,319] INFO in sir3stoolkit.mantle.dataframes: [results] Using 1 result properties.
+[2025-10-17 13:22:35,319] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result properties...
+[2025-10-17 13:22:37,094] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (13100, 3)
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_results.head(3)
@@ -650,7 +630,8 @@ Error : Object Model not set yet.
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
 <div>
@@ -700,7 +681,7 @@ Error : Object Model not set yet.
 </div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_results[&quot;QMAV&quot;]=df_pipes_results[&quot;QMAV&quot;].astype(float)
@@ -708,7 +689,7 @@ Error : Object Model not set yet.
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_results[&quot;QMAV&quot;]=df_pipes_results[&quot;QMAV&quot;].abs()
@@ -716,7 +697,7 @@ Error : Object Model not set yet.
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_results=df_pipes_results.rename(columns={&quot;QMAV&quot;: &quot;QMAVAbs&quot;})
@@ -727,7 +708,7 @@ Error : Object Model not set yet.
 <section id="id3">
 <h3>Merge<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes = pd.merge(
@@ -740,7 +721,7 @@ Error : Object Model not set yet.
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes=df_pipes[df_pipes[&quot;Kvr&quot;] == &quot;1&quot;]
@@ -748,7 +729,7 @@ Error : Object Model not set yet.
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes.head(3)
@@ -756,7 +737,8 @@ Error : Object Model not set yet.
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+</pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
 <div>
@@ -829,7 +811,7 @@ Error : Object Model not set yet.
 <section id="Plotting-Constants">
 <h3>Plotting Constants<a class="headerlink" href="#Plotting-Constants" title="Link to this heading"></a></h3>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def parse_point_string(s):
@@ -844,7 +826,7 @@ Error : Object Model not set yet.
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_consumer[&#39;geometry&#39;] = df_consumer[&#39;geometry&#39;].apply(parse_point_string)
@@ -858,7 +840,7 @@ y_mean = df_consumer[&#39;geometry&#39;].apply(lambda p: p.y if p else None).mea
 <section id="Change-datatypes">
 <h3>Change datatypes<a class="headerlink" href="#Change-datatypes" title="Link to this heading"></a></h3>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><br/><span></span>df_pipes[&#39;DN&#39;] = pd.to_numeric(df_pipes[&#39;DN&#39;], errors=&#39;coerce&#39;)
@@ -870,7 +852,7 @@ df_pipes[&#39;QMAVAbs&#39;] = pd.to_numeric(df_pipes[&#39;QMAVAbs&#39;], errors=
 <section id="Filter-rows">
 <h3>Filter rows<a class="headerlink" href="#Filter-rows" title="Link to this heading"></a></h3>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes = df_pipes[df_pipes[&#39;DN&#39;] != 999]
@@ -881,7 +863,7 @@ df_pipes[&#39;QMAVAbs&#39;] = pd.to_numeric(df_pipes[&#39;QMAVAbs&#39;], errors=
 <section id="Turn-into-gdf">
 <h3>Turn into gdf<a class="headerlink" href="#Turn-into-gdf" title="Link to this heading"></a></h3>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes[&#39;geometry&#39;] = df_pipes[&#39;geometry&#39;].apply(wkt.loads)
@@ -889,7 +871,7 @@ df_pipes[&#39;QMAVAbs&#39;] = pd.to_numeric(df_pipes[&#39;QMAVAbs&#39;], errors=
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>gdf_pipes = gpd.GeoDataFrame(df_pipes, geometry=&#39;geometry&#39;)
@@ -897,7 +879,7 @@ df_pipes[&#39;QMAVAbs&#39;] = pd.to_numeric(df_pipes[&#39;QMAVAbs&#39;], errors=
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[34]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>gdf_pipes=gdf_pipes.set_crs(epsg=4326, inplace=True)
@@ -905,7 +887,7 @@ df_pipes[&#39;QMAVAbs&#39;] = pd.to_numeric(df_pipes[&#39;QMAVAbs&#39;], errors=
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>gdf_pipes.head(3)
@@ -913,7 +895,8 @@ df_pipes[&#39;QMAVAbs&#39;] = pd.to_numeric(df_pipes[&#39;QMAVAbs&#39;], errors=
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
+</pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
 <div>
@@ -982,31 +965,50 @@ df_pipes[&#39;QMAVAbs&#39;] = pd.to_numeric(df_pipes[&#39;QMAVAbs&#39;], errors=
 </table>
 </div></div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</section>
+</section>
+</section>
+<section id="Plotting-(WORK-IN-PROGRESS)">
+<h1>Plotting (WORK IN PROGRESS)<a class="headerlink" href="#Plotting-(WORK-IN-PROGRESS)" title="Link to this heading"></a></h1>
+<p>The function used below is not yet released.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[48]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import matplotlib.pyplot as plt
-</pre></div>
-</div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>layer = s3s.create_pipe_layer(
+
+fig, ax = plt.subplots(figsize=s3s.din_figsize(&quot;A3&quot;, orientation=&quot;portrait&quot;))
+
+
+# 1) Create the first layer (no color mixing)
+layer1 = s3s.create_pipe_layer(
     gdf=gdf_pipes,
     geometry_col=&quot;geometry&quot;,
-    #width_scaling_col=&quot;DN&quot;,    # example
-    color_mixing_col=&quot;DN&quot;,
     cmap=&quot;viridis&quot;,
+    width_scaling_col=&quot;DN&quot;,
+    #color_mixing_col=&quot;QMAVAbs&quot;,
+    min_width = 10,
+    max_width = 30,
+    default_color = (0.5, 0.5, 0.5, 1)
 )
 
-ax = layer[&quot;axes&quot;]
-# Optional colorbar if you used color_mixing_col:
-if layer[&quot;norm&quot;] is not None:
-    plt.colorbar(layer[&quot;artist&quot;], ax=ax, label=&quot;Flow [kg/s]&quot;)
-plt.title(&quot;Network Pipes&quot;)
+ax = layer1[&quot;axes&quot;]  # grab axes from the first layer
+
+layer2 = s3s.create_pipe_layer(
+    gdf=gdf_pipes,
+    ax=ax,
+    geometry_col=&quot;geometry&quot;,
+    cmap=&quot;viridis&quot;,
+    width_scaling_col=&quot;QMAVAbs&quot;,
+    color_mixing_col=&quot;QMAVAbs&quot;,
+    min_width = 5,
+    max_width = 10,
+)
+
+layer1[&quot;artist&quot;].set_zorder(1)
+layer2[&quot;artist&quot;].set_zorder(10)
+
+ax.set_title(&quot;Network Pipes&quot;)
 plt.show()
 </pre></div>
 </div>
@@ -1015,11 +1017,9 @@ plt.show()
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/examples_Toolkit_Example2_60_0.png" src="../_images/examples_Toolkit_Example2_60_0.png" />
+<img alt="../_images/examples_Toolkit_Example2_61_0.png" src="../_images/examples_Toolkit_Example2_61_0.png" />
 </div>
 </div>
-</section>
-</section>
 </section>
 
 
