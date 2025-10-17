@@ -113,15 +113,7 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r&quot;C:\3S\SIR 3S Entwicklung\SirGraf-90-15-00-16_Quebec_x64&quot; #change to local path
-</pre></div>
-</div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import sir3stoolkit
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r&quot;C:\3S\SIR 3S Entwicklung\SirGraf-90-15-00-19_x64&quot; #change to local path
 </pre></div>
 </div>
 </div>
@@ -134,24 +126,24 @@
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sir3stoolkit
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>wrapper
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&lt;module &#39;sir3stoolkit&#39; from &#39;C:\\Users\\aUsername\\3S\\sir3stoolkit\\src\\sir3stoolkit\\__init__.py&#39;&gt;
+&lt;module &#39;sir3stoolkit.core.wrapper&#39; from &#39;C:\\Users\\aUsername\\3S\\sir3stoolkit\\src\\sir3stoolkit\\core\\wrapper.py&#39;&gt;
 </pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>wrapper.Initialize_Toolkit(SIR3S_SIRGRAF_DIR)
@@ -164,7 +156,7 @@
 <p>from sir3stoolkit.mantle import dataframe</p>
 <p>We can just import the whole mantle to get all higher level modeling functions.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sir3stoolkit.mantle import mantle
@@ -172,10 +164,34 @@
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s = mantle.Mantle_SIR3S_Model()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Initialization complete
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sir3stoolkit.mantle import dataframes
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s = dataframes.Dataframes_SIR3S_Model()
 </pre></div>
 </div>
 </div>
@@ -192,7 +208,7 @@ Initialization complete
 <section id="Additional">
 <h2>Additional<a class="headerlink" href="#Additional" title="Link to this heading"></a></h2>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
@@ -211,7 +227,7 @@ from shapely import wkt
 <section id="Open-Model">
 <h1>Open Model<a class="headerlink" href="#Open-Model" title="Link to this heading"></a></h1>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.OpenModel(dbName=r&quot;C:\Users\aUsername\3S\PT3S\PT3S\Examples\Example3.db3&quot;,
@@ -240,7 +256,7 @@ Model is open for further operation
 <section id="Metadata">
 <h3>Metadata<a class="headerlink" href="#Metadata" title="Link to this heading"></a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_consumer_metadata=s3s.generate_element_metadata_dataframe(element_type=s3s.ObjectTypes.DistrictHeatingConsumer, properties=[], geometry=True)
@@ -252,16 +268,16 @@ Model is open for further operation
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2025-10-07 14:23:57,478] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.DistrictHeatingConsumer
-[2025-10-07 14:23:57,486] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieved 337 element(s) of element type ObjectTypes.DistrictHeatingConsumer.
-[2025-10-07 14:23:57,499] DEBUG in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 0 metadata properties.
-[2025-10-07 14:23:57,500] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving geometry...
-[2025-10-07 14:23:57,530] INFO in sir3stoolkit.mantle.dataframes: [metadata] 0 non-empty end node columns were created)
-[2025-10-07 14:23:57,532] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (337, 2)
+[2025-10-17 09:51:08,527] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.DistrictHeatingConsumer
+[2025-10-17 09:51:08,543] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieved 337 element(s) of element type ObjectTypes.DistrictHeatingConsumer.
+[2025-10-17 09:51:08,560] DEBUG in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 0 metadata properties.
+[2025-10-17 09:51:08,560] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving geometry...
+[2025-10-17 09:51:08,593] INFO in sir3stoolkit.mantle.dataframes: [metadata] 0 non-empty end node columns were created)
+[2025-10-17 09:51:08,603] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (337, 2)
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_consumer_metadata.head(3)
@@ -269,7 +285,7 @@ Model is open for further operation
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -319,7 +335,7 @@ Model is open for further operation
 <section id="Result-Data">
 <h3>Result Data<a class="headerlink" href="#Result-Data" title="Link to this heading"></a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_consumer_results=s3s.generate_element_results_dataframe(s3s.ObjectTypes.DistrictHeatingConsumer, [&quot;W&quot;])
@@ -331,18 +347,18 @@ Model is open for further operation
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2025-10-07 14:23:57,561] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.DistrictHeatingConsumer
-[2025-10-07 14:23:57,562] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] No timestamps were given. Checking available simulation timestamps (SIR3S_Model.GetTimeStamps()).
-[2025-10-07 14:23:57,649] INFO in sir3stoolkit.mantle.dataframes: 25 simulation timestamps will be used.
-[2025-10-07 14:23:57,711] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 25 valid timestamps will be used.
-[2025-10-07 14:23:57,713] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieved 337 tks.
-[2025-10-07 14:23:57,714] INFO in sir3stoolkit.mantle.dataframes: [results] Using 1 result properties.
-[2025-10-07 14:23:57,715] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result properties...
-[2025-10-07 14:23:58,363] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (8425, 3)
+[2025-10-17 09:51:08,654] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.DistrictHeatingConsumer
+[2025-10-17 09:51:08,656] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] No timestamps were given. Checking available simulation timestamps (SIR3S_Model.GetTimeStamps()).
+[2025-10-17 09:51:08,776] INFO in sir3stoolkit.mantle.dataframes: 25 simulation timestamps will be used.
+[2025-10-17 09:51:08,876] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 25 valid timestamps will be used.
+[2025-10-17 09:51:08,880] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieved 337 tks.
+[2025-10-17 09:51:08,882] INFO in sir3stoolkit.mantle.dataframes: [results] Using 1 result properties.
+[2025-10-17 09:51:08,884] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result properties...
+[2025-10-17 09:51:09,840] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (8425, 3)
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_consumer_results.head(3)
@@ -350,7 +366,7 @@ Model is open for further operation
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -404,7 +420,7 @@ Model is open for further operation
 <section id="Merge">
 <h3>Merge<a class="headerlink" href="#Merge" title="Link to this heading"></a></h3>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_consumer = pd.merge(
@@ -417,7 +433,7 @@ Model is open for further operation
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_consumer.head(3)
@@ -425,7 +441,7 @@ Model is open for further operation
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -486,7 +502,7 @@ Model is open for further operation
 <section id="id1">
 <h3>Metadata<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[43]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_metadata=s3s.generate_element_metadata_dataframe(element_type=s3s.ObjectTypes.Pipe, properties=[&quot;DN&quot;, &quot;Kvr&quot;], geometry=True, end_nodes=True)
@@ -498,16 +514,16 @@ Model is open for further operation
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2025-10-07 14:37:00,169] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.Pipe
-[2025-10-07 14:37:00,170] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
-[2025-10-07 14:37:00,171] DEBUG in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 2 metadata properties.
-[2025-10-07 14:37:00,172] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving metadata properties [&#39;DN&#39;, &#39;Kvr&#39;], geometry, end nodes...
-[2025-10-07 14:37:00,267] INFO in sir3stoolkit.mantle.dataframes: [metadata] 2 non-empty end node columns were created)
-[2025-10-07 14:37:00,267] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (524, 6)
+[2025-10-17 09:51:09,922] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.Pipe
+[2025-10-17 09:51:09,926] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2025-10-17 09:51:09,929] DEBUG in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 2 metadata properties.
+[2025-10-17 09:51:09,932] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving metadata properties [&#39;DN&#39;, &#39;Kvr&#39;], geometry, end nodes...
+[2025-10-17 09:51:10,143] INFO in sir3stoolkit.mantle.dataframes: [metadata] 2 non-empty end node columns were created)
+[2025-10-17 09:51:10,156] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (524, 6)
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[44]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_metadata.head(3)
@@ -515,7 +531,7 @@ Model is open for further operation
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[44]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -581,7 +597,7 @@ Model is open for further operation
 <section id="Result-data">
 <h3>Result data<a class="headerlink" href="#Result-data" title="Link to this heading"></a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_results=s3s.generate_element_results_dataframe(s3s.ObjectTypes.Pipe, [&quot;QMAV&quot;])
@@ -593,18 +609,18 @@ Model is open for further operation
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2025-10-07 14:23:58,560] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
-[2025-10-07 14:23:58,561] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] No timestamps were given. Checking available simulation timestamps (SIR3S_Model.GetTimeStamps()).
-[2025-10-07 14:23:58,614] INFO in sir3stoolkit.mantle.dataframes: 25 simulation timestamps will be used.
-[2025-10-07 14:23:58,682] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 25 valid timestamps will be used.
-[2025-10-07 14:23:58,682] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieved 524 tks.
-[2025-10-07 14:23:58,682] INFO in sir3stoolkit.mantle.dataframes: [results] Using 1 result properties.
-[2025-10-07 14:23:58,688] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result properties...
-[2025-10-07 14:23:59,882] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (13100, 3)
+[2025-10-17 09:51:10,199] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
+[2025-10-17 09:51:10,199] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] No timestamps were given. Checking available simulation timestamps (SIR3S_Model.GetTimeStamps()).
+[2025-10-17 09:51:10,295] INFO in sir3stoolkit.mantle.dataframes: 25 simulation timestamps will be used.
+[2025-10-17 09:51:10,380] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 25 valid timestamps will be used.
+[2025-10-17 09:51:10,380] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieved 524 tks.
+[2025-10-17 09:51:10,385] INFO in sir3stoolkit.mantle.dataframes: [results] Using 1 result properties.
+[2025-10-17 09:51:10,386] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result properties...
+[2025-10-17 09:51:12,161] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (13100, 3)
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_results.head(3)
@@ -612,7 +628,7 @@ Model is open for further operation
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -663,7 +679,7 @@ Model is open for further operation
 </div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_results[&quot;QMAV&quot;]=df_pipes_results[&quot;QMAV&quot;].astype(float)
@@ -671,7 +687,7 @@ Model is open for further operation
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_results[&quot;QMAV&quot;]=df_pipes_results[&quot;QMAV&quot;].abs()
@@ -679,7 +695,7 @@ Model is open for further operation
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_results=df_pipes_results.rename(columns={&quot;QMAV&quot;: &quot;QMAVAbs&quot;})
@@ -690,7 +706,7 @@ Model is open for further operation
 <section id="id3">
 <h3>Merge<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes = pd.merge(
@@ -703,7 +719,7 @@ Model is open for further operation
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes=df_pipes[df_pipes[&quot;Kvr&quot;] == &quot;1&quot;]
@@ -711,7 +727,7 @@ Model is open for further operation
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes.head(3)
@@ -719,7 +735,7 @@ Model is open for further operation
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -745,6 +761,8 @@ Model is open for further operation
       <th>DN</th>
       <th>Kvr</th>
       <th>geometry</th>
+      <th>fkKI</th>
+      <th>fkKK</th>
       <th>timestamp</th>
       <th>QMAVAbs</th>
     </tr>
@@ -756,6 +774,8 @@ Model is open for further operation
       <td>999</td>
       <td>1</td>
       <td>LINESTRING (713738.296567236 5579219.90221333,...</td>
+      <td>5129584372458662150</td>
+      <td>5332825919690090061</td>
       <td>2023-02-13 00:00:00.000 +01:00</td>
       <td>3.667083e-10</td>
     </tr>
@@ -765,6 +785,8 @@ Model is open for further operation
       <td>999</td>
       <td>1</td>
       <td>LINESTRING (713738.296567236 5579219.90221333,...</td>
+      <td>5129584372458662150</td>
+      <td>5332825919690090061</td>
       <td>2023-02-13 01:00:00.000 +01:00</td>
       <td>1.440640e-09</td>
     </tr>
@@ -774,6 +796,8 @@ Model is open for further operation
       <td>999</td>
       <td>1</td>
       <td>LINESTRING (713738.296567236 5579219.90221333,...</td>
+      <td>5129584372458662150</td>
+      <td>5332825919690090061</td>
       <td>2023-02-13 02:00:00.000 +01:00</td>
       <td>1.414446e-09</td>
     </tr>
@@ -785,7 +809,7 @@ Model is open for further operation
 <section id="Plotting-Constants">
 <h3>Plotting Constants<a class="headerlink" href="#Plotting-Constants" title="Link to this heading"></a></h3>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def parse_point_string(s):
@@ -800,7 +824,7 @@ Model is open for further operation
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[34]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_consumer[&#39;geometry&#39;] = df_consumer[&#39;geometry&#39;].apply(parse_point_string)
@@ -814,7 +838,7 @@ y_mean = df_consumer[&#39;geometry&#39;].apply(lambda p: p.y if p else None).mea
 <section id="Change-datatypes">
 <h3>Change datatypes<a class="headerlink" href="#Change-datatypes" title="Link to this heading"></a></h3>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><br/><span></span>df_pipes[&#39;DN&#39;] = pd.to_numeric(df_pipes[&#39;DN&#39;], errors=&#39;coerce&#39;)
@@ -826,7 +850,7 @@ df_pipes[&#39;QMAVAbs&#39;] = pd.to_numeric(df_pipes[&#39;QMAVAbs&#39;], errors=
 <section id="Filter-rows">
 <h3>Filter rows<a class="headerlink" href="#Filter-rows" title="Link to this heading"></a></h3>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[36]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes = df_pipes[df_pipes[&#39;DN&#39;] != 999]
@@ -837,7 +861,7 @@ df_pipes[&#39;QMAVAbs&#39;] = pd.to_numeric(df_pipes[&#39;QMAVAbs&#39;], errors=
 <section id="Turn-into-gdf">
 <h3>Turn into gdf<a class="headerlink" href="#Turn-into-gdf" title="Link to this heading"></a></h3>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[37]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes[&#39;geometry&#39;] = df_pipes[&#39;geometry&#39;].apply(wkt.loads)
@@ -845,7 +869,7 @@ df_pipes[&#39;QMAVAbs&#39;] = pd.to_numeric(df_pipes[&#39;QMAVAbs&#39;], errors=
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[38]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>gdf_pipes = gpd.GeoDataFrame(df_pipes, geometry=&#39;geometry&#39;)
@@ -853,7 +877,7 @@ df_pipes[&#39;QMAVAbs&#39;] = pd.to_numeric(df_pipes[&#39;QMAVAbs&#39;], errors=
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[39]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>gdf_pipes=gdf_pipes.set_crs(epsg=4326, inplace=True)
