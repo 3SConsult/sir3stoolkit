@@ -26,13 +26,13 @@ This gives you a variety of opportunities, e.g.:
 
 * The analysis of model data and simulation results can leverage the entire Python data science ecosystem, enabling powerful insights using tools like pandas, NumPy, and others.
 
-On top of this core, higher-level functionality is provided in the so-called mantle, enabling more powerful and intuitive interactions with SIR 3S models. 
-
 .. image:: _static/images/Toolkit_structure_core_mantle.png
    :alt: Toolkit Structure
    :align: left
    :width: 280px
 
+On top of this core, higher-level functionality is provided in the so-called mantle, enabling more powerful and intuitive interactions with SIR 3S models. 
+|
 
 What is the difference between SIR 3S Toolkit and PT3S?
 -------------------------------------------------------
