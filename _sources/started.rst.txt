@@ -26,7 +26,13 @@ This gives you a variety of opportunities, e.g.:
 
 * The analysis of model data and simulation results can leverage the entire Python data science ecosystem, enabling powerful insights using tools like pandas, NumPy, and others.
 
-On top of this core, higher-level functionality is provided, enabling more powerful and intuitive interactions with SIR 3S models. 
+On top of this core, higher-level functionality is provided in the so-called mantle, enabling more powerful and intuitive interactions with SIR 3S models. 
+
+.. image:: _static/images/Toolkit_structure_core_mantle.png
+   :alt: Toolkit Structure
+   :align: left
+   :width: 280px
+
 
 What is the difference between SIR 3S Toolkit and PT3S?
 -------------------------------------------------------
@@ -63,5 +69,11 @@ To install the SIR 3S Toolkit, follow these steps:
    .. code-block:: bash
 
        pip install sir3stoolkit
+
+4. **Optional: Install mantle dependencies:** The mantle of the sir3stoolkit contains many additional functions. To reduce the dependencies required for the core installation, they have to be installed seperately if needed. Open a cmd in the desired Python environment (e.g. Anaconda Python installation) and enter the following commands to install mantle dependencies of the SIR 3S Toolkit:
+
+   .. code-block:: bash
+
+       pip install sir3stoolkit[mantle]
        
 To learn how the SIR 3S Toolkit is used in practice, take a look at the :doc:`examples` page.
