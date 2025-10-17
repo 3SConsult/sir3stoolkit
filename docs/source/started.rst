@@ -22,16 +22,16 @@ At its core, the package wraps basic functionality of SIR 3S, offering a low-lev
 A variety of method operations — such as Get, Set, Add, Delete, and Insert — are available to directly manipulate model components.
 This gives you a variety of opportunities, e.g.:
 
+.. image:: _static/images/Toolkit_structure_core_mantle.png
+   :alt: Toolkit Structure
+   :align: left
+   :width: 280px
+
 * You can build models solely from scratch, defining nodes, pipes, and more, flexibly adapted to your available data sources, thus extending SIR 3S's built-in import tools.
 
 * The analysis of model data and simulation results can leverage the entire Python data science ecosystem, enabling powerful insights using tools like pandas, NumPy, and others.
 
-.. image:: _static/images/Toolkit_structure_core_mantle.png
-   :alt: Toolkit Structure
-   :align: left
-   :width: 90px
-
-On top of this core, higher-level functionality is provided in the so-called mantle, enabling more powerful and intuitive interactions with SIR 3S models. \
+On top of this core, higher-level functionality is provided in the so-called mantle, enabling more powerful and intuitive interactions with SIR 3S models. 
 
 What is the difference between SIR 3S Toolkit and PT3S?
 -------------------------------------------------------
