@@ -24,8 +24,8 @@ This gives you a variety of opportunities, e.g.:
 
 .. image:: _static/images/Toolkit_structure_core_mantle.png
    :alt: Toolkit Structure
-   :align: left
-   :width: 280px
+   :align: right
+   :width: 200px
 
 * You can build models solely from scratch, defining nodes, pipes, and more, flexibly adapted to your available data sources, thus extending SIR 3S's built-in import tools.
 
