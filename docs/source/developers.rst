@@ -5,7 +5,7 @@ Welcome to the Developers page! This section provides resources and instructions
 
 - **Toolkit Contact**: If you encounter an issue with the Toolkit that should be fixed or have an idea for enhancement, feel free to create an new entry on our `GitHub forum <https://github.com/3SConsult/sir3stoolkit/issues>`_. Please include the Toolkit and SirGraf version you are using and, if available, the Jupyter Notebook you are working with.
 
-- **Documentation Contact**: For additional information regarding this documentation, and contribution inquiries, please contact `jablonski@3sconsult.de <mailto:jablonski@3sconsult.de>`_.
+- **Documentation Contact**: For additional information regarding this documentation, and contribution inquiries, please contact `sir3stoolkit@3sconsult.de <mailto:sir3stoolkit@3sconsult.de>`_.
 
 - **GitHub Repository:** `GitHub Repository <https://github.com/3SConsult/sir3stoolkit>`_.
 
