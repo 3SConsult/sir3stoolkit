@@ -23,10 +23,17 @@ The release notes indicate what kind of release it is.
 90-15 Quebec
 ------------
 
+Version 90.15.4 (TB Released)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- For SIR 3S Version: 90-15-00-19
+- Implementation of Higher level functions (mantle):
+   - nx-Graph generation from SIR 3S model
+
 Version 90.15.3 (Initial Release)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-- First official public release of the SIR 3S Toolkit
+- First official public release of the SIR 3S Toolkit (for SIR 3S Version: 90-15-00-16)
 - Introduced core wrapping API for SIR 3S object model (nodes, pipes, etc.)
 - Compatible with SIR 3S 90-15 Quebec (requires Sir3S_Toolkit.dll)
 - Included example workflows and basic simulation access
