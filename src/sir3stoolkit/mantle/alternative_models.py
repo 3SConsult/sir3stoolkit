@@ -9,6 +9,8 @@ import pandapipes as pp
 import pandas as pd
 from shapely import wkt
 
+import networkx as nx
+
 import logging
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -27,7 +29,19 @@ class Alternative_Models_SIR3S_Model(Dataframes_SIR3S_Model):
     """
     def SIR_3S_to_pandapipes(self):
         """
-        This function returns a pandapipes network that is a copy of the open SIR 3S network.
+        Converts the currently open SIR 3S network into a pandapipes network.
+
+        This function creates a pandapipes network that mirrors the structure of the SIR 3S network,
+        including junctions (nodes), pipes, and external sources/sinks. Only elements of type Node and Pipe
+        are included; FWVB (district heating consumers) are excluded.
+
+        Returns
+        -------
+        pandapipes.pandapipesNet
+            A pandapipes network object containing:
+            - Junctions with metadata and result values (pressure, temperature, flow).
+            - Pipes with geometry and physical parameters.
+            - External grids (sources) and sinks based on node type and flow direction.
         """
         net = pp.create_empty_network(fluid="water")
 
@@ -108,3 +122,82 @@ class Alternative_Models_SIR3S_Model(Dataframes_SIR3S_Model):
                 )
 
         return net
+    
+    def SIR_3S_to_nx_graph(self):
+        """
+        Build a directed NetworkX graph from SIR 3S model.
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        nx.DiGraph
+            Directed graph with nodes and edges populated from SIR 3S model.
+        """
+        logger.info("[graph] Building nx graph...")
+
+        # --- Nodes ---
+        try:
+            df_nodes = self.generate_element_metadata_dataframe(
+                element_type=self.ObjectTypes.Node,
+                geometry=True
+            )
+            logger.info(f"[graph] Retrieved {len(df_nodes)} nodes.")
+        except Exception as e:
+            logger.error(f"[graph] Failed to retrieve node metadata: {e}")
+            return nx.DiGraph()
+
+        # --- Edges ---
+        edge_types = [
+            'Pipe', 'Valve', 'SafetyValve', 'PressureRegulator', 'DifferentialRegulator',
+            'FlapValve', 'PhaseSeparation', 'FlowControlUnit', 'ControlValve', 'Pump',
+            'DistrictHeatingConsumer', 'DistrictHeatingFeeder', 'Compressor', 'HeaterCooler',
+            'HeatExchanger', 'HeatFeederConsumerStation', 'RART_ControlMode'
+        ]
+
+        try:
+            enum_members = self.__get_object_type_enums(edge_types, self.ObjectTypes)
+            dfs = []
+            for em in enum_members:
+                df = self.generate_element_metadata_dataframe(
+                    element_type=em,
+                    geometry=True,
+                    end_nodes=True,
+                    element_type_col=True
+                )
+                dfs.append(df)
+            df_edges = pd.concat(dfs, ignore_index=True)
+            logger.info(f"[graph] Retrieved {len(df_edges)} edges from {len(enum_members)} element types.")
+        except Exception as e:
+            logger.error(f"[graph] Failed to retrieve edge metadata: {e}")
+            return nx.DiGraph()
+
+        # --- Build graph ---
+        G = nx.DiGraph()
+
+        # Add nodes with attributes
+        logger.info("[graph] Adding nodes to graph...")
+        for _, row in df_nodes.iterrows():
+            try:
+                attr = row.to_dict()
+                attr['geometry'] = wkt.loads(row['geometry'])  # Ensure geometry is parsed
+                G.add_node(row['tk'], **attr)
+            except Exception as e:
+                logger.warning(f"[graph] Failed to add node '{row['tk']}': {e}")
+
+        # Add edges with attributes
+        logger.info("[graph] Adding edges to graph...")
+        for _, row in df_edges.iterrows():
+            try:
+                attr = row.to_dict()
+                attr['geometry'] = wkt.loads(row['geometry'])  # Ensure geometry is parsed
+                G.add_edge(row['fkKI'], row['fkKK'], **attr)
+            except Exception as e:
+                logger.warning(f"[graph] Failed to add edge from '{row['fkKI']}' to '{row['fkKK']}': {e}")
+
+        logger.info(f"[graph] Graph construction complete. Nodes: {G.number_of_nodes()}, Edges: {G.number_of_edges()}")
+        return G
+    
+    def __get_object_type_enums(self, names, enum_class):
+                    return [getattr(enum_class, name) for name in names if hasattr(enum_class, name)]

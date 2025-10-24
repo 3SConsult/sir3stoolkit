@@ -14,6 +14,8 @@ from dataclasses import dataclass, field
 from typing import List, Optional, Union
 from enum import Enum
 import io
+from typing import List, Tuple, Any
+from enum import Enum
 
 import logging
 logger = logging.getLogger(__name__)
@@ -123,7 +125,7 @@ class Dataframes_SIR3S_Model(SIR3S_Model):
 
     def __resolve_given_metadata_properties(
         self,
-        element_type: Union[str, "Enum"],
+        element_type: Enum,
         properties: Optional[List[str]] = None,
     ) -> List[str]:
         """
@@ -184,18 +186,18 @@ class Dataframes_SIR3S_Model(SIR3S_Model):
 
     def generate_element_metadata_dataframe(
         self,
-        element_type: Union[str, "Enum"],
+        element_type: Enum,
         properties: Optional[List[str]] = None,
         geometry: Optional[bool] = False,
-        end_nodes: Optional[bool] = False
+        end_nodes: Optional[bool] = False,
+        element_type_col: Optional[bool] = False
     ) -> pd.DataFrame:
         """
         Generate a dataframe with metadata (static) properties for all devices of a given element type.
 
         Parameters
         ----------
-        element_type : Enum or str
-            The element type (e.g., self.ObjectTypes.Node).
+        element_type : Enum The element type (e.g., self.ObjectTypes.Node).
         properties : list[str], optional
             If properties=None => All available properties will be used
             If properties=[] => No properties will be used
@@ -223,7 +225,11 @@ class Dataframes_SIR3S_Model(SIR3S_Model):
         except Exception as e:
             logger.error(f"[metadata] Error retrieving element tks: {e}")
             return pd.DataFrame()
-
+        
+        if len(tks) < 1:
+            logger.error(f"[metadata] No elements exist of this element type {element_type}.")
+            return pd.DataFrame()
+        
         # --- Resolve given metadata properties ---
         metadata_props = self.__resolve_given_metadata_properties(element_type=element_type, properties=properties)
 
@@ -272,10 +278,14 @@ class Dataframes_SIR3S_Model(SIR3S_Model):
                     row["fkKI"], row["fkKK"], row["fkKI2"], row["fkKK2"] = endnode_tuple
                 except Exception as e:
                     logger.warning(f"[metadata] Failed to get end nodes for tk '{tk}': {e}")
+            
+             # Add element type col if requested
+            if element_type_col:
+                row["element type"] = str(element_type).split(".")[-1]
 
             rows.append(row)
 
-        # --- Post-processing ---
+        # --- Endnodes Post Processing ---
         endnode_cols = ["fkKI", "fkKK", "fkKI2", "fkKK2"]
         used_cols = []
 
@@ -288,13 +298,14 @@ class Dataframes_SIR3S_Model(SIR3S_Model):
 
         logger.info(f"[metadata] {len(used_cols)} non-empty end node columns were created)")
 
+        # --- Dataframe creation ---
         df = pd.DataFrame(rows)
         logger.info(f"[metadata] Done. Shape: {df.shape}")
         return df
 
     def generate_element_results_dataframe(
         self,
-        element_type: Union[str, "Enum"],
+        element_type: Enum,
         properties: Optional[List[str]] = None,
         timestamps: Optional[List[str]] = None,
     ) -> pd.DataFrame:
@@ -380,7 +391,7 @@ class Dataframes_SIR3S_Model(SIR3S_Model):
 
     def apply_metadata_property_updates(
         self,
-        element_type: Union[str, Enum],
+        element_type: Enum,
         updates_df: pd.DataFrame,
         properties_new: Optional[List[str]] = None,
         tag: Optional[str] = "_new",
@@ -394,7 +405,7 @@ class Dataframes_SIR3S_Model(SIR3S_Model):
 
         Parameters
         ----------
-        element_type : Union[str, Enum]
+        element_type : Enum
             The element type to update (e.g., self.ObjectTypes.Pipe).
         updates_df : pd.DataFrame
             Input with at least:
@@ -461,3 +472,34 @@ class Dataframes_SIR3S_Model(SIR3S_Model):
         if(self.GetNetworkType=="NetworkType.Undefined"):
             is_a_model_open = False
         return is_a_model_open
+    
+    def __sort_properties_into_metadata_and_results(
+        self, 
+        element_type: Enum,
+        properties: List[str],
+    ) -> Tuple[List[str], List[str], List[str]]:
+        """
+        Sorts the given properties into three categories:
+        - Metadata properties
+        - Result properties
+        - Uncategorized properties (not found in either metadata or result properties)
+        
+        Args:
+            element_type (Enum): The type of element to query properties for.
+            properties (List[str]): The list of properties to sort.
+        
+        Returns:
+            Tuple[List[str], List[str], List[str]]: A tuple containing three lists:
+                - metadata_matches
+                - result_matches
+                - uncategorized
+        """
+        metadata_properties = self.GetPropertiesofElementType(element_type=element_type)
+        result_properties = self.GetResultProperties_from_elementType(elementType=element_type)
+
+        metadata_matches = [prop for prop in properties if prop in metadata_properties]
+        result_matches = [prop for prop in properties if prop in result_properties]
+        uncategorized = [prop for prop in properties if prop not in metadata_properties and prop not in result_properties]
+
+        return metadata_matches, result_matches, uncategorized
+    

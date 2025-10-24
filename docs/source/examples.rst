@@ -123,9 +123,18 @@ View: `Notebook <examples/Toolkit_Example2.html>`_ | Download: :download:`Notebo
 Example 3: Pandapipes
 ~~~~~~~~~~~~~~~~~~~~~
 
-This Example demonstrates how to transform a SIR 3S model to a pandapipes model using the Alternative_Models_SIR3S_Model() class extending Dataframes_SIR3S_Model().
+This Example demonstrates how to generate a pandapipes network based on a SIR 3S model.
 
 View: `Notebook <examples/Toolkit_Example3.html>`_ | Download: :download:`Notebook <examples/Toolkit_Example3.ipynb>`.
+
+.. _Tex3:
+
+Example 4: nx-Graphs
+~~~~~~~~~~~~~~~~~~~~
+
+This Example demonstrates how to generate a nx-Graph based on a SIR 3S model.
+
+View: `Notebook <examples/Toolkit_Example4.html>`_ | Download: :download:`Notebook <examples/Toolkit_Example4.ipynb>`.
 
 .. _TexX:
 
