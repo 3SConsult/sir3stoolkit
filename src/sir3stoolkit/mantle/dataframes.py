@@ -2,6 +2,8 @@
 """
 Created on Fri Aug 29 09:22:31 2025
 
+This module implements interactions between SIR 3S and pandas dataframes. You can obtain pandas dfs with meta- or resultdata, insert nodes and pipes via a df, etc.
+
 @author: Jablonski
 """
 from __future__ import annotations
@@ -386,8 +388,8 @@ class Dataframes_SIR3S_Model(SIR3S_Model):
             return pd.DataFrame()
 
         end_nodes_available = False
-            if self.__is_get_endnodes_applicable(tks[0]):
-                end_nodes_available = True
+        if self.__is_get_endnodes_applicable(tks[0]):
+            end_nodes_available = True
 
         logger.info("[results] Retrieving result properties...")
 
@@ -503,7 +505,7 @@ class Dataframes_SIR3S_Model(SIR3S_Model):
             for prop in metadata_props_new:
                 msg=self.SetValue(prop, updates_df.iloc[tk, metadata_props_new_with_suffix])
                 logger.debug
-                
+
     def AddNodesAndPipes(self, dfXL):
         """
         Takes a dataframe with each row representing one pipe and adds it to the model. Only dfXL

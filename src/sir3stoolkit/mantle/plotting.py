@@ -2,6 +2,8 @@
 """
 Created on Thu Okt 7 13:39:13 2025
 
+This module implements general plotting functions for SIR 3S applications. 
+
 @author: Jablonski
 
 """
