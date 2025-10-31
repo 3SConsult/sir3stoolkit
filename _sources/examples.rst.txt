@@ -88,7 +88,7 @@ Tutorial 7: Miscellaneaous
 
 This Tutorial demonstrates miscellaneaous functions of the SIR3S_Model() class that cannot be assigned to one of the previous Tutorial topics.
 
-View: `Notebook <tutorials/Tutorial6_Assets/ToolkitTutorial7.html>`_ | Download: `ZIP archive <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorial7_Assets.zip>`_.
+View: `Notebook <tutorials/Tutorial7_Assets/ToolkitTutorial7.html>`_ | Download: `ZIP archive <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorial7_Assets.zip>`_.
 
 .. _TtuX:
 
