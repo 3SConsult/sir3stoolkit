@@ -23,12 +23,19 @@ The release notes indicate what kind of release it is.
 90-15 Quebec
 ------------
 
-Version 90.15.4 (TB Released)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Version 90.15.4
+~~~~~~~~~~~~~~~
 
 - For SIR 3S Version: 90-15-00-19
 - Implementation of Higher level functions (mantle):
-   - nx-Graph generation from SIR 3S model
+   - alternative_models.py
+      - nx graphs
+      - pandapipes
+   - dataframes.py
+      - metadata dfs 
+      - result dfs
+   - mantle.py: collector for above modules
+- Mantle Import fixed: mantle dependencies no longer needed, when importing sir3stoolkit
 
 Version 90.15.3 (Initial Release)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -11,8 +11,8 @@ sys.path.insert(0, os.path.abspath('../src'))
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = 'sir3stoolkit'
-copyright = '2025, misc'
-author = 'misc'
+copyright = '2025 3S Consult GmbH'
+author = '3S Consult GmbH'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
