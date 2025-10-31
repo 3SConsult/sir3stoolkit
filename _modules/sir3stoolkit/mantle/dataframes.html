@@ -1,0 +1,880 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>sir3stoolkit.mantle.dataframes &mdash; sir3stoolkit  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=f281be69"></script>
+      <script>let toggleHintShow = 'Click to show';</script>
+      <script>let toggleHintHide = 'Click to hide';</script>
+      <script>let toggleOpenOnPrint = 'true';</script>
+      <script src="../../../_static/togglebutton.js?v=4a39c7ea"></script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            sir3stoolkit
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Application Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../releases.html">Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developers.html">For Developers</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">sir3stoolkit</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">sir3stoolkit.mantle.dataframes</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for sir3stoolkit.mantle.dataframes</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Created on Fri Aug 29 09:22:31 2025</span>
+
+<span class="sd">This module implements interactions between SIR 3S and pandas dataframes. You can obtain pandas dfs with meta- or resultdata, insert nodes and pipes via a df, etc.</span>
+
+<span class="sd">@author: Jablonski</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">attrs</span><span class="w"> </span><span class="kn">import</span> <span class="n">field</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pytoolconfig</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">io</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Any</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">defaultdict</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">logger</span><span class="o">.</span><span class="n">hasHandlers</span><span class="p">():</span>
+    <span class="n">handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">()</span>
+    <span class="n">formatter</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span><span class="s1">&#39;[</span><span class="si">%(asctime)s</span><span class="s1">] </span><span class="si">%(levelname)s</span><span class="s1"> in </span><span class="si">%(name)s</span><span class="s1">: </span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">formatter</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">sir3stoolkit.core.wrapper</span><span class="w"> </span><span class="kn">import</span> <span class="n">SIR3S_Model</span>
+
+<div class="viewcode-block" id="Dataframes_SIR3S_Model">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.Dataframes_SIR3S_Model">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Dataframes_SIR3S_Model</span><span class="p">(</span><span class="n">SIR3S_Model</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class is supposed to extend the general SIR3S_Model class with the possibility of using pandas dataframes when working with SIR 3S. Getting dataframes, inserting elements via dataframes, running algorithms on dataframes should be made possible.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Dataframes_SIR3S_Model.DataFrames">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.Dataframes_SIR3S_Model.DataFrames">[docs]</a>
+    <span class="nd">@dataclass</span>
+    <span class="k">class</span><span class="w"> </span><span class="nc">DataFrames</span><span class="p">:</span>
+        <span class="n">df_node</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span>
+        <span class="n">df_pipe</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_frames</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DataFrames</span><span class="p">()</span>
+
+<div class="viewcode-block" id="Dataframes_SIR3S_Model.generate_dataframes">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.Dataframes_SIR3S_Model.generate_dataframes">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">generate_dataframes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Manually generate and populate all relevant dataframes.</span>
+
+<span class="sd">        Inlcude optional param with ElemenTypes to only create certain dataframes</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__is_a_model_open</span><span class="p">():</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;No model is open. Cannot generate dataframes.&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Generating dataframes...&quot;</span><span class="p">)</span>
+        
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Generating df_node...&quot;</span><span class="p">)</span>
+        <span class="n">_metadata_props</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">GetPropertiesofElementType</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="o">.</span><span class="n">Node</span><span class="p">)</span>
+        <span class="n">_result_props</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">GetResultProperties_from_elementType</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="o">.</span><span class="n">Node</span><span class="p">,</span> <span class="n">onlySelectedVectors</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_frames</span><span class="o">.</span><span class="n">df_node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_element_dataframe</span><span class="p">(</span><span class="n">metadata_props</span><span class="o">=</span><span class="n">_metadata_props</span><span class="p">,</span> <span class="n">result_props</span><span class="o">=</span><span class="n">_result_props</span><span class="p">,</span> <span class="n">element_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="o">.</span><span class="n">Node</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;df_node generated&quot;</span><span class="p">)</span>
+    
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Generating df_pipe...&quot;</span><span class="p">)</span>
+        <span class="n">_metadata_props</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">GetPropertiesofElementType</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="o">.</span><span class="n">Pipe</span><span class="p">)</span>
+        <span class="n">_result_props</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">GetResultProperties_from_elementType</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="o">.</span><span class="n">Pipe</span><span class="p">,</span> <span class="n">onlySelectedVectors</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_frames</span><span class="o">.</span><span class="n">df_pipe</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_element_dataframe</span><span class="p">(</span><span class="n">metadata_props</span><span class="o">=</span><span class="n">_metadata_props</span><span class="p">,</span> <span class="n">result_props</span><span class="o">=</span><span class="n">_result_props</span><span class="p">,</span> <span class="n">element_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="o">.</span><span class="n">Pipe</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;df_pipe generated&quot;</span><span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Dataframes generated.&quot;</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_resolve_given_timestamps</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timestamps</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Resolve the list of timestamps to use:</span>
+<span class="sd">        - If `timestamps` is None: use all simulation timestamps (if available) else STAT.</span>
+<span class="sd">        - If list contains integers: treat them as indices into the available timestamps.</span>
+<span class="sd">        - If list contains strings: treat them as actual timestamp strings.</span>
+<span class="sd">        - Validate against available timestamps and filter out invalid ones.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        List[str]</span>
+<span class="sd">            A list of valid timestamp strings (possibly empty).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># --- Default timestamp resolution ---</span>
+        <span class="k">if</span> <span class="n">timestamps</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;[Resolving Timestamps] No timestamps were given. Checking available simulation timestamps (SIR3S_Model.GetTimeStamps()).&quot;</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">simulation_timestamps</span><span class="p">,</span> <span class="n">tsStat</span><span class="p">,</span> <span class="n">tsMin</span><span class="p">,</span> <span class="n">tsMax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTimeStamps</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">simulation_timestamps</span><span class="p">:</span>
+                    <span class="n">timestamps</span> <span class="o">=</span> <span class="n">simulation_timestamps</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[Resolving Timestamps] </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">timestamps</span><span class="p">)</span><span class="si">}</span><span class="s2"> simulation timestamps are available.&quot;</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;[Resolving Timestamps] No valid simulation timestamps exist in result data.&quot;</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="p">[]</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[Resolving Timestamps] Error retrieving timestamps: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="p">[]</span>
+
+        <span class="c1"># --- Validate given timestamps ---</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">simulation_timestamps</span><span class="p">,</span> <span class="n">tsStat</span><span class="p">,</span> <span class="n">tsMin</span><span class="p">,</span> <span class="n">tsMax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTimeStamps</span><span class="p">()</span>
+            <span class="n">available_timestamps</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">simulation_timestamps</span><span class="p">)</span> <span class="k">if</span> <span class="n">simulation_timestamps</span> <span class="k">else</span> <span class="p">[]</span>
+
+            <span class="n">valid_timestamps</span> <span class="o">=</span> <span class="p">[]</span>
+
+            <span class="c1"># Check if input is list of integers (indices)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">timestamps</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">int</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">timestamps</span><span class="p">:</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">resolved_ts</span> <span class="o">=</span> <span class="n">available_timestamps</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+                        <span class="n">valid_timestamps</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">resolved_ts</span><span class="p">)</span>
+                    <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[Resolving Timestamps] Index </span><span class="si">{</span><span class="n">idx</span><span class="si">}</span><span class="s2"> out of bounds for available timestamps. It will be excluded.&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Assume list of timestamp strings</span>
+                <span class="k">for</span> <span class="n">ts</span> <span class="ow">in</span> <span class="n">timestamps</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">ts</span> <span class="ow">in</span> <span class="n">available_timestamps</span><span class="p">:</span>
+                        <span class="n">valid_timestamps</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ts</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                            <span class="sa">f</span><span class="s2">&quot;[Resolving Timestamps] Timestamp </span><span class="si">{</span><span class="n">ts</span><span class="si">}</span><span class="s2"> is not valid (SIR3S_Model.GetTimeStamps()). It will be excluded.&quot;</span>
+                        <span class="p">)</span>
+
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">valid_timestamps</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">tsStat</span> <span class="o">==</span> <span class="n">valid_timestamps</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[Resolving Timestamps] Only static timestamp </span><span class="si">{</span><span class="n">tsStat</span><span class="si">}</span><span class="s2"> is used&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[Resolving Timestamps] </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">valid_timestamps</span><span class="p">)</span><span class="si">}</span><span class="s2"> valid timestamp(s) will be used.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">valid_timestamps</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error validating timestamps: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">[]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">__resolve_given_metadata_properties</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">element_type</span><span class="p">:</span> <span class="n">Enum</span><span class="p">,</span>
+        <span class="n">properties</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks the validity of given list of metadata properties. </span>
+<span class="sd">        If properties=None =&gt; All available properties will be used</span>
+<span class="sd">        If properties=[] =&gt; No properties will be used</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">available_metadata_props</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetPropertiesofElementType</span><span class="p">(</span><span class="n">ElementType</span><span class="o">=</span><span class="n">element_type</span><span class="p">)</span>
+            <span class="n">available_result_props</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetResultProperties_from_elementType</span><span class="p">(</span>
+                <span class="n">elementType</span><span class="o">=</span><span class="n">element_type</span><span class="p">,</span>
+                <span class="n">onlySelectedVectors</span><span class="o">=</span><span class="kc">False</span>
+            <span class="p">)</span>
+
+            <span class="n">metadata_props</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+            <span class="k">if</span> <span class="n">properties</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[Resolving Metadata Properties] No properties given → using ALL metadata properties for </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+                <span class="n">metadata_props</span> <span class="o">=</span> <span class="n">available_metadata_props</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">properties</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">available_metadata_props</span><span class="p">:</span>
+                        <span class="n">metadata_props</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prop</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">available_result_props</span><span class="p">:</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[Resolving Metadata Properties] Property &#39;</span><span class="si">{</span><span class="n">prop</span><span class="si">}</span><span class="s2">&#39; is a RESULT property; excluded from metadata.&quot;</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                            <span class="sa">f</span><span class="s2">&quot;[Resolving Metadata Properties] Property &#39;</span><span class="si">{</span><span class="n">prop</span><span class="si">}</span><span class="s2">&#39; not found in metadata or result properties of type </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">. Excluding.&quot;</span>
+                        <span class="p">)</span>
+
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[Resolving Metadata Properties] Using </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">metadata_props</span><span class="p">)</span><span class="si">}</span><span class="s2"> metadata properties.&quot;</span><span class="p">)</span>
+       
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[Resolving Metadata Properties] Error resolving metadata properties: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">metadata_props</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">__is_get_endnodes_applicable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tk</span><span class="p">):</span>
+        <span class="n">buffer</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">()</span>
+        <span class="n">sys_stdout</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="n">buffer</span>  <span class="c1"># Redirect stdout</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetEndNodes</span><span class="p">(</span><span class="n">tk</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="n">sys_stdout</span>  <span class="c1"># Restore stdout</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="n">sys_stdout</span>  <span class="c1"># Restore stdout</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">buffer</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span>
+        <span class="n">buffer</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="s2">&quot;doesnt apply to such Type of Elements&quot;</span> <span class="ow">in</span> <span class="n">output</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        
+        <span class="k">return</span> <span class="kc">True</span>
+
+<div class="viewcode-block" id="Dataframes_SIR3S_Model.generate_element_metadata_dataframe">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.Dataframes_SIR3S_Model.generate_element_metadata_dataframe">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">generate_element_metadata_dataframe</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">element_type</span><span class="p">:</span> <span class="n">Enum</span><span class="p">,</span>
+        <span class="n">properties</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">geometry</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">end_nodes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">element_type_col</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a dataframe with metadata (static) properties for all devices of a given element type.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        element_type : Enum The element type (e.g., self.ObjectTypes.Node).</span>
+<span class="sd">        properties : list[str], optional</span>
+<span class="sd">            If properties=None =&gt; All available properties will be used</span>
+<span class="sd">            If properties=[] =&gt; No properties will be used</span>
+<span class="sd">        geometry : bool, optional</span>
+<span class="sd">            If True, includes geometric information for each element in the dataframe. Note that this is still a regular DataFrame no GeoDataFrame, to convert it you need a crs values.</span>
+<span class="sd">            Adds a &#39;geometry&#39; column containing spatial data (WKT represenation eg. POINT (x y))</span>
+<span class="sd">            Default is False.</span>
+<span class="sd">        end_nodes : bool, optional</span>
+<span class="sd">            If True and supported by the element type, includes tks of end nodes as cols (fkKI, fkKK, fkKI2, fkKK2) in the dataframe.</span>
+<span class="sd">            Default is False.</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pd.DataFrame</span>
+<span class="sd">            Dataframe with one row per device (tk) and columns for requested metadata properties, geometry and end nodes.</span>
+<span class="sd">            Columns: [&quot;tk&quot;, &lt;metadata_props&gt;]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[metadata] Generating metadata dataframe for element type: </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># --- Collect device keys (tks) ---</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">tks</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTksofElementType</span><span class="p">(</span><span class="n">ElementType</span><span class="o">=</span><span class="n">element_type</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[metadata] Retrieved </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">tks</span><span class="p">)</span><span class="si">}</span><span class="s2"> element(s) of element type </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[metadata] Error retrieving element tks: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+        
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tks</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[metadata] No elements exist of this element type </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+        
+        <span class="c1"># --- Resolve given metadata properties ---</span>
+        <span class="n">metadata_props</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__resolve_given_metadata_properties</span><span class="p">(</span><span class="n">element_type</span><span class="o">=</span><span class="n">element_type</span><span class="p">,</span> <span class="n">properties</span><span class="o">=</span><span class="n">properties</span><span class="p">)</span>
+
+        <span class="c1"># --- Retrieve values ---</span>
+        <span class="n">to_retrieve</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">metadata_props</span> <span class="o">!=</span> <span class="p">[]:</span>
+            <span class="n">to_retrieve</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;metadata properties </span><span class="si">{</span><span class="n">metadata_props</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">geometry</span><span class="p">:</span>
+            <span class="n">to_retrieve</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;geometry&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">end_nodes</span><span class="p">:</span>
+            <span class="n">to_retrieve</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;end nodes&quot;</span><span class="p">)</span>
+            
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[metadata] Retrieving </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">to_retrieve</span><span class="p">)</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+        
+        <span class="n">rows</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">end_nodes_available</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">end_nodes</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__is_get_endnodes_applicable</span><span class="p">(</span><span class="n">tks</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+                <span class="n">end_nodes_available</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[metadata] End nodes are not defined for element type </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">. Dataframe is created without end nodes.&quot;</span><span class="p">)</span>
+        
+        <span class="k">for</span> <span class="n">tk</span> <span class="ow">in</span> <span class="n">tks</span><span class="p">:</span>
+            
+            <span class="n">row</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;tk&quot;</span><span class="p">:</span> <span class="n">tk</span><span class="p">}</span>
+            
+            <span class="c1"># Add metadata properties</span>
+            <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">metadata_props</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">row</span><span class="p">[</span><span class="n">prop</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetValue</span><span class="p">(</span><span class="n">Tk</span><span class="o">=</span><span class="n">tk</span><span class="p">,</span> <span class="n">propertyName</span><span class="o">=</span><span class="n">prop</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[metadata] Failed to get property &#39;</span><span class="si">{</span><span class="n">prop</span><span class="si">}</span><span class="s2">&#39; for tk &#39;</span><span class="si">{</span><span class="n">tk</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            
+            <span class="c1"># Add geometry if requested</span>
+            <span class="k">if</span> <span class="n">geometry</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">row</span><span class="p">[</span><span class="s2">&quot;geometry&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetGeometryInformation</span><span class="p">(</span><span class="n">Tk</span><span class="o">=</span><span class="n">tk</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[metadata] Failed to get geometry information for tk &#39;</span><span class="si">{</span><span class="n">tk</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            
+            <span class="c1"># Add end nodes if requested</span>
+            <span class="k">if</span> <span class="n">end_nodes_available</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">endnode_tuple</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetEndNodes</span><span class="p">(</span><span class="n">Tk</span><span class="o">=</span><span class="n">tk</span><span class="p">)</span> 
+                    <span class="n">row</span><span class="p">[</span><span class="s2">&quot;fkKI&quot;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;fkKK&quot;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;fkKI2&quot;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;fkKK2&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">endnode_tuple</span>
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[metadata] Failed to get end nodes for tk &#39;</span><span class="si">{</span><span class="n">tk</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            
+             <span class="c1"># Add element type col if requested</span>
+            <span class="k">if</span> <span class="n">element_type_col</span><span class="p">:</span>
+                <span class="n">row</span><span class="p">[</span><span class="s2">&quot;element type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">element_type</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+            <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+
+        <span class="c1"># --- Endnodes Post Processing ---</span>
+        <span class="n">endnode_cols</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;fkKI&quot;</span><span class="p">,</span> <span class="s2">&quot;fkKK&quot;</span><span class="p">,</span> <span class="s2">&quot;fkKI2&quot;</span><span class="p">,</span> <span class="s2">&quot;fkKK2&quot;</span><span class="p">]</span>
+        <span class="n">used_cols</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">endnode_cols</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="s2">&quot;-1&quot;</span><span class="p">)</span> <span class="o">!=</span> <span class="s2">&quot;-1&quot;</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">):</span>
+                <span class="n">used_cols</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">:</span>
+                    <span class="n">row</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[metadata] </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">used_cols</span><span class="p">)</span><span class="si">}</span><span class="s2"> non-empty end node columns were created)&quot;</span><span class="p">)</span>
+
+        <span class="c1"># --- Dataframe creation ---</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[metadata] Done. Shape: </span><span class="si">{</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">df</span></div>
+
+
+<div class="viewcode-block" id="Dataframes_SIR3S_Model.generate_element_results_dataframe">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.Dataframes_SIR3S_Model.generate_element_results_dataframe">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">generate_element_results_dataframe</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">element_type</span><span class="p">:</span> <span class="n">Enum</span><span class="p">,</span>
+        <span class="n">properties</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">timestamps</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a dataframe with RESULT (time-dependent) properties for all devices and timestamps.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        element_type : Enum or str</span>
+<span class="sd">            The element type (e.g., self.ObjectTypes.Node).</span>
+<span class="sd">        properties : list[str], optional</span>
+<span class="sd">            List of RESULT property names (vectors) to include. If None, includes ALL available result properties.</span>
+<span class="sd">        timestamps : list[Union[str, int]], optional</span>
+<span class="sd">            List of timestamps to include. Can be:</span>
+<span class="sd">            - List of timestamp strings (e.g., [&quot;2025-09-25 00:00:00.000 +02:00&quot;])</span>
+<span class="sd">            - List of integer indices (e.g., [0, 1, -1]), where:</span>
+<span class="sd">                - 0 refers to the stationary timestamp (STAT)</span>
+<span class="sd">                - 1 refers to the first simulation timestamp (unless it&#39;s STAT)</span>
+<span class="sd">                - -1 refers to the last available timestamp</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pd.DataFrame</span>
+<span class="sd">            Dataframe with one row per timestamp and MultiIndex columns:</span>
+<span class="sd">            - Level 0: tk (device ID)</span>
+<span class="sd">            - Level 1: name (device name)</span>
+<span class="sd">            - Level 2: end_nodes (tuple of connected node IDs as string)</span>
+<span class="sd">            - Level 3: property (result vector name)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[results] Generating results dataframe for element type: </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="n">valid_timestamps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_resolve_given_timestamps</span><span class="p">(</span><span class="n">timestamps</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">valid_timestamps</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;[results] No valid timestamps. Returning empty dataframe.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">tks</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTksofElementType</span><span class="p">(</span><span class="n">ElementType</span><span class="o">=</span><span class="n">element_type</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[results] Retrieved </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">tks</span><span class="p">)</span><span class="si">}</span><span class="s2"> tks.&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[results] Error retrieving tks: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">available_metadata_props</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetPropertiesofElementType</span><span class="p">(</span><span class="n">ElementType</span><span class="o">=</span><span class="n">element_type</span><span class="p">)</span>
+            <span class="n">available_result_props</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetResultProperties_from_elementType</span><span class="p">(</span>
+                <span class="n">elementType</span><span class="o">=</span><span class="n">element_type</span><span class="p">,</span>
+                <span class="n">onlySelectedVectors</span><span class="o">=</span><span class="kc">False</span>
+            <span class="p">)</span>
+
+            <span class="n">result_props</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+            <span class="k">if</span> <span class="n">properties</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[results] No properties given → using ALL result properties for </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+                <span class="n">result_props</span> <span class="o">=</span> <span class="n">available_result_props</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">properties</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">available_result_props</span><span class="p">:</span>
+                        <span class="n">result_props</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prop</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">available_metadata_props</span><span class="p">:</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[results] Property &#39;</span><span class="si">{</span><span class="n">prop</span><span class="si">}</span><span class="s2">&#39; is a METADATA property; excluded from results.&quot;</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                            <span class="sa">f</span><span class="s2">&quot;[results] Property &#39;</span><span class="si">{</span><span class="n">prop</span><span class="si">}</span><span class="s2">&#39; not found in metadata or result properties of type </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">. Excluding.&quot;</span>
+                        <span class="p">)</span>
+
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[results] Using </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">result_props</span><span class="p">)</span><span class="si">}</span><span class="s2"> result properties.&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[results] Error determining result properties: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+
+        <span class="n">end_nodes_available</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__is_get_endnodes_applicable</span><span class="p">(</span><span class="n">tks</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="n">end_nodes_available</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;[results] Retrieving result properties...&quot;</span><span class="p">)</span>
+
+        <span class="n">data_dict</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">ts</span> <span class="ow">in</span> <span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">valid_timestamps</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">tk</span> <span class="ow">in</span> <span class="n">tks</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">result_props</span><span class="p">:</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetResultfortimestamp</span><span class="p">(</span><span class="n">timestamp</span><span class="o">=</span><span class="n">ts</span><span class="p">,</span> <span class="n">Tk</span><span class="o">=</span><span class="n">tk</span><span class="p">,</span> <span class="nb">property</span><span class="o">=</span><span class="n">prop</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                        <span class="n">data_dict</span><span class="p">[(</span><span class="n">tk</span><span class="p">,</span> <span class="n">prop</span><span class="p">)][</span><span class="n">ts</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+                    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[results] Failed to get result &#39;</span><span class="si">{</span><span class="n">prop</span><span class="si">}</span><span class="s2">&#39; for tk &#39;</span><span class="si">{</span><span class="n">tk</span><span class="si">}</span><span class="s2">&#39; at &#39;</span><span class="si">{</span><span class="n">ts</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data_dict</span><span class="p">)</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;timestamp&quot;</span>
+
+        <span class="c1"># --- Add Name and End Nodes to column MultiIndex ---</span>
+        <span class="n">col_tuples</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">tk</span><span class="p">,</span> <span class="n">prop</span><span class="p">)</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetValue</span><span class="p">(</span><span class="n">tk</span><span class="p">,</span> <span class="s2">&quot;Name&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[results] Failed to get name for tk &#39;</span><span class="si">{</span><span class="n">tk</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;UNKNOWN&quot;</span>
+            <span class="k">if</span> <span class="n">end_nodes_available</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">end_nodes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetEndNodes</span><span class="p">(</span><span class="n">tk</span><span class="p">)</span>
+                    <span class="n">end_nodes_str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">end_nodes</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[results] Failed to get end nodes for tk &#39;</span><span class="si">{</span><span class="n">tk</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">end_nodes_str</span> <span class="o">=</span> <span class="s2">&quot;UNKNOWN&quot;</span>
+                
+            <span class="n">col_tuples</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">tk</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">end_nodes_str</span><span class="p">,</span> <span class="n">prop</span><span class="p">))</span>
+
+        <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">MultiIndex</span><span class="o">.</span><span class="n">from_tuples</span><span class="p">(</span><span class="n">col_tuples</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;tk&quot;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;end_nodes&quot;</span><span class="p">,</span> <span class="s2">&quot;property&quot;</span><span class="p">])</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[results] Done. Shape: </span><span class="si">{</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">df</span></div>
+
+
+<div class="viewcode-block" id="Dataframes_SIR3S_Model.apply_metadata_property_updates">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.Dataframes_SIR3S_Model.apply_metadata_property_updates">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">apply_metadata_property_updates</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">element_type</span><span class="p">:</span> <span class="n">Enum</span><span class="p">,</span>
+        <span class="n">updates_df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+        <span class="n">properties_new</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">tag</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;_new&quot;</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        WORK IN PROGRESS</span>
+<span class="sd">        Apply metadata updates for a single property using a DataFrame with keys and new values.</span>
+
+<span class="sd">        Expects:</span>
+<span class="sd">        - One key column (default: &#39;tk&#39;), and</span>
+<span class="sd">        - Exactly one column named &#39;&lt;metadata_property&gt;_new&#39; (or pass `property_name` to target one explicitly).</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        element_type : Enum</span>
+<span class="sd">            The element type to update (e.g., self.ObjectTypes.Pipe).</span>
+<span class="sd">        updates_df : pd.DataFrame</span>
+<span class="sd">            Input with at least:</span>
+<span class="sd">            - key column (default &#39;tk&#39;), and</span>
+<span class="sd">            - one &#39;&lt;property&gt;_new&#39; column (e.g., &#39;diameter_mm_new&#39;).</span>
+<span class="sd">        property_name : Optional[str], default None</span>
+<span class="sd">            If given, we will look for the column f&quot;{property_name}_new&quot;.</span>
+<span class="sd">            If None, we auto-detect a single &#39;*_new&#39; column.</span>
+<span class="sd">        on : str, default &#39;tk&#39;</span>
+<span class="sd">            Name of the key column in `updates_df`. If it&#39;s the index, it will be reset.</span>
+<span class="sd">        create_missing : bool, default False</span>
+<span class="sd">            If True, allow creating metadata rows that don&#39;t exist yet (your set-logic decides how).</span>
+<span class="sd">        dry_run : bool, default False</span>
+<span class="sd">            If True, do NOT apply; just return a normalized summary of what would be changed.</span>
+<span class="sd">        allow_na : bool, default True</span>
+<span class="sd">            If False, rows with NaN in the &#39;&lt;property&gt;_new&#39; column will be dropped (skipped).</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pd.DataFrame</span>
+<span class="sd">            A summary dataframe with columns:</span>
+<span class="sd">            [&#39;tk&#39;, &#39;property&#39;, &#39;new_value&#39;] (+ &#39;status&#39; when dry_run)</span>
+<span class="sd">            representing the intended updates.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[update] Applying metadata updates for element type: </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">updates_df</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">updates_df</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;[update] Empty updates_df provided. Nothing to do.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;tk&quot;</span><span class="p">,</span> <span class="s2">&quot;property&quot;</span><span class="p">,</span> <span class="s2">&quot;new_value&quot;</span><span class="p">])</span>
+
+        <span class="n">df</span> <span class="o">=</span> <span class="n">updates_df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+        <span class="c1"># --- Ensure key (&#39;tk&#39;) column is present ---</span>
+        <span class="k">if</span> <span class="n">tk</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">tk</span><span class="p">:</span>
+                <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[update] Using index as column.&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;[update] tk not found in updates_df (nor as index).&quot;</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+        <span class="c1"># --- Resolve &amp; Validate given properties_new ---</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;[update] Resolving &amp; validating given properties_new...&quot;</span><span class="p">)</span>
+        <span class="n">properties_new_in_index</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">properties_new</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[update] In updates_df found: </span><span class="si">{</span><span class="n">properties_new_in_index</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">properties_new_stripped</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">removesuffix</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">properties_new</span><span class="p">]</span>
+        <span class="n">metadata_props_new</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__resolve_given_metadata_properties</span><span class="p">(</span><span class="n">element_type</span><span class="o">=</span><span class="n">element_type</span><span class="p">,</span> <span class="n">properties</span><span class="o">=</span><span class="n">properties_new_stripped</span><span class="p">)</span>
+        <span class="n">metadata_props_new_with_suffix</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="o">+</span> <span class="n">tag</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">metadata_props_new</span><span class="p">]</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;[update] Resolved &amp; validated given properties_new&quot;</span><span class="p">)</span>
+
+        <span class="c1"># TODO</span>
+        <span class="c1"># --- Set metadata values in model ---</span>
+        <span class="k">for</span> <span class="n">tk</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTksofElementType</span><span class="p">(</span><span class="n">ElementType</span><span class="o">=</span><span class="n">element_type</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">metadata_props_new</span><span class="p">:</span>
+                <span class="n">msg</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">SetValue</span><span class="p">(</span><span class="n">prop</span><span class="p">,</span> <span class="n">updates_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">tk</span><span class="p">,</span> <span class="n">metadata_props_new_with_suffix</span><span class="p">])</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span></div>
+
+
+<div class="viewcode-block" id="Dataframes_SIR3S_Model.AddNodesAndPipes">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.Dataframes_SIR3S_Model.AddNodesAndPipes">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">AddNodesAndPipes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dfXL</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Takes a dataframe with each row representing one pipe and adds it to the model. Only dfXL</span>
+<span class="sd">        This function should be moved to Dataframes.py to create a general module for working with Dataframes in SIR 3S.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">dfXL</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+            <span class="n">kvr</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;KVR&#39;</span><span class="p">])</span>
+
+            <span class="c1"># Create KI node</span>
+            <span class="n">x_ki</span><span class="p">,</span> <span class="n">y_ki</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">tk_ki</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AddNewNode</span><span class="p">(</span>
+                <span class="s2">&quot;-1&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Node</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">KI </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">VL_or_RL</span><span class="p">(</span><span class="n">kvr</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Node</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">x_ki</span><span class="p">,</span> <span class="n">y_ki</span><span class="p">,</span>
+                <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Node</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">KI&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;ID</span><span class="si">{</span><span class="n">row</span><span class="o">.</span><span class="n">nodeKI_id</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">kvr</span>
+            <span class="p">)</span>
+            <span class="n">dfXL</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;nodeKI&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tk_ki</span>
+
+            <span class="c1"># Create KK node</span>
+            <span class="n">x_kk</span><span class="p">,</span> <span class="n">y_kk</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">tk_kk</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AddNewNode</span><span class="p">(</span>
+                <span class="s2">&quot;-1&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Node</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">KK </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">VL_or_RL</span><span class="p">(</span><span class="n">kvr</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Node</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">x_kk</span><span class="p">,</span> <span class="n">y_kk</span><span class="p">,</span>
+                <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Node</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">KK&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;ID</span><span class="si">{</span><span class="n">row</span><span class="o">.</span><span class="n">nodeKK_id</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">kvr</span>
+            <span class="p">)</span>
+            <span class="n">dfXL</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;nodeKK&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tk_kk</span>
+
+            <span class="c1"># Create pipe</span>
+            <span class="n">tk_pipe</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AddNewPipe</span><span class="p">(</span>
+                <span class="s2">&quot;-1&quot;</span><span class="p">,</span> <span class="n">tk_ki</span><span class="p">,</span> <span class="n">tk_kk</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">length</span><span class="p">,</span>
+                <span class="nb">str</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]),</span> <span class="nb">str</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;MATERIAL&#39;</span><span class="p">]),</span> <span class="nb">str</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;DN&#39;</span><span class="p">]),</span>
+                <span class="mf">1.5</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;ID</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;Pipe </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">kvr</span>
+            <span class="p">)</span>
+            <span class="n">dfXL</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;tk&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tk_pipe</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">baujahr</span> <span class="o">=</span> <span class="n">dfXL</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;BAUJAHR&#39;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">notna</span><span class="p">(</span><span class="n">baujahr</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">SetValue</span><span class="p">(</span><span class="n">tk_pipe</span><span class="p">,</span> <span class="s2">&quot;Baujahr&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">baujahr</span><span class="p">))</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;BAUJAHR of Pipe </span><span class="si">{</span><span class="n">tk_pipe</span><span class="si">}</span><span class="s2"> not assigned: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">hal</span> <span class="o">=</span> <span class="n">dfXL</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;HAL&#39;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">notna</span><span class="p">(</span><span class="n">hal</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">SetValue</span><span class="p">(</span><span class="n">tk_pipe</span><span class="p">,</span> <span class="s2">&quot;Hal&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">hal</span><span class="p">))</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;HAL of Pipe </span><span class="si">{</span><span class="n">tk_pipe</span><span class="si">}</span><span class="s2"> not assigned: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="c1"># 2LROHR does not work</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">partner_id</span> <span class="o">=</span> <span class="n">dfXL</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;2LROHR_id&#39;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">notna</span><span class="p">(</span><span class="n">partner_id</span><span class="p">):</span>
+                    <span class="n">match</span> <span class="o">=</span> <span class="n">dfXL</span><span class="p">[</span><span class="n">dfXL</span><span class="p">[</span><span class="s1">&#39;tk_id&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">partner_id</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">match</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+                        <span class="n">partner_pipe_tk</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;tk&#39;</span><span class="p">]</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">SetValue</span><span class="p">(</span><span class="n">tk_pipe</span><span class="p">,</span> <span class="s2">&quot;Fk2lrohr&quot;</span><span class="p">,</span> <span class="n">partner_pipe_tk</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;2LROHR of Pipe </span><span class="si">{</span><span class="n">tk_pipe</span><span class="si">}</span><span class="s2"> not assigned: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">dfXL</span></div>
+
+
+<div class="viewcode-block" id="Dataframes_SIR3S_Model.insert_dfPipes">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.Dataframes_SIR3S_Model.insert_dfPipes">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">insert_dfPipes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dfPipes</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Takes a dataframe with each row representing one pipe and adds it to the model.</span>
+<span class="sd">        The dataframe needs minimum of cols: geometry (LINESTRING), MATERIAL (str), DN (int), KVR (int)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">func_name</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">_getframe</span><span class="p">()</span><span class="o">.</span><span class="n">f_code</span><span class="o">.</span><span class="n">co_name</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">func_name</span><span class="si">}</span><span class="s2">: Start.&quot;</span><span class="p">)</span>
+
+        <span class="n">climbing_index</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dfPipes</span><span class="p">)):</span>
+            <span class="n">dfPipes</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="s1">&#39;nodeKI_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">climbing_index</span>
+            <span class="n">dfPipes</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="s1">&#39;nodeKK_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">climbing_index</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="n">climbing_index</span> <span class="o">+=</span> <span class="mi">2</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">StartEditSession</span><span class="p">(</span><span class="n">SessionName</span><span class="o">=</span><span class="s2">&quot;AddNodesAndPipes&quot;</span><span class="p">)</span>
+
+        <span class="n">dfPipes</span><span class="p">[</span><span class="s1">&#39;KVR&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dfPipes</span><span class="p">[</span><span class="s1">&#39;KVR&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="n">dfVL</span> <span class="o">=</span> <span class="n">dfPipes</span><span class="p">[</span><span class="n">dfPipes</span><span class="p">[</span><span class="s1">&#39;KVR&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">dfRL</span> <span class="o">=</span> <span class="n">dfPipes</span><span class="p">[</span><span class="n">dfPipes</span><span class="p">[</span><span class="s1">&#39;KVR&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">dfVL</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AddNodesAndPipes</span><span class="p">(</span><span class="n">dfVL</span><span class="p">)</span>
+        <span class="n">dfRL</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AddNodesAndPipes</span><span class="p">(</span><span class="n">dfRL</span><span class="p">)</span>
+
+        <span class="n">dfPipes</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">dfVL</span><span class="p">,</span> <span class="n">dfRL</span><span class="p">],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">EndEditSession</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SaveChanges</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">RefreshViews</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">dfPipes</span></div>
+
+
+<div class="viewcode-block" id="Dataframes_SIR3S_Model.Node_on_Node">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.Dataframes_SIR3S_Model.Node_on_Node">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">Node_on_Node</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">func_name</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">_getframe</span><span class="p">()</span><span class="o">.</span><span class="n">f_code</span><span class="o">.</span><span class="n">co_name</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">func_name</span><span class="si">}</span><span class="s2">: Start.&quot;</span><span class="p">)</span></div>
+
+        <span class="c1"># Implementation goes here</span>
+
+<div class="viewcode-block" id="Dataframes_SIR3S_Model.Merge_Nodes">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.Dataframes_SIR3S_Model.Merge_Nodes">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">Merge_Nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tk1</span><span class="p">,</span> <span class="n">tk2</span><span class="p">):</span>
+        <span class="n">func_name</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">_getframe</span><span class="p">()</span><span class="o">.</span><span class="n">f_code</span><span class="o">.</span><span class="n">co_name</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">func_name</span><span class="si">}</span><span class="s2">: Start.&quot;</span><span class="p">)</span></div>
+
+        <span class="c1"># Implementation goes here</span>
+
+<div class="viewcode-block" id="Dataframes_SIR3S_Model.Get_Node_Tks_From_Pipe">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.Dataframes_SIR3S_Model.Get_Node_Tks_From_Pipe">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">Get_Node_Tks_From_Pipe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pipe_tk</span><span class="p">):</span>
+        <span class="n">func_name</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">_getframe</span><span class="p">()</span><span class="o">.</span><span class="n">f_code</span><span class="o">.</span><span class="n">co_name</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">func_name</span><span class="si">}</span><span class="s2">: Start.&quot;</span><span class="p">)</span>
+
+        <span class="n">from_node_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetValue</span><span class="p">(</span><span class="n">pipe_tk</span><span class="p">,</span> <span class="s1">&#39;FromNode.Name&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">to_node_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetValue</span><span class="p">(</span><span class="n">pipe_tk</span><span class="p">,</span> <span class="s1">&#39;ToNode.Name&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="n">from_node_tk</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">to_node_tk</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">for</span> <span class="n">node_tk</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTksofElementType</span><span class="p">(</span><span class="n">ElementType</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="o">.</span><span class="n">Node</span><span class="p">):</span>
+            <span class="n">node_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetValue</span><span class="p">(</span><span class="n">node_tk</span><span class="p">,</span> <span class="s1">&#39;Name&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">node_name</span> <span class="o">==</span> <span class="n">from_node_name</span><span class="p">:</span>
+                <span class="n">from_node_tk</span> <span class="o">=</span> <span class="n">node_tk</span>
+            <span class="k">if</span> <span class="n">node_name</span> <span class="o">==</span> <span class="n">to_node_name</span><span class="p">:</span>
+                <span class="n">to_node_tk</span> <span class="o">=</span> <span class="n">node_tk</span>
+
+        <span class="k">return</span> <span class="n">from_node_tk</span><span class="p">,</span> <span class="n">to_node_tk</span></div>
+
+
+<div class="viewcode-block" id="Dataframes_SIR3S_Model.Get_Pipe_Tk_From_Nodes">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.Dataframes_SIR3S_Model.Get_Pipe_Tk_From_Nodes">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">Get_Pipe_Tk_From_Nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fkKI</span><span class="p">,</span> <span class="n">fkKK</span><span class="p">,</span> <span class="n">Order</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">func_name</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">_getframe</span><span class="p">()</span><span class="o">.</span><span class="n">f_code</span><span class="o">.</span><span class="n">co_name</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">func_name</span><span class="si">}</span><span class="s2">: Start.&quot;</span><span class="p">)</span>
+
+        <span class="n">from_node_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetValue</span><span class="p">(</span><span class="n">fkKI</span><span class="p">,</span> <span class="s1">&#39;Name&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">to_node_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetValue</span><span class="p">(</span><span class="n">fkKK</span><span class="p">,</span> <span class="s1">&#39;Name&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="n">pipe_tk_ret</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="n">Order</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">pipe_tk</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTksofElementType</span><span class="p">(</span><span class="n">ElementType</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="o">.</span><span class="n">Pipe</span><span class="p">):</span>
+                <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">GetValue</span><span class="p">(</span><span class="n">pipe_tk</span><span class="p">,</span> <span class="s1">&#39;FromNode.Name&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">from_node_name</span> <span class="ow">and</span>
+                   <span class="bp">self</span><span class="o">.</span><span class="n">GetValue</span><span class="p">(</span><span class="n">pipe_tk</span><span class="p">,</span> <span class="s1">&#39;ToNode.Name&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">to_node_name</span><span class="p">):</span>
+                    <span class="n">pipe_tk_ret</span> <span class="o">=</span> <span class="n">pipe_tk</span>
+                    <span class="k">break</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">pipe_tk</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTksofElementType</span><span class="p">(</span><span class="n">ElementType</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="o">.</span><span class="n">Pipe</span><span class="p">):</span>
+                <span class="n">from_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetValue</span><span class="p">(</span><span class="n">pipe_tk</span><span class="p">,</span> <span class="s1">&#39;FromNode.Name&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">to_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetValue</span><span class="p">(</span><span class="n">pipe_tk</span><span class="p">,</span> <span class="s1">&#39;ToNode.Name&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">if</span> <span class="p">((</span><span class="n">from_name</span> <span class="o">==</span> <span class="n">from_node_name</span> <span class="ow">and</span> <span class="n">to_name</span> <span class="o">==</span> <span class="n">to_node_name</span><span class="p">)</span> <span class="ow">or</span>
+                   <span class="p">(</span><span class="n">from_name</span> <span class="o">==</span> <span class="n">to_node_name</span> <span class="ow">and</span> <span class="n">to_name</span> <span class="o">==</span> <span class="n">from_node_name</span><span class="p">)):</span>
+                    <span class="n">pipe_tk_ret</span> <span class="o">=</span> <span class="n">pipe_tk</span>
+                    <span class="k">break</span>
+
+        <span class="k">return</span> <span class="n">pipe_tk_ret</span></div>
+
+
+<div class="viewcode-block" id="Dataframes_SIR3S_Model.VL_or_RL">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.Dataframes_SIR3S_Model.VL_or_RL">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">VL_or_RL</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">KVR</span><span class="p">):</span>
+        <span class="n">func_name</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">_getframe</span><span class="p">()</span><span class="o">.</span><span class="n">f_code</span><span class="o">.</span><span class="n">co_name</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">func_name</span><span class="si">}</span><span class="s2">: Start.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">KVR</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;VL&#39;</span>
+        <span class="k">elif</span> <span class="n">KVR</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;RL&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;Unknown&#39;</span></div>
+
+
+<div class="viewcode-block" id="Dataframes_SIR3S_Model.Check_Node_Name_Duplicates">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.Dataframes_SIR3S_Model.Check_Node_Name_Duplicates">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">Check_Node_Name_Duplicates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="n">func_name</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">_getframe</span><span class="p">()</span><span class="o">.</span><span class="n">f_code</span><span class="o">.</span><span class="n">co_name</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">func_name</span><span class="si">}</span><span class="s2">: Start.&quot;</span><span class="p">)</span>
+
+        <span class="n">tks</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">node_tk</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTksofElementType</span><span class="p">(</span><span class="n">ElementType</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="o">.</span><span class="n">Node</span><span class="p">):</span>
+            <span class="n">current_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetValue</span><span class="p">(</span><span class="n">node_tk</span><span class="p">,</span> <span class="s1">&#39;Name&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">current_name</span> <span class="o">==</span> <span class="n">name</span><span class="p">:</span>
+                <span class="n">tks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node_tk</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tks</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Only the node with tk </span><span class="si">{</span><span class="n">tks</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s1"> has the name </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The nodes of the following tks have the same name (</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">):&#39;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">tk</span> <span class="ow">in</span> <span class="n">tks</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">tk</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">tks</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">__is_a_model_open</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns true if a model is open, false if no model is open or the NetworkType is undefined.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">is_a_model_open</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">if</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">GetNetworkType</span><span class="o">==</span><span class="s2">&quot;NetworkType.Undefined&quot;</span><span class="p">):</span>
+            <span class="n">is_a_model_open</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="n">is_a_model_open</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="nf">__sort_properties_into_metadata_and_results</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> 
+        <span class="n">element_type</span><span class="p">:</span> <span class="n">Enum</span><span class="p">,</span>
+        <span class="n">properties</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sorts the given properties into three categories:</span>
+<span class="sd">        - Metadata properties</span>
+<span class="sd">        - Result properties</span>
+<span class="sd">        - Uncategorized properties (not found in either metadata or result properties)</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            element_type (Enum): The type of element to query properties for.</span>
+<span class="sd">            properties (List[str]): The list of properties to sort.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            Tuple[List[str], List[str], List[str]]: A tuple containing three lists:</span>
+<span class="sd">                - metadata_matches</span>
+<span class="sd">                - result_matches</span>
+<span class="sd">                - uncategorized</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">metadata_properties</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetPropertiesofElementType</span><span class="p">(</span><span class="n">element_type</span><span class="o">=</span><span class="n">element_type</span><span class="p">)</span>
+        <span class="n">result_properties</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetResultProperties_from_elementType</span><span class="p">(</span><span class="n">elementType</span><span class="o">=</span><span class="n">element_type</span><span class="p">)</span>
+
+        <span class="n">metadata_matches</span> <span class="o">=</span> <span class="p">[</span><span class="n">prop</span> <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">properties</span> <span class="k">if</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">metadata_properties</span><span class="p">]</span>
+        <span class="n">result_matches</span> <span class="o">=</span> <span class="p">[</span><span class="n">prop</span> <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">properties</span> <span class="k">if</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">result_properties</span><span class="p">]</span>
+        <span class="n">uncategorized</span> <span class="o">=</span> <span class="p">[</span><span class="n">prop</span> <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">properties</span> <span class="k">if</span> <span class="n">prop</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">metadata_properties</span> <span class="ow">and</span> <span class="n">prop</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">result_properties</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">metadata_matches</span><span class="p">,</span> <span class="n">result_matches</span><span class="p">,</span> <span class="n">uncategorized</span></div>
+
+    
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, misc.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
