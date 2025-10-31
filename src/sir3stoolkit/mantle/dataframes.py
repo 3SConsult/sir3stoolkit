@@ -16,6 +16,7 @@ from enum import Enum
 import io
 from typing import List, Tuple, Any
 from enum import Enum
+from collections import defaultdict
 
 import logging
 logger = logging.getLogger(__name__)
@@ -69,16 +70,18 @@ class Dataframes_SIR3S_Model(SIR3S_Model):
 
         logger.info("Dataframes generated.")
 
-    def _resolve_given_timestamps(self, timestamps: Optional[List[str]]) -> List[str]:
+    def _resolve_given_timestamps(self, timestamps: Optional[List[Union[str, int]]]) -> List[str]:
         """
         Resolve the list of timestamps to use:
         - If `timestamps` is None: use all simulation timestamps (if available) else STAT.
+        - If list contains integers: treat them as indices into the available timestamps.
+        - If list contains strings: treat them as actual timestamp strings.
         - Validate against available timestamps and filter out invalid ones.
 
         Returns
         -------
         List[str]
-            A list of valid timestamps (possibly empty).
+            A list of valid timestamp strings (possibly empty).
         """
         # --- Default timestamp resolution ---
         if timestamps is None:
@@ -87,12 +90,9 @@ class Dataframes_SIR3S_Model(SIR3S_Model):
                 simulation_timestamps, tsStat, tsMin, tsMax = self.GetTimeStamps()
                 if simulation_timestamps:
                     timestamps = simulation_timestamps
-                    logger.info(f"{len(timestamps)} simulation timestamps will be used.")
-                elif tsStat:
-                    timestamps = [tsStat]
-                    logger.info(f"[Resolving Timestamps] No simulation timestamps found. Using stationary timestamp (STAT): {tsStat}")
+                    logger.info(f"[Resolving Timestamps] {len(timestamps)} simulation timestamps are available.")
                 else:
-                    logger.warning("[Resolving Timestamps] No valid timestamps found. Proceeding with empty timestamp list.")
+                    logger.warning("[Resolving Timestamps] No valid simulation timestamps exist in result data.")
                     return []
             except Exception as e:
                 logger.error(f"[Resolving Timestamps] Error retrieving timestamps: {e}")
@@ -100,24 +100,32 @@ class Dataframes_SIR3S_Model(SIR3S_Model):
 
         # --- Validate given timestamps ---
         try:
-            all_timestamps, tsStat, tsMin, tsMax = self.GetTimeStamps()
-            available_timestamps = list(all_timestamps) if all_timestamps else []
-            if tsStat and tsStat not in available_timestamps:
-                available_timestamps.append(tsStat)
+            simulation_timestamps, tsStat, tsMin, tsMax = self.GetTimeStamps()
+            available_timestamps = list(simulation_timestamps) if simulation_timestamps else []
 
             valid_timestamps = []
-            for ts in timestamps:
-                if ts in available_timestamps:
-                    valid_timestamps.append(ts)
-                else:
-                    logger.warning(
-                        f"[Resolving Timestamps] Timestamp {ts} is not valid (SIR3S_Model.GetTimeStamps()). It will be excluded."
-                    )
-            
-            if len(valid_timestamps) == 1 and tsStat == valid_timestamps[0]:
-                logger.info(f"[Resolving Timestamps] Only static timestamp {tsStat} is available")
+
+            # Check if input is list of integers (indices)
+            if isinstance(timestamps[0], int):
+                for idx in timestamps:
+                    try:
+                        resolved_ts = available_timestamps[idx]
+                        valid_timestamps.append(resolved_ts)
+                    except IndexError:
+                        logger.warning(f"[Resolving Timestamps] Index {idx} out of bounds for available timestamps. It will be excluded.")
             else:
-                logger.info(f"[Resolving Timestamps] {len(valid_timestamps)} valid timestamps will be used.")
+                # Assume list of timestamp strings
+                for ts in timestamps:
+                    if ts in available_timestamps:
+                        valid_timestamps.append(ts)
+                    else:
+                        logger.warning(
+                            f"[Resolving Timestamps] Timestamp {ts} is not valid (SIR3S_Model.GetTimeStamps()). It will be excluded."
+                        )
+
+            if len(valid_timestamps) == 1 and tsStat == valid_timestamps[0]:
+                logger.info(f"[Resolving Timestamps] Only static timestamp {tsStat} is used")
+            logger.info(f"[Resolving Timestamps] {len(valid_timestamps)} valid timestamp(s) will be used.")
             return valid_timestamps
         except Exception as e:
             logger.error(f"Error validating timestamps: {e}")
@@ -318,32 +326,37 @@ class Dataframes_SIR3S_Model(SIR3S_Model):
             The element type (e.g., self.ObjectTypes.Node).
         properties : list[str], optional
             List of RESULT property names (vectors) to include. If None, includes ALL available result properties.
-        timestamps : list[str], optional
-            List of timestamps to include. If None, uses all simulation timestamps (or STAT if no sims).
+        timestamps : list[Union[str, int]], optional
+            List of timestamps to include. Can be:
+            - List of timestamp strings (e.g., ["2025-09-25 00:00:00.000 +02:00"])
+            - List of integer indices (e.g., [0, 1, -1]), where:
+                - 0 refers to the stationary timestamp (STAT)
+                - 1 refers to the first simulation timestamp (unless it's STAT)
+                - -1 refers to the last available timestamp
 
         Returns
         -------
         pd.DataFrame
-            Dataframe with one row per (timestamp, tk) and columns for requested result properties.
-            Columns: ["timestamp", "tk", <result_props>]
+            Dataframe with one row per timestamp and MultiIndex columns:
+            - Level 0: tk (device ID)
+            - Level 1: name (device name)
+            - Level 2: end_nodes (tuple of connected node IDs as string)
+            - Level 3: property (result vector name)
         """
         logger.info(f"[results] Generating results dataframe for element type: {element_type}")
 
-        # --- Resolve timestamps (all devices × timestamps) ---
         valid_timestamps = self._resolve_given_timestamps(timestamps)
         if not valid_timestamps:
             logger.warning("[results] No valid timestamps. Returning empty dataframe.")
-            return pd.DataFrame(columns=["timestamp", "tk"])
+            return pd.DataFrame()
 
-        # --- Collect device keys (tks) ---
         try:
             tks = self.GetTksofElementType(ElementType=element_type)
             logger.info(f"[results] Retrieved {len(tks)} tks.")
         except Exception as e:
             logger.error(f"[results] Error retrieving tks: {e}")
-            return pd.DataFrame(columns=["timestamp", "tk"])
+            return pd.DataFrame()
 
-        # --- Determine result properties ---
         try:
             available_metadata_props = self.GetPropertiesofElementType(ElementType=element_type)
             available_result_props = self.GetResultProperties_from_elementType(
@@ -370,22 +383,48 @@ class Dataframes_SIR3S_Model(SIR3S_Model):
             logger.info(f"[results] Using {len(result_props)} result properties.")
         except Exception as e:
             logger.error(f"[results] Error determining result properties: {e}")
-            return pd.DataFrame(columns=["timestamp", "tk"])
+            return pd.DataFrame()
 
-        # --- Retrieve result values ---
+        end_nodes_available = False
+            if self.__is_get_endnodes_applicable(tks[0]):
+                end_nodes_available = True
+
         logger.info("[results] Retrieving result properties...")
-        data_rows = []
+
+        data_dict = defaultdict(dict)
+
         for ts in map(str, valid_timestamps):
             for tk in tks:
-                row = {"timestamp": ts, "tk": tk}
                 for prop in result_props:
                     try:
-                        row[prop] = self.GetResultfortimestamp(timestamp=ts, Tk=tk, property=prop)[0]
+                        value = self.GetResultfortimestamp(timestamp=ts, Tk=tk, property=prop)[0]
+                        data_dict[(tk, prop)][ts] = value
                     except Exception as e:
                         logger.warning(f"[results] Failed to get result '{prop}' for tk '{tk}' at '{ts}': {e}")
-                data_rows.append(row)
 
-        df = pd.DataFrame(data_rows)
+        df = pd.DataFrame(data_dict)
+        df.index.name = "timestamp"
+
+        # --- Add Name and End Nodes to column MultiIndex ---
+        col_tuples = []
+        for (tk, prop) in df.columns:
+            try:
+                name = self.GetValue(tk, "Name")[0]
+            except Exception as e:
+                logger.warning(f"[results] Failed to get name for tk '{tk}': {e}")
+                name = "UNKNOWN"
+            if end_nodes_available:
+                try:
+                    end_nodes = self.GetEndNodes(tk)
+                    end_nodes_str = str(end_nodes)
+                except Exception as e:
+                    logger.warning(f"[results] Failed to get end nodes for tk '{tk}': {e}")
+                    end_nodes_str = "UNKNOWN"
+                
+            col_tuples.append((tk, name, end_nodes_str, prop))
+
+        df.columns = pd.MultiIndex.from_tuples(col_tuples, names=["tk", "name", "end_nodes", "property"])
+
         logger.info(f"[results] Done. Shape: {df.shape}")
         return df
 
@@ -397,6 +436,7 @@ class Dataframes_SIR3S_Model(SIR3S_Model):
         tag: Optional[str] = "_new",
     ) -> pd.DataFrame:
         """
+        WORK IN PROGRESS
         Apply metadata updates for a single property using a DataFrame with keys and new values.
 
         Expects:
