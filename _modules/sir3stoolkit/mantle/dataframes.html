@@ -297,6 +297,7 @@
         <span class="n">properties</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">geometry</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">end_nodes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">filter_container_tks</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">element_type_col</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -315,7 +316,10 @@
 <span class="sd">        end_nodes : bool, optional</span>
 <span class="sd">            If True and supported by the element type, includes tks of end nodes as cols (fkKI, fkKK, fkKI2, fkKK2) in the dataframe.</span>
 <span class="sd">            Default is False.</span>
-
+<span class="sd">        filter_container_tks: list[str], optional</span>
+<span class="sd">            List of tks of containers to use element from. Elements from other containers are not included.</span>
+<span class="sd">        element_type_col: bool, option</span>
+<span class="sd">            If true, a column indicating the element type will be added. Useful if df is later merged.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -337,6 +341,22 @@
             <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[metadata] No elements exist of this element type </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
         
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">all_container_tks</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTksofElementType</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="o">.</span><span class="n">ObjectContainerSymbol</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">tk</span> <span class="ow">in</span> <span class="n">filter_container_tks</span><span class="p">[:]:</span>
+                <span class="k">if</span> <span class="n">tk</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">all_container_tks</span><span class="p">:</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[metadata] Removed invalid container tk: </span><span class="si">{</span><span class="n">tk</span><span class="si">}</span><span class="s2">. Proceeding without it.&quot;</span><span class="p">)</span>
+                    <span class="n">filter_container_tks</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">tk</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">filter_container_tks</span><span class="p">:</span>
+                <span class="n">tks</span> <span class="o">=</span> <span class="p">[</span><span class="n">tk</span> <span class="k">for</span> <span class="n">tk</span> <span class="ow">in</span> <span class="n">tks</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetValue</span><span class="p">(</span><span class="n">tk</span><span class="p">,</span> <span class="s2">&quot;FkCont&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="n">filter_container_tks</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tks</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[metadata] No elements remain after filtering.&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[metadata] </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">tks</span><span class="p">)</span><span class="si">}</span><span class="s2"> tks remain after filtering.&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[metadata] Error occured while filtering with filter_container_tks.&quot;</span><span class="p">)</span>
+
         <span class="c1"># --- Resolve given metadata properties ---</span>
         <span class="n">metadata_props</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__resolve_given_metadata_properties</span><span class="p">(</span><span class="n">element_type</span><span class="o">=</span><span class="n">element_type</span><span class="p">,</span> <span class="n">properties</span><span class="o">=</span><span class="n">properties</span><span class="p">)</span>
 
@@ -418,6 +438,7 @@
         <span class="n">element_type</span><span class="p">:</span> <span class="n">Enum</span><span class="p">,</span>
         <span class="n">properties</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">timestamps</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">filter_container_tks</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate a dataframe with RESULT (time-dependent) properties for all devices and timestamps.</span>
@@ -430,12 +451,14 @@
 <span class="sd">            List of RESULT property names (vectors) to include. If None, includes ALL available result properties.</span>
 <span class="sd">        timestamps : list[Union[str, int]], optional</span>
 <span class="sd">            List of timestamps to include. Can be:</span>
-<span class="sd">            - List of timestamp strings (e.g., [&quot;2025-09-25 00:00:00.000 +02:00&quot;])</span>
-<span class="sd">            - List of integer indices (e.g., [0, 1, -1]), where:</span>
-<span class="sd">                - 0 refers to the stationary timestamp (STAT)</span>
-<span class="sd">                - 1 refers to the first simulation timestamp (unless it&#39;s STAT)</span>
+<span class="sd">            - List of timestamp strings (e.g., [&quot;2025-09-25 00:00:00.000 +02:00&quot;, &quot;2025-09-25 00:00:01.000 +02:00&quot;, &#39;2025-09-25 00:00:05.000 +02:00&#39;])</span>
+<span class="sd">            - List of integer indices (e.g., [0, 7, -1]), where:</span>
+<span class="sd">                - 0 refers to the first simulation timestamp</span>
+<span class="sd">                - 7 refers to the seventh simulation timestamp</span>
 <span class="sd">                - -1 refers to the last available timestamp</span>
-
+<span class="sd">        filter_container_tks : list[str], optional</span>
+<span class="sd">            List of tks of containers to use element from. Elements from other containers are not included.</span>
+<span class="sd">                </span>
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        pd.DataFrame</span>
@@ -458,7 +481,27 @@
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[results] Error retrieving tks: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+        
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tks</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[results] No elements exist of this element type </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+        
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">all_container_tks</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTksofElementType</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="o">.</span><span class="n">ObjectContainerSymbol</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">tk</span> <span class="ow">in</span> <span class="n">filter_container_tks</span><span class="p">[:]:</span>
+                <span class="k">if</span> <span class="n">tk</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">all_container_tks</span><span class="p">:</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[results] Removed invalid container tk: </span><span class="si">{</span><span class="n">tk</span><span class="si">}</span><span class="s2">. Proceeding without it.&quot;</span><span class="p">)</span>
+                    <span class="n">filter_container_tks</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">tk</span><span class="p">)</span>
 
+            <span class="k">if</span> <span class="n">filter_container_tks</span><span class="p">:</span>
+                <span class="n">tks</span> <span class="o">=</span> <span class="p">[</span><span class="n">tk</span> <span class="k">for</span> <span class="n">tk</span> <span class="ow">in</span> <span class="n">tks</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetValue</span><span class="p">(</span><span class="n">tk</span><span class="p">,</span> <span class="s2">&quot;FkCont&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="n">filter_container_tks</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tks</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[results] No elements remain after filtering.&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[results] </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">tks</span><span class="p">)</span><span class="si">}</span><span class="s2"> tks remain after filtering.&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[results] Error occured while filtering with filter_container_tks.&quot;</span><span class="p">)</span>
+        
         <span class="k">try</span><span class="p">:</span>
             <span class="n">available_metadata_props</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetPropertiesofElementType</span><span class="p">(</span><span class="n">ElementType</span><span class="o">=</span><span class="n">element_type</span><span class="p">)</span>
             <span class="n">available_result_props</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetResultProperties_from_elementType</span><span class="p">(</span>
@@ -522,6 +565,8 @@
                 <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                     <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[results] Failed to get end nodes for tk &#39;</span><span class="si">{</span><span class="n">tk</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
                     <span class="n">end_nodes_str</span> <span class="o">=</span> <span class="s2">&quot;UNKNOWN&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">end_nodes_str</span> <span class="o">=</span> <span class="s2">&quot;No end nodes on element type&quot;</span>
                 
             <span class="n">col_tuples</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">tk</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">end_nodes_str</span><span class="p">,</span> <span class="n">prop</span><span class="p">))</span>
 
