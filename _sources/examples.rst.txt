@@ -81,6 +81,15 @@ This Tutorial demonstrates how new elements such as nodes, pipes, tanks, valves,
 
 View: `Notebook <tutorials/Tutorial6_Assets/ToolkitTutorial6.html>`_ | Download: `ZIP archive <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorial6_Assets.zip>`_.
 
+.. _Ttu7:
+
+Tutorial 7: Insert and Connect Elements
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This Tutorial demonstrates miscellaneaous functions of the SIR3S_Model() class that cannot be assigned to one of the previous Tutorial topics.
+
+View: `Notebook <tutorials/Tutorial6_Assets/ToolkitTutorial7.html>`_ | Download: `ZIP archive <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorial7_Assets.zip>`_.
+
 .. _TtuX:
 
 Tutorial X: Template

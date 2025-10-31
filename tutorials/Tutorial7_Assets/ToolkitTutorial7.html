@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>WORK IN PROGRESS &mdash; sir3stoolkit  documentation</title>
+  <title>Tutorial 7: Miscellaneous &mdash; sir3stoolkit  documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -78,7 +78,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">WORK IN PROGRESS</li>
+      <li class="breadcrumb-item active">Tutorial 7: Miscellaneous</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../_sources/tutorials/Tutorial7_Assets/ToolkitTutorial7.ipynb.txt" rel="nofollow"> View page source</a>
       </li>
@@ -88,19 +88,16 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="WORK-IN-PROGRESS">
-<h1>WORK IN PROGRESS<a class="headerlink" href="#WORK-IN-PROGRESS" title="Link to this heading"></a></h1>
-</section>
-<section id="Tutorial-7:-Miscellaneous">
+  <section id="Tutorial-7:-Miscellaneous">
 <h1>Tutorial 7: Miscellaneous<a class="headerlink" href="#Tutorial-7:-Miscellaneous" title="Link to this heading"></a></h1>
-<p>This Tutorial demonstrates miscellaneaous funcions of the SIR3S_Model() class that cannot be assigned to one of the previous Tutorial topics.</p>
+<p>This Tutorial demonstrates miscellaneaous functions of the SIR3S_Model() class that cannot be assigned to one of the previous Tutorial topics.</p>
 <section id="SIR-3S-Installation">
 <h2>SIR 3S Installation<a class="headerlink" href="#SIR-3S-Installation" title="Link to this heading"></a></h2>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r&quot;C:\3S\SIR 3S Entwicklung\SirGraf-90-15-00-16_Quebec_x64&quot; #change to local path
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r&quot;C:\3S\SIR 3S Entwicklung\SirGraf-90-15-00-19_x64&quot; #change to local path
 </pre></div>
 </div>
 </div>
@@ -243,118 +240,378 @@ NetworkType.DistrictHeating
 <h1>Tables<a class="headerlink" href="#Tables" title="Link to this heading"></a></h1>
 <section id="GetTableRows()">
 <h2>GetTableRows()<a class="headerlink" href="#GetTableRows()" title="Link to this heading"></a></h2>
-<p>We can use the <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetTableRows">GetTableRows()</a> function …</p>
+<p>We can use the <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetTableRows">GetTableRows()</a> function to obtain the tks of rows belonging to the table with a given tk.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for tk in s3s.GetTksofElementType(s3s.ObjectTypes.PipeTable):
+    print(tk + &quot;: &quot; + s3s.GetValue(tk, &quot;Name&quot;)[0])
+<br/></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+5703793333632021763: STDROHR
+5016622236907997495: FLEXWELL-F
+5072515793845307207: KMR-Daemmr1
+4628032391580498906: KMR-Daemmr2
+5343398249541580160: KMR-Daemmr3
+5358720719472309931: SMR
+5207173582970272729: Kellerltg
+5567057697892033945: Freileitung
+</pre></div></div>
+</div>
+<p>Let’s focus on the STDROHR table</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[49]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>rows=s3s.GetTableRows(tablePkTk=&quot;5207173582970272729&quot;)
-</pre></div>
-</div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[36]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>column_names = list(rows[0])
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>tk_STDROHR_table = &quot;5703793333632021763&quot;
 </pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[37]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>data_row = rows[1]
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>rows = s3s.GetTableRows(tablePkTk=tk_STDROHR_table)
 </pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[38]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[54]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>result = (column_names, data_row)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>row_tks = list(rows[0])
+</pre></div>
+</div>
+</div>
+<p>Now, we have the tks of all rows of this table.</p>
+<p>We can reconstruct the table via pandas as follows.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[55]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[56]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>properties_rows=s3s.GetPropertiesofElementType(s3s.ObjectTypes.PipeTable_Row)
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[57]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>data = {
+    tk: {prop: s3s.GetValue(tk, prop)[0] for prop in properties_rows}
+    for tk in row_tks
+}
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[58]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df = pd.DataFrame.from_dict(data, orient=&#39;index&#39;)
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[39]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[59]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>result
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df.head(5)
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[39]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[59]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Name</th>
+      <th>Fk</th>
+      <th>Dn</th>
+      <th>Di</th>
+      <th>Da</th>
+      <th>S</th>
+      <th>Wsteig</th>
+      <th>Wtiefe</th>
+      <th>Kt</th>
+      <th>Pn</th>
+      <th>Ausfallzeit</th>
+      <th>Reparatur</th>
+      <th>Rehabilitation</th>
+      <th>Tk</th>
+      <th>Pk</th>
+      <th>IsMarked</th>
+      <th>InVariant</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>5297765239286495285</th>
+      <td>DN 20</td>
+      <td>5207173582970272729</td>
+      <td>20</td>
+      <td>22,3</td>
+      <td>26,9</td>
+      <td>2,2</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0,15</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>5297765239286495285</td>
+      <td>5297765239286495285</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>5505405016038766837</th>
+      <td>DN 25</td>
+      <td>5207173582970272729</td>
+      <td>25</td>
+      <td>28,5</td>
+      <td>33,7</td>
+      <td>2,6</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0,184</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>5505405016038766837</td>
+      <td>5505405016038766837</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>5657435971461916784</th>
+      <td>DN 32</td>
+      <td>5207173582970272729</td>
+      <td>32</td>
+      <td>37,2</td>
+      <td>42,4</td>
+      <td>2,6</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0,192</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>5657435971461916784</td>
+      <td>5657435971461916784</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>4731961744650959242</th>
+      <td>DN 40</td>
+      <td>5207173582970272729</td>
+      <td>40</td>
+      <td>43,1</td>
+      <td>48,3</td>
+      <td>2,6</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0,222</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>4731961744650959242</td>
+      <td>4731961744650959242</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>4654778941431515587</th>
+      <td>DN 50</td>
+      <td>5207173582970272729</td>
+      <td>50</td>
+      <td>54,5</td>
+      <td>60,3</td>
+      <td>2,9</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0,251</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>4654778941431515587</td>
+      <td>4654778941431515587</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</section>
+<section id="AddTableRow()">
+<h2>AddTableRow()<a class="headerlink" href="#AddTableRow()" title="Link to this heading"></a></h2>
+<p>We can use the <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow">AddTableRow()</a> function to add a new row to the bottom of any table.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[60]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>new_table_row_tk = s3s.AddTableRow(tk_STDROHR_table)[0]
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Row is added to the table with Tk: 5701591183009734607
+</pre></div></div>
+</div>
+<p>Now we can use the already known <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.SetValue">SetValue()</a> function to propagate the row with the necessary values.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[61]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetPropertiesofElementType(s3s.ObjectTypes.PipeTable_Row)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[61]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-([&#39;5297765239286495285&#39;,
-  &#39;5505405016038766837&#39;,
-  &#39;5657435971461916784&#39;,
-  &#39;4731961744650959242&#39;,
-  &#39;4654778941431515587&#39;,
-  &#39;4972106905750615640&#39;,
-  &#39;5306467440979393171&#39;,
-  &#39;5601428605019135559&#39;,
-  &#39;4688972552604402319&#39;,
-  &#39;5566973724189050747&#39;,
-  &#39;4800688165183110551&#39;,
-  &#39;5759402558880615483&#39;,
-  &#39;5747406601278383726&#39;,
-  &#39;4955753481431579638&#39;,
-  &#39;4767993928193269478&#39;,
-  &#39;5578432997313514963&#39;,
-  &#39;4900931631562346599&#39;,
-  &#39;4927707872220944575&#39;,
-  &#39;5519887127081422895&#39;,
-  &#39;4962453701239067026&#39;],
- &lt;ObjectTypes.PipeTable_Row: 68&gt;)
+[&#39;Name&#39;,
+ &#39;Fk&#39;,
+ &#39;Dn&#39;,
+ &#39;Di&#39;,
+ &#39;Da&#39;,
+ &#39;S&#39;,
+ &#39;Wsteig&#39;,
+ &#39;Wtiefe&#39;,
+ &#39;Kt&#39;,
+ &#39;Pn&#39;,
+ &#39;Ausfallzeit&#39;,
+ &#39;Reparatur&#39;,
+ &#39;Rehabilitation&#39;,
+ &#39;Tk&#39;,
+ &#39;Pk&#39;,
+ &#39;IsMarked&#39;,
+ &#39;InVariant&#39;]
 </pre></div></div>
 </div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[63]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.SetValue(new_table_row_tk, &quot;Name&quot;, &quot;DN 60&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Value is set
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.SetValue(new_table_row_tk, &quot;Fk&quot;, &quot;5207173582970272729&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.SetValue(new_table_row_tk, &quot;Dn&quot;, &quot;60&quot;)
+</pre></div>
+</div>
+</div>
+<p>… and so on. Then save your changes.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>#s3s.SaveChanges()
+</pre></div>
+</div>
+</div>
 </section>
-<section id="AddTableRows()">
-<h2>AddTableRows()<a class="headerlink" href="#AddTableRows()" title="Link to this heading"></a></h2>
-<p>We can use the <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow">AddTableRows()</a> function …</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-</div>
 </section>
+<section id="SetLogFilePath()">
+<h1>SetLogFilePath()<a class="headerlink" href="#SetLogFilePath()" title="Link to this heading"></a></h1>
+<p>We can use the function <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.SetLogFilePath">SetLogFilePath()</a> to change where the log file, created when SIR 3S executes calculations, is saved.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[68]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.SetLogFilePath(&quot;C:/Users/aUsername/Documents&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Error: UnauthorizedAccessException: Der Zugriff auf den Pfad &#34;C:\Users\aUsername\Documents&#34; wurde verweigert.
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[68]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+False
+</pre></div></div>
+</div>
 <section id="EnableOrDisableOutputComments()">
 <h2>EnableOrDisableOutputComments()<a class="headerlink" href="#EnableOrDisableOutputComments()" title="Link to this heading"></a></h2>
 <p>We can use the function <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.EnableOrDisableOutputComments">EnableOrDisableOutputComments()</a> to turn output comments on or off. Default is True.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.EnableOrDisableOutputComments(outputComments=True)
@@ -362,7 +619,7 @@ NetworkType.DistrictHeating
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(s3s.InsertElement(s3s.ObjectTypes.Node, &quot;-1&quot;))
@@ -379,7 +636,7 @@ Element inserted successfully into the model with Tk: 5709290878034830258
 </pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.EnableOrDisableOutputComments(outputComments=False)
@@ -387,7 +644,7 @@ Element inserted successfully into the model with Tk: 5709290878034830258
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(s3s.InsertElement(s3s.ObjectTypes.Node, &quot;-1&quot;))
@@ -404,38 +661,17 @@ Element inserted successfully into the model with Tk: 5709290878034830258
 </div>
 <p>As you can see, after the output comments were disabled the function does not print an output. The printed tk is the return value of the function that is displayed in Jupyter Notebooks.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.EnableOrDisableOutputComments(outputComments=True)
 </pre></div>
 </div>
 </div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>1/0
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-<span class="ansi-red-intense-fg ansi-bold">---------------------------------------------------------------------------</span>
-<span class="ansi-red-intense-fg ansi-bold">ZeroDivisionError</span>                         Traceback (most recent call last)
-Cell <span class="ansi-green-intense-fg ansi-bold">In[16], line 1</span>
-<span class="ansi-green-intense-fg ansi-bold">----&gt; 1</span> <span style="color: rgb(98,98,98)">1</span><span style="color: rgb(98,98,98)">/</span><span style="color: rgb(98,98,98)">0</span>
-
-<span class="ansi-red-intense-fg ansi-bold">ZeroDivisionError</span>: division by zero
-</pre></div></div>
-</div>
 </section>
 <section id="AllowSirMessageBox()">
 <h2>AllowSirMessageBox()<a class="headerlink" href="#AllowSirMessageBox()" title="Link to this heading"></a></h2>
-<p>We can use the function <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AllowSirMessageBox">AllowSirMessageBox()</a> to allow or diallow SIR DB Messages to pop up. Default is True.</p>
+<p>We can use the function <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AllowSirMessageBox">AllowSirMessageBox()</a> to allow or diallow SIR DB Messages to pop up. Default is True. Generally, not recommeded to turn off, as it could mean missing out on deep error messages.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
@@ -538,7 +774,8 @@ no such table: USCH
 </div>
 </div>
 <p>As you can see in your file explorer this time the model was migrated without asking. In general during model creation/opening the message boxes should be left on.</p>
-<p><strong>…</strong></p>
+<p>You have finished all Tutorials on the SIR3S_Model class of the SIR 3S Toolkit. The SIR3S_View class does not yet have Tutorials.</p>
+<p>Feel free to check out the Examples.</p>
 </section>
 </section>
 
