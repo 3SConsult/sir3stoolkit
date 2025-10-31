@@ -200,6 +200,7 @@ class Dataframes_SIR3S_Model(SIR3S_Model):
         properties: Optional[List[str]] = None,
         geometry: Optional[bool] = False,
         end_nodes: Optional[bool] = False,
+        filter_container_tks: Optional[List[str]] = None,
         element_type_col: Optional[bool] = False
     ) -> pd.DataFrame:
         """
@@ -218,7 +219,10 @@ class Dataframes_SIR3S_Model(SIR3S_Model):
         end_nodes : bool, optional
             If True and supported by the element type, includes tks of end nodes as cols (fkKI, fkKK, fkKI2, fkKK2) in the dataframe.
             Default is False.
-
+        filter_container_tks: list[str], optional
+            List of tks of containers to use element from. Elements from other containers are not included.
+        element_type_col: bool, option
+            If true, a column indicating the element type will be added. Useful if df is later merged.
 
         Returns
         -------
@@ -240,6 +244,22 @@ class Dataframes_SIR3S_Model(SIR3S_Model):
             logger.error(f"[metadata] No elements exist of this element type {element_type}.")
             return pd.DataFrame()
         
+        try:
+            all_container_tks = self.GetTksofElementType(self.ObjectTypes.ObjectContainerSymbol)
+            for tk in filter_container_tks[:]:
+                if tk not in all_container_tks:
+                    logger.warning(f"[metadata] Removed invalid container tk: {tk}. Proceeding without it.")
+                    filter_container_tks.remove(tk)
+
+            if filter_container_tks:
+                tks = [tk for tk in tks if self.GetValue(tk, "FkCont")[0] in filter_container_tks]
+            if len(tks) < 1:
+                logger.error(f"[metadata] No elements remain after filtering.")
+                return pd.DataFrame()
+            logger.info(f"[metadata] {len(tks)} tks remain after filtering.")
+        except Exception as e:
+            logger.error(f"[metadata] Error occured while filtering with filter_container_tks.")
+
         # --- Resolve given metadata properties ---
         metadata_props = self.__resolve_given_metadata_properties(element_type=element_type, properties=properties)
 
@@ -318,6 +338,7 @@ class Dataframes_SIR3S_Model(SIR3S_Model):
         element_type: Enum,
         properties: Optional[List[str]] = None,
         timestamps: Optional[List[str]] = None,
+        filter_container_tks: Optional[str] = None,
     ) -> pd.DataFrame:
         """
         Generate a dataframe with RESULT (time-dependent) properties for all devices and timestamps.
@@ -330,12 +351,14 @@ class Dataframes_SIR3S_Model(SIR3S_Model):
             List of RESULT property names (vectors) to include. If None, includes ALL available result properties.
         timestamps : list[Union[str, int]], optional
             List of timestamps to include. Can be:
-            - List of timestamp strings (e.g., ["2025-09-25 00:00:00.000 +02:00"])
-            - List of integer indices (e.g., [0, 1, -1]), where:
-                - 0 refers to the stationary timestamp (STAT)
-                - 1 refers to the first simulation timestamp (unless it's STAT)
+            - List of timestamp strings (e.g., ["2025-09-25 00:00:00.000 +02:00", "2025-09-25 00:00:01.000 +02:00", '2025-09-25 00:00:05.000 +02:00'])
+            - List of integer indices (e.g., [0, 7, -1]), where:
+                - 0 refers to the first simulation timestamp
+                - 7 refers to the seventh simulation timestamp
                 - -1 refers to the last available timestamp
-
+        filter_container_tks : list[str], optional
+            List of tks of containers to use element from. Elements from other containers are not included.
+                
         Returns
         -------
         pd.DataFrame
@@ -358,7 +381,27 @@ class Dataframes_SIR3S_Model(SIR3S_Model):
         except Exception as e:
             logger.error(f"[results] Error retrieving tks: {e}")
             return pd.DataFrame()
+        
+        if len(tks) < 1:
+            logger.error(f"[results] No elements exist of this element type {element_type}.")
+            return pd.DataFrame()
+        
+        try:
+            all_container_tks = self.GetTksofElementType(self.ObjectTypes.ObjectContainerSymbol)
+            for tk in filter_container_tks[:]:
+                if tk not in all_container_tks:
+                    logger.warning(f"[results] Removed invalid container tk: {tk}. Proceeding without it.")
+                    filter_container_tks.remove(tk)
 
+            if filter_container_tks:
+                tks = [tk for tk in tks if self.GetValue(tk, "FkCont")[0] in filter_container_tks]
+            if len(tks) < 1:
+                logger.error(f"[results] No elements remain after filtering.")
+                return pd.DataFrame()
+            logger.info(f"[results] {len(tks)} tks remain after filtering.")
+        except Exception as e:
+            logger.error(f"[results] Error occured while filtering with filter_container_tks.")
+        
         try:
             available_metadata_props = self.GetPropertiesofElementType(ElementType=element_type)
             available_result_props = self.GetResultProperties_from_elementType(
@@ -422,6 +465,8 @@ class Dataframes_SIR3S_Model(SIR3S_Model):
                 except Exception as e:
                     logger.warning(f"[results] Failed to get end nodes for tk '{tk}': {e}")
                     end_nodes_str = "UNKNOWN"
+            else:
+                end_nodes_str = "No end nodes on element type"
                 
             col_tuples.append((tk, name, end_nodes_str, prop))
 
