@@ -23,6 +23,20 @@ The release notes indicate what kind of release it is.
 90-15 Quebec
 ------------
 
+Version 90.15.5 (To be released)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Bug Fixes
+^^^^^^^^^^
+
+- dataframes.py: logger.error(f"[metadata] Error occured while filtering with filter_container_tks.") no longer triggers unwarranted
+
+Improvements
+^^^^^^^^^^^^
+
+- alternative_models.py: SIR_3S_to_nx_graph() now created minimal graph with additional properties
+- alternative_models.py: add_properties_to_graph() new function for user defined addition of properties to nx Graph
+
 Version 90.15.4
 ~~~~~~~~~~~~~~~
 
