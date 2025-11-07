@@ -12,6 +12,7 @@ import pandas as pd
 from shapely import wkt
 
 import networkx as nx
+from typing import List
 
 import logging
 logger = logging.getLogger(__name__)
@@ -143,6 +144,7 @@ class Alternative_Models_SIR3S_Model(Dataframes_SIR3S_Model):
         try:
             df_nodes = self.generate_element_metadata_dataframe(
                 element_type=self.ObjectTypes.Node,
+                properties=["Fkcont"],
                 geometry=True
             )
             logger.info(f"[graph] Retrieved {len(df_nodes)} nodes.")
@@ -162,13 +164,16 @@ class Alternative_Models_SIR3S_Model(Dataframes_SIR3S_Model):
             enum_members = self.__get_object_type_enums(edge_types, self.ObjectTypes)
             dfs = []
             for em in enum_members:
-                df = self.generate_element_metadata_dataframe(
-                    element_type=em,
-                    geometry=True,
-                    end_nodes=True,
-                    element_type_col=True
-                )
-                dfs.append(df)
+                tks = self.GetTksofElementType(ElementType=em)
+                if tks:
+                    df = self.generate_element_metadata_dataframe(
+                        element_type=em,
+                        properties=["Fkcont"],
+                        geometry=True,
+                        end_nodes=True,
+                        element_type_col=True
+                    )
+                    dfs.append(df)
             df_edges = pd.concat(dfs, ignore_index=True)
             logger.info(f"[graph] Retrieved {len(df_edges)} edges from {len(enum_members)} element types.")
         except Exception as e:
@@ -203,3 +208,181 @@ class Alternative_Models_SIR3S_Model(Dataframes_SIR3S_Model):
     
     def __get_object_type_enums(self, names, enum_class):
                     return [getattr(enum_class, name) for name in names if hasattr(enum_class, name)]
+
+    def add_properties_to_graph(
+        self,
+        G: nx.DiGraph,
+        element_type: str,        
+        properties: List[str],
+    ) -> nx.DiGraph:
+        """
+        Enrich nodes and edges in `G` with additional attributes by joining on 'tk'.
+
+        Parameters
+        ----------
+        G : nx.DiGraph
+            The already-built graph where nodes/edges have at least a 'tk' attribute.
+        element_type : str
+            The element type to filter by (must match df[element_type_col] and edge attr "element type").
+        properties : list of str
+            Column names from the dataframe to add as attributes.
+
+        Returns
+        -------
+        nx.DiGraph
+            The same graph instance with enriched attributes.
+        """
+        logger.info(f"[graph] Enriching graph with properties for element_type='{element_type}'")
+
+        # --- Validate property availability (optional, keep if you want the checks) ---
+        try:
+            available_metadata_props = self.GetPropertiesofElementType(ElementType=self.get_object_type_enum(element_type))
+            available_result_props = self.GetResultProperties_from_elementType(
+                elementType=self.get_object_type_enum(element_type),
+                onlySelectedVectors=False
+            )
+            metadata_props: List[str] = []
+            result_props: List[str] = []
+            if properties is None:
+                logger.warning(
+                    f"[graph] No properties given → using ALL metadata and STAT result properties for {element_type}. "
+                    "This can lead to long runtimes."
+                )
+                metadata_props = available_metadata_props or []
+                result_props = available_result_props or []
+            else:
+                for prop in properties:
+                    if prop in (available_result_props or []):
+                        result_props.append(prop)
+                    elif prop in (available_metadata_props or []):
+                        metadata_props.append(prop)
+                    else:
+                        logger.warning(
+                            f"[graph] Property '{prop}' not found in metadata or result properties of type {element_type}. Excluding."
+                        )
+            logger.info(f"[graph] Using {len(metadata_props)} metadata props and {len(result_props)} result props.")
+        except Exception as e:
+            logger.error(f"[graph] Error validating metadata/result properties: {e}. Aborting.")
+            return G
+
+        # --- Build dataframe with at least ['tk', *requested_columns] ---
+        try:
+            tks = self.GetTksofElementType(ElementType=self.get_object_type_enum(element_type))
+            if not tks:
+                logger.error(f"[graph] No elements exist for element type: {element_type}.")
+                return G
+
+            df_metadata = self.generate_element_metadata_dataframe(
+                element_type=self.get_object_type_enum(element_type),
+                properties=metadata_props,
+                element_type_col=False,
+                geometry=False,
+                end_nodes=False
+            )
+
+            TStat=self.GetTimeStamps()[1]
+
+            df_results = self.generate_element_results_dataframe(
+                element_type=self.get_object_type_enum(element_type),
+                properties=result_props,
+                timestamps=[TStat]
+            )
+            
+            df_results.columns = df_results.columns.droplevel([1, 2, 3])
+
+            #TODO merge df_results and df_metadata
+
+            df = df_metadata
+
+            if df is None or df.empty:
+                logger.info(f"[graph] Empty metadata DataFrame for element_type='{element_type}'. Nothing to add.")
+                return G
+
+        except Exception as e:
+            logger.error(f"[graph] Failed to retrieve metadata for enrichment: {e}")
+            return G
+
+        # --- Decide which columns to add; never add these ---
+        never_add = {"geometry", "fkKI", "fkKK", "tk", "element_type"}
+        add_cols = [c for c in (metadata_props or []) if c in df.columns and c not in never_add]
+        if not add_cols:
+            logger.info(f"[graph] No permissible columns to add for element_type='{element_type}'.")
+            return G
+
+        # --- Build tk -> {prop: value, ...} mapping ---
+        try:
+            df_updates = (
+                df[["tk"] + add_cols]
+                .drop_duplicates(subset=["tk"], keep="last")
+                .set_index("tk")
+            )
+        except KeyError as e:
+            logger.error(f"[graph] Required columns missing in df: {e}")
+            return G
+
+        tk_to_attrs = df_updates.to_dict(orient="index")
+
+        nodes_updated = 0
+        edges_updated = 0
+
+        try:
+            if element_type == "Node":
+                for _, data in G.nodes(data=True):
+                    tk = data.get("tk")
+                    if tk is None:
+                        continue
+                    row = tk_to_attrs.get(tk)
+                    if row is None:
+                        continue
+                    updates = {k: v for k, v in row.items() if k not in never_add}
+                    if updates:
+                        data.update(updates)
+                        nodes_updated += 1
+        except Exception as e:
+            logger.error(f"[graph] Error while updating nodes: {e}")
+
+        # --- Update edges (filter by 'element type' attr in the graph) ---
+        try:
+            if element_type != "Node":
+                for _, _, data in G.edges(data=True):
+                    if data.get("element type") != element_type:
+                        continue
+                    tk = data.get("tk")
+                    if tk is None:
+                        continue
+                    row = tk_to_attrs.get(tk)
+                    if row is None:
+                        continue
+                    updates = {k: v for k, v in row.items() if k not in never_add}
+                    if updates:
+                        data.update(updates)
+                        edges_updated += 1
+        except Exception as e:
+            logger.error(f"[graph] Error while updating edges: {e}")
+
+        logger.info(
+            "[graph] Enrichment summary for element_type='%s': nodes_updated=%d; edges_updated=%d; cols_added=%s",
+            str(element_type), nodes_updated, edges_updated, add_cols
+        )
+        return G
+    
+    def get_object_type_enum(self, element_type: str):
+        """
+        Return the enum member from self.ObjectTypes corresponding to the given element_type string.
+
+        Parameters
+        ----------
+        element_type : str
+            Name of the element type (e.g., 'Node', 'Pipe').
+
+        Returns
+        -------
+        Enum member from self.ObjectTypes if found, else None.
+        """
+        try:
+            # Normalize input to match attribute names
+            normalized = element_type.strip()
+            return getattr(self.ObjectTypes, normalized)
+        except AttributeError:
+            logger.error(f"[graph] Invalid element_type '{element_type}' — not found in ObjectTypes.")
+            return None
