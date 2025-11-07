@@ -243,22 +243,22 @@ class Dataframes_SIR3S_Model(SIR3S_Model):
         if len(tks) < 1:
             logger.error(f"[metadata] No elements exist of this element type {element_type}.")
             return pd.DataFrame()
-        
-        try:
-            all_container_tks = self.GetTksofElementType(self.ObjectTypes.ObjectContainerSymbol)
-            for tk in filter_container_tks[:]:
-                if tk not in all_container_tks:
-                    logger.warning(f"[metadata] Removed invalid container tk: {tk}. Proceeding without it.")
-                    filter_container_tks.remove(tk)
+        if filter_container_tks:
+            try:
+                all_container_tks = self.GetTksofElementType(self.ObjectTypes.ObjectContainerSymbol)
+                for tk in filter_container_tks[:]:
+                    if tk not in all_container_tks:
+                        logger.warning(f"[metadata] Removed invalid container tk: {tk}. Proceeding without it.")
+                        filter_container_tks.remove(tk)
 
-            if filter_container_tks:
-                tks = [tk for tk in tks if self.GetValue(tk, "FkCont")[0] in filter_container_tks]
-            if len(tks) < 1:
-                logger.error(f"[metadata] No elements remain after filtering.")
-                return pd.DataFrame()
-            logger.info(f"[metadata] {len(tks)} tks remain after filtering.")
-        except Exception as e:
-            logger.error(f"[metadata] Error occured while filtering with filter_container_tks.")
+                if filter_container_tks:
+                    tks = [tk for tk in tks if self.GetValue(tk, "FkCont")[0] in filter_container_tks]
+                if len(tks) < 1:
+                    logger.error(f"[metadata] No elements remain after filtering.")
+                    return pd.DataFrame()
+                logger.info(f"[metadata] {len(tks)} tks remain after filtering.")
+            except Exception as e:
+                logger.error(f"[metadata] Error occured while filtering with filter_container_tks.")
 
         # --- Resolve given metadata properties ---
         metadata_props = self.__resolve_given_metadata_properties(element_type=element_type, properties=properties)
@@ -386,22 +386,23 @@ class Dataframes_SIR3S_Model(SIR3S_Model):
             logger.error(f"[results] No elements exist of this element type {element_type}.")
             return pd.DataFrame()
         
-        try:
-            all_container_tks = self.GetTksofElementType(self.ObjectTypes.ObjectContainerSymbol)
-            for tk in filter_container_tks[:]:
-                if tk not in all_container_tks:
-                    logger.warning(f"[results] Removed invalid container tk: {tk}. Proceeding without it.")
-                    filter_container_tks.remove(tk)
+        if filter_container_tks:
+            try:
+                all_container_tks = self.GetTksofElementType(self.ObjectTypes.ObjectContainerSymbol)
+                for tk in filter_container_tks[:]:
+                    if tk not in all_container_tks:
+                        logger.warning(f"[results] Removed invalid container tk: {tk}. Proceeding without it.")
+                        filter_container_tks.remove(tk)
 
-            if filter_container_tks:
-                tks = [tk for tk in tks if self.GetValue(tk, "FkCont")[0] in filter_container_tks]
-            if len(tks) < 1:
-                logger.error(f"[results] No elements remain after filtering.")
-                return pd.DataFrame()
-            logger.info(f"[results] {len(tks)} tks remain after filtering.")
-        except Exception as e:
-            logger.error(f"[results] Error occured while filtering with filter_container_tks.")
-        
+                if filter_container_tks:
+                    tks = [tk for tk in tks if self.GetValue(tk, "FkCont")[0] in filter_container_tks]
+                if len(tks) < 1:
+                    logger.error(f"[results] No elements remain after filtering.")
+                    return pd.DataFrame()
+                logger.info(f"[results] {len(tks)} tks remain after filtering.")
+            except Exception as e:
+                logger.error(f"[results] Error occured while filtering with filter_container_tks.")
+            
         try:
             available_metadata_props = self.GetPropertiesofElementType(ElementType=element_type)
             available_result_props = self.GetResultProperties_from_elementType(
