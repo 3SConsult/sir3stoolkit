@@ -13,7 +13,7 @@ from shapely import wkt
 from shapely.geometry.base import BaseGeometry
 
 import networkx as nx
-from typing import List
+from typing import List, Optional, Union
 
 import logging
 logger = logging.getLogger(__name__)
@@ -210,6 +210,7 @@ class Alternative_Models_SIR3S_Model(Dataframes_SIR3S_Model):
         G: nx.DiGraph,
         element_type: str,        
         properties: List[str],
+        timestamp: Optional[str] = None,
     ) -> nx.DiGraph:
         """
         Enrich nodes and edges in `G` with additional attributes by joining on 'tk'.
@@ -221,7 +222,9 @@ class Alternative_Models_SIR3S_Model(Dataframes_SIR3S_Model):
         element_type : str
             The element type to filter by (must match df[element_type_col] and edge attr "element type").
         properties : list of str
-            Column names from the dataframe to add as attributes.
+            Column names from the dataframe to add as attributes
+        timestamp: str
+            Timestamp used for adding result properties. If None, STAT will be used.
 
         Returns
         -------
@@ -256,6 +259,7 @@ class Alternative_Models_SIR3S_Model(Dataframes_SIR3S_Model):
                         logger.warning(
                             f"[graph] Property '{prop}' not found in metadata or result properties of type {element_type}. Excluding."
                         )
+                all_props_to_use = metadata_props + result_props
             logger.info(f"[graph] Using {len(metadata_props)} metadata props and {len(result_props)} result props.")
         except Exception as e:
             logger.error(f"[graph] Error validating metadata/result properties: {e}. Aborting.")
@@ -276,19 +280,28 @@ class Alternative_Models_SIR3S_Model(Dataframes_SIR3S_Model):
                 end_nodes=False
             )
 
-            TStat=self.GetTimeStamps()[1]
+            simulation_timestamps, tsStat, tsMin, tsMax = self.GetTimeStamps()
+            available_timestamps = list(simulation_timestamps) if simulation_timestamps else []
+
+            if timestamp and (timestamp in available_timestamps):
+                timestamp_for_values = timestamp
+            else:
+                timestamp_for_values = tsStat
 
             df_results = self.generate_element_results_dataframe(
                 element_type=self.get_object_type_enum(element_type),
                 properties=result_props,
-                timestamps=[TStat]
+                timestamps=[timestamp_for_values]
             )
             
-            df_results.columns = df_results.columns.droplevel([1, 2, 3])
-
-            #TODO merge df_results and df_metadata
-
-            df = df_metadata
+            df_results.columns = df_results.columns.droplevel([1, 2])
+            df_results = df_results.T.unstack(level=0).T
+            df_results = df_results.droplevel(0, axis=0)
+            df = df_metadata.merge(on="tk",
+                             how="outer",
+                             right=df_results)
+            
+            logger.debug(f"{df.columns}")
 
             if df is None or df.empty:
                 logger.info(f"[graph] Empty metadata DataFrame for element_type='{element_type}'. Nothing to add.")
@@ -300,7 +313,7 @@ class Alternative_Models_SIR3S_Model(Dataframes_SIR3S_Model):
 
         # --- Decide which columns to add; never add these ---
         never_add = {"geometry", "fkKI", "fkKK", "tk", "element_type"}
-        add_cols = [c for c in (metadata_props or []) if c in df.columns and c not in never_add]
+        add_cols = [c for c in (all_props_to_use or []) if c in df.columns and c not in never_add]
         if not add_cols:
             logger.info(f"[graph] No permissible columns to add for element_type='{element_type}'.")
             return G

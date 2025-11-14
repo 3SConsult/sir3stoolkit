@@ -45,7 +45,7 @@ Improvements
 
 - alternative_models.py: 
    - SIR_3S_to_nx_graph() now created minimal graph with additional properties
-   - add_properties_to_graph() new function for user defined addition of properties to nx Graph
+   - add_properties_to_graph() new function for user defined addition of properties (metadata and result) to nx Graph
 - dataframes.py:
    - generate_element_metadata_dataframe(geometry=True) returns gpd.GeoDataFrame instead of pd.DataFrame
    - new function get_EPSG() returns tuple of SRID, SRID2, SRIDSTRING for crs
