@@ -265,7 +265,7 @@
                             <span class="sa">f</span><span class="s2">&quot;[Resolving Metadata Properties] Property &#39;</span><span class="si">{</span><span class="n">prop</span><span class="si">}</span><span class="s2">&#39; not found in metadata or result properties of type </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">. Excluding.&quot;</span>
                         <span class="p">)</span>
 
-            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[Resolving Metadata Properties] Using </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">metadata_props</span><span class="p">)</span><span class="si">}</span><span class="s2"> metadata properties.&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[Resolving Metadata Properties] Using </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">metadata_props</span><span class="p">)</span><span class="si">}</span><span class="s2"> metadata properties.&quot;</span><span class="p">)</span>
        
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[Resolving Metadata Properties] Error resolving metadata properties: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -436,11 +436,11 @@
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">df</span><span class="p">[</span><span class="s2">&quot;geometry&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;geometry&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">wkt</span><span class="o">.</span><span class="n">loads</span><span class="p">)</span>
                 <span class="n">srid</span><span class="p">,</span> <span class="n">srid2</span><span class="p">,</span> <span class="n">srid_string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_EPSG</span><span class="p">()</span>
-                <span class="k">if</span> <span class="n">srid</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">srid</span> <span class="ow">and</span> <span class="p">(</span><span class="n">srid</span> <span class="o">!=</span> <span class="s1">&#39;0&#39;</span><span class="p">):</span>
                     <span class="n">df</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">geometry</span><span class="o">=</span><span class="s2">&quot;geometry&quot;</span><span class="p">,</span> <span class="n">crs</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;EPSG: </span><span class="si">{</span><span class="n">srid</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
                     <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[metadata] Transforming DataFrame to GeoDataFrame successful with EPSG: </span><span class="si">{</span><span class="n">srid</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[metadata] Spatial Reference Identifier (SRID) not defined in model. DataFrame cannot be transformed to GeoDataFrame. Returning regular DataFrame with a geometry column.&quot;</span><span class="p">)</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[metadata] Spatial Reference Identifier (SRID) not defined in model. DataFrame cannot be transformed to GeoDataFrame but geometry column can be created independently of SRID. Returning regular DataFrame with a geometry column.&quot;</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                     <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[metadata] Error transforming DataFrame to GeoDataFrame. </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
@@ -593,6 +593,46 @@
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[results] Done. Shape: </span><span class="si">{</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">df</span></div>
 
+    
+<div class="viewcode-block" id="Dataframes_SIR3S_Model.generate_hydraulic_edge_dataframe">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.Dataframes_SIR3S_Model.generate_hydraulic_edge_dataframe">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">generate_hydraulic_edge_dataframe</span><span class="p">(</span>
+        <span class="bp">self</span>      
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates a pandas dataframe containing all edges that are part of the hydraulic model (eg. pipes, valves, compressors, etc.).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">edge_types</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s1">&#39;Pipe&#39;</span><span class="p">,</span> <span class="s1">&#39;Valve&#39;</span><span class="p">,</span> <span class="s1">&#39;SafetyValve&#39;</span><span class="p">,</span> <span class="s1">&#39;PressureRegulator&#39;</span><span class="p">,</span> <span class="s1">&#39;DifferentialRegulator&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;FlapValve&#39;</span><span class="p">,</span> <span class="s1">&#39;PhaseSeparation&#39;</span><span class="p">,</span> <span class="s1">&#39;FlowControlUnit&#39;</span><span class="p">,</span> <span class="s1">&#39;ControlValve&#39;</span><span class="p">,</span> <span class="s1">&#39;Pump&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;DistrictHeatingConsumer&#39;</span><span class="p">,</span> <span class="s1">&#39;DistrictHeatingFeeder&#39;</span><span class="p">,</span> <span class="s1">&#39;Compressor&#39;</span><span class="p">,</span> <span class="s1">&#39;HeaterCooler&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;HeatExchanger&#39;</span><span class="p">,</span> <span class="s1">&#39;HeatFeederConsumerStation&#39;</span><span class="p">,</span> <span class="s1">&#39;RART_ControlMode&#39;</span>
+        <span class="p">]</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">enum_members</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_object_type_enums</span><span class="p">(</span><span class="n">edge_types</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="p">)</span>
+            <span class="n">dfs</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">em</span> <span class="ow">in</span> <span class="n">enum_members</span><span class="p">:</span>
+                <span class="n">tks</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTksofElementType</span><span class="p">(</span><span class="n">ElementType</span><span class="o">=</span><span class="n">em</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">tks</span><span class="p">:</span>
+                    <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_element_metadata_dataframe</span><span class="p">(</span>
+                        <span class="n">element_type</span><span class="o">=</span><span class="n">em</span><span class="p">,</span>
+                        <span class="n">properties</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Fkcont&quot;</span><span class="p">],</span>
+                        <span class="n">geometry</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                        <span class="n">end_nodes</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                        <span class="n">element_type_col</span><span class="o">=</span><span class="kc">True</span>
+                    <span class="p">)</span>
+                    <span class="n">dfs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+            <span class="n">df_edges</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">dfs</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[hydraulic edges dataframe] Retrieved </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df_edges</span><span class="p">)</span><span class="si">}</span><span class="s2"> edges from </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">enum_members</span><span class="p">)</span><span class="si">}</span><span class="s2"> element types.&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[hydraulic edges dataframe] Failed to retrieve edges: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">df_edges</span></div>
+
+        
+    <span class="k">def</span><span class="w"> </span><span class="nf">__get_object_type_enums</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">names</span><span class="p">,</span> <span class="n">enum_class</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="nb">getattr</span><span class="p">(</span><span class="n">enum_class</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">names</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">enum_class</span><span class="p">,</span> <span class="n">name</span><span class="p">)]</span>
 
 <div class="viewcode-block" id="Dataframes_SIR3S_Model.apply_metadata_property_updates">
 <a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.Dataframes_SIR3S_Model.apply_metadata_property_updates">[docs]</a>

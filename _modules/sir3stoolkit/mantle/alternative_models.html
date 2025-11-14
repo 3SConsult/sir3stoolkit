@@ -97,6 +97,7 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandapipes</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pp</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">shapely</span><span class="w"> </span><span class="kn">import</span> <span class="n">wkt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">shapely.geometry.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseGeometry</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">networkx</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nx</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span>
@@ -247,31 +248,10 @@
             <span class="k">return</span> <span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">()</span>
 
         <span class="c1"># --- Edges ---</span>
-        <span class="n">edge_types</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="s1">&#39;Pipe&#39;</span><span class="p">,</span> <span class="s1">&#39;Valve&#39;</span><span class="p">,</span> <span class="s1">&#39;SafetyValve&#39;</span><span class="p">,</span> <span class="s1">&#39;PressureRegulator&#39;</span><span class="p">,</span> <span class="s1">&#39;DifferentialRegulator&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;FlapValve&#39;</span><span class="p">,</span> <span class="s1">&#39;PhaseSeparation&#39;</span><span class="p">,</span> <span class="s1">&#39;FlowControlUnit&#39;</span><span class="p">,</span> <span class="s1">&#39;ControlValve&#39;</span><span class="p">,</span> <span class="s1">&#39;Pump&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;DistrictHeatingConsumer&#39;</span><span class="p">,</span> <span class="s1">&#39;DistrictHeatingFeeder&#39;</span><span class="p">,</span> <span class="s1">&#39;Compressor&#39;</span><span class="p">,</span> <span class="s1">&#39;HeaterCooler&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;HeatExchanger&#39;</span><span class="p">,</span> <span class="s1">&#39;HeatFeederConsumerStation&#39;</span><span class="p">,</span> <span class="s1">&#39;RART_ControlMode&#39;</span>
-        <span class="p">]</span>
-
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">enum_members</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_object_type_enums</span><span class="p">(</span><span class="n">edge_types</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="p">)</span>
-            <span class="n">dfs</span> <span class="o">=</span> <span class="p">[]</span>
-            <span class="k">for</span> <span class="n">em</span> <span class="ow">in</span> <span class="n">enum_members</span><span class="p">:</span>
-                <span class="n">tks</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTksofElementType</span><span class="p">(</span><span class="n">ElementType</span><span class="o">=</span><span class="n">em</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">tks</span><span class="p">:</span>
-                    <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_element_metadata_dataframe</span><span class="p">(</span>
-                        <span class="n">element_type</span><span class="o">=</span><span class="n">em</span><span class="p">,</span>
-                        <span class="n">properties</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Fkcont&quot;</span><span class="p">],</span>
-                        <span class="n">geometry</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                        <span class="n">end_nodes</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                        <span class="n">element_type_col</span><span class="o">=</span><span class="kc">True</span>
-                    <span class="p">)</span>
-                    <span class="n">dfs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-            <span class="n">df_edges</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">dfs</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[graph] Retrieved </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df_edges</span><span class="p">)</span><span class="si">}</span><span class="s2"> edges from </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">enum_members</span><span class="p">)</span><span class="si">}</span><span class="s2"> element types.&quot;</span><span class="p">)</span>
+            <span class="n">df_edges</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">generate_hydraulic_edge_dataframe</span><span class="p">()</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[graph] Failed to retrieve edge metadata: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[graph] Failed to retrieve edges: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">()</span>
 
         <span class="c1"># --- Build graph ---</span>
@@ -282,7 +262,15 @@
         <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">df_nodes</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">attr</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
-                <span class="n">attr</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">wkt</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">])</span>  <span class="c1"># Ensure geometry is parsed</span>
+
+                <span class="n">geom</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">geom</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                    <span class="n">geom</span> <span class="o">=</span> <span class="n">wkt</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">geom</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">geom</span><span class="p">,</span> <span class="n">BaseGeometry</span><span class="p">):</span>
+                    <span class="k">pass</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[graph] Unsupported geometry type: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">geom</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
                 <span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;tk&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">attr</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[graph] Failed to add node &#39;</span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;tk&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -292,18 +280,26 @@
         <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">df_edges</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">attr</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
-                <span class="n">attr</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">wkt</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">])</span>  <span class="c1"># Ensure geometry is parsed</span>
+
+                <span class="n">geom</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">geom</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                    <span class="n">geom</span> <span class="o">=</span> <span class="n">wkt</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">geom</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">geom</span><span class="p">,</span> <span class="n">BaseGeometry</span><span class="p">):</span>
+                    <span class="k">pass</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported geometry type: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">geom</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+                <span class="n">attr</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">geom</span>
+
                 <span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;fkKI&#39;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;fkKK&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">attr</span><span class="p">)</span>
+
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[graph] Failed to add edge from &#39;</span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;fkKI&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&#39; to &#39;</span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;fkKK&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
+                
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[graph] Graph construction complete. Nodes: </span><span class="si">{</span><span class="n">G</span><span class="o">.</span><span class="n">number_of_nodes</span><span class="p">()</span><span class="si">}</span><span class="s2">, Edges: </span><span class="si">{</span><span class="n">G</span><span class="o">.</span><span class="n">number_of_edges</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">G</span></div>
 
-    
-    <span class="k">def</span><span class="w"> </span><span class="nf">__get_object_type_enums</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">names</span><span class="p">,</span> <span class="n">enum_class</span><span class="p">):</span>
-                    <span class="k">return</span> <span class="p">[</span><span class="nb">getattr</span><span class="p">(</span><span class="n">enum_class</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">names</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">enum_class</span><span class="p">,</span> <span class="n">name</span><span class="p">)]</span>
-
+  
 <div class="viewcode-block" id="Alternative_Models_SIR3S_Model.add_properties_to_graph">
 <a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.alternative_models.Alternative_Models_SIR3S_Model.add_properties_to_graph">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">add_properties_to_graph</span><span class="p">(</span>
