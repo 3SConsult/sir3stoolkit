@@ -2,7 +2,7 @@
 """
 Created on Thu Okt 7 13:39:13 2025
 
-This module implements general plotting functions for SIR 3S applications. 
+This module implements general plotting functions for SIR 3S applications. TODO: AGSN, Time Curves, Network Color Diagram
 
 @author: Jablonski
 
@@ -39,7 +39,7 @@ if not logger.hasHandlers():
 from sir3stoolkit.core.wrapper import SIR3S_Model
 
 class Plotting_SIR3S_Model(SIR3S_Model):
-    import numpy as np
+    
     def create_pipe_layer(
         self,
         gdf: gpd.GeoDataFrame,

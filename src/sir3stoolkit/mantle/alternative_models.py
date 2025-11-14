@@ -269,7 +269,7 @@ class Alternative_Models_SIR3S_Model(Dataframes_SIR3S_Model):
         try:
             tks = self.GetTksofElementType(ElementType=self.get_object_type_enum(element_type))
             if not tks:
-                logger.error(f"[graph] No elements exist for element type: {element_type}.")
+                logger.error(f"[graph] No elements exist for element type: {element_type}: {e}")
                 return G
 
             df_metadata = self.generate_element_metadata_dataframe(

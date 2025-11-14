@@ -50,6 +50,7 @@ class Dataframes_SIR3S_Model(SIR3S_Model):
 
     def generate_dataframes(self):
         """
+        WORK IN PROGRESS
         Manually generate and populate all relevant dataframes.
 
         Inlcude optional param with ElemenTypes to only create certain dataframes
@@ -243,7 +244,7 @@ class Dataframes_SIR3S_Model(SIR3S_Model):
             return pd.DataFrame()
         
         if len(tks) < 1:
-            logger.error(f"[metadata] No elements exist of this element type {element_type}.")
+            logger.error(f"[metadata] No elements exist of this element type {element_type}: {e}")
             return pd.DataFrame()
         if filter_container_tks:
             try:
@@ -256,11 +257,11 @@ class Dataframes_SIR3S_Model(SIR3S_Model):
                 if filter_container_tks:
                     tks = [tk for tk in tks if self.GetValue(tk, "FkCont")[0] in filter_container_tks]
                 if len(tks) < 1:
-                    logger.error(f"[metadata] No elements remain after filtering.")
+                    logger.error(f"[metadata] No elements remain after filtering: {e}")
                     return pd.DataFrame()
                 logger.info(f"[metadata] {len(tks)} tks remain after filtering.")
             except Exception as e:
-                logger.error(f"[metadata] Error occured while filtering with filter_container_tks.")
+                logger.error(f"[metadata] Error occured while filtering with filter_container_tks: {e}")
 
         # --- Resolve given metadata properties ---
         metadata_props = self.__resolve_given_metadata_properties(element_type=element_type, properties=properties)
@@ -399,7 +400,7 @@ class Dataframes_SIR3S_Model(SIR3S_Model):
             return pd.DataFrame()
         
         if len(tks) < 1:
-            logger.error(f"[results] No elements exist of this element type {element_type}.")
+            logger.error(f"[results] No elements exist of this element type {element_type}: {e}")
             return pd.DataFrame()
         
         if filter_container_tks:
@@ -413,11 +414,11 @@ class Dataframes_SIR3S_Model(SIR3S_Model):
                 if filter_container_tks:
                     tks = [tk for tk in tks if self.GetValue(tk, "FkCont")[0] in filter_container_tks]
                 if len(tks) < 1:
-                    logger.error(f"[results] No elements remain after filtering.")
+                    logger.error(f"[results] No elements remain after filtering: {e}")
                     return pd.DataFrame()
                 logger.info(f"[results] {len(tks)} tks remain after filtering.")
             except Exception as e:
-                logger.error(f"[results] Error occured while filtering with filter_container_tks.")
+                logger.error(f"[results] Error occured while filtering with filter_container_tks: {e}")
             
         try:
             available_metadata_props = self.GetPropertiesofElementType(ElementType=element_type)
