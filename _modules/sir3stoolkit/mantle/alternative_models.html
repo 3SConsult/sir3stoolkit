@@ -100,7 +100,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">shapely.geometry.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseGeometry</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">networkx</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nx</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
@@ -307,6 +307,7 @@
         <span class="n">G</span><span class="p">:</span> <span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">,</span>
         <span class="n">element_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>        
         <span class="n">properties</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+        <span class="n">timestamp</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Enrich nodes and edges in `G` with additional attributes by joining on &#39;tk&#39;.</span>
@@ -318,7 +319,9 @@
 <span class="sd">        element_type : str</span>
 <span class="sd">            The element type to filter by (must match df[element_type_col] and edge attr &quot;element type&quot;).</span>
 <span class="sd">        properties : list of str</span>
-<span class="sd">            Column names from the dataframe to add as attributes.</span>
+<span class="sd">            Column names from the dataframe to add as attributes</span>
+<span class="sd">        timestamp: str</span>
+<span class="sd">            Timestamp used for adding result properties. If None, STAT will be used.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -353,6 +356,7 @@
                         <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
                             <span class="sa">f</span><span class="s2">&quot;[graph] Property &#39;</span><span class="si">{</span><span class="n">prop</span><span class="si">}</span><span class="s2">&#39; not found in metadata or result properties of type </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">. Excluding.&quot;</span>
                         <span class="p">)</span>
+                <span class="n">all_props_to_use</span> <span class="o">=</span> <span class="n">metadata_props</span> <span class="o">+</span> <span class="n">result_props</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[graph] Using </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">metadata_props</span><span class="p">)</span><span class="si">}</span><span class="s2"> metadata props and </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">result_props</span><span class="p">)</span><span class="si">}</span><span class="s2"> result props.&quot;</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[graph] Error validating metadata/result properties: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">. Aborting.&quot;</span><span class="p">)</span>
@@ -373,19 +377,28 @@
                 <span class="n">end_nodes</span><span class="o">=</span><span class="kc">False</span>
             <span class="p">)</span>
 
-            <span class="n">TStat</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">GetTimeStamps</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">simulation_timestamps</span><span class="p">,</span> <span class="n">tsStat</span><span class="p">,</span> <span class="n">tsMin</span><span class="p">,</span> <span class="n">tsMax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTimeStamps</span><span class="p">()</span>
+            <span class="n">available_timestamps</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">simulation_timestamps</span><span class="p">)</span> <span class="k">if</span> <span class="n">simulation_timestamps</span> <span class="k">else</span> <span class="p">[]</span>
+
+            <span class="k">if</span> <span class="n">timestamp</span> <span class="ow">and</span> <span class="p">(</span><span class="n">timestamp</span> <span class="ow">in</span> <span class="n">available_timestamps</span><span class="p">):</span>
+                <span class="n">timestamp_for_values</span> <span class="o">=</span> <span class="n">timestamp</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">timestamp_for_values</span> <span class="o">=</span> <span class="n">tsStat</span>
 
             <span class="n">df_results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_element_results_dataframe</span><span class="p">(</span>
                 <span class="n">element_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_object_type_enum</span><span class="p">(</span><span class="n">element_type</span><span class="p">),</span>
                 <span class="n">properties</span><span class="o">=</span><span class="n">result_props</span><span class="p">,</span>
-                <span class="n">timestamps</span><span class="o">=</span><span class="p">[</span><span class="n">TStat</span><span class="p">]</span>
+                <span class="n">timestamps</span><span class="o">=</span><span class="p">[</span><span class="n">timestamp_for_values</span><span class="p">]</span>
             <span class="p">)</span>
             
-            <span class="n">df_results</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">df_results</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">droplevel</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
-
-            <span class="c1">#TODO merge df_results and df_metadata</span>
-
-            <span class="n">df</span> <span class="o">=</span> <span class="n">df_metadata</span>
+            <span class="n">df_results</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">df_results</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">droplevel</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+            <span class="n">df_results</span> <span class="o">=</span> <span class="n">df_results</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">unstack</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+            <span class="n">df_results</span> <span class="o">=</span> <span class="n">df_results</span><span class="o">.</span><span class="n">droplevel</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">df_metadata</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">on</span><span class="o">=</span><span class="s2">&quot;tk&quot;</span><span class="p">,</span>
+                             <span class="n">how</span><span class="o">=</span><span class="s2">&quot;outer&quot;</span><span class="p">,</span>
+                             <span class="n">right</span><span class="o">=</span><span class="n">df_results</span><span class="p">)</span>
+            
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
             <span class="k">if</span> <span class="n">df</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">df</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
                 <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[graph] Empty metadata DataFrame for element_type=&#39;</span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">&#39;. Nothing to add.&quot;</span><span class="p">)</span>
@@ -397,7 +410,7 @@
 
         <span class="c1"># --- Decide which columns to add; never add these ---</span>
         <span class="n">never_add</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;geometry&quot;</span><span class="p">,</span> <span class="s2">&quot;fkKI&quot;</span><span class="p">,</span> <span class="s2">&quot;fkKK&quot;</span><span class="p">,</span> <span class="s2">&quot;tk&quot;</span><span class="p">,</span> <span class="s2">&quot;element_type&quot;</span><span class="p">}</span>
-        <span class="n">add_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="p">(</span><span class="n">metadata_props</span> <span class="ow">or</span> <span class="p">[])</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="ow">and</span> <span class="n">c</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">never_add</span><span class="p">]</span>
+        <span class="n">add_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="p">(</span><span class="n">all_props_to_use</span> <span class="ow">or</span> <span class="p">[])</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="ow">and</span> <span class="n">c</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">never_add</span><span class="p">]</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">add_cols</span><span class="p">:</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[graph] No permissible columns to add for element_type=&#39;</span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">G</span>
