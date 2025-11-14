@@ -29,7 +29,11 @@ Version 90.15.5 (To be released)
 Bug Fixes
 ^^^^^^^^^^
 
-- dataframes.py: logger.error(f"[metadata] Error occured while filtering with filter_container_tks.") no longer triggers unwarranted
+- dataframes.py: 
+   - logger.error(f"[metadata] Error occured while filtering with filter_container_tks.") no longer triggers unwarranted
+   - logger.info(f"[metadata] {len(used_cols)} non-empty end node columns were created.") no longer triggers unwarranted
+
+
 
 Improvements
 ^^^^^^^^^^^^
