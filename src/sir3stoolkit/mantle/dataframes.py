@@ -92,7 +92,7 @@ class Dataframes_SIR3S_Model(SIR3S_Model):
                 simulation_timestamps, tsStat, tsMin, tsMax = self.GetTimeStamps()
                 if simulation_timestamps:
                     timestamps = simulation_timestamps
-                    logger.info(f"[Resolving Timestamps] {len(timestamps)} simulation timestamps are available.")
+                    logger.info(f"[Resolving Timestamps] {len(timestamps)} simulation timestamp(s) are available.")
                 else:
                     logger.warning("[Resolving Timestamps] No valid simulation timestamps exist in result data.")
                     return []
@@ -316,17 +316,18 @@ class Dataframes_SIR3S_Model(SIR3S_Model):
             rows.append(row)
 
         # --- Endnodes Post Processing ---
-        endnode_cols = ["fkKI", "fkKK", "fkKI2", "fkKK2"]
-        used_cols = []
+        if end_nodes_available:
+            endnode_cols = ["fkKI", "fkKK", "fkKI2", "fkKK2"]
+            used_cols = []
 
-        for col in endnode_cols:
-            if any(row.get(col, "-1") != "-1" for row in rows):
-                used_cols.append(col)
-            else:
-                for row in rows:
-                    row.pop(col, None)
+            for col in endnode_cols:
+                if any(row.get(col, "-1") != "-1" for row in rows):
+                    used_cols.append(col)
+                else:
+                    for row in rows:
+                        row.pop(col, None)
 
-        logger.info(f"[metadata] {len(used_cols)} non-empty end node columns were created)")
+            logger.info(f"[metadata] {len(used_cols)} non-empty end node columns were created.")
 
         # --- Dataframe creation ---
         df = pd.DataFrame(rows)
