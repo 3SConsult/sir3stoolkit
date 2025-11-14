@@ -19,6 +19,8 @@ import io
 from typing import List, Tuple, Any
 from enum import Enum
 from collections import defaultdict
+import geopandas as gpd
+from shapely import wkt
 
 import logging
 logger = logging.getLogger(__name__)
@@ -202,7 +204,7 @@ class Dataframes_SIR3S_Model(SIR3S_Model):
         end_nodes: Optional[bool] = False,
         filter_container_tks: Optional[List[str]] = None,
         element_type_col: Optional[bool] = False
-    ) -> pd.DataFrame:
+    ) -> pd.DataFrame | gpd.GeoDataFrame:
         """
         Generate a dataframe with metadata (static) properties for all devices of a given element type.
 
@@ -331,6 +333,19 @@ class Dataframes_SIR3S_Model(SIR3S_Model):
 
         # --- Dataframe creation ---
         df = pd.DataFrame(rows)
+
+        if geometry:
+            try:
+                df["geometry"] = df["geometry"].apply(wkt.loads)
+                srid, srid2, srid_string = self.get_EPSG()
+                if srid:
+                    df = gpd.GeoDataFrame(df, geometry="geometry", crs=f"EPSG: {srid}")
+                    logger.info(f"[metadata] Transforming DataFrame to GeoDataFrame successful with EPSG: {srid}")
+                else:
+                    logger.warning(f"[metadata] Spatial Reference Identifier (SRID) not defined in model. DataFrame cannot be transformed to GeoDataFrame. Returning regular DataFrame with a geometry column.")
+            except Exception as e:
+                    logger.error(f"[metadata] Error transforming DataFrame to GeoDataFrame. {e}")
+
         logger.info(f"[metadata] Done. Shape: {df.shape}")
         return df
 
@@ -726,6 +741,19 @@ class Dataframes_SIR3S_Model(SIR3S_Model):
                 print(f'{tk}')
 
         return tks
+
+    def get_EPSG(self
+    ) -> Tuple[str]:
+        """
+        Returns SRID, SRID and combined String. For example: ('25832', '1571', '25832-1571')
+        """
+        
+        tk_SIRGRAF = self.GetTksofElementType(self.ObjectTypes.SIRGRAF)[0]
+        srid = str(self.GetValue(tk_SIRGRAF, "Srid")[0])
+        srid2 = str(self.GetValue(tk_SIRGRAF, "Srid2")[0])
+        srid_string = self.GetValue(tk_SIRGRAF, "SridString")[0]
+
+        return srid, srid2, srid_string
 
     def __is_a_model_open(self):
         """
