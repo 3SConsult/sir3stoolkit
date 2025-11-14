@@ -49,7 +49,8 @@ Improvements
 - dataframes.py:
    - generate_element_metadata_dataframe(geometry=True) returns gpd.GeoDataFrame instead of pd.DataFrame
    - new function get_EPSG() returns tuple of SRID, SRID2, SRIDSTRING for crs
-   - new functiono generate_hydraulic_edge_dataframe() returns a pandas dataframe containing all hydraulic edges of a model (eg. pipes, valves, compressors, etc.)
+   - new function generate_hydraulic_edge_dataframe() returns a pandas dataframe containing all hydraulic edges of a model (eg. pipes, valves, compressors, etc.)
+
 Version 90.15.4
 ~~~~~~~~~~~~~~~
 
