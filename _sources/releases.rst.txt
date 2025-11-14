@@ -26,6 +26,13 @@ The release notes indicate what kind of release it is.
 Version 90.15.5 (To be released)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+For SIR 3S Version: 90-15-00-19
+
+C# Changes
+^^^^^^^^^^
+
+-
+
 Bug Fixes
 ^^^^^^^^^^
 
@@ -33,13 +40,15 @@ Bug Fixes
    - logger.error(f"[metadata] Error occured while filtering with filter_container_tks.") no longer triggers unwarranted
    - logger.info(f"[metadata] {len(used_cols)} non-empty end node columns were created.") no longer triggers unwarranted
 
-
-
 Improvements
 ^^^^^^^^^^^^
 
-- alternative_models.py: SIR_3S_to_nx_graph() now created minimal graph with additional properties
-- alternative_models.py: add_properties_to_graph() new function for user defined addition of properties to nx Graph
+- alternative_models.py: 
+   - SIR_3S_to_nx_graph() now created minimal graph with additional properties
+   - add_properties_to_graph() new function for user defined addition of properties to nx Graph
+- dataframes.py:
+   - generate_element_metadata_dataframe(geometry=True) returns gpd.GeoDataFrame instead of pd.DataFrame
+   - new function get_EPSG() returns tuple of SRID, SRID2, SRIDSTRING for crs
 
 Version 90.15.4
 ~~~~~~~~~~~~~~~
