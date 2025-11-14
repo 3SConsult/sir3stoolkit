@@ -170,7 +170,7 @@ class Dataframes_SIR3S_Model(SIR3S_Model):
                             f"[Resolving Metadata Properties] Property '{prop}' not found in metadata or result properties of type {element_type}. Excluding."
                         )
 
-            logger.debug(f"[Resolving Metadata Properties] Using {len(metadata_props)} metadata properties.")
+            logger.info(f"[Resolving Metadata Properties] Using {len(metadata_props)} metadata properties.")
        
         except Exception as e:
             logger.error(f"[Resolving Metadata Properties] Error resolving metadata properties: {e}")
@@ -339,11 +339,11 @@ class Dataframes_SIR3S_Model(SIR3S_Model):
             try:
                 df["geometry"] = df["geometry"].apply(wkt.loads)
                 srid, srid2, srid_string = self.get_EPSG()
-                if srid:
+                if srid and (srid != '0'):
                     df = gpd.GeoDataFrame(df, geometry="geometry", crs=f"EPSG: {srid}")
                     logger.info(f"[metadata] Transforming DataFrame to GeoDataFrame successful with EPSG: {srid}")
                 else:
-                    logger.warning(f"[metadata] Spatial Reference Identifier (SRID) not defined in model. DataFrame cannot be transformed to GeoDataFrame. Returning regular DataFrame with a geometry column.")
+                    logger.warning(f"[metadata] Spatial Reference Identifier (SRID) not defined in model. DataFrame cannot be transformed to GeoDataFrame but geometry column can be created independently of SRID. Returning regular DataFrame with a geometry column.")
             except Exception as e:
                     logger.error(f"[metadata] Error transforming DataFrame to GeoDataFrame. {e}")
 
@@ -492,6 +492,43 @@ class Dataframes_SIR3S_Model(SIR3S_Model):
 
         logger.info(f"[results] Done. Shape: {df.shape}")
         return df
+    
+    def generate_hydraulic_edge_dataframe(
+        self      
+    ) -> pd.DataFrame:
+        """
+        Generates a pandas dataframe containing all edges that are part of the hydraulic model (eg. pipes, valves, compressors, etc.).
+        """
+        edge_types = [
+            'Pipe', 'Valve', 'SafetyValve', 'PressureRegulator', 'DifferentialRegulator',
+            'FlapValve', 'PhaseSeparation', 'FlowControlUnit', 'ControlValve', 'Pump',
+            'DistrictHeatingConsumer', 'DistrictHeatingFeeder', 'Compressor', 'HeaterCooler',
+            'HeatExchanger', 'HeatFeederConsumerStation', 'RART_ControlMode'
+        ]
+
+        try:
+            enum_members = self.__get_object_type_enums(edge_types, self.ObjectTypes)
+            dfs = []
+            for em in enum_members:
+                tks = self.GetTksofElementType(ElementType=em)
+                if tks:
+                    df = self.generate_element_metadata_dataframe(
+                        element_type=em,
+                        properties=["Fkcont"],
+                        geometry=True,
+                        end_nodes=True,
+                        element_type_col=True
+                    )
+                    dfs.append(df)
+            df_edges = pd.concat(dfs, ignore_index=True)
+            logger.info(f"[hydraulic edges dataframe] Retrieved {len(df_edges)} edges from {len(enum_members)} element types.")
+        except Exception as e:
+            logger.error(f"[hydraulic edges dataframe] Failed to retrieve edges: {e}")
+
+        return df_edges
+        
+    def __get_object_type_enums(self, names, enum_class):
+        return [getattr(enum_class, name) for name in names if hasattr(enum_class, name)]
 
     def apply_metadata_property_updates(
         self,

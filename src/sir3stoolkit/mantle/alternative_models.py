@@ -10,6 +10,7 @@ This module implements the generation of SIR 3S models in alternative model form
 import pandapipes as pp
 import pandas as pd
 from shapely import wkt
+from shapely.geometry.base import BaseGeometry
 
 import networkx as nx
 from typing import List
@@ -153,31 +154,10 @@ class Alternative_Models_SIR3S_Model(Dataframes_SIR3S_Model):
             return nx.DiGraph()
 
         # --- Edges ---
-        edge_types = [
-            'Pipe', 'Valve', 'SafetyValve', 'PressureRegulator', 'DifferentialRegulator',
-            'FlapValve', 'PhaseSeparation', 'FlowControlUnit', 'ControlValve', 'Pump',
-            'DistrictHeatingConsumer', 'DistrictHeatingFeeder', 'Compressor', 'HeaterCooler',
-            'HeatExchanger', 'HeatFeederConsumerStation', 'RART_ControlMode'
-        ]
-
         try:
-            enum_members = self.__get_object_type_enums(edge_types, self.ObjectTypes)
-            dfs = []
-            for em in enum_members:
-                tks = self.GetTksofElementType(ElementType=em)
-                if tks:
-                    df = self.generate_element_metadata_dataframe(
-                        element_type=em,
-                        properties=["Fkcont"],
-                        geometry=True,
-                        end_nodes=True,
-                        element_type_col=True
-                    )
-                    dfs.append(df)
-            df_edges = pd.concat(dfs, ignore_index=True)
-            logger.info(f"[graph] Retrieved {len(df_edges)} edges from {len(enum_members)} element types.")
+            df_edges=self.generate_hydraulic_edge_dataframe()
         except Exception as e:
-            logger.error(f"[graph] Failed to retrieve edge metadata: {e}")
+            logger.error(f"[graph] Failed to retrieve edges: {e}")
             return nx.DiGraph()
 
         # --- Build graph ---
@@ -188,7 +168,15 @@ class Alternative_Models_SIR3S_Model(Dataframes_SIR3S_Model):
         for _, row in df_nodes.iterrows():
             try:
                 attr = row.to_dict()
-                attr['geometry'] = wkt.loads(row['geometry'])  # Ensure geometry is parsed
+
+                geom = row['geometry']
+                if isinstance(geom, str):
+                    geom = wkt.loads(geom)
+                elif isinstance(geom, BaseGeometry):
+                    pass
+                else:
+                    raise ValueError(f"[graph] Unsupported geometry type: {type(geom)}")
+
                 G.add_node(row['tk'], **attr)
             except Exception as e:
                 logger.warning(f"[graph] Failed to add node '{row['tk']}': {e}")
@@ -198,17 +186,25 @@ class Alternative_Models_SIR3S_Model(Dataframes_SIR3S_Model):
         for _, row in df_edges.iterrows():
             try:
                 attr = row.to_dict()
-                attr['geometry'] = wkt.loads(row['geometry'])  # Ensure geometry is parsed
+
+                geom = row['geometry']
+                if isinstance(geom, str):
+                    geom = wkt.loads(geom)
+                elif isinstance(geom, BaseGeometry):
+                    pass
+                else:
+                    raise ValueError(f"Unsupported geometry type: {type(geom)}")
+
+                attr['geometry'] = geom
+
                 G.add_edge(row['fkKI'], row['fkKK'], **attr)
+
             except Exception as e:
                 logger.warning(f"[graph] Failed to add edge from '{row['fkKI']}' to '{row['fkKK']}': {e}")
-
+                
         logger.info(f"[graph] Graph construction complete. Nodes: {G.number_of_nodes()}, Edges: {G.number_of_edges()}")
         return G
-    
-    def __get_object_type_enums(self, names, enum_class):
-                    return [getattr(enum_class, name) for name in names if hasattr(enum_class, name)]
-
+  
     def add_properties_to_graph(
         self,
         G: nx.DiGraph,
