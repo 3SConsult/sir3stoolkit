@@ -829,18 +829,20 @@ class Dataframes_SIR3S_Model(SIR3S_Model):
                     if tk not in available_tks:
                         logger.warning(f"[Resolving tks] {tk} does not exist or is not of element type {element_type}. Excluding.")
                         tks.remove(tk)
+                if len(tks) < 1:
+                    logger.error(f"[Resolving tks] No elements remain after filtering for given tks: {given_tks}")
+                    return pd.DataFrame()
+                else:
+                    logger.info(f"[Resolving tks] {len(tks)} tks remain after filering for given tks.")
+
             except Exception as e:
                 logger.error(f"[Resolving tks] Error validating given tks: {e}")
                 return pd.DataFrame()
+            
         else:
             tks = available_tks
             
-        if len(tks) < 1:
-            logger.error(f"[Resolving tks] No elements remain after filtering for given tks: {given_tks}")
-            return pd.DataFrame()
-        else:
-            logger.info(f"[Resolving tks] {len(tks)} tks remain after filering for given tks.")
-
+        
         # --- Filer for container tk list ---
         if filter_container_tks:
             try:
