@@ -159,10 +159,10 @@ class Plotting_SIR3S_Model(SIR3S_Model):
         )
 
         if array_for_colormap is not None:
-            lc = LineCollection(**lc_kwargs, cmap=the_cmap, norm=norm)
+            lc = LineCollection(**lc_kwargs, cmap=the_cmap, norm=norm, antialiased=False)
             lc.set_array(array_for_colormap)  # enables colorbar
         else:
-            lc = LineCollection(**lc_kwargs, colors=[default_color])
+            lc = LineCollection(**lc_kwargs, colors=[default_color], antialiased=False)
 
         ax.add_collection(lc)
 
@@ -276,3 +276,134 @@ class Plotting_SIR3S_Model(SIR3S_Model):
                 continue
 
         return segments, owners
+    
+    def create_node_layer(
+        self,
+        gdf: gpd.GeoDataFrame,
+        geometry_col: str = "geometry",
+        size_scaling_col: Optional[str] = None,
+        color_mixing_col: Optional[str] = None,
+        *,
+        min_size: float = 20.0,
+        max_size: float = 200.0,
+        default_color=(0.75, 0.75, 0.75, 1.0),
+        cmap: str = "viridis",
+        ax: Optional[plt.Axes] = None,
+    ) -> Dict[str, Any]:
+        """
+        Create and plot a node layer from a GeoDataFrame (Point geometries).
+
+        Parameters
+        ----------
+        gdf : GeoDataFrame
+            Must contain Point geometries.
+        geometry_col : str, optional
+            Name of the geometry column. Defaults to 'geometry'.
+        size_scaling_col : str, optional
+            Numeric column to scale marker size. If None, uses a constant size.
+        color_mixing_col : str, optional
+            Numeric column to color markers via colormap. If None, uses a constant color.
+        min_size, max_size : float
+            Minimum/maximum marker size in points^2 (scatter uses area).
+        cmap : str
+            Matplotlib colormap name used when `color_mixing_col` is provided.
+        ax : matplotlib.axes.Axes, optional
+            Axes to draw on. If None, uses current axes.
+
+        Returns
+        -------
+        layer : dict
+            {
+            'artist': PathCollection,
+            'axes': Axes,
+            'bbox': (xmin, ymin, xmax, ymax),
+            'norm': matplotlib.colors.Normalize or None,
+            'cmap': matplotlib Colormap or None,
+            'value_ranges': {'size': (smin, smax), 'color': (cmin, cmax) or None},
+            'n_nodes': int,
+            'kind': 'nodes'
+            }
+        """
+        if not isinstance(gdf, gpd.GeoDataFrame):
+            raise TypeError("gdf must be a GeoDataFrame")
+
+        if geometry_col not in gdf.columns:
+            raise ValueError(f"Geometry column '{geometry_col}' not found in gdf")
+
+        gf = gdf.reset_index(drop=True).copy()
+        points = gf[geometry_col]
+
+        # Validate geometry type
+        if not all(points.geom_type == "Point"):
+            raise ValueError("All geometries must be Points for node layer.")
+
+        # Extract XY coordinates
+        coords = np.array([[p.x, p.y] for p in points if p is not None])
+
+        if coords.shape[0] == 0:
+            raise ValueError("No valid Point geometries found to plot.")
+
+        # ----- Sizes -----
+        if size_scaling_col is not None:
+            if size_scaling_col not in gf.columns:
+                raise ValueError(f"Size scaling column '{size_scaling_col}' not found in gdf")
+            svals = pd.to_numeric(gf[size_scaling_col], errors="coerce")
+            snorm, smin, smax = Plotting_SIR3S_Model._minmax_normalize(svals)
+            sizes = min_size + snorm * (max_size - min_size)
+        else:
+            sizes = np.full(coords.shape[0], (min_size + max_size) * 0.5)
+            smin, smax = np.nan, np.nan
+
+        # ----- Colors -----
+        the_cmap = None
+        norm = None
+        array_for_colormap = None
+        if color_mixing_col is not None:
+            if color_mixing_col not in gf.columns:
+                raise ValueError(f"Color mixing column '{color_mixing_col}' not found in gdf")
+            cvals = pd.to_numeric(gf[color_mixing_col], errors="coerce")
+            cmin = np.nanmin(cvals.values) if np.isfinite(cvals.values).any() else 0.0
+            cmax = np.nanmax(cvals.values) if np.isfinite(cvals.values).any() else 1.0
+            if not np.isfinite(cmin) or not np.isfinite(cmax) or cmin == cmax:
+                cmin, cmax = 0.0, 1.0
+            norm = Normalize(vmin=float(cmin), vmax=float(cmax), clip=True)
+            the_cmap = get_cmap(cmap)
+            array_for_colormap = cvals.to_numpy()
+            color_range = (float(cmin), float(cmax))
+        else:
+            color_range = None
+
+        # ----- Plot -----
+        if ax is None:
+            ax = plt.gca()
+
+        if array_for_colormap is not None:
+            sc = ax.scatter(coords[:, 0], coords[:, 1], s=sizes, c=array_for_colormap,
+                            cmap=the_cmap, norm=norm, zorder=3, marker="p")
+        else:
+            sc = ax.scatter(coords[:, 0], coords[:, 1], s=sizes, color=default_color, zorder=3)
+
+        # ----- Axes extent -----
+        xmin, ymin, xmax, ymax = gpd.GeoSeries(points).total_bounds
+        if np.isfinite([xmin, ymin, xmax, ymax]).all():
+            ax.set_xlim(xmin, xmax)
+            ax.set_ylim(ymin, ymax)
+        try:
+            ax.set_aspect("equal", adjustable="box")
+        except Exception:
+            pass
+
+        layer = {
+            "artist": sc,
+            "axes": ax,
+            "bbox": (xmin, ymin, xmax, ymax),
+            "norm": norm,
+            "cmap": the_cmap,
+            "value_ranges": {
+                "size": (float(smin), float(smax)) if np.isfinite([smin, smax]).all() else None,
+                "color": color_range,
+            },
+            "n_nodes": coords.shape[0],
+            "kind": "nodes",
+        }
+        return layer
