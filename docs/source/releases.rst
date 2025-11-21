@@ -45,6 +45,7 @@ Improvements
    - add_properties_to_graph() new function for user defined addition of properties (metadata and result) to nx Graph
 - dataframes.py:
    - generate_element_metadata_dataframe(geometry=True) returns gpd.GeoDataFrame instead of pd.DataFrame
+   - generate_element_metadata_dataframe() and generate_element_result_dataframe() now have paramter tks to give a list which tks of the element type to include.
    - new function get_EPSG() returns tuple of SRID, SRID2, SRIDSTRING for crs
    - new function generate_hydraulic_edge_dataframe() returns a pandas dataframe containing all hydraulic edges of a model (eg. pipes, valves, compressors, etc.)
 
