@@ -6,19 +6,16 @@ Between major SIR 3S releases, the Toolkit may receive interim updates to fix bu
 
 There are two types of updates:
 
-1. **Python-only updates** – Install via:
+1. **Python-only updates** - Install via:
 
    .. code-block:: bash
 
       pip install --upgrade sir3stoolkit
 
-2. **Core updates with DLL changes** – Requires manual replacement of ``Sir3S_Toolkit.dll`` in the SirGraf directory **before** running the upgrade.
+2. **Core updates with DLL changes** - Requires manual replacement of ``Sir3S_Toolkit.dll`` in the SirGraf directory after pip upgrade (1). The newest version of the ``Sir3S_Toolkit.dll`` is shipped alongside the updated pure python code.    
 
 
-This can either be a pure python update that can be obtained using ``pip install --upgrade sir3stoolkit`` or 
-it can include changes in the basic functionality code wrapped by the core subpackage. 
-In this case before upgrading via pip the ``Sir3S_Toolkit.dll`` in the SirGraf directory has to be exchanged. 
-The release notes indicate what kind of release it is.
+The release notes indicate whether a version includes changes to the C# side and therefore if (2) is necessary. 
 
 90-15 Quebec
 ------------
