@@ -1580,8 +1580,23 @@
             <span class="n">resultList</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">t</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">valueType</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">SetCurrentTimeStamp</span><span class="p">(</span><span class="n">current_timestamp</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">resultList</span></div>
+
+
+<div class="viewcode-block" id="SIR3S_Model.CreateModelRepair">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.CreateModelRepair">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">CreateModelRepair</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates an instance to access all model repair functionalities</span>
+
+<span class="sd">        :return: modelRepair</span>
+<span class="sd">        :rtype: instance of model repair created in .NET</span>
+<span class="sd">        :description: This is a wrapper method for CreateModelRepair() from toolkit</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">modelRepair</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">CreateModelRepair</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">modelRepair</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span></div>
 </div>
 
+    
 
 
 <div class="viewcode-block" id="SIR3S_View">
@@ -3218,6 +3233,86 @@
 <span class="sd">        :description: This is a helper function</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span> <span class="o">=</span> <span class="n">outputComments</span></div>
+</div>
+
+
+
+<span class="c1"># Class definition for ModelRepair</span>
+<div class="viewcode-block" id="SIR3S_ModelRepair">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_ModelRepair">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">SIR3S_ModelRepair</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_instance</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">model_instance</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">modelrepair</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span>  <span class="o">=</span> <span class="n">model_instance</span><span class="o">.</span><span class="n">CreateModelRepair</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model_instance</span> <span class="o">=</span> <span class="n">model_instance</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: Toolkit instance necessary is null&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">modelrepair</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error in initializing the model repair&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Initialization complete&quot;</span><span class="p">)</span>  
+            
+<div class="viewcode-block" id="SIR3S_ModelRepair.GetListOfRepairTool">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_ModelRepair.GetListOfRepairTool">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">GetListOfRepairTool</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fetches the list of repair tools available</span>
+
+<span class="sd">        :return: listofTool</span>
+<span class="sd">        :rtype: List</span>
+<span class="sd">        :description: This is a wrapper method for GetListOfRepairTool() from toolkit</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resultValue</span><span class="p">,</span> <span class="n">listofTool</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">GetListOfRepairTool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">modelrepair</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">resultValue</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;GetListOfRepairTool() has failed&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">listofTool</span></div>
+
+
+<div class="viewcode-block" id="SIR3S_ModelRepair.CheckRepairTool">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_ModelRepair.CheckRepairTool">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">CheckRepairTool</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">toolName</span><span class="p">,</span> <span class="n">tol</span><span class="p">,</span> <span class="n">adjustnodes</span><span class="p">,</span> <span class="n">nodeDegree</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks the said repair tool</span>
+
+<span class="sd">        :param toolName: Name of the tool to be executed</span>
+<span class="sd">        :type toolName: str</span>
+<span class="sd">        :param tol: tol</span>
+<span class="sd">        :type tol: np.float64</span>
+<span class="sd">        :param adjustnodes: adjustnodes</span>
+<span class="sd">        :type adjustnodes: bool</span>
+<span class="sd">        :param nodeDegree: nodeDegree</span>
+<span class="sd">        :type nodeDegree: int</span>
+<span class="sd">        :return: imr</span>
+<span class="sd">        :rtype: IModelRepairMethod</span>
+<span class="sd">        :description: This is a wrapper method for CheckRepairTool() from toolkit</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resultValue</span><span class="p">,</span> <span class="n">imr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">CheckRepairTool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">modelrepair</span><span class="p">,</span> <span class="n">toolName</span><span class="p">,</span> <span class="n">tol</span><span class="p">,</span> <span class="n">adjustnodes</span><span class="p">,</span> <span class="n">nodeDegree</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">resultValue</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;CheckRepairTool() has failed&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;CheckRepairTool() has succeeded&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">imr</span></div>
+
+       
+<div class="viewcode-block" id="SIR3S_ModelRepair.ExecuteRepairTool">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_ModelRepair.ExecuteRepairTool">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">ExecuteRepairTool</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">imr</span><span class="p">,</span> <span class="n">table</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Executes the said repair tool</span>
+
+<span class="sd">        :param imr: IModelRepairMethod returned from CheckRepairTool()</span>
+<span class="sd">        :type toolName: IModelRepairMethod</span>
+<span class="sd">        :param table: intended table, e.g, &quot;ROHR&quot;</span>
+<span class="sd">        :type toolName: str</span>
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+<span class="sd">        :description: This is a wrapper method for ExecuteRepairTool() from toolkit</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resultValue</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">ExecuteRepairTool</span><span class="p">(</span><span class="n">imr</span><span class="p">,</span> <span class="n">table</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">resultValue</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ExecuteRepairTool() has failed&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ExecuteRepairTool() has succeeded&quot;</span><span class="p">)</span></div>
 </div>
 
 </pre></div>
