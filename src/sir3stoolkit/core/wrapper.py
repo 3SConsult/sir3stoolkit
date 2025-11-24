@@ -1310,6 +1310,18 @@ class SIR3S_Model:
         self.SetCurrentTimeStamp(current_timestamp)
         return resultList
 
+    def CreateModelRepair(self):
+        """
+        Creates an instance to access all model repair functionalities
+
+        :return: modelRepair
+        :rtype: instance of model repair created in .NET
+        :description: This is a wrapper method for CreateModelRepair() from toolkit
+        """
+        modelRepair = self.toolkit.CreateModelRepair()
+        return modelRepair, self.toolkit
+    
+
 
 class SIR3S_View:
     """
@@ -2785,3 +2797,71 @@ class SIR3S_View:
         :description: This is a helper function
         """
         self.outputComments = outputComments
+
+
+# Class definition for ModelRepair
+class SIR3S_ModelRepair:
+    def __init__(self, model_instance):
+        if (model_instance is not None):
+            self.modelrepair, self.toolkit  = model_instance.CreateModelRepair()
+            self.model_instance = model_instance
+        else:
+            print("Error: Toolkit instance necessary is null")
+        if (self.modelrepair is None):
+            print("Error in initializing the model repair")
+        else:
+            print("Initialization complete")  
+            
+    def GetListOfRepairTool(self):
+        """
+        Fetches the list of repair tools available
+
+        :return: listofTool
+        :rtype: List
+        :description: This is a wrapper method for GetListOfRepairTool() from toolkit
+        """
+        resultValue, listofTool = self.toolkit.GetListOfRepairTool(self.modelrepair)
+        if not resultValue:
+            print("GetListOfRepairTool() has failed")
+        return listofTool
+
+    def CheckRepairTool(self, toolName, tol, adjustnodes, nodeDegree):
+        """
+        Checks the said repair tool
+
+        :param toolName: Name of the tool to be executed
+        :type toolName: str
+        :param tol: tol
+        :type tol: np.float64
+        :param adjustnodes: adjustnodes
+        :type adjustnodes: bool
+        :param nodeDegree: nodeDegree
+        :type nodeDegree: int
+        :return: imr
+        :rtype: IModelRepairMethod
+        :description: This is a wrapper method for CheckRepairTool() from toolkit
+        """
+        resultValue, imr = self.toolkit.CheckRepairTool(self.modelrepair, toolName, tol, adjustnodes, nodeDegree)
+        if not resultValue:
+            print("CheckRepairTool() has failed")
+        else:
+            print("CheckRepairTool() has succeeded")
+        return imr
+       
+    def ExecuteRepairTool(self, imr, table):
+        """
+        Executes the said repair tool
+
+        :param imr: IModelRepairMethod returned from CheckRepairTool()
+        :type toolName: IModelRepairMethod
+        :param table: intended table, e.g, "ROHR"
+        :type toolName: str
+        :return: None
+        :rtype: None
+        :description: This is a wrapper method for ExecuteRepairTool() from toolkit
+        """
+        resultValue = self.toolkit.ExecuteRepairTool(imr, table)
+        if not resultValue:
+            print("ExecuteRepairTool() has failed")
+        else:
+            print("ExecuteRepairTool() has succeeded")
