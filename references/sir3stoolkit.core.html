@@ -486,10 +486,11 @@ Default value is False</p>
 <dd class="field-even"><p>None</p>
 </dd>
 <dt class="field-odd">Description<span class="colon">:</span></dt>
-<dd class="field-odd"><p>This method is a wrapper method for EndEditSession() from toolkit. Use it after StartEditSession()
-to close that session.</p>
+<dd class="field-odd"><p>This method is a wrapper method for EndEditSession() from toolkit.</p>
 </dd>
 </dl>
+<p>Closes an already started EditSession.
+Should always be called after a Call of StartEditSession() and all the Modifications applied.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -504,10 +505,14 @@ to close that session.</p>
 <dd class="field-even"><p>None</p>
 </dd>
 <dt class="field-odd">Description<span class="colon">:</span></dt>
-<dd class="field-odd"><p>This method is a wrapper method for EndTransaction() from toolkit. Use it after StartTransaction()
-to close that transaction.</p>
+<dd class="field-odd"><p>This method is a wrapper method for EndTransaction() from toolkit.</p>
 </dd>
 </dl>
+<p>If Modifications on a Model are intended, it is recommended to make a Call
+of StartTransaction(), then do all the Modifications you need. And then call
+EndTransaction() as soon as you are finished with Modifications. This helps
+the Software to keep Track of Modifications, so the User can Undo/Redo them
+on the main UI (SirGraf).</p>
 </dd></dl>
 
 <dl class="py method">
@@ -538,7 +543,7 @@ to close that transaction.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>tkAgsn</strong> (<em>str</em>) – Tk of agsn</p></li>
-<li><p><strong>uid</strong> (<em>str</em>) – UID</p></li>
+<li><p><strong>uid</strong> (<em>str</em>) – UID The internal Number of the Way/Branch to retrieve. For obtaining the Main Way of a Hydraulic Profile, just enter ‘0’ or an empty String</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -588,6 +593,7 @@ to close that transaction.</p>
 <dd class="field-even"><p>This is a wrapper method for GetElementInfo() from toolkit; Watch out for errors for more information.</p>
 </dd>
 </dl>
+<p>Gets a short ToolTip Text for a SIR 3S Element.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1095,6 +1101,8 @@ for more information.</p>
 <dd class="field-even"><p>This is a wrapper method for GetValue() from toolkit; Watch out for error message for more information.</p>
 </dd>
 </dl>
+<p>Reads the Value of the Property of an Element and also returns the
+Type name [string/float/double/int/bool] of that Property as a tuple of value and type.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1440,6 +1448,9 @@ the position on which the object is placed in the view.</p>
 <dd class="field-even"><p>This method is a wrapper method for StartEditSession() from toolkit.</p>
 </dd>
 </dl>
+<p>Recommended for fast bulk Changes (e.g. Changing the Values of 40 thousands Nodes in a
+single Task). Similar to StartTransaction(), EndEditSession() should be called after
+the Caller is done with all his bulk Changes.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1460,6 +1471,11 @@ the position on which the object is placed in the view.</p>
 <dd class="field-even"><p>This method is a wrapper method for StartTransaction() from toolkit.</p>
 </dd>
 </dl>
+<p>If Modifications on a Model are intended, it is recommended to make a Call
+of StartTransaction(), then do all the Modifications you need. And then call
+EndTransaction() as soon as you are finished with Modifications. This helps
+the Software to keep Track of Modifications, so the User can Undo/Redo them
+on the main UI (SirGraf).</p>
 </dd></dl>
 
 <dl class="py method">
