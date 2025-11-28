@@ -20,15 +20,15 @@ The release notes indicate whether a version includes changes to the C# side and
 90-15 Quebec
 ------------
 
-Version 90.15.5 (To be released)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Version 90.15.5
+~~~~~~~~~~~~~~~
 
 For SIR 3S Version: 90-15-00-19
 
 C# Changes
 ^^^^^^^^^^
 
--
+- Model Repair Class added
 
 Bug Fixes
 ^^^^^^^^^^
