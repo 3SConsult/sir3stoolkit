@@ -472,7 +472,7 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        pd.DataFrame</span>
-<span class="sd">            Dataframe with one row per timestamp and MultiIndex columns:</span>
+<span class="sd">            Dataframe with one row per timestamp (datatype float) and MultiIndex columns:</span>
 <span class="sd">            - Level 0: tk (device ID)</span>
 <span class="sd">            - Level 1: name (device name)</span>
 <span class="sd">            - Level 2: end_nodes (tuple of connected node IDs as string)</span>
@@ -522,6 +522,7 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__is_get_endnodes_applicable</span><span class="p">(</span><span class="n">element_type</span><span class="o">=</span><span class="n">element_type</span><span class="p">):</span>
             <span class="n">end_nodes_available</span> <span class="o">=</span> <span class="kc">True</span>
 
+        <span class="c1"># --- Retrieve values ---</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;[results] Retrieving result properties...&quot;</span><span class="p">)</span>
 
         <span class="n">data_dict</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
@@ -530,7 +531,13 @@
             <span class="k">for</span> <span class="n">tk</span> <span class="ow">in</span> <span class="n">tks</span><span class="p">:</span>
                 <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">result_props</span><span class="p">:</span>
                     <span class="k">try</span><span class="p">:</span>
-                        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetResultfortimestamp</span><span class="p">(</span><span class="n">timestamp</span><span class="o">=</span><span class="n">ts</span><span class="p">,</span> <span class="n">Tk</span><span class="o">=</span><span class="n">tk</span><span class="p">,</span> <span class="nb">property</span><span class="o">=</span><span class="n">prop</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetResultfortimestamp</span><span class="p">(</span><span class="n">timestamp</span><span class="o">=</span><span class="n">ts</span><span class="p">,</span> <span class="n">Tk</span><span class="o">=</span><span class="n">tk</span><span class="p">,</span> <span class="nb">property</span><span class="o">=</span><span class="n">prop</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> 
+
+                        <span class="k">try</span><span class="p">:</span>
+                            <span class="n">value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+                        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[results] Non-numeric value for &#39;</span><span class="si">{</span><span class="n">prop</span><span class="si">}</span><span class="s2">&#39; at &#39;</span><span class="si">{</span><span class="n">ts</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
                         <span class="n">data_dict</span><span class="p">[(</span><span class="n">tk</span><span class="p">,</span> <span class="n">prop</span><span class="p">)][</span><span class="n">ts</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
                     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                         <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[results] Failed to get result &#39;</span><span class="si">{</span><span class="n">prop</span><span class="si">}</span><span class="s2">&#39; for tk &#39;</span><span class="si">{</span><span class="n">tk</span><span class="si">}</span><span class="s2">&#39; at &#39;</span><span class="si">{</span><span class="n">ts</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
