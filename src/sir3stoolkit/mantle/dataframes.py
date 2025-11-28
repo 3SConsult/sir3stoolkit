@@ -372,7 +372,7 @@ class Dataframes_SIR3S_Model(SIR3S_Model):
         Returns
         -------
         pd.DataFrame
-            Dataframe with one row per timestamp and MultiIndex columns:
+            Dataframe with one row per timestamp (datatype float) and MultiIndex columns:
             - Level 0: tk (device ID)
             - Level 1: name (device name)
             - Level 2: end_nodes (tuple of connected node IDs as string)
@@ -422,6 +422,7 @@ class Dataframes_SIR3S_Model(SIR3S_Model):
         if self.__is_get_endnodes_applicable(element_type=element_type):
             end_nodes_available = True
 
+        # --- Retrieve values ---
         logger.info("[results] Retrieving result properties...")
 
         data_dict = defaultdict(dict)
@@ -430,7 +431,13 @@ class Dataframes_SIR3S_Model(SIR3S_Model):
             for tk in tks:
                 for prop in result_props:
                     try:
-                        value = self.GetResultfortimestamp(timestamp=ts, Tk=tk, property=prop)[0]
+                        value = self.GetResultfortimestamp(timestamp=ts, Tk=tk, property=prop)[0] 
+
+                        try:
+                            value = float(value)
+                        except ValueError:
+                            logger.warning(f"[results] Non-numeric value for '{prop}' at '{ts}': {value}")
+
                         data_dict[(tk, prop)][ts] = value
                     except Exception as e:
                         logger.warning(f"[results] Failed to get result '{prop}' for tk '{tk}' at '{ts}': {e}")

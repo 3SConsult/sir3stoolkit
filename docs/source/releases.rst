@@ -28,6 +28,11 @@ C# Changes
 
 - Hydraulic Profile related functions added
 
+Improvements
+^^^^^^^^^^^^
+
+- dataframes.py
+   - generate_element_results_dataframe() returns float values instead of object type
 
 Version 90.15.5
 ~~~~~~~~~~~~~~~
