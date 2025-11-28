@@ -198,6 +198,11 @@ class SIR3S_Model:
         :return: None
         :rtype: None
         :description: This method is a wrapper method for StartTransaction() from toolkit.
+        If Modifications on a Model are intended, it is recommended to make a Call
+        of StartTransaction(), then do all the Modifications you need. And then call
+        EndTransaction() as soon as you are finished with Modifications. This helps
+        the Software to keep Track of Modifications, so the User can Undo/Redo them 
+        on the main UI (SirGraf).
         """
         isTransactionStarted, message = self.toolkit.StartTransaction(SessionName)
         if not isTransactionStarted:
@@ -215,8 +220,12 @@ class SIR3S_Model:
 
         :return: None
         :rtype: None
-        :description: This method is a wrapper method for EndTransaction() from toolkit. Use it after StartTransaction()
-            to close that transaction.
+        :description: This method is a wrapper method for EndTransaction() from toolkit.
+        If Modifications on a Model are intended, it is recommended to make a Call
+        of StartTransaction(), then do all the Modifications you need. And then call
+        EndTransaction() as soon as you are finished with Modifications. This helps
+        the Software to keep Track of Modifications, so the User can Undo/Redo them 
+        on the main UI (SirGraf).
         """
         isTransactionEnded, message = self.toolkit.EndTransaction()
         if not isTransactionEnded:
@@ -237,6 +246,9 @@ class SIR3S_Model:
         :return: None
         :rtype: None
         :description: This method is a wrapper method for StartEditSession() from toolkit.
+        Recommended for fast bulk Changes (e.g. Changing the Values of 40 thousands Nodes in a 
+        single Task). Similar to StartTransaction(), EndEditSession() should be called after
+        the Caller is done with all his bulk Changes.
         """
         isTransactionStarted, message = self.toolkit.StartEditSession(SessionName)
         if not isTransactionStarted:
@@ -254,8 +266,9 @@ class SIR3S_Model:
 
         :return: None
         :rtype: None
-        :description: This method is a wrapper method for EndEditSession() from toolkit. Use it after StartEditSession()
-            to close that session.
+        :description: This method is a wrapper method for EndEditSession() from toolkit.
+        Closes an already started EditSession.
+        Should always be called after a Call of StartEditSession() and all the Modifications applied.
         """
         isTransactionEnded, message = self.toolkit.EndEditSession()
         if not isTransactionEnded:
@@ -300,6 +313,8 @@ class SIR3S_Model:
         :return: Value and type of the value returned.
         :rtype: tuple[str, str]
         :description: This is a wrapper method for GetValue() from toolkit; Watch out for error message for more information.
+        Reads the Value of the Property of an Element and also returns the 
+        Type name [string/float/double/int/bool] of that Property as a tuple of value and type.
         """
         value, isFound, valueType, error = self.toolkit.GetValue(Tk, propertyName)
         if value is None:
@@ -493,6 +508,7 @@ class SIR3S_Model:
         :return: None
         :rtype: None
         :description: This is a wrapper method for GetElementInfo() from toolkit; Watch out for errors for more information.
+        Gets a short ToolTip Text for a SIR 3S Element.
         """
         info, error = self.toolkit.GetElementInfo(Tk)
         if info == "":
@@ -1347,7 +1363,7 @@ class SIR3S_Model:
 
         :param tkAgsn: Tk of agsn
         :type tkAgsn: str
-        :param uid: UID
+        :param uid: UID The internal Number of the Way/Branch to retrieve. For obtaining the Main Way of a Hydraulic Profile, just enter '0' or an empty String
         :type uid: str
         :return: returns a namedtuple combining all the hydraulic profile information
         :rtype: hydraulicProfile(namedtuple)
