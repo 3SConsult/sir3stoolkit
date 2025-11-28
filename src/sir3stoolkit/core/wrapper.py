@@ -35,7 +35,9 @@ fontInformation = namedtuple("fontInformation",
                              ["textContent", "color", "angle_degree", "faceName",
                               "heightPt", "isBold", "isItalic", "isUnderline"])
 
-
+hydraulicProfile = namedtuple("hydraulicProfile", ["childrenUID", "nodesVL", "linksVL", "xVL", "nodesRL", "linksRL", 
+                                                   "xRL", "nrOfBranches", "xOffSet", "xOffsetRelativeToParent", "length",
+                                                   "tkArticulationNode"])
 # User defined Enum class using EnumMeta
 
 class DotNetEnumMeta(enum.EnumMeta):
@@ -1321,7 +1323,45 @@ class SIR3S_Model:
         modelRepair = self.toolkit.CreateModelRepair()
         return modelRepair, self.toolkit
     
+    def GetHydraulicProfileObjectString(self, tkAgsn) -> bool:
+        """
+        This Method retrieves the raw representation of the Course of a Hydraulic Profile.
+        That is the String saved in the 'OBJS' Field of the AGSN Table (Persistence).
 
+        :param tkAgsn: Tk of agsn
+        :type tkAgsn: str
+        :return: returns true if successfully able to retrieve Hydraulic Profile, false otherwise 
+        :rtype: bool
+        :return: returns agsn string as output
+        :rtype: str
+        :description: This is a wrapper method for GetHydraulicProfileObjectString() from toolkit
+        """
+        result, agsnString, error = self.toolkit.GetHydraulicProfileObjectString(tkAgsn)
+        if not result: 
+             print("Error: " + error)
+        return result, agsnString
+        
+    def GetCourseOfHydraulicProfile(self, tkAgsn, uid) -> hydraulicProfile:
+        """
+        This method gets the detailed Course of a Hydraulic Profile that may also have Branches.
+
+        :param tkAgsn: Tk of agsn
+        :type tkAgsn: str
+        :param uid: UID
+        :type uid: str
+        :return: returns a namedtuple combining all the hydraulic profile information
+        :rtype: hydraulicProfile(namedtuple)
+        :description: This is a wrapper method for GetCourseOfHydraulicProfile() from toolkit
+        """ 
+        (result, childrenUID, nodesVL, linksVL, xVL, 
+         nodesRL, linksRL, xRL, nrOfBranches,xOffSet, 
+         xOffsetRelativeToParent, length, tkArticulationNode, error) = self.toolkit.GetCourseOfHydraulicProfile(tkAgsn, uid)
+        
+        if not result:
+            print("Error: " + error)
+        return hydraulicProfile(childrenUID=childrenUID, nodesVL=nodesVL, linksVL=linksVL, xVL=xVL,
+                                nodesRL=nodesRL, linksRL=linksRL, xRL=xRL, nrOfBranches=nrOfBranches, xOffSet=xOffSet,
+                                xOffsetRelativeToParent=xOffsetRelativeToParent, length=length, tkArticulationNode=tkArticulationNode)
 
 class SIR3S_View:
     """
