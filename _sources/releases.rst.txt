@@ -34,6 +34,9 @@ Improvements
 - dataframes.py
    - generate_element_results_dataframe() returns float values instead of object type
 
+- plotting.py
+   - plot_pipe_layer() and plot_node_layer() introduced as new functions for network color depictions
+
 Version 90.15.5
 ~~~~~~~~~~~~~~~
 
