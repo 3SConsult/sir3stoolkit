@@ -9,17 +9,15 @@ This module implements general plotting functions for SIR 3S applications. TODO:
 """
 from __future__ import annotations
 
-import pandas as pd
-from typing import List, Optional, Union
 import numpy as np
-import pandas as pd
-import geopandas as gpd
-from typing import Optional, Dict, Any, Tuple, List
-from shapely.geometry import LineString, MultiLineString
 import matplotlib.pyplot as plt
+import matplotlib.colors as mcolors
+import matplotlib.patches as mpatches
 from matplotlib.collections import LineCollection
-from matplotlib.colors import Normalize
-from matplotlib.cm import get_cmap
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.colors as mcolors
+import matplotlib.patches as mpatches
 
 import re
 from typing import Dict, Tuple, Optional
@@ -40,370 +38,271 @@ from sir3stoolkit.core.wrapper import SIR3S_Model
 
 class Plotting_SIR3S_Model(SIR3S_Model):
     
-    def create_pipe_layer(
+    def plot_pipe_layer(
         self,
-        gdf: gpd.GeoDataFrame,
-        geometry_col: Optional[str] = "geometry",
-        width_scaling_col: Optional[str] = None,
-        color_mixing_col: Optional[str] = None,
+        ax=None,
+        gdf=None,
         *,
-        min_width: float = 0.5,
-        max_width: float = 6.0,
-        default_color = (0.75, 0.75, 0.75, 1.0),
-        cmap: str = "viridis",
-        ax: Optional[plt.Axes] = None,
-    ) -> Dict[str, Any]:
+        width_scaling_col: str | None = None,
+        color_mixing_col: str | None = None,
+        attribute: str | None = None,
+        # visual params
+        colors=('darkgreen', 'magenta'),
+        legend_fmt: str | None = None,
+        legend_values: list[float] | None = None,
+        # independent norms
+        width_vmin: float | None = None,
+        width_vmax: float | None = None,
+        color_vmin: float | None = None,
+        color_vmax: float | None = None,
+        # filtering & styling
+        query: str | None = None,
+        line_width_factor: float = 10.0,
+        zorder: float | None = None,
+    ):
         """
-        Create and plot a pipe layer from a GeoDataFrame.
+        Plot line geometries with separate width and color scaling.
 
         Parameters
         ----------
-        gdf : GeoDataFrame
-            Must contain LineString or MultiLineString geometries.
-        geometry_col : str, optional
-            Name of the geometry column. Defaults to 'geometry'.
-        width_scaling_col : str, optional
-            Numeric column to scale line width. If None, uses a constant width.
-        color_mixing_col : str, optional
-            Numeric column to color lines via colormap. If None, uses a constant color.
-        min_width, max_width : float
-            Minimum/maximum linewidth in points.
-        cmap : str
-            Matplotlib colormap name used when `color_mixing_col` is provided.
         ax : matplotlib.axes.Axes, optional
-            Axes to draw on. If None, uses current axes.
+            Axis to plot into. If None, uses current axes (plt.gca()).
+        gdf : pandas.DataFrame or geopandas.GeoDataFrame
+            Input with a 'geometry' column of shapely LineString/MultiLineString.
+        width_scaling_col : str, optional
+            Column used to scale line widths (numeric). If None, uses `attribute`
+            if provided; otherwise constant width.
+        color_mixing_col : str, optional
+            Column used to color lines (numeric). If None, uses `attribute`
+            if provided; otherwise a constant color.
+        attribute : str, optional
+            Legacy single column used for both width and color if the specific
+            columns are not provided.
+        colors : tuple[str, str], optional
+            Two colors to build a linear segmented colormap.
+        legend_fmt : str, optional
+            Legend label format, default: f"{color_col} {{:.4f}}".
+        legend_values : list[float], optional
+            Explicit legend tick values; default: 5 linear steps.
+        width_vmin, width_vmin : float, optional
+            Bounds for width normalization; defaults to data min/max.
+        color_vmin, color_vmax : float, optional
+            Bounds for color normalization; defaults to data min/max.
+        query : str, optional
+            Pandas query string to filter rows before plotting.
+        line_width_factor : float, optional
+            Factor applied after width normalization, default 10.0.
+        zorder : float, optional
+            Z-order for drawing.
 
         Returns
         -------
-        layer : dict
-            {
-              'artist': LineCollection,
-              'axes': Axes,
-              'bbox': (xmin, ymin, xmax, ymax),
-              'norm': matplotlib.colors.Normalize or None,
-              'cmap': matplotlib Colormap or None,
-              'value_ranges': {'width': (wmin, wmax), 'color': (cmin, cmax) or None},
-              'n_segments': int
-            }
-
-        Notes
-        -----
-        - Efficiently packs all polylines into a single LineCollection.
-        - If `color_mixing_col` is provided, the collection is "mappable" and
-          you can add a colorbar upstream with: `plt.colorbar(layer['artist'], ax=ax)`.
-        - If `width_scaling_col` or `color_mixing_col` have constant values, a safe
-          mid-value normalization is used.
+        list[matplotlib.patches.Patch] or None
+            Legend patches based on the color scaling column; None if constant color.
         """
-        if not isinstance(gdf, gpd.GeoDataFrame):
-            raise TypeError("gdf must be a GeoDataFrame")
+        logger.info(f"[plot] Plotting pipes (width='{width_scaling_col}', color='{color_mixing_col}', attr='{attribute}')")
 
-        if geometry_col not in gdf.columns:
-            raise ValueError(f"Geometry column '{geometry_col}' not found in gdf")
+        ax = ax or plt.gca()
+        if gdf is None or getattr(gdf, 'empty', True) or 'geometry' not in gdf.columns:
+            logger.warning("[plot] Pipes: missing data or geometry column.")
+            return None
 
-        # Work on a clean copy with positional index for consistent mapping
-        gf = gdf.reset_index(drop=True).copy()
+        df = gdf.query(query) if query else gdf
+        if df.empty:
+            logger.warning("[plot] Pipes: filtered dataframe is empty.")
+            return None
 
-        # Extract segments and owner row indices
-        segments, owners = self._explode_lines_to_segments(gf, geometry_col)
-        if len(segments) == 0:
-            raise ValueError("No valid LineString/MultiLineString geometries found to plot.")
-
-        # ----- Widths -----
-        if width_scaling_col is not None:
-            if width_scaling_col not in gf.columns:
-                raise ValueError(f"Width scaling column '{width_scaling_col}' not found in gdf")
-
-            wvals = pd.to_numeric(gf[width_scaling_col], errors="coerce")
-            wnorm, wmin, wmax = self._minmax_normalize(wvals)
-            widths_per_row = min_width + wnorm * (max_width - min_width)
-            widths = widths_per_row[np.array(owners)]
+        # --- WIDTH SCALING ---
+        width_col = width_scaling_col or attribute
+        if width_col is not None:
+            try:
+                a_w = df[width_col].astype(float).to_numpy()
+            except Exception as e:
+                logger.error(f"[plot] Pipes: width column '{width_col}' not numeric or missing. {e}")
+                return None
+            vmin_w = float(width_vmin) if width_vmin is not None else float(np.nanmin(a_w))
+            vmax_w = float(width_vmax) if width_vmax is not None else float(np.nanmax(a_w))
+            if not np.isfinite(vmin_w) or not np.isfinite(vmax_w) or vmin_w == vmax_w:
+                vmax_w = vmin_w + 1e-12
+            norm_w = plt.Normalize(vmin=vmin_w, vmax=vmax_w)
+            widths_full = norm_w(a_w) * float(line_width_factor)
         else:
-            # Constant width if no scaling column
-            widths = np.full(len(segments), (min_width + max_width) * 0.5)
-            wmin, wmax = np.nan, np.nan  # no scaling info
-        # ----- Colors -----
-        the_cmap = None
-        norm = None
-        array_for_colormap = None
+            widths_full = None  # will use constant width later
 
-        if color_mixing_col is not None:
-            if color_mixing_col not in gf.columns:
-                raise ValueError(f"Color mixing column '{color_mixing_col}' not found in gdf")
-
-            cvals = pd.to_numeric(gf[color_mixing_col], errors="coerce")
-            # We'll use Normalize directly (better for colorbar linkage)
-            cmin = np.nanmin(cvals.values) if np.isfinite(cvals.values).any() else 0.0
-            cmax = np.nanmax(cvals.values) if np.isfinite(cvals.values).any() else 1.0
-            if not np.isfinite(cmin) or not np.isfinite(cmax) or cmin == cmax:
-                # Fall back to a safe range
-                cmin, cmax = 0.0, 1.0
-            norm = Normalize(vmin=float(cmin), vmax=float(cmax), clip=True)
-            the_cmap = get_cmap(cmap)
-            # Per-segment values from per-row values via owners
-            row_vals = cvals.to_numpy()
-            array_for_colormap = row_vals[np.array(owners)]
-            color_range = (float(cmin), float(cmax))
+        # --- COLOR SCALING ---
+        color_col = color_mixing_col or attribute
+        cmap = mcolors.LinearSegmentedColormap.from_list('cmap', list(colors), N=256)
+        patches = None
+        if color_col is not None:
+            try:
+                a_c = df[color_col].astype(float).to_numpy()
+            except Exception as e:
+                logger.error(f"[plot] Pipes: color column '{color_col}' not numeric or missing. {e}")
+                return None
+            vmin_c = float(color_vmin) if color_vmin is not None else float(np.nanmin(a_c))
+            vmax_c = float(color_vmax) if color_vmax is not None else float(np.nanmax(a_c))
+            if not np.isfinite(vmin_c) or not np.isfinite(vmax_c) or vmin_c == vmax_c:
+                vmax_c = vmin_c + 1e-12
+            norm_c = plt.Normalize(vmin=vmin_c, vmax=vmax_c)
+            colors_full = cmap(norm_c(a_c))
+            legend_fmt = legend_fmt or f"{color_col} {{:.4f}}"
+            vals = legend_values if legend_values is not None else np.linspace(vmin_c, vmax_c, 5)
+            patches = [mpatches.Patch(color=cmap(norm_c(float(v))), label=legend_fmt.format(float(v))) for v in vals]
         else:
-            color_range = None
+            colors_full = None  # will use constant color later
 
-        # ----- Build and add LineCollection -----
-        if ax is None:
-            ax = plt.gca()
-
-        lc_kwargs = dict(
-            segments=segments,
-            linewidths=widths,
-            capstyle="round",
-            joinstyle="round",
-            zorder=2,
-        )
-
-        if array_for_colormap is not None:
-            lc = LineCollection(**lc_kwargs, cmap=the_cmap, norm=norm, antialiased=False)
-            lc.set_array(array_for_colormap)  # enables colorbar
-        else:
-            lc = LineCollection(**lc_kwargs, colors=[default_color], antialiased=False)
-
-        ax.add_collection(lc)
-
-        # ----- Axes extent -----
-        # Use GeoDataFrame bounds for stability; fall back to autoscale as needed.
-        try:
-            xmin, ymin, xmax, ymax = gpd.GeoSeries(gf[geometry_col]).total_bounds
-            bbox = (xmin, ymin, xmax, ymax)
-            if np.isfinite(xmin) and np.isfinite(ymin) and np.isfinite(xmax) and np.isfinite(ymax):
-                ax.set_xlim(xmin, xmax)
-                ax.set_ylim(ymin, ymax)
-        except Exception:
-            ax.autoscale_view()
-            # Compute a loose bbox if needed
-            xs = np.concatenate([seg[:, 0] for seg in segments])
-            ys = np.concatenate([seg[:, 1] for seg in segments])
-            bbox = (float(np.nanmin(xs)), float(np.nanmin(ys)),
-                    float(np.nanmax(xs)), float(np.nanmax(ys)))
-
-        # Keep aspect ratio square for networks
-        try:
-            ax.set_aspect("equal", adjustable="box")
-        except Exception:
-            pass
-
-        layer = {
-            "artist": lc,
-            "axes": ax,
-            "bbox": bbox,
-            "norm": norm,
-            "cmap": the_cmap,
-            "value_ranges": {
-                "width": (float(wmin), float(wmax)) if np.isfinite([wmin, wmax]).all() else None,
-                "color": color_range,
-            },
-            "n_segments": len(segments),
-            "kind": "pipes",
-        }
-        return layer
-
-    # ---------------------------
-    # Helpers
-    # ---------------------------
-
-    @staticmethod
-    def _minmax_normalize(series: pd.Series) -> Tuple[np.ndarray, float, float]:
-        """
-        Min-max normalize numeric series to [0, 1], handling NaNs and constant vectors.
-
-        Returns
-        -------
-        norm_values : np.ndarray
-            Same length as series, NaNs become 0.5 (neutral midpoint).
-        vmin, vmax : float
-            The numeric min and max used. If constant/invalid, returns (0.0, 1.0).
-        """
-        vals = pd.to_numeric(series, errors="coerce").to_numpy(dtype=float)
-        finite = np.isfinite(vals)
-
-        if not finite.any():
-            return np.full_like(vals, 0.5), 0.0, 1.0
-
-        vmin = float(np.nanmin(vals[finite]))
-        vmax = float(np.nanmax(vals[finite]))
-        if vmin == vmax:
-            # All equal → neutral 0.5
-            norm = np.full_like(vals, 0.5)
-            return norm, vmin, vmax
-
-        norm = (vals - vmin) / (vmax - vmin)
-        norm = np.clip(norm, 0.0, 1.0)
-        # Replace NaNs with neutral midpoint
-        norm[~finite] = 0.5
-        return norm, vmin, vmax
-
-    @staticmethod
-    def _explode_lines_to_segments(
-        gdf: gpd.GeoDataFrame, geometry_col: str
-    ) -> Tuple[List[np.ndarray], List[int]]:
-        """
-        Convert LineString/MultiLineString geometries to a list of polyline segments.
-
-        Returns
-        -------
-        segments : list of (N_i x 2) float arrays
-            Each array is the sequence of [x, y] vertices for a line.
-        owners : list of int
-            Row index (positional in gdf.reset_index(drop=True)) that each segment came from.
-        """
-        segments: List[np.ndarray] = []
-        owners: List[int] = []
-
-        geoms = gdf[geometry_col]
-        for i, geom in enumerate(geoms):
+        # --- BUILD SEGMENTS ---
+        segs, cols, lw = [], [], []
+        count = 0
+        for i, geom in enumerate(df['geometry']):
             if geom is None:
                 continue
-            if isinstance(geom, LineString):
-                coords = np.asarray(geom.coords, dtype=float)
-                if coords.shape[0] >= 2:
-                    segments.append(coords)
-                    owners.append(i)
-            elif isinstance(geom, MultiLineString):
-                for part in geom.geoms:
-                    if isinstance(part, LineString):
-                        coords = np.asarray(part.coords, dtype=float)
-                        if coords.shape[0] >= 2:
-                            segments.append(coords)
-                            owners.append(i)
-            else:
-                # Non-line geometry: skip
-                continue
+            gt = getattr(geom, 'geom_type', None)
+            col = colors_full[i] if colors_full is not None else mcolors.to_rgba(colors[0])
+            w = widths_full[i] if widths_full is not None else float(line_width_factor) * 0.5
+            if gt == 'LineString':
+                segs.append(np.asarray(geom.coords)); cols.append(col); lw.append(w); count += 1
+            elif gt == 'MultiLineString':
+                for part in getattr(geom, 'geoms', []):
+                    segs.append(np.asarray(part.coords)); cols.append(col); lw.append(w); count += 1
 
-        return segments, owners
-    
-    def create_node_layer(
+        if not segs:
+            logger.warning("[plot] Pipes: no line geometries found.")
+            return None
+
+        lc = LineCollection(segs, colors=cols, linewidths=lw, zorder=zorder)
+        ax.add_collection(lc); ax.autoscale_view()
+
+        logger.info(f"[plot] Pipes: plotted {count} segments.")
+        return patches
+
+    def plot_node_layer(
         self,
-        gdf: gpd.GeoDataFrame,
-        geometry_col: str = "geometry",
-        size_scaling_col: Optional[str] = None,
-        color_mixing_col: Optional[str] = None,
+        ax=None,
+        gdf=None,
         *,
-        min_size: float = 20.0,
-        max_size: float = 200.0,
-        default_color=(0.75, 0.75, 0.75, 1.0),
-        cmap: str = "viridis",
-        ax: Optional[plt.Axes] = None,
-    ) -> Dict[str, Any]:
+        size_scaling_col: str | None = None,
+        color_mixing_col: str | None = None,
+        attribute: str | None = None,
+        # visual params
+        colors=('darkgreen', 'magenta'),
+        legend_fmt: str | None = None,
+        legend_values: list[float] | None = None,
+        # independent norms
+        size_vmin: float | None = None,
+        size_vmax: float | None = None,
+        color_vmin: float | None = None,
+        color_vmax: float | None = None,
+        # filtering & styling
+        query: str | None = None,
+        marker_style: str = 'o',
+        marker_size_factor: float = 1000.0,
+        zorder: float | None = None,
+    ):
         """
-        Create and plot a node layer from a GeoDataFrame (Point geometries).
+        Plot point nodes with separate size and color scaling.
 
         Parameters
         ----------
-        gdf : GeoDataFrame
-            Must contain Point geometries.
-        geometry_col : str, optional
-            Name of the geometry column. Defaults to 'geometry'.
-        size_scaling_col : str, optional
-            Numeric column to scale marker size. If None, uses a constant size.
-        color_mixing_col : str, optional
-            Numeric column to color markers via colormap. If None, uses a constant color.
-        min_size, max_size : float
-            Minimum/maximum marker size in points^2 (scatter uses area).
-        cmap : str
-            Matplotlib colormap name used when `color_mixing_col` is provided.
         ax : matplotlib.axes.Axes, optional
-            Axes to draw on. If None, uses current axes.
+            Axis to plot into. If None, uses current axes (plt.gca()).
+        gdf : pandas.DataFrame or geopandas.GeoDataFrame
+            Input with a 'geometry' column of shapely geometries.
+        size_scaling_col : str, optional
+            Column used to scale marker sizes (numeric). If None, uses `attribute`
+            if provided; otherwise constant size.
+        color_mixing_col : str, optional
+            Column used to color markers (numeric). If None, uses `attribute`
+            if provided; otherwise a constant color.
+        attribute : str, optional
+            Legacy single column used for both size and color if the specific
+            columns are not provided.
+        colors : tuple[str, str], optional
+            Two colors to build a linear segmented colormap.
+        legend_fmt : str, optional
+            Legend label format, default: f"{color_col} {{:.4f}}".
+        legend_values : list[float], optional
+            Explicit legend tick values; default: 5 linear steps.
+        size_vmin, size_vmax : float, optional
+            Bounds for size normalization; defaults to data min/max.
+        color_vmin, color_vmax : float, optional
+            Bounds for color normalization; defaults to data min/max.
+        query : str, optional
+            Pandas query string to filter rows before plotting.
+        marker_style : str, optional
+            Matplotlib marker style, default 'o'.
+        marker_size_factor : float, optional
+            Factor applied after size normalization, default 1000.0.
+        zorder : float, optional
+            Z-order for drawing.
 
         Returns
         -------
-        layer : dict
-            {
-            'artist': PathCollection,
-            'axes': Axes,
-            'bbox': (xmin, ymin, xmax, ymax),
-            'norm': matplotlib.colors.Normalize or None,
-            'cmap': matplotlib Colormap or None,
-            'value_ranges': {'size': (smin, smax), 'color': (cmin, cmax) or None},
-            'n_nodes': int,
-            'kind': 'nodes'
-            }
+        list[matplotlib.patches.Patch] or None
+            Legend patches based on the color scaling column; None if constant color.
         """
-        if not isinstance(gdf, gpd.GeoDataFrame):
-            raise TypeError("gdf must be a GeoDataFrame")
+        logger.info(f"[plot] Plotting nodes (size='{size_scaling_col}', color='{color_mixing_col}', attr='{attribute}')")
 
-        if geometry_col not in gdf.columns:
-            raise ValueError(f"Geometry column '{geometry_col}' not found in gdf")
+        ax = ax or plt.gca()
+        if gdf is None or getattr(gdf, 'empty', True) or 'geometry' not in gdf.columns:
+            logger.warning("[plot] Nodes: missing data or geometry column.")
+            return None
 
-        gf = gdf.reset_index(drop=True).copy()
-        points = gf[geometry_col]
+        df = gdf.query(query) if query else gdf
+        if df.empty:
+            logger.warning("[plot] Nodes: filtered dataframe is empty.")
+            return None
 
-        # Validate geometry type
-        if not all(points.geom_type == "Point"):
-            raise ValueError("All geometries must be Points for node layer.")
+        geoms = df['geometry']
+        is_point = geoms.apply(lambda g: getattr(g, 'geom_type', None) == 'Point')
+        if not is_point.any():
+            logger.warning("[plot] Nodes: no Point geometries found.")
+            return None
 
-        # Extract XY coordinates
-        coords = np.array([[p.x, p.y] for p in points if p is not None])
-
-        if coords.shape[0] == 0:
-            raise ValueError("No valid Point geometries found to plot.")
-
-        # ----- Sizes -----
-        if size_scaling_col is not None:
-            if size_scaling_col not in gf.columns:
-                raise ValueError(f"Size scaling column '{size_scaling_col}' not found in gdf")
-            svals = pd.to_numeric(gf[size_scaling_col], errors="coerce")
-            snorm, smin, smax = Plotting_SIR3S_Model._minmax_normalize(svals)
-            sizes = min_size + snorm * (max_size - min_size)
+        # --- SIZE SCALING ---
+        size_col = size_scaling_col or attribute
+        if size_col is not None:
+            try:
+                a_size = df.loc[is_point, size_col].astype(float).to_numpy()
+            except Exception as e:
+                logger.error(f"[plot] Nodes: size column '{size_col}' not numeric or missing. {e}")
+                return None
+            vmin_s = float(size_vmin) if size_vmin is not None else float(np.nanmin(a_size))
+            vmax_s = float(size_vmax) if size_vmax is not None else float(np.nanmax(a_size))
+            if not np.isfinite(vmin_s) or not np.isfinite(vmax_s) or vmin_s == vmax_s:
+                vmax_s = vmin_s + 1e-12
+            norm_s = plt.Normalize(vmin=vmin_s, vmax=vmax_s)
+            sizes = norm_s(a_size) * float(marker_size_factor)
         else:
-            sizes = np.full(coords.shape[0], (min_size + max_size) * 0.5)
-            smin, smax = np.nan, np.nan
+            sizes = np.full(is_point.sum(), float(marker_size_factor) * 0.5)
 
-        # ----- Colors -----
-        the_cmap = None
-        norm = None
-        array_for_colormap = None
-        if color_mixing_col is not None:
-            if color_mixing_col not in gf.columns:
-                raise ValueError(f"Color mixing column '{color_mixing_col}' not found in gdf")
-            cvals = pd.to_numeric(gf[color_mixing_col], errors="coerce")
-            cmin = np.nanmin(cvals.values) if np.isfinite(cvals.values).any() else 0.0
-            cmax = np.nanmax(cvals.values) if np.isfinite(cvals.values).any() else 1.0
-            if not np.isfinite(cmin) or not np.isfinite(cmax) or cmin == cmax:
-                cmin, cmax = 0.0, 1.0
-            norm = Normalize(vmin=float(cmin), vmax=float(cmax), clip=True)
-            the_cmap = get_cmap(cmap)
-            array_for_colormap = cvals.to_numpy()
-            color_range = (float(cmin), float(cmax))
+        # --- COLOR SCALING ---
+        color_col = color_mixing_col or attribute
+        cmap = mcolors.LinearSegmentedColormap.from_list('cmap', list(colors), N=256)
+        patches = None
+        if color_col is not None:
+            try:
+                a_col = df.loc[is_point, color_col].astype(float).to_numpy()
+            except Exception as e:
+                logger.error(f"[plot] Nodes: color column '{color_col}' not numeric or missing. {e}")
+                return None
+            vmin_c = float(color_vmin) if color_vmin is not None else float(np.nanmin(a_col))
+            vmax_c = float(color_vmax) if color_vmax is not None else float(np.nanmax(a_col))
+            if not np.isfinite(vmin_c) or not np.isfinite(vmax_c) or vmin_c == vmax_c:
+                vmax_c = vmin_c + 1e-12
+            norm_c = plt.Normalize(vmin=vmin_c, vmax=vmax_c)
+            colors_arr = cmap(norm_c(a_col))
+            # Legend only for color scaling
+            legend_fmt = legend_fmt or f"{color_col} {{:.4f}}"
+            vals = legend_values if legend_values is not None else np.linspace(vmin_c, vmax_c, 5)
+            patches = [mpatches.Patch(color=cmap(norm_c(float(v))), label=legend_fmt.format(float(v))) for v in vals]
         else:
-            color_range = None
+            # Constant color (first color provided)
+            colors_arr = np.tile(mcolors.to_rgba(colors[0]), (is_point.sum(), 1))
 
-        # ----- Plot -----
-        if ax is None:
-            ax = plt.gca()
+        # --- PLOT ---
+        coords = np.array([(g.x, g.y) for g in geoms[is_point]])
+        ax.scatter(coords[:, 0], coords[:, 1], s=sizes, c=colors_arr, marker=marker_style, zorder=zorder)
 
-        if array_for_colormap is not None:
-            sc = ax.scatter(coords[:, 0], coords[:, 1], s=sizes, c=array_for_colormap,
-                            cmap=the_cmap, norm=norm, zorder=3, marker="p")
-        else:
-            sc = ax.scatter(coords[:, 0], coords[:, 1], s=sizes, color=default_color, zorder=3)
-
-        # ----- Axes extent -----
-        xmin, ymin, xmax, ymax = gpd.GeoSeries(points).total_bounds
-        if np.isfinite([xmin, ymin, xmax, ymax]).all():
-            ax.set_xlim(xmin, xmax)
-            ax.set_ylim(ymin, ymax)
-        try:
-            ax.set_aspect("equal", adjustable="box")
-        except Exception:
-            pass
-
-        layer = {
-            "artist": sc,
-            "axes": ax,
-            "bbox": (xmin, ymin, xmax, ymax),
-            "norm": norm,
-            "cmap": the_cmap,
-            "value_ranges": {
-                "size": (float(smin), float(smax)) if np.isfinite([smin, smax]).all() else None,
-                "color": color_range,
-            },
-            "n_nodes": coords.shape[0],
-            "kind": "nodes",
-        }
-        return layer
+        logger.info(f"[plot] Nodes: plotted {is_point.sum()} points.")
+        return patches
