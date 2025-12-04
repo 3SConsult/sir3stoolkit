@@ -840,7 +840,7 @@ class Dataframes_SIR3S_Model(SIR3S_Model):
                     logger.error(f"[Resolving tks] No elements remain after filtering for given tks: {given_tks}")
                     return pd.DataFrame()
                 else:
-                    logger.info(f"[Resolving tks] {len(tks)} tks remain after filering for given tks.")
+                    logger.info(f"[Resolving tks] {len(tks)} tks remain after filtering for given tks.")
 
             except Exception as e:
                 logger.error(f"[Resolving tks] Error validating given tks: {e}")
