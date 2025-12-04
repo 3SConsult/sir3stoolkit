@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>WORK IN PROGRESS: Example 5: Time Curves &mdash; sir3stoolkit  documentation</title>
+  <title>Example 7: Network Color Depiction (WORK IN PROGRESS: Loop over multiple SIR 3S calculations) &mdash; sir3stoolkit  documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
@@ -28,7 +28,6 @@
       <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
       <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
       <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
       <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -78,7 +77,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">WORK IN PROGRESS: Example 5: Time Curves</li>
+      <li class="breadcrumb-item active">Example 7: Network Color Depiction (WORK IN PROGRESS: Loop over multiple SIR 3S calculations)</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/examples/Toolkit_Example5.ipynb.txt" rel="nofollow"> View page source</a>
       </li>
@@ -88,8 +87,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="WORK-IN-PROGRESS:-Example-5:-Time-Curves">
-<h1>WORK IN PROGRESS: Example 5: Time Curves<a class="headerlink" href="#WORK-IN-PROGRESS:-Example-5:-Time-Curves" title="Link to this heading"></a></h1>
+  <section id="Example-7:-Network-Color-Depiction-(WORK-IN-PROGRESS:-Loop-over-multiple-SIR-3S-calculations)">
+<h1>Example 7: Network Color Depiction (WORK IN PROGRESS: Loop over multiple SIR 3S calculations)<a class="headerlink" href="#Example-7:-Network-Color-Depiction-(WORK-IN-PROGRESS:-Loop-over-multiple-SIR-3S-calculations)" title="Link to this heading"></a></h1>
 <p>This example demonstrates how to …</p>
 </section>
 <section id="SIR-3S-Installation">
@@ -98,7 +97,7 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r&quot;C:\3S\SIR 3S\SirGraf-90-15-00-19_Quebec&quot;
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r&quot;C:\3S\SIR 3S\SirGraf-90-15-00-20x64_Quebec-Upd1&quot; #change to local path
 </pre></div>
 </div>
 </div>
@@ -168,7 +167,7 @@ Initialization complete
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dbFilePath=r&quot;C:\Users\aUsername\3S\PT3S\PT3S\Examples\Example2.db3&quot;
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dbFilePath=r&quot;C:\Users\aUsername\3S\PT3S\PT3S\Examples\Example5.db3&quot;
 </pre></div>
 </div>
 </div>
@@ -195,25 +194,29 @@ Model is open for further operation
 </pre></div></div>
 </div>
 </section>
-<section id="Edit">
-<h1>Edit<a class="headerlink" href="#Edit" title="Link to this heading"></a></h1>
+<section id="View-network-graph">
+<h1>View network graph<a class="headerlink" href="#View-network-graph" title="Link to this heading"></a></h1>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>node_tks = [&quot;5471942051669438823&quot;, &quot;5166327497394449628&quot;, &quot;5667818255300782920&quot;, &quot;5262999985134416180&quot;]
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import networkx as nx
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import matplotlib.pyplot as plt
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_results = s3s.generate_element_results_dataframe(element_type=s3s.ObjectTypes.Node
-                                                          ,tks=node_tks
-                                                          ,properties=[&quot;QM&quot;, &quot;PH&quot;]
-                                                          ,timestamps=None # all available simulation timestamps will be used
-                                                          )
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>G = s3s.SIR_3S_to_nx_graph()
 </pre></div>
 </div>
 </div>
@@ -222,27 +225,202 @@ Model is open for further operation
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2025-11-21 15:11:52,562] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Node
-[2025-11-21 15:11:52,562] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] No timestamps were given. Checking available simulation timestamps (SIR3S_Model.GetTimeStamps()).
-[2025-11-21 15:11:52,621] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 601 simulation timestamp(s) are available.
-[2025-11-21 15:11:52,693] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 601 valid timestamp(s) will be used.
-[2025-11-21 15:11:52,697] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 635 element(s) of element type ObjectTypes.Node.
-[2025-11-21 15:11:52,698] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 4 tks remain after filering for given tks.
-[2025-11-21 15:11:52,699] INFO in sir3stoolkit.mantle.dataframes: [results] Using 2 result properties.
-[2025-11-21 15:11:52,802] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result properties...
-[2025-11-21 15:11:55,670] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (601, 8)
+[2025-12-04 15:22:18,098] INFO in sir3stoolkit.mantle.alternative_models: [graph] Building nx graph...
+[2025-12-04 15:22:18,099] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.Node
+[2025-12-04 15:22:18,108] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieved 1559 element(s) of element type ObjectTypes.Node.
+[2025-12-04 15:22:18,112] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 1559 element(s) of element type ObjectTypes.Node.
+[2025-12-04 15:22:18,129] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 1 metadata properties.
+[2025-12-04 15:22:18,130] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving metadata properties [&#39;Fkcont&#39;], geometry...
+[2025-12-04 15:22:18,337] WARNING in sir3stoolkit.mantle.dataframes: [metadata] Spatial Reference Identifier (SRID) not defined in model. DataFrame cannot be transformed to GeoDataFrame but geometry column can be created independently of SRID. Returning regular DataFrame with a geometry column.
+[2025-12-04 15:22:18,339] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (1559, 3)
+[2025-12-04 15:22:18,340] INFO in sir3stoolkit.mantle.alternative_models: [graph] Retrieved 1559 nodes.
+[2025-12-04 15:22:18,343] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.Pipe
+[2025-12-04 15:22:18,348] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieved 1672 element(s) of element type ObjectTypes.Pipe.
+[2025-12-04 15:22:18,352] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 1672 element(s) of element type ObjectTypes.Pipe.
+[2025-12-04 15:22:18,353] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 1 metadata properties.
+[2025-12-04 15:22:18,354] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving metadata properties [&#39;Fkcont&#39;], geometry, end nodes...
+[2025-12-04 15:22:18,917] INFO in sir3stoolkit.mantle.dataframes: [metadata] 2 non-empty end node columns were created.
+[2025-12-04 15:22:18,954] WARNING in sir3stoolkit.mantle.dataframes: [metadata] Spatial Reference Identifier (SRID) not defined in model. DataFrame cannot be transformed to GeoDataFrame but geometry column can be created independently of SRID. Returning regular DataFrame with a geometry column.
+[2025-12-04 15:22:18,955] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (1672, 6)
+[2025-12-04 15:22:18,958] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.Valve
+[2025-12-04 15:22:18,960] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieved 119 element(s) of element type ObjectTypes.Valve.
+[2025-12-04 15:22:18,961] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 119 element(s) of element type ObjectTypes.Valve.
+[2025-12-04 15:22:18,964] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 1 metadata properties.
+[2025-12-04 15:22:18,965] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving metadata properties [&#39;Fkcont&#39;], geometry, end nodes...
+[2025-12-04 15:22:19,400] INFO in sir3stoolkit.mantle.dataframes: [metadata] 2 non-empty end node columns were created.
+[2025-12-04 15:22:19,407] WARNING in sir3stoolkit.mantle.dataframes: [metadata] Spatial Reference Identifier (SRID) not defined in model. DataFrame cannot be transformed to GeoDataFrame but geometry column can be created independently of SRID. Returning regular DataFrame with a geometry column.
+[2025-12-04 15:22:19,407] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (119, 6)
+[2025-12-04 15:22:19,410] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.FlapValve
+[2025-12-04 15:22:19,412] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieved 5 element(s) of element type ObjectTypes.FlapValve.
+[2025-12-04 15:22:19,413] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 5 element(s) of element type ObjectTypes.FlapValve.
+[2025-12-04 15:22:19,413] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 1 metadata properties.
+[2025-12-04 15:22:19,417] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving metadata properties [&#39;Fkcont&#39;], geometry, end nodes...
+[2025-12-04 15:22:19,427] INFO in sir3stoolkit.mantle.dataframes: [metadata] 2 non-empty end node columns were created.
+[2025-12-04 15:22:19,436] WARNING in sir3stoolkit.mantle.dataframes: [metadata] Spatial Reference Identifier (SRID) not defined in model. DataFrame cannot be transformed to GeoDataFrame but geometry column can be created independently of SRID. Returning regular DataFrame with a geometry column.
+[2025-12-04 15:22:19,439] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (5, 6)
+[2025-12-04 15:22:19,442] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.ControlValve
+[2025-12-04 15:22:19,444] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieved 1 element(s) of element type ObjectTypes.ControlValve.
+[2025-12-04 15:22:19,451] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 1 element(s) of element type ObjectTypes.ControlValve.
+[2025-12-04 15:22:19,451] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 1 metadata properties.
+[2025-12-04 15:22:19,475] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving metadata properties [&#39;Fkcont&#39;], geometry, end nodes...
+[2025-12-04 15:22:19,500] INFO in sir3stoolkit.mantle.dataframes: [metadata] 2 non-empty end node columns were created.
+[2025-12-04 15:22:19,505] WARNING in sir3stoolkit.mantle.dataframes: [metadata] Spatial Reference Identifier (SRID) not defined in model. DataFrame cannot be transformed to GeoDataFrame but geometry column can be created independently of SRID. Returning regular DataFrame with a geometry column.
+[2025-12-04 15:22:19,507] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (1, 6)
+[2025-12-04 15:22:19,511] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.Pump
+[2025-12-04 15:22:19,513] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieved 3 element(s) of element type ObjectTypes.Pump.
+[2025-12-04 15:22:19,514] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 3 element(s) of element type ObjectTypes.Pump.
+[2025-12-04 15:22:19,517] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 1 metadata properties.
+[2025-12-04 15:22:19,520] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving metadata properties [&#39;Fkcont&#39;], geometry, end nodes...
+[2025-12-04 15:22:19,717] INFO in sir3stoolkit.mantle.dataframes: [metadata] 2 non-empty end node columns were created.
+[2025-12-04 15:22:19,723] WARNING in sir3stoolkit.mantle.dataframes: [metadata] Spatial Reference Identifier (SRID) not defined in model. DataFrame cannot be transformed to GeoDataFrame but geometry column can be created independently of SRID. Returning regular DataFrame with a geometry column.
+[2025-12-04 15:22:19,725] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (3, 6)
+[2025-12-04 15:22:19,728] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.DistrictHeatingConsumer
+[2025-12-04 15:22:19,729] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieved 656 element(s) of element type ObjectTypes.DistrictHeatingConsumer.
+[2025-12-04 15:22:19,732] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 656 element(s) of element type ObjectTypes.DistrictHeatingConsumer.
+[2025-12-04 15:22:19,735] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 1 metadata properties.
+[2025-12-04 15:22:19,735] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving metadata properties [&#39;Fkcont&#39;], geometry, end nodes...
+[2025-12-04 15:22:19,859] INFO in sir3stoolkit.mantle.dataframes: [metadata] 2 non-empty end node columns were created.
+[2025-12-04 15:22:19,867] WARNING in sir3stoolkit.mantle.dataframes: [metadata] Spatial Reference Identifier (SRID) not defined in model. DataFrame cannot be transformed to GeoDataFrame but geometry column can be created independently of SRID. Returning regular DataFrame with a geometry column.
+[2025-12-04 15:22:19,867] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (656, 6)
+[2025-12-04 15:22:19,875] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.DistrictHeatingFeeder
+[2025-12-04 15:22:19,876] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieved 2 element(s) of element type ObjectTypes.DistrictHeatingFeeder.
+[2025-12-04 15:22:19,877] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 2 element(s) of element type ObjectTypes.DistrictHeatingFeeder.
+[2025-12-04 15:22:19,880] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 1 metadata properties.
+[2025-12-04 15:22:19,880] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving metadata properties [&#39;Fkcont&#39;], geometry, end nodes...
+[2025-12-04 15:22:19,901] INFO in sir3stoolkit.mantle.dataframes: [metadata] 2 non-empty end node columns were created.
+[2025-12-04 15:22:19,905] WARNING in sir3stoolkit.mantle.dataframes: [metadata] Spatial Reference Identifier (SRID) not defined in model. DataFrame cannot be transformed to GeoDataFrame but geometry column can be created independently of SRID. Returning regular DataFrame with a geometry column.
+[2025-12-04 15:22:19,906] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (2, 6)
+[2025-12-04 15:22:19,910] INFO in sir3stoolkit.mantle.dataframes: [hydraulic edges dataframe] Retrieved 2458 edges from 17 element types.
+[2025-12-04 15:22:19,912] INFO in sir3stoolkit.mantle.alternative_models: [graph] Adding nodes to graph...
+[2025-12-04 15:22:20,042] INFO in sir3stoolkit.mantle.alternative_models: [graph] Adding edges to graph...
+[2025-12-04 15:22:20,272] INFO in sir3stoolkit.mantle.alternative_models: [graph] Graph construction complete. Nodes: 1559, Edges: 2457
 </pre></div></div>
 </div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_results.head(3)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def plot_nx_graph(G, main_container):
+    # Extract node positions from geometry and filter by Fkcont
+    pos = {
+        node_id: (data[&#39;geometry&#39;].x, data[&#39;geometry&#39;].y)
+        for node_id, data in G.nodes(data=True)
+        if &#39;geometry&#39; in data and hasattr(data[&#39;geometry&#39;], &#39;x&#39;) and hasattr(data[&#39;geometry&#39;], &#39;y&#39;)
+        and data.get(&#39;Fkcont&#39;) == main_container
+    }
+
+    # Extract edges with valid geometry and both nodes in pos
+    edges = [
+        (u, v, data) for u, v, data in G.edges(data=True)
+        if u in pos and v in pos and &#39;geometry&#39; in data and data[&#39;geometry&#39;].geom_type != &#39;Point&#39;
+    ]
+
+    # Plot
+    plt.figure(figsize=(20, 14))
+    for _, _, data in edges:
+        geom = data[&#39;geometry&#39;]
+        x, y = geom.xy
+        plt.plot(x, y, color=&#39;black&#39;, linewidth=1)
+
+    # Only draw nodes that have positions
+    nx.draw_networkx_nodes(G, pos=pos, nodelist=list(pos.keys()), node_color=&#39;black&#39;, node_size=10)
+    plt.title(f&quot;nx-Graph&quot;)
+    plt.axis(&#39;equal&#39;)
+    plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plot_nx_graph(G, s3s.GetMainContainer()[0])
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_Toolkit_Example5_22_0.png" src="../_images/examples_Toolkit_Example5_22_0.png" />
+</div>
+</div>
+</section>
+<section id="Prep-Data">
+<h1>Prep Data<a class="headerlink" href="#Prep-Data" title="Link to this heading"></a></h1>
+<section id="District-Heating-consumers">
+<h2>District Heating consumers<a class="headerlink" href="#District-Heating-consumers" title="Link to this heading"></a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>gdf_district_heating_consumer_metadata = s3s.generate_element_metadata_dataframe(s3s.ObjectTypes.DistrictHeatingConsumer
+                                                                        ,properties=[]
+                                                                        ,geometry=True)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+[2025-12-04 15:22:21,931] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.DistrictHeatingConsumer
+[2025-12-04 15:22:21,935] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieved 656 element(s) of element type ObjectTypes.DistrictHeatingConsumer.
+[2025-12-04 15:22:21,937] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 656 element(s) of element type ObjectTypes.DistrictHeatingConsumer.
+[2025-12-04 15:22:21,939] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 0 metadata properties.
+[2025-12-04 15:22:21,941] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving geometry...
+[2025-12-04 15:22:21,989] WARNING in sir3stoolkit.mantle.dataframes: [metadata] Spatial Reference Identifier (SRID) not defined in model. DataFrame cannot be transformed to GeoDataFrame but geometry column can be created independently of SRID. Returning regular DataFrame with a geometry column.
+[2025-12-04 15:22:21,989] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (656, 2)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>gdf_district_heating_consumer_results=s3s.generate_element_results_dataframe(element_type=s3s.ObjectTypes.DistrictHeatingConsumer
+                                                           ,properties=[&quot;QM&quot;]
+                                                           ,timestamps=[0])
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+[2025-12-04 15:22:22,005] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.DistrictHeatingConsumer
+[2025-12-04 15:22:22,251] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2025-09-24 00:00:00.000 +02:00 is used
+[2025-12-04 15:22:22,252] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
+[2025-12-04 15:22:22,255] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 656 element(s) of element type ObjectTypes.DistrictHeatingConsumer.
+[2025-12-04 15:22:22,257] INFO in sir3stoolkit.mantle.dataframes: [results] Using 1 result properties.
+[2025-12-04 15:22:22,285] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result properties...
+[2025-12-04 15:22:22,403] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 656)
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>gdf_district_heating_consumer_results.columns = gdf_district_heating_consumer_results.columns.droplevel([1, 2])
+gdf_district_heating_consumer_results = gdf_district_heating_consumer_results.T.unstack(level=0).T
+gdf_district_heating_consumer_results = gdf_district_heating_consumer_results.droplevel(0, axis=0)
+gdf_district_heating_consumer = gdf_district_heating_consumer_metadata.merge(on=&quot;tk&quot;,
+                    how=&quot;outer&quot;,
+                    right=gdf_district_heating_consumer_results)
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>gdf_district_heating_consumer.head(3)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -256,238 +434,295 @@ Model is open for further operation
         vertical-align: top;
     }
 
-    .dataframe thead tr th {
-        text-align: left;
-    }
-
-    .dataframe thead tr:last-of-type th {
+    .dataframe thead th {
         text-align: right;
     }
 </style>
 <table border="1" class="dataframe">
   <thead>
-    <tr>
+    <tr style="text-align: right;">
+      <th></th>
       <th>tk</th>
-      <th colspan="2" halign="left">5471942051669438823</th>
-      <th colspan="2" halign="left">5166327497394449628</th>
-      <th colspan="2" halign="left">5667818255300782920</th>
-      <th colspan="2" halign="left">5262999985134416180</th>
-    </tr>
-    <tr>
-      <th>name</th>
-      <th colspan="2" halign="left">K0011</th>
-      <th colspan="2" halign="left">5143521_i</th>
-      <th colspan="2" halign="left">791393_3_k</th>
-      <th colspan="2" halign="left">1629686_0_i</th>
-    </tr>
-    <tr>
-      <th>end_nodes</th>
-      <th colspan="2" halign="left">No end nodes on element type</th>
-      <th colspan="2" halign="left">No end nodes on element type</th>
-      <th colspan="2" halign="left">No end nodes on element type</th>
-      <th colspan="2" halign="left">No end nodes on element type</th>
-    </tr>
-    <tr>
-      <th>property</th>
+      <th>geometry</th>
       <th>QM</th>
-      <th>PH</th>
-      <th>QM</th>
-      <th>PH</th>
-      <th>QM</th>
-      <th>PH</th>
-      <th>QM</th>
-      <th>PH</th>
-    </tr>
-    <tr>
-      <th>timestamp</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>2020-01-28 15:45:01.000 +01:00</th>
-      <td>0</td>
-      <td>10.59964</td>
-      <td>-5.7E-06</td>
-      <td>8.320659</td>
-      <td>-5.7E-06</td>
-      <td>6.477164</td>
-      <td>-3.380222E-06</td>
-      <td>0.8816414</td>
+      <th>0</th>
+      <td>4615167946623235098</td>
+      <td>POINT (48964.78656816362 97889.18677734208)</td>
+      <td>9.808820</td>
     </tr>
     <tr>
-      <th>2020-01-28 15:45:01.100 +01:00</th>
-      <td>0</td>
-      <td>10.59981</td>
-      <td>-5.7E-06</td>
-      <td>8.320658</td>
-      <td>-5.7E-06</td>
-      <td>6.477123</td>
-      <td>-3.380221E-06</td>
-      <td>0.8816413</td>
+      <th>1</th>
+      <td>4615393182465694100</td>
+      <td>POINT (46651.60694166463 97713.81722454002)</td>
+      <td>8.018323</td>
     </tr>
     <tr>
-      <th>2020-01-28 15:45:01.200 +01:00</th>
-      <td>0</td>
-      <td>10.59993</td>
-      <td>-5.7E-06</td>
-      <td>8.320656</td>
-      <td>-5.7E-06</td>
-      <td>6.47708</td>
-      <td>-3.380217E-06</td>
-      <td>0.8816391</td>
+      <th>2</th>
+      <td>4616022158288753538</td>
+      <td>POINT (54845.39768749467 97480.83261120686)</td>
+      <td>3.134198</td>
     </tr>
   </tbody>
 </table>
 </div></div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
-import matplotlib.pyplot as plt
-
-def plot_two_common_lowest(df: pd.DataFrame, start=None, end=None, labels=None, figsize=(10, 4)):
-    &quot;&quot;&quot;
-    Plot two minimal-common lowest-level column labels in a single figure
-    using left/right y-axes (twin axes). Each axis shows one label; within
-    each, one line per level-0 group is plotted.
-
-    Parameters
-    ----------
-    df : pd.DataFrame
-        DataFrame with MultiIndex columns: (level-0, ..., lowest-level).
-    start, end : str or None
-        Optional start and end timestamps (ISO format or parseable by pandas).
-        Example: &#39;2020-01-28 15:45:01.000 +01:00&#39;
-    labels : tuple[str, str] or None
-        Optional pair of lowest-level labels (as strings) to plot.
-        If None, the function will compute the intersection across level-0
-        groups and take the first two labels.
-    figsize : tuple
-        Figure size.
-
-    Returns
-    -------
-    fig, ax_left, ax_right, used_labels : (Figure, Axes, Axes, tuple[str, str])
-    &quot;&quot;&quot;
-    if not isinstance(df.columns, pd.MultiIndex):
-        raise ValueError(&quot;DataFrame must have MultiIndex columns.&quot;)
-
-    # Convert index to datetime if possible
-    df = df.copy()
-    try:
-        df.index = pd.to_datetime(df.index)
-    except Exception:
-        pass
-
-    # Apply time filtering if start/end provided
-    if start:
-        start_ts = pd.to_datetime(start)
-        df = df[df.index &gt;= start_ts]
-    if end:
-        end_ts = pd.to_datetime(end)
-        df = df[df.index &lt;= end_ts]
-
-    lvl0 = df.columns.get_level_values(0)
-    lvl_last = df.columns.get_level_values(-1)
-
-    # Map level-0 -&gt; set of lowest-level labels
-    mapping = (
-        pd.Series(lvl_last.astype(str), index=lvl0)
-        .groupby(level=0)
-        .unique()
-    )
-    sets = [set(vals) for vals in mapping]
-    common = sorted(set.intersection(*sets) if sets else set())
-
-    if labels is None:
-        if len(common) &lt; 2:
-            raise ValueError(&quot;Need at least two common lowest-level labels to use twin axes.&quot;)
-        used_labels = (common[0], common[1])
-    else:
-        if len(labels) != 2:
-            raise ValueError(&quot;labels must be a tuple/list of two strings.&quot;)
-        labels_str = tuple(str(x) for x in labels)
-        missing = [l for l in labels_str if l not in common]
-        if missing:
-            raise ValueError(f&quot;Provided labels not common across all groups: {missing}&quot;)
-        used_labels = labels_str
-
-    top_groups = list(mapping.index)
-
-    fig, ax_left = plt.subplots(figsize=figsize)
-    ax_right = ax_left.twinx()
-
-    def plot_label_on_axis(label_str, axis, linestyle=&quot;-&quot;):
-        lines = []
-        for g in top_groups:
-            mask = (df.columns.get_level_values(0).astype(str) == str(g)) &amp; \
-                   (df.columns.get_level_values(-1).astype(str) == label_str)
-            cols = df.columns[mask]
-            if len(cols) == 0:
-                continue
-            series = df[cols].sum(axis=1) if len(cols) &gt; 1 else df[cols[0]]
-            ln, = axis.plot(df.index, series, linestyle=linestyle, label=f&quot;{g}&quot;)
-            lines.append(ln)
-        return lines
-
-    left_label, right_label = used_labels
-    lines_left = plot_label_on_axis(left_label, ax_left, linestyle=&quot;-&quot;)
-    lines_right = plot_label_on_axis(right_label, ax_right, linestyle=&quot;--&quot;)
-
-    ax_left.set_ylabel(str(left_label))
-    ax_right.set_ylabel(str(right_label))
-    ax_left.set_xlabel(&quot;Time&quot;)
-    ax_left.grid(True, linestyle=&quot;--&quot;, alpha=0.3)
-
-    lines_all = lines_left + lines_right
-    labels_all = [l.get_label() for l in lines_all]
-    if lines_all:
-        ax_left.legend(lines_all, labels_all, loc=&quot;best&quot;, fontsize=8)
-
-    fig.tight_layout()
-    return fig, ax_left, ax_right, used_labels
-</pre></div>
-</div>
-</div>
+</section>
+<section id="Pipes">
+<h2>Pipes<a class="headerlink" href="#Pipes" title="Link to this heading"></a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fig, ax_l, ax_r, used = plot_two_common_lowest(
-    df_pipes_results,
-    start=&quot;2020-01-28 14:45:00.000 +01:00&quot;,
-    end=&quot;2020-01-28 15:46:00.000 +01:00&quot;
-)
-plt.show()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_metadata=s3s.generate_element_metadata_dataframe(s3s.ObjectTypes.Pipe
+                                                   ,properties=[&quot;DN&quot;]
+                                                   ,geometry=True)
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="output_area docutils container">
-<img alt="../_images/examples_Toolkit_Example5_22_0.png" src="../_images/examples_Toolkit_Example5_22_0.png" />
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+[2025-12-04 15:22:22,455] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.Pipe
+[2025-12-04 15:22:22,458] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieved 1672 element(s) of element type ObjectTypes.Pipe.
+[2025-12-04 15:22:22,462] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 1672 element(s) of element type ObjectTypes.Pipe.
+[2025-12-04 15:22:22,462] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 1 metadata properties.
+[2025-12-04 15:22:22,462] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving metadata properties [&#39;DN&#39;], geometry...
+[2025-12-04 15:22:22,723] WARNING in sir3stoolkit.mantle.dataframes: [metadata] Spatial Reference Identifier (SRID) not defined in model. DataFrame cannot be transformed to GeoDataFrame but geometry column can be created independently of SRID. Returning regular DataFrame with a geometry column.
+[2025-12-04 15:22:22,723] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (1672, 3)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_results=s3s.generate_element_results_dataframe(element_type=s3s.ObjectTypes.Pipe
+                                                           ,properties=[&quot;QMAV&quot;]
+                                                           ,timestamps=[0])
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+[2025-12-04 15:22:22,737] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
+[2025-12-04 15:22:22,959] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2025-09-24 00:00:00.000 +02:00 is used
+[2025-12-04 15:22:22,961] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
+[2025-12-04 15:22:22,963] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 1672 element(s) of element type ObjectTypes.Pipe.
+[2025-12-04 15:22:22,963] INFO in sir3stoolkit.mantle.dataframes: [results] Using 1 result properties.
+[2025-12-04 15:22:23,006] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result properties...
+[2025-12-04 15:22:23,400] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 1672)
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_results.columns = df_pipes_results.columns.droplevel([1, 2])
+df_pipes_results = df_pipes_results.T.unstack(level=0).T
+df_pipes_results = df_pipes_results.droplevel(0, axis=0)
+df_pipes = df_pipes_metadata.merge(on=&quot;tk&quot;,
+                                    how=&quot;outer&quot;,
+                                    right=df_pipes_results)
+</pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>#df_pipes_results.xs(key=&#39;1629686_0_i&#39;, axis=1, level=1)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes[&#39;QMAVAbs&#39;] = df_pipes[&#39;QMAV&#39;].abs()
 </pre></div>
 </div>
 </div>
-<p>…</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes.head(3)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>tk</th>
+      <th>DN</th>
+      <th>geometry</th>
+      <th>QMAV</th>
+      <th>QMAVAbs</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>4613765641349500151</td>
+      <td>150</td>
+      <td>LINESTRING (47478.00263683735 97484.9974701480...</td>
+      <td>-10.61157</td>
+      <td>10.61157</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4614040293856762696</td>
+      <td>200</td>
+      <td>LINESTRING (49756.350183295086 97621.546860662...</td>
+      <td>-135.87620</td>
+      <td>135.87620</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4614199490723616754</td>
+      <td>150</td>
+      <td>LINESTRING (50941.63085419123 97450.3987353445...</td>
+      <td>19.20712</td>
+      <td>19.20712</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</section>
+</section>
+<section id="Plotting">
+<h1>Plotting<a class="headerlink" href="#Plotting" title="Link to this heading"></a></h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import matplotlib.pyplot as plt
+from matplotlib.colors import LinearSegmentedColormap
+import contextily as cx
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def plot_Result_ncd(gdf_ROHR, gdf_FWVB, axTitle=&#39;initial condition&#39;):
+    fig, ax = plt.subplots(figsize=(16.54, 11.69))
+
+    # Nodes (size+color by QM)
+    nodes_patches_1 = s3s.plot_node_layer(
+        ax=ax,
+        gdf=gdf_FWVB,
+        attribute=&#39;QM&#39;,
+        colors=[&#39;cyan&#39;, &#39;teal&#39;],
+        marker_style=&#39;p&#39;,
+        marker_size_factor=3000,
+        legend_fmt=&#39;{:4.0f} t/h&#39;,
+        legend_values=[0, 25, 50, 75, 100],
+        zorder=1
+    )
+
+    # Pipes layer 1 (size+color by DN)
+    pipes_patches_2 = s3s.plot_pipe_layer(
+        ax=ax,
+        gdf=gdf_ROHR,
+        attribute=&#39;DN&#39;,
+        colors=[&#39;lightgray&#39;, &#39;dimgray&#39;],
+        legend_fmt=&#39;{:4.0f} mm&#39;,
+        line_width_factor=25,
+        legend_values=[0, 250, 500, 750],
+        zorder=2
+    )
+    # Pipes layer 2 (size+color by QMAVAbs)
+    pipes_patches_3 = s3s.plot_pipe_layer(
+        ax=ax,
+        gdf=gdf_ROHR,
+        attribute=&#39;QMAVAbs&#39;,
+        colors=[&#39;darkgreen&#39;, &#39;magenta&#39;],
+        legend_fmt=&#39;{:4.0f} t/h&#39;,
+        line_width_factor=20,
+        legend_values=[0, 500, 1000, 1500, 2000],
+        zorder=3
+    )
+
+    # Combine handles
+    handles = []
+    for h in (nodes_patches_1, pipes_patches_2, pipes_patches_3):
+        if h:
+            handles.extend(h)
+
+    # Deduplicate legend by label
+    if handles:
+        seen = set()
+        unique = []
+        for h in handles:
+            if h.get_label() not in seen:
+                unique.append(h)
+                seen.add(h.get_label())
+        ax.legend(handles=unique, loc=&#39;best&#39;)
+
+    ax.set_title(axTitle)
+    plt.tight_layout()
+<br/></pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plot_Result_ncd(df_pipes, gdf_district_heating_consumer)
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+[2025-12-04 15:22:24,890] INFO in sir3stoolkit.mantle.plotting: [plot] Plotting nodes (size=&#39;None&#39;, color=&#39;None&#39;, attr=&#39;QM&#39;)
+[2025-12-04 15:22:24,922] INFO in sir3stoolkit.mantle.plotting: [plot] Nodes: plotted 656 points.
+[2025-12-04 15:22:24,923] INFO in sir3stoolkit.mantle.plotting: [plot] Plotting pipes (width=&#39;None&#39;, color=&#39;None&#39;, attr=&#39;DN&#39;)
+[2025-12-04 15:22:25,023] INFO in sir3stoolkit.mantle.plotting: [plot] Pipes: plotted 1672 segments.
+[2025-12-04 15:22:25,023] INFO in sir3stoolkit.mantle.plotting: [plot] Plotting pipes (width=&#39;None&#39;, color=&#39;None&#39;, attr=&#39;QMAVAbs&#39;)
+[2025-12-04 15:22:25,122] INFO in sir3stoolkit.mantle.plotting: [plot] Pipes: plotted 1672 segments.
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_Toolkit_Example5_38_1.png" src="../_images/examples_Toolkit_Example5_38_1.png" />
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
 </section>
 
 
