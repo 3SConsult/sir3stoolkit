@@ -29,10 +29,10 @@ Some tutorials are available **downloading** as a `.zip` archive containing all 
 
 .. _Ttu1-49:
 
-0 - 49: SIR3S_Model
-~~~~~~~~~~~~~~~~~~~
+SIR3S_Model
+~~~~~~~~~~~
 
-You can also download all tutorials regarding SIR3S_Model (0 - 49) and their respective data in a joint `.zip` archive at once `here <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorials000-050_Assets.zip>`_.
+You can also download all tutorials regarding SIR3S_Model (0 - 49) and their respective data in a joint `.zip` archive at once `here <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorials000-049_Assets.zip>`_.
 
 .. _Ttu000:
 
@@ -41,7 +41,7 @@ Tutorial 0: Importing and initialization of the SIR 3S Toolkit
 
 This tutorial demonstrates how to import the SIR 3S Toolkit and initialize instances of its classes.
 
-View: `Notebook <tutorials/SIR3S_Model/Tutorial1_Assets/ToolkitTutorial1.html>`_ | Download: `ZIP archive <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorial000_Assets.zip>`_.
+View: `Notebook <tutorials/SIR3S_Model/Tutorial000_Assets/ToolkitTutorial1.html>`_ | Download: `ZIP archive <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorial000_Assets.zip>`_.
 
 .. _Ttu001:
 
@@ -50,7 +50,7 @@ Tutorial 1: Creating a new or opening an existing SIR 3S model
 
 This tutorial demonstrates how to create new SIR 3S models or open already existing ones.
 
-View: `Notebook <tutorials/SIR3S_Model/Tutorial2_Assets/ToolkitTutorial2.html>`_ | Download: `ZIP archive <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorial001_Assets.zip>`_.
+View: `Notebook <tutorials/SIR3S_Model/Tutorial001_Assets/ToolkitTutorial2.html>`_ | Download: `ZIP archive <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorial001_Assets.zip>`_.
 
 .. _Ttu002:
 
@@ -59,7 +59,7 @@ Tutorial 2: Accessing and modifying model data
 
 This tutorial demonstrates how to get and set values of objects based on their topological key (tk).
 
-View: `Notebook <tutorials/SIR3S_Model/SIR3S_ModelTutorial3_Assets/ToolkitTutorial3.html>`_ | Download: `ZIP archive <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorial002_Assets.zip>`_.
+View: `Notebook <tutorials/SIR3S_Model/Tutorial002_Assets/ToolkitTutorial3.html>`_ | Download: `ZIP archive <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorial002_Assets.zip>`_.
 
 .. _Ttu003:
 
@@ -68,7 +68,7 @@ Tutorial 3: Accessing simulation results
 
 This tutorial demonstrates how to get result values of objects based on their tk.
 
-View: `Notebook <tutorials/SIR3S_Model/SIR3S_ModelTutorial4_Assets/ToolkitTutorial4.html>`_ | Download: `ZIP archive <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorial003_Assets.zip>`_.
+View: `Notebook <tutorials/SIR3S_ModelTutorial003_Assets/ToolkitTutorial4.html>`_ | Download: `ZIP archive <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorial003_Assets.zip>`_.
 
 .. _Ttu004:
 
@@ -77,7 +77,7 @@ Tutorial 4: Editing a SIR 3S model safely and effectively
 
 This Tutorial demonstrates how to change SIR 3S models properly by grouping changes and saving them.
 
-View: `Notebook <tutorials/SIR3S_Model/SIR3S_ModelTutorial5_Assets/ToolkitTutorial5.html>`_ | Download: `ZIP archive <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorial004_Assets.zip>`_.
+View: `Notebook <tutorials/SIR3S_Model/Tutorial004_Assets/ToolkitTutorial5.html>`_ | Download: `ZIP archive <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorial004_Assets.zip>`_.
 
 .. _Ttu005:
 
@@ -86,7 +86,7 @@ Tutorial 5: Insert and Connect Elements
 
 This Tutorial demonstrates how new elements such as nodes, pipes, tanks, valves, etc. can be inserted into a SIR 3S model and connected.
 
-View: `Notebook <tutorials/SIR3S_Model/SIR3S_ModelTutorial6_Assets/ToolkitTutorial6.html>`_ | Download: `ZIP archive <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorial005_Assets.zip>`_.
+View: `Notebook <tutorials/SIR3S_Model/Tutorial005_Assets/ToolkitTutorial6.html>`_ | Download: `ZIP archive <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorial005_Assets.zip>`_.
 
 .. _Ttu006:
 
@@ -95,26 +95,26 @@ Tutorial 6: Miscellaneous
 
 This Tutorial demonstrates miscellaneous functions of the SIR3S_Model() class that cannot be assigned to one of the previous Tutorial topics.
 
-View: `Notebook <tutorials/SIR3S_Model/SIR3S_Model/Tutorial7_Assets/ToolkitTutorial7.html>`_ | Download: `ZIP archive <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorial006_Assets.zip>`_.
+View: `Notebook <tutorials/SIR3S_Model/Tutorial006_Assets/ToolkitTutorial006.html>`_ | Download: `ZIP archive <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorial006_Assets.zip>`_.
 
 .. _Ttu50-99:
 
-50 - 99: SIR3S_Model_Mantle
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+SIR3S_Model_Mantle
+~~~~~~~~~~~~~~~~~~
 
 SIR3S_Model_Mantle() is a collector class that contains the functions from all other classes defined in the mantle.
 
 .. _Ttu50-59:
 
-50 - 59: SIR3S_Model_Dataframes
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+SIR3S_Model_Dataframes
+^^^^^^^^^^^^^^^^^^^^^^
 
 SIR3S_Model_Dataframes() implements interactions between SIR 3S and pandas dataframes. You can obtain pandas dfs with meta- or resultdata, insert nodes and pipes via a df, etc.
 
 .. _Ttu051:
 
 Tutorial 51: Dataframe Creation
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+"""""""""""""""""""""""""""""""
 
 This Tutorial demonstrates how to create dataframes.
 
@@ -122,15 +122,15 @@ View: `Notebook <tutorials/SIR3S_Model_Mantle/ToolkitTutorial051.html>`_ | Downl
 
 .. _Ttu60-69:
 
-60 - 69: SIR3S_Model_Alternative_Models
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+SIR3S_Model_Alternative_Models
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 SIR3S_Model_Alternative_Models() implements the generation of SIR 3S models in alternative model formats such as pandapipes or nx-Graphs.
 
 .. _Ttu061:
 
 Tutorial 61: nx-Graph
-^^^^^^^^^^^^^^^^^^^^^
+"""""""""""""""""""""
 
 This Tutorial demonstrates how to create a nx-Graph from a SIR 3S model.
 
@@ -139,7 +139,7 @@ View: `Notebook <tutorials/SIR3S_Model_Mantle/ToolkitTutorial061.html>`_  | Down
 .. _Ttu062:
 
 Tutorial 62: pandapipes
-^^^^^^^^^^^^^^^^^^^^^^^
+"""""""""""""""""""""""
 
 This Tutorial demonstrates how to create a pandapipes model from a SIR 3S model.
 
@@ -147,13 +147,13 @@ View: `Notebook <tutorials/SIR3S_Model_Mantle/ToolkitTutorial062.html>`_  | Down
 
 .. _Ttu70-79:
 
-70 - 79: SIR3S_Model_Plotting
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+SIR3S_Model_Plotting
+^^^^^^^^^^^^^^^^^^^^
 
 SIR3S_Model_Plotting implements general plotting functions for SIR 3S applications.
 
 Tutorial 71: WORK IN PROGRESS: time curves
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+""""""""""""""""""""""""""""""""""""""""""
 
 .. _Ttu072:
 
