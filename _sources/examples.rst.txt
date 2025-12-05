@@ -109,7 +109,9 @@ SIR3S_Model_Mantle() is a collector class that contains the functions from all o
 .. _Ttu50-59:
 
 Tutorial 50: Mantle Import
-""""""""""""""""""""""""""
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+View: `Notebook <tutorials/SIR3S_Model_Mantle/ToolkitTutorial050.html>`_ | Download: `Notebook <tutorials/SIR3S_Model_Mantle/ToolkitTutorial050.html>`_
 
 SIR3S_Model_Dataframes
 ^^^^^^^^^^^^^^^^^^^^^^
