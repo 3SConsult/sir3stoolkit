@@ -39,7 +39,7 @@ for entry in entries:
 
 # Create a combined zip file with all matched directories
 if matched_dirs:
-    combined_zip_name = "Tutorials000-050_Assets.zip"
+    combined_zip_name = "Tutorials000-049_Assets.zip"
     print(f"Creating combined zip: {combined_zip_name}")
     with zipfile.ZipFile(combined_zip_name, 'w', zipfile.ZIP_DEFLATED) as zipf:
         for dir_name in matched_dirs:
