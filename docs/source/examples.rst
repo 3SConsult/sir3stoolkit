@@ -32,6 +32,8 @@ Some tutorials are available **downloading** as a `.zip` archive containing all 
 SIR3S_Model
 ~~~~~~~~~~~
 
+SIR3S_Model() implements basic functionalities regarding interactions between Python and a SIR 3S model.
+
 You can also download all tutorials regarding SIR3S_Model (0 - 49) and their respective data in a joint `.zip` archive at once `here <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorials000-049_Assets.zip>`_.
 
 .. _Ttu000:
@@ -106,6 +108,9 @@ SIR3S_Model_Mantle() is a collector class that contains the functions from all o
 
 .. _Ttu50-59:
 
+Tutorial 50: Mantle Import
+""""""""""""""""""""""""""
+
 SIR3S_Model_Dataframes
 ^^^^^^^^^^^^^^^^^^^^^^
 
@@ -161,9 +166,9 @@ This Tutorial demonstrates how to plot time curves.
 
 View: `Notebook <tutorials/SIR3S_Model_Mantle/ToolkitTutorial071.html>`_  | Download: `Notebook <tutorials/SIR3S_Model_Mantle/ToolkitTutorial071.html>`_
 
-.. _Ttu100-149:
-
 .. 
+   .. _Ttu100-149:
+
    SIR3S_View: 100 - 149
    ~~~~~~~~~~~~~~~~~~~~~
 
