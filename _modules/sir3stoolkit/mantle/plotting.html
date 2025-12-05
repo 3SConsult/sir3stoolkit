@@ -1,0 +1,433 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>sir3stoolkit.mantle.plotting &mdash; sir3stoolkit  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=f281be69"></script>
+      <script>let toggleHintShow = 'Click to show';</script>
+      <script>let toggleHintHide = 'Click to hide';</script>
+      <script>let toggleOpenOnPrint = 'true';</script>
+      <script src="../../../_static/togglebutton.js?v=4a39c7ea"></script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            sir3stoolkit
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Application Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../releases.html">Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developers.html">For Developers</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">sir3stoolkit</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">sir3stoolkit.mantle.plotting</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for sir3stoolkit.mantle.plotting</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Created on Thu Okt 7 13:39:13 2025</span>
+
+<span class="sd">This module implements general plotting functions for SIR 3S applications. TODO: AGSN, Time Curves, Network Color Diagram</span>
+
+<span class="sd">@author: Jablonski</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.colors</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mcolors</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.patches</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mpatches</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">LineCollection</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.colors</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mcolors</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.patches</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mpatches</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Optional</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">logger</span><span class="o">.</span><span class="n">hasHandlers</span><span class="p">():</span>
+    <span class="n">handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">()</span>
+    <span class="n">formatter</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span><span class="s1">&#39;[</span><span class="si">%(asctime)s</span><span class="s1">] </span><span class="si">%(levelname)s</span><span class="s1"> in </span><span class="si">%(name)s</span><span class="s1">: </span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">formatter</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">sir3stoolkit.core.wrapper</span><span class="w"> </span><span class="kn">import</span> <span class="n">SIR3S_Model</span>
+
+<div class="viewcode-block" id="SIR3S_Model_Plotting">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.plotting.SIR3S_Model_Plotting">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">SIR3S_Model_Plotting</span><span class="p">(</span><span class="n">SIR3S_Model</span><span class="p">):</span>
+    
+<div class="viewcode-block" id="SIR3S_Model_Plotting.plot_pipe_layer">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.plotting.SIR3S_Model_Plotting.plot_pipe_layer">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plot_pipe_layer</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">gdf</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">width_scaling_col</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">color_mixing_col</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">attribute</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="c1"># visual params</span>
+        <span class="n">colors</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;darkgreen&#39;</span><span class="p">,</span> <span class="s1">&#39;magenta&#39;</span><span class="p">),</span>
+        <span class="n">legend_fmt</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">legend_values</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="c1"># independent norms</span>
+        <span class="n">width_vmin</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">width_vmax</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">color_vmin</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">color_vmax</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="c1"># filtering &amp; styling</span>
+        <span class="n">query</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">line_width_factor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">10.0</span><span class="p">,</span>
+        <span class="n">zorder</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Plot line geometries with separate width and color scaling.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        ax : matplotlib.axes.Axes, optional</span>
+<span class="sd">            Axis to plot into. If None, uses current axes (plt.gca()).</span>
+<span class="sd">        gdf : pandas.DataFrame or geopandas.GeoDataFrame</span>
+<span class="sd">            Input with a &#39;geometry&#39; column of shapely LineString/MultiLineString.</span>
+<span class="sd">        width_scaling_col : str, optional</span>
+<span class="sd">            Column used to scale line widths (numeric). If None, uses `attribute`</span>
+<span class="sd">            if provided; otherwise constant width.</span>
+<span class="sd">        color_mixing_col : str, optional</span>
+<span class="sd">            Column used to color lines (numeric). If None, uses `attribute`</span>
+<span class="sd">            if provided; otherwise a constant color.</span>
+<span class="sd">        attribute : str, optional</span>
+<span class="sd">            Legacy single column used for both width and color if the specific</span>
+<span class="sd">            columns are not provided.</span>
+<span class="sd">        colors : tuple[str, str], optional</span>
+<span class="sd">            Two colors to build a linear segmented colormap.</span>
+<span class="sd">        legend_fmt : str, optional</span>
+<span class="sd">            Legend label format, default: f&quot;{color_col} {{:.4f}}&quot;.</span>
+<span class="sd">        legend_values : list[float], optional</span>
+<span class="sd">            Explicit legend tick values; default: 5 linear steps.</span>
+<span class="sd">        width_vmin, width_vmin : float, optional</span>
+<span class="sd">            Bounds for width normalization; defaults to data min/max.</span>
+<span class="sd">        color_vmin, color_vmax : float, optional</span>
+<span class="sd">            Bounds for color normalization; defaults to data min/max.</span>
+<span class="sd">        query : str, optional</span>
+<span class="sd">            Pandas query string to filter rows before plotting.</span>
+<span class="sd">        line_width_factor : float, optional</span>
+<span class="sd">            Factor applied after width normalization, default 10.0.</span>
+<span class="sd">        zorder : float, optional</span>
+<span class="sd">            Z-order for drawing.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list[matplotlib.patches.Patch] or None</span>
+<span class="sd">            Legend patches based on the color scaling column; None if constant color.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[plot] Plotting pipes (width=&#39;</span><span class="si">{</span><span class="n">width_scaling_col</span><span class="si">}</span><span class="s2">&#39;, color=&#39;</span><span class="si">{</span><span class="n">color_mixing_col</span><span class="si">}</span><span class="s2">&#39;, attr=&#39;</span><span class="si">{</span><span class="n">attribute</span><span class="si">}</span><span class="s2">&#39;)&quot;</span><span class="p">)</span>
+
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">ax</span> <span class="ow">or</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">gdf</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">gdf</span><span class="p">,</span> <span class="s1">&#39;empty&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span> <span class="ow">or</span> <span class="s1">&#39;geometry&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">gdf</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;[plot] Pipes: missing data or geometry column.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">df</span> <span class="o">=</span> <span class="n">gdf</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">query</span><span class="p">)</span> <span class="k">if</span> <span class="n">query</span> <span class="k">else</span> <span class="n">gdf</span>
+        <span class="k">if</span> <span class="n">df</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;[plot] Pipes: filtered dataframe is empty.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="c1"># --- WIDTH SCALING ---</span>
+        <span class="n">width_col</span> <span class="o">=</span> <span class="n">width_scaling_col</span> <span class="ow">or</span> <span class="n">attribute</span>
+        <span class="k">if</span> <span class="n">width_col</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">a_w</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">width_col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[plot] Pipes: width column &#39;</span><span class="si">{</span><span class="n">width_col</span><span class="si">}</span><span class="s2">&#39; not numeric or missing. </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">None</span>
+            <span class="n">vmin_w</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">width_vmin</span><span class="p">)</span> <span class="k">if</span> <span class="n">width_vmin</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">a_w</span><span class="p">))</span>
+            <span class="n">vmax_w</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">width_vmax</span><span class="p">)</span> <span class="k">if</span> <span class="n">width_vmax</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">a_w</span><span class="p">))</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">vmin_w</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">vmax_w</span><span class="p">)</span> <span class="ow">or</span> <span class="n">vmin_w</span> <span class="o">==</span> <span class="n">vmax_w</span><span class="p">:</span>
+                <span class="n">vmax_w</span> <span class="o">=</span> <span class="n">vmin_w</span> <span class="o">+</span> <span class="mf">1e-12</span>
+            <span class="n">norm_w</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">Normalize</span><span class="p">(</span><span class="n">vmin</span><span class="o">=</span><span class="n">vmin_w</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax_w</span><span class="p">)</span>
+            <span class="n">widths_full</span> <span class="o">=</span> <span class="n">norm_w</span><span class="p">(</span><span class="n">a_w</span><span class="p">)</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="n">line_width_factor</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">widths_full</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># will use constant width later</span>
+
+        <span class="c1"># --- COLOR SCALING ---</span>
+        <span class="n">color_col</span> <span class="o">=</span> <span class="n">color_mixing_col</span> <span class="ow">or</span> <span class="n">attribute</span>
+        <span class="n">cmap</span> <span class="o">=</span> <span class="n">mcolors</span><span class="o">.</span><span class="n">LinearSegmentedColormap</span><span class="o">.</span><span class="n">from_list</span><span class="p">(</span><span class="s1">&#39;cmap&#39;</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">colors</span><span class="p">),</span> <span class="n">N</span><span class="o">=</span><span class="mi">256</span><span class="p">)</span>
+        <span class="n">patches</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">color_col</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">a_c</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">color_col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[plot] Pipes: color column &#39;</span><span class="si">{</span><span class="n">color_col</span><span class="si">}</span><span class="s2">&#39; not numeric or missing. </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">None</span>
+            <span class="n">vmin_c</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">color_vmin</span><span class="p">)</span> <span class="k">if</span> <span class="n">color_vmin</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">a_c</span><span class="p">))</span>
+            <span class="n">vmax_c</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">color_vmax</span><span class="p">)</span> <span class="k">if</span> <span class="n">color_vmax</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">a_c</span><span class="p">))</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">vmin_c</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">vmax_c</span><span class="p">)</span> <span class="ow">or</span> <span class="n">vmin_c</span> <span class="o">==</span> <span class="n">vmax_c</span><span class="p">:</span>
+                <span class="n">vmax_c</span> <span class="o">=</span> <span class="n">vmin_c</span> <span class="o">+</span> <span class="mf">1e-12</span>
+            <span class="n">norm_c</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">Normalize</span><span class="p">(</span><span class="n">vmin</span><span class="o">=</span><span class="n">vmin_c</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax_c</span><span class="p">)</span>
+            <span class="n">colors_full</span> <span class="o">=</span> <span class="n">cmap</span><span class="p">(</span><span class="n">norm_c</span><span class="p">(</span><span class="n">a_c</span><span class="p">))</span>
+            <span class="n">legend_fmt</span> <span class="o">=</span> <span class="n">legend_fmt</span> <span class="ow">or</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">color_col</span><span class="si">}</span><span class="s2"> </span><span class="se">{{</span><span class="s2">:.4f</span><span class="se">}}</span><span class="s2">&quot;</span>
+            <span class="n">vals</span> <span class="o">=</span> <span class="n">legend_values</span> <span class="k">if</span> <span class="n">legend_values</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">vmin_c</span><span class="p">,</span> <span class="n">vmax_c</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+            <span class="n">patches</span> <span class="o">=</span> <span class="p">[</span><span class="n">mpatches</span><span class="o">.</span><span class="n">Patch</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">cmap</span><span class="p">(</span><span class="n">norm_c</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">v</span><span class="p">))),</span> <span class="n">label</span><span class="o">=</span><span class="n">legend_fmt</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">v</span><span class="p">)))</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">vals</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">colors_full</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># will use constant color later</span>
+
+        <span class="c1"># --- BUILD SEGMENTS ---</span>
+        <span class="n">segs</span><span class="p">,</span> <span class="n">cols</span><span class="p">,</span> <span class="n">lw</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">geom</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]):</span>
+            <span class="k">if</span> <span class="n">geom</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">gt</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">geom</span><span class="p">,</span> <span class="s1">&#39;geom_type&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">col</span> <span class="o">=</span> <span class="n">colors_full</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">if</span> <span class="n">colors_full</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">mcolors</span><span class="o">.</span><span class="n">to_rgba</span><span class="p">(</span><span class="n">colors</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">w</span> <span class="o">=</span> <span class="n">widths_full</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">if</span> <span class="n">widths_full</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">float</span><span class="p">(</span><span class="n">line_width_factor</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.5</span>
+            <span class="k">if</span> <span class="n">gt</span> <span class="o">==</span> <span class="s1">&#39;LineString&#39;</span><span class="p">:</span>
+                <span class="n">segs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">geom</span><span class="o">.</span><span class="n">coords</span><span class="p">));</span> <span class="n">cols</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">col</span><span class="p">);</span> <span class="n">lw</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">w</span><span class="p">);</span> <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">elif</span> <span class="n">gt</span> <span class="o">==</span> <span class="s1">&#39;MultiLineString&#39;</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">geom</span><span class="p">,</span> <span class="s1">&#39;geoms&#39;</span><span class="p">,</span> <span class="p">[]):</span>
+                    <span class="n">segs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">part</span><span class="o">.</span><span class="n">coords</span><span class="p">));</span> <span class="n">cols</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">col</span><span class="p">);</span> <span class="n">lw</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">w</span><span class="p">);</span> <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">segs</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;[plot] Pipes: no line geometries found.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">lc</span> <span class="o">=</span> <span class="n">LineCollection</span><span class="p">(</span><span class="n">segs</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="n">cols</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="n">lw</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="n">zorder</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">add_collection</span><span class="p">(</span><span class="n">lc</span><span class="p">);</span> <span class="n">ax</span><span class="o">.</span><span class="n">autoscale_view</span><span class="p">()</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[plot] Pipes: plotted </span><span class="si">{</span><span class="n">count</span><span class="si">}</span><span class="s2"> segments.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">patches</span></div>
+
+
+<div class="viewcode-block" id="SIR3S_Model_Plotting.plot_node_layer">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.plotting.SIR3S_Model_Plotting.plot_node_layer">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plot_node_layer</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">gdf</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">size_scaling_col</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">color_mixing_col</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">attribute</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="c1"># visual params</span>
+        <span class="n">colors</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;darkgreen&#39;</span><span class="p">,</span> <span class="s1">&#39;magenta&#39;</span><span class="p">),</span>
+        <span class="n">legend_fmt</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">legend_values</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="c1"># independent norms</span>
+        <span class="n">size_vmin</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">size_vmax</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">color_vmin</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">color_vmax</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="c1"># filtering &amp; styling</span>
+        <span class="n">query</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">marker_style</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span>
+        <span class="n">marker_size_factor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1000.0</span><span class="p">,</span>
+        <span class="n">zorder</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Plot point nodes with separate size and color scaling.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        ax : matplotlib.axes.Axes, optional</span>
+<span class="sd">            Axis to plot into. If None, uses current axes (plt.gca()).</span>
+<span class="sd">        gdf : pandas.DataFrame or geopandas.GeoDataFrame</span>
+<span class="sd">            Input with a &#39;geometry&#39; column of shapely geometries.</span>
+<span class="sd">        size_scaling_col : str, optional</span>
+<span class="sd">            Column used to scale marker sizes (numeric). If None, uses `attribute`</span>
+<span class="sd">            if provided; otherwise constant size.</span>
+<span class="sd">        color_mixing_col : str, optional</span>
+<span class="sd">            Column used to color markers (numeric). If None, uses `attribute`</span>
+<span class="sd">            if provided; otherwise a constant color.</span>
+<span class="sd">        attribute : str, optional</span>
+<span class="sd">            Legacy single column used for both size and color if the specific</span>
+<span class="sd">            columns are not provided.</span>
+<span class="sd">        colors : tuple[str, str], optional</span>
+<span class="sd">            Two colors to build a linear segmented colormap.</span>
+<span class="sd">        legend_fmt : str, optional</span>
+<span class="sd">            Legend label format, default: f&quot;{color_col} {{:.4f}}&quot;.</span>
+<span class="sd">        legend_values : list[float], optional</span>
+<span class="sd">            Explicit legend tick values; default: 5 linear steps.</span>
+<span class="sd">        size_vmin, size_vmax : float, optional</span>
+<span class="sd">            Bounds for size normalization; defaults to data min/max.</span>
+<span class="sd">        color_vmin, color_vmax : float, optional</span>
+<span class="sd">            Bounds for color normalization; defaults to data min/max.</span>
+<span class="sd">        query : str, optional</span>
+<span class="sd">            Pandas query string to filter rows before plotting.</span>
+<span class="sd">        marker_style : str, optional</span>
+<span class="sd">            Matplotlib marker style, default &#39;o&#39;.</span>
+<span class="sd">        marker_size_factor : float, optional</span>
+<span class="sd">            Factor applied after size normalization, default 1000.0.</span>
+<span class="sd">        zorder : float, optional</span>
+<span class="sd">            Z-order for drawing.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list[matplotlib.patches.Patch] or None</span>
+<span class="sd">            Legend patches based on the color scaling column; None if constant color.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[plot] Plotting nodes (size=&#39;</span><span class="si">{</span><span class="n">size_scaling_col</span><span class="si">}</span><span class="s2">&#39;, color=&#39;</span><span class="si">{</span><span class="n">color_mixing_col</span><span class="si">}</span><span class="s2">&#39;, attr=&#39;</span><span class="si">{</span><span class="n">attribute</span><span class="si">}</span><span class="s2">&#39;)&quot;</span><span class="p">)</span>
+
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">ax</span> <span class="ow">or</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">gdf</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">gdf</span><span class="p">,</span> <span class="s1">&#39;empty&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span> <span class="ow">or</span> <span class="s1">&#39;geometry&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">gdf</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;[plot] Nodes: missing data or geometry column.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">df</span> <span class="o">=</span> <span class="n">gdf</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">query</span><span class="p">)</span> <span class="k">if</span> <span class="n">query</span> <span class="k">else</span> <span class="n">gdf</span>
+        <span class="k">if</span> <span class="n">df</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;[plot] Nodes: filtered dataframe is empty.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">geoms</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span>
+        <span class="n">is_point</span> <span class="o">=</span> <span class="n">geoms</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">g</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="s1">&#39;geom_type&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;Point&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">is_point</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;[plot] Nodes: no Point geometries found.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="c1"># --- SIZE SCALING ---</span>
+        <span class="n">size_col</span> <span class="o">=</span> <span class="n">size_scaling_col</span> <span class="ow">or</span> <span class="n">attribute</span>
+        <span class="k">if</span> <span class="n">size_col</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">a_size</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">is_point</span><span class="p">,</span> <span class="n">size_col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[plot] Nodes: size column &#39;</span><span class="si">{</span><span class="n">size_col</span><span class="si">}</span><span class="s2">&#39; not numeric or missing. </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">None</span>
+            <span class="n">vmin_s</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">size_vmin</span><span class="p">)</span> <span class="k">if</span> <span class="n">size_vmin</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">a_size</span><span class="p">))</span>
+            <span class="n">vmax_s</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">size_vmax</span><span class="p">)</span> <span class="k">if</span> <span class="n">size_vmax</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">a_size</span><span class="p">))</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">vmin_s</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">vmax_s</span><span class="p">)</span> <span class="ow">or</span> <span class="n">vmin_s</span> <span class="o">==</span> <span class="n">vmax_s</span><span class="p">:</span>
+                <span class="n">vmax_s</span> <span class="o">=</span> <span class="n">vmin_s</span> <span class="o">+</span> <span class="mf">1e-12</span>
+            <span class="n">norm_s</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">Normalize</span><span class="p">(</span><span class="n">vmin</span><span class="o">=</span><span class="n">vmin_s</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax_s</span><span class="p">)</span>
+            <span class="n">sizes</span> <span class="o">=</span> <span class="n">norm_s</span><span class="p">(</span><span class="n">a_size</span><span class="p">)</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="n">marker_size_factor</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">sizes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="n">is_point</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="nb">float</span><span class="p">(</span><span class="n">marker_size_factor</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.5</span><span class="p">)</span>
+
+        <span class="c1"># --- COLOR SCALING ---</span>
+        <span class="n">color_col</span> <span class="o">=</span> <span class="n">color_mixing_col</span> <span class="ow">or</span> <span class="n">attribute</span>
+        <span class="n">cmap</span> <span class="o">=</span> <span class="n">mcolors</span><span class="o">.</span><span class="n">LinearSegmentedColormap</span><span class="o">.</span><span class="n">from_list</span><span class="p">(</span><span class="s1">&#39;cmap&#39;</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">colors</span><span class="p">),</span> <span class="n">N</span><span class="o">=</span><span class="mi">256</span><span class="p">)</span>
+        <span class="n">patches</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">color_col</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">a_col</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">is_point</span><span class="p">,</span> <span class="n">color_col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[plot] Nodes: color column &#39;</span><span class="si">{</span><span class="n">color_col</span><span class="si">}</span><span class="s2">&#39; not numeric or missing. </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">None</span>
+            <span class="n">vmin_c</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">color_vmin</span><span class="p">)</span> <span class="k">if</span> <span class="n">color_vmin</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">a_col</span><span class="p">))</span>
+            <span class="n">vmax_c</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">color_vmax</span><span class="p">)</span> <span class="k">if</span> <span class="n">color_vmax</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">a_col</span><span class="p">))</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">vmin_c</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">vmax_c</span><span class="p">)</span> <span class="ow">or</span> <span class="n">vmin_c</span> <span class="o">==</span> <span class="n">vmax_c</span><span class="p">:</span>
+                <span class="n">vmax_c</span> <span class="o">=</span> <span class="n">vmin_c</span> <span class="o">+</span> <span class="mf">1e-12</span>
+            <span class="n">norm_c</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">Normalize</span><span class="p">(</span><span class="n">vmin</span><span class="o">=</span><span class="n">vmin_c</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax_c</span><span class="p">)</span>
+            <span class="n">colors_arr</span> <span class="o">=</span> <span class="n">cmap</span><span class="p">(</span><span class="n">norm_c</span><span class="p">(</span><span class="n">a_col</span><span class="p">))</span>
+            <span class="c1"># Legend only for color scaling</span>
+            <span class="n">legend_fmt</span> <span class="o">=</span> <span class="n">legend_fmt</span> <span class="ow">or</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">color_col</span><span class="si">}</span><span class="s2"> </span><span class="se">{{</span><span class="s2">:.4f</span><span class="se">}}</span><span class="s2">&quot;</span>
+            <span class="n">vals</span> <span class="o">=</span> <span class="n">legend_values</span> <span class="k">if</span> <span class="n">legend_values</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">vmin_c</span><span class="p">,</span> <span class="n">vmax_c</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+            <span class="n">patches</span> <span class="o">=</span> <span class="p">[</span><span class="n">mpatches</span><span class="o">.</span><span class="n">Patch</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">cmap</span><span class="p">(</span><span class="n">norm_c</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">v</span><span class="p">))),</span> <span class="n">label</span><span class="o">=</span><span class="n">legend_fmt</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">v</span><span class="p">)))</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">vals</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Constant color (first color provided)</span>
+            <span class="n">colors_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">mcolors</span><span class="o">.</span><span class="n">to_rgba</span><span class="p">(</span><span class="n">colors</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="p">(</span><span class="n">is_point</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="mi">1</span><span class="p">))</span>
+
+        <span class="c1"># --- PLOT ---</span>
+        <span class="n">coords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([(</span><span class="n">g</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">g</span><span class="o">.</span><span class="n">y</span><span class="p">)</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">geoms</span><span class="p">[</span><span class="n">is_point</span><span class="p">]])</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">coords</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">coords</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="n">sizes</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">colors_arr</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="n">marker_style</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="n">zorder</span><span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[plot] Nodes: plotted </span><span class="si">{</span><span class="n">is_point</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s2"> points.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">patches</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025 3S Consult GmbH.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,1340 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "id": "558c4be7",
+   "metadata": {},
+   "source": [
+    "# Tutorial 6: Miscellaneous"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "8899e69a",
+   "metadata": {},
+   "source": [
+    "This Tutorial demonstrates miscellaneous functions of the SIR3S_Model() class that cannot be assigned to one of the previous Tutorial topics."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "a271e499-a4e8-4cf5-a510-7008fc501fa9",
+   "metadata": {},
+   "source": [
+    "## SIR 3S Installation"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "id": "9241d47b-641e-4c68-b8f8-adad4806d086",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "SIR3S_SIRGRAF_DIR = r\"C:\\3S\\SIR 3S\\SirGraf-90-15-00-20x64_Quebec-Upd1\" #change to local path"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "7887be8d",
+   "metadata": {},
+   "source": [
+    "## Imports"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "bbfb80b5",
+   "metadata": {},
+   "source": [
+    "Note: The SIR 3S Toolkit requires the Sir3S_Toolkit.dll included in SIR 3S installations (version Quebec and higher)."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "id": "48372080",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import sir3stoolkit"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "e12d61e9",
+   "metadata": {},
+   "source": [
+    "The core of sir3stoolkit is a Python wrapper around basic functionality of SIR 3S, offering a low-level access to the creation, modification and simulation of SIR 3S models. In the future pure python subpackages may be added."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "id": "f1baf699",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from sir3stoolkit.core import wrapper"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "id": "89da1276",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "<module 'sir3stoolkit' from 'C:\\\\Users\\\\aUsername\\\\3S\\\\sir3stoolkit\\\\src\\\\sir3stoolkit\\\\__init__.py'>"
+      ]
+     },
+     "execution_count": 4,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "sir3stoolkit"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "6d982834",
+   "metadata": {},
+   "source": [
+    "The [wrapper package](https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.Initialize_Toolkit) has to be initialized with reference to a SIR 3S (SirGraf) installation."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "id": "817b0ebf",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "wrapper.Initialize_Toolkit(SIR3S_SIRGRAF_DIR)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "0352dd43",
+   "metadata": {},
+   "source": [
+    "## Initialization"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "e14ffe06",
+   "metadata": {},
+   "source": [
+    "The SIR 3S Toolkit contains two classes: [SIR3S_Model](https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model) (model and data) and [SIR3S_View](https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_View) (depiction in SIR Graf). All SIR 3S Toolkit functionality is accessed via the methods of these classes."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "id": "7e40a5af",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Initialization complete\n"
+     ]
+    }
+   ],
+   "source": [
+    "s3s = wrapper.SIR3S_Model()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "id": "3770c93f",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Initialization complete\n"
+     ]
+    }
+   ],
+   "source": [
+    "s3s_view = wrapper.SIR3S_View()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "34309a14",
+   "metadata": {},
+   "source": [
+    "## Open Model"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "id": "0918738e",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "dbFilePath=r\"Toolkit_Tutorial6_Model.db3\""
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "id": "e984b61e",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Model is open for further operation\n"
+     ]
+    }
+   ],
+   "source": [
+    "s3s.OpenModel(dbName=dbFilePath, \n",
+    "              providerType=s3s.ProviderTypes.SQLite, \n",
+    "              Mid=\"M-1-0-1\", \n",
+    "              saveCurrentlyOpenModel=False, \n",
+    "              namedInstance=\"\", \n",
+    "              userID=\"\", \n",
+    "              password=\"\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "e2490549",
+   "metadata": {},
+   "source": [
+    "Now the model has been opened and the previous one has been closed without saving it. All SIR 3S Toolkit commands now apply to this model until another one is opened."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "id": "8e3adb92",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "NetworkType.DistrictHeating\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(s3s.GetNetworkType()) # to check that the model is responsive"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "f82b025a",
+   "metadata": {},
+   "source": [
+    "## GetTableRows()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "57658e32",
+   "metadata": {},
+   "source": [
+    "We can use the [GetTableRows()](https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetTableRows) function to obtain the tks of rows belonging to the table with a given tk."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "id": "d8cf4a2f",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "5703793333632021763: STDROHR\n",
+      "5016622236907997495: FLEXWELL-F\n",
+      "5072515793845307207: KMR-Daemmr1\n",
+      "4628032391580498906: KMR-Daemmr2\n",
+      "5343398249541580160: KMR-Daemmr3\n",
+      "5358720719472309931: SMR\n",
+      "5207173582970272729: Kellerltg\n",
+      "5567057697892033945: Freileitung\n"
+     ]
+    }
+   ],
+   "source": [
+    "for tk in s3s.GetTksofElementType(s3s.ObjectTypes.PipeTable):\n",
+    "    print(tk + \": \" + s3s.GetValue(tk, \"Name\")[0])\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "1d7ad2e6",
+   "metadata": {},
+   "source": [
+    "Let's focus on the STDROHR table"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "id": "ea7cb49f",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "tk_STDROHR_table = \"5703793333632021763\""
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "id": "33dd8a3a",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "rows = s3s.GetTableRows(tablePkTk=tk_STDROHR_table)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "id": "a6ef1310",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "<System.String[] object at 0x000002ADF8E3FF40>"
+      ]
+     },
+     "execution_count": 14,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "rows[0]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "2775d7c5",
+   "metadata": {},
+   "source": [
+    "We get a .NET array of strings returned, we need to transform it into a python list."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 15,
+   "id": "3aa0b9f6",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "row_tks = list(rows[0])  "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "1a4ba4e8",
+   "metadata": {},
+   "source": [
+    "Now, we have the tks of all rows of this table."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "84a44478",
+   "metadata": {},
+   "source": [
+    "We can reconstruct the table via pandas as follows."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 16,
+   "id": "8e94884d",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import pandas as pd"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 17,
+   "id": "3055c5e9",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "properties_rows=s3s.GetPropertiesofElementType(s3s.ObjectTypes.PipeTable_Row)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 18,
+   "id": "70d61d17",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "data = {\n",
+    "    tk: {prop: s3s.GetValue(tk, prop)[0] for prop in properties_rows}\n",
+    "    for tk in row_tks\n",
+    "}"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 19,
+   "id": "b4fe53e3",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df = pd.DataFrame.from_dict(data, orient='index')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 20,
+   "id": "542100dd",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>Name</th>\n",
+       "      <th>Fk</th>\n",
+       "      <th>Dn</th>\n",
+       "      <th>Di</th>\n",
+       "      <th>Da</th>\n",
+       "      <th>S</th>\n",
+       "      <th>Wsteig</th>\n",
+       "      <th>Wtiefe</th>\n",
+       "      <th>Kt</th>\n",
+       "      <th>Pn</th>\n",
+       "      <th>Ausfallzeit</th>\n",
+       "      <th>Reparatur</th>\n",
+       "      <th>Rehabilitation</th>\n",
+       "      <th>Tk</th>\n",
+       "      <th>Pk</th>\n",
+       "      <th>InVariant</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>5606026146967010825</th>\n",
+       "      <td>DN 3</td>\n",
+       "      <td>5703793333632021763</td>\n",
+       "      <td>3</td>\n",
+       "      <td>3</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>5606026146967010825</td>\n",
+       "      <td>5606026146967010825</td>\n",
+       "      <td>False</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>5709880459701024427</th>\n",
+       "      <td>DN 4</td>\n",
+       "      <td>5703793333632021763</td>\n",
+       "      <td>4</td>\n",
+       "      <td>4</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>5709880459701024427</td>\n",
+       "      <td>5709880459701024427</td>\n",
+       "      <td>False</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>5653919630703523685</th>\n",
+       "      <td>DN 5</td>\n",
+       "      <td>5703793333632021763</td>\n",
+       "      <td>5</td>\n",
+       "      <td>5</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>5653919630703523685</td>\n",
+       "      <td>5653919630703523685</td>\n",
+       "      <td>False</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>5518872245540208156</th>\n",
+       "      <td>DN 6</td>\n",
+       "      <td>5703793333632021763</td>\n",
+       "      <td>6</td>\n",
+       "      <td>6</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>5518872245540208156</td>\n",
+       "      <td>5518872245540208156</td>\n",
+       "      <td>False</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>5281245134223674519</th>\n",
+       "      <td>DN 8</td>\n",
+       "      <td>5703793333632021763</td>\n",
+       "      <td>8</td>\n",
+       "      <td>8</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>5281245134223674519</td>\n",
+       "      <td>5281245134223674519</td>\n",
+       "      <td>False</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "                     Name                   Fk Dn Di Da  S Wsteig Wtiefe Kt  \\\n",
+       "5606026146967010825  DN 3  5703793333632021763  3  3  0  0      0      0  0   \n",
+       "5709880459701024427  DN 4  5703793333632021763  4  4  0  0      0      0  0   \n",
+       "5653919630703523685  DN 5  5703793333632021763  5  5  0  0      0      0  0   \n",
+       "5518872245540208156  DN 6  5703793333632021763  6  6  0  0      0      0  0   \n",
+       "5281245134223674519  DN 8  5703793333632021763  8  8  0  0      0      0  0   \n",
+       "\n",
+       "                    Pn Ausfallzeit Reparatur Rehabilitation  \\\n",
+       "5606026146967010825  0           0         0              0   \n",
+       "5709880459701024427  0           0         0              0   \n",
+       "5653919630703523685  0           0         0              0   \n",
+       "5518872245540208156  0           0         0              0   \n",
+       "5281245134223674519  0           0         0              0   \n",
+       "\n",
+       "                                      Tk                   Pk InVariant  \n",
+       "5606026146967010825  5606026146967010825  5606026146967010825     False  \n",
+       "5709880459701024427  5709880459701024427  5709880459701024427     False  \n",
+       "5653919630703523685  5653919630703523685  5653919630703523685     False  \n",
+       "5518872245540208156  5518872245540208156  5518872245540208156     False  \n",
+       "5281245134223674519  5281245134223674519  5281245134223674519     False  "
+      ]
+     },
+     "execution_count": 20,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df.head(5)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "c6b7fa25",
+   "metadata": {},
+   "source": [
+    "## AddTableRow()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "8283d261",
+   "metadata": {},
+   "source": [
+    "We can use the [AddTableRow()](https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow) function to add a new row to the bottom of any table. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 21,
+   "id": "5bdec3c0",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Row is added to the table with Tk: 4709308787444856320\n"
+     ]
+    }
+   ],
+   "source": [
+    "new_table_row_tk = s3s.AddTableRow(tk_STDROHR_table)[0]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "f95b95a5",
+   "metadata": {},
+   "source": [
+    "Now we can use the already known [SetValue()](https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.SetValue) function to propagate the row with the necessary values."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 22,
+   "id": "b3d082dd",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "['Name',\n",
+       " 'Fk',\n",
+       " 'Dn',\n",
+       " 'Di',\n",
+       " 'Da',\n",
+       " 'S',\n",
+       " 'Wsteig',\n",
+       " 'Wtiefe',\n",
+       " 'Kt',\n",
+       " 'Pn',\n",
+       " 'Ausfallzeit',\n",
+       " 'Reparatur',\n",
+       " 'Rehabilitation',\n",
+       " 'Tk',\n",
+       " 'Pk',\n",
+       " 'InVariant']"
+      ]
+     },
+     "execution_count": 22,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "s3s.GetPropertiesofElementType(s3s.ObjectTypes.PipeTable_Row)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 23,
+   "id": "dceee907",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Value is set\n"
+     ]
+    }
+   ],
+   "source": [
+    "s3s.SetValue(new_table_row_tk, \"Name\", \"DN 60\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 24,
+   "id": "3ee457f7",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Value is set\n"
+     ]
+    }
+   ],
+   "source": [
+    "s3s.SetValue(new_table_row_tk, \"Fk\", \"5207173582970272729\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 25,
+   "id": "04293582",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Value is set\n"
+     ]
+    }
+   ],
+   "source": [
+    "s3s.SetValue(new_table_row_tk, \"Dn\", \"60\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "56cb7d0c",
+   "metadata": {},
+   "source": [
+    "... and so on. Then save your changes."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 26,
+   "id": "44eb4abb",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#s3s.SaveChanges()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "9eaedbff",
+   "metadata": {},
+   "source": [
+    "## GetHydraulicProfileObjectString()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "c0017215",
+   "metadata": {},
+   "source": [
+    "We can use the function [GetHydraulicProfileObjectString()](https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetHydraulicProfileObjectString) to obtain a string containing all pipe tks part of the longitudinal section."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 27,
+   "id": "f1f8846d",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "['4999575369425665759']"
+      ]
+     },
+     "execution_count": 27,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "s3s.GetTksofElementType(s3s.ObjectTypes.AGSN_HydraulicProfile)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 28,
+   "id": "fa7004ed",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "(True, '\\tROHR~5222487322443009246\\tROHR~5354178785470006283\\n')"
+      ]
+     },
+     "execution_count": 28,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "s3s.GetHydraulicProfileObjectString(tkAgsn=\"4999575369425665759\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "d26e91bf",
+   "metadata": {},
+   "source": [
+    "We can us regex to get clean list of the pipe tks."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 29,
+   "id": "a4a0e5b5",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import re"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 30,
+   "id": "3a205ada",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "text = s3s.GetHydraulicProfileObjectString(tkAgsn=\"4999575369425665759\")[1]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 31,
+   "id": "b10a849e",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "tks = re.findall(r'ROHR~(\\d+)', text)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 32,
+   "id": "7ac5a2f1",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "['5222487322443009246', '5354178785470006283']"
+      ]
+     },
+     "execution_count": 32,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "tks"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "108729ba",
+   "metadata": {},
+   "source": [
+    "## GetCourseOfHydraulicProfile()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "b095cc4e",
+   "metadata": {},
+   "source": [
+    "We can use the function [GetCourseOfHydraulicProfile()](https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetCourseOfHydraulicProfile) to obtain a detailed output for longitudinal sections including branch considerations.\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 33,
+   "id": "5ab4e1f5",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "hydraulicProfile = s3s.GetCourseOfHydraulicProfile(tkAgsn=\"4999575369425665759\", uid=\"0\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 34,
+   "id": "834fdbc3",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "hydraulicProfile(childrenUID=<System.Collections.Generic.List[String] object at 0x000002ADFD5663C0>, nodesVL=<System.Collections.Generic.List[String] object at 0x000002ADFD56B100>, linksVL=<System.Collections.Generic.List[String] object at 0x000002ADFD56B140>, xVL=<System.Collections.Generic.List[Double] object at 0x000002ADFD56B980>, nodesRL=<System.Collections.Generic.List[String] object at 0x000002ADFD56B9C0>, linksRL=<System.Collections.Generic.List[String] object at 0x000002ADFD56BA00>, xRL=<System.Collections.Generic.List[Double] object at 0x000002ADFD56BA40>, nrOfBranches=0, xOffSet=0.0, xOffsetRelativeToParent=0.0, length=493.5, tkArticulationNode='-1')"
+      ]
+     },
+     "execution_count": 34,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "hydraulicProfile"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "5eccbe2a",
+   "metadata": {},
+   "source": [
+    "If we have more than one branch in our section we can use the uid parameter to differentiate between them. Otherwise \"0\" is sufficient."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "564cd4b7",
+   "metadata": {},
+   "source": [
+    "As the lists that are part of the returned tuple remain NET objets we have to turn them into python lists."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 35,
+   "id": "ba7b15d6",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nodesVL = list(hydraulicProfile.nodesVL)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 36,
+   "id": "38bf0d2f",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "['4905524959962565243', '5517957656259932533', '4852293679410056753']"
+      ]
+     },
+     "execution_count": 36,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "nodesVL"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 37,
+   "id": "e1b5f923",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "linksVL = list(hydraulicProfile.linksVL)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 38,
+   "id": "c75640a9",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "['5222487322443009246', '5354178785470006283']"
+      ]
+     },
+     "execution_count": 38,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "linksVL"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 39,
+   "id": "96cd7e84",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "xVL = list(hydraulicProfile.xVL)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 40,
+   "id": "81d62a0d",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "[0.0, 316.43719482421875, 493.4965362548828]"
+      ]
+     },
+     "execution_count": 40,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "xVL"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 41,
+   "id": "f1489e31",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "0"
+      ]
+     },
+     "execution_count": 41,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "hydraulicProfile.nrOfBranches"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 42,
+   "id": "09d29a4a",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "493.5"
+      ]
+     },
+     "execution_count": 42,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "hydraulicProfile.length"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "631f9294",
+   "metadata": {},
+   "source": [
+    "## SetLogFilePath()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "c8565a19",
+   "metadata": {},
+   "source": [
+    "We can use the function [SetLogFilePath()](https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.SetLogFilePath) to change where the log file, created when SIR 3S executes calculations, is saved."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 43,
+   "id": "cbdbd10a",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Error: DirectoryNotFoundException: Ein Teil des Pfades \"C:\\Users\\aUsername\\Documents\" konnte nicht gefunden werden.\n"
+     ]
+    },
+    {
+     "data": {
+      "text/plain": [
+       "False"
+      ]
+     },
+     "execution_count": 43,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "s3s.SetLogFilePath(\"C:/Users/aUsername/Documents\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "d08444fe",
+   "metadata": {},
+   "source": [
+    "## EnableOrDisableOutputComments()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "c7aff6c4",
+   "metadata": {},
+   "source": [
+    "We can use the function [EnableOrDisableOutputComments()](https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.EnableOrDisableOutputComments) to turn output comments on or off. Default is True."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 44,
+   "id": "292cbed0",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "s3s.EnableOrDisableOutputComments(outputComments=True)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 45,
+   "id": "78d1923b",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Element inserted successfully into the model with Tk: 5545345590912933449\n",
+      "5545345590912933449\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(s3s.InsertElement(s3s.ObjectTypes.Node, \"-1\"))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 46,
+   "id": "cc901d57",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "s3s.EnableOrDisableOutputComments(outputComments=False)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 47,
+   "id": "d3cb83bc",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "5629265237157425666\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(s3s.InsertElement(s3s.ObjectTypes.Node, \"-1\"))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "31e744e2",
+   "metadata": {},
+   "source": [
+    "As you can see, after the output comments were disabled the function does not print an output. The printed tk is the return value of the function that is displayed in Jupyter Notebooks."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 48,
+   "id": "a943a8a2",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "s3s.EnableOrDisableOutputComments(outputComments=True)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "295abfa0",
+   "metadata": {},
+   "source": [
+    "## AllowSirMessageBox()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "8815c86f",
+   "metadata": {},
+   "source": [
+    "We can use the function [AllowSirMessageBox()](https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AllowSirMessageBox) to allow or diallow SIR DB Messages to pop up. Default is True. Generally, not recommeded to turn off, as it could mean missing out on deep error messages."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 49,
+   "id": "71684fb3",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "s3s.AllowSirMessageBox(bAllow=True)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 50,
+   "id": "4bf17754",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "dbFilePath2=r\"Toolkit_Tutorial6_PotsdamVersionModel.db3\""
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "4e5cdeb8",
+   "metadata": {},
+   "source": [
+    "We will try to open a model created in Potsdam Version of SIR 3S. A message window should pop up that asks whether you want the model to be migrated to your current SIR 3S version. Please choose to not migrate. The cell will fail to execute."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 51,
+   "id": "2abe89ed",
+   "metadata": {},
+   "outputs": [
+    {
+     "ename": "SQLiteException",
+     "evalue": "code = Error (1), message = System.Data.SQLite.SQLiteException (0x800007BF): SQL logic error\r\nno such table: USCH\r\n   bei System.Data.SQLite.SQLite3.Prepare(SQLiteConnection cnn, String strSql, SQLiteStatement previous, UInt32 timeoutMS, String& strRemain)\r\n   bei System.Data.SQLite.SQLiteCommand.BuildNextCommand()\r\n   bei System.Data.SQLite.SQLiteDataReader.NextResult()\r\n   bei System.Data.SQLite.SQLiteDataReader..ctor(SQLiteCommand cmd, CommandBehavior behave)\r\n   bei System.Data.SQLite.SQLiteCommand.ExecuteReader(CommandBehavior behavior)\r\n   bei System.Data.Common.DbDataAdapter.FillInternal(DataSet dataset, DataTable[] datatables, Int32 startRecord, Int32 maxRecords, String srcTable, IDbCommand command, CommandBehavior behavior)\r\n   bei System.Data.Common.DbDataAdapter.Fill(DataSet dataSet, Int32 startRecord, Int32 maxRecords, String srcTable, IDbCommand command, CommandBehavior behavior)\r\n   bei System.Data.Common.DbDataAdapter.Fill(DataSet dataSet, String srcTable)\r\n   bei Sir3S_Repository.DataBaseModel.CDbTableTypeA.FillDataSet(DbDataAdapter dbDataAdapter, String fkBa, String fkVa, String fkBz, Int32& iTables)\r\n   bei Sir3S_Repository.DataBaseModel.CDataBase.FillDataSet(DbDataAdapter dbDataAdapter, IModel iModel)\r\n   bei Sir3S_Repository.DataSetModel.CModelDs.Open(IModel iModel, Boolean& modelWasInUse)\r\n   bei Sir3S_Repository.ModelManager.CModelManagerModelListEvents.OpenModel(IDialog iDialog, IModelInfo iModelInfo, Boolean& modelWasInUse)\r\n   bei Sir3S_Repository.ModelManager.CModelManager.OpenModel(IModel Model, Boolean& modelWasInUse)\r\n   bei Sir3S_Toolkit.Model.CSir3SToolkitModel.OpenModel(String dbName, SirDBProviderType providerType, String Mid, Boolean saveCurrentlyOpenModel, String namedInstance, String userID, String password, String& error)",
+     "output_type": "error",
+     "traceback": [
+      "\u001b[1;31m---------------------------------------------------------------------------\u001b[0m",
+      "\u001b[1;31mSQLiteException\u001b[0m                           Traceback (most recent call last)",
+      "Cell \u001b[1;32mIn[51], line 1\u001b[0m\n\u001b[1;32m----> 1\u001b[0m s3s\u001b[38;5;241m.\u001b[39mOpenModel(dbName\u001b[38;5;241m=\u001b[39mdbFilePath2,\n\u001b[0;32m      2\u001b[0m               providerType\u001b[38;5;241m=\u001b[39ms3s\u001b[38;5;241m.\u001b[39mProviderTypes\u001b[38;5;241m.\u001b[39mSQLite,\n\u001b[0;32m      3\u001b[0m               Mid\u001b[38;5;241m=\u001b[39m\u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mM-1-0-1\u001b[39m\u001b[38;5;124m\"\u001b[39m,\n\u001b[0;32m      4\u001b[0m               saveCurrentlyOpenModel\u001b[38;5;241m=\u001b[39m\u001b[38;5;28;01mFalse\u001b[39;00m,\n\u001b[0;32m      5\u001b[0m               namedInstance\u001b[38;5;241m=\u001b[39m\u001b[38;5;124m\"\u001b[39m\u001b[38;5;124m\"\u001b[39m,\n\u001b[0;32m      6\u001b[0m               userID\u001b[38;5;241m=\u001b[39m\u001b[38;5;124m\"\u001b[39m\u001b[38;5;124m\"\u001b[39m,\n\u001b[0;32m      7\u001b[0m               password\u001b[38;5;241m=\u001b[39m\u001b[38;5;124m\"\u001b[39m\u001b[38;5;124m\"\u001b[39m)\n",
+      "File \u001b[1;32m~\\3S\\sir3stoolkit\\src\\sir3stoolkit\\core\\wrapper.py:391\u001b[0m, in \u001b[0;36mSIR3S_Model.OpenModel\u001b[1;34m(self, dbName, providerType, Mid, saveCurrentlyOpenModel, namedInstance, userID, password)\u001b[0m\n\u001b[0;32m    367\u001b[0m \u001b[38;5;250m\u001b[39m\u001b[38;5;124;03m\"\"\"\u001b[39;00m\n\u001b[0;32m    368\u001b[0m \u001b[38;5;124;03mOpens a model from a database file.\u001b[39;00m\n\u001b[0;32m    369\u001b[0m \n\u001b[1;32m   (...)\u001b[0m\n\u001b[0;32m    388\u001b[0m \u001b[38;5;124;03m:description: This is a wrapper method for OpenModel() from toolkit; Watch out for errors for more information.\u001b[39;00m\n\u001b[0;32m    389\u001b[0m \u001b[38;5;124;03m\"\"\"\u001b[39;00m\n\u001b[0;32m    390\u001b[0m providerType_net \u001b[38;5;241m=\u001b[39m \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39mto_dotnet_enum(providerType)\n\u001b[1;32m--> 391\u001b[0m result, error \u001b[38;5;241m=\u001b[39m \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39mtoolkit\u001b[38;5;241m.\u001b[39mOpenModel(dbName, providerType_net, Mid, saveCurrentlyOpenModel,\n\u001b[0;32m    392\u001b[0m                                        namedInstance, userID, password)\n\u001b[0;32m    393\u001b[0m \u001b[38;5;28;01mif\u001b[39;00m result:\n\u001b[0;32m    394\u001b[0m     \u001b[38;5;28;01mif\u001b[39;00m \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39moutputComments:\n",
+      "\u001b[1;31mSQLiteException\u001b[0m: code = Error (1), message = System.Data.SQLite.SQLiteException (0x800007BF): SQL logic error\r\nno such table: USCH\r\n   bei System.Data.SQLite.SQLite3.Prepare(SQLiteConnection cnn, String strSql, SQLiteStatement previous, UInt32 timeoutMS, String& strRemain)\r\n   bei System.Data.SQLite.SQLiteCommand.BuildNextCommand()\r\n   bei System.Data.SQLite.SQLiteDataReader.NextResult()\r\n   bei System.Data.SQLite.SQLiteDataReader..ctor(SQLiteCommand cmd, CommandBehavior behave)\r\n   bei System.Data.SQLite.SQLiteCommand.ExecuteReader(CommandBehavior behavior)\r\n   bei System.Data.Common.DbDataAdapter.FillInternal(DataSet dataset, DataTable[] datatables, Int32 startRecord, Int32 maxRecords, String srcTable, IDbCommand command, CommandBehavior behavior)\r\n   bei System.Data.Common.DbDataAdapter.Fill(DataSet dataSet, Int32 startRecord, Int32 maxRecords, String srcTable, IDbCommand command, CommandBehavior behavior)\r\n   bei System.Data.Common.DbDataAdapter.Fill(DataSet dataSet, String srcTable)\r\n   bei Sir3S_Repository.DataBaseModel.CDbTableTypeA.FillDataSet(DbDataAdapter dbDataAdapter, String fkBa, String fkVa, String fkBz, Int32& iTables)\r\n   bei Sir3S_Repository.DataBaseModel.CDataBase.FillDataSet(DbDataAdapter dbDataAdapter, IModel iModel)\r\n   bei Sir3S_Repository.DataSetModel.CModelDs.Open(IModel iModel, Boolean& modelWasInUse)\r\n   bei Sir3S_Repository.ModelManager.CModelManagerModelListEvents.OpenModel(IDialog iDialog, IModelInfo iModelInfo, Boolean& modelWasInUse)\r\n   bei Sir3S_Repository.ModelManager.CModelManager.OpenModel(IModel Model, Boolean& modelWasInUse)\r\n   bei Sir3S_Toolkit.Model.CSir3SToolkitModel.OpenModel(String dbName, SirDBProviderType providerType, String Mid, Boolean saveCurrentlyOpenModel, String namedInstance, String userID, String password, String& error)"
+     ]
+    }
+   ],
+   "source": [
+    "s3s.OpenModel(dbName=dbFilePath2,\n",
+    "              providerType=s3s.ProviderTypes.SQLite,\n",
+    "              Mid=\"M-1-0-1\",\n",
+    "              saveCurrentlyOpenModel=False,\n",
+    "              namedInstance=\"\",\n",
+    "              userID=\"\",\n",
+    "              password=\"\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "efbbb21b",
+   "metadata": {},
+   "source": [
+    "Now we will attempt the same but with message boxes turned off."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 52,
+   "id": "1bd52eff",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "s3s.AllowSirMessageBox(bAllow=False)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 53,
+   "id": "105e433d",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Model is open for further operation\n"
+     ]
+    }
+   ],
+   "source": [
+    "s3s.OpenModel(dbName=dbFilePath2,\n",
+    "              providerType=s3s.ProviderTypes.SQLite,\n",
+    "              Mid=\"M-1-0-1\",\n",
+    "              saveCurrentlyOpenModel=False,\n",
+    "              namedInstance=\"\",\n",
+    "              userID=\"\",\n",
+    "              password=\"\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "fd7ed537",
+   "metadata": {},
+   "source": [
+    "As you can see in your file explorer this time the model was migrated without asking. In general during model creation/opening the message boxes should be left on. "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "6fb4de39-a405-4741-92ae-4613320b93f4",
+   "metadata": {},
+   "source": [
+    "You have finished all Tutorials on the SIR3S_Model class of the SIR 3S Toolkit. The SIR3S_View class does not yet have Tutorials. \n",
+    "\n",
+    "Feel free to check out the Examples."
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "base",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.11.8"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}

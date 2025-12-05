@@ -1,0 +1,528 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>sir3stoolkit.mantle.alternative_models &mdash; sir3stoolkit  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=f281be69"></script>
+      <script>let toggleHintShow = 'Click to show';</script>
+      <script>let toggleHintHide = 'Click to hide';</script>
+      <script>let toggleOpenOnPrint = 'true';</script>
+      <script src="../../../_static/togglebutton.js?v=4a39c7ea"></script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            sir3stoolkit
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Application Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../releases.html">Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developers.html">For Developers</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">sir3stoolkit</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">sir3stoolkit.mantle.alternative_models</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for sir3stoolkit.mantle.alternative_models</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Created on Weg Sep 01 14:04:43 2025</span>
+
+<span class="sd">This module implements the generation of SIR 3S models in alternative model formats such as pandapipes or nx-Graphs.</span>
+
+<span class="sd">@author: Jablonski</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandapipes</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pp</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">shapely</span><span class="w"> </span><span class="kn">import</span> <span class="n">wkt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">shapely.geometry.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseGeometry</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">networkx</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nx</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">logger</span><span class="o">.</span><span class="n">hasHandlers</span><span class="p">():</span>
+    <span class="n">handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">()</span>
+    <span class="n">formatter</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span><span class="s1">&#39;[</span><span class="si">%(asctime)s</span><span class="s1">] </span><span class="si">%(levelname)s</span><span class="s1"> in </span><span class="si">%(name)s</span><span class="s1">: </span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">formatter</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">sir3stoolkit.mantle.dataframes</span><span class="w"> </span><span class="kn">import</span> <span class="n">SIR3S_Model_Dataframes</span>
+
+<div class="viewcode-block" id="SIR3S_Model_Alternative_Models">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.alternative_models.SIR3S_Model_Alternative_Models">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">SIR3S_Model_Alternative_Models</span><span class="p">(</span><span class="n">SIR3S_Model_Dataframes</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class is supposed to extend the Dataframes class that extends the general SIR3S_Model class with the possibility of using alternative District Heating models such as pandapipes.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SIR3S_Model_Alternative_Models.SIR_3S_to_pandapipes">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.alternative_models.SIR3S_Model_Alternative_Models.SIR_3S_to_pandapipes">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">SIR_3S_to_pandapipes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Converts the currently open SIR 3S network into a pandapipes network.</span>
+
+<span class="sd">        This function creates a pandapipes network that mirrors the structure of the SIR 3S network,</span>
+<span class="sd">        including junctions (nodes), pipes, and external sources/sinks. Only elements of type Node and Pipe</span>
+<span class="sd">        are included; FWVB (district heating consumers) are excluded.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pandapipes.pandapipesNet</span>
+<span class="sd">            A pandapipes network object containing:</span>
+<span class="sd">            - Junctions with metadata and result values (pressure, temperature, flow).</span>
+<span class="sd">            - Pipes with geometry and physical parameters.</span>
+<span class="sd">            - External grids (sources) and sinks based on node type and flow direction.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">net</span> <span class="o">=</span> <span class="n">pp</span><span class="o">.</span><span class="n">create_empty_network</span><span class="p">(</span><span class="n">fluid</span><span class="o">=</span><span class="s2">&quot;water&quot;</span><span class="p">)</span>
+
+        <span class="c1"># --- Nodes/Junctions ---</span>
+        <span class="n">df_nodes_metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_element_metadata_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="o">.</span><span class="n">Node</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Zkor&#39;</span><span class="p">,</span> <span class="s1">&#39;QmEin&#39;</span><span class="p">,</span> <span class="s1">&#39;bz.PhEin&#39;</span><span class="p">,</span> <span class="s1">&#39;Ktyp&#39;</span><span class="p">],</span> <span class="n">geometry</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">df_nodes_results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_element_results_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="o">.</span><span class="n">Node</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;PH&#39;</span><span class="p">,</span> <span class="s1">&#39;T&#39;</span><span class="p">,</span> <span class="s1">&#39;QM&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTimeStamps</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">df_nodes</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df_nodes_metadata</span><span class="p">,</span> <span class="n">df_nodes_results</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s1">&#39;tk&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;inner&#39;</span><span class="p">)</span>
+
+        <span class="n">js</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">df_nodes</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+            <span class="n">geom</span> <span class="o">=</span> <span class="n">wkt</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;geometry&quot;</span><span class="p">])</span>
+            <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">geom</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">geom</span><span class="o">.</span><span class="n">y</span>
+
+            <span class="n">j</span> <span class="o">=</span> <span class="n">pp</span><span class="o">.</span><span class="n">create_junction</span><span class="p">(</span>
+                <span class="n">net</span><span class="p">,</span>
+                <span class="n">pn_bar</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;PH&#39;</span><span class="p">]),</span>
+                <span class="n">tfluid_k</span><span class="o">=</span><span class="mf">273.15</span> <span class="o">+</span> <span class="nb">float</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;T&#39;</span><span class="p">]),</span>
+                <span class="n">height_m</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;Zkor&#39;</span><span class="p">]),</span>
+                <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">~</span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;tk&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+
+            <span class="c1"># Assign geodata to junction_geodata table</span>
+            <span class="n">net</span><span class="o">.</span><span class="n">junction_geodata</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span>
+            <span class="n">net</span><span class="o">.</span><span class="n">junction_geodata</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">y</span>
+
+            <span class="n">js</span><span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;tk&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">j</span>
+
+        <span class="c1"># --- Pipes ---</span>
+        <span class="n">df_pipes_metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_element_metadata_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="o">.</span><span class="n">Pipe</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;L&#39;</span><span class="p">,</span> <span class="s1">&#39;Di&#39;</span><span class="p">,</span> <span class="s1">&#39;Rau&#39;</span><span class="p">,</span> <span class="s1">&#39;Name&#39;</span><span class="p">],</span> <span class="n">end_nodes</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">geometry</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">row</span> <span class="ow">in</span> <span class="n">df_pipes_metadata</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+            <span class="n">raw_value</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;Rau&quot;</span><span class="p">]</span>
+            <span class="n">row</span><span class="p">[</span><span class="s2">&quot;Rau&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">raw_value</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">,</span> <span class="s2">&quot;.&quot;</span><span class="p">))</span>
+
+        <span class="n">ps</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">df_pipes_metadata</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+            <span class="n">geom</span> <span class="o">=</span> <span class="n">wkt</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;geometry&quot;</span><span class="p">])</span>  
+            <span class="n">coords</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">geom</span><span class="o">.</span><span class="n">coords</span><span class="p">)</span>        
+
+            <span class="c1"># Create pipe</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="n">pp</span><span class="o">.</span><span class="n">create_pipe_from_parameters</span><span class="p">(</span>
+                <span class="n">net</span><span class="p">,</span>
+                <span class="n">from_junction</span><span class="o">=</span><span class="n">js</span><span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;fkKI&#39;</span><span class="p">]],</span>
+                <span class="n">to_junction</span><span class="o">=</span><span class="n">js</span><span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;fkKK&#39;</span><span class="p">]],</span>
+                <span class="n">length_km</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;L&#39;</span><span class="p">])</span> <span class="o">/</span> <span class="mf">1000.</span><span class="p">,</span>
+                <span class="n">diameter_m</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;Di&#39;</span><span class="p">])</span> <span class="o">/</span> <span class="mf">1000.</span><span class="p">,</span>
+                <span class="n">k_mm</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;Rau&#39;</span><span class="p">]),</span>
+                <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">~</span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;tk&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+            <span class="n">ps</span><span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;tk&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">p</span>
+
+            <span class="n">net</span><span class="o">.</span><span class="n">pipe_geodata</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">p</span><span class="p">,</span> <span class="s2">&quot;coords&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">coords</span>
+
+        <span class="c1"># --- Source/Sinks ---</span>
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">df_nodes</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+            <span class="n">ktyp</span> <span class="o">=</span> <span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;Ktyp&quot;</span><span class="p">))</span>
+            <span class="n">tk</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;tk&quot;</span><span class="p">)</span>
+
+            <span class="c1"># Create source if Ktyp is PKON and PH &gt; 0</span>
+            <span class="k">if</span> <span class="n">ktyp</span> <span class="o">==</span> <span class="s2">&quot;PKON&quot;</span> <span class="ow">and</span> <span class="nb">float</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;PH&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">pp</span><span class="o">.</span><span class="n">create_ext_grid</span><span class="p">(</span>
+                    <span class="n">net</span><span class="p">,</span>
+                    <span class="n">junction</span><span class="o">=</span><span class="n">js</span><span class="p">[</span><span class="n">tk</span><span class="p">],</span>
+                    <span class="n">p_bar</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;PH&quot;</span><span class="p">]),</span>
+                    <span class="n">t_k</span><span class="o">=</span><span class="mf">273.15</span> <span class="o">+</span> <span class="nb">float</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;T&quot;</span><span class="p">]),</span>
+                    <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Src: </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">~</span><span class="si">{</span><span class="n">tk</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+
+            <span class="c1"># Create sink if Ktyp is QKON and QM &lt; 0</span>
+            <span class="k">elif</span> <span class="n">ktyp</span> <span class="o">==</span> <span class="s2">&quot;QKON&quot;</span> <span class="ow">and</span> <span class="nb">float</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;QM&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">pp</span><span class="o">.</span><span class="n">create_sink</span><span class="p">(</span>
+                    <span class="n">net</span><span class="p">,</span>
+                    <span class="n">junction</span><span class="o">=</span><span class="n">js</span><span class="p">[</span><span class="n">tk</span><span class="p">],</span>
+                    <span class="n">mdot_kg_per_s</span><span class="o">=</span><span class="nb">abs</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;QM&quot;</span><span class="p">])),</span>
+                    <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Snk: </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">~</span><span class="si">{</span><span class="n">tk</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">net</span></div>
+
+    
+<div class="viewcode-block" id="SIR3S_Model_Alternative_Models.SIR_3S_to_nx_graph">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.alternative_models.SIR3S_Model_Alternative_Models.SIR_3S_to_nx_graph">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">SIR_3S_to_nx_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Build a directed NetworkX graph from SIR 3S model.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        nx.DiGraph</span>
+<span class="sd">            Directed graph with nodes and edges populated from SIR 3S model.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;[graph] Building nx graph...&quot;</span><span class="p">)</span>
+
+        <span class="c1"># --- Nodes ---</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">df_nodes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_element_metadata_dataframe</span><span class="p">(</span>
+                <span class="n">element_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="o">.</span><span class="n">Node</span><span class="p">,</span>
+                <span class="n">properties</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Fkcont&quot;</span><span class="p">],</span>
+                <span class="n">geometry</span><span class="o">=</span><span class="kc">True</span>
+            <span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[graph] Retrieved </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df_nodes</span><span class="p">)</span><span class="si">}</span><span class="s2"> nodes.&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[graph] Failed to retrieve node metadata: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">()</span>
+
+        <span class="c1"># --- Edges ---</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">df_edges</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">generate_hydraulic_edge_dataframe</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[graph] Failed to retrieve edges: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">()</span>
+
+        <span class="c1"># --- Build graph ---</span>
+        <span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">()</span>
+
+        <span class="c1"># Add nodes with attributes</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;[graph] Adding nodes to graph...&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">df_nodes</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">attr</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+
+                <span class="n">geom</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">geom</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                    <span class="n">geom</span> <span class="o">=</span> <span class="n">wkt</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">geom</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">geom</span><span class="p">,</span> <span class="n">BaseGeometry</span><span class="p">):</span>
+                    <span class="k">pass</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[graph] Unsupported geometry type: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">geom</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+                <span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;tk&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">attr</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[graph] Failed to add node &#39;</span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;tk&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Add edges with attributes</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;[graph] Adding edges to graph...&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">df_edges</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">attr</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+
+                <span class="n">geom</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">geom</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                    <span class="n">geom</span> <span class="o">=</span> <span class="n">wkt</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">geom</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">geom</span><span class="p">,</span> <span class="n">BaseGeometry</span><span class="p">):</span>
+                    <span class="k">pass</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported geometry type: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">geom</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+                <span class="n">attr</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">geom</span>
+
+                <span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;fkKI&#39;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;fkKK&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">attr</span><span class="p">)</span>
+
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[graph] Failed to add edge from &#39;</span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;fkKI&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&#39; to &#39;</span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;fkKK&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[graph] Graph construction complete. Nodes: </span><span class="si">{</span><span class="n">G</span><span class="o">.</span><span class="n">number_of_nodes</span><span class="p">()</span><span class="si">}</span><span class="s2">, Edges: </span><span class="si">{</span><span class="n">G</span><span class="o">.</span><span class="n">number_of_edges</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">G</span></div>
+
+  
+<div class="viewcode-block" id="SIR3S_Model_Alternative_Models.add_properties_to_graph">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.alternative_models.SIR3S_Model_Alternative_Models.add_properties_to_graph">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_properties_to_graph</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">G</span><span class="p">:</span> <span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">,</span>
+        <span class="n">element_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>        
+        <span class="n">properties</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+        <span class="n">timestamp</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Enrich nodes and edges in `G` with additional attributes by joining on &#39;tk&#39;.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        G : nx.DiGraph</span>
+<span class="sd">            The already-built graph where nodes/edges have at least a &#39;tk&#39; attribute.</span>
+<span class="sd">        element_type : str</span>
+<span class="sd">            The element type to filter by (must match df[element_type_col] and edge attr &quot;element type&quot;).</span>
+<span class="sd">        properties : list of str</span>
+<span class="sd">            Column names from the dataframe to add as attributes</span>
+<span class="sd">        timestamp: str</span>
+<span class="sd">            Timestamp used for adding result properties. If None, STAT will be used.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        nx.DiGraph</span>
+<span class="sd">            The same graph instance with enriched attributes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[graph] Enriching graph with properties for element_type=&#39;</span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+
+        <span class="c1"># --- Validate property availability (optional, keep if you want the checks) ---</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">available_metadata_props</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetPropertiesofElementType</span><span class="p">(</span><span class="n">ElementType</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_object_type_enum</span><span class="p">(</span><span class="n">element_type</span><span class="p">))</span>
+            <span class="n">available_result_props</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetResultProperties_from_elementType</span><span class="p">(</span>
+                <span class="n">elementType</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_object_type_enum</span><span class="p">(</span><span class="n">element_type</span><span class="p">),</span>
+                <span class="n">onlySelectedVectors</span><span class="o">=</span><span class="kc">False</span>
+            <span class="p">)</span>
+            <span class="n">metadata_props</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">result_props</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">if</span> <span class="n">properties</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;[graph] No properties given → using ALL metadata and STAT result properties for </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">. &quot;</span>
+                    <span class="s2">&quot;This can lead to long runtimes.&quot;</span>
+                <span class="p">)</span>
+                <span class="n">metadata_props</span> <span class="o">=</span> <span class="n">available_metadata_props</span> <span class="ow">or</span> <span class="p">[]</span>
+                <span class="n">result_props</span> <span class="o">=</span> <span class="n">available_result_props</span> <span class="ow">or</span> <span class="p">[]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">properties</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">prop</span> <span class="ow">in</span> <span class="p">(</span><span class="n">available_result_props</span> <span class="ow">or</span> <span class="p">[]):</span>
+                        <span class="n">result_props</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prop</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">prop</span> <span class="ow">in</span> <span class="p">(</span><span class="n">available_metadata_props</span> <span class="ow">or</span> <span class="p">[]):</span>
+                        <span class="n">metadata_props</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prop</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                            <span class="sa">f</span><span class="s2">&quot;[graph] Property &#39;</span><span class="si">{</span><span class="n">prop</span><span class="si">}</span><span class="s2">&#39; not found in metadata or result properties of type </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">. Excluding.&quot;</span>
+                        <span class="p">)</span>
+                <span class="n">all_props_to_use</span> <span class="o">=</span> <span class="n">metadata_props</span> <span class="o">+</span> <span class="n">result_props</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[graph] Using </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">metadata_props</span><span class="p">)</span><span class="si">}</span><span class="s2"> metadata props and </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">result_props</span><span class="p">)</span><span class="si">}</span><span class="s2"> result props.&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[graph] Error validating metadata/result properties: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">. Aborting.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">G</span>
+
+        <span class="c1"># --- Build dataframe with at least [&#39;tk&#39;, *requested_columns] ---</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">tks</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTksofElementType</span><span class="p">(</span><span class="n">ElementType</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_object_type_enum</span><span class="p">(</span><span class="n">element_type</span><span class="p">))</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">tks</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[graph] No elements exist for element type: </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">G</span>
+
+            <span class="n">df_metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_element_metadata_dataframe</span><span class="p">(</span>
+                <span class="n">element_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_object_type_enum</span><span class="p">(</span><span class="n">element_type</span><span class="p">),</span>
+                <span class="n">properties</span><span class="o">=</span><span class="n">metadata_props</span><span class="p">,</span>
+                <span class="n">element_type_col</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="n">geometry</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="n">end_nodes</span><span class="o">=</span><span class="kc">False</span>
+            <span class="p">)</span>
+
+            <span class="n">simulation_timestamps</span><span class="p">,</span> <span class="n">tsStat</span><span class="p">,</span> <span class="n">tsMin</span><span class="p">,</span> <span class="n">tsMax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTimeStamps</span><span class="p">()</span>
+            <span class="n">available_timestamps</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">simulation_timestamps</span><span class="p">)</span> <span class="k">if</span> <span class="n">simulation_timestamps</span> <span class="k">else</span> <span class="p">[]</span>
+
+            <span class="k">if</span> <span class="n">timestamp</span> <span class="ow">and</span> <span class="p">(</span><span class="n">timestamp</span> <span class="ow">in</span> <span class="n">available_timestamps</span><span class="p">):</span>
+                <span class="n">timestamp_for_values</span> <span class="o">=</span> <span class="n">timestamp</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">timestamp_for_values</span> <span class="o">=</span> <span class="n">tsStat</span>
+
+            <span class="n">df_results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_element_results_dataframe</span><span class="p">(</span>
+                <span class="n">element_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_object_type_enum</span><span class="p">(</span><span class="n">element_type</span><span class="p">),</span>
+                <span class="n">properties</span><span class="o">=</span><span class="n">result_props</span><span class="p">,</span>
+                <span class="n">timestamps</span><span class="o">=</span><span class="p">[</span><span class="n">timestamp_for_values</span><span class="p">]</span>
+            <span class="p">)</span>
+            
+            <span class="n">df_results</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">df_results</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">droplevel</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+            <span class="n">df_results</span> <span class="o">=</span> <span class="n">df_results</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">unstack</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+            <span class="n">df_results</span> <span class="o">=</span> <span class="n">df_results</span><span class="o">.</span><span class="n">droplevel</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">df_metadata</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">on</span><span class="o">=</span><span class="s2">&quot;tk&quot;</span><span class="p">,</span>
+                             <span class="n">how</span><span class="o">=</span><span class="s2">&quot;outer&quot;</span><span class="p">,</span>
+                             <span class="n">right</span><span class="o">=</span><span class="n">df_results</span><span class="p">)</span>
+            
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">df</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">df</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[graph] Empty metadata DataFrame for element_type=&#39;</span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">&#39;. Nothing to add.&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">G</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[graph] Failed to retrieve metadata for enrichment: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">G</span>
+
+        <span class="c1"># --- Decide which columns to add; never add these ---</span>
+        <span class="n">never_add</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;geometry&quot;</span><span class="p">,</span> <span class="s2">&quot;fkKI&quot;</span><span class="p">,</span> <span class="s2">&quot;fkKK&quot;</span><span class="p">,</span> <span class="s2">&quot;tk&quot;</span><span class="p">,</span> <span class="s2">&quot;element_type&quot;</span><span class="p">}</span>
+        <span class="n">add_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="p">(</span><span class="n">all_props_to_use</span> <span class="ow">or</span> <span class="p">[])</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="ow">and</span> <span class="n">c</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">never_add</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">add_cols</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[graph] No permissible columns to add for element_type=&#39;</span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">G</span>
+
+        <span class="c1"># --- Build tk -&gt; {prop: value, ...} mapping ---</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">df_updates</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">df</span><span class="p">[[</span><span class="s2">&quot;tk&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">add_cols</span><span class="p">]</span>
+                <span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;tk&quot;</span><span class="p">],</span> <span class="n">keep</span><span class="o">=</span><span class="s2">&quot;last&quot;</span><span class="p">)</span>
+                <span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;tk&quot;</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[graph] Required columns missing in df: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">G</span>
+
+        <span class="n">tk_to_attrs</span> <span class="o">=</span> <span class="n">df_updates</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s2">&quot;index&quot;</span><span class="p">)</span>
+
+        <span class="n">nodes_updated</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">edges_updated</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">element_type</span> <span class="o">==</span> <span class="s2">&quot;Node&quot;</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+                    <span class="n">tk</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;tk&quot;</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">tk</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="k">continue</span>
+                    <span class="n">row</span> <span class="o">=</span> <span class="n">tk_to_attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">tk</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">row</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="k">continue</span>
+                    <span class="n">updates</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">row</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">never_add</span><span class="p">}</span>
+                    <span class="k">if</span> <span class="n">updates</span><span class="p">:</span>
+                        <span class="n">data</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">updates</span><span class="p">)</span>
+                        <span class="n">nodes_updated</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[graph] Error while updating nodes: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># --- Update edges (filter by &#39;element type&#39; attr in the graph) ---</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">element_type</span> <span class="o">!=</span> <span class="s2">&quot;Node&quot;</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">G</span><span class="o">.</span><span class="n">edges</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;element type&quot;</span><span class="p">)</span> <span class="o">!=</span> <span class="n">element_type</span><span class="p">:</span>
+                        <span class="k">continue</span>
+                    <span class="n">tk</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;tk&quot;</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">tk</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="k">continue</span>
+                    <span class="n">row</span> <span class="o">=</span> <span class="n">tk_to_attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">tk</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">row</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="k">continue</span>
+                    <span class="n">updates</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">row</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">never_add</span><span class="p">}</span>
+                    <span class="k">if</span> <span class="n">updates</span><span class="p">:</span>
+                        <span class="n">data</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">updates</span><span class="p">)</span>
+                        <span class="n">edges_updated</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[graph] Error while updating edges: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="s2">&quot;[graph] Enrichment summary for element_type=&#39;</span><span class="si">%s</span><span class="s2">&#39;: nodes_updated=</span><span class="si">%d</span><span class="s2">; edges_updated=</span><span class="si">%d</span><span class="s2">; cols_added=</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="nb">str</span><span class="p">(</span><span class="n">element_type</span><span class="p">),</span> <span class="n">nodes_updated</span><span class="p">,</span> <span class="n">edges_updated</span><span class="p">,</span> <span class="n">add_cols</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">G</span></div>
+
+    
+<div class="viewcode-block" id="SIR3S_Model_Alternative_Models.get_object_type_enum">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.alternative_models.SIR3S_Model_Alternative_Models.get_object_type_enum">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_object_type_enum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the enum member from self.ObjectTypes corresponding to the given element_type string.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        element_type : str</span>
+<span class="sd">            Name of the element type (e.g., &#39;Node&#39;, &#39;Pipe&#39;).</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Enum member from self.ObjectTypes if found, else None.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># Normalize input to match attribute names</span>
+            <span class="n">normalized</span> <span class="o">=</span> <span class="n">element_type</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="p">,</span> <span class="n">normalized</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[graph] Invalid element_type &#39;</span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">&#39; — not found in ObjectTypes.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025 3S Consult GmbH.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
