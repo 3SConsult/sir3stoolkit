@@ -36,7 +36,7 @@ if not logger.hasHandlers():
 
 from sir3stoolkit.core.wrapper import SIR3S_Model
 
-class Plotting_SIR3S_Model(SIR3S_Model):
+class SIR3S_Model_Plotting(SIR3S_Model):
     
     def plot_pipe_layer(
         self,

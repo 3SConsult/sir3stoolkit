@@ -25,9 +25,9 @@ if not logger.hasHandlers():
     handler.setFormatter(formatter)
     logger.addHandler(handler)
 
-from sir3stoolkit.mantle.dataframes import Dataframes_SIR3S_Model
+from sir3stoolkit.mantle.dataframes import SIR3S_Model_Dataframes
 
-class Alternative_Models_SIR3S_Model(Dataframes_SIR3S_Model):
+class SIR3S_Model_Alternative_Models(SIR3S_Model_Dataframes):
     """
     This class is supposed to extend the Dataframes class that extends the general SIR3S_Model class with the possibility of using alternative District Heating models such as pandapipes.
     """
