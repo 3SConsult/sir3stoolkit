@@ -70,7 +70,7 @@ Tutorial 3: Accessing simulation results
 
 This tutorial demonstrates how to get result values of objects based on their tk.
 
-View: `Notebook <tutorials/SIR3S_ModelTutorial003_Assets/ToolkitTutorial003.html>`_ | Download: `ZIP archive <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorial003_Assets.zip>`_.
+View: `Notebook <tutorials/SIR3S_Model/Tutorial003_Assets/ToolkitTutorial003.html>`_ | Download: `ZIP archive <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorial003_Assets.zip>`_.
 
 .. _Ttu004:
 
