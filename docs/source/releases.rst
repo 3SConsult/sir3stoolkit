@@ -32,7 +32,7 @@ Improvements
 ^^^^^^^^^^^^
 
 - dataframes.py
-   - generate_element_results_dataframe() returns float values instead of object type
+   - generate_element_results_dataframe() returns float values instead of object type, new parameter use_vector_results to include vectorized data eg. for pipe interior points.
 
 - plotting.py
    - plot_pipe_layer() and plot_node_layer() introduced as new functions for network color depictions
