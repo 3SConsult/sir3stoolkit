@@ -29,7 +29,7 @@ Some tutorials are available **downloading** as a `.zip` archive containing all 
 
 .. _Ttu1-49:
 
-SIR3S_Model: 0 - 49
+0 - 49: SIR3S_Model
 ~~~~~~~~~~~~~~~~~~~
 
 You can also download all tutorials regarding SIR3S_Model (0 - 49) and their respective data in a joint `.zip` archive at once `here <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorials000-050_Assets.zip>`_.
@@ -99,14 +99,14 @@ View: `Notebook <tutorials/SIR3S_Model/SIR3S_Model/Tutorial7_Assets/ToolkitTutor
 
 .. _Ttu50-99:
 
-SIR3S_Model_Mantle: 50 - 99
+50 - 99: SIR3S_Model_Mantle
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 SIR3S_Model_Mantle() is a collector class that contains the functions from all other classes defined in the mantle.
 
 .. _Ttu50-59:
 
-SIR3S_Model_Dataframes: 50 - 59
+50 - 59: SIR3S_Model_Dataframes
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 SIR3S_Model_Dataframes() implements interactions between SIR 3S and pandas dataframes. You can obtain pandas dfs with meta- or resultdata, insert nodes and pipes via a df, etc.
@@ -122,7 +122,7 @@ View: `Notebook <tutorials/SIR3S_Model_Mantle/ToolkitTutorial051.html>`_ | Downl
 
 .. _Ttu60-69:
 
-SIR3S_Model_Alternative_Models: 60 - 69
+60 - 69: SIR3S_Model_Alternative_Models
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 SIR3S_Model_Alternative_Models() implements the generation of SIR 3S models in alternative model formats such as pandapipes or nx-Graphs.
@@ -147,7 +147,7 @@ View: `Notebook <tutorials/SIR3S_Model_Mantle/ToolkitTutorial062.html>`_  | Down
 
 .. _Ttu70-79:
 
-SIR3S_Model_Plotting: 70 - 79
+70 - 79: SIR3S_Model_Plotting
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 SIR3S_Model_Plotting implements general plotting functions for SIR 3S applications.
@@ -163,24 +163,24 @@ View: `Notebook <tutorials/SIR3S_Model_Mantle/ToolkitTutorial071.html>`_  | Down
 
 .. _Ttu100-149:
 
-SIR3S_View: 100 - 149
-~~~~~~~~~~~~~~~~~~~~~
+.. 
+   SIR3S_View: 100 - 149
+   ~~~~~~~~~~~~~~~~~~~~~
 
-.. _Ttu150-199:
+   .. _Ttu150-199:
 
-SIR3S_View_Mantle: 150 - 199
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   SIR3S_View_Mantle: 150 - 199
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. _Ttu200-249:
+   .. _Ttu200-249:
 
-SIR3S_ModelRepair: 200 - 249
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   SIR3S_ModelRepair: 200 - 249
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. _Ttu250-299:
+   .. _Ttu250-299:
 
-SIR3S_ModelRepair_Mantle: 250 - 299
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+   SIR3S_ModelRepair_Mantle: 250 - 299
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Examples
 --------
