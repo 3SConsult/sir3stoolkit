@@ -43,7 +43,7 @@ Tutorial 0: Importing and initialization of the SIR 3S Toolkit
 
 This tutorial demonstrates how to import the SIR 3S Toolkit and initialize instances of its classes.
 
-View: `Notebook <tutorials/SIR3S_Model/Tutorial000_Assets/ToolkitTutorial1.html>`_ | Download: `ZIP archive <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorial000_Assets.zip>`_.
+View: `Notebook <tutorials/SIR3S_Model/Tutorial000_Assets/ToolkitTutorial000.html>`_ | Download: `ZIP archive <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorial000_Assets.zip>`_.
 
 .. _Ttu001:
 
@@ -52,7 +52,7 @@ Tutorial 1: Creating a new or opening an existing SIR 3S model
 
 This tutorial demonstrates how to create new SIR 3S models or open already existing ones.
 
-View: `Notebook <tutorials/SIR3S_Model/Tutorial001_Assets/ToolkitTutorial2.html>`_ | Download: `ZIP archive <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorial001_Assets.zip>`_.
+View: `Notebook <tutorials/SIR3S_Model/Tutorial001_Assets/ToolkitTutorial001.html>`_ | Download: `ZIP archive <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorial001_Assets.zip>`_.
 
 .. _Ttu002:
 
@@ -61,7 +61,7 @@ Tutorial 2: Accessing and modifying model data
 
 This tutorial demonstrates how to get and set values of objects based on their topological key (tk).
 
-View: `Notebook <tutorials/SIR3S_Model/Tutorial002_Assets/ToolkitTutorial3.html>`_ | Download: `ZIP archive <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorial002_Assets.zip>`_.
+View: `Notebook <tutorials/SIR3S_Model/Tutorial002_Assets/ToolkitTutorial002.html>`_ | Download: `ZIP archive <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorial002_Assets.zip>`_.
 
 .. _Ttu003:
 
@@ -70,7 +70,7 @@ Tutorial 3: Accessing simulation results
 
 This tutorial demonstrates how to get result values of objects based on their tk.
 
-View: `Notebook <tutorials/SIR3S_ModelTutorial003_Assets/ToolkitTutorial4.html>`_ | Download: `ZIP archive <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorial003_Assets.zip>`_.
+View: `Notebook <tutorials/SIR3S_ModelTutorial003_Assets/ToolkitTutorial003.html>`_ | Download: `ZIP archive <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorial003_Assets.zip>`_.
 
 .. _Ttu004:
 
@@ -79,7 +79,7 @@ Tutorial 4: Editing a SIR 3S model safely and effectively
 
 This Tutorial demonstrates how to change SIR 3S models properly by grouping changes and saving them.
 
-View: `Notebook <tutorials/SIR3S_Model/Tutorial004_Assets/ToolkitTutorial5.html>`_ | Download: `ZIP archive <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorial004_Assets.zip>`_.
+View: `Notebook <tutorials/SIR3S_Model/Tutorial004_Assets/ToolkitTutorial004.html>`_ | Download: `ZIP archive <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorial004_Assets.zip>`_.
 
 .. _Ttu005:
 
@@ -88,7 +88,7 @@ Tutorial 5: Insert and Connect Elements
 
 This Tutorial demonstrates how new elements such as nodes, pipes, tanks, valves, etc. can be inserted into a SIR 3S model and connected.
 
-View: `Notebook <tutorials/SIR3S_Model/Tutorial005_Assets/ToolkitTutorial6.html>`_ | Download: `ZIP archive <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorial005_Assets.zip>`_.
+View: `Notebook <tutorials/SIR3S_Model/Tutorial005_Assets/ToolkitTutorial005.html>`_ | Download: `ZIP archive <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorial005_Assets.zip>`_.
 
 .. _Ttu006:
 
