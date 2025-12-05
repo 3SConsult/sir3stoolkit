@@ -197,25 +197,25 @@ Each example is available for both **viewing** and **downloading** as an `.ipynb
 .. _Tex1:
 
 Example 1: Shape Import
-^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~
 
 This Example demonstrates how to create a connected topological network of nodes and pipes in SIR 3S via teh SIR 3S Toolkit based on shapefile data. The data used comes from 'SIR 3S\Modelle\Beispiele\Wasser\Manual\Projektdaten\01 Shape-Dateien'.
 
-View: `Notebook <examples/Toolkit_Example1.html>`_ | Download: :download:`Notebook <examples/Toolkit_Example1.ipynb>`.
+View: `Notebook <examples/Toolkit_Example001.html>`_ | Download: :download:`Notebook <examples/Toolkit_Example001.ipynb>`.
 
 .. _Tex2:
 
 Example 2: Iterate over SIR 3S calculations
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This Example demonstrates how to use the Dataframes_SIR3S_Model() class extending SIR3S_Model().
 
-View: `Notebook <examples/Toolkit_Example2.html>`_ | Download: :download:`Notebook <examples/Toolkit_Example2.ipynb>`.
+View: `Notebook <examples/Toolkit_Example002.html>`_ | Download: :download:`Notebook <examples/Toolkit_Example002.ipynb>`.
 
 .. _TexX:
 
 Example X: Template
-^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~
 
 .. admonition:: Contributor Template
 
