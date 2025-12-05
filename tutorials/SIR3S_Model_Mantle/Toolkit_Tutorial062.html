@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tutorial 62: Pandapipes &mdash; sir3stoolkit  documentation</title>
+  <title>Example 3: Pandapipes &mdash; sir3stoolkit  documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -77,7 +77,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Tutorial 62: Pandapipes</li>
+      <li class="breadcrumb-item active">Example 3: Pandapipes</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../_sources/tutorials/SIR3S_Model_Mantle/Toolkit_Tutorial062.ipynb.txt" rel="nofollow"> View page source</a>
       </li>
@@ -87,8 +87,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="Tutorial-62:-Pandapipes">
-<h1>Tutorial 62: Pandapipes<a class="headerlink" href="#Tutorial-62:-Pandapipes" title="Link to this heading"></a></h1>
+  <section id="Example-3:-Pandapipes">
+<h1>Example 3: Pandapipes<a class="headerlink" href="#Example-3:-Pandapipes" title="Link to this heading"></a></h1>
 <p>This Example demonstrates how to generate a pandapipes network based on a SIR 3S model. When working with SIR 3S, pandapipes used to offer some freedom in creating simple DH models via Python, but with the introduction of the SIR 3S Toolkit, pandapipes is no longer necessary for this. Therefore the main benefit of pandapipes for SIR 3S users is for comparing calculations to SIR 3S results.</p>
 <p>Note that the SIR 3S model we are using in this Example is quite simple.</p>
 <p>In this Example we will first generate the pandapipes network manually by obtaining element dataframes for pipes and nodes via SIR 3S Toolkit. Then we will perform the same steps but built into one single Toolkit function.</p>
@@ -96,7 +96,7 @@
 <section id="Toolkit-Release">
 <h1>Toolkit Release<a class="headerlink" href="#Toolkit-Release" title="Link to this heading"></a></h1>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[43]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>#pip install
@@ -111,15 +111,15 @@
 <section id="Regular-Import/Init">
 <h3>Regular Import/Init<a class="headerlink" href="#Regular-Import/Init" title="Link to this heading"></a></h3>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[44]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r&quot;C:\3S\SIR 3S\SirGraf-90-15-00-20x64_Quebec-Upd1&quot; #change to local path
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r&quot;C:\3S\SIR 3S Entwicklung\SirGraf-90-15-00-16_Quebec_x64&quot; #change to local path
 </pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[45]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import sir3stoolkit
@@ -127,7 +127,7 @@
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[46]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sir3stoolkit.core import wrapper
@@ -135,7 +135,7 @@
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[47]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sir3stoolkit
@@ -143,7 +143,7 @@
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[47]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -152,7 +152,7 @@
 </pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[48]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>wrapper.Initialize_Toolkit(SIR3S_SIRGRAF_DIR)
@@ -163,7 +163,7 @@
 <section id="Additional-Import/Init-for-Alternative_Models-class">
 <h3>Additional Import/Init for Alternative_Models class<a class="headerlink" href="#Additional-Import/Init-for-Alternative_Models-class" title="Link to this heading"></a></h3>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[49]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sir3stoolkit.mantle import alternative_models
@@ -171,7 +171,7 @@
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[50]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s = alternative_models.Alternative_Models_SIR3S_Model()
@@ -191,7 +191,7 @@ Initialization complete
 <section id="Additional">
 <h2>Additional<a class="headerlink" href="#Additional" title="Link to this heading"></a></h2>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[51]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
@@ -199,7 +199,7 @@ Initialization complete
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[52]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandapipes as pp
@@ -207,7 +207,7 @@ Initialization complete
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[53]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from shapely import wkt
@@ -215,7 +215,7 @@ Initialization complete
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[54]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandapipes.plotting as pp_plot
@@ -227,7 +227,7 @@ Initialization complete
 <section id="Open-SIR-3S-Model">
 <h1>Open SIR 3S Model<a class="headerlink" href="#Open-SIR-3S-Model" title="Link to this heading"></a></h1>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[55]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.OpenModel(dbName=r&quot;C:\Users\aUsername\3S\PT3S\PT3S\Examples\Example9_2.db3&quot;,
@@ -256,7 +256,7 @@ Model is open for further operation
 <section id="Nodes">
 <h3>Nodes<a class="headerlink" href="#Nodes" title="Link to this heading"></a></h3>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[56]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>net = pp.create_empty_network(fluid=&quot;water&quot;)
@@ -264,7 +264,7 @@ Model is open for further operation
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[57]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_nodes_metadata = s3s.generate_element_metadata_dataframe(s3s.ObjectTypes.Node, [&#39;Name&#39;, &#39;QmEin&#39;, &#39;bz.PhEin&#39;, &#39;Zkor&#39;, &#39;Ktyp&#39;], geometry=True)
@@ -276,22 +276,16 @@ Model is open for further operation
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2025-12-05 12:11:41,396] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.Node
-[2025-12-05 12:11:41,405] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieved 9 element(s) of element type ObjectTypes.Node.
-[2025-12-05 12:11:41,407] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 9 element(s) of element type ObjectTypes.Node.
-[2025-12-05 12:11:41,408] WARNING in sir3stoolkit.mantle.dataframes: [Resolving tks] Name does not exist or is not of element type ObjectTypes.Node. Excluding.
-[2025-12-05 12:11:41,408] WARNING in sir3stoolkit.mantle.dataframes: [Resolving tks] bz.PhEin does not exist or is not of element type ObjectTypes.Node. Excluding.
-[2025-12-05 12:11:41,412] WARNING in sir3stoolkit.mantle.dataframes: [Resolving tks] Ktyp does not exist or is not of element type ObjectTypes.Node. Excluding.
-[2025-12-05 12:11:41,412] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 2 tks remain after filtering for given tks.
-[2025-12-05 12:11:41,440] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] No properties given → using ALL metadata properties for ObjectTypes.Node.
-[2025-12-05 12:11:41,441] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 37 metadata properties.
-[2025-12-05 12:11:41,442] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving metadata properties [&#39;Name&#39;, &#39;Ktyp&#39;, &#39;Zkor&#39;, &#39;QmEin&#39;, &#39;Lfakt&#39;, &#39;Fkpzon&#39;, &#39;Fkfstf&#39;, &#39;Fkutmp&#39;, &#39;Fkfqps&#39;, &#39;Fkcont&#39;, &#39;Fk2lknot&#39;, &#39;Beschreibung&#39;, &#39;Idreferenz&#39;, &#39;Iplanung&#39;, &#39;Kvr&#39;, &#39;Qakt&#39;, &#39;Xkor&#39;, &#39;Ykor&#39;, &#39;NodeNamePosition&#39;, &#39;ShowNodeName&#39;, &#39;KvrKlartext&#39;, &#39;NumberOfVERB&#39;, &#39;HasBlockConnection&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;, &#39;GeometriesDiffer&#39;, &#39;SymbolFactor&#39;, &#39;bz.Drakonz&#39;, &#39;bz.Fk&#39;, &#39;bz.Fkpvar&#39;, &#39;bz.Fkqvar&#39;, &#39;bz.Fklfkt&#39;, &#39;bz.PhEin&#39;, &#39;bz.Tm&#39;, &#39;bz.Te&#39;, &#39;bz.PhMin&#39;], geometry...
-[2025-12-05 12:11:41,466] ERROR in sir3stoolkit.mantle.dataframes: [metadata] Error transforming DataFrame to GeoDataFrame. ParseException: Expected word but encountered end of stream
-[2025-12-05 12:11:41,467] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (2, 39)
+[2025-10-07 13:27:29,772] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.Node
+[2025-10-07 13:27:29,773] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieved 9 element(s) of element type ObjectTypes.Node.
+[2025-10-07 13:27:29,776] DEBUG in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 5 metadata properties.
+[2025-10-07 13:27:29,777] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving metadata properties [&#39;Name&#39;, &#39;QmEin&#39;, &#39;bz.PhEin&#39;, &#39;Zkor&#39;, &#39;Ktyp&#39;], geometry...
+[2025-10-07 13:27:29,777] INFO in sir3stoolkit.mantle.dataframes: [metadata] 0 non-empty end node columns were created)
+[2025-10-07 13:27:29,783] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (9, 7)
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[58]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_nodes_results = s3s.generate_element_results_dataframe(s3s.ObjectTypes.Node, [&#39;PH&#39;, &#39;T&#39;, &#39;QM&#39;], s3s.GetTimeStamps()[0])
@@ -303,84 +297,24 @@ Model is open for further operation
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2025-12-05 12:11:41,517] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Node
-[2025-12-05 12:11:41,517] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] No timestamps were given. Checking available simulation timestamps (SIR3S_Model.GetTimeStamps()).
-[2025-12-05 12:11:41,534] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 simulation timestamp(s) are available.
-[2025-12-05 12:11:41,555] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2025-06-05 15:27:46.000 +02:00 is used
-[2025-12-05 12:11:41,555] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
-[2025-12-05 12:11:41,558] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 9 element(s) of element type ObjectTypes.Node.
-[2025-12-05 12:11:41,558] WARNING in sir3stoolkit.mantle.dataframes: [Resolving tks] PH does not exist or is not of element type ObjectTypes.Node. Excluding.
-[2025-12-05 12:11:41,561] WARNING in sir3stoolkit.mantle.dataframes: [Resolving tks] QM does not exist or is not of element type ObjectTypes.Node. Excluding.
-[2025-12-05 12:11:41,563] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 1 tks remain after filtering for given tks.
-[2025-12-05 12:11:41,566] WARNING in sir3stoolkit.mantle.dataframes: [results] Property &#39;2025-06-05 15:27:46.000 +02:00&#39; not found in metadata or result properties of type ObjectTypes.Node. Excluding.
-[2025-12-05 12:11:41,566] INFO in sir3stoolkit.mantle.dataframes: [results] Using 0 result properties.
-[2025-12-05 12:11:41,803] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result properties...
-[2025-12-05 12:11:41,807] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (0, 0)
+[2025-10-07 13:27:29,803] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Node
+[2025-10-07 13:27:29,812] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2025-06-05 15:27:46.000 +02:00 is available
+[2025-10-07 13:27:29,813] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieved 9 tks.
+[2025-10-07 13:27:29,816] INFO in sir3stoolkit.mantle.dataframes: [results] Using 3 result properties.
+[2025-10-07 13:27:29,816] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result properties...
+[2025-10-07 13:27:29,820] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (9, 5)
 </pre></div></div>
 </div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[59]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_nodes = pd.merge(df_nodes_metadata, df_nodes_results, on=&#39;tk&#39;, how=&#39;inner&#39;)
 </pre></div>
 </div>
 </div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-<span class="ansi-red-intense-fg ansi-bold">---------------------------------------------------------------------------</span>
-<span class="ansi-red-intense-fg ansi-bold">MergeError</span>                                Traceback (most recent call last)
-Cell <span class="ansi-green-intense-fg ansi-bold">In[17], line 1</span>
-<span class="ansi-green-intense-fg ansi-bold">----&gt; 1</span> df_nodes <span style="color: rgb(98,98,98)">=</span> pd<span style="color: rgb(98,98,98)">.</span>merge(df_nodes_metadata, df_nodes_results, on<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">tk</span><span style="color: rgb(175,0,0)">&#39;</span>, how<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">inner</span><span style="color: rgb(175,0,0)">&#39;</span>)
-
-File <span class="ansi-green-intense-fg ansi-bold">c:\Users\jablonski\AppData\Local\anaconda3\Lib\site-packages\pandas\core\reshape\merge.py:170</span>, in <span class="ansi-cyan-fg">merge</span><span class="ansi-blue-intense-fg ansi-bold">(left, right, how, on, left_on, right_on, left_index, right_index, sort, suffixes, copy, indicator, validate)</span>
-<span class="ansi-green-fg">    155</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> _cross_merge(
-<span class="ansi-green-fg">    156</span>         left_df,
-<span class="ansi-green-fg">    157</span>         right_df,
-<span class="ansi-green-intense-fg ansi-bold">   (...)</span>
-<span class="ansi-green-fg">    167</span>         copy<span style="color: rgb(98,98,98)">=</span>copy,
-<span class="ansi-green-fg">    168</span>     )
-<span class="ansi-green-fg">    169</span> <span class="ansi-bold" style="color: rgb(0,135,0)">else</span>:
-<span class="ansi-green-intense-fg ansi-bold">--&gt; 170</span>     op <span style="color: rgb(98,98,98)">=</span> _MergeOperation(
-<span class="ansi-green-fg">    171</span>         left_df,
-<span class="ansi-green-fg">    172</span>         right_df,
-<span class="ansi-green-fg">    173</span>         how<span style="color: rgb(98,98,98)">=</span>how,
-<span class="ansi-green-fg">    174</span>         on<span style="color: rgb(98,98,98)">=</span>on,
-<span class="ansi-green-fg">    175</span>         left_on<span style="color: rgb(98,98,98)">=</span>left_on,
-<span class="ansi-green-fg">    176</span>         right_on<span style="color: rgb(98,98,98)">=</span>right_on,
-<span class="ansi-green-fg">    177</span>         left_index<span style="color: rgb(98,98,98)">=</span>left_index,
-<span class="ansi-green-fg">    178</span>         right_index<span style="color: rgb(98,98,98)">=</span>right_index,
-<span class="ansi-green-fg">    179</span>         sort<span style="color: rgb(98,98,98)">=</span>sort,
-<span class="ansi-green-fg">    180</span>         suffixes<span style="color: rgb(98,98,98)">=</span>suffixes,
-<span class="ansi-green-fg">    181</span>         indicator<span style="color: rgb(98,98,98)">=</span>indicator,
-<span class="ansi-green-fg">    182</span>         validate<span style="color: rgb(98,98,98)">=</span>validate,
-<span class="ansi-green-fg">    183</span>     )
-<span class="ansi-green-fg">    184</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> op<span style="color: rgb(98,98,98)">.</span>get_result(copy<span style="color: rgb(98,98,98)">=</span>copy)
-
-File <span class="ansi-green-intense-fg ansi-bold">c:\Users\jablonski\AppData\Local\anaconda3\Lib\site-packages\pandas\core\reshape\merge.py:784</span>, in <span class="ansi-cyan-fg">_MergeOperation.__init__</span><span class="ansi-blue-intense-fg ansi-bold">(self, left, right, how, on, left_on, right_on, left_index, right_index, sort, suffixes, indicator, validate)</span>
-<span class="ansi-green-fg">    778</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> _left<span style="color: rgb(98,98,98)">.</span>columns<span style="color: rgb(98,98,98)">.</span>nlevels <span style="color: rgb(98,98,98)">!=</span> _right<span style="color: rgb(98,98,98)">.</span>columns<span style="color: rgb(98,98,98)">.</span>nlevels:
-<span class="ansi-green-fg">    779</span>     msg <span style="color: rgb(98,98,98)">=</span> (
-<span class="ansi-green-fg">    780</span>         <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">Not allowed to merge between different levels. </span><span style="color: rgb(175,0,0)">&#34;</span>
-<span class="ansi-green-fg">    781</span>         <span style="color: rgb(175,0,0)">f</span><span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">(</span><span class="ansi-bold" style="color: rgb(175,95,135)">{</span>_left<span style="color: rgb(98,98,98)">.</span>columns<span style="color: rgb(98,98,98)">.</span>nlevels<span class="ansi-bold" style="color: rgb(175,95,135)">}</span><span style="color: rgb(175,0,0)"> levels on the left, </span><span style="color: rgb(175,0,0)">&#34;</span>
-<span class="ansi-green-fg">    782</span>         <span style="color: rgb(175,0,0)">f</span><span style="color: rgb(175,0,0)">&#34;</span><span class="ansi-bold" style="color: rgb(175,95,135)">{</span>_right<span style="color: rgb(98,98,98)">.</span>columns<span style="color: rgb(98,98,98)">.</span>nlevels<span class="ansi-bold" style="color: rgb(175,95,135)">}</span><span style="color: rgb(175,0,0)"> on the right)</span><span style="color: rgb(175,0,0)">&#34;</span>
-<span class="ansi-green-fg">    783</span>     )
-<span class="ansi-green-intense-fg ansi-bold">--&gt; 784</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">raise</span> MergeError(msg)
-<span class="ansi-green-fg">    786</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>left_on, <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>right_on <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>_validate_left_right_on(left_on, right_on)
-<span class="ansi-green-fg">    788</span> (
-<span class="ansi-green-fg">    789</span>     <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>left_join_keys,
-<span class="ansi-green-fg">    790</span>     <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>right_join_keys,
-<span class="ansi-green-intense-fg ansi-bold">   (...)</span>
-<span class="ansi-green-fg">    793</span>     right_drop,
-<span class="ansi-green-fg">    794</span> ) <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>_get_merge_keys()
-
-<span class="ansi-red-intense-fg ansi-bold">MergeError</span>: Not allowed to merge between different levels. (1 levels on the left, 4 on the right)
-</pre></div></div>
-</div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[60]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_nodes.head(3)
@@ -388,7 +322,8 @@ File <span class="ansi-green-intense-fg ansi-bold">c:\Users\jablonski\AppData\Lo
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[60]:
+</pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
 <div>
@@ -470,7 +405,7 @@ File <span class="ansi-green-intense-fg ansi-bold">c:\Users\jablonski\AppData\Lo
 </div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[61]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>js = {}
@@ -496,7 +431,7 @@ for idx, row in df_nodes.iterrows():
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[62]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>net.junction
@@ -504,7 +439,8 @@ for idx, row in df_nodes.iterrows():
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[62]:
+</pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
 <div>
@@ -623,7 +559,7 @@ for idx, row in df_nodes.iterrows():
 <section id="pipes">
 <h3>pipes<a class="headerlink" href="#pipes" title="Link to this heading"></a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[63]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_metadata = s3s.generate_element_metadata_dataframe(s3s.ObjectTypes.Pipe, [&#39;L&#39;, &#39;Di&#39;, &#39;Rau&#39;, &#39;Name&#39;], end_nodes=True, geometry=True)
@@ -644,7 +580,7 @@ for idx, row in df_nodes.iterrows():
 </pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[64]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for idx,row in df_pipes_metadata.iterrows():
@@ -654,7 +590,7 @@ for idx, row in df_nodes.iterrows():
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[65]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_metadata.head(3)
@@ -662,7 +598,8 @@ for idx, row in df_nodes.iterrows():
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[65]:
+</pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
 <div>
@@ -732,7 +669,7 @@ for idx, row in df_nodes.iterrows():
 </div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[66]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>ps = {}
@@ -758,7 +695,7 @@ for idx, row in df_pipes_metadata.iterrows():
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[67]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>net.pipe.head(3)
@@ -766,7 +703,8 @@ for idx, row in df_pipes_metadata.iterrows():
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[67]:
+</pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
 <div>
@@ -863,7 +801,7 @@ for idx, row in df_pipes_metadata.iterrows():
 <section id="sources/sinks">
 <h3>sources/sinks<a class="headerlink" href="#sources/sinks" title="Link to this heading"></a></h3>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[68]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for idx, row in df_nodes.iterrows():
@@ -892,7 +830,7 @@ for idx, row in df_pipes_metadata.iterrows():
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[69]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>net.ext_grid
@@ -900,7 +838,8 @@ for idx, row in df_pipes_metadata.iterrows():
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[69]:
+</pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
 <div>
@@ -944,7 +883,7 @@ for idx, row in df_pipes_metadata.iterrows():
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[70]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>net.sink
@@ -952,7 +891,8 @@ for idx, row in df_pipes_metadata.iterrows():
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[70]:
+</pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
 <div>
@@ -1027,7 +967,7 @@ for idx, row in df_pipes_metadata.iterrows():
 <section id="Calculate">
 <h2>Calculate<a class="headerlink" href="#Calculate" title="Link to this heading"></a></h2>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[71]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pp.pipeflow(net)
@@ -1037,7 +977,7 @@ for idx, row in df_pipes_metadata.iterrows():
 <section id="View-Results">
 <h3>View Results<a class="headerlink" href="#View-Results" title="Link to this heading"></a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[72]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>net.res_junction
@@ -1045,7 +985,8 @@ for idx, row in df_pipes_metadata.iterrows():
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[72]:
+</pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
 <div>
@@ -1121,7 +1062,7 @@ for idx, row in df_pipes_metadata.iterrows():
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[73]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>net.res_pipe
@@ -1129,7 +1070,8 @@ for idx, row in df_pipes_metadata.iterrows():
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[73]:
+</pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
 <div>
@@ -1295,7 +1237,7 @@ for idx, row in df_pipes_metadata.iterrows():
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[74]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>net.res_sink
@@ -1303,7 +1245,8 @@ for idx, row in df_pipes_metadata.iterrows():
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[74]:
+</pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
 <div>
@@ -1349,7 +1292,7 @@ for idx, row in df_pipes_metadata.iterrows():
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[75]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>net.res_ext_grid
@@ -1357,7 +1300,8 @@ for idx, row in df_pipes_metadata.iterrows():
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[75]:
+</pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
 <div>
@@ -1395,7 +1339,7 @@ for idx, row in df_pipes_metadata.iterrows():
 <section id="Plot">
 <h2>Plot<a class="headerlink" href="#Plot" title="Link to this heading"></a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[76]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pp_plot.simple_plot(net)
@@ -1410,7 +1354,8 @@ for idx, row in df_pipes_metadata.iterrows():
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[76]:
+</pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
@@ -1418,7 +1363,7 @@ for idx, row in df_pipes_metadata.iterrows():
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[77]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import plotly.express as px
@@ -1457,7 +1402,7 @@ fig.show()
 <h2>Create<a class="headerlink" href="#Create" title="Link to this heading"></a></h2>
 <p>Now we can perform the same steps above confined into one method using <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.alternative_models.Alternative_Models_SIR3S_Model.SIR_3S_to_pandapipes">SIR_3S_to_pandapipes()</a>.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[78]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pp_net = s3s.SIR_3S_to_pandapipes()
@@ -1493,7 +1438,7 @@ fig.show()
 <section id="id1">
 <h2>Calculate<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[79]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pp.pipeflow(net)
@@ -1503,7 +1448,7 @@ fig.show()
 <section id="id2">
 <h3>View Results<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[80]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>net.res_junction
@@ -1511,7 +1456,8 @@ fig.show()
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[80]:
+</pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
 <div>
@@ -1587,7 +1533,7 @@ fig.show()
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[81]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>net.res_pipe
@@ -1595,7 +1541,8 @@ fig.show()
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[81]:
+</pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
 <div>
@@ -1761,7 +1708,7 @@ fig.show()
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[82]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>net.res_sink
@@ -1769,7 +1716,8 @@ fig.show()
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[82]:
+</pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
 <div>
@@ -1815,7 +1763,7 @@ fig.show()
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[83]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>net.res_ext_grid
@@ -1823,7 +1771,8 @@ fig.show()
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[83]:
+</pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
 <div>
@@ -1861,7 +1810,7 @@ fig.show()
 <section id="id3">
 <h2>Plot<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[84]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import plotly.express as px
