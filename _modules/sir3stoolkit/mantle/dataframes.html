@@ -120,15 +120,15 @@
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">sir3stoolkit.core.wrapper</span><span class="w"> </span><span class="kn">import</span> <span class="n">SIR3S_Model</span>
 
-<div class="viewcode-block" id="Dataframes_SIR3S_Model">
-<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.Dataframes_SIR3S_Model">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">Dataframes_SIR3S_Model</span><span class="p">(</span><span class="n">SIR3S_Model</span><span class="p">):</span>
+<div class="viewcode-block" id="SIR3S_Model_Dataframes">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">SIR3S_Model_Dataframes</span><span class="p">(</span><span class="n">SIR3S_Model</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This class is supposed to extend the general SIR3S_Model class with the possibility of using pandas dataframes when working with SIR 3S. Getting dataframes, inserting elements via dataframes, running algorithms on dataframes should be made possible.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="Dataframes_SIR3S_Model.DataFrames">
-<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.Dataframes_SIR3S_Model.DataFrames">[docs]</a>
+<div class="viewcode-block" id="SIR3S_Model_Dataframes.DataFrames">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.DataFrames">[docs]</a>
     <span class="nd">@dataclass</span>
     <span class="k">class</span><span class="w"> </span><span class="nc">DataFrames</span><span class="p">:</span>
         <span class="n">df_node</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span>
@@ -139,8 +139,8 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data_frames</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DataFrames</span><span class="p">()</span>
 
-<div class="viewcode-block" id="Dataframes_SIR3S_Model.generate_dataframes">
-<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.Dataframes_SIR3S_Model.generate_dataframes">[docs]</a>
+<div class="viewcode-block" id="SIR3S_Model_Dataframes.generate_dataframes">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.generate_dataframes">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">generate_dataframes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        WORK IN PROGRESS</span>
@@ -184,7 +184,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># --- Default timestamp resolution ---</span>
         <span class="k">if</span> <span class="n">timestamps</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;[Resolving Timestamps] No timestamps were given. Checking available simulation timestamps (SIR3S_Model.GetTimeStamps()).&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;[Resolving Timestamps] No timestamps were given. Checking available simulation timestamps (SIR3S_Model.GetTimeStamps()[0]).&quot;</span><span class="p">)</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">simulation_timestamps</span><span class="p">,</span> <span class="n">tsStat</span><span class="p">,</span> <span class="n">tsMin</span><span class="p">,</span> <span class="n">tsMax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTimeStamps</span><span class="p">()</span>
                 <span class="k">if</span> <span class="n">simulation_timestamps</span><span class="p">:</span>
@@ -295,8 +295,8 @@
         
         <span class="k">return</span> <span class="kc">True</span>
 
-<div class="viewcode-block" id="Dataframes_SIR3S_Model.generate_element_metadata_dataframe">
-<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.Dataframes_SIR3S_Model.generate_element_metadata_dataframe">[docs]</a>
+<div class="viewcode-block" id="SIR3S_Model_Dataframes.generate_element_metadata_dataframe">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.generate_element_metadata_dataframe">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">generate_element_metadata_dataframe</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">element_type</span><span class="p">:</span> <span class="n">Enum</span><span class="p">,</span>
@@ -350,6 +350,8 @@
         
         <span class="c1"># --- Resolve tks ---</span>
         <span class="n">tks</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__resolve_given_tks</span><span class="p">(</span><span class="n">element_type</span><span class="o">=</span><span class="n">element_type</span><span class="p">,</span> <span class="n">tks</span><span class="o">=</span><span class="n">tks</span><span class="p">,</span> <span class="n">filter_container_tks</span><span class="o">=</span><span class="n">filter_container_tks</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tks</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span>
           
         <span class="c1"># --- Resolve given metadata properties ---</span>
         <span class="n">metadata_props</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__resolve_given_metadata_properties</span><span class="p">(</span><span class="n">element_type</span><span class="o">=</span><span class="n">element_type</span><span class="p">,</span> <span class="n">properties</span><span class="o">=</span><span class="n">properties</span><span class="p">)</span>
@@ -439,8 +441,8 @@
         <span class="k">return</span> <span class="n">df</span></div>
 
 
-<div class="viewcode-block" id="Dataframes_SIR3S_Model.generate_element_results_dataframe">
-<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.Dataframes_SIR3S_Model.generate_element_results_dataframe">[docs]</a>
+<div class="viewcode-block" id="SIR3S_Model_Dataframes.generate_element_results_dataframe">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.generate_element_results_dataframe">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">generate_element_results_dataframe</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">element_type</span><span class="p">:</span> <span class="n">Enum</span><span class="p">,</span>
@@ -448,6 +450,7 @@
         <span class="n">properties</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">timestamps</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">filter_container_tks</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">use_vector_results</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate a dataframe with RESULT (time-dependent) properties for all devices and timestamps.</span>
@@ -487,7 +490,9 @@
             
         <span class="c1"># --- Resolve tks ---</span>
         <span class="n">tks</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__resolve_given_tks</span><span class="p">(</span><span class="n">element_type</span><span class="o">=</span><span class="n">element_type</span><span class="p">,</span> <span class="n">tks</span><span class="o">=</span><span class="n">tks</span><span class="p">,</span> <span class="n">filter_container_tks</span><span class="o">=</span><span class="n">filter_container_tks</span><span class="p">)</span>
-            
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tks</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span>
+        
         <span class="c1"># --- Resolve given properties ---</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">available_metadata_props</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetPropertiesofElementType</span><span class="p">(</span><span class="n">ElementType</span><span class="o">=</span><span class="n">element_type</span><span class="p">)</span>
@@ -495,23 +500,43 @@
                 <span class="n">elementType</span><span class="o">=</span><span class="n">element_type</span><span class="p">,</span>
                 <span class="n">onlySelectedVectors</span><span class="o">=</span><span class="kc">False</span>
             <span class="p">)</span>
+            <span class="n">available_result_vector_props</span><span class="o">=</span><span class="p">[</span><span class="n">available_result_props</span> <span class="k">for</span> <span class="n">available_result_props</span> <span class="ow">in</span> <span class="n">available_result_props</span> <span class="k">if</span> <span class="s2">&quot;VEC&quot;</span> <span class="ow">in</span> <span class="n">available_result_props</span><span class="p">]</span>
+            <span class="n">available_result_non_vector_props</span> <span class="o">=</span> <span class="p">[</span><span class="n">available_result_props</span> <span class="k">for</span> <span class="n">available_result_props</span> <span class="ow">in</span> <span class="n">available_result_props</span> <span class="k">if</span> <span class="s2">&quot;VEC&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">available_result_props</span><span class="p">]</span>
 
             <span class="n">result_props</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
 
             <span class="k">if</span> <span class="n">properties</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[results] No properties given → using ALL result properties for </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
-                <span class="n">result_props</span> <span class="o">=</span> <span class="n">available_result_props</span>
+                <span class="k">if</span> <span class="n">use_vector_results</span><span class="p">:</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[results] No properties given → using ALL vectorized result properties for </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+                    <span class="n">result_props</span> <span class="o">=</span> <span class="n">available_result_vector_props</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[results] No properties given → using ALL non-vectorized result properties for </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+                    <span class="n">result_props</span> <span class="o">=</span> <span class="n">available_result_non_vector_props</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">properties</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">available_result_props</span><span class="p">:</span>
-                        <span class="n">result_props</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prop</span><span class="p">)</span>
-                    <span class="k">elif</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">available_metadata_props</span><span class="p">:</span>
-                        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[results] Property &#39;</span><span class="si">{</span><span class="n">prop</span><span class="si">}</span><span class="s2">&#39; is a METADATA property; excluded from results.&quot;</span><span class="p">)</span>
-                    <span class="k">else</span><span class="p">:</span>
-                        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
-                            <span class="sa">f</span><span class="s2">&quot;[results] Property &#39;</span><span class="si">{</span><span class="n">prop</span><span class="si">}</span><span class="s2">&#39; not found in metadata or result properties of type </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">. Excluding.&quot;</span>
-                        <span class="p">)</span>
-
+                <span class="k">if</span> <span class="n">use_vector_results</span><span class="p">:</span> <span class="c1"># Accept only vectorized result properties</span>
+                    <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">properties</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">available_result_vector_props</span><span class="p">:</span>
+                            <span class="n">result_props</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prop</span><span class="p">)</span>
+                        <span class="k">elif</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">available_result_non_vector_props</span><span class="p">:</span>
+                            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[results] Property &#39;</span><span class="si">{</span><span class="n">prop</span><span class="si">}</span><span class="s2">&#39; is a non-vectorized result property; excluded from results.&quot;</span><span class="p">)</span>
+                        <span class="k">elif</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">available_metadata_props</span><span class="p">:</span>
+                            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[results] Property &#39;</span><span class="si">{</span><span class="n">prop</span><span class="si">}</span><span class="s2">&#39; is a METADATA property; excluded from results.&quot;</span><span class="p">)</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                                <span class="sa">f</span><span class="s2">&quot;[results] Property &#39;</span><span class="si">{</span><span class="n">prop</span><span class="si">}</span><span class="s2">&#39; not found in metadata or result properties of type </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">. Excluding.&quot;</span>
+                            <span class="p">)</span> 
+                <span class="k">else</span><span class="p">:</span> <span class="c1"># Accept only non-vectorized result properties</span>
+                    <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">properties</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">available_result_non_vector_props</span><span class="p">:</span>
+                            <span class="n">result_props</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prop</span><span class="p">)</span>
+                        <span class="k">elif</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">available_result_vector_props</span><span class="p">:</span>
+                            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[results] Property &#39;</span><span class="si">{</span><span class="n">prop</span><span class="si">}</span><span class="s2">&#39; is a vectorized result property; excluded from results.&quot;</span><span class="p">)</span>
+                        <span class="k">elif</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">available_metadata_props</span><span class="p">:</span>
+                            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[results] Property &#39;</span><span class="si">{</span><span class="n">prop</span><span class="si">}</span><span class="s2">&#39; is a METADATA property; excluded from results.&quot;</span><span class="p">)</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                                <span class="sa">f</span><span class="s2">&quot;[results] Property &#39;</span><span class="si">{</span><span class="n">prop</span><span class="si">}</span><span class="s2">&#39; not found in metadata or result properties of type </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">. Excluding.&quot;</span>
+                            <span class="p">)</span> 
             <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[results] Using </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">result_props</span><span class="p">)</span><span class="si">}</span><span class="s2"> result properties.&quot;</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[results] Error determining result properties: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -524,34 +549,76 @@
         <span class="c1"># --- Retrieve values ---</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;[results] Retrieving result properties...&quot;</span><span class="p">)</span>
 
+        <span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">defaultdict</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
         <span class="n">data_dict</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="n">ts</span> <span class="ow">in</span> <span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">valid_timestamps</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">tk</span> <span class="ow">in</span> <span class="n">tks</span><span class="p">:</span>
                 <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">result_props</span><span class="p">:</span>
                     <span class="k">try</span><span class="p">:</span>
-                        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetResultfortimestamp</span><span class="p">(</span><span class="n">timestamp</span><span class="o">=</span><span class="n">ts</span><span class="p">,</span> <span class="n">Tk</span><span class="o">=</span><span class="n">tk</span><span class="p">,</span> <span class="nb">property</span><span class="o">=</span><span class="n">prop</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> 
+                        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetResultfortimestamp</span><span class="p">(</span><span class="n">timestamp</span><span class="o">=</span><span class="n">ts</span><span class="p">,</span> <span class="n">Tk</span><span class="o">=</span><span class="n">tk</span><span class="p">,</span> <span class="nb">property</span><span class="o">=</span><span class="n">prop</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
 
-                        <span class="k">try</span><span class="p">:</span>
-                            <span class="n">value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
-                        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-                            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[results] Non-numeric value for &#39;</span><span class="si">{</span><span class="n">prop</span><span class="si">}</span><span class="s2">&#39; at &#39;</span><span class="si">{</span><span class="n">ts</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="n">use_vector_results</span><span class="p">:</span>
+                            <span class="c1"># Handle empty value explicitly</span>
+                            <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+                                <span class="n">data_dict</span><span class="p">[(</span><span class="n">tk</span><span class="p">,</span> <span class="n">prop</span><span class="p">,</span> <span class="mi">0</span><span class="p">)][</span><span class="n">ts</span><span class="p">]</span> <span class="o">=</span> <span class="mf">99999.0</span>
+                                <span class="k">continue</span>
 
-                        <span class="n">data_dict</span><span class="p">[(</span><span class="n">tk</span><span class="p">,</span> <span class="n">prop</span><span class="p">)][</span><span class="n">ts</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+                            <span class="n">parts</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">p</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">]</span>
+                            <span class="c1"># If splitting yields no parts, still store a single placeholder</span>
+                            <span class="k">if</span> <span class="ow">not</span> <span class="n">parts</span><span class="p">:</span>
+                                <span class="n">data_dict</span><span class="p">[(</span><span class="n">tk</span><span class="p">,</span> <span class="n">prop</span><span class="p">,</span> <span class="mi">0</span><span class="p">)][</span><span class="n">ts</span><span class="p">]</span> <span class="o">=</span> <span class="mf">99999.0</span>
+                                <span class="k">continue</span>
+
+                            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">parts</span><span class="p">):</span>
+                                <span class="k">try</span><span class="p">:</span>
+                                    <span class="n">v</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+                                <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                                    <span class="k">if</span> <span class="n">p</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+                                        <span class="n">v</span> <span class="o">=</span> <span class="mf">99999.0</span>
+                                    <span class="k">else</span><span class="p">:</span>
+                                        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                                            <span class="sa">f</span><span class="s2">&quot;[results] Non-numeric vector value for &#39;</span><span class="si">{</span><span class="n">prop</span><span class="si">}</span><span class="s2">&#39; at &#39;</span><span class="si">{</span><span class="n">ts</span><span class="si">}</span><span class="s2">&#39; idx </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2">&quot;</span>
+                                        <span class="p">)</span>
+                                        <span class="n">v</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;nan&quot;</span><span class="p">)</span>
+                                <span class="n">data_dict</span><span class="p">[(</span><span class="n">tk</span><span class="p">,</span> <span class="n">prop</span><span class="p">,</span> <span class="n">i</span><span class="p">)][</span><span class="n">ts</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+                            <span class="k">continue</span>  <span class="c1"># do not fall through to scalar handling</span>
+
+                        <span class="c1"># --- existing scalar handling ---</span>
+                        <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+                            <span class="n">data_dict</span><span class="p">[(</span><span class="n">tk</span><span class="p">,</span> <span class="n">prop</span><span class="p">)][</span><span class="n">ts</span><span class="p">]</span> <span class="o">=</span> <span class="mf">99999.0</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="k">try</span><span class="p">:</span>
+                                <span class="n">value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+                            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[results] Non-numeric value for &#39;</span><span class="si">{</span><span class="n">prop</span><span class="si">}</span><span class="s2">&#39; at &#39;</span><span class="si">{</span><span class="n">ts</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                                <span class="n">value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;nan&quot;</span><span class="p">)</span>
+                            <span class="n">data_dict</span><span class="p">[(</span><span class="n">tk</span><span class="p">,</span> <span class="n">prop</span><span class="p">)][</span><span class="n">ts</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
                     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                         <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[results] Failed to get result &#39;</span><span class="si">{</span><span class="n">prop</span><span class="si">}</span><span class="s2">&#39; for tk &#39;</span><span class="si">{</span><span class="n">tk</span><span class="si">}</span><span class="s2">&#39; at &#39;</span><span class="si">{</span><span class="n">ts</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data_dict</span><span class="p">)</span>
         <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;timestamp&quot;</span>
 
-        <span class="c1"># --- Add Name and End Nodes to column MultiIndex ---</span>
+        <span class="c1"># --- Add Name, End Nodes and Interior points to column MultiIndex ---</span>
         <span class="n">col_tuples</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="p">(</span><span class="n">tk</span><span class="p">,</span> <span class="n">prop</span><span class="p">)</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">use_vector_results</span><span class="p">:</span>
+                <span class="n">tk</span><span class="p">,</span> <span class="n">prop</span><span class="p">,</span> <span class="n">comp</span> <span class="o">=</span> <span class="n">col</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">tk</span><span class="p">,</span> <span class="n">prop</span> <span class="o">=</span> <span class="n">col</span>
+                <span class="n">comp</span> <span class="o">=</span> <span class="kc">None</span>
+
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetValue</span><span class="p">(</span><span class="n">tk</span><span class="p">,</span> <span class="s2">&quot;Name&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[results] Failed to get name for tk &#39;</span><span class="si">{</span><span class="n">tk</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
                 <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;UNKNOWN&quot;</span>
+
             <span class="k">if</span> <span class="n">end_nodes_available</span><span class="p">:</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="n">end_nodes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetEndNodes</span><span class="p">(</span><span class="n">tk</span><span class="p">)</span>
@@ -561,17 +628,25 @@
                     <span class="n">end_nodes_str</span> <span class="o">=</span> <span class="s2">&quot;UNKNOWN&quot;</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">end_nodes_str</span> <span class="o">=</span> <span class="s2">&quot;No end nodes on element type&quot;</span>
-                
-            <span class="n">col_tuples</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">tk</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">end_nodes_str</span><span class="p">,</span> <span class="n">prop</span><span class="p">))</span>
 
-        <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">MultiIndex</span><span class="o">.</span><span class="n">from_tuples</span><span class="p">(</span><span class="n">col_tuples</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;tk&quot;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;end_nodes&quot;</span><span class="p">,</span> <span class="s2">&quot;property&quot;</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">use_vector_results</span><span class="p">:</span>
+                <span class="n">col_tuples</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">tk</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">end_nodes_str</span><span class="p">,</span> <span class="n">prop</span><span class="p">,</span> <span class="n">comp</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">col_tuples</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">tk</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">end_nodes_str</span><span class="p">,</span> <span class="n">prop</span><span class="p">))</span>
+
+        <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">MultiIndex</span><span class="o">.</span><span class="n">from_tuples</span><span class="p">(</span>
+            <span class="n">col_tuples</span><span class="p">,</span>
+            <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;tk&quot;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;end_nodes&quot;</span><span class="p">,</span> <span class="s2">&quot;property&quot;</span><span class="p">,</span> <span class="s2">&quot;interior points&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="n">use_vector_results</span>
+                <span class="k">else</span> <span class="p">[</span><span class="s2">&quot;tk&quot;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;end_nodes&quot;</span><span class="p">,</span> <span class="s2">&quot;property&quot;</span><span class="p">]</span>
+        <span class="p">)</span>
 
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[results] Done. Shape: </span><span class="si">{</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">df</span></div>
 
+
     
-<div class="viewcode-block" id="Dataframes_SIR3S_Model.generate_hydraulic_edge_dataframe">
-<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.Dataframes_SIR3S_Model.generate_hydraulic_edge_dataframe">[docs]</a>
+<div class="viewcode-block" id="SIR3S_Model_Dataframes.generate_hydraulic_edge_dataframe">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.generate_hydraulic_edge_dataframe">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">generate_hydraulic_edge_dataframe</span><span class="p">(</span>
         <span class="bp">self</span>      
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
@@ -610,8 +685,8 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">__get_object_type_enums</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">names</span><span class="p">,</span> <span class="n">enum_class</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">[</span><span class="nb">getattr</span><span class="p">(</span><span class="n">enum_class</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">names</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">enum_class</span><span class="p">,</span> <span class="n">name</span><span class="p">)]</span>
 
-<div class="viewcode-block" id="Dataframes_SIR3S_Model.apply_metadata_property_updates">
-<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.Dataframes_SIR3S_Model.apply_metadata_property_updates">[docs]</a>
+<div class="viewcode-block" id="SIR3S_Model_Dataframes.apply_metadata_property_updates">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.apply_metadata_property_updates">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">apply_metadata_property_updates</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">element_type</span><span class="p">:</span> <span class="n">Enum</span><span class="p">,</span>
@@ -689,8 +764,8 @@
                 <span class="n">logger</span><span class="o">.</span><span class="n">debug</span></div>
 
 
-<div class="viewcode-block" id="Dataframes_SIR3S_Model.AddNodesAndPipes">
-<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.Dataframes_SIR3S_Model.AddNodesAndPipes">[docs]</a>
+<div class="viewcode-block" id="SIR3S_Model_Dataframes.AddNodesAndPipes">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.AddNodesAndPipes">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">AddNodesAndPipes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dfXL</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Takes a dataframe with each row representing one pipe and adds it to the model. Only dfXL</span>
@@ -751,8 +826,8 @@
         <span class="k">return</span> <span class="n">dfXL</span></div>
 
 
-<div class="viewcode-block" id="Dataframes_SIR3S_Model.insert_dfPipes">
-<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.Dataframes_SIR3S_Model.insert_dfPipes">[docs]</a>
+<div class="viewcode-block" id="SIR3S_Model_Dataframes.insert_dfPipes">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.insert_dfPipes">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">insert_dfPipes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dfPipes</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Takes a dataframe with each row representing one pipe and adds it to the model.</span>
@@ -785,24 +860,24 @@
         <span class="k">return</span> <span class="n">dfPipes</span></div>
 
 
-<div class="viewcode-block" id="Dataframes_SIR3S_Model.Node_on_Node">
-<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.Dataframes_SIR3S_Model.Node_on_Node">[docs]</a>
+<div class="viewcode-block" id="SIR3S_Model_Dataframes.Node_on_Node">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.Node_on_Node">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">Node_on_Node</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">func_name</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">_getframe</span><span class="p">()</span><span class="o">.</span><span class="n">f_code</span><span class="o">.</span><span class="n">co_name</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">func_name</span><span class="si">}</span><span class="s2">: Start.&quot;</span><span class="p">)</span></div>
 
         <span class="c1"># Implementation goes here</span>
 
-<div class="viewcode-block" id="Dataframes_SIR3S_Model.Merge_Nodes">
-<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.Dataframes_SIR3S_Model.Merge_Nodes">[docs]</a>
+<div class="viewcode-block" id="SIR3S_Model_Dataframes.Merge_Nodes">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.Merge_Nodes">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">Merge_Nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tk1</span><span class="p">,</span> <span class="n">tk2</span><span class="p">):</span>
         <span class="n">func_name</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">_getframe</span><span class="p">()</span><span class="o">.</span><span class="n">f_code</span><span class="o">.</span><span class="n">co_name</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">func_name</span><span class="si">}</span><span class="s2">: Start.&quot;</span><span class="p">)</span></div>
 
         <span class="c1"># Implementation goes here</span>
 
-<div class="viewcode-block" id="Dataframes_SIR3S_Model.Get_Node_Tks_From_Pipe">
-<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.Dataframes_SIR3S_Model.Get_Node_Tks_From_Pipe">[docs]</a>
+<div class="viewcode-block" id="SIR3S_Model_Dataframes.Get_Node_Tks_From_Pipe">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.Get_Node_Tks_From_Pipe">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">Get_Node_Tks_From_Pipe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pipe_tk</span><span class="p">):</span>
         <span class="n">func_name</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">_getframe</span><span class="p">()</span><span class="o">.</span><span class="n">f_code</span><span class="o">.</span><span class="n">co_name</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">func_name</span><span class="si">}</span><span class="s2">: Start.&quot;</span><span class="p">)</span>
@@ -823,8 +898,8 @@
         <span class="k">return</span> <span class="n">from_node_tk</span><span class="p">,</span> <span class="n">to_node_tk</span></div>
 
 
-<div class="viewcode-block" id="Dataframes_SIR3S_Model.Get_Pipe_Tk_From_Nodes">
-<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.Dataframes_SIR3S_Model.Get_Pipe_Tk_From_Nodes">[docs]</a>
+<div class="viewcode-block" id="SIR3S_Model_Dataframes.Get_Pipe_Tk_From_Nodes">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.Get_Pipe_Tk_From_Nodes">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">Get_Pipe_Tk_From_Nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fkKI</span><span class="p">,</span> <span class="n">fkKK</span><span class="p">,</span> <span class="n">Order</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="n">func_name</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">_getframe</span><span class="p">()</span><span class="o">.</span><span class="n">f_code</span><span class="o">.</span><span class="n">co_name</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">func_name</span><span class="si">}</span><span class="s2">: Start.&quot;</span><span class="p">)</span>
@@ -852,8 +927,8 @@
         <span class="k">return</span> <span class="n">pipe_tk_ret</span></div>
 
 
-<div class="viewcode-block" id="Dataframes_SIR3S_Model.VL_or_RL">
-<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.Dataframes_SIR3S_Model.VL_or_RL">[docs]</a>
+<div class="viewcode-block" id="SIR3S_Model_Dataframes.VL_or_RL">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.VL_or_RL">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">VL_or_RL</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">KVR</span><span class="p">):</span>
         <span class="n">func_name</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">_getframe</span><span class="p">()</span><span class="o">.</span><span class="n">f_code</span><span class="o">.</span><span class="n">co_name</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">func_name</span><span class="si">}</span><span class="s2">: Start.&quot;</span><span class="p">)</span>
@@ -865,8 +940,8 @@
             <span class="k">return</span> <span class="s1">&#39;Unknown&#39;</span></div>
 
 
-<div class="viewcode-block" id="Dataframes_SIR3S_Model.Check_Node_Name_Duplicates">
-<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.Dataframes_SIR3S_Model.Check_Node_Name_Duplicates">[docs]</a>
+<div class="viewcode-block" id="SIR3S_Model_Dataframes.Check_Node_Name_Duplicates">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.Check_Node_Name_Duplicates">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">Check_Node_Name_Duplicates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
         <span class="n">func_name</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">_getframe</span><span class="p">()</span><span class="o">.</span><span class="n">f_code</span><span class="o">.</span><span class="n">co_name</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">func_name</span><span class="si">}</span><span class="s2">: Start.&quot;</span><span class="p">)</span>
@@ -887,8 +962,8 @@
         <span class="k">return</span> <span class="n">tks</span></div>
 
 
-<div class="viewcode-block" id="Dataframes_SIR3S_Model.get_EPSG">
-<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.Dataframes_SIR3S_Model.get_EPSG">[docs]</a>
+<div class="viewcode-block" id="SIR3S_Model_Dataframes.get_EPSG">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.get_EPSG">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_EPSG</span><span class="p">(</span><span class="bp">self</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -995,8 +1070,8 @@
                 <span class="k">if</span> <span class="n">filter_container_tks</span><span class="p">:</span>
                     <span class="n">tks</span> <span class="o">=</span> <span class="p">[</span><span class="n">tk</span> <span class="k">for</span> <span class="n">tk</span> <span class="ow">in</span> <span class="n">tks</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetValue</span><span class="p">(</span><span class="n">tk</span><span class="p">,</span> <span class="s2">&quot;FkCont&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="n">filter_container_tks</span><span class="p">]</span>
                 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tks</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
-                    <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[Resolving tks] No elements remain after container filtering: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-                    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[Resolving tks] No elements remain after container filtering.&quot;</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="p">[]</span>
                 <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[Resolving tks] </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">tks</span><span class="p">)</span><span class="si">}</span><span class="s2"> tks remain after container filtering.&quot;</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[Resolving tks] Error occured while filtering with filter_container_tks: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
