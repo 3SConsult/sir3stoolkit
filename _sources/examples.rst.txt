@@ -111,7 +111,7 @@ SIR3S_Model_Mantle() is a collector class that contains the functions from all o
 Tutorial 50: Mantle Import
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-View: `Notebook <tutorials/SIR3S_Model_Mantle/ToolkitTutorial050.html>`_ | Download: `Notebook <tutorials/SIR3S_Model_Mantle/ToolkitTutorial050.html>`_
+View: `Notebook <tutorials/SIR3S_Model_Mantle/ToolkitTutorial050.html>`_ | Download: `Notebook <tutorials/SIR3S_Model_Mantle/ToolkitTutorial050.ipynb>`_
 
 SIR3S_Model_Dataframes
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -125,7 +125,7 @@ Tutorial 51: Dataframe Creation
 
 This Tutorial demonstrates how to create dataframes.
 
-View: `Notebook <tutorials/SIR3S_Model_Mantle/ToolkitTutorial051.html>`_ | Download: `Notebook <tutorials/SIR3S_Model_Mantle/ToolkitTutorial051.html>`_
+View: `Notebook <tutorials/SIR3S_Model_Mantle/ToolkitTutorial051.html>`_ | Download: `Notebook <tutorials/SIR3S_Model_Mantle/ToolkitTutorial051.ipynb>`_
 
 .. _Ttu60-69:
 
@@ -141,7 +141,7 @@ Tutorial 61: nx-Graph
 
 This Tutorial demonstrates how to create a nx-Graph from a SIR 3S model.
 
-View: `Notebook <tutorials/SIR3S_Model_Mantle/ToolkitTutorial061.html>`_  | Download: `Notebook <tutorials/SIR3S_Model_Mantle/ToolkitTutorial061.html>`_
+View: `Notebook <tutorials/SIR3S_Model_Mantle/ToolkitTutorial061.html>`_  | Download: `Notebook <tutorials/SIR3S_Model_Mantle/ToolkitTutorial061.ipynb>`_
 
 .. _Ttu062:
 
@@ -150,7 +150,7 @@ Tutorial 62: pandapipes
 
 This Tutorial demonstrates how to create a pandapipes model from a SIR 3S model.
 
-View: `Notebook <tutorials/SIR3S_Model_Mantle/ToolkitTutorial062.html>`_  | Download: `Notebook <tutorials/SIR3S_Model_Mantle/ToolkitTutorial062.html>`_
+View: `Notebook <tutorials/SIR3S_Model_Mantle/ToolkitTutorial062.html>`_  | Download: `Notebook <tutorials/SIR3S_Model_Mantle/ToolkitTutorial062.ipynb>`_
 
 .. _Ttu70-79:
 
@@ -166,7 +166,7 @@ Tutorial 71: WORK IN PROGRESS: time curves
 
 This Tutorial demonstrates how to plot time curves.
 
-View: `Notebook <tutorials/SIR3S_Model_Mantle/ToolkitTutorial071.html>`_  | Download: `Notebook <tutorials/SIR3S_Model_Mantle/ToolkitTutorial071.html>`_
+View: `Notebook <tutorials/SIR3S_Model_Mantle/ToolkitTutorial071.html>`_  | Download: `Notebook <tutorials/SIR3S_Model_Mantle/ToolkitTutorial071.ipynb>`_
 
 .. 
    .. _Ttu100-149:
