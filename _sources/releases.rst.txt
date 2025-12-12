@@ -32,7 +32,9 @@ Improvements
 ^^^^^^^^^^^^
 
 - dataframes.py
-   - generate_element_results_dataframe() returns float values instead of object type, new parameter use_vector_results to include vectorized data eg. for pipe interior points.
+   - generate_element_results_dataframe() returns float values instead of object type
+   - new method: add_interior_points_to_results_dataframe() to transform result df into vectorized result df with additonal multi index
+   - new method: generate_element_dataframe() to generate basic dfs with metadata and result values of components
 
 - plotting.py
    - plot_pipe_layer() and plot_node_layer() introduced as new functions for network color depictions
