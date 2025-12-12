@@ -39,15 +39,6 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
     This class is supposed to extend the general SIR3S_Model class with the possibility of using pandas dataframes when working with SIR 3S. Getting dataframes, inserting elements via dataframes, running algorithms on dataframes should be made possible.
     """
 
-    @dataclass
-    class DataFrames:
-        df_node: pd.DataFrame = field(default_factory=pd.DataFrame)
-        df_pipe: pd.DataFrame = field(default_factory=pd.DataFrame)
-
-    def __init__(self):
-        super().__init__()
-        self.data_frames = self.DataFrames()
-
     # Dataframe Creation
 
     ## Dataframe Creation: Basic Functions
@@ -59,7 +50,6 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         properties: Optional[List[str]] = None,
         geometry: Optional[bool] = False,
         end_nodes: Optional[bool] = False,
-        filter_container_tks: Optional[List[str]] = None,
         element_type_col: Optional[bool] = False
     ) -> pd.DataFrame | gpd.GeoDataFrame:
         """
@@ -94,7 +84,6 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         # --- Collect device keys (tks) ---
         try:
             available_tks = self.GetTksofElementType(ElementType=element_type)
-            logger.info(f"[metadata] Retrieved {len(available_tks)} element(s) of element type {element_type}.")
         except Exception as e:
             logger.error(f"[metadata] Error retrieving element tks: {e}")
             return pd.DataFrame()
@@ -104,9 +93,13 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
             return pd.DataFrame()
         
         # --- Resolve tks ---
-        tks=self.__resolve_given_tks(element_type=element_type, tks=tks, filter_container_tks=filter_container_tks)
-        if len(tks) < 1:
-            return pd.DataFrame
+        if tks:
+            tks=self.__resolve_given_tks(element_type=element_type, tks=tks, filter_container_tks=None)
+            if len(tks) < 1:
+                return pd.DataFrame
+        else:
+            tks=available_tks
+            logger.info(f"[metadata] Retrieved {len(available_tks)} element(s) of element type {element_type}.")
           
         # --- Resolve given metadata properties ---
         metadata_props = self.__resolve_given_metadata_properties(element_type=element_type, properties=properties)
@@ -130,7 +123,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
                 end_nodes_available = True
             else:
                 logger.warning(f"[metadata] End nodes are not defined for element type {element_type}. Dataframe is created without end nodes.")
-        
+            
         for tk in tks:
             
             row = {"tk": tk}
@@ -201,8 +194,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         tks: Optional[List[str]] = None,
         properties: Optional[List[str]] = None,
         timestamps: Optional[List[str]] = None,
-        filter_container_tks: Optional[str] = None,
-        include_vectorized_results: Optional[bool] = False,
+        place_holder_value: Optional[float] = 99999.0
     ) -> pd.DataFrame:
         """
         Generate a dataframe with RESULT (time-dependent) properties for all devices and timestamps.
@@ -212,28 +204,23 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         element_type : Enum or str
             The element type (e.g., self.ObjectTypes.Node).
         properties : list[str], optional
-            List of RESULT property names (vectors) to include. If None, includes ALL available result properties.
+            List of RESULT property names (vectors) to include. If None, includes ALL available result properties. If the calculation of SIR Calc does not yield a value for a requested property it will not be included (this is checked for each element individually).
         timestamps : list[Union[str, int]], optional
             List of timestamps to include. Can be:
             - List of timestamp strings (e.g., ["2025-09-25 00:00:00.000 +02:00", "2025-09-25 00:00:01.000 +02:00", '2025-09-25 00:00:05.000 +02:00'])
             - List of integer indices (e.g., [0, 7, -1]), where:
                 - 0 refers to the first simulation timestamp
                 - 7 refers to the eights simulation timestamp
-                - -1 refers to the last available timestamp
-        filter_container_tks : list[str], optional
-            List of tks of containers to use element from. Elements from other containers are not included.
-        include_vectorized_results: bool, optional, default false
-            Only relevant for pipe dataframes, otherwise automatically set to False. If True an addtional muliindex 'interior points' is created to index all vectorized result value. non-vectoriezd result values have -1 as multiindex.
-                
+                - -1 refers to the last available timestamp 
+
         Returns
         -------
         pd.DataFrame
-            Dataframe with one row per timestamp (datatype float) and MultiIndex columns:
+            Dataframe with one row per timestamp (datatype float, datatype str for vectorized data -> Pipes) and MultiIndex columns:
             - Level 0: tk (device ID)
             - Level 1: name (device name)
             - Level 2: end_nodes (tuple of connected node IDs as string)
             - Level 3: property (result vector name)
-            - Level 4: interior points 
         """
         # --- Validate time stamps ---
         logger.info(f"[results] Generating results dataframe for element type: {element_type}")
@@ -244,15 +231,10 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
             return pd.DataFrame()
             
         # --- Resolve tks ---
-        tks=self.__resolve_given_tks(element_type=element_type, tks=tks, filter_container_tks=filter_container_tks)
+        tks=self.__resolve_given_tks(element_type=element_type, tks=tks, filter_container_tks=None)
         if len(tks) < 1:
             return pd.DataFrame
         
-        # --- Vectorized result values ---
-        if element_type!= self.ObjectTypes.Pipe:
-            include_vectorized_results = False
-            logger.info(f"Vectorized data only exist for pipes.")
-
         # --- Resolve given properties ---
         try:
             available_metadata_props = self.GetPropertiesofElementType(ElementType=element_type)
@@ -266,37 +248,18 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
             result_props: List[str] = []
 
             if properties is None:
-                if include_vectorized_results:
-                    logger.info(f"[results] No properties given → using ALL result properties for {element_type}.")
-                    result_props = available_result_props
-                else:
-                    logger.info(f"[results] No properties given → using ALL non-vectorized result properties for {element_type}.")
-                    result_props = available_result_non_vector_props
+                logger.info(f"[results] No properties given → using ALL result properties for {element_type}.")
+                result_props = available_result_props
             else:
-                if include_vectorized_results: # Accept vectorized and non vectorized result properties
-                    for prop in properties:
-                        if prop in available_result_vector_props:
-                            result_props.append(prop)
-                        elif prop in available_result_non_vector_props:
-                            result_props.append(prop)
-                        elif prop in available_metadata_props:
-                            logger.warning(f"[results] Property '{prop}' is a METADATA property; excluded from results.")
-                        else:
-                            logger.warning(
-                                f"[results] Property '{prop}' not found in metadata or result properties of type {element_type}. Excluding."
-                            ) 
-                else: # Accept only non-vectorized result properties
-                    for prop in properties:
-                        if prop in available_result_non_vector_props:
-                            result_props.append(prop)
-                        elif prop in available_result_vector_props:
-                            logger.warning(f"[results] Property '{prop}' is a vectorized result property; excluded from results.")
-                        elif prop in available_metadata_props:
-                            logger.warning(f"[results] Property '{prop}' is a METADATA property; excluded from results.")
-                        else:
-                            logger.warning(
-                                f"[results] Property '{prop}' not found in metadata or result properties of type {element_type}. Excluding."
-                            ) 
+                for prop in properties:
+                    if prop in available_result_props:
+                        result_props.append(prop)
+                    elif prop in available_metadata_props:
+                        logger.warning(f"[results] Property '{prop}' is a METADATA property; excluded from results.")
+                    else:
+                        logger.warning(
+                            f"[results] Property '{prop}' not found in metadata or result properties of type {element_type}. Excluding."
+                        ) 
             logger.info(f"[results] Using {len(result_props)} result properties.")
         except Exception as e:
             logger.error(f"[results] Error determining result properties: {e}")
@@ -307,7 +270,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
             end_nodes_available = True
 
         # --- Retrieve values ---
-        logger.info("[results] Retrieving result properties...")
+        logger.info("[results] Retrieving result values...")
 
         data_dict = defaultdict(dict)
 
@@ -316,53 +279,18 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
                 for prop in result_props:
                     try:
                         value = self.GetResultfortimestamp(timestamp=ts, Tk=tk, property=prop)[0]
-
-                        if include_vectorized_results:
-                            # --- vector-aware handling with scalar fallback ---
-                            s = str(value)
-
-                            # Empty -> treat as scalar fallback with sentinel
-                            if s == "":
-                                data_dict[(tk, prop, -1)][ts] = 99999.0
-                            else:
-                                parts_raw = s.split("\t")
-                                parts = [p for p in parts_raw if p != ""]
-
-                                is_scalar_fallback = ("\t" not in s) 
-
-                                if is_scalar_fallback:
-                                    # --- scalar fallback into vector key with idx -1 ---
-                                    try:
-                                        v = float(parts[0] if parts else s)  # parts might be [], use s
-                                    except ValueError:
-                                        logger.warning(f"[results] Non-numeric (scalar-fallback) value for '{prop}' at '{ts}': {value}")
-                                        v = float("nan")
-                                    data_dict[(tk, prop, -1)][ts] = v
-                                else:
-                                    # --- proper vector handling ---
-                                    for i, p in enumerate(parts):
-                                        try:
-                                            v = float(p)
-                                        except ValueError:
-                                            if p == "":
-                                                v = 99999.0
-                                            else:
-                                                logger.warning(
-                                                    f"[results] Non-numeric vector value for '{prop}' at '{ts}' idx {i}: {p}"
-                                                )
-                                                v = float("nan")
-                                        data_dict[(tk, prop, i)][ts] = v
+                        if value == "":
+                            data_dict[(tk, prop)][ts] = place_holder_value
+                        elif prop in available_result_vector_props:
+                            value = str(value)
+                            data_dict[(tk, prop)][ts] = value
                         else:
-                            # --- scalar handling ---
-                            if value == "":
-                                data_dict[(tk, prop)][ts] = 99999.0
-                            else:
-                                try:
-                                    value = float(value)
-                                except ValueError:
-                                    logger.warning(f"[results] Non-numeric value for '{prop}' at '{ts}': {value}")
-                                    value = float("nan")
-                                data_dict[(tk, prop)][ts] = value
+                            try:
+                                value = float(value)
+                            except ValueError:
+                                logger.warning(f"[results] Non-numeric value for '{prop}' at '{ts}': {value}")
+                                value = float("nan")
+                            data_dict[(tk, prop)][ts] = value
 
                     except Exception as e:
                         logger.warning(f"[results] Failed to get result '{prop}' for tk '{tk}' at '{ts}': {e}")
@@ -374,12 +302,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         col_tuples = []
 
         for col in df.columns:
-            if include_vectorized_results:
-                tk, prop, comp = col
-            else:
-                tk, prop = col
-                comp = None
-
+            tk, prop = col
             try:
                 name = self.GetValue(tk, "Name")[0]
             except Exception as e:
@@ -396,15 +319,12 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
             else:
                 end_nodes_str = "No end nodes on element type"
 
-            if include_vectorized_results:
-                col_tuples.append((tk, name, end_nodes_str, prop, comp))
-            else:
-                col_tuples.append((tk, name, end_nodes_str, prop))
+            
+            col_tuples.append((tk, name, end_nodes_str, prop))
 
         df.columns = pd.MultiIndex.from_tuples(
             col_tuples,
-            names=["tk", "name", "end_nodes", "property", "interior points"] if include_vectorized_results
-                else ["tk", "name", "end_nodes", "property"]
+            names=["tk", "name", "end_nodes", "property"]
         )
 
         logger.info(f"[results] Done. Shape: {df.shape}")
@@ -412,79 +332,40 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
 
     ## Dataframe Creation: Explicit Dataframe Creation
 
-    def generate_node_dataframe(
-        self
-    ) -> pd.DataFrame:
-        """
-        Generates a dataframe with all nodes containing all all metadata information and results for static timestamp. 
-        """
-        logger.debug(f"Generating df_nodes ...")
-
-        try:
-            logger.debug(f"[generate_node_dataframe] Generating df_nodes_metadata ...")
-            df_nodes_metadata = self.generate_element_metadata_dataframe(element_type=self.ObjectTypes.Node
-                                                                ,tks=None
-                                                                ,properties=None
-                                                                ,geometry=True
-                                                                ,end_nodes=False
-                                                                ,filter_container_tks=None
-                                                                ,element_type_col=False
-            )
-            
-            logger.debug(f"[generate_node_dataframe] Generating df_nodes_results ...")
-            result_values_to_obtain = self.GetResultProperties_from_elementType(self.ObjectTypes.Node, True)
-            static_timestamp = self.GetTimeStamps()[1]
-            df_nodes_results = self.generate_element_results_dataframe(element_type=self.ObjectTypes.Node
-                                                                        ,tks=None
-                                                                        ,properties=result_values_to_obtain
-                                                                        ,timestamps=[static_timestamp]
-                                                                        ,filter_container_tks=None
-                                                                        ,include_vectorized_results=False)
-
-            logger.debug(f"[generate_node_dataframe] Merging df_nodes_metadata with df_nodes_results ...")
-            df_nodes_results.columns = df_nodes_results.columns.droplevel([1, 2])
-            df_nodes_results = df_nodes_results.T.unstack(level=0).T
-            df_nodes_results = df_nodes_results.droplevel(0, axis=0)
-            df_pipes = df_nodes_metadata.merge(on="tk",
-                                how="outer",
-                                right=df_nodes_results)
-            
-            return df_pipes
-        
-        except Exception as e:
-            logger.error(f"[generate_node_dataframe] Error generating df_nodes: {e}")
-
-    def generate_generic_dataframe(
+    def generate_element_dataframe(
         self,
-        element_type: str
+        element_type: str,
     ) -> pd.DataFrame:
         """
-        Generates a dataframe with all containing all all metadata information and results for static timestamp. 
-        """
-        logger.debug(f"[generate_generic_dataframe] Generating df for element type: {element_type} ...")
+        Generates a dataframe containing all instances for a given element type in the open SIR 3S model. All metadata and most result values (self.GetResultProperties_from_elementType(onlySelectedVectors=True)) for the static timestamp are included. Result values are given as floats, unless they are in vectorized form (relevant only for pipes), in that case they are strings.
+        
+        Paramters
+        ---------
 
+        - element_type: str: eg. self.ObjectTypes.Node, self.ObjectTypes.Pipe
+        """
+        logger.info(f"[generate_element_dataframe] Generating df for element type: {element_type} ...")
+        
         try:
-            logger.debug(f"[generate_generic_dataframe] Generating df_metadata for element type: {element_type} ...")
+            logger.debug(f"[generate_element_dataframe] Generating df_metadata for element type: {element_type} ...")
             df_metadata = self.generate_element_metadata_dataframe(element_type=element_type
                                                                 ,tks=None
                                                                 ,properties=None
                                                                 ,geometry=True
                                                                 ,end_nodes=False
-                                                                ,filter_container_tks=None
                                                                 ,element_type_col=False
             )
             
-            logger.debug(f"[generate_generic_dataframe] Generating df_results for element type: {element_type} ...")
+            logger.debug(f"[generate_element_dataframe] Generating df_results for element type: {element_type} ...")
             result_values_to_obtain = self.GetResultProperties_from_elementType(element_type, True)
             static_timestamp = self.GetTimeStamps()[1]
             df_results = self.generate_element_results_dataframe(element_type=element_type
                                                                         ,tks=None
                                                                         ,properties=result_values_to_obtain
                                                                         ,timestamps=[static_timestamp]
-                                                                        ,filter_container_tks=None
-                                                                        ,include_vectorized_results=False)
+            )
 
-            logger.debug(f"[generate_generic_dataframe] Merging df_metadata with df_results for element type: {element_type} ...")
+            logger.debug(f"[generate_element_dataframe] Merging df_metadata with df_results for element type: {element_type} ...")
             df_results.columns = df_results.columns.droplevel([1, 2])
             df_results = df_results.T.unstack(level=0).T
             df_results = df_results.droplevel(0, axis=0)
@@ -495,18 +376,39 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
             return df
         
         except Exception as e:
-            logger.error(f"[generate_generic_dataframe] Error Generating df for element type: {element_type}: {e}")
+            logger.error(f"[generate_element_dataframe] Error Generating df for element type: {element_type}: {e}")
         
-    def transform_results_dataframe_to_vectorized(
-            self,
-            df_results: pd.DataFrame
-            
-    ) -> pd.DataFrame:
+    def add_interior_points_to_results_dataframe(self, df_results):
         """
+        Expand vector properties (level 3 contains 'VEC') from tab-separated strings into
+        float segments along a new column MultiIndex level 'interior points'.
+        Non-vector properties get interior point -1 and retain original values.
         """
-        self.generate_element_results_dataframe(self.ObjectTypes.Pipe
-                                                ,)
 
+        vec_props = {p for p in df_results.columns.get_level_values(3).unique() if "VEC" in str(p)}
+        new_level_name = "interior points"
+        new_names = list(df_results.columns.names) + [new_level_name]
+
+        pieces = []
+        for col_key in df_results.columns:
+            prop = col_key[3]
+            col = df_results[col_key]
+
+            if prop in vec_props:
+                # Split by tabs; convert to float;
+                s = col.where(col.notna()).astype(str)
+                segs = s.str.split(r"\t+", expand=True).apply(pd.to_numeric, errors="coerce")
+                segs.columns = pd.MultiIndex.from_tuples([col_key + (i,) for i in range(segs.shape[1])],
+                                                        names=new_names)
+                pieces.append(segs)
+            else:
+                df1 = col.to_frame()
+                df1.columns = pd.MultiIndex.from_tuples([col_key + (-1,)], names=new_names)
+                pieces.append(df1)
+
+        out = pd.concat(pieces, axis=1)
+        return out
+    
     def generate_hydraulic_edge_dataframe(
         self      
     ) -> pd.DataFrame:
