@@ -48,158 +48,9 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         super().__init__()
         self.data_frames = self.DataFrames()
 
-    def generate_dataframes(self):
-        """
-        WORK IN PROGRESS
-        Manually generate and populate all relevant dataframes.
+    # Dataframe Creation
 
-        Inlcude optional param with ElemenTypes to only create certain dataframes
-        """
-        if not self.__is_a_model_open():
-            logger.warning("No model is open. Cannot generate dataframes.")
-            return
-
-        logger.info("Generating dataframes...")
-        
-        logger.info("Generating df_node...")
-        _metadata_props=self.GetPropertiesofElementType(self.ObjectTypes.Node)
-        _result_props=self.GetResultProperties_from_elementType(self.ObjectTypes.Node, onlySelectedVectors=True)
-        self.data_frames.df_node = self.generate_element_dataframe(metadata_props=_metadata_props, result_props=_result_props, element_type=self.ObjectTypes.Node)
-        logger.info("df_node generated")
-    
-        logger.info("Generating df_pipe...")
-        _metadata_props=self.GetPropertiesofElementType(self.ObjectTypes.Pipe)
-        _result_props=self.GetResultProperties_from_elementType(self.ObjectTypes.Pipe, onlySelectedVectors=True)
-        self.data_frames.df_pipe = self.generate_element_dataframe(metadata_props=_metadata_props, result_props=_result_props, element_type=self.ObjectTypes.Pipe)
-        logger.info("df_pipe generated")
-
-        logger.info("Dataframes generated.")
-
-    def _resolve_given_timestamps(self, timestamps: Optional[List[Union[str, int]]]) -> List[str]:
-        """
-        Resolve the list of timestamps to use:
-        - If `timestamps` is None: use all simulation timestamps (if available) else STAT.
-        - If list contains integers: treat them as indices into the available timestamps.
-        - If list contains strings: treat them as actual timestamp strings.
-        - Validate against available timestamps and filter out invalid ones.
-
-        Returns
-        -------
-        List[str]
-            A list of valid timestamp strings (possibly empty).
-        """
-        # --- Default timestamp resolution ---
-        if timestamps is None:
-            logger.info("[Resolving Timestamps] No timestamps were given. Checking available simulation timestamps (SIR3S_Model.GetTimeStamps()[0]).")
-            try:
-                simulation_timestamps, tsStat, tsMin, tsMax = self.GetTimeStamps()
-                if simulation_timestamps:
-                    timestamps = simulation_timestamps
-                    logger.info(f"[Resolving Timestamps] {len(timestamps)} simulation timestamp(s) are available.")
-                else:
-                    logger.warning("[Resolving Timestamps] No valid simulation timestamps exist in result data.")
-                    return []
-            except Exception as e:
-                logger.error(f"[Resolving Timestamps] Error retrieving timestamps: {e}")
-                return []
-
-        # --- Validate given timestamps ---
-        try:
-            simulation_timestamps, tsStat, tsMin, tsMax = self.GetTimeStamps()
-            available_timestamps = list(simulation_timestamps) if simulation_timestamps else []
-
-            valid_timestamps = []
-
-            # Check if input is list of integers (indices)
-            if isinstance(timestamps[0], int):
-                for idx in timestamps:
-                    try:
-                        resolved_ts = available_timestamps[idx]
-                        valid_timestamps.append(resolved_ts)
-                    except IndexError:
-                        logger.warning(f"[Resolving Timestamps] Index {idx} out of bounds for available timestamps. It will be excluded.")
-            else:
-                # Assume list of timestamp strings
-                for ts in timestamps:
-                    if ts in available_timestamps:
-                        valid_timestamps.append(ts)
-                    else:
-                        logger.warning(
-                            f"[Resolving Timestamps] Timestamp {ts} is not valid (SIR3S_Model.GetTimeStamps()). It will be excluded."
-                        )
-
-            if len(valid_timestamps) == 1 and tsStat == valid_timestamps[0]:
-                logger.info(f"[Resolving Timestamps] Only static timestamp {tsStat} is used")
-            logger.info(f"[Resolving Timestamps] {len(valid_timestamps)} valid timestamp(s) will be used.")
-            return valid_timestamps
-        except Exception as e:
-            logger.error(f"Error validating timestamps: {e}")
-            return []
-
-    def __resolve_given_metadata_properties(
-        self,
-        element_type: Enum,
-        properties: Optional[List[str]] = None,
-    ) -> List[str]:
-        """
-        Checks the validity of given list of metadata properties. 
-        If properties=None => All available properties will be used
-        If properties=[] => No properties will be used
-        """
-
-        try:
-            available_metadata_props = self.GetPropertiesofElementType(ElementType=element_type)
-            available_result_props = self.GetResultProperties_from_elementType(
-                elementType=element_type,
-                onlySelectedVectors=False
-            )
-
-            metadata_props: List[str] = []
-
-            if properties is None:
-                logger.info(f"[Resolving Metadata Properties] No properties given → using ALL metadata properties for {element_type}.")
-                metadata_props = available_metadata_props
-            else:
-                for prop in properties:
-                    if prop in available_metadata_props:
-                        metadata_props.append(prop)
-                    elif prop in available_result_props:
-                        logger.warning(f"[Resolving Metadata Properties] Property '{prop}' is a RESULT property; excluded from metadata.")
-                    else:
-                        logger.warning(
-                            f"[Resolving Metadata Properties] Property '{prop}' not found in metadata or result properties of type {element_type}. Excluding."
-                        )
-
-            logger.info(f"[Resolving Metadata Properties] Using {len(metadata_props)} metadata properties.")
-       
-        except Exception as e:
-            logger.error(f"[Resolving Metadata Properties] Error resolving metadata properties: {e}")
-        
-        return metadata_props
-
-    def __is_get_endnodes_applicable(self, element_type):
-        buffer = io.StringIO()
-        sys_stdout = sys.stdout
-        sys.stdout = buffer  # Redirect stdout
-
-        dummy = self.InsertElement(element_type, "to be deleted")
-
-        try:
-            
-            _ = self.GetEndNodes(dummy)
-        except Exception:
-            sys.stdout = sys_stdout  # Restore stdout
-
-        self.DeleteElement(dummy)
-
-        sys.stdout = sys_stdout  # Restore stdout
-        output = buffer.getvalue()
-        buffer.close()
-
-        if "doesnt apply to such Type of Elements" in output:
-            return False
-        
-        return True
+    ## Dataframe Creation: Basic Functions
 
     def generate_element_metadata_dataframe(
         self,
@@ -351,7 +202,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         properties: Optional[List[str]] = None,
         timestamps: Optional[List[str]] = None,
         filter_container_tks: Optional[str] = None,
-        use_vector_results: Optional[bool] = False,
+        include_vectorized_results: Optional[bool] = False,
     ) -> pd.DataFrame:
         """
         Generate a dataframe with RESULT (time-dependent) properties for all devices and timestamps.
@@ -367,10 +218,12 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
             - List of timestamp strings (e.g., ["2025-09-25 00:00:00.000 +02:00", "2025-09-25 00:00:01.000 +02:00", '2025-09-25 00:00:05.000 +02:00'])
             - List of integer indices (e.g., [0, 7, -1]), where:
                 - 0 refers to the first simulation timestamp
-                - 7 refers to the seventh simulation timestamp
+                - 7 refers to the eights simulation timestamp
                 - -1 refers to the last available timestamp
         filter_container_tks : list[str], optional
             List of tks of containers to use element from. Elements from other containers are not included.
+        include_vectorized_results: bool, optional, default false
+            Only relevant for pipe dataframes, otherwise automatically set to False. If True an addtional muliindex 'interior points' is created to index all vectorized result value. non-vectoriezd result values have -1 as multiindex.
                 
         Returns
         -------
@@ -380,6 +233,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
             - Level 1: name (device name)
             - Level 2: end_nodes (tuple of connected node IDs as string)
             - Level 3: property (result vector name)
+            - Level 4: interior points 
         """
         # --- Validate time stamps ---
         logger.info(f"[results] Generating results dataframe for element type: {element_type}")
@@ -394,6 +248,11 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         if len(tks) < 1:
             return pd.DataFrame
         
+        # --- Vectorized result values ---
+        if element_type!= self.ObjectTypes.Pipe:
+            include_vectorized_results = False
+            logger.info(f"Vectorized data only exist for pipes.")
+
         # --- Resolve given properties ---
         try:
             available_metadata_props = self.GetPropertiesofElementType(ElementType=element_type)
@@ -407,19 +266,19 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
             result_props: List[str] = []
 
             if properties is None:
-                if use_vector_results:
-                    logger.info(f"[results] No properties given → using ALL vectorized result properties for {element_type}.")
-                    result_props = available_result_vector_props
+                if include_vectorized_results:
+                    logger.info(f"[results] No properties given → using ALL result properties for {element_type}.")
+                    result_props = available_result_props
                 else:
                     logger.info(f"[results] No properties given → using ALL non-vectorized result properties for {element_type}.")
                     result_props = available_result_non_vector_props
             else:
-                if use_vector_results: # Accept only vectorized result properties
+                if include_vectorized_results: # Accept vectorized and non vectorized result properties
                     for prop in properties:
                         if prop in available_result_vector_props:
                             result_props.append(prop)
                         elif prop in available_result_non_vector_props:
-                            logger.warning(f"[results] Property '{prop}' is a non-vectorized result property; excluded from results.")
+                            result_props.append(prop)
                         elif prop in available_metadata_props:
                             logger.warning(f"[results] Property '{prop}' is a METADATA property; excluded from results.")
                         else:
@@ -450,9 +309,6 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         # --- Retrieve values ---
         logger.info("[results] Retrieving result properties...")
 
-        from collections import defaultdict
-        import pandas as pd
-
         data_dict = defaultdict(dict)
 
         for ts in map(str, valid_timestamps):
@@ -461,42 +317,52 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
                     try:
                         value = self.GetResultfortimestamp(timestamp=ts, Tk=tk, property=prop)[0]
 
-                        if use_vector_results:
-                            # Handle empty value explicitly
-                            if value == "":
-                                data_dict[(tk, prop, 0)][ts] = 99999.0
-                                continue
+                        if include_vectorized_results:
+                            # --- vector-aware handling with scalar fallback ---
+                            s = str(value)
 
-                            parts = [p for p in str(value).split("\t") if p != ""]
-                            # If splitting yields no parts, still store a single placeholder
-                            if not parts:
-                                data_dict[(tk, prop, 0)][ts] = 99999.0
-                                continue
+                            # Empty -> treat as scalar fallback with sentinel
+                            if s == "":
+                                data_dict[(tk, prop, -1)][ts] = 99999.0
+                            else:
+                                parts_raw = s.split("\t")
+                                parts = [p for p in parts_raw if p != ""]
 
-                            for i, p in enumerate(parts):
-                                try:
-                                    v = float(p)
-                                except ValueError:
-                                    if p == "":
-                                        v = 99999.0
-                                    else:
-                                        logger.warning(
-                                            f"[results] Non-numeric vector value for '{prop}' at '{ts}' idx {i}: {p}"
-                                        )
+                                is_scalar_fallback = ("\t" not in s) 
+
+                                if is_scalar_fallback:
+                                    # --- scalar fallback into vector key with idx -1 ---
+                                    try:
+                                        v = float(parts[0] if parts else s)  # parts might be [], use s
+                                    except ValueError:
+                                        logger.warning(f"[results] Non-numeric (scalar-fallback) value for '{prop}' at '{ts}': {value}")
                                         v = float("nan")
-                                data_dict[(tk, prop, i)][ts] = v
-                            continue  # do not fall through to scalar handling
-
-                        # --- existing scalar handling ---
-                        if value == "":
-                            data_dict[(tk, prop)][ts] = 99999.0
+                                    data_dict[(tk, prop, -1)][ts] = v
+                                else:
+                                    # --- proper vector handling ---
+                                    for i, p in enumerate(parts):
+                                        try:
+                                            v = float(p)
+                                        except ValueError:
+                                            if p == "":
+                                                v = 99999.0
+                                            else:
+                                                logger.warning(
+                                                    f"[results] Non-numeric vector value for '{prop}' at '{ts}' idx {i}: {p}"
+                                                )
+                                                v = float("nan")
+                                        data_dict[(tk, prop, i)][ts] = v
                         else:
-                            try:
-                                value = float(value)
-                            except ValueError:
-                                logger.warning(f"[results] Non-numeric value for '{prop}' at '{ts}': {value}")
-                                value = float("nan")
-                            data_dict[(tk, prop)][ts] = value
+                            # --- scalar handling ---
+                            if value == "":
+                                data_dict[(tk, prop)][ts] = 99999.0
+                            else:
+                                try:
+                                    value = float(value)
+                                except ValueError:
+                                    logger.warning(f"[results] Non-numeric value for '{prop}' at '{ts}': {value}")
+                                    value = float("nan")
+                                data_dict[(tk, prop)][ts] = value
 
                     except Exception as e:
                         logger.warning(f"[results] Failed to get result '{prop}' for tk '{tk}' at '{ts}': {e}")
@@ -508,7 +374,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         col_tuples = []
 
         for col in df.columns:
-            if use_vector_results:
+            if include_vectorized_results:
                 tk, prop, comp = col
             else:
                 tk, prop = col
@@ -530,21 +396,117 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
             else:
                 end_nodes_str = "No end nodes on element type"
 
-            if use_vector_results:
+            if include_vectorized_results:
                 col_tuples.append((tk, name, end_nodes_str, prop, comp))
             else:
                 col_tuples.append((tk, name, end_nodes_str, prop))
 
         df.columns = pd.MultiIndex.from_tuples(
             col_tuples,
-            names=["tk", "name", "end_nodes", "property", "interior points"] if use_vector_results
+            names=["tk", "name", "end_nodes", "property", "interior points"] if include_vectorized_results
                 else ["tk", "name", "end_nodes", "property"]
         )
 
         logger.info(f"[results] Done. Shape: {df.shape}")
         return df
 
-    
+    ## Dataframe Creation: Explicit Dataframe Creation
+
+    def generate_node_dataframe(
+        self
+    ) -> pd.DataFrame:
+        """
+        Generates a dataframe with all nodes containing all all metadata information and results for static timestamp. 
+        """
+        logger.debug(f"Generating df_nodes ...")
+
+        try:
+            logger.debug(f"[generate_node_dataframe] Generating df_nodes_metadata ...")
+            df_nodes_metadata = self.generate_element_metadata_dataframe(element_type=self.ObjectTypes.Node
+                                                                ,tks=None
+                                                                ,properties=None
+                                                                ,geometry=True
+                                                                ,end_nodes=False
+                                                                ,filter_container_tks=None
+                                                                ,element_type_col=False
+            )
+            
+            logger.debug(f"[generate_node_dataframe] Generating df_nodes_results ...")
+            result_values_to_obtain = self.GetResultProperties_from_elementType(self.ObjectTypes.Node, True)
+            static_timestamp = self.GetTimeStamps()[1]
+            df_nodes_results = self.generate_element_results_dataframe(element_type=self.ObjectTypes.Node
+                                                                        ,tks=None
+                                                                        ,properties=result_values_to_obtain
+                                                                        ,timestamps=[static_timestamp]
+                                                                        ,filter_container_tks=None
+                                                                        ,include_vectorized_results=False)
+
+            logger.debug(f"[generate_node_dataframe] Merging df_nodes_metadata with df_nodes_results ...")
+            df_nodes_results.columns = df_nodes_results.columns.droplevel([1, 2])
+            df_nodes_results = df_nodes_results.T.unstack(level=0).T
+            df_nodes_results = df_nodes_results.droplevel(0, axis=0)
+            df_pipes = df_nodes_metadata.merge(on="tk",
+                                how="outer",
+                                right=df_nodes_results)
+            
+            return df_pipes
+        
+        except Exception as e:
+            logger.error(f"[generate_node_dataframe] Error generating df_nodes: {e}")
+
+    def generate_generic_dataframe(
+        self,
+        element_type: str
+    ) -> pd.DataFrame:
+        """
+        Generates a dataframe with all containing all all metadata information and results for static timestamp. 
+        """
+        logger.debug(f"[generate_generic_dataframe] Generating df for element type: {element_type} ...")
+
+        try:
+            logger.debug(f"[generate_generic_dataframe] Generating df_metadata for element type: {element_type} ...")
+            df_metadata = self.generate_element_metadata_dataframe(element_type=element_type
+                                                                ,tks=None
+                                                                ,properties=None
+                                                                ,geometry=True
+                                                                ,end_nodes=False
+                                                                ,filter_container_tks=None
+                                                                ,element_type_col=False
+            )
+            
+            logger.debug(f"[generate_generic_dataframe] Generating df_results for element type: {element_type} ...")
+            result_values_to_obtain = self.GetResultProperties_from_elementType(element_type, True)
+            static_timestamp = self.GetTimeStamps()[1]
+            df_results = self.generate_element_results_dataframe(element_type=element_type
+                                                                        ,tks=None
+                                                                        ,properties=result_values_to_obtain
+                                                                        ,timestamps=[static_timestamp]
+                                                                        ,filter_container_tks=None
+                                                                        ,include_vectorized_results=False)
+
+            logger.debug(f"[generate_generic_dataframe] Merging df_metadata with df_results for element type: {element_type} ...")
+            df_results.columns = df_results.columns.droplevel([1, 2])
+            df_results = df_results.T.unstack(level=0).T
+            df_results = df_results.droplevel(0, axis=0)
+            df = df_metadata.merge(on="tk",
+                                how="outer",
+                                right=df_results)
+            
+            return df
+        
+        except Exception as e:
+            logger.error(f"[generate_generic_dataframe] Error Generating df for element type: {element_type}: {e}")
+        
+    def transform_results_dataframe_to_vectorized(
+            self,
+            df_results: pd.DataFrame
+            
+    ) -> pd.DataFrame:
+        """
+        """
+        self.generate_element_results_dataframe(self.ObjectTypes.Pipe
+                                                ,)
+
     def generate_hydraulic_edge_dataframe(
         self      
     ) -> pd.DataFrame:
@@ -582,7 +544,244 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
     def __get_object_type_enums(self, names, enum_class):
         return [getattr(enum_class, name) for name in names if hasattr(enum_class, name)]
 
-    def apply_metadata_property_updates(
+    ## Dataframe Creation: Helpers
+
+    def __sort_properties_into_metadata_and_results(
+        self, 
+        element_type: Enum,
+        properties: List[str],
+    ) -> Tuple[List[str], List[str], List[str]]:
+        """
+        Sorts the given properties into three categories:
+        - Metadata properties
+        - Result properties
+        - Uncategorized properties (not found in either metadata or result properties)
+        
+        Args:
+            element_type (Enum): The type of element to query properties for.
+            properties (List[str]): The list of properties to sort.
+        
+        Returns:
+            Tuple[List[str], List[str], List[str]]: A tuple containing three lists:
+                - metadata_matches
+                - result_matches
+                - uncategorized
+        """
+        metadata_properties = self.GetPropertiesofElementType(element_type=element_type)
+        result_properties = self.GetResultProperties_from_elementType(elementType=element_type)
+
+        metadata_matches = [prop for prop in properties if prop in metadata_properties]
+        result_matches = [prop for prop in properties if prop in result_properties]
+        uncategorized = [prop for prop in properties if prop not in metadata_properties and prop not in result_properties]
+
+        return metadata_matches, result_matches, uncategorized
+
+    def __decapitalize(s: str) -> str:
+        return s[:1].lower() + s[1:] if s else s
+
+    def get_EPSG(self
+    ) -> Tuple[str]:
+        """
+        Returns SRID, SRID and combined String. For example: ('25832', '1571', '25832-1571')
+        """
+        
+        tk_SIRGRAF = self.GetTksofElementType(self.ObjectTypes.SIRGRAF)[0]
+        srid = str(self.GetValue(tk_SIRGRAF, "Srid")[0])
+        srid2 = str(self.GetValue(tk_SIRGRAF, "Srid2")[0])
+        srid_string = self.GetValue(tk_SIRGRAF, "SridString")[0]
+
+        return srid, srid2, srid_string
+    
+    def __resolve_given_tks(
+        self,
+        element_type: Enum,
+        tks: Optional[List[str]] = None,
+        filter_container_tks: Optional[List[str]] = None
+    ) -> List:
+
+        # --- Collect device keys (tks) ---
+        try:
+            available_tks = self.GetTksofElementType(ElementType=element_type)
+            logger.info(f"[Resolving tks] Retrieved {len(available_tks)} element(s) of element type {element_type}.")
+        except Exception as e:
+            logger.error(f"[metadata] Error retrieving element tks: {e}")
+            return pd.DataFrame()
+        
+        if len(available_tks) < 1:
+            logger.warning(f"[Resolving tks] No elements exist of this element type {element_type}: {e}")
+            return pd.DataFrame()
+        
+        # --- Filter for given tks ---
+        given_tks = tks
+        if tks:
+            try:
+                for tk in tks:
+                    if tk not in available_tks:
+                        logger.warning(f"[Resolving tks] {tk} does not exist or is not of element type {element_type}. Excluding.")
+                        tks.remove(tk)
+                if len(tks) < 1:
+                    logger.error(f"[Resolving tks] No elements remain after filtering for given tks: {given_tks}")
+                    return pd.DataFrame()
+                else:
+                    logger.info(f"[Resolving tks] {len(tks)} tks remain after filtering for given tks.")
+
+            except Exception as e:
+                logger.error(f"[Resolving tks] Error validating given tks: {e}")
+                return pd.DataFrame()
+            
+        else:
+            tks = available_tks
+            
+        
+        # --- Filer for container tk list ---
+        if filter_container_tks:
+            try:
+                all_container_tks = self.GetTksofElementType(self.ObjectTypes.ObjectContainerSymbol)
+                for tk in filter_container_tks[:]:
+                    if tk not in all_container_tks:
+                        logger.warning(f"[Resolving tks] Removed invalid container tk: {tk}. Proceeding without it.")
+                        filter_container_tks.remove(tk)
+
+                if filter_container_tks:
+                    tks = [tk for tk in tks if self.GetValue(tk, "FkCont")[0] in filter_container_tks]
+                if len(tks) < 1:
+                    logger.error(f"[Resolving tks] No elements remain after container filtering.")
+                    return []
+                logger.info(f"[Resolving tks] {len(tks)} tks remain after container filtering.")
+            except Exception as e:
+                logger.error(f"[Resolving tks] Error occured while filtering with filter_container_tks: {e}")
+
+        return tks
+    
+    def _resolve_given_timestamps(self, timestamps: Optional[List[Union[str, int]]]) -> List[str]:
+        """
+        Resolve the list of timestamps to use:
+        - If `timestamps` is None: use all simulation timestamps (if available) else STAT.
+        - If list contains integers: treat them as indices into the available timestamps.
+        - If list contains strings: treat them as actual timestamp strings.
+        - Validate against available timestamps and filter out invalid ones.
+
+        Returns
+        -------
+        List[str]
+            A list of valid timestamp strings (possibly empty).
+        """
+        # --- Default timestamp resolution ---
+        if timestamps is None:
+            logger.info("[Resolving Timestamps] No timestamps were given. Checking available simulation timestamps (SIR3S_Model.GetTimeStamps()[0]).")
+            try:
+                simulation_timestamps, tsStat, tsMin, tsMax = self.GetTimeStamps()
+                if simulation_timestamps:
+                    timestamps = simulation_timestamps
+                    logger.info(f"[Resolving Timestamps] {len(timestamps)} simulation timestamp(s) are available.")
+                else:
+                    logger.warning("[Resolving Timestamps] No valid simulation timestamps exist in result data.")
+                    return []
+            except Exception as e:
+                logger.error(f"[Resolving Timestamps] Error retrieving timestamps: {e}")
+                return []
+
+        # --- Validate given timestamps ---
+        try:
+            simulation_timestamps, tsStat, tsMin, tsMax = self.GetTimeStamps()
+            available_timestamps = list(simulation_timestamps) if simulation_timestamps else []
+
+            valid_timestamps = []
+
+            # Check if input is list of integers (indices)
+            if isinstance(timestamps[0], int):
+                for idx in timestamps:
+                    try:
+                        resolved_ts = available_timestamps[idx]
+                        valid_timestamps.append(resolved_ts)
+                    except IndexError:
+                        logger.warning(f"[Resolving Timestamps] Index {idx} out of bounds for available timestamps. It will be excluded.")
+            else:
+                # Assume list of timestamp strings
+                for ts in timestamps:
+                    if ts in available_timestamps:
+                        valid_timestamps.append(ts)
+                    else:
+                        logger.warning(
+                            f"[Resolving Timestamps] Timestamp {ts} is not valid (SIR3S_Model.GetTimeStamps()). It will be excluded."
+                        )
+
+            if len(valid_timestamps) == 1 and tsStat == valid_timestamps[0]:
+                logger.info(f"[Resolving Timestamps] Only static timestamp {tsStat} is used")
+            logger.info(f"[Resolving Timestamps] {len(valid_timestamps)} valid timestamp(s) will be used.")
+            return valid_timestamps
+        except Exception as e:
+            logger.error(f"Error validating timestamps: {e}")
+            return []
+
+    def __resolve_given_metadata_properties(
+        self,
+        element_type: Enum,
+        properties: Optional[List[str]] = None,
+    ) -> List[str]:
+        """
+        Checks the validity of given list of metadata properties. 
+        If properties=None => All available properties will be used
+        If properties=[] => No properties will be used
+        """
+
+        try:
+            available_metadata_props = self.GetPropertiesofElementType(ElementType=element_type)
+            available_result_props = self.GetResultProperties_from_elementType(
+                elementType=element_type,
+                onlySelectedVectors=False
+            )
+
+            metadata_props: List[str] = []
+
+            if properties is None:
+                logger.info(f"[Resolving Metadata Properties] No properties given → using ALL metadata properties for {element_type}.")
+                metadata_props = available_metadata_props
+            else:
+                for prop in properties:
+                    if prop in available_metadata_props:
+                        metadata_props.append(prop)
+                    elif prop in available_result_props:
+                        logger.warning(f"[Resolving Metadata Properties] Property '{prop}' is a RESULT property; excluded from metadata.")
+                    else:
+                        logger.warning(
+                            f"[Resolving Metadata Properties] Property '{prop}' not found in metadata or result properties of type {element_type}. Excluding."
+                        )
+
+            logger.info(f"[Resolving Metadata Properties] Using {len(metadata_props)} metadata properties.")
+       
+        except Exception as e:
+            logger.error(f"[Resolving Metadata Properties] Error resolving metadata properties: {e}")
+        
+        return metadata_props
+
+    def __is_get_endnodes_applicable(self, element_type):
+        buffer = io.StringIO()
+        sys_stdout = sys.stdout
+        sys.stdout = buffer  # Redirect stdout
+
+        dummy = self.InsertElement(element_type, "to be deleted")
+
+        try:
+            
+            _ = self.GetEndNodes(dummy)
+        except Exception:
+            sys.stdout = sys_stdout  # Restore stdout
+
+        self.DeleteElement(dummy)
+
+        sys.stdout = sys_stdout  # Restore stdout
+        output = buffer.getvalue()
+        buffer.close()
+
+        if "doesnt apply to such Type of Elements" in output:
+            return False
+        
+        return True
+
+    # Dataframe Operations
+
+    def __apply_metadata_property_updates(
         self,
         element_type: Enum,
         updates_df: pd.DataFrame,
@@ -658,7 +857,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
                 msg=self.SetValue(prop, updates_df.iloc[tk, metadata_props_new_with_suffix])
                 logger.debug
 
-    def AddNodesAndPipes(self, dfXL):
+    def __AddNodesAndPipes(self, dfXL):
         """
         Takes a dataframe with each row representing one pipe and adds it to the model. Only dfXL
         This function should be moved to Dataframes.py to create a general module for working with Dataframes in SIR 3S.
@@ -669,7 +868,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
             # Create KI node
             x_ki, y_ki = row['geometry'].coords[0]
             tk_ki = self.AddNewNode(
-                "-1", f"Node{i}KI {self.VL_or_RL(kvr)}", f"Node{i}", x_ki, y_ki,
+                "-1", f"Node{i}KI {self.__VL_or_RL(kvr)}", f"Node{i}", x_ki, y_ki,
                 1.0, 0.1, 2.0, f"Node{i}KI", f'ID{row.nodeKI_id}', kvr
             )
             dfXL.at[i, 'nodeKI'] = tk_ki
@@ -677,7 +876,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
             # Create KK node
             x_kk, y_kk = row['geometry'].coords[-1]
             tk_kk = self.AddNewNode(
-                "-1", f"Node{i}KK {self.VL_or_RL(kvr)}", f"Node{i}", x_kk, y_kk,
+                "-1", f"Node{i}KK {self.__VL_or_RL(kvr)}", f"Node{i}", x_kk, y_kk,
                 1.0, 0.1, 2.0, f"Node{i}KK", f'ID{row.nodeKK_id}', kvr
             )
             dfXL.at[i, 'nodeKK'] = tk_kk
@@ -717,7 +916,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
 
         return dfXL
 
-    def insert_dfPipes(self, dfPipes):
+    def __insert_dfPipes(self, dfPipes):
         """
         Takes a dataframe with each row representing one pipe and adds it to the model.
         The dataframe needs minimum of cols: geometry (LINESTRING), MATERIAL (str), DN (int), KVR (int)
@@ -748,17 +947,9 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
 
         return dfPipes
 
-    def Node_on_Node(self):
-        func_name = sys._getframe().f_code.co_name
-        logger.debug(f"{func_name}: Start.")
-        # Implementation goes here
 
-    def Merge_Nodes(self, tk1, tk2):
-        func_name = sys._getframe().f_code.co_name
-        logger.debug(f"{func_name}: Start.")
-        # Implementation goes here
-
-    def Get_Node_Tks_From_Pipe(self, pipe_tk):
+    # Miscellaneous
+    def __Get_Node_Tks_From_Pipe(self, pipe_tk):
         func_name = sys._getframe().f_code.co_name
         logger.debug(f"{func_name}: Start.")
 
@@ -777,7 +968,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
 
         return from_node_tk, to_node_tk
 
-    def Get_Pipe_Tk_From_Nodes(self, fkKI, fkKK, Order=True):
+    def __Get_Pipe_Tk_From_Nodes(self, fkKI, fkKK, Order=True):
         func_name = sys._getframe().f_code.co_name
         logger.debug(f"{func_name}: Start.")
 
@@ -803,7 +994,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
 
         return pipe_tk_ret
 
-    def VL_or_RL(self, KVR):
+    def __VL_or_RL(self, KVR):
         func_name = sys._getframe().f_code.co_name
         logger.debug(f"{func_name}: Start.")
         if KVR == 1:
@@ -813,7 +1004,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         else:
             return 'Unknown'
 
-    def Check_Node_Name_Duplicates(self, name):
+    def __Check_Node_Name_Duplicates(self, name):
         func_name = sys._getframe().f_code.co_name
         logger.debug(f"{func_name}: Start.")
 
@@ -832,19 +1023,6 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
 
         return tks
 
-    def get_EPSG(self
-    ) -> Tuple[str]:
-        """
-        Returns SRID, SRID and combined String. For example: ('25832', '1571', '25832-1571')
-        """
-        
-        tk_SIRGRAF = self.GetTksofElementType(self.ObjectTypes.SIRGRAF)[0]
-        srid = str(self.GetValue(tk_SIRGRAF, "Srid")[0])
-        srid2 = str(self.GetValue(tk_SIRGRAF, "Srid2")[0])
-        srid_string = self.GetValue(tk_SIRGRAF, "SridString")[0]
-
-        return srid, srid2, srid_string
-
     def __is_a_model_open(self):
         """
         Returns true if a model is open, false if no model is open or the NetworkType is undefined.
@@ -854,93 +1032,3 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
             is_a_model_open = False
         return is_a_model_open
     
-    def __sort_properties_into_metadata_and_results(
-        self, 
-        element_type: Enum,
-        properties: List[str],
-    ) -> Tuple[List[str], List[str], List[str]]:
-        """
-        Sorts the given properties into three categories:
-        - Metadata properties
-        - Result properties
-        - Uncategorized properties (not found in either metadata or result properties)
-        
-        Args:
-            element_type (Enum): The type of element to query properties for.
-            properties (List[str]): The list of properties to sort.
-        
-        Returns:
-            Tuple[List[str], List[str], List[str]]: A tuple containing three lists:
-                - metadata_matches
-                - result_matches
-                - uncategorized
-        """
-        metadata_properties = self.GetPropertiesofElementType(element_type=element_type)
-        result_properties = self.GetResultProperties_from_elementType(elementType=element_type)
-
-        metadata_matches = [prop for prop in properties if prop in metadata_properties]
-        result_matches = [prop for prop in properties if prop in result_properties]
-        uncategorized = [prop for prop in properties if prop not in metadata_properties and prop not in result_properties]
-
-        return metadata_matches, result_matches, uncategorized
-    
-    def __resolve_given_tks(
-        self,
-        element_type: Enum,
-        tks: Optional[List[str]] = None,
-        filter_container_tks: Optional[List[str]] = None
-    ) -> List:
-
-        # --- Collect device keys (tks) ---
-        try:
-            available_tks = self.GetTksofElementType(ElementType=element_type)
-            logger.info(f"[Resolving tks] Retrieved {len(available_tks)} element(s) of element type {element_type}.")
-        except Exception as e:
-            logger.error(f"[metadata] Error retrieving element tks: {e}")
-            return pd.DataFrame()
-        
-        if len(available_tks) < 1:
-            logger.warning(f"[Resolving tks] No elements exist of this element type {element_type}: {e}")
-            return pd.DataFrame()
-        
-        # --- Filter for given tks ---
-        given_tks = tks
-        if tks:
-            try:
-                for tk in tks:
-                    if tk not in available_tks:
-                        logger.warning(f"[Resolving tks] {tk} does not exist or is not of element type {element_type}. Excluding.")
-                        tks.remove(tk)
-                if len(tks) < 1:
-                    logger.error(f"[Resolving tks] No elements remain after filtering for given tks: {given_tks}")
-                    return pd.DataFrame()
-                else:
-                    logger.info(f"[Resolving tks] {len(tks)} tks remain after filtering for given tks.")
-
-            except Exception as e:
-                logger.error(f"[Resolving tks] Error validating given tks: {e}")
-                return pd.DataFrame()
-            
-        else:
-            tks = available_tks
-            
-        
-        # --- Filer for container tk list ---
-        if filter_container_tks:
-            try:
-                all_container_tks = self.GetTksofElementType(self.ObjectTypes.ObjectContainerSymbol)
-                for tk in filter_container_tks[:]:
-                    if tk not in all_container_tks:
-                        logger.warning(f"[Resolving tks] Removed invalid container tk: {tk}. Proceeding without it.")
-                        filter_container_tks.remove(tk)
-
-                if filter_container_tks:
-                    tks = [tk for tk in tks if self.GetValue(tk, "FkCont")[0] in filter_container_tks]
-                if len(tks) < 1:
-                    logger.error(f"[Resolving tks] No elements remain after container filtering.")
-                    return []
-                logger.info(f"[Resolving tks] {len(tks)} tks remain after container filtering.")
-            except Exception as e:
-                logger.error(f"[Resolving tks] Error occured while filtering with filter_container_tks: {e}")
-
-        return tks
