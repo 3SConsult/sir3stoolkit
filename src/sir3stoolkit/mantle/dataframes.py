@@ -335,24 +335,26 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
     def generate_element_dataframe(
         self,
         element_type: str,
-    ) -> pd.DataFrame:
+        tks: Optional[list[str]] = None
+    ) -> pd.DataFrame | gpd.GeoDataFrame:
         """
-        Generates a dataframe containing all instances for a given element type in the open SIR 3S model. All metadata and most result values (self.GetResultProperties_from_elementType(onlySelectedVectors=True)) for the static timestamp are included. Result values are given as floats, unless they are in vectorized form (relevant only for pipes), in that case they are strings.
+        Generates a dataframe containing all instances for a given element type in the open SIR 3S model. All metadata and most result values (self.GetResultProperties_from_elementType(onlySelectedVectors=True)) for the static timestamp are included. Result values are given as floats, unless they are in vectorized form (relevant only for pipes), in that case they are strings. Tks of end nodes are included (fkKI, fkKK). Geometry is included.
         
         Paramters
         ---------
 
         - element_type: str: eg. self.ObjectTypes.Node, self.ObjectTypes.Pipe
+        - tks: list[str]: list of tks to include
         """
         logger.info(f"[generate_element_dataframe] Generating df for element type: {element_type} ...")
         
         try:
             logger.debug(f"[generate_element_dataframe] Generating df_metadata for element type: {element_type} ...")
             df_metadata = self.generate_element_metadata_dataframe(element_type=element_type
-                                                                ,tks=None
+                                                                ,tks=tks
                                                                 ,properties=None
                                                                 ,geometry=True
-                                                                ,end_nodes=False
+                                                                ,end_nodes=True
                                                                 ,element_type_col=False
             )
             
@@ -360,7 +362,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
             result_values_to_obtain = self.GetResultProperties_from_elementType(element_type, True)
             static_timestamp = self.GetTimeStamps()[1]
             df_results = self.generate_element_results_dataframe(element_type=element_type
-                                                                        ,tks=None
+                                                                        ,tks=tks
                                                                         ,properties=result_values_to_obtain
                                                                         ,timestamps=[static_timestamp]
             )
@@ -409,6 +411,75 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         out = pd.concat(pieces, axis=1)
         return out
     
+    def generate_longitudinal_section_dataframes(
+        self
+    ) -> List[pd.DataFrame]:
+        """
+        Generates dataframes for longitudinal sections.
+        
+        :param self: Instance of SIR_Model_Dataframes class
+        :return: List of dataframes of the form [section_1_VL, section_1_RL, section_2_VL, section_2_RL, ..., section_lfdnr_VL, section_lfdnr_RL, ...]
+        :rtype: List[DataFrame|GeoDataFrame]
+        """
+
+        df_agsn_metadata = self.generate_element_metadata_dataframe(self.ObjectTypes.AGSN_HydraulicProfile)
+        df_agsn_metadata = df_agsn_metadata.sort_values('Lfdnr')
+
+        """
+        # Only include active 
+        df_agsn_metadata["Aktiv"] = df_agsn_metadata["Aktiv"].astype(str)
+        df_agsn_metadata = df_agsn_metadata[df_agsn_metadata["Aktiv"] == "101"]
+        """
+
+        dfs = []
+
+        for tk, lfdnr, name in df_agsn_metadata[['tk', 'Lfdnr', 'Name']].itertuples(index=False):
+
+            # --- Retrieve Hydraulic Profile
+            logger.info(f"Retrieving Hydraulic Profile with Lfdnr: {lfdnr}.")
+            try:
+                hydraulicProfile = self.GetCourseOfHydraulicProfile(tkAgsn=tk, uid="0")
+                if hydraulicProfile.nrOfBranches != 0:
+                    logger.info(f"Method does not work for longitudinal sections with branches. Not including hydraulic profile: {lfdnr}.")
+                    continue
+                # VL
+                nodes_VL = list(hydraulicProfile.nodesVL)
+                links_VL = list(hydraulicProfile.linksVL)
+                x_VL = list(hydraulicProfile.xVL)
+                x_VL = x_VL[1:]
+                links_VL_tk_to_x_sum = dict(zip(links_VL, x_VL))
+                df_pipes_VL = self.generate_element_dataframe(element_type=self.ObjectTypes.Pipe
+                                                            ,tks=links_VL)
+                df_pipes_VL["l_sum"] = df_pipes_VL["tk"].map(links_VL_tk_to_x_sum)
+                df_pipes_VL["AGSN_Lfdnr"] = lfdnr
+                df_pipes_VL["AGSN_Name"] = name
+                df_pipes_VL.sort_values(by='l_sum', ascending=True, inplace=True)
+                df_pipes_VL = df_pipes_VL.reset_index(drop=True)
+                dfs.append(df_pipes_VL)
+                    
+                # RL
+                nodes_RL = list(hydraulicProfile.nodesRL)
+                links_RL = list(hydraulicProfile.linksRL)
+                x_RL = list(hydraulicProfile.xRL)
+                x_RL = x_RL[1:]
+                links_RL_tk_to_x_sum = dict(zip(links_RL, x_RL))
+                df_pipes_RL = self.generate_element_dataframe(element_type=self.ObjectTypes.Pipe
+                                                            ,tks=links_RL)
+                df_pipes_RL["l_sum"] = df_pipes_RL["tk"].map(links_RL_tk_to_x_sum)
+                df_pipes_RL["AGSN_Lfdnr"] = lfdnr
+                df_pipes_RL["AGSN_Name"] = name
+                df_pipes_RL.sort_values(by='l_sum', ascending=True, inplace=True)
+                df_pipes_RL = df_pipes_RL.reset_index(drop=True)
+                dfs.append(df_pipes_RL)
+            except Exception as e:
+                logging.error(f"Error retrieving Hydraulic Profile with Lfdnr: {lfdnr}.")
+                return []
+
+        return dfs
+    
+
+
+
     def generate_hydraulic_edge_dataframe(
         self      
     ) -> pd.DataFrame:

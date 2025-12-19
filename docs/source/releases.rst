@@ -35,6 +35,7 @@ Improvements
    - generate_element_results_dataframe() returns float values instead of object type
    - new method: add_interior_points_to_results_dataframe() to transform result df into vectorized result df with additonal multi index
    - new method: generate_element_dataframe() to generate basic dfs with metadata and result values of components
+   - new method: generate_longitudinal_section_dataframes() to generate dfs for longitudinal sections
 
 - plotting.py
    - plot_pipe_layer() and plot_node_layer() introduced as new functions for network color depictions
