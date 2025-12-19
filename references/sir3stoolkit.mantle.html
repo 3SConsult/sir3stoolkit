@@ -207,12 +207,13 @@ Non-vector properties get interior point -1 and retain original values.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.generate_element_dataframe">
-<span class="sig-name descname"><span class="pre">generate_element_dataframe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">element_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/mantle/dataframes.html#SIR3S_Model_Dataframes.generate_element_dataframe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.generate_element_dataframe" title="Link to this definition"></a></dt>
-<dd><p>Generates a dataframe containing all instances for a given element type in the open SIR 3S model. All metadata and most result values (self.GetResultProperties_from_elementType(onlySelectedVectors=True)) for the static timestamp are included. Result values are given as floats, unless they are in vectorized form (relevant only for pipes), in that case they are strings.</p>
+<span class="sig-name descname"><span class="pre">generate_element_dataframe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">element_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">GeoDataFrame</span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/mantle/dataframes.html#SIR3S_Model_Dataframes.generate_element_dataframe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.generate_element_dataframe" title="Link to this definition"></a></dt>
+<dd><p>Generates a dataframe containing all instances for a given element type in the open SIR 3S model. All metadata and most result values (self.GetResultProperties_from_elementType(onlySelectedVectors=True)) for the static timestamp are included. Result values are given as floats, unless they are in vectorized form (relevant only for pipes), in that case they are strings. Tks of end nodes are included (fkKI, fkKK). Geometry is included.</p>
 <section id="paramters">
 <h3>Paramters<a class="headerlink" href="#paramters" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>element_type: str: eg. self.ObjectTypes.Node, self.ObjectTypes.Pipe</p></li>
+<li><p>tks: list[str]: list of tks to include</p></li>
 </ul>
 </section>
 </dd></dl>
@@ -285,6 +286,23 @@ Columns: [“tk”, &lt;metadata_props&gt;]</p>
 <dt class="sig sig-object py" id="sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.generate_hydraulic_edge_dataframe">
 <span class="sig-name descname"><span class="pre">generate_hydraulic_edge_dataframe</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/mantle/dataframes.html#SIR3S_Model_Dataframes.generate_hydraulic_edge_dataframe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.generate_hydraulic_edge_dataframe" title="Link to this definition"></a></dt>
 <dd><p>Generates a pandas dataframe containing all edges that are part of the hydraulic model (eg. pipes, valves, compressors, etc.).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.generate_longitudinal_section_dataframes">
+<span class="sig-name descname"><span class="pre">generate_longitudinal_section_dataframes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">DataFrame</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/mantle/dataframes.html#SIR3S_Model_Dataframes.generate_longitudinal_section_dataframes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.generate_longitudinal_section_dataframes" title="Link to this definition"></a></dt>
+<dd><p>Generates dataframes for longitudinal sections.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>self</strong> – Instance of SIR_Model_Dataframes class</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of dataframes of the form [section_1_VL, section_1_RL, section_2_VL, section_2_RL, …, section_lfdnr_VL, section_lfdnr_RL, …]</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[DataFrame|GeoDataFrame]</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">

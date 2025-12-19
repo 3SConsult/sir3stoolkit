@@ -112,7 +112,7 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r&quot;C:\3S\SIR 3S Entwicklung\SirGraf-90-15-00-19_x64&quot; #change to local path
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r&quot;C:\3S\SIR 3S\SirGraf-90-15-00-20x64_Quebec-Upd1&quot; #change to local path
 </pre></div>
 </div>
 </div>
@@ -226,7 +226,7 @@ Model is open for further operation
 </section>
 <section id="Generate-Element-Dataframes">
 <h1>Generate Element Dataframes<a class="headerlink" href="#Generate-Element-Dataframes" title="Link to this heading"></a></h1>
-<p>We can use the ### method to quickly generate basic dataframes containing all instances of hydraulic element types (Node, Pipe, etc.) in a SIR 3S model. For a more user defined dataframe creation see Manual dataframe creation.</p>
+<p>We can use the <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.generate_element_dataframe">generate_element_dataframe()</a> method to quickly generate basic dataframes containing all instances of hydraulic element types (Node, Pipe, etc.) in a SIR 3S model. For a more user defined dataframe creation see Manual dataframe creation.</p>
 <p>All metadata and most result values (self.GetResultProperties_from_elementType(onlySelectedVectors=True)) for the static timestamp are included. Result values are given as floats, unless they are in vectorized form (relevant only for pipes), in that case they are strings.</p>
 <p>The pd.Dataframe will automatically be transformed into a gpd.GeoDataFrame if a SRID is defined in the model, after a geometry column is created.</p>
 <div class="nbinput docutils container">
@@ -246,14 +246,14 @@ print(object_types) # Check for hydraulic elmement types
 [&#39;AGSN_HydraulicProfile&#39;, &#39;AirVessel&#39;, &#39;Arrow&#39;, &#39;Atmosphere&#39;, &#39;BlockConnectionNode&#39;, &#39;CalcPari&#39;, &#39;CharacteristicLossTable&#39;, &#39;CharacteristicLossTable_Row&#39;, &#39;Circle&#39;, &#39;Compressor&#39;, &#39;CompressorTable&#39;, &#39;CompressorTable_Row&#39;, &#39;ControlEngineeringNexus&#39;, &#39;ControlMode&#39;, &#39;ControlPointTable&#39;, &#39;ControlPointTable_Row&#39;, &#39;ControlValve&#39;, &#39;ControlVariableConverter&#39;, &#39;ControlVariableConverterRSTE&#39;, &#39;CrossSectionTable&#39;, &#39;CrossSectionTable_Row&#39;, &#39;DPGR_DPKT_DatapointDpgrConnection&#39;, &#39;DPGR_DataPointGroup&#39;, &#39;DPKT_Datapoint&#39;, &#39;DamageRatesTable&#39;, &#39;DamageRatesTable_Row&#39;, &#39;DeadTimeElement&#39;, &#39;Demand&#39;, &#39;DifferentialRegulator&#39;, &#39;DirectionalArrow&#39;, &#39;DistrictHeatingConsumer&#39;, &#39;DistrictHeatingFeeder&#39;, &#39;Divider&#39;, &#39;DriveEfficiencyTable&#39;, &#39;DriveEfficiencyTable_Row&#39;, &#39;DrivePowerTable&#39;, &#39;DrivePowerTable_Row&#39;, &#39;EBES_FeederGroups&#39;, &#39;EfficiencyConverterTable&#39;, &#39;EfficiencyConverterTable_Row&#39;, &#39;ElementQuery&#39;, &#39;EnergyRecoveryTable&#39;, &#39;EnergyRecoveryTable_Row&#39;, &#39;EnvironmentTemp&#39;, &#39;FWBZ_DistrictHeatingReferenceValues&#39;, &#39;FlapValve&#39;, &#39;FlowControlUnit&#39;, &#39;FluidQualityParamSet&#39;, &#39;FluidQualityParamSet_OS&#39;, &#39;FluidThermalPropertyGroup&#39;, &#39;FreeDuct&#39;, &#39;FunctionGenerator&#39;, &#39;FunctionTable&#39;, &#39;FunctionTable_Row&#39;, &#39;GasComponent&#39;, &#39;GasMixture&#39;, &#39;GeneralSection&#39;, &#39;Gravitation&#39;, &#39;HeatExchanger&#39;, &#39;HeatFeederConsumerStation&#39;, &#39;HeaterCooler&#39;, &#39;Histeresis&#39;, &#39;House&#39;, &#39;Hydrant&#39;, &#39;Integrator&#39;, &#39;LAYR_Layer&#39;, &#39;LoadFactorTable&#39;, &#39;LoadFactorTable_Row&#39;, &#39;LogicalComparison&#39;, &#39;LogicalStorage&#39;, &#39;MeasuredVariableTable&#39;, &#39;MeasuredVariableTable_Row&#39;, &#39;MinMaxSelection&#39;, &#39;Multiplier&#39;, &#39;NetValve&#39;, &#39;Node&#39;, &#39;NonReturnValvesTable&#39;, &#39;NonReturnValvesTable_Row&#39;, &#39;NumericalDisplay&#39;, &#39;ObjectContainerSymbol&#39;, &#39;OpenContainer&#39;, &#39;Oval&#39;, &#39;PARZ_TransientCalculationParameters&#39;, &#39;PhaseSeparation&#39;, &#39;PidController&#39;, &#39;Pipe&#39;, &#39;PipeGroup&#39;, &#39;PipeTable&#39;, &#39;PipeTable_Row&#39;, &#39;PipeVertex&#39;, &#39;Polygon&#39;, &#39;Polyline&#39;, &#39;PressureRegulator&#39;, &#39;PressureZone&#39;, &#39;Pt1Controller&#39;, &#39;Pump&#39;, &#39;PumpCharTable&#39;, &#39;PumpCharTable_Row&#39;, &#39;PumpGroup&#39;, &#39;PumpOfPumpGroup&#39;, &#39;PumpSpeedTable&#39;, &#39;PumpSpeedTable_Row&#39;, &#39;RART_ControlMode&#39;, &#39;REGP_ControlParameters&#39;, &#39;RMES_DPTS_RmesInternalDataPoint&#39;, &#39;Rectangle&#39;, &#39;RegulatorsTable&#39;, &#39;RegulatorsTable_Row&#39;, &#39;ReturnTemperaturTable&#39;, &#39;ReturnTemperaturTable_Row&#39;, &#39;RoundRectangle&#39;, &#39;SIRGRAF&#39;, &#39;SPLZ_TimeSeries&#39;, &#39;SafetyValve&#39;, &#39;SetpointDevice&#39;, &#39;SolarCollector&#39;, &#39;StandPipe&#39;, &#39;Street&#39;, &#39;SummingPoint&#39;, &#39;SwitchInBlock&#39;, &#39;TemperatureTable&#39;, &#39;TemperatureTable_Row&#39;, &#39;Text&#39;, &#39;ThermalOutputTable&#39;, &#39;ThermalOutputTable_Row&#39;, &#39;ThermophysPropTable&#39;, &#39;ThermophysPropTable_Row&#39;, &#39;TransitionSymbol&#39;, &#39;Transmitter&#39;, &#39;TransportVariable&#39;, &#39;USCH_UserDefinedProperties&#39;, &#39;Unknown&#39;, &#39;VARA_ColorScale&#39;, &#39;VARA_ROWS_WidthOrScale&#39;, &#39;VRCT_ViewRectangle&#39;, &#39;Valve&#39;, &#39;ValveLiftTable&#39;, &#39;ValveLiftTable_Row&#39;, &#39;VarFlowTable&#39;, &#39;VarFlowTable_Row&#39;, &#39;VarPressureTable&#39;, &#39;VarPressureTable_Row&#39;, &#39;VentOpenCloseTable&#39;, &#39;VentOpenCloseTable_Row&#39;, &#39;VentValve&#39;, &#39;VentilatedPressureAirVessel&#39;, &#39;WBLZ_ThermalBalance&#39;, &#39;WeatherDataTable&#39;, &#39;WeatherDataTable_Row&#39;]
 </pre></div></div>
 </div>
-<p>This function allows for littler user definition the only paramter is the element_type. For more user defined dataframe creation see Tutorial 52.</p>
+<p>This function allows for little user definition the only paramters are element_type and tks of that element type to exclusively use. For more user defined dataframe creation see Tutorial 52.</p>
 <section id="Node">
 <h2>Node<a class="headerlink" href="#Node" title="Link to this heading"></a></h2>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(s3s.generate_element_dataframe(element_type=s3s.ObjectTypes.Node)).head(3)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(s3s.generate_element_dataframe(element_type=s3s.ObjectTypes.Node, tks=None)).head(3)
 </pre></div>
 </div>
 </div>
@@ -262,24 +262,25 @@ print(object_types) # Check for hydraulic elmement types
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2025-12-12 19:59:09,206] INFO in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df for element type: ObjectTypes.Node ...
-[2025-12-12 19:59:09,207] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_metadata for element type: ObjectTypes.Node ...
-[2025-12-12 19:59:09,208] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.Node
-[2025-12-12 19:59:09,214] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieved 517 element(s) of element type ObjectTypes.Node.
-[2025-12-12 19:59:09,222] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] No properties given → using ALL metadata properties for ObjectTypes.Node.
-[2025-12-12 19:59:09,227] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 38 metadata properties.
-[2025-12-12 19:59:09,227] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving metadata properties [&#39;Name&#39;, &#39;Ktyp&#39;, &#39;Zkor&#39;, &#39;QmEin&#39;, &#39;Lfakt&#39;, &#39;Fkpzon&#39;, &#39;Fkfstf&#39;, &#39;Fkutmp&#39;, &#39;Fkfqps&#39;, &#39;Fkcont&#39;, &#39;Fk2lknot&#39;, &#39;Beschreibung&#39;, &#39;Idreferenz&#39;, &#39;Iplanung&#39;, &#39;Kvr&#39;, &#39;Qakt&#39;, &#39;Xkor&#39;, &#39;Ykor&#39;, &#39;NodeNamePosition&#39;, &#39;ShowNodeName&#39;, &#39;KvrKlartext&#39;, &#39;NumberOfVERB&#39;, &#39;HasBlockConnection&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;IsMarked&#39;, &#39;InVariant&#39;, &#39;GeometriesDiffer&#39;, &#39;SymbolFactor&#39;, &#39;bz.Drakonz&#39;, &#39;bz.Fk&#39;, &#39;bz.Fkpvar&#39;, &#39;bz.Fkqvar&#39;, &#39;bz.Fklfkt&#39;, &#39;bz.PhEin&#39;, &#39;bz.Tm&#39;, &#39;bz.Te&#39;, &#39;bz.PhMin&#39;], geometry...
-[2025-12-12 19:59:10,261] INFO in sir3stoolkit.mantle.dataframes: [metadata] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
-[2025-12-12 19:59:10,261] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (517, 40)
-[2025-12-12 19:59:10,261] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_results for element type: ObjectTypes.Node ...
-[2025-12-12 19:59:10,344] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Node
-[2025-12-12 19:59:10,403] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2023-02-13 00:00:00.000 +01:00 is used
-[2025-12-12 19:59:10,404] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
-[2025-12-12 19:59:10,406] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 517 element(s) of element type ObjectTypes.Node.
-[2025-12-12 19:59:10,406] INFO in sir3stoolkit.mantle.dataframes: [results] Using 21 result properties.
-[2025-12-12 19:59:10,477] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
-[2025-12-12 19:59:12,011] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 10857)
-[2025-12-12 19:59:12,011] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Merging df_metadata with df_results for element type: ObjectTypes.Node ...
+[2025-12-19 15:53:22,951] INFO in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df for element type: ObjectTypes.Node ...
+[2025-12-19 15:53:22,951] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_metadata for element type: ObjectTypes.Node ...
+[2025-12-19 15:53:22,952] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.Node
+[2025-12-19 15:53:22,960] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieved 517 element(s) of element type ObjectTypes.Node.
+[2025-12-19 15:53:22,969] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] No properties given → using ALL metadata properties for ObjectTypes.Node.
+[2025-12-19 15:53:22,969] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 37 metadata properties.
+[2025-12-19 15:53:22,969] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving metadata properties [&#39;Name&#39;, &#39;Ktyp&#39;, &#39;Zkor&#39;, &#39;QmEin&#39;, &#39;Lfakt&#39;, &#39;Fkpzon&#39;, &#39;Fkfstf&#39;, &#39;Fkutmp&#39;, &#39;Fkfqps&#39;, &#39;Fkcont&#39;, &#39;Fk2lknot&#39;, &#39;Beschreibung&#39;, &#39;Idreferenz&#39;, &#39;Iplanung&#39;, &#39;Kvr&#39;, &#39;Qakt&#39;, &#39;Xkor&#39;, &#39;Ykor&#39;, &#39;NodeNamePosition&#39;, &#39;ShowNodeName&#39;, &#39;KvrKlartext&#39;, &#39;NumberOfVERB&#39;, &#39;HasBlockConnection&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;, &#39;GeometriesDiffer&#39;, &#39;SymbolFactor&#39;, &#39;bz.Drakonz&#39;, &#39;bz.Fk&#39;, &#39;bz.Fkpvar&#39;, &#39;bz.Fkqvar&#39;, &#39;bz.Fklfkt&#39;, &#39;bz.PhEin&#39;, &#39;bz.Tm&#39;, &#39;bz.Te&#39;, &#39;bz.PhMin&#39;], geometry, end nodes...
+[2025-12-19 15:53:23,051] WARNING in sir3stoolkit.mantle.dataframes: [metadata] End nodes are not defined for element type ObjectTypes.Node. Dataframe is created without end nodes.
+[2025-12-19 15:53:24,118] INFO in sir3stoolkit.mantle.dataframes: [metadata] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
+[2025-12-19 15:53:24,118] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (517, 39)
+[2025-12-19 15:53:24,127] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_results for element type: ObjectTypes.Node ...
+[2025-12-19 15:53:24,196] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Node
+[2025-12-19 15:53:24,267] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2023-02-13 00:00:00.000 +01:00 is used
+[2025-12-19 15:53:24,269] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
+[2025-12-19 15:53:24,272] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 517 element(s) of element type ObjectTypes.Node.
+[2025-12-19 15:53:24,274] INFO in sir3stoolkit.mantle.dataframes: [results] Using 21 result properties.
+[2025-12-19 15:53:24,282] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2025-12-19 15:53:25,867] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 10857)
+[2025-12-19 15:53:25,867] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Merging df_metadata with df_results for element type: ObjectTypes.Node ...
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -331,7 +332,6 @@ print(object_types) # Check for hydraulic elmement types
       <th>HasBlockConnection</th>
       <th>Tk</th>
       <th>Pk</th>
-      <th>IsMarked</th>
       <th>InVariant</th>
       <th>GeometriesDiffer</th>
       <th>SymbolFactor</th>
@@ -399,7 +399,6 @@ print(object_types) # Check for hydraulic elmement types
       <td>4612618373909997110</td>
       <td>False</td>
       <td>False</td>
-      <td>False</td>
       <td>0,2</td>
       <td>0</td>
       <td>4612618373909997110</td>
@@ -461,7 +460,6 @@ print(object_types) # Check for hydraulic elmement types
       <td>False</td>
       <td>4619205996903908050</td>
       <td>4619205996903908050</td>
-      <td>False</td>
       <td>False</td>
       <td>False</td>
       <td>0,2</td>
@@ -527,7 +525,6 @@ print(object_types) # Check for hydraulic elmement types
       <td>4619682681341516951</td>
       <td>False</td>
       <td>False</td>
-      <td>False</td>
       <td>0,2</td>
       <td>0</td>
       <td>4619682681341516951</td>
@@ -572,7 +569,7 @@ print(object_types) # Check for hydraulic elmement types
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(s3s.generate_element_dataframe(element_type=s3s.ObjectTypes.Pipe)).head(3)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(s3s.generate_element_dataframe(element_type=s3s.ObjectTypes.Pipe, tks=None)).head(3)
 </pre></div>
 </div>
 </div>
@@ -581,24 +578,25 @@ print(object_types) # Check for hydraulic elmement types
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2025-12-12 19:59:12,061] INFO in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df for element type: ObjectTypes.Pipe ...
-[2025-12-12 19:59:12,067] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_metadata for element type: ObjectTypes.Pipe ...
-[2025-12-12 19:59:12,068] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.Pipe
-[2025-12-12 19:59:12,069] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
-[2025-12-12 19:59:12,071] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] No properties given → using ALL metadata properties for ObjectTypes.Pipe.
-[2025-12-12 19:59:12,072] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 47 metadata properties.
-[2025-12-12 19:59:12,073] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving metadata properties [&#39;Name&#39;, &#39;FkdtroRowd&#39;, &#39;Fkltgr&#39;, &#39;Fkstrasse&#39;, &#39;L&#39;, &#39;Lzu&#39;, &#39;Rau&#39;, &#39;Jlambs&#39;, &#39;Lambda0&#39;, &#39;Zein&#39;, &#39;Zaus&#39;, &#39;Zuml&#39;, &#39;Asoll&#39;, &#39;Indschall&#39;, &#39;Baujahr&#39;, &#39;Hal&#39;, &#39;Fkcont&#39;, &#39;Fk2lrohr&#39;, &#39;Beschreibung&#39;, &#39;Idreferenz&#39;, &#39;Iplanung&#39;, &#39;Kvr&#39;, &#39;LineWidthMM&#39;, &#39;DottedLine&#39;, &#39;DN&#39;, &#39;Di&#39;, &#39;KvrKlartext&#39;, &#39;HasClosedNSCHs&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;IsMarked&#39;, &#39;InVariant&#39;, &#39;Xkor&#39;, &#39;Ykor&#39;, &#39;GeometriesDiffer&#39;, &#39;bz.Fk&#39;, &#39;bz.Qsvb&#39;, &#39;bz.Irtrenn&#39;, &#39;bz.Leckstatus&#39;, &#39;bz.Leckstart&#39;, &#39;bz.Leckend&#39;, &#39;bz.Leckort&#39;, &#39;bz.Leckmenge&#39;, &#39;bz.Imptnz&#39;, &#39;bz.Zvlimptnz&#39;, &#39;bz.Kantenzv&#39;, &#39;bz.ITrennWithNSCH&#39;], geometry...
-[2025-12-12 19:59:13,318] INFO in sir3stoolkit.mantle.dataframes: [metadata] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
-[2025-12-12 19:59:13,318] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (524, 49)
-[2025-12-12 19:59:13,318] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_results for element type: ObjectTypes.Pipe ...
-[2025-12-12 19:59:13,487] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
-[2025-12-12 19:59:13,570] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2023-02-13 00:00:00.000 +01:00 is used
-[2025-12-12 19:59:13,572] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
-[2025-12-12 19:59:13,574] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
-[2025-12-12 19:59:13,574] INFO in sir3stoolkit.mantle.dataframes: [results] Using 31 result properties.
-[2025-12-12 19:59:13,617] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
-[2025-12-12 19:59:17,139] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 16244)
-[2025-12-12 19:59:17,142] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Merging df_metadata with df_results for element type: ObjectTypes.Pipe ...
+[2025-12-19 15:53:25,951] INFO in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df for element type: ObjectTypes.Pipe ...
+[2025-12-19 15:53:25,951] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_metadata for element type: ObjectTypes.Pipe ...
+[2025-12-19 15:53:25,951] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.Pipe
+[2025-12-19 15:53:25,951] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2025-12-19 15:53:25,951] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] No properties given → using ALL metadata properties for ObjectTypes.Pipe.
+[2025-12-19 15:53:25,951] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 46 metadata properties.
+[2025-12-19 15:53:25,951] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving metadata properties [&#39;Name&#39;, &#39;FkdtroRowd&#39;, &#39;Fkltgr&#39;, &#39;Fkstrasse&#39;, &#39;L&#39;, &#39;Lzu&#39;, &#39;Rau&#39;, &#39;Jlambs&#39;, &#39;Lambda0&#39;, &#39;Zein&#39;, &#39;Zaus&#39;, &#39;Zuml&#39;, &#39;Asoll&#39;, &#39;Indschall&#39;, &#39;Baujahr&#39;, &#39;Hal&#39;, &#39;Fkcont&#39;, &#39;Fk2lrohr&#39;, &#39;Beschreibung&#39;, &#39;Idreferenz&#39;, &#39;Iplanung&#39;, &#39;Kvr&#39;, &#39;LineWidthMM&#39;, &#39;DottedLine&#39;, &#39;DN&#39;, &#39;Di&#39;, &#39;KvrKlartext&#39;, &#39;HasClosedNSCHs&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;, &#39;Xkor&#39;, &#39;Ykor&#39;, &#39;GeometriesDiffer&#39;, &#39;bz.Fk&#39;, &#39;bz.Qsvb&#39;, &#39;bz.Irtrenn&#39;, &#39;bz.Leckstatus&#39;, &#39;bz.Leckstart&#39;, &#39;bz.Leckend&#39;, &#39;bz.Leckort&#39;, &#39;bz.Leckmenge&#39;, &#39;bz.Imptnz&#39;, &#39;bz.Zvlimptnz&#39;, &#39;bz.Kantenzv&#39;, &#39;bz.ITrennWithNSCH&#39;], geometry, end nodes...
+[2025-12-19 15:53:27,384] INFO in sir3stoolkit.mantle.dataframes: [metadata] 2 non-empty end node columns were created.
+[2025-12-19 15:53:27,401] INFO in sir3stoolkit.mantle.dataframes: [metadata] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
+[2025-12-19 15:53:27,408] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (524, 50)
+[2025-12-19 15:53:27,409] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_results for element type: ObjectTypes.Pipe ...
+[2025-12-19 15:53:27,618] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
+[2025-12-19 15:53:27,917] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2023-02-13 00:00:00.000 +01:00 is used
+[2025-12-19 15:53:27,921] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
+[2025-12-19 15:53:27,921] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2025-12-19 15:53:27,921] INFO in sir3stoolkit.mantle.dataframes: [results] Using 31 result properties.
+[2025-12-19 15:53:27,951] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2025-12-19 15:53:31,469] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 16244)
+[2025-12-19 15:53:31,479] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Merging df_metadata with df_results for element type: ObjectTypes.Pipe ...
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -655,7 +653,6 @@ print(object_types) # Check for hydraulic elmement types
       <th>HasClosedNSCHs</th>
       <th>Tk</th>
       <th>Pk</th>
-      <th>IsMarked</th>
       <th>InVariant</th>
       <th>Xkor</th>
       <th>Ykor</th>
@@ -673,6 +670,8 @@ print(object_types) # Check for hydraulic elmement types
       <th>bz.Kantenzv</th>
       <th>bz.ITrennWithNSCH</th>
       <th>geometry</th>
+      <th>fkKI</th>
+      <th>fkKK</th>
       <th>A</th>
       <th>DTTR</th>
       <th>DWVERL</th>
@@ -741,7 +740,6 @@ print(object_types) # Check for hydraulic elmement types
       <td>4614463970292122863</td>
       <td>4614463970292122863</td>
       <td>False</td>
-      <td>False</td>
       <td>714262,482930264</td>
       <td>5578857,41970231</td>
       <td>False</td>
@@ -758,6 +756,8 @@ print(object_types) # Check for hydraulic elmement types
       <td>0</td>
       <td>0</td>
       <td>LINESTRING (714262.483 5578857.42, 714269.543 ...</td>
+      <td>4730066059089961857</td>
+      <td>4917189080965035120</td>
       <td>0.0</td>
       <td>7.780674</td>
       <td>0.0</td>
@@ -824,7 +824,6 @@ print(object_types) # Check for hydraulic elmement types
       <td>4615723899944629797</td>
       <td>4615723899944629797</td>
       <td>False</td>
-      <td>False</td>
       <td>713738,296567236</td>
       <td>5579219,90221333</td>
       <td>False</td>
@@ -841,6 +840,8 @@ print(object_types) # Check for hydraulic elmement types
       <td>0</td>
       <td>0</td>
       <td>LINESTRING (713738.297 5579219.902, 713793.23 ...</td>
+      <td>5129584372458662150</td>
+      <td>5332825919690090061</td>
       <td>0.0</td>
       <td>64.28724</td>
       <td>0.0</td>
@@ -907,7 +908,6 @@ print(object_types) # Check for hydraulic elmement types
       <td>4621030304810285220</td>
       <td>4621030304810285220</td>
       <td>False</td>
-      <td>False</td>
       <td>713650,613400257</td>
       <td>5578990,48768687</td>
       <td>False</td>
@@ -924,6 +924,8 @@ print(object_types) # Check for hydraulic elmement types
       <td>0</td>
       <td>0</td>
       <td>LINESTRING (713650.613 5578990.488, 713649.498...</td>
+      <td>5070795580168283912</td>
+      <td>5725848577942138606</td>
       <td>0.0</td>
       <td>0.002291</td>
       <td>16.2622</td>
@@ -968,7 +970,7 @@ print(object_types) # Check for hydraulic elmement types
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(s3s.generate_element_dataframe(element_type=s3s.ObjectTypes.DistrictHeatingConsumer)).head(3)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(s3s.generate_element_dataframe(element_type=s3s.ObjectTypes.DistrictHeatingConsumer, tks=None)).head(3)
 </pre></div>
 </div>
 </div>
@@ -977,24 +979,25 @@ print(object_types) # Check for hydraulic elmement types
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2025-12-12 19:59:17,191] INFO in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df for element type: ObjectTypes.DistrictHeatingConsumer ...
-[2025-12-12 19:59:17,194] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_metadata for element type: ObjectTypes.DistrictHeatingConsumer ...
-[2025-12-12 19:59:17,194] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.DistrictHeatingConsumer
-[2025-12-12 19:59:17,197] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieved 337 element(s) of element type ObjectTypes.DistrictHeatingConsumer.
-[2025-12-12 19:59:17,199] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] No properties given → using ALL metadata properties for ObjectTypes.DistrictHeatingConsumer.
-[2025-12-12 19:59:17,199] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 56 metadata properties.
-[2025-12-12 19:59:17,200] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving metadata properties [&#39;Name&#39;, &#39;Beschreibung&#39;, &#39;Ind0&#39;, &#39;W0&#39;, &#39;Qm0&#39;, &#39;Tvl0&#39;, &#39;Trs0&#39;, &#39;Lfk&#39;, &#39;Rho0&#39;, &#39;Dtmin&#39;, &#39;Indtr&#39;, &#39;Trsk&#39;, &#39;Fktrft&#39;, &#39;A&#39;, &#39;B&#39;, &#39;C&#39;, &#39;Vtyp&#39;, &#39;V0&#39;, &#39;P1soll&#39;, &#39;Dpvlmin&#39;, &#39;Fkzep1vl&#39;, &#39;Tsvl&#39;, &#39;Zevk&#39;, &#39;Dphaus&#39;, &#39;Dprlmin&#39;, &#39;Fkzep1rl&#39;, &#39;Tsrl&#39;, &#39;Imbg&#39;, &#39;Irfv&#39;, &#39;Fkcont&#39;, &#39;Idreferenz&#39;, &#39;Iplanung&#39;, &#39;CPM&#39;, &#39;NumberOfVERB&#39;, &#39;IndtrKlartext&#39;, &#39;M0Estimated&#39;, &#39;W0Estimated&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;IsMarked&#39;, &#39;InVariant&#39;, &#39;Xkor&#39;, &#39;Ykor&#39;, &#39;ShowDescription&#39;, &#39;PositionOfDescription&#39;, &#39;Angle&#39;, &#39;SymbolFactor&#39;, &#39;GeometriesDiffer&#39;, &#39;bz.Fk&#39;, &#39;bz.Indlast&#39;, &#39;bz.Indlfkt2&#39;, &#39;bz.Fklfkt&#39;, &#39;bz.Fklfkt2&#39;, &#39;bz.Fkqvar&#39;, &#39;bz.Fktevt&#39;, &#39;bz.IndlastKlartext&#39;], geometry...
-[2025-12-12 19:59:18,164] INFO in sir3stoolkit.mantle.dataframes: [metadata] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
-[2025-12-12 19:59:18,172] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (337, 58)
-[2025-12-12 19:59:18,174] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_results for element type: ObjectTypes.DistrictHeatingConsumer ...
-[2025-12-12 19:59:18,226] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.DistrictHeatingConsumer
-[2025-12-12 19:59:18,277] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2023-02-13 00:00:00.000 +01:00 is used
-[2025-12-12 19:59:18,277] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
-[2025-12-12 19:59:18,282] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 337 element(s) of element type ObjectTypes.DistrictHeatingConsumer.
-[2025-12-12 19:59:18,284] INFO in sir3stoolkit.mantle.dataframes: [results] Using 20 result properties.
-[2025-12-12 19:59:18,344] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
-[2025-12-12 19:59:19,244] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 6740)
-[2025-12-12 19:59:19,254] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Merging df_metadata with df_results for element type: ObjectTypes.DistrictHeatingConsumer ...
+[2025-12-19 15:53:31,529] INFO in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df for element type: ObjectTypes.DistrictHeatingConsumer ...
+[2025-12-19 15:53:31,530] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_metadata for element type: ObjectTypes.DistrictHeatingConsumer ...
+[2025-12-19 15:53:31,531] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.DistrictHeatingConsumer
+[2025-12-19 15:53:31,532] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieved 337 element(s) of element type ObjectTypes.DistrictHeatingConsumer.
+[2025-12-19 15:53:31,534] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] No properties given → using ALL metadata properties for ObjectTypes.DistrictHeatingConsumer.
+[2025-12-19 15:53:31,536] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 55 metadata properties.
+[2025-12-19 15:53:31,537] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving metadata properties [&#39;Name&#39;, &#39;Beschreibung&#39;, &#39;Ind0&#39;, &#39;W0&#39;, &#39;Qm0&#39;, &#39;Tvl0&#39;, &#39;Trs0&#39;, &#39;Lfk&#39;, &#39;Rho0&#39;, &#39;Dtmin&#39;, &#39;Indtr&#39;, &#39;Trsk&#39;, &#39;Fktrft&#39;, &#39;A&#39;, &#39;B&#39;, &#39;C&#39;, &#39;Vtyp&#39;, &#39;V0&#39;, &#39;P1soll&#39;, &#39;Dpvlmin&#39;, &#39;Fkzep1vl&#39;, &#39;Tsvl&#39;, &#39;Zevk&#39;, &#39;Dphaus&#39;, &#39;Dprlmin&#39;, &#39;Fkzep1rl&#39;, &#39;Tsrl&#39;, &#39;Imbg&#39;, &#39;Irfv&#39;, &#39;Fkcont&#39;, &#39;Idreferenz&#39;, &#39;Iplanung&#39;, &#39;CPM&#39;, &#39;NumberOfVERB&#39;, &#39;IndtrKlartext&#39;, &#39;M0Estimated&#39;, &#39;W0Estimated&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;, &#39;Xkor&#39;, &#39;Ykor&#39;, &#39;ShowDescription&#39;, &#39;PositionOfDescription&#39;, &#39;Angle&#39;, &#39;SymbolFactor&#39;, &#39;GeometriesDiffer&#39;, &#39;bz.Fk&#39;, &#39;bz.Indlast&#39;, &#39;bz.Indlfkt2&#39;, &#39;bz.Fklfkt&#39;, &#39;bz.Fklfkt2&#39;, &#39;bz.Fkqvar&#39;, &#39;bz.Fktevt&#39;, &#39;bz.IndlastKlartext&#39;], geometry, end nodes...
+[2025-12-19 15:53:32,632] INFO in sir3stoolkit.mantle.dataframes: [metadata] 2 non-empty end node columns were created.
+[2025-12-19 15:53:32,645] INFO in sir3stoolkit.mantle.dataframes: [metadata] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
+[2025-12-19 15:53:32,647] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (337, 59)
+[2025-12-19 15:53:32,647] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_results for element type: ObjectTypes.DistrictHeatingConsumer ...
+[2025-12-19 15:53:32,805] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.DistrictHeatingConsumer
+[2025-12-19 15:53:32,985] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2023-02-13 00:00:00.000 +01:00 is used
+[2025-12-19 15:53:32,986] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
+[2025-12-19 15:53:32,987] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 337 element(s) of element type ObjectTypes.DistrictHeatingConsumer.
+[2025-12-19 15:53:32,987] INFO in sir3stoolkit.mantle.dataframes: [results] Using 20 result properties.
+[2025-12-19 15:53:33,025] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2025-12-19 15:53:34,118] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 6740)
+[2025-12-19 15:53:34,118] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Merging df_metadata with df_results for element type: ObjectTypes.DistrictHeatingConsumer ...
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -1060,7 +1063,6 @@ print(object_types) # Check for hydraulic elmement types
       <th>W0Estimated</th>
       <th>Tk</th>
       <th>Pk</th>
-      <th>IsMarked</th>
       <th>InVariant</th>
       <th>Xkor</th>
       <th>Ykor</th>
@@ -1078,6 +1080,8 @@ print(object_types) # Check for hydraulic elmement types
       <th>bz.Fktevt</th>
       <th>bz.IndlastKlartext</th>
       <th>geometry</th>
+      <th>fkKI</th>
+      <th>fkKK</th>
       <th>DH</th>
       <th>DP</th>
       <th>DPH</th>
@@ -1144,7 +1148,6 @@ print(object_types) # Check for hydraulic elmement types
       <td>4611752310942477664</td>
       <td>4611752310942477664</td>
       <td>False</td>
-      <td>False</td>
       <td>713675,30023234</td>
       <td>5578705,1927566</td>
       <td>False</td>
@@ -1161,6 +1164,8 @@ print(object_types) # Check for hydraulic elmement types
       <td>5395645951786400348</td>
       <td>Lastfaktor thermisch</td>
       <td>POINT (713675.3 5578705.193)</td>
+      <td>4673701597187411685</td>
+      <td>4995788945387711669</td>
       <td>17.178450</td>
       <td>1.583806</td>
       <td>1.583806</td>
@@ -1225,7 +1230,6 @@ print(object_types) # Check for hydraulic elmement types
       <td>4612528660388965271</td>
       <td>4612528660388965271</td>
       <td>False</td>
-      <td>False</td>
       <td>714251,332395179</td>
       <td>5578925,00052798</td>
       <td>False</td>
@@ -1242,6 +1246,8 @@ print(object_types) # Check for hydraulic elmement types
       <td>5395645951786400348</td>
       <td>Lastfaktor thermisch</td>
       <td>POINT (714251.332 5578925.001)</td>
+      <td>5015101891725198603</td>
+      <td>5751808837348052764</td>
       <td>0.069769</td>
       <td>0.006844</td>
       <td>0.006844</td>
@@ -1306,7 +1312,6 @@ print(object_types) # Check for hydraulic elmement types
       <td>4612562908060328263</td>
       <td>4612562908060328263</td>
       <td>False</td>
-      <td>False</td>
       <td>713271,271817449</td>
       <td>5578979,74264398</td>
       <td>False</td>
@@ -1323,6 +1328,8 @@ print(object_types) # Check for hydraulic elmement types
       <td>5395645951786400348</td>
       <td>Lastfaktor thermisch</td>
       <td>POINT (713271.272 5578979.743)</td>
+      <td>4965299629814639205</td>
+      <td>4779536530687993701</td>
       <td>16.757140</td>
       <td>1.562662</td>
       <td>1.562662</td>
@@ -1350,6 +1357,1276 @@ print(object_types) # Check for hydraulic elmement types
 </div>
 </section>
 </section>
+<section id="Generate-Non-Element-Dataframes">
+<h1>Generate Non-Element Dataframes<a class="headerlink" href="#Generate-Non-Element-Dataframes" title="Link to this heading"></a></h1>
+<section id="AGSN-(Longitudinal-Sections)">
+<h2>AGSN (Longitudinal Sections)<a class="headerlink" href="#AGSN-(Longitudinal-Sections)" title="Link to this heading"></a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dfs = s3s.generate_longitudinal_section_dataframes()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+[2025-12-19 15:53:34,175] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.AGSN_HydraulicProfile
+[2025-12-19 15:53:34,177] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieved 3 element(s) of element type ObjectTypes.AGSN_HydraulicProfile.
+[2025-12-19 15:53:34,179] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] No properties given → using ALL metadata properties for ObjectTypes.AGSN_HydraulicProfile.
+[2025-12-19 15:53:34,180] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 9 metadata properties.
+[2025-12-19 15:53:34,182] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving metadata properties [&#39;Name&#39;, &#39;Lfdnr&#39;, &#39;Aktiv&#39;, &#39;AllNodesAndLinks&#39;, &#39;ObjsString&#39;, &#39;MainWay&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;]...
+[2025-12-19 15:53:34,186] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (3, 10)
+[2025-12-19 15:53:34,188] INFO in sir3stoolkit.mantle.dataframes: Retrieving Hydraulic Profile with Lfdnr: 1.
+[2025-12-19 15:53:34,200] INFO in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df for element type: ObjectTypes.Pipe ...
+[2025-12-19 15:53:34,201] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_metadata for element type: ObjectTypes.Pipe ...
+[2025-12-19 15:53:34,201] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.Pipe
+[2025-12-19 15:53:34,203] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2025-12-19 15:53:34,204] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 44 tks remain after filtering for given tks.
+[2025-12-19 15:53:34,205] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] No properties given → using ALL metadata properties for ObjectTypes.Pipe.
+[2025-12-19 15:53:34,206] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 46 metadata properties.
+[2025-12-19 15:53:34,207] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving metadata properties [&#39;Name&#39;, &#39;FkdtroRowd&#39;, &#39;Fkltgr&#39;, &#39;Fkstrasse&#39;, &#39;L&#39;, &#39;Lzu&#39;, &#39;Rau&#39;, &#39;Jlambs&#39;, &#39;Lambda0&#39;, &#39;Zein&#39;, &#39;Zaus&#39;, &#39;Zuml&#39;, &#39;Asoll&#39;, &#39;Indschall&#39;, &#39;Baujahr&#39;, &#39;Hal&#39;, &#39;Fkcont&#39;, &#39;Fk2lrohr&#39;, &#39;Beschreibung&#39;, &#39;Idreferenz&#39;, &#39;Iplanung&#39;, &#39;Kvr&#39;, &#39;LineWidthMM&#39;, &#39;DottedLine&#39;, &#39;DN&#39;, &#39;Di&#39;, &#39;KvrKlartext&#39;, &#39;HasClosedNSCHs&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;, &#39;Xkor&#39;, &#39;Ykor&#39;, &#39;GeometriesDiffer&#39;, &#39;bz.Fk&#39;, &#39;bz.Qsvb&#39;, &#39;bz.Irtrenn&#39;, &#39;bz.Leckstatus&#39;, &#39;bz.Leckstart&#39;, &#39;bz.Leckend&#39;, &#39;bz.Leckort&#39;, &#39;bz.Leckmenge&#39;, &#39;bz.Imptnz&#39;, &#39;bz.Zvlimptnz&#39;, &#39;bz.Kantenzv&#39;, &#39;bz.ITrennWithNSCH&#39;], geometry, end nodes...
+[2025-12-19 15:53:34,346] INFO in sir3stoolkit.mantle.dataframes: [metadata] 2 non-empty end node columns were created.
+[2025-12-19 15:53:34,354] INFO in sir3stoolkit.mantle.dataframes: [metadata] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
+[2025-12-19 15:53:34,355] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (44, 50)
+[2025-12-19 15:53:34,356] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_results for element type: ObjectTypes.Pipe ...
+[2025-12-19 15:53:34,435] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
+[2025-12-19 15:53:34,497] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2023-02-13 00:00:00.000 +01:00 is used
+[2025-12-19 15:53:34,498] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
+[2025-12-19 15:53:34,499] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2025-12-19 15:53:34,500] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 44 tks remain after filtering for given tks.
+[2025-12-19 15:53:34,501] INFO in sir3stoolkit.mantle.dataframes: [results] Using 31 result properties.
+[2025-12-19 15:53:34,525] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2025-12-19 15:53:34,845] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 1364)
+[2025-12-19 15:53:34,845] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Merging df_metadata with df_results for element type: ObjectTypes.Pipe ...
+[2025-12-19 15:53:34,852] INFO in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df for element type: ObjectTypes.Pipe ...
+[2025-12-19 15:53:34,852] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_metadata for element type: ObjectTypes.Pipe ...
+[2025-12-19 15:53:34,852] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.Pipe
+[2025-12-19 15:53:34,860] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2025-12-19 15:53:34,862] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 44 tks remain after filtering for given tks.
+[2025-12-19 15:53:34,863] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] No properties given → using ALL metadata properties for ObjectTypes.Pipe.
+[2025-12-19 15:53:34,863] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 46 metadata properties.
+[2025-12-19 15:53:34,865] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving metadata properties [&#39;Name&#39;, &#39;FkdtroRowd&#39;, &#39;Fkltgr&#39;, &#39;Fkstrasse&#39;, &#39;L&#39;, &#39;Lzu&#39;, &#39;Rau&#39;, &#39;Jlambs&#39;, &#39;Lambda0&#39;, &#39;Zein&#39;, &#39;Zaus&#39;, &#39;Zuml&#39;, &#39;Asoll&#39;, &#39;Indschall&#39;, &#39;Baujahr&#39;, &#39;Hal&#39;, &#39;Fkcont&#39;, &#39;Fk2lrohr&#39;, &#39;Beschreibung&#39;, &#39;Idreferenz&#39;, &#39;Iplanung&#39;, &#39;Kvr&#39;, &#39;LineWidthMM&#39;, &#39;DottedLine&#39;, &#39;DN&#39;, &#39;Di&#39;, &#39;KvrKlartext&#39;, &#39;HasClosedNSCHs&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;, &#39;Xkor&#39;, &#39;Ykor&#39;, &#39;GeometriesDiffer&#39;, &#39;bz.Fk&#39;, &#39;bz.Qsvb&#39;, &#39;bz.Irtrenn&#39;, &#39;bz.Leckstatus&#39;, &#39;bz.Leckstart&#39;, &#39;bz.Leckend&#39;, &#39;bz.Leckort&#39;, &#39;bz.Leckmenge&#39;, &#39;bz.Imptnz&#39;, &#39;bz.Zvlimptnz&#39;, &#39;bz.Kantenzv&#39;, &#39;bz.ITrennWithNSCH&#39;], geometry, end nodes...
+[2025-12-19 15:53:34,975] INFO in sir3stoolkit.mantle.dataframes: [metadata] 2 non-empty end node columns were created.
+[2025-12-19 15:53:34,986] INFO in sir3stoolkit.mantle.dataframes: [metadata] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
+[2025-12-19 15:53:34,987] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (44, 50)
+[2025-12-19 15:53:34,988] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_results for element type: ObjectTypes.Pipe ...
+[2025-12-19 15:53:35,066] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
+[2025-12-19 15:53:35,137] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2023-02-13 00:00:00.000 +01:00 is used
+[2025-12-19 15:53:35,144] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
+[2025-12-19 15:53:35,145] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2025-12-19 15:53:35,147] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 44 tks remain after filtering for given tks.
+[2025-12-19 15:53:35,152] INFO in sir3stoolkit.mantle.dataframes: [results] Using 31 result properties.
+[2025-12-19 15:53:35,169] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2025-12-19 15:53:35,518] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 1364)
+[2025-12-19 15:53:35,518] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Merging df_metadata with df_results for element type: ObjectTypes.Pipe ...
+[2025-12-19 15:53:35,534] INFO in sir3stoolkit.mantle.dataframes: Retrieving Hydraulic Profile with Lfdnr: 2.
+[2025-12-19 15:53:35,534] INFO in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df for element type: ObjectTypes.Pipe ...
+[2025-12-19 15:53:35,534] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_metadata for element type: ObjectTypes.Pipe ...
+[2025-12-19 15:53:35,539] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.Pipe
+[2025-12-19 15:53:35,541] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2025-12-19 15:53:35,542] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 44 tks remain after filtering for given tks.
+[2025-12-19 15:53:35,543] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] No properties given → using ALL metadata properties for ObjectTypes.Pipe.
+[2025-12-19 15:53:35,544] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 46 metadata properties.
+[2025-12-19 15:53:35,545] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving metadata properties [&#39;Name&#39;, &#39;FkdtroRowd&#39;, &#39;Fkltgr&#39;, &#39;Fkstrasse&#39;, &#39;L&#39;, &#39;Lzu&#39;, &#39;Rau&#39;, &#39;Jlambs&#39;, &#39;Lambda0&#39;, &#39;Zein&#39;, &#39;Zaus&#39;, &#39;Zuml&#39;, &#39;Asoll&#39;, &#39;Indschall&#39;, &#39;Baujahr&#39;, &#39;Hal&#39;, &#39;Fkcont&#39;, &#39;Fk2lrohr&#39;, &#39;Beschreibung&#39;, &#39;Idreferenz&#39;, &#39;Iplanung&#39;, &#39;Kvr&#39;, &#39;LineWidthMM&#39;, &#39;DottedLine&#39;, &#39;DN&#39;, &#39;Di&#39;, &#39;KvrKlartext&#39;, &#39;HasClosedNSCHs&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;, &#39;Xkor&#39;, &#39;Ykor&#39;, &#39;GeometriesDiffer&#39;, &#39;bz.Fk&#39;, &#39;bz.Qsvb&#39;, &#39;bz.Irtrenn&#39;, &#39;bz.Leckstatus&#39;, &#39;bz.Leckstart&#39;, &#39;bz.Leckend&#39;, &#39;bz.Leckort&#39;, &#39;bz.Leckmenge&#39;, &#39;bz.Imptnz&#39;, &#39;bz.Zvlimptnz&#39;, &#39;bz.Kantenzv&#39;, &#39;bz.ITrennWithNSCH&#39;], geometry, end nodes...
+[2025-12-19 15:53:35,680] INFO in sir3stoolkit.mantle.dataframes: [metadata] 2 non-empty end node columns were created.
+[2025-12-19 15:53:35,689] INFO in sir3stoolkit.mantle.dataframes: [metadata] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
+[2025-12-19 15:53:35,689] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (44, 50)
+[2025-12-19 15:53:35,689] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_results for element type: ObjectTypes.Pipe ...
+[2025-12-19 15:53:35,756] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
+[2025-12-19 15:53:35,829] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2023-02-13 00:00:00.000 +01:00 is used
+[2025-12-19 15:53:35,829] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
+[2025-12-19 15:53:35,833] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2025-12-19 15:53:35,834] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 44 tks remain after filtering for given tks.
+[2025-12-19 15:53:35,835] INFO in sir3stoolkit.mantle.dataframes: [results] Using 31 result properties.
+[2025-12-19 15:53:35,847] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2025-12-19 15:53:36,184] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 1364)
+[2025-12-19 15:53:36,188] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Merging df_metadata with df_results for element type: ObjectTypes.Pipe ...
+[2025-12-19 15:53:36,195] INFO in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df for element type: ObjectTypes.Pipe ...
+[2025-12-19 15:53:36,196] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_metadata for element type: ObjectTypes.Pipe ...
+[2025-12-19 15:53:36,196] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.Pipe
+[2025-12-19 15:53:36,201] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2025-12-19 15:53:36,202] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 44 tks remain after filtering for given tks.
+[2025-12-19 15:53:36,203] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] No properties given → using ALL metadata properties for ObjectTypes.Pipe.
+[2025-12-19 15:53:36,204] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 46 metadata properties.
+[2025-12-19 15:53:36,204] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving metadata properties [&#39;Name&#39;, &#39;FkdtroRowd&#39;, &#39;Fkltgr&#39;, &#39;Fkstrasse&#39;, &#39;L&#39;, &#39;Lzu&#39;, &#39;Rau&#39;, &#39;Jlambs&#39;, &#39;Lambda0&#39;, &#39;Zein&#39;, &#39;Zaus&#39;, &#39;Zuml&#39;, &#39;Asoll&#39;, &#39;Indschall&#39;, &#39;Baujahr&#39;, &#39;Hal&#39;, &#39;Fkcont&#39;, &#39;Fk2lrohr&#39;, &#39;Beschreibung&#39;, &#39;Idreferenz&#39;, &#39;Iplanung&#39;, &#39;Kvr&#39;, &#39;LineWidthMM&#39;, &#39;DottedLine&#39;, &#39;DN&#39;, &#39;Di&#39;, &#39;KvrKlartext&#39;, &#39;HasClosedNSCHs&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;, &#39;Xkor&#39;, &#39;Ykor&#39;, &#39;GeometriesDiffer&#39;, &#39;bz.Fk&#39;, &#39;bz.Qsvb&#39;, &#39;bz.Irtrenn&#39;, &#39;bz.Leckstatus&#39;, &#39;bz.Leckstart&#39;, &#39;bz.Leckend&#39;, &#39;bz.Leckort&#39;, &#39;bz.Leckmenge&#39;, &#39;bz.Imptnz&#39;, &#39;bz.Zvlimptnz&#39;, &#39;bz.Kantenzv&#39;, &#39;bz.ITrennWithNSCH&#39;], geometry, end nodes...
+[2025-12-19 15:53:36,317] INFO in sir3stoolkit.mantle.dataframes: [metadata] 2 non-empty end node columns were created.
+[2025-12-19 15:53:36,328] INFO in sir3stoolkit.mantle.dataframes: [metadata] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
+[2025-12-19 15:53:36,328] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (44, 50)
+[2025-12-19 15:53:36,328] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_results for element type: ObjectTypes.Pipe ...
+[2025-12-19 15:53:36,386] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
+[2025-12-19 15:53:36,451] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2023-02-13 00:00:00.000 +01:00 is used
+[2025-12-19 15:53:36,451] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
+[2025-12-19 15:53:36,454] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2025-12-19 15:53:36,455] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 44 tks remain after filtering for given tks.
+[2025-12-19 15:53:36,455] INFO in sir3stoolkit.mantle.dataframes: [results] Using 31 result properties.
+[2025-12-19 15:53:36,484] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2025-12-19 15:53:36,784] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 1364)
+[2025-12-19 15:53:36,784] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Merging df_metadata with df_results for element type: ObjectTypes.Pipe ...
+[2025-12-19 15:53:36,788] INFO in sir3stoolkit.mantle.dataframes: Retrieving Hydraulic Profile with Lfdnr: 3.
+[2025-12-19 15:53:36,788] INFO in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df for element type: ObjectTypes.Pipe ...
+[2025-12-19 15:53:36,793] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_metadata for element type: ObjectTypes.Pipe ...
+[2025-12-19 15:53:36,793] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.Pipe
+[2025-12-19 15:53:36,797] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2025-12-19 15:53:36,798] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 44 tks remain after filtering for given tks.
+[2025-12-19 15:53:36,799] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] No properties given → using ALL metadata properties for ObjectTypes.Pipe.
+[2025-12-19 15:53:36,801] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 46 metadata properties.
+[2025-12-19 15:53:36,801] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving metadata properties [&#39;Name&#39;, &#39;FkdtroRowd&#39;, &#39;Fkltgr&#39;, &#39;Fkstrasse&#39;, &#39;L&#39;, &#39;Lzu&#39;, &#39;Rau&#39;, &#39;Jlambs&#39;, &#39;Lambda0&#39;, &#39;Zein&#39;, &#39;Zaus&#39;, &#39;Zuml&#39;, &#39;Asoll&#39;, &#39;Indschall&#39;, &#39;Baujahr&#39;, &#39;Hal&#39;, &#39;Fkcont&#39;, &#39;Fk2lrohr&#39;, &#39;Beschreibung&#39;, &#39;Idreferenz&#39;, &#39;Iplanung&#39;, &#39;Kvr&#39;, &#39;LineWidthMM&#39;, &#39;DottedLine&#39;, &#39;DN&#39;, &#39;Di&#39;, &#39;KvrKlartext&#39;, &#39;HasClosedNSCHs&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;, &#39;Xkor&#39;, &#39;Ykor&#39;, &#39;GeometriesDiffer&#39;, &#39;bz.Fk&#39;, &#39;bz.Qsvb&#39;, &#39;bz.Irtrenn&#39;, &#39;bz.Leckstatus&#39;, &#39;bz.Leckstart&#39;, &#39;bz.Leckend&#39;, &#39;bz.Leckort&#39;, &#39;bz.Leckmenge&#39;, &#39;bz.Imptnz&#39;, &#39;bz.Zvlimptnz&#39;, &#39;bz.Kantenzv&#39;, &#39;bz.ITrennWithNSCH&#39;], geometry, end nodes...
+[2025-12-19 15:53:36,918] INFO in sir3stoolkit.mantle.dataframes: [metadata] 2 non-empty end node columns were created.
+[2025-12-19 15:53:36,929] INFO in sir3stoolkit.mantle.dataframes: [metadata] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
+[2025-12-19 15:53:36,929] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (44, 50)
+[2025-12-19 15:53:36,931] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_results for element type: ObjectTypes.Pipe ...
+[2025-12-19 15:53:36,999] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
+[2025-12-19 15:53:37,068] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2023-02-13 00:00:00.000 +01:00 is used
+[2025-12-19 15:53:37,068] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
+[2025-12-19 15:53:37,068] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2025-12-19 15:53:37,068] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 44 tks remain after filtering for given tks.
+[2025-12-19 15:53:37,073] INFO in sir3stoolkit.mantle.dataframes: [results] Using 31 result properties.
+[2025-12-19 15:53:37,098] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2025-12-19 15:53:37,427] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 1364)
+[2025-12-19 15:53:37,428] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Merging df_metadata with df_results for element type: ObjectTypes.Pipe ...
+[2025-12-19 15:53:37,434] INFO in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df for element type: ObjectTypes.Pipe ...
+[2025-12-19 15:53:37,434] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_metadata for element type: ObjectTypes.Pipe ...
+[2025-12-19 15:53:37,434] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.Pipe
+[2025-12-19 15:53:37,438] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2025-12-19 15:53:37,439] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 44 tks remain after filtering for given tks.
+[2025-12-19 15:53:37,442] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] No properties given → using ALL metadata properties for ObjectTypes.Pipe.
+[2025-12-19 15:53:37,443] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 46 metadata properties.
+[2025-12-19 15:53:37,444] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving metadata properties [&#39;Name&#39;, &#39;FkdtroRowd&#39;, &#39;Fkltgr&#39;, &#39;Fkstrasse&#39;, &#39;L&#39;, &#39;Lzu&#39;, &#39;Rau&#39;, &#39;Jlambs&#39;, &#39;Lambda0&#39;, &#39;Zein&#39;, &#39;Zaus&#39;, &#39;Zuml&#39;, &#39;Asoll&#39;, &#39;Indschall&#39;, &#39;Baujahr&#39;, &#39;Hal&#39;, &#39;Fkcont&#39;, &#39;Fk2lrohr&#39;, &#39;Beschreibung&#39;, &#39;Idreferenz&#39;, &#39;Iplanung&#39;, &#39;Kvr&#39;, &#39;LineWidthMM&#39;, &#39;DottedLine&#39;, &#39;DN&#39;, &#39;Di&#39;, &#39;KvrKlartext&#39;, &#39;HasClosedNSCHs&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;, &#39;Xkor&#39;, &#39;Ykor&#39;, &#39;GeometriesDiffer&#39;, &#39;bz.Fk&#39;, &#39;bz.Qsvb&#39;, &#39;bz.Irtrenn&#39;, &#39;bz.Leckstatus&#39;, &#39;bz.Leckstart&#39;, &#39;bz.Leckend&#39;, &#39;bz.Leckort&#39;, &#39;bz.Leckmenge&#39;, &#39;bz.Imptnz&#39;, &#39;bz.Zvlimptnz&#39;, &#39;bz.Kantenzv&#39;, &#39;bz.ITrennWithNSCH&#39;], geometry, end nodes...
+[2025-12-19 15:53:37,558] INFO in sir3stoolkit.mantle.dataframes: [metadata] 2 non-empty end node columns were created.
+[2025-12-19 15:53:37,565] INFO in sir3stoolkit.mantle.dataframes: [metadata] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
+[2025-12-19 15:53:37,568] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (44, 50)
+[2025-12-19 15:53:37,568] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_results for element type: ObjectTypes.Pipe ...
+[2025-12-19 15:53:37,617] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
+[2025-12-19 15:53:37,696] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2023-02-13 00:00:00.000 +01:00 is used
+[2025-12-19 15:53:37,698] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
+[2025-12-19 15:53:37,698] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2025-12-19 15:53:37,701] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 44 tks remain after filtering for given tks.
+[2025-12-19 15:53:37,703] INFO in sir3stoolkit.mantle.dataframes: [results] Using 31 result properties.
+[2025-12-19 15:53:37,718] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2025-12-19 15:53:38,059] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 1364)
+[2025-12-19 15:53:38,061] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Merging df_metadata with df_results for element type: ObjectTypes.Pipe ...
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dfs[0].head() # Lfdnr 1 VL
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>tk</th>
+      <th>Name</th>
+      <th>FkdtroRowd</th>
+      <th>Fkltgr</th>
+      <th>Fkstrasse</th>
+      <th>L</th>
+      <th>Lzu</th>
+      <th>Rau</th>
+      <th>Jlambs</th>
+      <th>Lambda0</th>
+      <th>Zein</th>
+      <th>Zaus</th>
+      <th>Zuml</th>
+      <th>Asoll</th>
+      <th>Indschall</th>
+      <th>Baujahr</th>
+      <th>Hal</th>
+      <th>Fkcont</th>
+      <th>Fk2lrohr</th>
+      <th>Beschreibung</th>
+      <th>Idreferenz</th>
+      <th>Iplanung</th>
+      <th>Kvr</th>
+      <th>LineWidthMM</th>
+      <th>DottedLine</th>
+      <th>DN</th>
+      <th>Di</th>
+      <th>KvrKlartext</th>
+      <th>HasClosedNSCHs</th>
+      <th>Tk</th>
+      <th>Pk</th>
+      <th>InVariant</th>
+      <th>Xkor</th>
+      <th>Ykor</th>
+      <th>GeometriesDiffer</th>
+      <th>bz.Fk</th>
+      <th>bz.Qsvb</th>
+      <th>bz.Irtrenn</th>
+      <th>bz.Leckstatus</th>
+      <th>bz.Leckstart</th>
+      <th>bz.Leckend</th>
+      <th>bz.Leckort</th>
+      <th>bz.Leckmenge</th>
+      <th>bz.Imptnz</th>
+      <th>bz.Zvlimptnz</th>
+      <th>bz.Kantenzv</th>
+      <th>bz.ITrennWithNSCH</th>
+      <th>geometry</th>
+      <th>fkKI</th>
+      <th>fkKK</th>
+      <th>A</th>
+      <th>DTTR</th>
+      <th>DWVERL</th>
+      <th>DWVERLABS</th>
+      <th>IAKTIV</th>
+      <th>IRTRENN</th>
+      <th>JV</th>
+      <th>MVEC</th>
+      <th>PDAMPF</th>
+      <th>PHR</th>
+      <th>PMIN</th>
+      <th>PVEC</th>
+      <th>PVECMAX_INST</th>
+      <th>PVECMIN_INST</th>
+      <th>QMAV</th>
+      <th>QMI</th>
+      <th>QMK</th>
+      <th>RHOI</th>
+      <th>RHOK</th>
+      <th>RHOVEC</th>
+      <th>SVEC</th>
+      <th>TI</th>
+      <th>TK</th>
+      <th>TTRVEC</th>
+      <th>TVEC</th>
+      <th>VAV</th>
+      <th>VI</th>
+      <th>VK</th>
+      <th>VOLDA</th>
+      <th>WVL</th>
+      <th>ZVEC</th>
+      <th>l_sum</th>
+      <th>AGSN_Lfdnr</th>
+      <th>AGSN_Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>5691533564979419761</td>
+      <td>Rohr V-E0 V-K1683S</td>
+      <td>4816511167455310973</td>
+      <td>4779752876656844188</td>
+      <td>5204829332281547346</td>
+      <td>15,3517</td>
+      <td>0</td>
+      <td>0,05</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1000</td>
+      <td>0</td>
+      <td></td>
+      <td>0</td>
+      <td>5029128874972463118</td>
+      <td>5025945677694931826</td>
+      <td>OSM: Knoten 476971238 -&gt; Knoten 299394923; Län...</td>
+      <td>39785520</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0,00499999987368938</td>
+      <td>0</td>
+      <td>350</td>
+      <td>345,6</td>
+      <td>Vorlauf</td>
+      <td></td>
+      <td>5691533564979419761</td>
+      <td>5691533564979419761</td>
+      <td>False</td>
+      <td>713619,921382501</td>
+      <td>5578218,95448989</td>
+      <td>False</td>
+      <td>5691533564979419761</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>LINESTRING (713619.921 5578218.954, 713614.649...</td>
+      <td>5398100694284104779</td>
+      <td>4825391580467484032</td>
+      <td>0.0</td>
+      <td>0.004844</td>
+      <td>43.12016</td>
+      <td>0.661968</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.152727</td>
+      <td>79.74764\t79.74764\t79.74764</td>
+      <td>0.701074</td>
+      <td>0.002345</td>
+      <td>5.800678</td>
+      <td>5.878785\t5.83973\t5.80068</td>
+      <td>5.878785\t5.83973\t5.80068</td>
+      <td>5.878785\t5.83973\t5.80068</td>
+      <td>287.0915</td>
+      <td>287.0915</td>
+      <td>287.0915</td>
+      <td>965.7</td>
+      <td>965.7012</td>
+      <td>965.7\t965.7006\t965.7012</td>
+      <td>0\t7.67585\t15.3517</td>
+      <td>89.99999</td>
+      <td>89.99802</td>
+      <td>0\t0.002422066\t0.004844132</td>
+      <td>90\t89.99902\t89.99802</td>
+      <td>0.880315</td>
+      <td>0.880315</td>
+      <td>0.880314</td>
+      <td>0.0</td>
+      <td>10082.88</td>
+      <td>541.49\t541.89\t542.29</td>
+      <td>15.351701</td>
+      <td>1</td>
+      <td>Längsschnitt</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>5048873293262650113</td>
+      <td>Rohr V-K1683S V-K1693S</td>
+      <td>4816511167455310973</td>
+      <td>4779752876656844188</td>
+      <td>5204829332281547346</td>
+      <td>12,50895</td>
+      <td>0</td>
+      <td>0,05</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1000</td>
+      <td>0</td>
+      <td></td>
+      <td>0</td>
+      <td>5029128874972463118</td>
+      <td>5216742060270992761</td>
+      <td>OSM: Knoten 299394923 -&gt; Knoten 4105649557; Lä...</td>
+      <td>39785520</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0,00499999987368938</td>
+      <td>0</td>
+      <td>350</td>
+      <td>345,6</td>
+      <td>Vorlauf</td>
+      <td></td>
+      <td>5048873293262650113</td>
+      <td>5048873293262650113</td>
+      <td>False</td>
+      <td>713614,648711719</td>
+      <td>5578233,37231421</td>
+      <td>False</td>
+      <td>5048873293262650113</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>LINESTRING (713614.649 5578233.372, 713614.465...</td>
+      <td>4825391580467484032</td>
+      <td>5180617780362861593</td>
+      <td>0.0</td>
+      <td>0.003947</td>
+      <td>43.5808</td>
+      <td>0.54515</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.152727</td>
+      <td>79.74764\t79.74764\t79.74764</td>
+      <td>0.701027</td>
+      <td>0.00191</td>
+      <td>5.732475</td>
+      <td>5.80068\t5.766575\t5.732475</td>
+      <td>5.80068\t5.766575\t5.732475</td>
+      <td>5.80068\t5.766575\t5.732475</td>
+      <td>287.0915</td>
+      <td>287.0915</td>
+      <td>287.0915</td>
+      <td>965.7012</td>
+      <td>965.7021</td>
+      <td>965.7012\t965.7017\t965.7021</td>
+      <td>0\t6.254474\t12.50895</td>
+      <td>89.99802</td>
+      <td>89.9964</td>
+      <td>0.004844132\t0.006817695\t0.008791257</td>
+      <td>89.99802\t89.99722\t89.9964</td>
+      <td>0.880314</td>
+      <td>0.880314</td>
+      <td>0.880313</td>
+      <td>0.0</td>
+      <td>10081.81</td>
+      <td>542.29\t542.64\t542.99</td>
+      <td>27.860648</td>
+      <td>1</td>
+      <td>Längsschnitt</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>5715081934973525403</td>
+      <td>Rohr V-K2163S V-K1693S</td>
+      <td>4816511167455310973</td>
+      <td>4779752876656844188</td>
+      <td>5204829332281547346</td>
+      <td>6,265505</td>
+      <td>0</td>
+      <td>0,05</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1000</td>
+      <td>0</td>
+      <td></td>
+      <td>0</td>
+      <td>5029128874972463118</td>
+      <td>4919359344392474301</td>
+      <td>OSM: Knoten 299394922 -&gt; Knoten 4105649557; Lä...</td>
+      <td>595926249</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0,00499999987368938</td>
+      <td>0</td>
+      <td>350</td>
+      <td>345,6</td>
+      <td>Vorlauf</td>
+      <td></td>
+      <td>5715081934973525403</td>
+      <td>5715081934973525403</td>
+      <td>False</td>
+      <td>713614,369043203</td>
+      <td>5578252,14468345</td>
+      <td>False</td>
+      <td>5715081934973525403</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>LINESTRING (713614.369 5578252.145, 713614.465...</td>
+      <td>4964920487041183545</td>
+      <td>5180617780362861593</td>
+      <td>0.0</td>
+      <td>0.001977</td>
+      <td>43.50407</td>
+      <td>0.272575</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.152727</td>
+      <td>-79.74764\t-79.74764</td>
+      <td>0.700995</td>
+      <td>0.000957</td>
+      <td>5.699317</td>
+      <td>5.699315\t5.732475</td>
+      <td>5.699315\t5.732475</td>
+      <td>5.699315\t5.732475</td>
+      <td>-287.0915</td>
+      <td>-287.0915</td>
+      <td>-287.0915</td>
+      <td>965.7026</td>
+      <td>965.7021</td>
+      <td>965.7026\t965.7021</td>
+      <td>0\t6.265505</td>
+      <td>89.9956</td>
+      <td>89.9964</td>
+      <td>0.0107683\t0.008791257</td>
+      <td>89.99561\t89.9964</td>
+      <td>-0.880313</td>
+      <td>-0.880313</td>
+      <td>-0.880313</td>
+      <td>0.0</td>
+      <td>-10080.92</td>
+      <td>543.33\t542.99</td>
+      <td>34.126153</td>
+      <td>1</td>
+      <td>Längsschnitt</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>5413647981880727734</td>
+      <td>Rohr V-K2043S V-K2163S</td>
+      <td>4816511167455310973</td>
+      <td>4779752876656844188</td>
+      <td>5204829332281547346</td>
+      <td>14,40754</td>
+      <td>0</td>
+      <td>0,05</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1000</td>
+      <td>0</td>
+      <td></td>
+      <td>0</td>
+      <td>5029128874972463118</td>
+      <td>5299861566239260044</td>
+      <td>OSM: Knoten 299394921 -&gt; Knoten 299394922; Län...</td>
+      <td>595926249</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0,00499999987368938</td>
+      <td>0</td>
+      <td>350</td>
+      <td>345,6</td>
+      <td>Vorlauf</td>
+      <td></td>
+      <td>5413647981880727734</td>
+      <td>5413647981880727734</td>
+      <td>False</td>
+      <td>713616,883648516</td>
+      <td>5578266,3310858</td>
+      <td>False</td>
+      <td>5413647981880727734</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>LINESTRING (713616.884 5578266.331, 713614.369...</td>
+      <td>4794016231137548967</td>
+      <td>4964920487041183545</td>
+      <td>0.0</td>
+      <td>0.004546</td>
+      <td>43.24322</td>
+      <td>0.623028</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.152727</td>
+      <td>-79.74764\t-79.74764\t-79.74764</td>
+      <td>0.70096</td>
+      <td>0.0022</td>
+      <td>5.630823</td>
+      <td>5.630825\t5.66507\t5.699315</td>
+      <td>5.630825\t5.66507\t5.699315</td>
+      <td>5.630825\t5.66507\t5.699315</td>
+      <td>-287.0915</td>
+      <td>-287.0915</td>
+      <td>-287.0915</td>
+      <td>965.7037</td>
+      <td>965.7026</td>
+      <td>965.7037\t965.7032\t965.7026</td>
+      <td>0\t7.203771\t14.40754</td>
+      <td>89.99374</td>
+      <td>89.9956</td>
+      <td>0.01531452\t0.01304141\t0.0107683</td>
+      <td>89.99374\t89.99466\t89.99561</td>
+      <td>-0.880313</td>
+      <td>-0.880312</td>
+      <td>-0.880313</td>
+      <td>0.0</td>
+      <td>-10080.48</td>
+      <td>544.03\t543.6801\t543.33</td>
+      <td>48.533695</td>
+      <td>1</td>
+      <td>Längsschnitt</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5134010500800575790</td>
+      <td>Rohr V-K2033S V-K2043S</td>
+      <td>4816511167455310973</td>
+      <td>4779752876656844188</td>
+      <td>5204829332281547346</td>
+      <td>13,51584</td>
+      <td>0</td>
+      <td>0,05</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1000</td>
+      <td>0</td>
+      <td></td>
+      <td>0</td>
+      <td>5029128874972463118</td>
+      <td>5204837016964086891</td>
+      <td>OSM: Knoten 4105649561 -&gt; Knoten 299394921; Lä...</td>
+      <td>408665320</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0,00499999987368938</td>
+      <td>0</td>
+      <td>350</td>
+      <td>345,6</td>
+      <td>Vorlauf</td>
+      <td></td>
+      <td>5134010500800575790</td>
+      <td>5134010500800575790</td>
+      <td>False</td>
+      <td>713614,238695288</td>
+      <td>5578279,58560368</td>
+      <td>False</td>
+      <td>5134010500800575790</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>LINESTRING (713614.239 5578279.586, 713616.884...</td>
+      <td>5473123125979010325</td>
+      <td>4794016231137548967</td>
+      <td>0.0</td>
+      <td>0.004265</td>
+      <td>42.4949</td>
+      <td>0.574354</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.152727</td>
+      <td>-79.74764\t-79.74764\t-79.74764</td>
+      <td>0.700913</td>
+      <td>0.002064</td>
+      <td>5.580464</td>
+      <td>5.580465\t5.605645\t5.630825</td>
+      <td>5.580465\t5.605645\t5.630825</td>
+      <td>5.580465\t5.605645\t5.630825</td>
+      <td>-287.0915</td>
+      <td>-287.0915</td>
+      <td>-287.0915</td>
+      <td>965.7048</td>
+      <td>965.7037</td>
+      <td>965.7048\t965.7043\t965.7037</td>
+      <td>0\t6.757922\t13.51584</td>
+      <td>89.992</td>
+      <td>89.99374</td>
+      <td>0.01957938\t0.01744695\t0.01531452</td>
+      <td>89.992\t89.99286\t89.99374</td>
+      <td>-0.880312</td>
+      <td>-0.880311</td>
+      <td>-0.880312</td>
+      <td>0.0</td>
+      <td>-10079.47</td>
+      <td>544.54\t544.285\t544.03</td>
+      <td>62.049538</td>
+      <td>1</td>
+      <td>Längsschnitt</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dfs[1].head() # Lfdnr 1 RL
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>tk</th>
+      <th>Name</th>
+      <th>FkdtroRowd</th>
+      <th>Fkltgr</th>
+      <th>Fkstrasse</th>
+      <th>L</th>
+      <th>Lzu</th>
+      <th>Rau</th>
+      <th>Jlambs</th>
+      <th>Lambda0</th>
+      <th>Zein</th>
+      <th>Zaus</th>
+      <th>Zuml</th>
+      <th>Asoll</th>
+      <th>Indschall</th>
+      <th>Baujahr</th>
+      <th>Hal</th>
+      <th>Fkcont</th>
+      <th>Fk2lrohr</th>
+      <th>Beschreibung</th>
+      <th>Idreferenz</th>
+      <th>Iplanung</th>
+      <th>Kvr</th>
+      <th>LineWidthMM</th>
+      <th>DottedLine</th>
+      <th>DN</th>
+      <th>Di</th>
+      <th>KvrKlartext</th>
+      <th>HasClosedNSCHs</th>
+      <th>Tk</th>
+      <th>Pk</th>
+      <th>InVariant</th>
+      <th>Xkor</th>
+      <th>Ykor</th>
+      <th>GeometriesDiffer</th>
+      <th>bz.Fk</th>
+      <th>bz.Qsvb</th>
+      <th>bz.Irtrenn</th>
+      <th>bz.Leckstatus</th>
+      <th>bz.Leckstart</th>
+      <th>bz.Leckend</th>
+      <th>bz.Leckort</th>
+      <th>bz.Leckmenge</th>
+      <th>bz.Imptnz</th>
+      <th>bz.Zvlimptnz</th>
+      <th>bz.Kantenzv</th>
+      <th>bz.ITrennWithNSCH</th>
+      <th>geometry</th>
+      <th>fkKI</th>
+      <th>fkKK</th>
+      <th>A</th>
+      <th>DTTR</th>
+      <th>DWVERL</th>
+      <th>DWVERLABS</th>
+      <th>IAKTIV</th>
+      <th>IRTRENN</th>
+      <th>JV</th>
+      <th>MVEC</th>
+      <th>PDAMPF</th>
+      <th>PHR</th>
+      <th>PMIN</th>
+      <th>PVEC</th>
+      <th>PVECMAX_INST</th>
+      <th>PVECMIN_INST</th>
+      <th>QMAV</th>
+      <th>QMI</th>
+      <th>QMK</th>
+      <th>RHOI</th>
+      <th>RHOK</th>
+      <th>RHOVEC</th>
+      <th>SVEC</th>
+      <th>TI</th>
+      <th>TK</th>
+      <th>TTRVEC</th>
+      <th>TVEC</th>
+      <th>VAV</th>
+      <th>VI</th>
+      <th>VK</th>
+      <th>VOLDA</th>
+      <th>WVL</th>
+      <th>ZVEC</th>
+      <th>l_sum</th>
+      <th>AGSN_Lfdnr</th>
+      <th>AGSN_Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>5025945677694931826</td>
+      <td>Rohr R-E0 R-K4163S</td>
+      <td>4816511167455310973</td>
+      <td>4779752876656844188</td>
+      <td>5204829332281547346</td>
+      <td>15,3517</td>
+      <td>0</td>
+      <td>0,05</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1000</td>
+      <td>0</td>
+      <td></td>
+      <td>0</td>
+      <td>5029128874972463118</td>
+      <td>5691533564979419761</td>
+      <td>OSM: Knoten 476971238 -&gt; Knoten 299394923; Län...</td>
+      <td>39785520</td>
+      <td>0</td>
+      <td>2</td>
+      <td>0,00499999987368938</td>
+      <td>0</td>
+      <td>350</td>
+      <td>345,6</td>
+      <td>Rücklauf</td>
+      <td></td>
+      <td>5025945677694931826</td>
+      <td>5025945677694931826</td>
+      <td>False</td>
+      <td>713621,921382501</td>
+      <td>5578218,95448989</td>
+      <td>False</td>
+      <td>5025945677694931826</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>LINESTRING (713621.921 5578218.954, 713616.649...</td>
+      <td>5160850648779674898</td>
+      <td>4851678476955084637</td>
+      <td>0.0</td>
+      <td>0.004935</td>
+      <td>26.63304</td>
+      <td>0.408862</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.154884</td>
+      <td>-79.74764\t-79.74764\t-79.74764</td>
+      <td>0.197685</td>
+      <td>0.002378</td>
+      <td>3.953687</td>
+      <td>4.0256\t3.98964\t3.953685</td>
+      <td>4.0256\t3.98964\t3.953685</td>
+      <td>4.0256\t3.98964\t3.953685</td>
+      <td>-287.0915</td>
+      <td>-287.0915</td>
+      <td>-287.0915</td>
+      <td>983.7845</td>
+      <td>983.7839</td>
+      <td>983.7845\t983.7842\t983.7839</td>
+      <td>0\t7.67585\t15.3517</td>
+      <td>59.83105</td>
+      <td>59.83229</td>
+      <td>0.3167359\t0.3142685\t0.3118011</td>
+      <td>59.83105\t59.83167\t59.83231</td>
+      <td>-0.864133</td>
+      <td>-0.864133</td>
+      <td>-0.864133</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>541.43\t541.815\t542.2</td>
+      <td>15.351701</td>
+      <td>1</td>
+      <td>Längsschnitt</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>5216742060270992761</td>
+      <td>Rohr R-K4163S R-K4173S</td>
+      <td>4816511167455310973</td>
+      <td>4779752876656844188</td>
+      <td>5204829332281547346</td>
+      <td>12,50895</td>
+      <td>0</td>
+      <td>0,05</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1000</td>
+      <td>0</td>
+      <td></td>
+      <td>0</td>
+      <td>5029128874972463118</td>
+      <td>5048873293262650113</td>
+      <td>OSM: Knoten 299394923 -&gt; Knoten 4105649557; Lä...</td>
+      <td>39785520</td>
+      <td>0</td>
+      <td>2</td>
+      <td>0,00499999987368938</td>
+      <td>0</td>
+      <td>350</td>
+      <td>345,6</td>
+      <td>Rücklauf</td>
+      <td></td>
+      <td>5216742060270992761</td>
+      <td>5216742060270992761</td>
+      <td>False</td>
+      <td>713616,648711719</td>
+      <td>5578233,37231421</td>
+      <td>False</td>
+      <td>5216742060270992761</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>LINESTRING (713616.649 5578233.372, 713616.465...</td>
+      <td>4851678476955084637</td>
+      <td>5469753985021987570</td>
+      <td>0.0</td>
+      <td>0.004021</td>
+      <td>27.238</td>
+      <td>0.340719</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.154884</td>
+      <td>-79.74764\t-79.74764\t-79.74764</td>
+      <td>0.197695</td>
+      <td>0.001937</td>
+      <td>3.885199</td>
+      <td>3.953685\t3.919445\t3.8852</td>
+      <td>3.953685\t3.919445\t3.8852</td>
+      <td>3.953685\t3.919445\t3.8852</td>
+      <td>-287.0915</td>
+      <td>-287.0915</td>
+      <td>-287.0915</td>
+      <td>983.7839</td>
+      <td>983.7833</td>
+      <td>983.7839\t983.7836\t983.7833</td>
+      <td>0\t6.254474\t12.50895</td>
+      <td>59.83229</td>
+      <td>59.8333</td>
+      <td>0.3118011\t0.3097906\t0.3077801</td>
+      <td>59.83231\t59.83279\t59.83331</td>
+      <td>-0.864134</td>
+      <td>-0.864133</td>
+      <td>-0.864134</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>542.2\t542.565\t542.93</td>
+      <td>27.860648</td>
+      <td>1</td>
+      <td>Längsschnitt</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4919359344392474301</td>
+      <td>Rohr R-K4643S R-K4173S</td>
+      <td>4816511167455310973</td>
+      <td>4779752876656844188</td>
+      <td>5204829332281547346</td>
+      <td>6,265505</td>
+      <td>0</td>
+      <td>0,05</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1000</td>
+      <td>0</td>
+      <td></td>
+      <td>0</td>
+      <td>5029128874972463118</td>
+      <td>5715081934973525403</td>
+      <td>OSM: Knoten 299394922 -&gt; Knoten 4105649557; Lä...</td>
+      <td>595926249</td>
+      <td>0</td>
+      <td>2</td>
+      <td>0,00499999987368938</td>
+      <td>0</td>
+      <td>350</td>
+      <td>345,6</td>
+      <td>Rücklauf</td>
+      <td></td>
+      <td>4919359344392474301</td>
+      <td>4919359344392474301</td>
+      <td>False</td>
+      <td>713616,369043203</td>
+      <td>5578252,14468345</td>
+      <td>False</td>
+      <td>4919359344392474301</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>LINESTRING (713616.369 5578252.145, 713616.465...</td>
+      <td>5207603338578264169</td>
+      <td>5469753985021987570</td>
+      <td>0.0</td>
+      <td>0.002014</td>
+      <td>26.41318</td>
+      <td>0.165492</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.154884</td>
+      <td>79.74764\t79.74764</td>
+      <td>0.197702</td>
+      <td>0.00097</td>
+      <td>3.851439</td>
+      <td>3.85144\t3.8852</td>
+      <td>3.85144\t3.8852</td>
+      <td>3.85144\t3.8852</td>
+      <td>287.0915</td>
+      <td>287.0915</td>
+      <td>287.0915</td>
+      <td>983.7831</td>
+      <td>983.7833</td>
+      <td>983.7831\t983.7833</td>
+      <td>0\t6.265505</td>
+      <td>59.8338</td>
+      <td>59.8333</td>
+      <td>0.305766\t0.3077801</td>
+      <td>59.8338\t59.83331</td>
+      <td>0.864134</td>
+      <td>0.864134</td>
+      <td>0.864134</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>543.29\t542.93</td>
+      <td>34.126153</td>
+      <td>1</td>
+      <td>Längsschnitt</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>5299861566239260044</td>
+      <td>Rohr R-K4523S R-K4643S</td>
+      <td>4816511167455310973</td>
+      <td>4779752876656844188</td>
+      <td>5204829332281547346</td>
+      <td>14,40754</td>
+      <td>0</td>
+      <td>0,05</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1000</td>
+      <td>0</td>
+      <td></td>
+      <td>0</td>
+      <td>5029128874972463118</td>
+      <td>5413647981880727734</td>
+      <td>OSM: Knoten 299394921 -&gt; Knoten 299394922; Län...</td>
+      <td>595926249</td>
+      <td>0</td>
+      <td>2</td>
+      <td>0,00499999987368938</td>
+      <td>0</td>
+      <td>350</td>
+      <td>345,6</td>
+      <td>Rücklauf</td>
+      <td></td>
+      <td>5299861566239260044</td>
+      <td>5299861566239260044</td>
+      <td>False</td>
+      <td>713618,883648516</td>
+      <td>5578266,3310858</td>
+      <td>False</td>
+      <td>5299861566239260044</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>LINESTRING (713618.884 5578266.331, 713616.369...</td>
+      <td>5191457421068378074</td>
+      <td>5207603338578264169</td>
+      <td>0.0</td>
+      <td>0.004631</td>
+      <td>27.02701</td>
+      <td>0.389393</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.154884</td>
+      <td>79.74764\t79.74764\t79.74764</td>
+      <td>0.197709</td>
+      <td>0.002231</td>
+      <td>3.773594</td>
+      <td>3.773595\t3.812515\t3.85144</td>
+      <td>3.773595\t3.812515\t3.85144</td>
+      <td>3.773595\t3.812515\t3.85144</td>
+      <td>287.0915</td>
+      <td>287.0915</td>
+      <td>287.0915</td>
+      <td>983.7825</td>
+      <td>983.7831</td>
+      <td>983.7825\t983.7828\t983.7831</td>
+      <td>0\t7.203771\t14.40754</td>
+      <td>59.83496</td>
+      <td>59.8338</td>
+      <td>0.3011347\t0.3034503\t0.305766</td>
+      <td>59.83496\t59.83438\t59.8338</td>
+      <td>0.864135</td>
+      <td>0.864135</td>
+      <td>0.864134</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>544.12\t543.705\t543.29</td>
+      <td>48.533695</td>
+      <td>1</td>
+      <td>Längsschnitt</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5204837016964086891</td>
+      <td>Rohr R-K4513S R-K4523S</td>
+      <td>4816511167455310973</td>
+      <td>4779752876656844188</td>
+      <td>5204829332281547346</td>
+      <td>13,51584</td>
+      <td>0</td>
+      <td>0,05</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1000</td>
+      <td>0</td>
+      <td></td>
+      <td>0</td>
+      <td>5029128874972463118</td>
+      <td>5134010500800575790</td>
+      <td>OSM: Knoten 4105649561 -&gt; Knoten 299394921; Lä...</td>
+      <td>408665320</td>
+      <td>0</td>
+      <td>2</td>
+      <td>0,00499999987368938</td>
+      <td>0</td>
+      <td>350</td>
+      <td>345,6</td>
+      <td>Rücklauf</td>
+      <td></td>
+      <td>5204837016964086891</td>
+      <td>5204837016964086891</td>
+      <td>False</td>
+      <td>713616,238695288</td>
+      <td>5578279,58560368</td>
+      <td>False</td>
+      <td>5204837016964086891</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>LINESTRING (713616.239 5578279.586, 713618.884...</td>
+      <td>4875054825941361274</td>
+      <td>5191457421068378074</td>
+      <td>0.0</td>
+      <td>0.004345</td>
+      <td>27.36959</td>
+      <td>0.369923</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.154884</td>
+      <td>79.74764\t79.74764\t79.74764</td>
+      <td>0.19772</td>
+      <td>0.002093</td>
+      <td>3.72938</td>
+      <td>3.72938\t3.751485\t3.773595</td>
+      <td>3.72938\t3.751485\t3.773595</td>
+      <td>3.72938\t3.751485\t3.773595</td>
+      <td>287.0915</td>
+      <td>287.0915</td>
+      <td>287.0915</td>
+      <td>983.782</td>
+      <td>983.7825</td>
+      <td>983.782\t983.7822\t983.7825</td>
+      <td>0\t6.757922\t13.51584</td>
+      <td>59.83606</td>
+      <td>59.83496</td>
+      <td>0.2967899\t0.2989623\t0.3011346</td>
+      <td>59.83606\t59.83551\t59.83496</td>
+      <td>0.864135</td>
+      <td>0.864135</td>
+      <td>0.864135</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>544.6\t544.36\t544.12</td>
+      <td>62.049538</td>
+      <td>1</td>
+      <td>Längsschnitt</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</section>
+</section>
 <section id="Manual-Dataframe-creation">
 <h1>Manual Dataframe creation<a class="headerlink" href="#Manual-Dataframe-creation" title="Link to this heading"></a></h1>
 <section id="Metadata---Nodes">
@@ -1357,7 +2634,7 @@ print(object_types) # Check for hydraulic elmement types
 <p>We can use the <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.Dataframes_SIR3S_Model.generate_element_metadata_dataframe">generate_element_metadata_dataframe()</a> method to obtain a dataframe for all instances of a specifc component type (Nodes, Pipes, etc.) with user defined metadata properties (all non-result data related to a component) to be added. For this example we will use nodes.</p>
 <p>In this case we are interested in Nodes, let’s check what metadata properties are available for this element.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetPropertiesofElementType(s3s.ObjectTypes.Node)
@@ -1365,8 +2642,7 @@ print(object_types) # Check for hydraulic elmement types
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
@@ -1395,7 +2671,6 @@ print(object_types) # Check for hydraulic elmement types
  &#39;HasBlockConnection&#39;,
  &#39;Tk&#39;,
  &#39;Pk&#39;,
- &#39;IsMarked&#39;,
  &#39;InVariant&#39;,
  &#39;GeometriesDiffer&#39;,
  &#39;SymbolFactor&#39;,
@@ -1415,7 +2690,7 @@ print(object_types) # Check for hydraulic elmement types
 <h3>Subcase 1: Minimal<a class="headerlink" href="#Subcase-1:-Minimal" title="Link to this heading"></a></h3>
 <p>Let’s say for now we only want a dataframe with all node tks without any related data.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(s3s.generate_element_metadata_dataframe(element_type=s3s.ObjectTypes.Node
@@ -1429,16 +2704,15 @@ print(object_types) # Check for hydraulic elmement types
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2025-12-12 19:59:19,314] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.Node
-[2025-12-12 19:59:19,314] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieved 517 element(s) of element type ObjectTypes.Node.
-[2025-12-12 19:59:19,317] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 0 metadata properties.
-[2025-12-12 19:59:19,319] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving ...
-[2025-12-12 19:59:19,320] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (517, 1)
+[2025-12-19 10:39:00,786] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.Node
+[2025-12-19 10:39:00,790] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieved 517 element(s) of element type ObjectTypes.Node.
+[2025-12-19 10:39:00,796] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 0 metadata properties.
+[2025-12-19 10:39:00,798] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving ...
+[2025-12-19 10:39:00,802] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (517, 1)
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
 <div>
@@ -1484,7 +2758,7 @@ print(object_types) # Check for hydraulic elmement types
 <h3>Subcase 2: Specific Properties<a class="headerlink" href="#Subcase-2:-Specific-Properties" title="Link to this heading"></a></h3>
 <p>Let’s say we now want the minimal dataframe extended with supply/return info (kvr) and height (Zkor) of the nodes.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(s3s.generate_element_metadata_dataframe(element_type=s3s.ObjectTypes.Node
@@ -1498,16 +2772,15 @@ print(object_types) # Check for hydraulic elmement types
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2025-12-12 19:59:19,331] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.Node
-[2025-12-12 19:59:19,339] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieved 517 element(s) of element type ObjectTypes.Node.
-[2025-12-12 19:59:19,340] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 2 metadata properties.
-[2025-12-12 19:59:19,342] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving metadata properties [&#39;Kvr&#39;, &#39;Zkor&#39;]...
-[2025-12-12 19:59:19,377] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (517, 3)
+[2025-12-19 10:39:00,841] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.Node
+[2025-12-19 10:39:00,846] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieved 517 element(s) of element type ObjectTypes.Node.
+[2025-12-19 10:39:00,851] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 2 metadata properties.
+[2025-12-19 10:39:00,853] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving metadata properties [&#39;Kvr&#39;, &#39;Zkor&#39;]...
+[2025-12-19 10:39:00,973] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (517, 3)
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
 <div>
@@ -1562,7 +2835,7 @@ print(object_types) # Check for hydraulic elmement types
 <p>Let’s say now we want basically all available metadata (non-result data) related to nodes.</p>
 <p>If geometry=True, the 2D Point geometry will be added for Nodes and it will be attempted to transform the DataFrame into a GeoDataFrame using the SRID (eg. EPSG: 25832) defined in the model. If no SRID is defined, the DataFrame will remain as a DataFrame, but the geometry column with be added nonetheless.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(s3s.generate_element_metadata_dataframe(element_type=s3s.ObjectTypes.Node
@@ -1577,18 +2850,17 @@ print(object_types) # Check for hydraulic elmement types
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2025-12-12 19:59:19,394] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.Node
-[2025-12-12 19:59:19,398] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieved 517 element(s) of element type ObjectTypes.Node.
-[2025-12-12 19:59:19,399] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] No properties given → using ALL metadata properties for ObjectTypes.Node.
-[2025-12-12 19:59:19,399] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 38 metadata properties.
-[2025-12-12 19:59:19,401] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving metadata properties [&#39;Name&#39;, &#39;Ktyp&#39;, &#39;Zkor&#39;, &#39;QmEin&#39;, &#39;Lfakt&#39;, &#39;Fkpzon&#39;, &#39;Fkfstf&#39;, &#39;Fkutmp&#39;, &#39;Fkfqps&#39;, &#39;Fkcont&#39;, &#39;Fk2lknot&#39;, &#39;Beschreibung&#39;, &#39;Idreferenz&#39;, &#39;Iplanung&#39;, &#39;Kvr&#39;, &#39;Qakt&#39;, &#39;Xkor&#39;, &#39;Ykor&#39;, &#39;NodeNamePosition&#39;, &#39;ShowNodeName&#39;, &#39;KvrKlartext&#39;, &#39;NumberOfVERB&#39;, &#39;HasBlockConnection&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;IsMarked&#39;, &#39;InVariant&#39;, &#39;GeometriesDiffer&#39;, &#39;SymbolFactor&#39;, &#39;bz.Drakonz&#39;, &#39;bz.Fk&#39;, &#39;bz.Fkpvar&#39;, &#39;bz.Fkqvar&#39;, &#39;bz.Fklfkt&#39;, &#39;bz.PhEin&#39;, &#39;bz.Tm&#39;, &#39;bz.Te&#39;, &#39;bz.PhMin&#39;], geometry...
-[2025-12-12 19:59:20,041] INFO in sir3stoolkit.mantle.dataframes: [metadata] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
-[2025-12-12 19:59:20,041] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (517, 40)
+[2025-12-19 10:39:01,007] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.Node
+[2025-12-19 10:39:01,013] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieved 517 element(s) of element type ObjectTypes.Node.
+[2025-12-19 10:39:01,017] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] No properties given → using ALL metadata properties for ObjectTypes.Node.
+[2025-12-19 10:39:01,019] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 37 metadata properties.
+[2025-12-19 10:39:01,021] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving metadata properties [&#39;Name&#39;, &#39;Ktyp&#39;, &#39;Zkor&#39;, &#39;QmEin&#39;, &#39;Lfakt&#39;, &#39;Fkpzon&#39;, &#39;Fkfstf&#39;, &#39;Fkutmp&#39;, &#39;Fkfqps&#39;, &#39;Fkcont&#39;, &#39;Fk2lknot&#39;, &#39;Beschreibung&#39;, &#39;Idreferenz&#39;, &#39;Iplanung&#39;, &#39;Kvr&#39;, &#39;Qakt&#39;, &#39;Xkor&#39;, &#39;Ykor&#39;, &#39;NodeNamePosition&#39;, &#39;ShowNodeName&#39;, &#39;KvrKlartext&#39;, &#39;NumberOfVERB&#39;, &#39;HasBlockConnection&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;, &#39;GeometriesDiffer&#39;, &#39;SymbolFactor&#39;, &#39;bz.Drakonz&#39;, &#39;bz.Fk&#39;, &#39;bz.Fkpvar&#39;, &#39;bz.Fkqvar&#39;, &#39;bz.Fklfkt&#39;, &#39;bz.PhEin&#39;, &#39;bz.Tm&#39;, &#39;bz.Te&#39;, &#39;bz.PhMin&#39;], geometry...
+[2025-12-19 10:39:03,073] INFO in sir3stoolkit.mantle.dataframes: [metadata] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
+[2025-12-19 10:39:03,075] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (517, 39)
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
 <div>
@@ -1635,7 +2907,6 @@ print(object_types) # Check for hydraulic elmement types
       <th>HasBlockConnection</th>
       <th>Tk</th>
       <th>Pk</th>
-      <th>IsMarked</th>
       <th>InVariant</th>
       <th>GeometriesDiffer</th>
       <th>SymbolFactor</th>
@@ -1682,7 +2953,6 @@ print(object_types) # Check for hydraulic elmement types
       <td>5669301360686511351</td>
       <td>False</td>
       <td>False</td>
-      <td>False</td>
       <td>0,2</td>
       <td>0</td>
       <td>5669301360686511351</td>
@@ -1723,7 +2993,6 @@ print(object_types) # Check for hydraulic elmement types
       <td>False</td>
       <td>5397948523091900401</td>
       <td>5397948523091900401</td>
-      <td>False</td>
       <td>False</td>
       <td>False</td>
       <td>0,2</td>
@@ -1768,7 +3037,6 @@ print(object_types) # Check for hydraulic elmement types
       <td>5239335112004772156</td>
       <td>False</td>
       <td>False</td>
-      <td>False</td>
       <td>0,2</td>
       <td>0</td>
       <td>5239335112004772156</td>
@@ -1798,7 +3066,7 @@ print(object_types) # Check for hydraulic elmement types
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for container_id in (s3s.GetTksofElementType(s3s.ObjectTypes.ObjectContainerSymbol)):
@@ -1820,7 +3088,7 @@ print(object_types) # Check for hydraulic elmement types
 </pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>all_tks = s3s.GetTksofElementType(s3s.ObjectTypes.Node)
@@ -1828,7 +3096,7 @@ print(object_types) # Check for hydraulic elmement types
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>good_tks = []
@@ -1836,7 +3104,7 @@ print(object_types) # Check for hydraulic elmement types
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for tk in all_tks:
@@ -1847,7 +3115,7 @@ print(object_types) # Check for hydraulic elmement types
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(s3s.generate_element_metadata_dataframe(element_type=s3s.ObjectTypes.Node
@@ -1864,17 +3132,16 @@ print(object_types) # Check for hydraulic elmement types
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2025-12-12 19:59:20,137] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.Node
-[2025-12-12 19:59:20,139] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieved 517 element(s) of element type ObjectTypes.Node.
-[2025-12-12 19:59:20,142] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 0 metadata properties.
-[2025-12-12 19:59:20,143] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving geometry...
-[2025-12-12 19:59:20,174] INFO in sir3stoolkit.mantle.dataframes: [metadata] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
-[2025-12-12 19:59:20,174] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (517, 3)
+[2025-12-19 10:39:03,304] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.Node
+[2025-12-19 10:39:03,308] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieved 517 element(s) of element type ObjectTypes.Node.
+[2025-12-19 10:39:03,314] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 0 metadata properties.
+[2025-12-19 10:39:03,315] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving geometry...
+[2025-12-19 10:39:03,400] INFO in sir3stoolkit.mantle.dataframes: [metadata] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
+[2025-12-19 10:39:03,401] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (517, 3)
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
 <div>
@@ -1930,7 +3197,7 @@ print(object_types) # Check for hydraulic elmement types
 <p>We can use the <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.Dataframes_SIR3S_Model.generate_element_results_dataframe">generate_element_metadata_dataframe()</a> method to obtain a dataframe for all instances of a specifc component type (Nodes, Pipes, etc.) with user defined result values for certain timestamps to be added. For this example we will use pipes.</p>
 <p>Let’s check what result properties are available for Pipes.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetResultProperties_from_elementType(elementType=s3s.ObjectTypes.Pipe
@@ -1940,8 +3207,7 @@ print(object_types) # Check for hydraulic elmement types
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
@@ -2031,7 +3297,7 @@ print(object_types) # Check for hydraulic elmement types
 </div>
 <p>Let’s also check what simulation timestamps are available in the model.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetTimeStamps()[0] # list of simulation timestamps
@@ -2039,8 +3305,7 @@ print(object_types) # Check for hydraulic elmement types
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
@@ -2072,7 +3337,7 @@ print(object_types) # Check for hydraulic elmement types
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetTimeStamps()[1] # Static
@@ -2080,8 +3345,7 @@ print(object_types) # Check for hydraulic elmement types
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
@@ -2092,7 +3356,7 @@ print(object_types) # Check for hydraulic elmement types
 <section id="Subcase-1:-Static-+-All-Result-Values">
 <h3>Subcase 1: Static + All Result Values<a class="headerlink" href="#Subcase-1:-Static-+-All-Result-Values" title="Link to this heading"></a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(s3s.generate_element_results_dataframe(element_type=s3s.ObjectTypes.Pipe
@@ -2107,19 +3371,18 @@ print(object_types) # Check for hydraulic elmement types
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2025-12-12 19:59:20,589] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
-[2025-12-12 19:59:20,644] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2023-02-13 00:00:00.000 +01:00 is used
-[2025-12-12 19:59:20,644] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
-[2025-12-12 19:59:20,648] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
-[2025-12-12 19:59:20,649] INFO in sir3stoolkit.mantle.dataframes: [results] No properties given → using ALL result properties for ObjectTypes.Pipe.
-[2025-12-12 19:59:20,651] INFO in sir3stoolkit.mantle.dataframes: [results] Using 82 result properties.
-[2025-12-12 19:59:20,667] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
-[2025-12-12 19:59:29,261] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 42968)
+[2025-12-19 10:39:04,301] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
+[2025-12-19 10:39:04,477] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2023-02-13 00:00:00.000 +01:00 is used
+[2025-12-19 10:39:04,479] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
+[2025-12-19 10:39:04,484] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2025-12-19 10:39:04,490] INFO in sir3stoolkit.mantle.dataframes: [results] No properties given → using ALL result properties for ObjectTypes.Pipe.
+[2025-12-19 10:39:04,493] INFO in sir3stoolkit.mantle.dataframes: [results] Using 82 result properties.
+[2025-12-19 10:39:04,570] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2025-12-19 10:39:26,887] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 42968)
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
 <div>
@@ -4921,7 +6184,7 @@ print(object_types) # Check for hydraulic elmement types
 <section id="Subcase-2:-All-Timestamps-+-Specific-Values">
 <h3>Subcase 2: All Timestamps + Specific Values<a class="headerlink" href="#Subcase-2:-All-Timestamps-+-Specific-Values" title="Link to this heading"></a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(s3s.generate_element_results_dataframe(element_type=s3s.ObjectTypes.Pipe
@@ -4936,19 +6199,18 @@ print(object_types) # Check for hydraulic elmement types
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2025-12-12 19:59:29,778] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
-[2025-12-12 19:59:29,780] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] No timestamps were given. Checking available simulation timestamps (SIR3S_Model.GetTimeStamps()[0]).
-[2025-12-12 19:59:29,836] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 25 simulation timestamp(s) are available.
-[2025-12-12 19:59:29,891] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 25 valid timestamp(s) will be used.
-[2025-12-12 19:59:29,893] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
-[2025-12-12 19:59:29,894] INFO in sir3stoolkit.mantle.dataframes: [results] Using 2 result properties.
-[2025-12-12 19:59:29,921] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
-[2025-12-12 19:59:32,597] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (25, 1048)
+[2025-12-19 10:39:28,426] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
+[2025-12-19 10:39:28,428] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] No timestamps were given. Checking available simulation timestamps (SIR3S_Model.GetTimeStamps()[0]).
+[2025-12-19 10:39:28,761] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 25 simulation timestamp(s) are available.
+[2025-12-19 10:39:28,960] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 25 valid timestamp(s) will be used.
+[2025-12-19 10:39:28,964] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2025-12-19 10:39:28,968] INFO in sir3stoolkit.mantle.dataframes: [results] Using 2 result properties.
+[2025-12-19 10:39:29,020] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2025-12-19 10:39:36,044] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (25, 1048)
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
 <div>
@@ -12673,7 +13935,7 @@ print(object_types) # Check for hydraulic elmement types
 <h3>Subcase 3: Specific Timestamps + Specific Values<a class="headerlink" href="#Subcase-3:-Specific-Timestamps-+-Specific-Values" title="Link to this heading"></a></h3>
 <p>We can specify the list of timestamps to include either as a list of str timestamps …</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(s3s.generate_element_results_dataframe(element_type=s3s.ObjectTypes.Pipe
@@ -12688,17 +13950,16 @@ print(object_types) # Check for hydraulic elmement types
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2025-12-12 19:59:33,261] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
-[2025-12-12 19:59:33,346] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 3 valid timestamp(s) will be used.
-[2025-12-12 19:59:33,348] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
-[2025-12-12 19:59:33,350] INFO in sir3stoolkit.mantle.dataframes: [results] Using 2 result properties.
-[2025-12-12 19:59:33,358] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
-[2025-12-12 19:59:33,810] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (3, 1048)
+[2025-12-19 10:39:37,043] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
+[2025-12-19 10:39:37,213] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 3 valid timestamp(s) will be used.
+[2025-12-19 10:39:37,215] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2025-12-19 10:39:37,218] INFO in sir3stoolkit.mantle.dataframes: [results] Using 2 result properties.
+[2025-12-19 10:39:37,243] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2025-12-19 10:39:38,023] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (3, 1048)
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
 <div>
@@ -18612,7 +19873,7 @@ print(object_types) # Check for hydraulic elmement types
 </div>
 <p>… or as a list of int indices.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>simulation_timestamps=s3s.GetTimeStamps()[0]
@@ -18620,7 +19881,7 @@ print(object_types) # Check for hydraulic elmement types
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for idx, timestamp in enumerate(simulation_timestamps):
@@ -18661,7 +19922,7 @@ print(object_types) # Check for hydraulic elmement types
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(s3s.generate_element_results_dataframe(element_type=s3s.ObjectTypes.Pipe
@@ -18676,17 +19937,16 @@ print(object_types) # Check for hydraulic elmement types
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2025-12-12 19:59:34,477] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
-[2025-12-12 19:59:34,537] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 3 valid timestamp(s) will be used.
-[2025-12-12 19:59:34,539] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
-[2025-12-12 19:59:34,541] INFO in sir3stoolkit.mantle.dataframes: [results] Using 2 result properties.
-[2025-12-12 19:59:34,558] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
-[2025-12-12 19:59:34,986] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (3, 1048)
+[2025-12-19 10:39:39,017] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
+[2025-12-19 10:39:39,200] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 3 valid timestamp(s) will be used.
+[2025-12-19 10:39:39,203] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2025-12-19 10:39:39,205] INFO in sir3stoolkit.mantle.dataframes: [results] Using 2 result properties.
+[2025-12-19 10:39:39,257] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2025-12-19 10:39:40,214] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (3, 1048)
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
 <div>
@@ -24603,7 +25863,7 @@ print(object_types) # Check for hydraulic elmement types
 <h3>Subcase 4: Specific Timestamps + Specific Values<a class="headerlink" href="#Subcase-4:-Specific-Timestamps-+-Specific-Values" title="Link to this heading"></a></h3>
 <p>As for metadatat dataframes we can give a list of container tks to filter for.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(s3s.generate_element_results_dataframe(element_type=s3s.ObjectTypes.Pipe
@@ -24618,17 +25878,16 @@ print(object_types) # Check for hydraulic elmement types
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2025-12-12 19:59:35,602] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
-[2025-12-12 19:59:35,851] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 3 valid timestamp(s) will be used.
-[2025-12-12 19:59:35,853] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
-[2025-12-12 19:59:35,854] INFO in sir3stoolkit.mantle.dataframes: [results] Using 2 result properties.
-[2025-12-12 19:59:35,861] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
-[2025-12-12 19:59:36,312] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (3, 1048)
+[2025-12-19 10:39:41,484] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
+[2025-12-19 10:39:41,690] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 3 valid timestamp(s) will be used.
+[2025-12-19 10:39:41,693] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2025-12-19 10:39:41,695] INFO in sir3stoolkit.mantle.dataframes: [results] Using 2 result properties.
+[2025-12-19 10:39:41,743] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2025-12-19 10:39:42,955] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (3, 1048)
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
 <div>
@@ -30545,7 +31804,7 @@ print(object_types) # Check for hydraulic elmement types
 <h3>Subcase 5: Specific Timestamps + Specific Values + Filtering<a class="headerlink" href="#Subcase-5:-Specific-Timestamps-+-Specific-Values-+-Filtering" title="Link to this heading"></a></h3>
 <p>If we want to filter for more than just the container, we have to filter tks outside the function and then pass them. Works same way as for metadata.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>all_tks = s3s.GetTksofElementType(s3s.ObjectTypes.Pipe)
@@ -30553,7 +31812,7 @@ print(object_types) # Check for hydraulic elmement types
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[34]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>len(all_tks)
@@ -30561,8 +31820,7 @@ print(object_types) # Check for hydraulic elmement types
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[34]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
@@ -30570,44 +31828,26 @@ print(object_types) # Check for hydraulic elmement types
 </pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>good_tks = []
 </pre></div>
 </div>
 </div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[36]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetTksofElementType(s3s.ObjectTypes.PipeGroup) # Leitungsgruppe
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[36]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-[&#39;5109995988251362606&#39;, &#39;4779752876656844188&#39;]
-</pre></div></div>
-</div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[37]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for tk in all_tks:
     if s3s.GetValue(tk, &quot;FkCont&quot;)[0] == &quot;5029128874972463118&quot;:
-        if s3s.GetValue(tk, &quot;Fkltgr&quot;)[0] == &#39;4779752876656844188&#39;: # Leitungsgruppe
-            if s3s.GetValue(tk, &quot;bz.Irtrenn&quot;)[0] == &quot;0&quot;: # Rohr nicht getrennt
-                good_tks.append(tk)
+        if s3s.GetValue(tk, &quot;bz.Irtrenn&quot;)[0] == &quot;0&quot;: # Rohr nicht getrennt
+            good_tks.append(tk)
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[38]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>len(good_tks)
@@ -30615,8 +31855,7 @@ print(object_types) # Check for hydraulic elmement types
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[38]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
@@ -30624,7 +31863,7 @@ print(object_types) # Check for hydraulic elmement types
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[39]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(s3s.generate_element_results_dataframe(element_type=s3s.ObjectTypes.Pipe
@@ -30640,18 +31879,17 @@ print(object_types) # Check for hydraulic elmement types
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2025-12-12 19:59:37,039] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
-[2025-12-12 19:59:37,095] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 3 valid timestamp(s) will be used.
-[2025-12-12 19:59:37,096] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
-[2025-12-12 19:59:37,101] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 480 tks remain after filtering for given tks.
-[2025-12-12 19:59:37,103] INFO in sir3stoolkit.mantle.dataframes: [results] Using 2 result properties.
-[2025-12-12 19:59:37,121] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
-[2025-12-12 19:59:37,561] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (3, 960)
+[2025-12-19 10:39:46,211] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
+[2025-12-19 10:39:46,393] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 3 valid timestamp(s) will be used.
+[2025-12-19 10:39:46,397] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2025-12-19 10:39:46,409] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 480 tks remain after filtering for given tks.
+[2025-12-19 10:39:46,414] INFO in sir3stoolkit.mantle.dataframes: [results] Using 2 result properties.
+[2025-12-19 10:39:46,463] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2025-12-19 10:39:47,735] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (3, 960)
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[39]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
 <div>
@@ -36568,7 +37806,7 @@ print(object_types) # Check for hydraulic elmement types
 <h3>Subcase 6: Specific Vectorized results + Specific Timestamps<a class="headerlink" href="#Subcase-6:-Specific-Vectorized-results-+-Specific-Timestamps" title="Link to this heading"></a></h3>
 <p>For pipes we have interior point result values. These are usually found as vectors with the postfix VEC.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[40]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>available_result_props=s3s.GetResultProperties_from_elementType(s3s.ObjectTypes.Pipe,False)
@@ -36576,7 +37814,7 @@ print(object_types) # Check for hydraulic elmement types
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[41]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>available_result_props
@@ -36584,8 +37822,7 @@ print(object_types) # Check for hydraulic elmement types
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[41]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
@@ -36674,7 +37911,7 @@ print(object_types) # Check for hydraulic elmement types
 </pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[42]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>available_result_vector_props=[available_result_props for available_result_props in available_result_props if &quot;VEC&quot; in available_result_props]
@@ -36682,7 +37919,7 @@ print(object_types) # Check for hydraulic elmement types
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[43]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>available_result_vector_props
@@ -36690,8 +37927,7 @@ print(object_types) # Check for hydraulic elmement types
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[43]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
@@ -36714,7 +37950,7 @@ print(object_types) # Check for hydraulic elmement types
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[53]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes = s3s.generate_element_results_dataframe(element_type=s3s.ObjectTypes.Pipe
@@ -36729,16 +37965,16 @@ print(object_types) # Check for hydraulic elmement types
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2025-12-12 20:00:25,505] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
-[2025-12-12 20:00:25,564] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 3 valid timestamp(s) will be used.
-[2025-12-12 20:00:25,565] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
-[2025-12-12 20:00:25,567] INFO in sir3stoolkit.mantle.dataframes: [results] Using 3 result properties.
-[2025-12-12 20:00:25,582] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
-[2025-12-12 20:00:26,256] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (3, 1572)
+[2025-12-19 10:39:49,952] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
+[2025-12-19 10:39:50,232] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 3 valid timestamp(s) will be used.
+[2025-12-19 10:39:50,235] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2025-12-19 10:39:50,241] INFO in sir3stoolkit.mantle.dataframes: [results] Using 3 result properties.
+[2025-12-19 10:39:50,266] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2025-12-19 10:39:52,221] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (3, 1572)
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[54]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(s3s.add_interior_points_to_results_dataframe(df_pipes)).head(3)
@@ -36746,8 +37982,7 @@ print(object_types) # Check for hydraulic elmement types
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[54]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
 <div>
@@ -41855,7 +43090,7 @@ print(object_types) # Check for hydraulic elmement types
 <section id="Metadata">
 <h4>Metadata<a class="headerlink" href="#Metadata" title="Link to this heading"></a></h4>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[45]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_metadata = s3s.generate_element_metadata_dataframe(element_type=s3s.ObjectTypes.Pipe
@@ -41870,16 +43105,16 @@ print(object_types) # Check for hydraulic elmement types
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2025-12-12 19:59:39,596] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.Pipe
-[2025-12-12 19:59:39,598] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
-[2025-12-12 19:59:39,600] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 2 metadata properties.
-[2025-12-12 19:59:39,601] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving metadata properties [&#39;L&#39;, &#39;DN&#39;], geometry...
-[2025-12-12 19:59:39,821] INFO in sir3stoolkit.mantle.dataframes: [metadata] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
-[2025-12-12 19:59:39,821] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (524, 4)
+[2025-12-19 10:40:02,262] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.Pipe
+[2025-12-19 10:40:02,266] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2025-12-19 10:40:02,270] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 2 metadata properties.
+[2025-12-19 10:40:02,271] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving metadata properties [&#39;L&#39;, &#39;DN&#39;], geometry...
+[2025-12-19 10:40:02,487] INFO in sir3stoolkit.mantle.dataframes: [metadata] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
+[2025-12-19 10:40:02,488] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (524, 4)
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[46]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_metadata.head(3)
@@ -41887,8 +43122,7 @@ print(object_types) # Check for hydraulic elmement types
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[46]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
 <div>
@@ -41945,7 +43179,7 @@ print(object_types) # Check for hydraulic elmement types
 <section id="Results">
 <h4>Results<a class="headerlink" href="#Results" title="Link to this heading"></a></h4>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[47]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_results = s3s.generate_element_results_dataframe(element_type=s3s.ObjectTypes.Pipe
@@ -41960,17 +43194,17 @@ print(object_types) # Check for hydraulic elmement types
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2025-12-12 19:59:39,877] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
-[2025-12-12 19:59:39,936] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2023-02-13 00:00:00.000 +01:00 is used
-[2025-12-12 19:59:39,937] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
-[2025-12-12 19:59:39,938] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
-[2025-12-12 19:59:39,941] INFO in sir3stoolkit.mantle.dataframes: [results] Using 2 result properties.
-[2025-12-12 19:59:39,955] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
-[2025-12-12 19:59:40,206] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 1048)
+[2025-12-19 10:40:02,537] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
+[2025-12-19 10:40:02,654] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2023-02-13 00:00:00.000 +01:00 is used
+[2025-12-19 10:40:02,655] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
+[2025-12-19 10:40:02,659] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2025-12-19 10:40:02,663] INFO in sir3stoolkit.mantle.dataframes: [results] Using 2 result properties.
+[2025-12-19 10:40:02,687] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2025-12-19 10:40:03,168] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 1048)
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[48]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_results.head(3)
@@ -41978,8 +43212,7 @@ print(object_types) # Check for hydraulic elmement types
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[48]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
 <div>
@@ -46088,7 +47321,7 @@ print(object_types) # Check for hydraulic elmement types
 <section id="Merge">
 <h3>Merge<a class="headerlink" href="#Merge" title="Link to this heading"></a></h3>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[49]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_results.columns = df_pipes_results.columns.droplevel([1, 2])
@@ -46101,7 +47334,7 @@ df_pipes = df_pipes_metadata.merge(on=&quot;tk&quot;,
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[50]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes.head(3)
@@ -46109,8 +47342,7 @@ df_pipes = df_pipes_metadata.merge(on=&quot;tk&quot;,
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[50]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
 <div>

@@ -1,0 +1,462 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "id": "5556432f",
+   "metadata": {},
+   "source": [
+    "# Tutorial 72: Longitudinal Sections"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "8899e69a",
+   "metadata": {},
+   "source": [
+    "This example demonstrates how to ..."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "e2d40c36",
+   "metadata": {},
+   "source": [
+    "# SIR 3S Installation"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "id": "7fb5a07b",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "SIR3S_SIRGRAF_DIR = r\"C:\\3S\\SIR 3S\\SirGraf-90-15-00-20x64_Quebec-Upd1\" #change to local path"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "d6773e12",
+   "metadata": {},
+   "source": [
+    "# Imports"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "id": "2a62aead",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from sir3stoolkit.core import wrapper"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "id": "687f2fa2-afee-4376-bd8f-5a53f288b772",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from sir3stoolkit.mantle import mantle"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "5cdb23ce-d1bb-4f8c-a800-fb8c026e9266",
+   "metadata": {},
+   "source": [
+    "The wrapper package has to be initialized with reference to a SIR 3S (SirGraf) installation."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "id": "ee4bc044",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "wrapper.Initialize_Toolkit(SIR3S_SIRGRAF_DIR)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "2007993a",
+   "metadata": {},
+   "source": [
+    "## Additional imports"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "id": "60659f01",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import os"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "c3ab6600-34d9-4bfc-a816-96385dff31b0",
+   "metadata": {},
+   "source": [
+    "..."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "0352dd43",
+   "metadata": {},
+   "source": [
+    "# Initialization"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "id": "7e40a5af",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Initialization complete\n"
+     ]
+    }
+   ],
+   "source": [
+    "s3s = mantle.SIR3S_Model_Mantle()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "2d0f6dc9",
+   "metadata": {},
+   "source": [
+    "# Open Model"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "id": "c2f6ab2c",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "dbFilePath=r\"C:\\Users\\aUsername\\3S\\PT3S\\PT3S\\Examples\\Example3.db3\""
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "id": "efbe536c",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Model is open for further operation\n"
+     ]
+    }
+   ],
+   "source": [
+    "s3s.OpenModel(dbName=dbFilePath,\n",
+    "              providerType=s3s.ProviderTypes.SQLite,\n",
+    "              Mid=\"M-1-0-1\",\n",
+    "              saveCurrentlyOpenModel=False,\n",
+    "              namedInstance=\"\",\n",
+    "              userID=\"\",\n",
+    "              password=\"\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "749e3c64",
+   "metadata": {},
+   "source": [
+    "# Get Data"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "id": "b0a0193f",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "tks = s3s.GetTksofElementType(ElementType=s3s.ObjectTypes.AGSN_HydraulicProfile)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "id": "1b7e651a",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "hydraulicProfile = s3s.GetCourseOfHydraulicProfile(tkAgsn=tks[0], uid=\"0\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "id": "9d1ec104",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "hydraulicProfile(childrenUID=<System.Collections.Generic.List[String] object at 0x0000012D5AA37580>, nodesVL=<System.Collections.Generic.List[String] object at 0x0000012D5AA374C0>, linksVL=<System.Collections.Generic.List[String] object at 0x0000012D5AA37440>, xVL=<System.Collections.Generic.List[Double] object at 0x0000012D5AA36080>, nodesRL=<System.Collections.Generic.List[String] object at 0x0000012D5AA36000>, linksRL=<System.Collections.Generic.List[String] object at 0x0000012D5AA35F80>, xRL=<System.Collections.Generic.List[Double] object at 0x0000012D5AA35F00>, nrOfBranches=0, xOffSet=0.0, xOffsetRelativeToParent=0.0, length=1281.55, tkArticulationNode='-1')"
+      ]
+     },
+     "execution_count": 11,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "hydraulicProfile"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "id": "36a49bf7",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "tk_to_x = dict(zip(list(hydraulicProfile.linksVL), list(hydraulicProfile.xVL)))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "id": "5ad0a665",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "linksVL=list(hydraulicProfile.linksVL)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "id": "ae787383",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "linksRL=list(hydraulicProfile.linksRL)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 15,
+   "id": "9dbc4a7d",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "[2025-12-19 13:29:33,699] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe\n",
+      "[2025-12-19 13:29:33,789] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2023-02-13 00:00:00.000 +01:00 is used\n",
+      "[2025-12-19 13:29:33,790] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.\n",
+      "[2025-12-19 13:29:33,791] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.\n",
+      "[2025-12-19 13:29:33,792] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 44 tks remain after filtering for given tks.\n",
+      "[2025-12-19 13:29:33,804] INFO in sir3stoolkit.mantle.dataframes: [results] No properties given → using ALL result properties for ObjectTypes.Pipe.\n",
+      "[2025-12-19 13:29:33,805] INFO in sir3stoolkit.mantle.dataframes: [results] Using 82 result properties.\n",
+      "[2025-12-19 13:29:33,901] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...\n",
+      "[2025-12-19 13:29:34,684] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 3608)\n"
+     ]
+    }
+   ],
+   "source": [
+    "df_agsn_results_VL = s3s.generate_element_results_dataframe(s3s.ObjectTypes.Pipe\n",
+    "                                        ,tks=linksVL\n",
+    "                                        ,timestamps=[0])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "b761b905",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "[2025-12-19 13:18:45,851] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe\n",
+      "[2025-12-19 13:18:45,914] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2023-02-13 00:00:00.000 +01:00 is used\n",
+      "[2025-12-19 13:18:45,914] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.\n",
+      "[2025-12-19 13:18:45,916] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.\n",
+      "[2025-12-19 13:18:45,918] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 44 tks remain after filtering for given tks.\n",
+      "[2025-12-19 13:18:45,920] INFO in sir3stoolkit.mantle.dataframes: [results] No properties given → using ALL result properties for ObjectTypes.Pipe.\n",
+      "[2025-12-19 13:18:45,921] INFO in sir3stoolkit.mantle.dataframes: [results] Using 82 result properties.\n",
+      "[2025-12-19 13:18:45,941] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...\n",
+      "[2025-12-19 13:18:47,503] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 3608)\n"
+     ]
+    }
+   ],
+   "source": [
+    "df_agsn_results_RL = s3s.generate_element_results_dataframe(s3s.ObjectTypes.Pipe\n",
+    "                                        ,tks=linksRL\n",
+    "                                        ,timestamps=[0])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 27,
+   "id": "a24d395a",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "MultiIndex([('5691533564979419761',   'Rohr V-E0 V-K1683S', ...),\n",
+       "            ('5691533564979419761',   'Rohr V-E0 V-K1683S', ...),\n",
+       "            ('5691533564979419761',   'Rohr V-E0 V-K1683S', ...),\n",
+       "            ('5691533564979419761',   'Rohr V-E0 V-K1683S', ...),\n",
+       "            ('5691533564979419761',   'Rohr V-E0 V-K1683S', ...),\n",
+       "            ('5691533564979419761',   'Rohr V-E0 V-K1683S', ...),\n",
+       "            ('5691533564979419761',   'Rohr V-E0 V-K1683S', ...),\n",
+       "            ('5691533564979419761',   'Rohr V-E0 V-K1683S', ...),\n",
+       "            ('5691533564979419761',   'Rohr V-E0 V-K1683S', ...),\n",
+       "            ('5691533564979419761',   'Rohr V-E0 V-K1683S', ...),\n",
+       "            ...\n",
+       "            ('5107343838750080243', 'Rohr V-K133S V-K143S', ...),\n",
+       "            ('5107343838750080243', 'Rohr V-K133S V-K143S', ...),\n",
+       "            ('5107343838750080243', 'Rohr V-K133S V-K143S', ...),\n",
+       "            ('5107343838750080243', 'Rohr V-K133S V-K143S', ...),\n",
+       "            ('5107343838750080243', 'Rohr V-K133S V-K143S', ...),\n",
+       "            ('5107343838750080243', 'Rohr V-K133S V-K143S', ...),\n",
+       "            ('5107343838750080243', 'Rohr V-K133S V-K143S', ...),\n",
+       "            ('5107343838750080243', 'Rohr V-K133S V-K143S', ...),\n",
+       "            ('5107343838750080243', 'Rohr V-K133S V-K143S', ...),\n",
+       "            ('5107343838750080243', 'Rohr V-K133S V-K143S', ...)],\n",
+       "           names=['tk', 'name', 'end_nodes', 'property'], length=3608)"
+      ]
+     },
+     "execution_count": 27,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df_agsn_results_VL.columns"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "396b22d2",
+   "metadata": {},
+   "source": [
+    "# Plot"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "abfd0471",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import matplotlib.pyplot as plt"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "995f4030",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import pandas as pd"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "3e622931",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def fyPH(ax,offset=0):\n",
+    "    ax.spines[\"left\"].set_position((\"outward\", offset))\n",
+    "    ax.set_ylabel('PH Druck in bar')\n",
+    "    #ax.set_ylim(1,6)\n",
+    "    #ax.set_yticks(sorted(np.append(np.linspace(1,6,11),[])))\n",
+    "    ax.yaxis.set_ticks_position('left')\n",
+    "    ax.yaxis.set_label_position('left')\n",
+    "\n",
+    "def fymlc(ax,offset=60):\n",
+    "    ax.spines[\"left\"].set_position((\"outward\", offset))\n",
+    "    ax.set_ylabel('mlc Druckhöhe in mlc')\n",
+    "    #ax.set_ylim(1,6)\n",
+    "    #ax.set_yticks(sorted(np.append(np.linspace(1,6,11),[])))\n",
+    "    ax.yaxis.set_ticks_position('left')\n",
+    "    ax.yaxis.set_label_position('left')\n",
+    "\n",
+    "def fybarBzg(ax,offset=120):\n",
+    "    ax.spines[\"left\"].set_position((\"outward\", offset))\n",
+    "    ax.set_ylabel('H Druck in barBzg')\n",
+    "    #ax.set_ylim(1,6)\n",
+    "    #ax.set_yticks(sorted(np.append(np.linspace(1,6,11),[])))\n",
+    "    ax.yaxis.set_ticks_position('left')\n",
+    "    ax.yaxis.set_label_position('left')\n",
+    "\n",
+    "\"\"\"def fyM(ax,offset=180):\n",
+    "    Rm.pltLDSHelperY(ax)\n",
+    "    ax.spines[\"left\"].set_position((\"outward\",offset))\n",
+    "    ax.set_ylabel('QM Massenstrom in t/h')\n",
+    "    #ax.set_ylim(500,550)\n",
+    "    #ax.set_yticks(sorted(np.append(np.linspace(500,550,11),[])))\n",
+    "    ax.yaxis.set_ticks_position('left')\n",
+    "    ax.yaxis.set_label_position('left')\n",
+    "\n",
+    "def fyT(ax,offset=240):\n",
+    "    Rm.pltLDSHelperY(ax)\n",
+    "    ax.spines[\"left\"].set_position((\"outward\",offset))\n",
+    "    ax.set_ylabel('T Tempertatur in °C')\n",
+    "    ax.set_ylim(55,95)\n",
+    "    #ax.set_yticks(sorted(np.append(np.linspace(0,95,11),[])))\n",
+    "    ax.yaxis.set_ticks_position('left')\n",
+    "    ax.yaxis.set_label_position('left')\"\"\""
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "4dfd2e9a-dc8d-486d-81a0-9e01e7b79b2e",
+   "metadata": {},
+   "source": [
+    "..."
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "base",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.11.8"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
