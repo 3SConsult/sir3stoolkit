@@ -476,39 +476,72 @@
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[generate_element_dataframe] Error Generating df for element type: </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
 
-        
+            
 <div class="viewcode-block" id="SIR3S_Model_Dataframes.add_interior_points_to_results_dataframe">
 <a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.add_interior_points_to_results_dataframe">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">add_interior_points_to_results_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df_results</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Expand vector properties (level 3 contains &#39;VEC&#39;) from tab-separated strings into</span>
-<span class="sd">        float segments along a new column MultiIndex level &#39;interior points&#39;.</span>
+<span class="sd">        Expand vector properties (last column level contains &#39;VEC&#39;) from tab-separated strings</span>
+<span class="sd">        into float segments along a new column MultiIndex level &#39;interior points&#39;.</span>
 <span class="sd">        Non-vector properties get interior point -1 and retain original values.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">vec_props</span> <span class="o">=</span> <span class="p">{</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">df_results</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">get_level_values</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span> <span class="k">if</span> <span class="s2">&quot;VEC&quot;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">p</span><span class="p">)}</span>
+        <span class="n">last_level</span> <span class="o">=</span> <span class="n">df_results</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">get_level_values</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">vec_props</span> <span class="o">=</span> <span class="p">{</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">last_level</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span> <span class="k">if</span> <span class="s2">&quot;VEC&quot;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">p</span><span class="p">)}</span>
+
         <span class="n">new_level_name</span> <span class="o">=</span> <span class="s2">&quot;interior points&quot;</span>
         <span class="n">new_names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">df_results</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">names</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="n">new_level_name</span><span class="p">]</span>
 
         <span class="n">pieces</span> <span class="o">=</span> <span class="p">[]</span>
+
         <span class="k">for</span> <span class="n">col_key</span> <span class="ow">in</span> <span class="n">df_results</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
-            <span class="n">prop</span> <span class="o">=</span> <span class="n">col_key</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+
+            <span class="n">key</span> <span class="o">=</span> <span class="n">col_key</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">col_key</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="k">else</span> <span class="p">(</span><span class="n">col_key</span><span class="p">,)</span>
+            <span class="n">prop</span> <span class="o">=</span> <span class="n">key</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
             <span class="n">col</span> <span class="o">=</span> <span class="n">df_results</span><span class="p">[</span><span class="n">col_key</span><span class="p">]</span>
 
             <span class="k">if</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">vec_props</span><span class="p">:</span>
-                <span class="c1"># Split by tabs; convert to float;</span>
-                <span class="n">s</span> <span class="o">=</span> <span class="n">col</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">col</span><span class="o">.</span><span class="n">notna</span><span class="p">())</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
-                <span class="n">segs</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\t+&quot;</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s2">&quot;coerce&quot;</span><span class="p">)</span>
-                <span class="n">segs</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">MultiIndex</span><span class="o">.</span><span class="n">from_tuples</span><span class="p">([</span><span class="n">col_key</span> <span class="o">+</span> <span class="p">(</span><span class="n">i</span><span class="p">,)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">segs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])],</span>
-                                                        <span class="n">names</span><span class="o">=</span><span class="n">new_names</span><span class="p">)</span>
+
+                <span class="n">s</span> <span class="o">=</span> <span class="n">col</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">col</span><span class="o">.</span><span class="n">notna</span><span class="p">())</span>
+                
+                <span class="n">split_lists</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">else</span> <span class="p">[])</span>
+
+                <span class="c1"># Determine max number of segments for THIS column</span>
+                <span class="n">max_len</span> <span class="o">=</span> <span class="n">split_lists</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">len</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+
+                <span class="k">if</span> <span class="n">max_len</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">continue</span>
+
+                
+                <span class="n">segs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+                    <span class="n">split_lists</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">lst</span><span class="p">:</span> <span class="n">lst</span> <span class="o">+</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">max_len</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">lst</span><span class="p">)))</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span>
+                    <span class="n">index</span><span class="o">=</span><span class="n">col</span><span class="o">.</span><span class="n">index</span>
+                <span class="p">)</span>
+
+                <span class="c1"># Convert to numeric</span>
+                <span class="n">segs</span> <span class="o">=</span> <span class="n">segs</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s2">&quot;coerce&quot;</span><span class="p">)</span>
+
+                <span class="c1"># Assign MultiIndex columns</span>
+                <span class="n">segs</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">MultiIndex</span><span class="o">.</span><span class="n">from_tuples</span><span class="p">(</span>
+                    <span class="p">[</span><span class="n">key</span> <span class="o">+</span> <span class="p">(</span><span class="n">i</span><span class="p">,)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_len</span><span class="p">)],</span>
+                    <span class="n">names</span><span class="o">=</span><span class="n">new_names</span>
+                <span class="p">)</span>
+
                 <span class="n">pieces</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">segs</span><span class="p">)</span>
+
             <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Non-vector property → interior point = -1</span>
                 <span class="n">df1</span> <span class="o">=</span> <span class="n">col</span><span class="o">.</span><span class="n">to_frame</span><span class="p">()</span>
-                <span class="n">df1</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">MultiIndex</span><span class="o">.</span><span class="n">from_tuples</span><span class="p">([</span><span class="n">col_key</span> <span class="o">+</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,)],</span> <span class="n">names</span><span class="o">=</span><span class="n">new_names</span><span class="p">)</span>
+                <span class="n">df1</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">MultiIndex</span><span class="o">.</span><span class="n">from_tuples</span><span class="p">(</span>
+                    <span class="p">[</span><span class="n">key</span> <span class="o">+</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,)],</span>
+                    <span class="n">names</span><span class="o">=</span><span class="n">new_names</span>
+                <span class="p">)</span>
                 <span class="n">pieces</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df1</span><span class="p">)</span>
 
         <span class="n">out</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">pieces</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">out</span></div>
+
 
     
 <div class="viewcode-block" id="SIR3S_Model_Dataframes.generate_longitudinal_section_dataframes">

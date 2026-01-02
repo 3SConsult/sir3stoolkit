@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tutorial 72: Longitudinal Sections &mdash; sir3stoolkit  documentation</title>
+  <title>Tutorial 72: WORK IN PROGRESS: Longitudinal Sections &mdash; sir3stoolkit  documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -77,7 +77,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Tutorial 72: Longitudinal Sections</li>
+      <li class="breadcrumb-item active">Tutorial 72: WORK IN PROGRESS: Longitudinal Sections</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../_sources/tutorials/SIR3S_Model_Mantle/ToolkitTutorial072.ipynb.txt" rel="nofollow"> View page source</a>
       </li>
@@ -87,8 +87,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="Tutorial-72:-Longitudinal-Sections">
-<h1>Tutorial 72: Longitudinal Sections<a class="headerlink" href="#Tutorial-72:-Longitudinal-Sections" title="Link to this heading"></a></h1>
+  <section id="Tutorial-72:-WORK-IN-PROGRESS:-Longitudinal-Sections">
+<h1>Tutorial 72: WORK IN PROGRESS: Longitudinal Sections<a class="headerlink" href="#Tutorial-72:-WORK-IN-PROGRESS:-Longitudinal-Sections" title="Link to this heading"></a></h1>
 <p>This example demonstrates how to …</p>
 </section>
 <section id="SIR-3S-Installation">
@@ -196,70 +196,11 @@ Model is open for further operation
 </section>
 <section id="Get-Data">
 <h1>Get Data<a class="headerlink" href="#Get-Data" title="Link to this heading"></a></h1>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>tks = s3s.GetTksofElementType(ElementType=s3s.ObjectTypes.AGSN_HydraulicProfile)
-</pre></div>
-</div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>hydraulicProfile = s3s.GetCourseOfHydraulicProfile(tkAgsn=tks[0], uid=&quot;0&quot;)
-</pre></div>
-</div>
-</div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>hydraulicProfile
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-hydraulicProfile(childrenUID=&lt;System.Collections.Generic.List[String] object at 0x0000012D5AA37580&gt;, nodesVL=&lt;System.Collections.Generic.List[String] object at 0x0000012D5AA374C0&gt;, linksVL=&lt;System.Collections.Generic.List[String] object at 0x0000012D5AA37440&gt;, xVL=&lt;System.Collections.Generic.List[Double] object at 0x0000012D5AA36080&gt;, nodesRL=&lt;System.Collections.Generic.List[String] object at 0x0000012D5AA36000&gt;, linksRL=&lt;System.Collections.Generic.List[String] object at 0x0000012D5AA35F80&gt;, xRL=&lt;System.Collections.Generic.List[Double] object at 0x0000012D5AA35F00&gt;, nrOfBranches=0, xOffSet=0.0, xOffsetRelativeToParent=0.0, length=1281.55, tkArticulationNode=&#39;-1&#39;)
-</pre></div></div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>tk_to_x = dict(zip(list(hydraulicProfile.linksVL), list(hydraulicProfile.xVL)))
-</pre></div>
-</div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>linksVL=list(hydraulicProfile.linksVL)
-</pre></div>
-</div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>linksRL=list(hydraulicProfile.linksRL)
-</pre></div>
-</div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_agsn_results_VL = s3s.generate_element_results_dataframe(s3s.ObjectTypes.Pipe
-                                        ,tks=linksVL
-                                        ,timestamps=[0])
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dfs = s3s.generate_longitudinal_section_dataframes()
 </pre></div>
 </div>
 </div>
@@ -268,86 +209,1091 @@ hydraulicProfile(childrenUID=&lt;System.Collections.Generic.List[String] object 
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2025-12-19 13:29:33,699] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
-[2025-12-19 13:29:33,789] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2023-02-13 00:00:00.000 +01:00 is used
-[2025-12-19 13:29:33,790] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
-[2025-12-19 13:29:33,791] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
-[2025-12-19 13:29:33,792] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 44 tks remain after filtering for given tks.
-[2025-12-19 13:29:33,804] INFO in sir3stoolkit.mantle.dataframes: [results] No properties given → using ALL result properties for ObjectTypes.Pipe.
-[2025-12-19 13:29:33,805] INFO in sir3stoolkit.mantle.dataframes: [results] Using 82 result properties.
-[2025-12-19 13:29:33,901] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
-[2025-12-19 13:29:34,684] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 3608)
+[2026-01-02 11:00:24,067] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.AGSN_HydraulicProfile
+[2026-01-02 11:00:24,067] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieved 3 element(s) of element type ObjectTypes.AGSN_HydraulicProfile.
+[2026-01-02 11:00:24,070] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] No properties given → using ALL metadata properties for ObjectTypes.AGSN_HydraulicProfile.
+[2026-01-02 11:00:24,071] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 9 metadata properties.
+[2026-01-02 11:00:24,071] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving metadata properties [&#39;Name&#39;, &#39;Lfdnr&#39;, &#39;Aktiv&#39;, &#39;AllNodesAndLinks&#39;, &#39;ObjsString&#39;, &#39;MainWay&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;]...
+[2026-01-02 11:00:24,076] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (3, 10)
+[2026-01-02 11:00:24,078] INFO in sir3stoolkit.mantle.dataframes: Retrieving Hydraulic Profile with Lfdnr: 1.
+[2026-01-02 11:00:24,079] INFO in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df for element type: ObjectTypes.Pipe ...
+[2026-01-02 11:00:24,079] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_metadata for element type: ObjectTypes.Pipe ...
+[2026-01-02 11:00:24,082] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.Pipe
+[2026-01-02 11:00:24,084] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2026-01-02 11:00:24,084] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 44 tks remain after filtering for given tks.
+[2026-01-02 11:00:24,084] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] No properties given → using ALL metadata properties for ObjectTypes.Pipe.
+[2026-01-02 11:00:24,084] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 46 metadata properties.
+[2026-01-02 11:00:24,088] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving metadata properties [&#39;Name&#39;, &#39;FkdtroRowd&#39;, &#39;Fkltgr&#39;, &#39;Fkstrasse&#39;, &#39;L&#39;, &#39;Lzu&#39;, &#39;Rau&#39;, &#39;Jlambs&#39;, &#39;Lambda0&#39;, &#39;Zein&#39;, &#39;Zaus&#39;, &#39;Zuml&#39;, &#39;Asoll&#39;, &#39;Indschall&#39;, &#39;Baujahr&#39;, &#39;Hal&#39;, &#39;Fkcont&#39;, &#39;Fk2lrohr&#39;, &#39;Beschreibung&#39;, &#39;Idreferenz&#39;, &#39;Iplanung&#39;, &#39;Kvr&#39;, &#39;LineWidthMM&#39;, &#39;DottedLine&#39;, &#39;DN&#39;, &#39;Di&#39;, &#39;KvrKlartext&#39;, &#39;HasClosedNSCHs&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;, &#39;Xkor&#39;, &#39;Ykor&#39;, &#39;GeometriesDiffer&#39;, &#39;bz.Fk&#39;, &#39;bz.Qsvb&#39;, &#39;bz.Irtrenn&#39;, &#39;bz.Leckstatus&#39;, &#39;bz.Leckstart&#39;, &#39;bz.Leckend&#39;, &#39;bz.Leckort&#39;, &#39;bz.Leckmenge&#39;, &#39;bz.Imptnz&#39;, &#39;bz.Zvlimptnz&#39;, &#39;bz.Kantenzv&#39;, &#39;bz.ITrennWithNSCH&#39;], geometry, end nodes...
+[2026-01-02 11:00:24,446] INFO in sir3stoolkit.mantle.dataframes: [metadata] 2 non-empty end node columns were created.
+[2026-01-02 11:00:24,465] INFO in sir3stoolkit.mantle.dataframes: [metadata] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
+[2026-01-02 11:00:24,465] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (44, 50)
+[2026-01-02 11:00:24,465] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_results for element type: ObjectTypes.Pipe ...
+[2026-01-02 11:00:24,531] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
+[2026-01-02 11:00:24,603] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2023-02-13 00:00:00.000 +01:00 is used
+[2026-01-02 11:00:24,604] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
+[2026-01-02 11:00:24,604] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2026-01-02 11:00:24,606] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 44 tks remain after filtering for given tks.
+[2026-01-02 11:00:24,607] INFO in sir3stoolkit.mantle.dataframes: [results] Using 31 result properties.
+[2026-01-02 11:00:24,613] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2026-01-02 11:00:24,913] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 1364)
+[2026-01-02 11:00:24,913] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Merging df_metadata with df_results for element type: ObjectTypes.Pipe ...
+[2026-01-02 11:00:24,934] INFO in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df for element type: ObjectTypes.Pipe ...
+[2026-01-02 11:00:24,934] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_metadata for element type: ObjectTypes.Pipe ...
+[2026-01-02 11:00:24,934] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.Pipe
+[2026-01-02 11:00:24,939] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2026-01-02 11:00:24,939] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 44 tks remain after filtering for given tks.
+[2026-01-02 11:00:24,941] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] No properties given → using ALL metadata properties for ObjectTypes.Pipe.
+[2026-01-02 11:00:24,941] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 46 metadata properties.
+[2026-01-02 11:00:24,941] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving metadata properties [&#39;Name&#39;, &#39;FkdtroRowd&#39;, &#39;Fkltgr&#39;, &#39;Fkstrasse&#39;, &#39;L&#39;, &#39;Lzu&#39;, &#39;Rau&#39;, &#39;Jlambs&#39;, &#39;Lambda0&#39;, &#39;Zein&#39;, &#39;Zaus&#39;, &#39;Zuml&#39;, &#39;Asoll&#39;, &#39;Indschall&#39;, &#39;Baujahr&#39;, &#39;Hal&#39;, &#39;Fkcont&#39;, &#39;Fk2lrohr&#39;, &#39;Beschreibung&#39;, &#39;Idreferenz&#39;, &#39;Iplanung&#39;, &#39;Kvr&#39;, &#39;LineWidthMM&#39;, &#39;DottedLine&#39;, &#39;DN&#39;, &#39;Di&#39;, &#39;KvrKlartext&#39;, &#39;HasClosedNSCHs&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;, &#39;Xkor&#39;, &#39;Ykor&#39;, &#39;GeometriesDiffer&#39;, &#39;bz.Fk&#39;, &#39;bz.Qsvb&#39;, &#39;bz.Irtrenn&#39;, &#39;bz.Leckstatus&#39;, &#39;bz.Leckstart&#39;, &#39;bz.Leckend&#39;, &#39;bz.Leckort&#39;, &#39;bz.Leckmenge&#39;, &#39;bz.Imptnz&#39;, &#39;bz.Zvlimptnz&#39;, &#39;bz.Kantenzv&#39;, &#39;bz.ITrennWithNSCH&#39;], geometry, end nodes...
+[2026-01-02 11:00:25,049] INFO in sir3stoolkit.mantle.dataframes: [metadata] 2 non-empty end node columns were created.
+[2026-01-02 11:00:25,065] INFO in sir3stoolkit.mantle.dataframes: [metadata] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
+[2026-01-02 11:00:25,065] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (44, 50)
+[2026-01-02 11:00:25,065] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_results for element type: ObjectTypes.Pipe ...
+[2026-01-02 11:00:25,129] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
+[2026-01-02 11:00:25,199] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2023-02-13 00:00:00.000 +01:00 is used
+[2026-01-02 11:00:25,199] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
+[2026-01-02 11:00:25,203] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2026-01-02 11:00:25,203] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 44 tks remain after filtering for given tks.
+[2026-01-02 11:00:25,205] INFO in sir3stoolkit.mantle.dataframes: [results] Using 31 result properties.
+[2026-01-02 11:00:25,215] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2026-01-02 11:00:25,563] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 1364)
+[2026-01-02 11:00:25,563] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Merging df_metadata with df_results for element type: ObjectTypes.Pipe ...
+[2026-01-02 11:00:25,574] INFO in sir3stoolkit.mantle.dataframes: Retrieving Hydraulic Profile with Lfdnr: 2.
+[2026-01-02 11:00:25,574] INFO in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df for element type: ObjectTypes.Pipe ...
+[2026-01-02 11:00:25,578] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_metadata for element type: ObjectTypes.Pipe ...
+[2026-01-02 11:00:25,579] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.Pipe
+[2026-01-02 11:00:25,582] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2026-01-02 11:00:25,582] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 44 tks remain after filtering for given tks.
+[2026-01-02 11:00:25,584] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] No properties given → using ALL metadata properties for ObjectTypes.Pipe.
+[2026-01-02 11:00:25,585] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 46 metadata properties.
+[2026-01-02 11:00:25,586] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving metadata properties [&#39;Name&#39;, &#39;FkdtroRowd&#39;, &#39;Fkltgr&#39;, &#39;Fkstrasse&#39;, &#39;L&#39;, &#39;Lzu&#39;, &#39;Rau&#39;, &#39;Jlambs&#39;, &#39;Lambda0&#39;, &#39;Zein&#39;, &#39;Zaus&#39;, &#39;Zuml&#39;, &#39;Asoll&#39;, &#39;Indschall&#39;, &#39;Baujahr&#39;, &#39;Hal&#39;, &#39;Fkcont&#39;, &#39;Fk2lrohr&#39;, &#39;Beschreibung&#39;, &#39;Idreferenz&#39;, &#39;Iplanung&#39;, &#39;Kvr&#39;, &#39;LineWidthMM&#39;, &#39;DottedLine&#39;, &#39;DN&#39;, &#39;Di&#39;, &#39;KvrKlartext&#39;, &#39;HasClosedNSCHs&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;, &#39;Xkor&#39;, &#39;Ykor&#39;, &#39;GeometriesDiffer&#39;, &#39;bz.Fk&#39;, &#39;bz.Qsvb&#39;, &#39;bz.Irtrenn&#39;, &#39;bz.Leckstatus&#39;, &#39;bz.Leckstart&#39;, &#39;bz.Leckend&#39;, &#39;bz.Leckort&#39;, &#39;bz.Leckmenge&#39;, &#39;bz.Imptnz&#39;, &#39;bz.Zvlimptnz&#39;, &#39;bz.Kantenzv&#39;, &#39;bz.ITrennWithNSCH&#39;], geometry, end nodes...
+[2026-01-02 11:00:25,696] INFO in sir3stoolkit.mantle.dataframes: [metadata] 2 non-empty end node columns were created.
+[2026-01-02 11:00:25,704] INFO in sir3stoolkit.mantle.dataframes: [metadata] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
+[2026-01-02 11:00:25,704] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (44, 50)
+[2026-01-02 11:00:25,704] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_results for element type: ObjectTypes.Pipe ...
+[2026-01-02 11:00:25,765] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
+[2026-01-02 11:00:25,830] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2023-02-13 00:00:00.000 +01:00 is used
+[2026-01-02 11:00:25,830] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
+[2026-01-02 11:00:25,833] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2026-01-02 11:00:25,834] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 44 tks remain after filtering for given tks.
+[2026-01-02 11:00:25,835] INFO in sir3stoolkit.mantle.dataframes: [results] Using 31 result properties.
+[2026-01-02 11:00:25,856] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2026-01-02 11:00:26,163] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 1364)
+[2026-01-02 11:00:26,163] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Merging df_metadata with df_results for element type: ObjectTypes.Pipe ...
+[2026-01-02 11:00:26,174] INFO in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df for element type: ObjectTypes.Pipe ...
+[2026-01-02 11:00:26,174] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_metadata for element type: ObjectTypes.Pipe ...
+[2026-01-02 11:00:26,174] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.Pipe
+[2026-01-02 11:00:26,179] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2026-01-02 11:00:26,181] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 44 tks remain after filtering for given tks.
+[2026-01-02 11:00:26,181] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] No properties given → using ALL metadata properties for ObjectTypes.Pipe.
+[2026-01-02 11:00:26,184] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 46 metadata properties.
+[2026-01-02 11:00:26,184] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving metadata properties [&#39;Name&#39;, &#39;FkdtroRowd&#39;, &#39;Fkltgr&#39;, &#39;Fkstrasse&#39;, &#39;L&#39;, &#39;Lzu&#39;, &#39;Rau&#39;, &#39;Jlambs&#39;, &#39;Lambda0&#39;, &#39;Zein&#39;, &#39;Zaus&#39;, &#39;Zuml&#39;, &#39;Asoll&#39;, &#39;Indschall&#39;, &#39;Baujahr&#39;, &#39;Hal&#39;, &#39;Fkcont&#39;, &#39;Fk2lrohr&#39;, &#39;Beschreibung&#39;, &#39;Idreferenz&#39;, &#39;Iplanung&#39;, &#39;Kvr&#39;, &#39;LineWidthMM&#39;, &#39;DottedLine&#39;, &#39;DN&#39;, &#39;Di&#39;, &#39;KvrKlartext&#39;, &#39;HasClosedNSCHs&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;, &#39;Xkor&#39;, &#39;Ykor&#39;, &#39;GeometriesDiffer&#39;, &#39;bz.Fk&#39;, &#39;bz.Qsvb&#39;, &#39;bz.Irtrenn&#39;, &#39;bz.Leckstatus&#39;, &#39;bz.Leckstart&#39;, &#39;bz.Leckend&#39;, &#39;bz.Leckort&#39;, &#39;bz.Leckmenge&#39;, &#39;bz.Imptnz&#39;, &#39;bz.Zvlimptnz&#39;, &#39;bz.Kantenzv&#39;, &#39;bz.ITrennWithNSCH&#39;], geometry, end nodes...
+[2026-01-02 11:00:26,280] INFO in sir3stoolkit.mantle.dataframes: [metadata] 2 non-empty end node columns were created.
+[2026-01-02 11:00:26,296] INFO in sir3stoolkit.mantle.dataframes: [metadata] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
+[2026-01-02 11:00:26,296] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (44, 50)
+[2026-01-02 11:00:26,298] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_results for element type: ObjectTypes.Pipe ...
+[2026-01-02 11:00:26,346] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
+[2026-01-02 11:00:26,414] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2023-02-13 00:00:00.000 +01:00 is used
+[2026-01-02 11:00:26,414] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
+[2026-01-02 11:00:26,419] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2026-01-02 11:00:26,419] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 44 tks remain after filtering for given tks.
+[2026-01-02 11:00:26,420] INFO in sir3stoolkit.mantle.dataframes: [results] Using 31 result properties.
+[2026-01-02 11:00:26,444] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2026-01-02 11:00:26,735] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 1364)
+[2026-01-02 11:00:26,735] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Merging df_metadata with df_results for element type: ObjectTypes.Pipe ...
+[2026-01-02 11:00:26,748] INFO in sir3stoolkit.mantle.dataframes: Retrieving Hydraulic Profile with Lfdnr: 3.
+[2026-01-02 11:00:26,748] INFO in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df for element type: ObjectTypes.Pipe ...
+[2026-01-02 11:00:26,748] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_metadata for element type: ObjectTypes.Pipe ...
+[2026-01-02 11:00:26,748] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.Pipe
+[2026-01-02 11:00:26,752] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2026-01-02 11:00:26,753] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 44 tks remain after filtering for given tks.
+[2026-01-02 11:00:26,753] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] No properties given → using ALL metadata properties for ObjectTypes.Pipe.
+[2026-01-02 11:00:26,755] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 46 metadata properties.
+[2026-01-02 11:00:26,755] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving metadata properties [&#39;Name&#39;, &#39;FkdtroRowd&#39;, &#39;Fkltgr&#39;, &#39;Fkstrasse&#39;, &#39;L&#39;, &#39;Lzu&#39;, &#39;Rau&#39;, &#39;Jlambs&#39;, &#39;Lambda0&#39;, &#39;Zein&#39;, &#39;Zaus&#39;, &#39;Zuml&#39;, &#39;Asoll&#39;, &#39;Indschall&#39;, &#39;Baujahr&#39;, &#39;Hal&#39;, &#39;Fkcont&#39;, &#39;Fk2lrohr&#39;, &#39;Beschreibung&#39;, &#39;Idreferenz&#39;, &#39;Iplanung&#39;, &#39;Kvr&#39;, &#39;LineWidthMM&#39;, &#39;DottedLine&#39;, &#39;DN&#39;, &#39;Di&#39;, &#39;KvrKlartext&#39;, &#39;HasClosedNSCHs&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;, &#39;Xkor&#39;, &#39;Ykor&#39;, &#39;GeometriesDiffer&#39;, &#39;bz.Fk&#39;, &#39;bz.Qsvb&#39;, &#39;bz.Irtrenn&#39;, &#39;bz.Leckstatus&#39;, &#39;bz.Leckstart&#39;, &#39;bz.Leckend&#39;, &#39;bz.Leckort&#39;, &#39;bz.Leckmenge&#39;, &#39;bz.Imptnz&#39;, &#39;bz.Zvlimptnz&#39;, &#39;bz.Kantenzv&#39;, &#39;bz.ITrennWithNSCH&#39;], geometry, end nodes...
+[2026-01-02 11:00:26,862] INFO in sir3stoolkit.mantle.dataframes: [metadata] 2 non-empty end node columns were created.
+[2026-01-02 11:00:26,871] INFO in sir3stoolkit.mantle.dataframes: [metadata] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
+[2026-01-02 11:00:26,871] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (44, 50)
+[2026-01-02 11:00:26,871] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_results for element type: ObjectTypes.Pipe ...
+[2026-01-02 11:00:26,935] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
+[2026-01-02 11:00:26,996] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2023-02-13 00:00:00.000 +01:00 is used
+[2026-01-02 11:00:26,996] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
+[2026-01-02 11:00:26,996] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2026-01-02 11:00:27,001] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 44 tks remain after filtering for given tks.
+[2026-01-02 11:00:27,002] INFO in sir3stoolkit.mantle.dataframes: [results] Using 31 result properties.
+[2026-01-02 11:00:27,014] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2026-01-02 11:00:27,335] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 1364)
+[2026-01-02 11:00:27,335] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Merging df_metadata with df_results for element type: ObjectTypes.Pipe ...
+[2026-01-02 11:00:27,347] INFO in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df for element type: ObjectTypes.Pipe ...
+[2026-01-02 11:00:27,347] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_metadata for element type: ObjectTypes.Pipe ...
+[2026-01-02 11:00:27,347] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.Pipe
+[2026-01-02 11:00:27,347] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2026-01-02 11:00:27,351] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 44 tks remain after filtering for given tks.
+[2026-01-02 11:00:27,351] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] No properties given → using ALL metadata properties for ObjectTypes.Pipe.
+[2026-01-02 11:00:27,354] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 46 metadata properties.
+[2026-01-02 11:00:27,354] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving metadata properties [&#39;Name&#39;, &#39;FkdtroRowd&#39;, &#39;Fkltgr&#39;, &#39;Fkstrasse&#39;, &#39;L&#39;, &#39;Lzu&#39;, &#39;Rau&#39;, &#39;Jlambs&#39;, &#39;Lambda0&#39;, &#39;Zein&#39;, &#39;Zaus&#39;, &#39;Zuml&#39;, &#39;Asoll&#39;, &#39;Indschall&#39;, &#39;Baujahr&#39;, &#39;Hal&#39;, &#39;Fkcont&#39;, &#39;Fk2lrohr&#39;, &#39;Beschreibung&#39;, &#39;Idreferenz&#39;, &#39;Iplanung&#39;, &#39;Kvr&#39;, &#39;LineWidthMM&#39;, &#39;DottedLine&#39;, &#39;DN&#39;, &#39;Di&#39;, &#39;KvrKlartext&#39;, &#39;HasClosedNSCHs&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;, &#39;Xkor&#39;, &#39;Ykor&#39;, &#39;GeometriesDiffer&#39;, &#39;bz.Fk&#39;, &#39;bz.Qsvb&#39;, &#39;bz.Irtrenn&#39;, &#39;bz.Leckstatus&#39;, &#39;bz.Leckstart&#39;, &#39;bz.Leckend&#39;, &#39;bz.Leckort&#39;, &#39;bz.Leckmenge&#39;, &#39;bz.Imptnz&#39;, &#39;bz.Zvlimptnz&#39;, &#39;bz.Kantenzv&#39;, &#39;bz.ITrennWithNSCH&#39;], geometry, end nodes...
+[2026-01-02 11:00:27,463] INFO in sir3stoolkit.mantle.dataframes: [metadata] 2 non-empty end node columns were created.
+[2026-01-02 11:00:27,468] INFO in sir3stoolkit.mantle.dataframes: [metadata] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
+[2026-01-02 11:00:27,468] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (44, 50)
+[2026-01-02 11:00:27,468] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_results for element type: ObjectTypes.Pipe ...
+[2026-01-02 11:00:27,532] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
+[2026-01-02 11:00:27,582] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2023-02-13 00:00:00.000 +01:00 is used
+[2026-01-02 11:00:27,582] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
+[2026-01-02 11:00:27,582] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2026-01-02 11:00:27,591] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 44 tks remain after filtering for given tks.
+[2026-01-02 11:00:27,605] INFO in sir3stoolkit.mantle.dataframes: [results] Using 31 result properties.
+[2026-01-02 11:00:27,615] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2026-01-02 11:00:27,916] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 1364)
+[2026-01-02 11:00:27,916] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Merging df_metadata with df_results for element type: ObjectTypes.Pipe ...
 </pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df=dfs[0]
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_vec=s3s.add_interior_points_to_results_dataframe(df)
+</pre></div>
+</div>
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_agsn_results_RL = s3s.generate_element_results_dataframe(s3s.ObjectTypes.Pipe
-                                        ,tks=linksRL
-                                        ,timestamps=[0])
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_vec.head(3)
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-[2025-12-19 13:18:45,851] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
-[2025-12-19 13:18:45,914] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2023-02-13 00:00:00.000 +01:00 is used
-[2025-12-19 13:18:45,914] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
-[2025-12-19 13:18:45,916] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
-[2025-12-19 13:18:45,918] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 44 tks remain after filtering for given tks.
-[2025-12-19 13:18:45,920] INFO in sir3stoolkit.mantle.dataframes: [results] No properties given → using ALL result properties for ObjectTypes.Pipe.
-[2025-12-19 13:18:45,921] INFO in sir3stoolkit.mantle.dataframes: [results] Using 82 result properties.
-[2025-12-19 13:18:45,941] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
-[2025-12-19 13:18:47,503] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 3608)
-</pre></div></div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th></th>
+      <th>tk</th>
+      <th>Name</th>
+      <th>FkdtroRowd</th>
+      <th>Fkltgr</th>
+      <th>Fkstrasse</th>
+      <th>L</th>
+      <th>Lzu</th>
+      <th>Rau</th>
+      <th>Jlambs</th>
+      <th>Lambda0</th>
+      <th>Zein</th>
+      <th>Zaus</th>
+      <th>Zuml</th>
+      <th>Asoll</th>
+      <th>Indschall</th>
+      <th>Baujahr</th>
+      <th>Hal</th>
+      <th>Fkcont</th>
+      <th>Fk2lrohr</th>
+      <th>Beschreibung</th>
+      <th>Idreferenz</th>
+      <th>Iplanung</th>
+      <th>Kvr</th>
+      <th>LineWidthMM</th>
+      <th>DottedLine</th>
+      <th>DN</th>
+      <th>Di</th>
+      <th>KvrKlartext</th>
+      <th>HasClosedNSCHs</th>
+      <th>Tk</th>
+      <th>Pk</th>
+      <th>InVariant</th>
+      <th>Xkor</th>
+      <th>Ykor</th>
+      <th>GeometriesDiffer</th>
+      <th>bz.Fk</th>
+      <th>bz.Qsvb</th>
+      <th>bz.Irtrenn</th>
+      <th>bz.Leckstatus</th>
+      <th>bz.Leckstart</th>
+      <th>bz.Leckend</th>
+      <th>bz.Leckort</th>
+      <th>bz.Leckmenge</th>
+      <th>bz.Imptnz</th>
+      <th>bz.Zvlimptnz</th>
+      <th>bz.Kantenzv</th>
+      <th>bz.ITrennWithNSCH</th>
+      <th>geometry</th>
+      <th>fkKI</th>
+      <th>fkKK</th>
+      <th>A</th>
+      <th>DTTR</th>
+      <th>DWVERL</th>
+      <th>DWVERLABS</th>
+      <th>IAKTIV</th>
+      <th>IRTRENN</th>
+      <th>JV</th>
+      <th colspan="11" halign="left">MVEC</th>
+      <th>PDAMPF</th>
+      <th>PHR</th>
+      <th>PMIN</th>
+      <th colspan="11" halign="left">PVEC</th>
+      <th colspan="11" halign="left">PVECMAX_INST</th>
+      <th colspan="11" halign="left">PVECMIN_INST</th>
+      <th>QMAV</th>
+      <th>QMI</th>
+      <th>QMK</th>
+      <th>RHOI</th>
+      <th>RHOK</th>
+      <th colspan="11" halign="left">RHOVEC</th>
+      <th colspan="11" halign="left">SVEC</th>
+      <th>TI</th>
+      <th>TK</th>
+      <th colspan="11" halign="left">TTRVEC</th>
+      <th colspan="11" halign="left">TVEC</th>
+      <th>VAV</th>
+      <th>VI</th>
+      <th>VK</th>
+      <th>VOLDA</th>
+      <th>WVL</th>
+      <th colspan="11" halign="left">ZVEC</th>
+      <th>l_sum</th>
+      <th>AGSN_Lfdnr</th>
+      <th>AGSN_Name</th>
+    </tr>
+    <tr>
+      <th>interior points</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>4</th>
+      <th>5</th>
+      <th>6</th>
+      <th>7</th>
+      <th>8</th>
+      <th>9</th>
+      <th>10</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>4</th>
+      <th>5</th>
+      <th>6</th>
+      <th>7</th>
+      <th>8</th>
+      <th>9</th>
+      <th>10</th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>4</th>
+      <th>5</th>
+      <th>6</th>
+      <th>7</th>
+      <th>8</th>
+      <th>9</th>
+      <th>10</th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>4</th>
+      <th>5</th>
+      <th>6</th>
+      <th>7</th>
+      <th>8</th>
+      <th>9</th>
+      <th>10</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>4</th>
+      <th>5</th>
+      <th>6</th>
+      <th>7</th>
+      <th>8</th>
+      <th>9</th>
+      <th>10</th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>4</th>
+      <th>5</th>
+      <th>6</th>
+      <th>7</th>
+      <th>8</th>
+      <th>9</th>
+      <th>10</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>4</th>
+      <th>5</th>
+      <th>6</th>
+      <th>7</th>
+      <th>8</th>
+      <th>9</th>
+      <th>10</th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>4</th>
+      <th>5</th>
+      <th>6</th>
+      <th>7</th>
+      <th>8</th>
+      <th>9</th>
+      <th>10</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>4</th>
+      <th>5</th>
+      <th>6</th>
+      <th>7</th>
+      <th>8</th>
+      <th>9</th>
+      <th>10</th>
+      <th>-1</th>
+      <th>-1</th>
+      <th>-1</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>5691533564979419761</td>
+      <td>Rohr V-E0 V-K1683S</td>
+      <td>4816511167455310973</td>
+      <td>4779752876656844188</td>
+      <td>5204829332281547346</td>
+      <td>15,3517</td>
+      <td>0</td>
+      <td>0,05</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1000</td>
+      <td>0</td>
+      <td></td>
+      <td>0</td>
+      <td>5029128874972463118</td>
+      <td>5025945677694931826</td>
+      <td>OSM: Knoten 476971238 -&gt; Knoten 299394923; Län...</td>
+      <td>39785520</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0,00499999987368938</td>
+      <td>0</td>
+      <td>350</td>
+      <td>345,6</td>
+      <td>Vorlauf</td>
+      <td></td>
+      <td>5691533564979419761</td>
+      <td>5691533564979419761</td>
+      <td>False</td>
+      <td>713619,921382501</td>
+      <td>5578218,95448989</td>
+      <td>False</td>
+      <td>5691533564979419761</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>LINESTRING (713619.921 5578218.954, 713614.649...</td>
+      <td>5398100694284104779</td>
+      <td>4825391580467484032</td>
+      <td>0.0</td>
+      <td>0.004844</td>
+      <td>43.12016</td>
+      <td>0.661968</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.152727</td>
+      <td>79.74764</td>
+      <td>79.74764</td>
+      <td>79.74764</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.701074</td>
+      <td>0.002345</td>
+      <td>5.800678</td>
+      <td>5.878785</td>
+      <td>5.839730</td>
+      <td>5.800680</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>5.878785</td>
+      <td>5.839730</td>
+      <td>5.800680</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>5.878785</td>
+      <td>5.839730</td>
+      <td>5.800680</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>287.0915</td>
+      <td>287.0915</td>
+      <td>287.0915</td>
+      <td>965.7</td>
+      <td>965.7012</td>
+      <td>965.7000</td>
+      <td>965.7006</td>
+      <td>965.7012</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>7.675850</td>
+      <td>15.35170</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>89.99999</td>
+      <td>89.99802</td>
+      <td>0.000000</td>
+      <td>0.002422</td>
+      <td>0.004844</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>90.00000</td>
+      <td>89.99902</td>
+      <td>89.99802</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.880315</td>
+      <td>0.880315</td>
+      <td>0.880314</td>
+      <td>0.0</td>
+      <td>10082.88</td>
+      <td>541.49</td>
+      <td>541.89</td>
+      <td>542.29</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>15.351701</td>
+      <td>1</td>
+      <td>Längsschnitt</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>5048873293262650113</td>
+      <td>Rohr V-K1683S V-K1693S</td>
+      <td>4816511167455310973</td>
+      <td>4779752876656844188</td>
+      <td>5204829332281547346</td>
+      <td>12,50895</td>
+      <td>0</td>
+      <td>0,05</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1000</td>
+      <td>0</td>
+      <td></td>
+      <td>0</td>
+      <td>5029128874972463118</td>
+      <td>5216742060270992761</td>
+      <td>OSM: Knoten 299394923 -&gt; Knoten 4105649557; Lä...</td>
+      <td>39785520</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0,00499999987368938</td>
+      <td>0</td>
+      <td>350</td>
+      <td>345,6</td>
+      <td>Vorlauf</td>
+      <td></td>
+      <td>5048873293262650113</td>
+      <td>5048873293262650113</td>
+      <td>False</td>
+      <td>713614,648711719</td>
+      <td>5578233,37231421</td>
+      <td>False</td>
+      <td>5048873293262650113</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>LINESTRING (713614.649 5578233.372, 713614.465...</td>
+      <td>4825391580467484032</td>
+      <td>5180617780362861593</td>
+      <td>0.0</td>
+      <td>0.003947</td>
+      <td>43.5808</td>
+      <td>0.54515</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.152727</td>
+      <td>79.74764</td>
+      <td>79.74764</td>
+      <td>79.74764</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.701027</td>
+      <td>0.00191</td>
+      <td>5.732475</td>
+      <td>5.800680</td>
+      <td>5.766575</td>
+      <td>5.732475</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>5.800680</td>
+      <td>5.766575</td>
+      <td>5.732475</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>5.800680</td>
+      <td>5.766575</td>
+      <td>5.732475</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>287.0915</td>
+      <td>287.0915</td>
+      <td>287.0915</td>
+      <td>965.7012</td>
+      <td>965.7021</td>
+      <td>965.7012</td>
+      <td>965.7017</td>
+      <td>965.7021</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>6.254474</td>
+      <td>12.50895</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>89.99802</td>
+      <td>89.9964</td>
+      <td>0.004844</td>
+      <td>0.006818</td>
+      <td>0.008791</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>89.99802</td>
+      <td>89.99722</td>
+      <td>89.99640</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.880314</td>
+      <td>0.880314</td>
+      <td>0.880313</td>
+      <td>0.0</td>
+      <td>10081.81</td>
+      <td>542.29</td>
+      <td>542.64</td>
+      <td>542.99</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>27.860648</td>
+      <td>1</td>
+      <td>Längsschnitt</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>5715081934973525403</td>
+      <td>Rohr V-K2163S V-K1693S</td>
+      <td>4816511167455310973</td>
+      <td>4779752876656844188</td>
+      <td>5204829332281547346</td>
+      <td>6,265505</td>
+      <td>0</td>
+      <td>0,05</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1000</td>
+      <td>0</td>
+      <td></td>
+      <td>0</td>
+      <td>5029128874972463118</td>
+      <td>4919359344392474301</td>
+      <td>OSM: Knoten 299394922 -&gt; Knoten 4105649557; Lä...</td>
+      <td>595926249</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0,00499999987368938</td>
+      <td>0</td>
+      <td>350</td>
+      <td>345,6</td>
+      <td>Vorlauf</td>
+      <td></td>
+      <td>5715081934973525403</td>
+      <td>5715081934973525403</td>
+      <td>False</td>
+      <td>713614,369043203</td>
+      <td>5578252,14468345</td>
+      <td>False</td>
+      <td>5715081934973525403</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>LINESTRING (713614.369 5578252.145, 713614.465...</td>
+      <td>4964920487041183545</td>
+      <td>5180617780362861593</td>
+      <td>0.0</td>
+      <td>0.001977</td>
+      <td>43.50407</td>
+      <td>0.272575</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.152727</td>
+      <td>-79.74764</td>
+      <td>-79.74764</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.700995</td>
+      <td>0.000957</td>
+      <td>5.699317</td>
+      <td>5.699315</td>
+      <td>5.732475</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>5.699315</td>
+      <td>5.732475</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>5.699315</td>
+      <td>5.732475</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>-287.0915</td>
+      <td>-287.0915</td>
+      <td>-287.0915</td>
+      <td>965.7026</td>
+      <td>965.7021</td>
+      <td>965.7026</td>
+      <td>965.7021</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>6.265505</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>89.9956</td>
+      <td>89.9964</td>
+      <td>0.010768</td>
+      <td>0.008791</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>89.99561</td>
+      <td>89.99640</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>-0.880313</td>
+      <td>-0.880313</td>
+      <td>-0.880313</td>
+      <td>0.0</td>
+      <td>-10080.92</td>
+      <td>543.33</td>
+      <td>542.99</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>34.126153</td>
+      <td>1</td>
+      <td>Längsschnitt</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[54]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_agsn_results_VL.columns
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetResultProperties_from_elementType(s3s.ObjectTypes.Pipe,False)
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[54]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-MultiIndex([(&#39;5691533564979419761&#39;,   &#39;Rohr V-E0 V-K1683S&#39;, ...),
-            (&#39;5691533564979419761&#39;,   &#39;Rohr V-E0 V-K1683S&#39;, ...),
-            (&#39;5691533564979419761&#39;,   &#39;Rohr V-E0 V-K1683S&#39;, ...),
-            (&#39;5691533564979419761&#39;,   &#39;Rohr V-E0 V-K1683S&#39;, ...),
-            (&#39;5691533564979419761&#39;,   &#39;Rohr V-E0 V-K1683S&#39;, ...),
-            (&#39;5691533564979419761&#39;,   &#39;Rohr V-E0 V-K1683S&#39;, ...),
-            (&#39;5691533564979419761&#39;,   &#39;Rohr V-E0 V-K1683S&#39;, ...),
-            (&#39;5691533564979419761&#39;,   &#39;Rohr V-E0 V-K1683S&#39;, ...),
-            (&#39;5691533564979419761&#39;,   &#39;Rohr V-E0 V-K1683S&#39;, ...),
-            (&#39;5691533564979419761&#39;,   &#39;Rohr V-E0 V-K1683S&#39;, ...),
-            ...
-            (&#39;5107343838750080243&#39;, &#39;Rohr V-K133S V-K143S&#39;, ...),
-            (&#39;5107343838750080243&#39;, &#39;Rohr V-K133S V-K143S&#39;, ...),
-            (&#39;5107343838750080243&#39;, &#39;Rohr V-K133S V-K143S&#39;, ...),
-            (&#39;5107343838750080243&#39;, &#39;Rohr V-K133S V-K143S&#39;, ...),
-            (&#39;5107343838750080243&#39;, &#39;Rohr V-K133S V-K143S&#39;, ...),
-            (&#39;5107343838750080243&#39;, &#39;Rohr V-K133S V-K143S&#39;, ...),
-            (&#39;5107343838750080243&#39;, &#39;Rohr V-K133S V-K143S&#39;, ...),
-            (&#39;5107343838750080243&#39;, &#39;Rohr V-K133S V-K143S&#39;, ...),
-            (&#39;5107343838750080243&#39;, &#39;Rohr V-K133S V-K143S&#39;, ...),
-            (&#39;5107343838750080243&#39;, &#39;Rohr V-K133S V-K143S&#39;, ...)],
-           names=[&#39;tk&#39;, &#39;name&#39;, &#39;end_nodes&#39;, &#39;property&#39;], length=3608)
+[&#39;A&#39;,
+ &#39;ACALC&#39;,
+ &#39;CPI&#39;,
+ &#39;CPK&#39;,
+ &#39;DH&#39;,
+ &#39;DP&#39;,
+ &#39;DRAGRED&#39;,
+ &#39;DRAKONZ&#39;,
+ &#39;DSI&#39;,
+ &#39;DSK&#39;,
+ &#39;DTTR&#39;,
+ &#39;DWVERL&#39;,
+ &#39;DWVERLABS&#39;,
+ &#39;ETAAV&#39;,
+ &#39;FS&#39;,
+ &#39;HR&#39;,
+ &#39;HVEC&#39;,
+ &#39;IAKTIV&#39;,
+ &#39;IRTRENN&#39;,
+ &#39;JV&#39;,
+ &#39;JV2&#39;,
+ &#39;LAMBDA&#39;,
+ &#39;LECKEINAUS&#39;,
+ &#39;LECKMENGE&#39;,
+ &#39;LECKORT&#39;,
+ &#39;LINEPACK&#39;,
+ &#39;LINEPACKGEOM&#39;,
+ &#39;LINEPACKRATE&#39;,
+ &#39;MAINELEMENT&#39;,
+ &#39;MAV&#39;,
+ &#39;MI&#39;,
+ &#39;MK&#39;,
+ &#39;MKOND&#39;,
+ &#39;MMAX_INST&#39;,
+ &#39;MMIN_INST&#39;,
+ &#39;MVEC&#39;,
+ &#39;MVECMAX_INST&#39;,
+ &#39;MVECMIN_INST&#39;,
+ &#39;PAV&#39;,
+ &#39;PDAMPF&#39;,
+ &#39;PHR&#39;,
+ &#39;PHVEC&#39;,
+ &#39;PMAX&#39;,
+ &#39;PMIN&#39;,
+ &#39;PR&#39;,
+ &#39;PVEC&#39;,
+ &#39;PVECMAX_INST&#39;,
+ &#39;PVECMIN_INST&#39;,
+ &#39;QI2&#39;,
+ &#39;QK2&#39;,
+ &#39;QMAV&#39;,
+ &#39;QMI&#39;,
+ &#39;QMK&#39;,
+ &#39;QMMAX_INST&#39;,
+ &#39;QMMIN_INST&#39;,
+ &#39;QMVEC&#39;,
+ &#39;QSVB&#39;,
+ &#39;RHOAV&#39;,
+ &#39;RHOI&#39;,
+ &#39;RHOK&#39;,
+ &#39;RHOVEC&#39;,
+ &#39;SVEC&#39;,
+ &#39;TAV&#39;,
+ &#39;TI&#39;,
+ &#39;TK&#39;,
+ &#39;TTRVEC&#39;,
+ &#39;TVEC&#39;,
+ &#39;TVECMAX_INST&#39;,
+ &#39;TVECMIN_INST&#39;,
+ &#39;VAV&#39;,
+ &#39;VI&#39;,
+ &#39;VK&#39;,
+ &#39;VMAX_INST&#39;,
+ &#39;VMIN_INST&#39;,
+ &#39;VOLDA&#39;,
+ &#39;WALTERI&#39;,
+ &#39;WALTERK&#39;,
+ &#39;WVL&#39;,
+ &#39;ZAUS&#39;,
+ &#39;ZEIN&#39;,
+ &#39;ZHKNR&#39;,
+ &#39;ZVEC&#39;]
 </pre></div></div>
 </div>
 </section>
 <section id="Plot">
 <h1>Plot<a class="headerlink" href="#Plot" title="Link to this heading"></a></h1>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import matplotlib.pyplot as plt
@@ -355,15 +1301,15 @@ MultiIndex([(&#39;5691533564979419761&#39;,   &#39;Rohr V-E0 V-K1683S&#39;, ...)
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
 </pre></div>
 </div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def fyPH(ax,offset=0):
@@ -408,6 +1354,228 @@ def fyT(ax,offset=240):
     ax.yaxis.set_ticks_position(&#39;left&#39;)
     ax.yaxis.set_label_position(&#39;left&#39;)&quot;&quot;&quot;
 </pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&#39;def fyM(ax,offset=180):\n    Rm.pltLDSHelperY(ax)\n    ax.spines[&#34;left&#34;].set_position((&#34;outward&#34;,offset))\n    ax.set_ylabel(\&#39;QM Massenstrom in t/h\&#39;)\n    #ax.set_ylim(500,550)\n    #ax.set_yticks(sorted(np.append(np.linspace(500,550,11),[])))\n    ax.yaxis.set_ticks_position(\&#39;left\&#39;)\n    ax.yaxis.set_label_position(\&#39;left\&#39;)\n\ndef fyT(ax,offset=240):\n    Rm.pltLDSHelperY(ax)\n    ax.spines[&#34;left&#34;].set_position((&#34;outward&#34;,offset))\n    ax.set_ylabel(\&#39;T Tempertatur in °C\&#39;)\n    ax.set_ylim(55,95)\n    #ax.set_yticks(sorted(np.append(np.linspace(0,95,11),[])))\n    ax.yaxis.set_ticks_position(\&#39;left\&#39;)\n    ax.yaxis.set_label_position(\&#39;left\&#39;)&#39;
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[38]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import numpy as np
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def plot(dfAGSN=pd.DataFrame()
+        ,dfAGSNRL=pd.DataFrame()
+        ,PHCol=&#39;(&quot;PVEC&quot;, &quot;0&quot;)&#39;
+        ,mlcCol=&#39;mlc_n&#39;
+        ,zKoorCol=&#39;ZKOR_n&#39;
+        ,barBzgCol=&#39;H_n&#39;
+        ,QMCol=&#39;QM&#39;
+        ,TCol=&#39;T_n&#39;
+        ,xCol=&#39;LSum&#39;
+
+):
+
+    fig, ax0 = plt.subplots(figsize=(20,11.9))
+
+    ax0.set_yticks(np.linspace(0, 10, 21))
+    ax0.yaxis.set_ticklabels([])
+    ax0.grid()
+
+    #PH
+    ax1 = ax0.twinx()
+    fyPH(ax1)
+    PH_SL=ax1.plot(dfAGSN[xCol], dfAGSN[PHCol], color=&#39;red&#39;, label=&#39;PH SL&#39;,ls=&#39;dotted&#39;)
+    PH_RL=ax1.plot(dfAGSNRL[xCol], dfAGSNRL[PHCol], color=&#39;blue&#39;, label=&#39;PH RL&#39;,ls=&#39;dotted&#39;)
+
+    #mlc
+    ax11 = ax0.twinx()
+    fymlc(ax11)
+    mlc_SL=ax11.plot(dfAGSN[xCol], dfAGSN[mlcCol], color=&#39;red&#39;, label=&#39;mlc SL&#39;)
+    mlc_RL=ax11.plot(dfAGSNRL[xCol], dfAGSNRL[mlcCol], color=&#39;blue&#39;, label=&#39;mlc RL&#39;)
+
+    z=ax11.plot(dfAGSN[xCol], dfAGSN[zKoorCol], color=&#39;black&#39;, label=&#39;z&#39;,ls=&#39;dashed&#39;,alpha=.5)
+
+    #barBZG
+    ax12 = ax0.twinx()
+    fybarBzg(ax12)
+    barB_SL=ax12.plot(dfAGSN[xCol], dfAGSN[barBzgCol], color=&#39;red&#39;, label=&#39;H SL&#39;,ls=&#39;dashdot&#39;)
+    barB_RL=ax12.plot(dfAGSNRL[xCol], dfAGSNRL[barBzgCol], color=&#39;blue&#39;, label=&#39;H RL&#39;,ls=&#39;dashdot&#39;)
+    &quot;&quot;&quot;
+    #M
+    ax2 = ax0.twinx()
+    fyM(ax2)
+    QM_SL=ax2.step(dfAGSN[xCol], dfAGSN[QMCol]*dfAGSN[&#39;direction&#39;], color=&#39;orange&#39;, label=&#39;M SL&#39;)
+    QM_RL=ax2.step(dfAGSNRL[xCol], dfAGSNRL[QMCol]*dfAGSNRL[&#39;direction&#39;], color=&#39;cyan&#39;, label=&#39;M RL&#39;,ls=&#39;--&#39;)
+
+    #T
+    ax3 = ax0.twinx()
+    fyT(ax3)
+    T_SL=ax3.plot(dfAGSN[xCol], dfAGSN[TCol], color=&#39;pink&#39;, label=&#39;T SL&#39;)
+    T_RL=ax3.plot(dfAGSNRL[xCol], dfAGSNRL[TCol], color=&#39;lavender&#39;, label=&#39;T RL&#39;)
+    &quot;&quot;&quot;
+    ax0.set_title(&#39;Longitudinal Section for &#39;)#+dbFilename)
+
+    # added these three lines
+    lns =  PH_SL+ PH_RL + mlc_SL+ mlc_RL + barB_SL+ barB_RL#+ QM_SL+ QM_RL + T_SL+ T_RL + z
+    labs = [l.get_label() for l in lns]
+    ax0.legend(lns, labs)#, loc=0)
+
+    plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[55]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def plot(
+    dfAGSN=df_vec,
+    xCol=&quot;l_sum&quot;,
+    PHCol=(&quot;PVEC&quot;, 0),
+    barBzgCol=(&quot;HVEC&quot;, 0)
+):
+    fig, ax0 = plt.subplots(figsize=(20,11.9))
+
+    ax0.set_yticks(np.linspace(0, 10, 21))
+    ax0.yaxis.set_ticklabels([])
+    ax0.grid()
+
+    #PH
+    ax1 = ax0.twinx()
+    fyPH(ax1)
+    PH_SL=ax1.plot(dfAGSN[xCol], dfAGSN[PHCol], color=&#39;red&#39;, label=&#39;PH SL&#39;,ls=&#39;dotted&#39;)
+    #PH_RL=ax1.plot(dfAGSNRL[xCol], dfAGSNRL[PHCol], color=&#39;blue&#39;, label=&#39;PH RL&#39;,ls=&#39;dotted&#39;)
+
+    #barBZG
+    ax12 = ax0.twinx()
+    fybarBzg(ax12)
+    barB_SL=ax12.plot(dfAGSN[xCol], dfAGSN[barBzgCol], color=&#39;red&#39;, label=&#39;H SL&#39;,ls=&#39;dashdot&#39;)
+
+    ax0.set_title(&#39;Longitudinal Section for &#39;)#+dbFilename)
+
+    # added these three lines
+    lns =  PH_SL + barB_SL#+ PH_RL + mlc_SL+ mlc_RL + barB_SL+ barB_RL#+ QM_SL+ QM_RL + T_SL+ T_RL + z
+    labs = [l.get_label() for l in lns]
+    ax0.legend(lns, labs)#, loc=0)
+
+    plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[56]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plot(df_vec)
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-intense-fg ansi-bold">---------------------------------------------------------------------------</span>
+<span class="ansi-red-intense-fg ansi-bold">KeyError</span>                                  Traceback (most recent call last)
+File <span class="ansi-green-intense-fg ansi-bold">c:\Users\jablonski\AppData\Local\anaconda3\Lib\site-packages\pandas\core\indexes\base.py:3805</span>, in <span class="ansi-cyan-fg">Index.get_loc</span><span class="ansi-blue-intense-fg ansi-bold">(self, key)</span>
+<span class="ansi-green-fg">   3804</span> <span class="ansi-bold" style="color: rgb(0,135,0)">try</span>:
+<span class="ansi-green-intense-fg ansi-bold">-&gt; 3805</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>_engine<span style="color: rgb(98,98,98)">.</span>get_loc(casted_key)
+<span class="ansi-green-fg">   3806</span> <span class="ansi-bold" style="color: rgb(0,135,0)">except</span> <span class="ansi-bold" style="color: rgb(215,95,95)">KeyError</span> <span class="ansi-bold" style="color: rgb(0,135,0)">as</span> err:
+
+File <span class="ansi-green-intense-fg ansi-bold">index.pyx:167</span>, in <span class="ansi-cyan-fg">pandas._libs.index.IndexEngine.get_loc</span><span class="ansi-blue-intense-fg ansi-bold">()</span>
+
+File <span class="ansi-green-intense-fg ansi-bold">index.pyx:196</span>, in <span class="ansi-cyan-fg">pandas._libs.index.IndexEngine.get_loc</span><span class="ansi-blue-intense-fg ansi-bold">()</span>
+
+File <span class="ansi-green-intense-fg ansi-bold">pandas\\_libs\\hashtable_class_helper.pxi:7081</span>, in <span class="ansi-cyan-fg">pandas._libs.hashtable.PyObjectHashTable.get_item</span><span class="ansi-blue-intense-fg ansi-bold">()</span>
+
+File <span class="ansi-green-intense-fg ansi-bold">pandas\\_libs\\hashtable_class_helper.pxi:7089</span>, in <span class="ansi-cyan-fg">pandas._libs.hashtable.PyObjectHashTable.get_item</span><span class="ansi-blue-intense-fg ansi-bold">()</span>
+
+<span class="ansi-red-intense-fg ansi-bold">KeyError</span>: &#39;HVEC&#39;
+
+The above exception was the direct cause of the following exception:
+
+<span class="ansi-red-intense-fg ansi-bold">KeyError</span>                                  Traceback (most recent call last)
+File <span class="ansi-green-intense-fg ansi-bold">index.pyx:768</span>, in <span class="ansi-cyan-fg">pandas._libs.index.BaseMultiIndexCodesEngine.get_loc</span><span class="ansi-blue-intense-fg ansi-bold">()</span>
+
+File <span class="ansi-green-intense-fg ansi-bold">c:\Users\jablonski\AppData\Local\anaconda3\Lib\site-packages\pandas\core\indexes\base.py:3812</span>, in <span class="ansi-cyan-fg">Index.get_loc</span><span class="ansi-blue-intense-fg ansi-bold">(self, key)</span>
+<span class="ansi-green-fg">   3811</span>         <span class="ansi-bold" style="color: rgb(0,135,0)">raise</span> InvalidIndexError(key)
+<span class="ansi-green-intense-fg ansi-bold">-&gt; 3812</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">raise</span> <span class="ansi-bold" style="color: rgb(215,95,95)">KeyError</span>(key) <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">err</span>
+<span class="ansi-green-fg">   3813</span> <span class="ansi-bold" style="color: rgb(0,135,0)">except</span> <span class="ansi-bold" style="color: rgb(215,95,95)">TypeError</span>:
+<span class="ansi-green-fg">   3814</span>     <span style="color: rgb(95,135,135)"># If we have a listlike key, _check_indexing_error will raise</span>
+<span class="ansi-green-fg">   3815</span>     <span style="color: rgb(95,135,135)">#  InvalidIndexError. Otherwise we fall through and re-raise</span>
+<span class="ansi-green-fg">   3816</span>     <span style="color: rgb(95,135,135)">#  the TypeError.</span>
+
+<span class="ansi-red-intense-fg ansi-bold">KeyError</span>: &#39;HVEC&#39;
+
+During handling of the above exception, another exception occurred:
+
+<span class="ansi-red-intense-fg ansi-bold">KeyError</span>                                  Traceback (most recent call last)
+File <span class="ansi-green-intense-fg ansi-bold">c:\Users\jablonski\AppData\Local\anaconda3\Lib\site-packages\pandas\core\indexes\multi.py:3053</span>, in <span class="ansi-cyan-fg">MultiIndex.get_loc</span><span class="ansi-blue-intense-fg ansi-bold">(self, key)</span>
+<span class="ansi-green-fg">   3052</span> <span class="ansi-bold" style="color: rgb(0,135,0)">try</span>:
+<span class="ansi-green-intense-fg ansi-bold">-&gt; 3053</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>_engine<span style="color: rgb(98,98,98)">.</span>get_loc(key)
+<span class="ansi-green-fg">   3054</span> <span class="ansi-bold" style="color: rgb(0,135,0)">except</span> <span class="ansi-bold" style="color: rgb(215,95,95)">KeyError</span> <span class="ansi-bold" style="color: rgb(0,135,0)">as</span> err:
+
+File <span class="ansi-green-intense-fg ansi-bold">index.pyx:771</span>, in <span class="ansi-cyan-fg">pandas._libs.index.BaseMultiIndexCodesEngine.get_loc</span><span class="ansi-blue-intense-fg ansi-bold">()</span>
+
+<span class="ansi-red-intense-fg ansi-bold">KeyError</span>: (&#39;HVEC&#39;, 0)
+
+The above exception was the direct cause of the following exception:
+
+<span class="ansi-red-intense-fg ansi-bold">KeyError</span>                                  Traceback (most recent call last)
+Cell <span class="ansi-green-intense-fg ansi-bold">In[56], line 1</span>
+<span class="ansi-green-intense-fg ansi-bold">----&gt; 1</span> plot(df_vec)
+
+Cell <span class="ansi-green-intense-fg ansi-bold">In[55], line 22</span>, in <span class="ansi-cyan-fg">plot</span><span class="ansi-blue-intense-fg ansi-bold">(dfAGSN, xCol, PHCol, barBzgCol)</span>
+<span class="ansi-green-fg">     20</span> ax12 <span style="color: rgb(98,98,98)">=</span> ax0<span style="color: rgb(98,98,98)">.</span>twinx()
+<span class="ansi-green-fg">     21</span> fybarBzg(ax12)
+<span class="ansi-green-intense-fg ansi-bold">---&gt; 22</span> barB_SL<span style="color: rgb(98,98,98)">=</span>ax12<span style="color: rgb(98,98,98)">.</span>plot(dfAGSN[xCol], dfAGSN[barBzgCol], color<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">red</span><span style="color: rgb(175,0,0)">&#39;</span>, label<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">H SL</span><span style="color: rgb(175,0,0)">&#39;</span>,ls<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">dashdot</span><span style="color: rgb(175,0,0)">&#39;</span>)
+<span class="ansi-green-fg">     24</span> ax0<span style="color: rgb(98,98,98)">.</span>set_title(<span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">Longitudinal Section for </span><span style="color: rgb(175,0,0)">&#39;</span>)<span style="color: rgb(95,135,135)">#+dbFilename)</span>
+<span class="ansi-green-fg">     26</span> <span style="color: rgb(95,135,135)"># added these three lines</span>
+
+File <span class="ansi-green-intense-fg ansi-bold">c:\Users\jablonski\AppData\Local\anaconda3\Lib\site-packages\pandas\core\frame.py:4101</span>, in <span class="ansi-cyan-fg">DataFrame.__getitem__</span><span class="ansi-blue-intense-fg ansi-bold">(self, key)</span>
+<span class="ansi-green-fg">   4099</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> is_single_key:
+<span class="ansi-green-fg">   4100</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>columns<span style="color: rgb(98,98,98)">.</span>nlevels <span style="color: rgb(98,98,98)">&gt;</span> <span style="color: rgb(98,98,98)">1</span>:
+<span class="ansi-green-intense-fg ansi-bold">-&gt; 4101</span>         <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>_getitem_multilevel(key)
+<span class="ansi-green-fg">   4102</span>     indexer <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>columns<span style="color: rgb(98,98,98)">.</span>get_loc(key)
+<span class="ansi-green-fg">   4103</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> is_integer(indexer):
+
+File <span class="ansi-green-intense-fg ansi-bold">c:\Users\jablonski\AppData\Local\anaconda3\Lib\site-packages\pandas\core\frame.py:4159</span>, in <span class="ansi-cyan-fg">DataFrame._getitem_multilevel</span><span class="ansi-blue-intense-fg ansi-bold">(self, key)</span>
+<span class="ansi-green-fg">   4157</span> <span class="ansi-bold" style="color: rgb(0,135,0)">def</span> <span style="color: rgb(0,0,255)">_getitem_multilevel</span>(<span style="color: rgb(0,135,0)">self</span>, key):
+<span class="ansi-green-fg">   4158</span>     <span style="color: rgb(95,135,135)"># self.columns is a MultiIndex</span>
+<span class="ansi-green-intense-fg ansi-bold">-&gt; 4159</span>     loc <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>columns<span style="color: rgb(98,98,98)">.</span>get_loc(key)
+<span class="ansi-green-fg">   4160</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> <span style="color: rgb(0,135,0)">isinstance</span>(loc, (<span style="color: rgb(0,135,0)">slice</span>, np<span style="color: rgb(98,98,98)">.</span>ndarray)):
+<span class="ansi-green-fg">   4161</span>         new_columns <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>columns[loc]
+
+File <span class="ansi-green-intense-fg ansi-bold">c:\Users\jablonski\AppData\Local\anaconda3\Lib\site-packages\pandas\core\indexes\multi.py:3055</span>, in <span class="ansi-cyan-fg">MultiIndex.get_loc</span><span class="ansi-blue-intense-fg ansi-bold">(self, key)</span>
+<span class="ansi-green-fg">   3053</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>_engine<span style="color: rgb(98,98,98)">.</span>get_loc(key)
+<span class="ansi-green-fg">   3054</span> <span class="ansi-bold" style="color: rgb(0,135,0)">except</span> <span class="ansi-bold" style="color: rgb(215,95,95)">KeyError</span> <span class="ansi-bold" style="color: rgb(0,135,0)">as</span> err:
+<span class="ansi-green-intense-fg ansi-bold">-&gt; 3055</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">raise</span> <span class="ansi-bold" style="color: rgb(215,95,95)">KeyError</span>(key) <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">err</span>
+<span class="ansi-green-fg">   3056</span> <span class="ansi-bold" style="color: rgb(0,135,0)">except</span> <span class="ansi-bold" style="color: rgb(215,95,95)">TypeError</span>:
+<span class="ansi-green-fg">   3057</span>     <span style="color: rgb(95,135,135)"># e.g. test_partial_slicing_with_multiindex partial string slicing</span>
+<span class="ansi-green-fg">   3058</span>     loc, _ <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>get_loc_level(key, <span style="color: rgb(0,135,0)">list</span>(<span style="color: rgb(0,135,0)">range</span>(<span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>nlevels)))
+
+<span class="ansi-red-intense-fg ansi-bold">KeyError</span>: (&#39;HVEC&#39;, 0)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/tutorials_SIR3S_Model_Mantle_ToolkitTutorial072_30_1.png" src="../../_images/tutorials_SIR3S_Model_Mantle_ToolkitTutorial072_30_1.png" />
 </div>
 </div>
 <p>…</p>
