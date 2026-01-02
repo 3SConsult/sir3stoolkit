@@ -379,37 +379,70 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         
         except Exception as e:
             logger.error(f"[generate_element_dataframe] Error Generating df for element type: {element_type}: {e}")
-        
+            
     def add_interior_points_to_results_dataframe(self, df_results):
         """
-        Expand vector properties (level 3 contains 'VEC') from tab-separated strings into
-        float segments along a new column MultiIndex level 'interior points'.
+        Expand vector properties (last column level contains 'VEC') from tab-separated strings
+        into float segments along a new column MultiIndex level 'interior points'.
         Non-vector properties get interior point -1 and retain original values.
         """
 
-        vec_props = {p for p in df_results.columns.get_level_values(3).unique() if "VEC" in str(p)}
+        last_level = df_results.columns.get_level_values(-1)
+        vec_props = {p for p in last_level.unique() if "VEC" in str(p)}
+
         new_level_name = "interior points"
         new_names = list(df_results.columns.names) + [new_level_name]
 
         pieces = []
+
         for col_key in df_results.columns:
-            prop = col_key[3]
+
+            key = col_key if isinstance(col_key, tuple) else (col_key,)
+            prop = key[-1]
             col = df_results[col_key]
 
             if prop in vec_props:
-                # Split by tabs; convert to float;
-                s = col.where(col.notna()).astype(str)
-                segs = s.str.split(r"\t+", expand=True).apply(pd.to_numeric, errors="coerce")
-                segs.columns = pd.MultiIndex.from_tuples([col_key + (i,) for i in range(segs.shape[1])],
-                                                        names=new_names)
+
+                s = col.where(col.notna())
+                
+                split_lists = s.apply(lambda x: x.split("\t") if isinstance(x, str) else [])
+
+                # Determine max number of segments for THIS column
+                max_len = split_lists.apply(len).max()
+
+                if max_len == 0:
+                    continue
+
+                
+                segs = pd.DataFrame(
+                    split_lists.apply(lambda lst: lst + [None] * (max_len - len(lst))).tolist(),
+                    index=col.index
+                )
+
+                # Convert to numeric
+                segs = segs.apply(pd.to_numeric, errors="coerce")
+
+                # Assign MultiIndex columns
+                segs.columns = pd.MultiIndex.from_tuples(
+                    [key + (i,) for i in range(max_len)],
+                    names=new_names
+                )
+
                 pieces.append(segs)
+
             else:
+                # Non-vector property → interior point = -1
                 df1 = col.to_frame()
-                df1.columns = pd.MultiIndex.from_tuples([col_key + (-1,)], names=new_names)
+                df1.columns = pd.MultiIndex.from_tuples(
+                    [key + (-1,)],
+                    names=new_names
+                )
                 pieces.append(df1)
 
         out = pd.concat(pieces, axis=1)
+        out = out.dropna(axis=1, how="all")
         return out
+
     
     def generate_longitudinal_section_dataframes(
         self
