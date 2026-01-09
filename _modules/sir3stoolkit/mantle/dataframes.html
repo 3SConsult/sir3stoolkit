@@ -724,28 +724,25 @@
         <span class="k">return</span> <span class="n">dfs</span></div>
 
     
-<div class="viewcode-block" id="SIR3S_Model_Dataframes.generate_hydraulic_edge_dataframe">
-<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.generate_hydraulic_edge_dataframe">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">generate_hydraulic_edge_dataframe</span><span class="p">(</span>
+<div class="viewcode-block" id="SIR3S_Model_Dataframes.generate_edge_dataframe">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.generate_edge_dataframe">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">generate_edge_dataframe</span><span class="p">(</span>
         <span class="bp">self</span>      
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
 
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Generates dataframes for longitudinal sections.</span>
+<span class="sd">        Generates dataframes containing all edges in a SIR 3S model.</span>
 
-<span class="sd">        Each section produces two dataframes: VL (supply/flow) and RL (return).</span>
-<span class="sd">        The returned list follows the structure:</span>
-<span class="sd">        [section_1_VL, section_1_RL, section_2_VL, section_2_RL, ..., section_n_VL, section_n_RL].</span>
+<span class="sd">        :return: dataframes containing all edges in a SIR 3S model</span>
+<span class="sd">        :rtype: DataFrame</span>
 
-<span class="sd">        :return: List of dataframes representing longitudinal sections in the order</span>
-<span class="sd">                [section_1_VL, section_1_RL, ..., section_n_VL, section_n_RL].</span>
-<span class="sd">        :rtype: list[DataFrame | GeoDataFrame]</span>
-
-<span class="sd">        :description:</span>
-<span class="sd">            Creates a collection of longitudinal-section dataframes for the open SIR 3S model.</span>
-<span class="sd">            For each section, both supply (VL) and return (RL) lines are extracted.</span>
-<span class="sd">            Depending on whether geometric information is present, each dataframe may be</span>
-<span class="sd">            a regular pandas DataFrame or a GeoDataFrame.</span>
+<span class="sd">        :description: edge_types = [</span>
+<span class="sd">            &#39;Pipe&#39;, &#39;Valve&#39;, &#39;SafetyValve&#39;, &#39;PressureRegulator&#39;, &#39;DifferentialRegulator&#39;,</span>
+<span class="sd">            &#39;FlapValve&#39;, &#39;PhaseSeparation&#39;, &#39;FlowControlUnit&#39;, &#39;ControlValve&#39;, &#39;Pump&#39;,</span>
+<span class="sd">            &#39;DistrictHeatingConsumer&#39;, &#39;DistrictHeatingFeeder&#39;, &#39;Compressor&#39;, &#39;HeaterCooler&#39;,</span>
+<span class="sd">            &#39;HeatExchanger&#39;, &#39;HeatFeederConsumerStation&#39;, &#39;RART_ControlMode&#39;</span>
+<span class="sd">            ] are included.</span>
+<span class="sd">            </span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">edge_types</span> <span class="o">=</span> <span class="p">[</span>
@@ -770,9 +767,9 @@
                     <span class="p">)</span>
                     <span class="n">dfs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
             <span class="n">df_edges</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">dfs</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[hydraulic edges dataframe] Retrieved </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df_edges</span><span class="p">)</span><span class="si">}</span><span class="s2"> edges from </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">enum_members</span><span class="p">)</span><span class="si">}</span><span class="s2"> element types.&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[edge dataframe] Retrieved </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df_edges</span><span class="p">)</span><span class="si">}</span><span class="s2"> edges from </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">enum_members</span><span class="p">)</span><span class="si">}</span><span class="s2"> element types.&quot;</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[hydraulic edges dataframe] Failed to retrieve edges: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[edge dataframe] Failed to retrieve edges: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">df_edges</span></div>
 
