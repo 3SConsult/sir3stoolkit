@@ -20,8 +20,8 @@ The release notes indicate whether a version includes changes to the C# side and
 90-15 Quebec
 ------------
 
-Version 90.15.6 (To be released)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Version 90.15.6
+~~~~~~~~~~~~~~~
 
 C# Changes
 ^^^^^^^^^^
