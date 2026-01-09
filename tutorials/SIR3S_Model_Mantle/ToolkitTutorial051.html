@@ -226,10 +226,10 @@ Model is open for further operation
 </section>
 <section id="Manual-Dataframe-creation">
 <h1>Manual Dataframe creation<a class="headerlink" href="#Manual-Dataframe-creation" title="Link to this heading"></a></h1>
-<section id="Metadata---Nodes">
-<h2>Metadata - Nodes<a class="headerlink" href="#Metadata---Nodes" title="Link to this heading"></a></h2>
-<p>We can use the <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.Dataframes_SIR3S_Model.generate_element_metadata_dataframe">generate_element_metadata_dataframe()</a> method to obtain a dataframe for all instances of a specifc component type (Nodes, Pipes, etc.) with user defined metadata properties (all non-result data related to a component) to be added. For this example we will use nodes.</p>
-<p>In this case we are interested in Nodes, let’s check what metadata properties are available for this element.</p>
+<section id="model_data---Nodes">
+<h2>model_data - Nodes<a class="headerlink" href="#model_data---Nodes" title="Link to this heading"></a></h2>
+<p>We can use the <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.Dataframes_SIR3S_Model.generate_element_model_data_dataframe">generate_element_model_data_dataframe()</a> method to obtain a dataframe for all instances of a specifc component type (Nodes, Pipes, etc.) with user defined model_data properties (all non-result data related to a component) to be added. For this example we will use nodes.</p>
+<p>In this case we are interested in Nodes, let’s check what model_data properties are available for this element.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
@@ -283,7 +283,7 @@ Model is open for further operation
  &#39;bz.PhMin&#39;]
 </pre></div></div>
 </div>
-<p>In the below subcases differnt choices of parameters for creating the metadata dataframe manually are shown. Note that not all possible combination of paramters are shown here.</p>
+<p>In the below subcases differnt choices of parameters for creating the model_data dataframe manually are shown. Note that not all possible combination of paramters are shown here.</p>
 <section id="Subcase-1:-Minimal">
 <h3>Subcase 1: Minimal<a class="headerlink" href="#Subcase-1:-Minimal" title="Link to this heading"></a></h3>
 <p>Let’s say for now we only want a dataframe with all node tks without any related data.</p>
@@ -291,7 +291,7 @@ Model is open for further operation
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(s3s.generate_element_metadata_dataframe(element_type=s3s.ObjectTypes.Node
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(s3s.generate_element_model_data_dataframe(element_type=s3s.ObjectTypes.Node
                                         ,properties=[]
                                         )).head(3)
 </pre></div>
@@ -302,11 +302,11 @@ Model is open for further operation
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2026-01-09 10:23:44,690] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.Node
-[2026-01-09 10:23:44,694] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieved 517 element(s) of element type ObjectTypes.Node.
-[2026-01-09 10:23:44,708] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 0 metadata properties.
-[2026-01-09 10:23:44,709] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving ...
-[2026-01-09 10:23:44,711] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (517, 1)
+[2026-01-09 15:28:24,606] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.Node
+[2026-01-09 15:28:24,611] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieved 517 element(s) of element type ObjectTypes.Node.
+[2026-01-09 15:28:24,623] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 0 model_data properties.
+[2026-01-09 15:28:24,623] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving ...
+[2026-01-09 15:28:24,626] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (517, 1)
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -360,7 +360,7 @@ Model is open for further operation
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(s3s.generate_element_metadata_dataframe(element_type=s3s.ObjectTypes.Node
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(s3s.generate_element_model_data_dataframe(element_type=s3s.ObjectTypes.Node
                                         ,properties=[&quot;Kvr&quot;, &quot;Zkor&quot;]
                                         )).head(3)
 </pre></div>
@@ -371,11 +371,11 @@ Model is open for further operation
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2026-01-09 10:23:44,734] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.Node
-[2026-01-09 10:23:44,736] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieved 517 element(s) of element type ObjectTypes.Node.
-[2026-01-09 10:23:44,738] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 2 metadata properties.
-[2026-01-09 10:23:44,739] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving metadata properties [&#39;Kvr&#39;, &#39;Zkor&#39;]...
-[2026-01-09 10:23:44,774] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (517, 3)
+[2026-01-09 15:28:24,651] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.Node
+[2026-01-09 15:28:24,653] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieved 517 element(s) of element type ObjectTypes.Node.
+[2026-01-09 15:28:24,655] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 2 model_data properties.
+[2026-01-09 15:28:24,656] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving model_data properties [&#39;Kvr&#39;, &#39;Zkor&#39;]...
+[2026-01-09 15:28:24,701] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (517, 3)
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -432,13 +432,13 @@ Model is open for further operation
 </section>
 <section id="Subcase-3:-Maximal">
 <h3>Subcase 3: Maximal<a class="headerlink" href="#Subcase-3:-Maximal" title="Link to this heading"></a></h3>
-<p>Let’s say now we want basically all available metadata (non-result data) related to nodes.</p>
+<p>Let’s say now we want basically all available model_data (non-result data) related to nodes.</p>
 <p>If geometry=True, the 2D Point geometry will be added for Nodes and it will be attempted to transform the DataFrame into a GeoDataFrame using the SRID (eg. EPSG: 25832) defined in the model. If no SRID is defined, the DataFrame will remain as a DataFrame, but the geometry column with be added nonetheless.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(s3s.generate_element_metadata_dataframe(element_type=s3s.ObjectTypes.Node
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(s3s.generate_element_model_data_dataframe(element_type=s3s.ObjectTypes.Node
                                         ,properties=None # Instead of an empty or filled list, we pass None to indicate we want all available properties
                                         ,geometry=True # geometry data has to be explicitly requested
                                         )).head(3)
@@ -450,13 +450,13 @@ Model is open for further operation
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2026-01-09 10:23:44,788] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.Node
-[2026-01-09 10:23:44,792] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieved 517 element(s) of element type ObjectTypes.Node.
-[2026-01-09 10:23:44,794] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] No properties given → using ALL metadata properties for ObjectTypes.Node.
-[2026-01-09 10:23:44,794] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 37 metadata properties.
-[2026-01-09 10:23:44,795] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving metadata properties [&#39;Name&#39;, &#39;Ktyp&#39;, &#39;Zkor&#39;, &#39;QmEin&#39;, &#39;Lfakt&#39;, &#39;Fkpzon&#39;, &#39;Fkfstf&#39;, &#39;Fkutmp&#39;, &#39;Fkfqps&#39;, &#39;Fkcont&#39;, &#39;Fk2lknot&#39;, &#39;Beschreibung&#39;, &#39;Idreferenz&#39;, &#39;Iplanung&#39;, &#39;Kvr&#39;, &#39;Qakt&#39;, &#39;Xkor&#39;, &#39;Ykor&#39;, &#39;NodeNamePosition&#39;, &#39;ShowNodeName&#39;, &#39;KvrKlartext&#39;, &#39;NumberOfVERB&#39;, &#39;HasBlockConnection&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;, &#39;GeometriesDiffer&#39;, &#39;SymbolFactor&#39;, &#39;bz.Drakonz&#39;, &#39;bz.Fk&#39;, &#39;bz.Fkpvar&#39;, &#39;bz.Fkqvar&#39;, &#39;bz.Fklfkt&#39;, &#39;bz.PhEin&#39;, &#39;bz.Tm&#39;, &#39;bz.Te&#39;, &#39;bz.PhMin&#39;], geometry...
-[2026-01-09 10:23:45,965] INFO in sir3stoolkit.mantle.dataframes: [metadata] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
-[2026-01-09 10:23:45,965] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (517, 39)
+[2026-01-09 15:28:24,786] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.Node
+[2026-01-09 15:28:24,788] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieved 517 element(s) of element type ObjectTypes.Node.
+[2026-01-09 15:28:24,790] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] No properties given → using ALL model_data properties for ObjectTypes.Node.
+[2026-01-09 15:28:24,791] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 37 model_data properties.
+[2026-01-09 15:28:24,791] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving model_data properties [&#39;Name&#39;, &#39;Ktyp&#39;, &#39;Zkor&#39;, &#39;QmEin&#39;, &#39;Lfakt&#39;, &#39;Fkpzon&#39;, &#39;Fkfstf&#39;, &#39;Fkutmp&#39;, &#39;Fkfqps&#39;, &#39;Fkcont&#39;, &#39;Fk2lknot&#39;, &#39;Beschreibung&#39;, &#39;Idreferenz&#39;, &#39;Iplanung&#39;, &#39;Kvr&#39;, &#39;Qakt&#39;, &#39;Xkor&#39;, &#39;Ykor&#39;, &#39;NodeNamePosition&#39;, &#39;ShowNodeName&#39;, &#39;KvrKlartext&#39;, &#39;NumberOfVERB&#39;, &#39;HasBlockConnection&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;, &#39;GeometriesDiffer&#39;, &#39;SymbolFactor&#39;, &#39;bz.Drakonz&#39;, &#39;bz.Fk&#39;, &#39;bz.Fkpvar&#39;, &#39;bz.Fkqvar&#39;, &#39;bz.Fklfkt&#39;, &#39;bz.PhEin&#39;, &#39;bz.Tm&#39;, &#39;bz.Te&#39;, &#39;bz.PhMin&#39;], geometry...
+[2026-01-09 15:28:25,925] INFO in sir3stoolkit.mantle.dataframes: [model_data] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
+[2026-01-09 15:28:25,925] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (517, 39)
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -711,7 +711,7 @@ Model is open for further operation
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(s3s.generate_element_metadata_dataframe(element_type=s3s.ObjectTypes.Node
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(s3s.generate_element_model_data_dataframe(element_type=s3s.ObjectTypes.Node
                                         ,properties=[]
                                         ,tks=good_tks
                                         ,geometry=True
@@ -725,12 +725,12 @@ Model is open for further operation
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2026-01-09 10:23:46,175] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.Node
-[2026-01-09 10:23:46,177] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieved 517 element(s) of element type ObjectTypes.Node.
-[2026-01-09 10:23:46,178] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 0 metadata properties.
-[2026-01-09 10:23:46,179] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving geometry...
-[2026-01-09 10:23:46,213] INFO in sir3stoolkit.mantle.dataframes: [metadata] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
-[2026-01-09 10:23:46,214] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (517, 3)
+[2026-01-09 15:28:26,138] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.Node
+[2026-01-09 15:28:26,141] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieved 517 element(s) of element type ObjectTypes.Node.
+[2026-01-09 15:28:26,141] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 0 model_data properties.
+[2026-01-09 15:28:26,146] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving geometry...
+[2026-01-09 15:28:26,179] INFO in sir3stoolkit.mantle.dataframes: [model_data] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
+[2026-01-09 15:28:26,179] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (517, 3)
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -788,7 +788,7 @@ Model is open for further operation
 </section>
 <section id="Result-Data---Pipes">
 <h2>Result Data - Pipes<a class="headerlink" href="#Result-Data---Pipes" title="Link to this heading"></a></h2>
-<p>We can use the <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.Dataframes_SIR3S_Model.generate_element_results_dataframe">generate_element_metadata_dataframe()</a> method to obtain a dataframe for all instances of a specifc component type (Nodes, Pipes, etc.) with user defined result values for certain timestamps to be added. For this example we will use pipes.</p>
+<p>We can use the <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.Dataframes_SIR3S_Model.generate_element_results_dataframe">generate_element_model_data_dataframe()</a> method to obtain a dataframe for all instances of a specifc component type (Nodes, Pipes, etc.) with user defined result values for certain timestamps to be added. For this example we will use pipes.</p>
 <p>Let’s check what result properties are available for Pipes.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
@@ -968,14 +968,14 @@ Model is open for further operation
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2026-01-09 10:23:46,499] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
-[2026-01-09 10:23:46,569] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2023-02-13 00:00:00.000 +01:00 is used
-[2026-01-09 10:23:46,570] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
-[2026-01-09 10:23:46,572] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
-[2026-01-09 10:23:46,575] INFO in sir3stoolkit.mantle.dataframes: [results] No properties given → using ALL result properties for ObjectTypes.Pipe.
-[2026-01-09 10:23:46,576] INFO in sir3stoolkit.mantle.dataframes: [results] Using 82 result properties.
-[2026-01-09 10:23:46,665] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
-[2026-01-09 10:23:55,743] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 42968)
+[2026-01-09 15:28:26,494] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
+[2026-01-09 15:28:26,557] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2023-02-13 00:00:00.000 +01:00 is used
+[2026-01-09 15:28:26,557] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
+[2026-01-09 15:28:26,564] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2026-01-09 15:28:26,565] INFO in sir3stoolkit.mantle.dataframes: [results] No properties given → using ALL result properties for ObjectTypes.Pipe.
+[2026-01-09 15:28:26,567] INFO in sir3stoolkit.mantle.dataframes: [results] Using 82 result properties.
+[2026-01-09 15:28:26,673] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2026-01-09 15:28:35,872] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 42968)
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -3770,7 +3770,7 @@ Model is open for further operation
 <p>1 rows × 42968 columns</p>
 </div></div>
 </div>
-<p>Note that a multi index on the columns is created, holding the most important metadata.</p>
+<p>Note that a multi index on the columns is created, holding the most important model_data.</p>
 <ul class="simple">
 <li><p>Level 0: tk (device ID)</p></li>
 <li><p>Level 1: name (device name)</p></li>
@@ -3797,14 +3797,14 @@ Model is open for further operation
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2026-01-09 10:23:56,286] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
-[2026-01-09 10:23:56,288] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] No timestamps were given. Checking available simulation timestamps (SIR3S_Model.GetTimeStamps()[0]).
-[2026-01-09 10:23:56,359] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 25 simulation timestamp(s) are available.
-[2026-01-09 10:23:56,427] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 25 valid timestamp(s) will be used.
-[2026-01-09 10:23:56,429] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
-[2026-01-09 10:23:56,431] INFO in sir3stoolkit.mantle.dataframes: [results] Using 2 result properties.
-[2026-01-09 10:23:56,462] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
-[2026-01-09 10:24:00,002] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (25, 1048)
+[2026-01-09 15:28:36,411] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
+[2026-01-09 15:28:36,412] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] No timestamps were given. Checking available simulation timestamps (SIR3S_Model.GetTimeStamps()[0]).
+[2026-01-09 15:28:36,473] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 25 simulation timestamp(s) are available.
+[2026-01-09 15:28:36,538] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 25 valid timestamp(s) will be used.
+[2026-01-09 15:28:36,538] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2026-01-09 15:28:36,543] INFO in sir3stoolkit.mantle.dataframes: [results] Using 2 result properties.
+[2026-01-09 15:28:36,554] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2026-01-09 15:28:39,380] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (25, 1048)
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -11549,12 +11549,12 @@ Model is open for further operation
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2026-01-09 10:24:01,294] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
-[2026-01-09 10:24:01,496] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 3 valid timestamp(s) will be used.
-[2026-01-09 10:24:01,500] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
-[2026-01-09 10:24:01,504] INFO in sir3stoolkit.mantle.dataframes: [results] Using 2 result properties.
-[2026-01-09 10:24:01,539] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
-[2026-01-09 10:24:02,447] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (3, 1048)
+[2026-01-09 15:28:40,120] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
+[2026-01-09 15:28:40,217] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 3 valid timestamp(s) will be used.
+[2026-01-09 15:28:40,219] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2026-01-09 15:28:40,221] INFO in sir3stoolkit.mantle.dataframes: [results] Using 2 result properties.
+[2026-01-09 15:28:40,233] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2026-01-09 15:28:40,687] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (3, 1048)
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -17537,12 +17537,12 @@ Model is open for further operation
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2026-01-09 10:24:03,939] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
-[2026-01-09 10:24:04,143] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 3 valid timestamp(s) will be used.
-[2026-01-09 10:24:04,148] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
-[2026-01-09 10:24:04,151] INFO in sir3stoolkit.mantle.dataframes: [results] Using 2 result properties.
-[2026-01-09 10:24:04,195] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
-[2026-01-09 10:24:05,354] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (3, 1048)
+[2026-01-09 15:28:41,505] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
+[2026-01-09 15:28:41,600] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 3 valid timestamp(s) will be used.
+[2026-01-09 15:28:41,601] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2026-01-09 15:28:41,603] INFO in sir3stoolkit.mantle.dataframes: [results] Using 2 result properties.
+[2026-01-09 15:28:41,615] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2026-01-09 15:28:42,065] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (3, 1048)
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -23462,7 +23462,7 @@ Model is open for further operation
 </section>
 <section id="Subcase-4:-Specific-Timestamps-+-Specific-Values-+-Filtering">
 <h3>Subcase 4: Specific Timestamps + Specific Values + Filtering<a class="headerlink" href="#Subcase-4:-Specific-Timestamps-+-Specific-Values-+-Filtering" title="Link to this heading"></a></h3>
-<p>If we want to filter for more than just the container, we have to filter tks outside the function and then pass them. Works same way as for metadata.</p>
+<p>If we want to filter for more than just the container, we have to filter tks outside the function and then pass them. Works same way as for model_data.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
 </pre></div>
@@ -23541,13 +23541,13 @@ Model is open for further operation
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2026-01-09 10:24:07,039] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
-[2026-01-09 10:24:07,172] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 3 valid timestamp(s) will be used.
-[2026-01-09 10:24:07,179] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
-[2026-01-09 10:24:07,183] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 480 tks remain after filtering for given tks.
-[2026-01-09 10:24:07,190] INFO in sir3stoolkit.mantle.dataframes: [results] Using 2 result properties.
-[2026-01-09 10:24:07,223] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
-[2026-01-09 10:24:08,673] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (3, 960)
+[2026-01-09 15:28:42,881] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
+[2026-01-09 15:28:42,964] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 3 valid timestamp(s) will be used.
+[2026-01-09 15:28:42,965] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2026-01-09 15:28:42,969] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 480 tks remain after filtering for given tks.
+[2026-01-09 15:28:42,971] INFO in sir3stoolkit.mantle.dataframes: [results] Using 2 result properties.
+[2026-01-09 15:28:42,980] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2026-01-09 15:28:43,415] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (3, 960)
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -29630,12 +29630,12 @@ Model is open for further operation
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2026-01-09 10:24:11,147] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
-[2026-01-09 10:24:11,346] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 3 valid timestamp(s) will be used.
-[2026-01-09 10:24:11,352] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
-[2026-01-09 10:24:11,357] INFO in sir3stoolkit.mantle.dataframes: [results] Using 3 result properties.
-[2026-01-09 10:24:11,393] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
-[2026-01-09 10:24:13,522] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (3, 1572)
+[2026-01-09 15:28:44,107] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
+[2026-01-09 15:28:44,196] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 3 valid timestamp(s) will be used.
+[2026-01-09 15:28:44,199] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2026-01-09 15:28:44,201] INFO in sir3stoolkit.mantle.dataframes: [results] Using 3 result properties.
+[2026-01-09 15:28:44,223] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2026-01-09 15:28:45,165] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (3, 1572)
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
@@ -40222,17 +40222,17 @@ Model is open for further operation
 <p>Note that an additional multiindex is created that indexes the interior points. Non-vectorized properties get index -1 in the new multiindex .</p>
 </section>
 </section>
-<section id="Merge-Metadata-and-Result-Dataframes-(for-one-timestamp)">
-<h2>Merge Metadata and Result Dataframes (for one timestamp)<a class="headerlink" href="#Merge-Metadata-and-Result-Dataframes-(for-one-timestamp)" title="Link to this heading"></a></h2>
+<section id="Merge-model_data-and-Result-Dataframes-(for-one-timestamp)">
+<h2>Merge model_data and Result Dataframes (for one timestamp)<a class="headerlink" href="#Merge-model_data-and-Result-Dataframes-(for-one-timestamp)" title="Link to this heading"></a></h2>
 <section id="Create-Dataframes---For-pipes">
 <h3>Create Dataframes - For pipes<a class="headerlink" href="#Create-Dataframes---For-pipes" title="Link to this heading"></a></h3>
-<section id="Metadata">
-<h4>Metadata<a class="headerlink" href="#Metadata" title="Link to this heading"></a></h4>
+<section id="model_data">
+<h4>model_data<a class="headerlink" href="#model_data" title="Link to this heading"></a></h4>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[41]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_metadata = s3s.generate_element_metadata_dataframe(element_type=s3s.ObjectTypes.Pipe
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_model_data = s3s.generate_element_model_data_dataframe(element_type=s3s.ObjectTypes.Pipe
                                                             ,properties=[&quot;L&quot;, &quot;DN&quot;]
                                                             ,geometry=True
                                                             )
@@ -40244,19 +40244,19 @@ Model is open for further operation
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2026-01-09 10:24:27,570] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.Pipe
-[2026-01-09 10:24:27,578] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
-[2026-01-09 10:24:27,580] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 2 metadata properties.
-[2026-01-09 10:24:27,581] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving metadata properties [&#39;L&#39;, &#39;DN&#39;], geometry...
-[2026-01-09 10:24:27,735] INFO in sir3stoolkit.mantle.dataframes: [metadata] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
-[2026-01-09 10:24:27,735] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (524, 4)
+[2026-01-09 15:28:55,816] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.Pipe
+[2026-01-09 15:28:55,821] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2026-01-09 15:28:55,825] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 2 model_data properties.
+[2026-01-09 15:28:55,828] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving model_data properties [&#39;L&#39;, &#39;DN&#39;], geometry...
+[2026-01-09 15:28:56,232] INFO in sir3stoolkit.mantle.dataframes: [model_data] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
+[2026-01-09 15:28:56,233] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (524, 4)
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[42]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_metadata.head(3)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_model_data.head(3)
 </pre></div>
 </div>
 </div>
@@ -40334,13 +40334,13 @@ Model is open for further operation
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2026-01-09 10:24:27,775] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
-[2026-01-09 10:24:27,955] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2023-02-13 00:00:00.000 +01:00 is used
-[2026-01-09 10:24:27,955] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
-[2026-01-09 10:24:27,955] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
-[2026-01-09 10:24:27,963] INFO in sir3stoolkit.mantle.dataframes: [results] Using 2 result properties.
-[2026-01-09 10:24:27,985] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
-[2026-01-09 10:24:28,352] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 1048)
+[2026-01-09 15:28:56,317] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
+[2026-01-09 15:28:56,784] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2023-02-13 00:00:00.000 +01:00 is used
+[2026-01-09 15:28:56,785] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
+[2026-01-09 15:28:56,793] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2026-01-09 15:28:56,799] INFO in sir3stoolkit.mantle.dataframes: [results] Using 2 result properties.
+[2026-01-09 15:28:56,851] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2026-01-09 15:28:57,819] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 1048)
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
@@ -44468,7 +44468,7 @@ Model is open for further operation
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_results.columns = df_pipes_results.columns.droplevel([1, 2])
 df_pipes_results = df_pipes_results.T.unstack(level=0).T
 df_pipes_results = df_pipes_results.droplevel(0, axis=0)
-df_pipes = df_pipes_metadata.merge(on=&quot;tk&quot;,
+df_pipes = df_pipes_model_data.merge(on=&quot;tk&quot;,
                     how=&quot;outer&quot;,
                     right=df_pipes_results)
 </pre></div>
@@ -44544,6 +44544,44 @@ df_pipes = df_pipes_metadata.merge(on=&quot;tk&quot;,
   </tbody>
 </table>
 </div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[47]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_model_data.dtypes
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[47]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+tk            object
+L             object
+DN            object
+geometry    geometry
+dtype: object
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[48]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pd.to_numeric(df_pipes_model_data[&quot;tk&quot;], errors=&#39;coerce&#39;).notna().all()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[48]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+True
+</pre></div></div>
 </div>
 </section>
 </section>

@@ -202,7 +202,7 @@ import contextily as cx
 <section id="Open-Model">
 <h1>Open Model<a class="headerlink" href="#Open-Model" title="Link to this heading"></a></h1>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.OpenModel(dbName=r&quot;C:\Users\aUsername\3S\PT3S\PT3S\Examples\Example3.db3&quot;,
@@ -227,7 +227,7 @@ Model is open for further operation
 <section id="Generate-Element-Dataframes">
 <h1>Generate Element Dataframes<a class="headerlink" href="#Generate-Element-Dataframes" title="Link to this heading"></a></h1>
 <p>We can use the <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.generate_element_dataframe">generate_element_dataframe()</a> method to quickly generate basic dataframes containing all instances of hydraulic element types (Node, Pipe, etc.) in a SIR 3S model.</p>
-<p>All metadata and most result values (self.GetResultProperties_from_elementType(onlySelectedVectors=True)) for the static timestamp are included. Result values are given as floats, unless they are in vectorized form (relevant only for pipes), in that case they are strings.</p>
+<p>All model_data and most result values (self.GetResultProperties_from_elementType(onlySelectedVectors=True)) for the static timestamp are included. Result values are given as floats, unless they are in vectorized form (relevant only for pipes), in that case they are strings.</p>
 <p>The pd.Dataframe will automatically be transformed into a gpd.GeoDataFrame if a SRID is defined in the model, after a geometry column is created.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
@@ -262,25 +262,25 @@ print(object_types) # Check for hydraulic elmement types
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2025-12-19 15:53:22,951] INFO in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df for element type: ObjectTypes.Node ...
-[2025-12-19 15:53:22,951] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_metadata for element type: ObjectTypes.Node ...
-[2025-12-19 15:53:22,952] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.Node
-[2025-12-19 15:53:22,960] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieved 517 element(s) of element type ObjectTypes.Node.
-[2025-12-19 15:53:22,969] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] No properties given → using ALL metadata properties for ObjectTypes.Node.
-[2025-12-19 15:53:22,969] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 37 metadata properties.
-[2025-12-19 15:53:22,969] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving metadata properties [&#39;Name&#39;, &#39;Ktyp&#39;, &#39;Zkor&#39;, &#39;QmEin&#39;, &#39;Lfakt&#39;, &#39;Fkpzon&#39;, &#39;Fkfstf&#39;, &#39;Fkutmp&#39;, &#39;Fkfqps&#39;, &#39;Fkcont&#39;, &#39;Fk2lknot&#39;, &#39;Beschreibung&#39;, &#39;Idreferenz&#39;, &#39;Iplanung&#39;, &#39;Kvr&#39;, &#39;Qakt&#39;, &#39;Xkor&#39;, &#39;Ykor&#39;, &#39;NodeNamePosition&#39;, &#39;ShowNodeName&#39;, &#39;KvrKlartext&#39;, &#39;NumberOfVERB&#39;, &#39;HasBlockConnection&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;, &#39;GeometriesDiffer&#39;, &#39;SymbolFactor&#39;, &#39;bz.Drakonz&#39;, &#39;bz.Fk&#39;, &#39;bz.Fkpvar&#39;, &#39;bz.Fkqvar&#39;, &#39;bz.Fklfkt&#39;, &#39;bz.PhEin&#39;, &#39;bz.Tm&#39;, &#39;bz.Te&#39;, &#39;bz.PhMin&#39;], geometry, end nodes...
-[2025-12-19 15:53:23,051] WARNING in sir3stoolkit.mantle.dataframes: [metadata] End nodes are not defined for element type ObjectTypes.Node. Dataframe is created without end nodes.
-[2025-12-19 15:53:24,118] INFO in sir3stoolkit.mantle.dataframes: [metadata] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
-[2025-12-19 15:53:24,118] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (517, 39)
-[2025-12-19 15:53:24,127] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_results for element type: ObjectTypes.Node ...
-[2025-12-19 15:53:24,196] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Node
-[2025-12-19 15:53:24,267] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2023-02-13 00:00:00.000 +01:00 is used
-[2025-12-19 15:53:24,269] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
-[2025-12-19 15:53:24,272] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 517 element(s) of element type ObjectTypes.Node.
-[2025-12-19 15:53:24,274] INFO in sir3stoolkit.mantle.dataframes: [results] Using 21 result properties.
-[2025-12-19 15:53:24,282] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
-[2025-12-19 15:53:25,867] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 10857)
-[2025-12-19 15:53:25,867] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Merging df_metadata with df_results for element type: ObjectTypes.Node ...
+[2026-01-09 15:30:47,423] INFO in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df for element type: ObjectTypes.Node ...
+[2026-01-09 15:30:47,424] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_model_data for element type: ObjectTypes.Node ...
+[2026-01-09 15:30:47,425] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.Node
+[2026-01-09 15:30:47,436] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieved 517 element(s) of element type ObjectTypes.Node.
+[2026-01-09 15:30:47,456] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] No properties given → using ALL model_data properties for ObjectTypes.Node.
+[2026-01-09 15:30:47,458] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 37 model_data properties.
+[2026-01-09 15:30:47,459] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving model_data properties [&#39;Name&#39;, &#39;Ktyp&#39;, &#39;Zkor&#39;, &#39;QmEin&#39;, &#39;Lfakt&#39;, &#39;Fkpzon&#39;, &#39;Fkfstf&#39;, &#39;Fkutmp&#39;, &#39;Fkfqps&#39;, &#39;Fkcont&#39;, &#39;Fk2lknot&#39;, &#39;Beschreibung&#39;, &#39;Idreferenz&#39;, &#39;Iplanung&#39;, &#39;Kvr&#39;, &#39;Qakt&#39;, &#39;Xkor&#39;, &#39;Ykor&#39;, &#39;NodeNamePosition&#39;, &#39;ShowNodeName&#39;, &#39;KvrKlartext&#39;, &#39;NumberOfVERB&#39;, &#39;HasBlockConnection&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;, &#39;GeometriesDiffer&#39;, &#39;SymbolFactor&#39;, &#39;bz.Drakonz&#39;, &#39;bz.Fk&#39;, &#39;bz.Fkpvar&#39;, &#39;bz.Fkqvar&#39;, &#39;bz.Fklfkt&#39;, &#39;bz.PhEin&#39;, &#39;bz.Tm&#39;, &#39;bz.Te&#39;, &#39;bz.PhMin&#39;], geometry, end nodes...
+[2026-01-09 15:30:47,656] WARNING in sir3stoolkit.mantle.dataframes: [model_data] End nodes are not defined for element type ObjectTypes.Node. Dataframe is created without end nodes.
+[2026-01-09 15:30:49,909] INFO in sir3stoolkit.mantle.dataframes: [model_data] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
+[2026-01-09 15:30:49,909] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (517, 39)
+[2026-01-09 15:30:49,913] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_results for element type: ObjectTypes.Node ...
+[2026-01-09 15:30:50,072] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Node
+[2026-01-09 15:30:50,228] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2023-02-13 00:00:00.000 +01:00 is used
+[2026-01-09 15:30:50,231] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
+[2026-01-09 15:30:50,234] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 517 element(s) of element type ObjectTypes.Node.
+[2026-01-09 15:30:50,239] INFO in sir3stoolkit.mantle.dataframes: [results] Using 21 result properties.
+[2026-01-09 15:30:50,296] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2026-01-09 15:30:53,171] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 10857)
+[2026-01-09 15:30:53,171] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Merging df_model_data with df_results for element type: ObjectTypes.Node ...
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -578,25 +578,25 @@ print(object_types) # Check for hydraulic elmement types
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2025-12-19 15:53:25,951] INFO in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df for element type: ObjectTypes.Pipe ...
-[2025-12-19 15:53:25,951] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_metadata for element type: ObjectTypes.Pipe ...
-[2025-12-19 15:53:25,951] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.Pipe
-[2025-12-19 15:53:25,951] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
-[2025-12-19 15:53:25,951] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] No properties given → using ALL metadata properties for ObjectTypes.Pipe.
-[2025-12-19 15:53:25,951] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 46 metadata properties.
-[2025-12-19 15:53:25,951] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving metadata properties [&#39;Name&#39;, &#39;FkdtroRowd&#39;, &#39;Fkltgr&#39;, &#39;Fkstrasse&#39;, &#39;L&#39;, &#39;Lzu&#39;, &#39;Rau&#39;, &#39;Jlambs&#39;, &#39;Lambda0&#39;, &#39;Zein&#39;, &#39;Zaus&#39;, &#39;Zuml&#39;, &#39;Asoll&#39;, &#39;Indschall&#39;, &#39;Baujahr&#39;, &#39;Hal&#39;, &#39;Fkcont&#39;, &#39;Fk2lrohr&#39;, &#39;Beschreibung&#39;, &#39;Idreferenz&#39;, &#39;Iplanung&#39;, &#39;Kvr&#39;, &#39;LineWidthMM&#39;, &#39;DottedLine&#39;, &#39;DN&#39;, &#39;Di&#39;, &#39;KvrKlartext&#39;, &#39;HasClosedNSCHs&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;, &#39;Xkor&#39;, &#39;Ykor&#39;, &#39;GeometriesDiffer&#39;, &#39;bz.Fk&#39;, &#39;bz.Qsvb&#39;, &#39;bz.Irtrenn&#39;, &#39;bz.Leckstatus&#39;, &#39;bz.Leckstart&#39;, &#39;bz.Leckend&#39;, &#39;bz.Leckort&#39;, &#39;bz.Leckmenge&#39;, &#39;bz.Imptnz&#39;, &#39;bz.Zvlimptnz&#39;, &#39;bz.Kantenzv&#39;, &#39;bz.ITrennWithNSCH&#39;], geometry, end nodes...
-[2025-12-19 15:53:27,384] INFO in sir3stoolkit.mantle.dataframes: [metadata] 2 non-empty end node columns were created.
-[2025-12-19 15:53:27,401] INFO in sir3stoolkit.mantle.dataframes: [metadata] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
-[2025-12-19 15:53:27,408] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (524, 50)
-[2025-12-19 15:53:27,409] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_results for element type: ObjectTypes.Pipe ...
-[2025-12-19 15:53:27,618] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
-[2025-12-19 15:53:27,917] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2023-02-13 00:00:00.000 +01:00 is used
-[2025-12-19 15:53:27,921] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
-[2025-12-19 15:53:27,921] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
-[2025-12-19 15:53:27,921] INFO in sir3stoolkit.mantle.dataframes: [results] Using 31 result properties.
-[2025-12-19 15:53:27,951] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
-[2025-12-19 15:53:31,469] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 16244)
-[2025-12-19 15:53:31,479] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Merging df_metadata with df_results for element type: ObjectTypes.Pipe ...
+[2026-01-09 15:30:53,251] INFO in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df for element type: ObjectTypes.Pipe ...
+[2026-01-09 15:30:53,253] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_model_data for element type: ObjectTypes.Pipe ...
+[2026-01-09 15:30:53,255] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.Pipe
+[2026-01-09 15:30:53,259] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2026-01-09 15:30:53,261] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] No properties given → using ALL model_data properties for ObjectTypes.Pipe.
+[2026-01-09 15:30:53,263] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 46 model_data properties.
+[2026-01-09 15:30:53,265] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving model_data properties [&#39;Name&#39;, &#39;FkdtroRowd&#39;, &#39;Fkltgr&#39;, &#39;Fkstrasse&#39;, &#39;L&#39;, &#39;Lzu&#39;, &#39;Rau&#39;, &#39;Jlambs&#39;, &#39;Lambda0&#39;, &#39;Zein&#39;, &#39;Zaus&#39;, &#39;Zuml&#39;, &#39;Asoll&#39;, &#39;Indschall&#39;, &#39;Baujahr&#39;, &#39;Hal&#39;, &#39;Fkcont&#39;, &#39;Fk2lrohr&#39;, &#39;Beschreibung&#39;, &#39;Idreferenz&#39;, &#39;Iplanung&#39;, &#39;Kvr&#39;, &#39;LineWidthMM&#39;, &#39;DottedLine&#39;, &#39;DN&#39;, &#39;Di&#39;, &#39;KvrKlartext&#39;, &#39;HasClosedNSCHs&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;, &#39;Xkor&#39;, &#39;Ykor&#39;, &#39;GeometriesDiffer&#39;, &#39;bz.Fk&#39;, &#39;bz.Qsvb&#39;, &#39;bz.Irtrenn&#39;, &#39;bz.Leckstatus&#39;, &#39;bz.Leckstart&#39;, &#39;bz.Leckend&#39;, &#39;bz.Leckort&#39;, &#39;bz.Leckmenge&#39;, &#39;bz.Imptnz&#39;, &#39;bz.Zvlimptnz&#39;, &#39;bz.Kantenzv&#39;, &#39;bz.ITrennWithNSCH&#39;], geometry, end nodes...
+[2026-01-09 15:30:55,671] INFO in sir3stoolkit.mantle.dataframes: [model_data] 2 non-empty end node columns were created.
+[2026-01-09 15:30:55,704] INFO in sir3stoolkit.mantle.dataframes: [model_data] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
+[2026-01-09 15:30:55,706] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (524, 50)
+[2026-01-09 15:30:55,708] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_results for element type: ObjectTypes.Pipe ...
+[2026-01-09 15:30:55,805] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
+[2026-01-09 15:30:55,921] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2023-02-13 00:00:00.000 +01:00 is used
+[2026-01-09 15:30:55,921] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
+[2026-01-09 15:30:55,921] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2026-01-09 15:30:55,926] INFO in sir3stoolkit.mantle.dataframes: [results] Using 31 result properties.
+[2026-01-09 15:30:55,938] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2026-01-09 15:31:03,097] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 16244)
+[2026-01-09 15:31:03,103] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Merging df_model_data with df_results for element type: ObjectTypes.Pipe ...
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -979,25 +979,25 @@ print(object_types) # Check for hydraulic elmement types
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2025-12-19 15:53:31,529] INFO in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df for element type: ObjectTypes.DistrictHeatingConsumer ...
-[2025-12-19 15:53:31,530] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_metadata for element type: ObjectTypes.DistrictHeatingConsumer ...
-[2025-12-19 15:53:31,531] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.DistrictHeatingConsumer
-[2025-12-19 15:53:31,532] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieved 337 element(s) of element type ObjectTypes.DistrictHeatingConsumer.
-[2025-12-19 15:53:31,534] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] No properties given → using ALL metadata properties for ObjectTypes.DistrictHeatingConsumer.
-[2025-12-19 15:53:31,536] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 55 metadata properties.
-[2025-12-19 15:53:31,537] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving metadata properties [&#39;Name&#39;, &#39;Beschreibung&#39;, &#39;Ind0&#39;, &#39;W0&#39;, &#39;Qm0&#39;, &#39;Tvl0&#39;, &#39;Trs0&#39;, &#39;Lfk&#39;, &#39;Rho0&#39;, &#39;Dtmin&#39;, &#39;Indtr&#39;, &#39;Trsk&#39;, &#39;Fktrft&#39;, &#39;A&#39;, &#39;B&#39;, &#39;C&#39;, &#39;Vtyp&#39;, &#39;V0&#39;, &#39;P1soll&#39;, &#39;Dpvlmin&#39;, &#39;Fkzep1vl&#39;, &#39;Tsvl&#39;, &#39;Zevk&#39;, &#39;Dphaus&#39;, &#39;Dprlmin&#39;, &#39;Fkzep1rl&#39;, &#39;Tsrl&#39;, &#39;Imbg&#39;, &#39;Irfv&#39;, &#39;Fkcont&#39;, &#39;Idreferenz&#39;, &#39;Iplanung&#39;, &#39;CPM&#39;, &#39;NumberOfVERB&#39;, &#39;IndtrKlartext&#39;, &#39;M0Estimated&#39;, &#39;W0Estimated&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;, &#39;Xkor&#39;, &#39;Ykor&#39;, &#39;ShowDescription&#39;, &#39;PositionOfDescription&#39;, &#39;Angle&#39;, &#39;SymbolFactor&#39;, &#39;GeometriesDiffer&#39;, &#39;bz.Fk&#39;, &#39;bz.Indlast&#39;, &#39;bz.Indlfkt2&#39;, &#39;bz.Fklfkt&#39;, &#39;bz.Fklfkt2&#39;, &#39;bz.Fkqvar&#39;, &#39;bz.Fktevt&#39;, &#39;bz.IndlastKlartext&#39;], geometry, end nodes...
-[2025-12-19 15:53:32,632] INFO in sir3stoolkit.mantle.dataframes: [metadata] 2 non-empty end node columns were created.
-[2025-12-19 15:53:32,645] INFO in sir3stoolkit.mantle.dataframes: [metadata] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
-[2025-12-19 15:53:32,647] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (337, 59)
-[2025-12-19 15:53:32,647] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_results for element type: ObjectTypes.DistrictHeatingConsumer ...
-[2025-12-19 15:53:32,805] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.DistrictHeatingConsumer
-[2025-12-19 15:53:32,985] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2023-02-13 00:00:00.000 +01:00 is used
-[2025-12-19 15:53:32,986] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
-[2025-12-19 15:53:32,987] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 337 element(s) of element type ObjectTypes.DistrictHeatingConsumer.
-[2025-12-19 15:53:32,987] INFO in sir3stoolkit.mantle.dataframes: [results] Using 20 result properties.
-[2025-12-19 15:53:33,025] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
-[2025-12-19 15:53:34,118] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 6740)
-[2025-12-19 15:53:34,118] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Merging df_metadata with df_results for element type: ObjectTypes.DistrictHeatingConsumer ...
+[2026-01-09 15:31:03,184] INFO in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df for element type: ObjectTypes.DistrictHeatingConsumer ...
+[2026-01-09 15:31:03,186] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_model_data for element type: ObjectTypes.DistrictHeatingConsumer ...
+[2026-01-09 15:31:03,187] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.DistrictHeatingConsumer
+[2026-01-09 15:31:03,190] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieved 337 element(s) of element type ObjectTypes.DistrictHeatingConsumer.
+[2026-01-09 15:31:03,194] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] No properties given → using ALL model_data properties for ObjectTypes.DistrictHeatingConsumer.
+[2026-01-09 15:31:03,195] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 55 model_data properties.
+[2026-01-09 15:31:03,197] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving model_data properties [&#39;Name&#39;, &#39;Beschreibung&#39;, &#39;Ind0&#39;, &#39;W0&#39;, &#39;Qm0&#39;, &#39;Tvl0&#39;, &#39;Trs0&#39;, &#39;Lfk&#39;, &#39;Rho0&#39;, &#39;Dtmin&#39;, &#39;Indtr&#39;, &#39;Trsk&#39;, &#39;Fktrft&#39;, &#39;A&#39;, &#39;B&#39;, &#39;C&#39;, &#39;Vtyp&#39;, &#39;V0&#39;, &#39;P1soll&#39;, &#39;Dpvlmin&#39;, &#39;Fkzep1vl&#39;, &#39;Tsvl&#39;, &#39;Zevk&#39;, &#39;Dphaus&#39;, &#39;Dprlmin&#39;, &#39;Fkzep1rl&#39;, &#39;Tsrl&#39;, &#39;Imbg&#39;, &#39;Irfv&#39;, &#39;Fkcont&#39;, &#39;Idreferenz&#39;, &#39;Iplanung&#39;, &#39;CPM&#39;, &#39;NumberOfVERB&#39;, &#39;IndtrKlartext&#39;, &#39;M0Estimated&#39;, &#39;W0Estimated&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;, &#39;Xkor&#39;, &#39;Ykor&#39;, &#39;ShowDescription&#39;, &#39;PositionOfDescription&#39;, &#39;Angle&#39;, &#39;SymbolFactor&#39;, &#39;GeometriesDiffer&#39;, &#39;bz.Fk&#39;, &#39;bz.Indlast&#39;, &#39;bz.Indlfkt2&#39;, &#39;bz.Fklfkt&#39;, &#39;bz.Fklfkt2&#39;, &#39;bz.Fkqvar&#39;, &#39;bz.Fktevt&#39;, &#39;bz.IndlastKlartext&#39;], geometry, end nodes...
+[2026-01-09 15:31:05,180] INFO in sir3stoolkit.mantle.dataframes: [model_data] 2 non-empty end node columns were created.
+[2026-01-09 15:31:05,204] INFO in sir3stoolkit.mantle.dataframes: [model_data] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
+[2026-01-09 15:31:05,205] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (337, 59)
+[2026-01-09 15:31:05,206] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_results for element type: ObjectTypes.DistrictHeatingConsumer ...
+[2026-01-09 15:31:05,303] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.DistrictHeatingConsumer
+[2026-01-09 15:31:05,407] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2023-02-13 00:00:00.000 +01:00 is used
+[2026-01-09 15:31:05,409] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
+[2026-01-09 15:31:05,410] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 337 element(s) of element type ObjectTypes.DistrictHeatingConsumer.
+[2026-01-09 15:31:05,413] INFO in sir3stoolkit.mantle.dataframes: [results] Using 20 result properties.
+[2026-01-09 15:31:05,438] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2026-01-09 15:31:07,119] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 6740)
+[2026-01-09 15:31:07,133] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Merging df_model_data with df_results for element type: ObjectTypes.DistrictHeatingConsumer ...
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">

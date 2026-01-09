@@ -138,7 +138,7 @@ are included; FWVB (district heating consumers) are excluded.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>A pandapipes network object containing:
-- Junctions with metadata and result values (pressure, temperature, flow).
+- Junctions with model data and result values (pressure, temperature, flow).
 - Pipes with geometry and physical parameters.
 - External grids (sources) and sinks based on node type and flow direction.</p>
 </dd>
@@ -190,7 +190,7 @@ are included; FWVB (district heating consumers) are excluded.</p>
 <section id="module-sir3stoolkit.mantle.dataframes">
 <span id="sir3stoolkit-mantle-dataframes-module"></span><h2>sir3stoolkit.mantle.dataframes module<a class="headerlink" href="#module-sir3stoolkit.mantle.dataframes" title="Link to this heading"></a></h2>
 <p>Created on Fri Aug 29 09:22:31 2025</p>
-<p>This module implements interactions between SIR 3S and pandas dataframes. You can obtain pandas dfs with meta- or resultdata, insert nodes and pipes via a df, etc.</p>
+<p>This module implements interactions between SIR 3S and pandas dataframes. You can obtain pandas dfs with model- or resultdata, insert nodes and pipes via a df, etc.</p>
 <p>&#64;author: Jablonski</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes">
@@ -232,7 +232,7 @@ placed under interior point -1 to maintain consistent indexing.</p>
 <dt class="sig sig-object py" id="sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.generate_element_dataframe">
 <span class="sig-name descname"><span class="pre">generate_element_dataframe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">element_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">GeoDataFrame</span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/mantle/dataframes.html#SIR3S_Model_Dataframes.generate_element_dataframe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.generate_element_dataframe" title="Link to this definition"></a></dt>
 <dd><p>Generates a dataframe containing all instances for a given element type in the open
-SIR 3S model. All metadata and most result values
+SIR 3S model. All model_data and most result values
 (self.GetResultProperties_from_elementType(onlySelectedVectors=True))
 for the static timestamp are included.</p>
 <p>Result values are returned as floats unless they are vectorized (relevant only for
@@ -247,7 +247,7 @@ Default: None.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>DataFrame containing one row per element instance, including metadata, end
+<dd class="field-even"><p>DataFrame containing one row per element instance, including model_data, end
 nodes, geometry, and available static result values.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
@@ -256,22 +256,22 @@ nodes, geometry, and available static result values.</p>
 <dt class="field-even">Description<span class="colon">:</span></dt>
 <dd class="field-even"><p></p></dd>
 </dl>
-<p>Builds a comprehensive DataFrame containing metadata and static result values for
+<p>Builds a comprehensive DataFrame containing model_data and static result values for
 all requested elements of the given type. Vectorized pipe results are included
 as strings, and scalar results as floats. Geometry and end-node tks are always included.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.generate_element_metadata_dataframe">
-<span class="sig-name descname"><span class="pre">generate_element_metadata_dataframe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">element_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Enum</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">properties</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_nodes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">element_type_col</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">GeoDataFrame</span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/mantle/dataframes.html#SIR3S_Model_Dataframes.generate_element_metadata_dataframe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.generate_element_metadata_dataframe" title="Link to this definition"></a></dt>
-<dd><p>Generate a dataframe with metadata (static) properties for all devices of a given element type.</p>
+<dt class="sig sig-object py" id="sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.generate_element_model_data_dataframe">
+<span class="sig-name descname"><span class="pre">generate_element_model_data_dataframe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">element_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Enum</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">properties</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_nodes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">element_type_col</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">GeoDataFrame</span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/mantle/dataframes.html#SIR3S_Model_Dataframes.generate_element_model_data_dataframe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.generate_element_model_data_dataframe" title="Link to this definition"></a></dt>
+<dd><p>Generate a dataframe with model data (static) properties for all devices of a given element type.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>element_type</strong> (<em>Enum</em>) – The element type (e.g., self.ObjectTypes.Node).</p></li>
 <li><p><strong>tks</strong> (<em>list</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – List of tks of instances of the element type to include. All other tks will be excluded. Use for filtering.
 Default: None (no filtering)</p></li>
-<li><p><strong>properties</strong> (<em>list</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – List of metadata property names to include.
+<li><p><strong>properties</strong> (<em>list</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – List of model data property names to include.
 If properties=None ⇒ all available properties are used.
 If properties=[] ⇒ no properties are used.
 Default: None.</p></li>
@@ -288,9 +288,9 @@ Default: False.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>DataFrame (or GeoDataFrame) with one row per device (tk) and columns for the requested metadata properties,
+<dd class="field-even"><p>DataFrame (or GeoDataFrame) with one row per device (tk) and columns for the requested model data properties,
 geometry and end nodes.
-Columns: [“tk”, &lt;metadata_props&gt;]</p>
+Columns: [“tk”, &lt;model_data_props&gt;]</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>pd.DataFrame | gpd.GeoDataFrame</p>
@@ -298,7 +298,7 @@ Columns: [“tk”, &lt;metadata_props&gt;]</p>
 <dt class="field-even">Description<span class="colon">:</span></dt>
 <dd class="field-even"><p></p></dd>
 </dl>
-<p>Generates a DataFrame (or GeoDataFrame) containing static metadata for all elements of a given type.</p>
+<p>Generates a DataFrame (or GeoDataFrame) containing static model data for all elements of a given type. Columns are of data type object. For decimal numbers “,” will be used as a seperators. The user has to manually change to numeric data types, if they are to be used in calculations.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -309,6 +309,8 @@ Columns: [“tk”, &lt;metadata_props&gt;]</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>element_type</strong> (<em>Enum</em>) – The element type (e.g., self.ObjectTypes.Node).</p></li>
+<li><p><strong>tks</strong> (<em>list</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – List of tks of instances of the element type to include. All other tks will be excluded. Use for filtering.
+Default: None (no filtering)</p></li>
 <li><p><strong>properties</strong> (<em>list</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – List of RESULT property names to include.
 If properties=None ⇒ includes all available result properties (per element, only if values exist).
 If properties=[] ⇒ no properties are used.
@@ -328,6 +330,8 @@ where 0 = first timestamp, 7 = eighth timestamp, -1 = last timestamp.</p>
 </ul>
 <p>Default: None (includes all available timestamps).</p>
 </p></li>
+<li><p><strong>place_holder_value</strong> (<em>float</em><em>, </em><em>optional</em>) – float values to be used if SIR 3S calculations do not return a result.
+Default: 99999.0</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>

@@ -88,7 +88,7 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Created on Fri Aug 29 09:22:31 2025</span>
 
-<span class="sd">This module implements interactions between SIR 3S and pandas dataframes. You can obtain pandas dfs with meta- or resultdata, insert nodes and pipes via a df, etc.</span>
+<span class="sd">This module implements interactions between SIR 3S and pandas dataframes. You can obtain pandas dfs with model- or resultdata, insert nodes and pipes via a df, etc.</span>
 
 <span class="sd">@author: Jablonski</span>
 <span class="sd">&quot;&quot;&quot;</span>
@@ -131,9 +131,9 @@
 
     <span class="c1">## Dataframe Creation: Basic Functions</span>
 
-<div class="viewcode-block" id="SIR3S_Model_Dataframes.generate_element_metadata_dataframe">
-<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.generate_element_metadata_dataframe">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">generate_element_metadata_dataframe</span><span class="p">(</span>
+<div class="viewcode-block" id="SIR3S_Model_Dataframes.generate_element_model_data_dataframe">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.generate_element_model_data_dataframe">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">generate_element_model_data_dataframe</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">element_type</span><span class="p">:</span> <span class="n">Enum</span><span class="p">,</span>
         <span class="n">tks</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -144,14 +144,14 @@
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">|</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">:</span>
 
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Generate a dataframe with metadata (static) properties for all devices of a given element type.</span>
+<span class="sd">        Generate a dataframe with model data (static) properties for all devices of a given element type.</span>
 
 <span class="sd">        :param element_type: The element type (e.g., self.ObjectTypes.Node).</span>
 <span class="sd">        :type element_type: Enum</span>
 <span class="sd">        :param tks: List of tks of instances of the element type to include. All other tks will be excluded. Use for filtering.</span>
 <span class="sd">                    Default: None (no filtering)</span>
 <span class="sd">        :type tks: list[str], optional</span>
-<span class="sd">        :param properties: List of metadata property names to include.  </span>
+<span class="sd">        :param properties: List of model data property names to include.  </span>
 <span class="sd">                        If properties=None ⇒ all available properties are used.  </span>
 <span class="sd">                        If properties=[] ⇒ no properties are used.</span>
 <span class="sd">                        Default: None.</span>
@@ -170,26 +170,26 @@
 <span class="sd">                                Default: False.</span>
 <span class="sd">        :type element_type_col: bool, optional</span>
 
-<span class="sd">        :return: DataFrame (or GeoDataFrame) with one row per device (tk) and columns for the requested metadata properties,  </span>
+<span class="sd">        :return: DataFrame (or GeoDataFrame) with one row per device (tk) and columns for the requested model data properties,  </span>
 <span class="sd">                geometry and end nodes.  </span>
-<span class="sd">                Columns: [&quot;tk&quot;, &lt;metadata_props&gt;]</span>
+<span class="sd">                Columns: [&quot;tk&quot;, &lt;model_data_props&gt;]</span>
 <span class="sd">        :rtype: pd.DataFrame | gpd.GeoDataFrame</span>
 
 <span class="sd">        :description:  </span>
-<span class="sd">        Generates a DataFrame (or GeoDataFrame) containing static metadata for all elements of a given type.</span>
+<span class="sd">        Generates a DataFrame (or GeoDataFrame) containing static model data for all elements of a given type. Columns are of data type object. For decimal numbers &quot;,&quot; will be used as a seperators. The user has to manually change to numeric data types, if they are to be used in calculations.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[metadata] Generating metadata dataframe for element type: </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[model_data] Generating model_data dataframe for element type: </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="c1"># --- Collect device keys (tks) ---</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">available_tks</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTksofElementType</span><span class="p">(</span><span class="n">ElementType</span><span class="o">=</span><span class="n">element_type</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[metadata] Error retrieving element tks: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[model_data] Error retrieving element tks: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
         
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">available_tks</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[metadata] No elements exist of this element type </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[model_data] No elements exist of this element type </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
         
         <span class="c1"># --- Resolve tks ---</span>
@@ -199,21 +199,21 @@
                 <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">tks</span><span class="o">=</span><span class="n">available_tks</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[metadata] Retrieved </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">available_tks</span><span class="p">)</span><span class="si">}</span><span class="s2"> element(s) of element type </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[model_data] Retrieved </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">available_tks</span><span class="p">)</span><span class="si">}</span><span class="s2"> element(s) of element type </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
           
-        <span class="c1"># --- Resolve given metadata properties ---</span>
-        <span class="n">metadata_props</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__resolve_given_metadata_properties</span><span class="p">(</span><span class="n">element_type</span><span class="o">=</span><span class="n">element_type</span><span class="p">,</span> <span class="n">properties</span><span class="o">=</span><span class="n">properties</span><span class="p">)</span>
+        <span class="c1"># --- Resolve given model_data properties ---</span>
+        <span class="n">model_data_props</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__resolve_given_model_data_properties</span><span class="p">(</span><span class="n">element_type</span><span class="o">=</span><span class="n">element_type</span><span class="p">,</span> <span class="n">properties</span><span class="o">=</span><span class="n">properties</span><span class="p">)</span>
 
         <span class="c1"># --- Retrieve values ---</span>
         <span class="n">to_retrieve</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">if</span> <span class="n">metadata_props</span> <span class="o">!=</span> <span class="p">[]:</span>
-            <span class="n">to_retrieve</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;metadata properties </span><span class="si">{</span><span class="n">metadata_props</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">model_data_props</span> <span class="o">!=</span> <span class="p">[]:</span>
+            <span class="n">to_retrieve</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;model_data properties </span><span class="si">{</span><span class="n">model_data_props</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">geometry</span><span class="p">:</span>
             <span class="n">to_retrieve</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;geometry&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">end_nodes</span><span class="p">:</span>
             <span class="n">to_retrieve</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;end nodes&quot;</span><span class="p">)</span>
             
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[metadata] Retrieving </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">to_retrieve</span><span class="p">)</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[model_data] Retrieving </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">to_retrieve</span><span class="p">)</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
         
         <span class="n">rows</span> <span class="o">=</span> <span class="p">[]</span>
 
@@ -222,25 +222,25 @@
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__is_get_endnodes_applicable</span><span class="p">(</span><span class="n">element_type</span><span class="o">=</span><span class="n">element_type</span><span class="p">):</span>
                 <span class="n">end_nodes_available</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[metadata] End nodes are not defined for element type </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">. Dataframe is created without end nodes.&quot;</span><span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[model_data] End nodes are not defined for element type </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">. Dataframe is created without end nodes.&quot;</span><span class="p">)</span>
             
         <span class="k">for</span> <span class="n">tk</span> <span class="ow">in</span> <span class="n">tks</span><span class="p">:</span>
             
             <span class="n">row</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;tk&quot;</span><span class="p">:</span> <span class="n">tk</span><span class="p">}</span>
             
-            <span class="c1"># Add metadata properties</span>
-            <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">metadata_props</span><span class="p">:</span>
+            <span class="c1"># Add model_data properties</span>
+            <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">model_data_props</span><span class="p">:</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="n">row</span><span class="p">[</span><span class="n">prop</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetValue</span><span class="p">(</span><span class="n">Tk</span><span class="o">=</span><span class="n">tk</span><span class="p">,</span> <span class="n">propertyName</span><span class="o">=</span><span class="n">prop</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
                 <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                    <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[metadata] Failed to get property &#39;</span><span class="si">{</span><span class="n">prop</span><span class="si">}</span><span class="s2">&#39; for tk &#39;</span><span class="si">{</span><span class="n">tk</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[model_data] Failed to get property &#39;</span><span class="si">{</span><span class="n">prop</span><span class="si">}</span><span class="s2">&#39; for tk &#39;</span><span class="si">{</span><span class="n">tk</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             
             <span class="c1"># Add geometry if requested</span>
             <span class="k">if</span> <span class="n">geometry</span><span class="p">:</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="n">row</span><span class="p">[</span><span class="s2">&quot;geometry&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetGeometryInformation</span><span class="p">(</span><span class="n">Tk</span><span class="o">=</span><span class="n">tk</span><span class="p">)</span>
                 <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                    <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[metadata] Failed to get geometry information for tk &#39;</span><span class="si">{</span><span class="n">tk</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[model_data] Failed to get geometry information for tk &#39;</span><span class="si">{</span><span class="n">tk</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             
             <span class="c1"># Add end nodes if requested</span>
             <span class="k">if</span> <span class="n">end_nodes_available</span><span class="p">:</span>
@@ -248,7 +248,7 @@
                     <span class="n">endnode_tuple</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetEndNodes</span><span class="p">(</span><span class="n">Tk</span><span class="o">=</span><span class="n">tk</span><span class="p">)</span> 
                     <span class="n">row</span><span class="p">[</span><span class="s2">&quot;fkKI&quot;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;fkKK&quot;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;fkKI2&quot;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;fkKK2&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">endnode_tuple</span>
                 <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                    <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[metadata] Failed to get end nodes for tk &#39;</span><span class="si">{</span><span class="n">tk</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[model_data] Failed to get end nodes for tk &#39;</span><span class="si">{</span><span class="n">tk</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             
              <span class="c1"># Add element type col if requested</span>
             <span class="k">if</span> <span class="n">element_type_col</span><span class="p">:</span>
@@ -268,24 +268,25 @@
                     <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">:</span>
                         <span class="n">row</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[metadata] </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">used_cols</span><span class="p">)</span><span class="si">}</span><span class="s2"> non-empty end node columns were created.&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[model_data] </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">used_cols</span><span class="p">)</span><span class="si">}</span><span class="s2"> non-empty end node columns were created.&quot;</span><span class="p">)</span>
 
         <span class="c1"># --- Dataframe creation ---</span>
         <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span>
-
+        
+        <span class="c1"># Transform to gpd ---</span>
         <span class="k">if</span> <span class="n">geometry</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">df</span><span class="p">[</span><span class="s2">&quot;geometry&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;geometry&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">wkt</span><span class="o">.</span><span class="n">loads</span><span class="p">)</span>
                 <span class="n">srid</span><span class="p">,</span> <span class="n">srid2</span><span class="p">,</span> <span class="n">srid_string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_EPSG</span><span class="p">()</span>
                 <span class="k">if</span> <span class="n">srid</span> <span class="ow">and</span> <span class="p">(</span><span class="n">srid</span> <span class="o">!=</span> <span class="s1">&#39;0&#39;</span><span class="p">):</span>
                     <span class="n">df</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">geometry</span><span class="o">=</span><span class="s2">&quot;geometry&quot;</span><span class="p">,</span> <span class="n">crs</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;EPSG: </span><span class="si">{</span><span class="n">srid</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-                    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[metadata] Transforming DataFrame to GeoDataFrame successful with EPSG: </span><span class="si">{</span><span class="n">srid</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[model_data] Transforming DataFrame to GeoDataFrame successful with EPSG: </span><span class="si">{</span><span class="n">srid</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[metadata] Spatial Reference Identifier (SRID) not defined in model. DataFrame cannot be transformed to GeoDataFrame but geometry column can be created independently of SRID. Returning regular DataFrame with a geometry column.&quot;</span><span class="p">)</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[model_data] Spatial Reference Identifier (SRID) not defined in model. DataFrame cannot be transformed to GeoDataFrame but geometry column can be created independently of SRID. Returning regular DataFrame with a geometry column.&quot;</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                    <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[metadata] Error transforming DataFrame to GeoDataFrame. </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[model_data] Error transforming DataFrame to GeoDataFrame. </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[metadata] Done. Shape: </span><span class="si">{</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[model_data] Done. Shape: </span><span class="si">{</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">df</span></div>
 
 
@@ -305,6 +306,9 @@
 
 <span class="sd">        :param element_type: The element type (e.g., self.ObjectTypes.Node). </span>
 <span class="sd">        :type element_type: Enum</span>
+<span class="sd">        :param tks: List of tks of instances of the element type to include. All other tks will be excluded. Use for filtering.</span>
+<span class="sd">                    Default: None (no filtering)</span>
+<span class="sd">        :type tks: list[str], optional</span>
 <span class="sd">        :param properties: List of RESULT property names to include.  </span>
 <span class="sd">                        If properties=None ⇒ includes all available result properties (per element, only if values exist).  </span>
 <span class="sd">                        If properties=[] ⇒ no properties are used.</span>
@@ -318,6 +322,9 @@
 <span class="sd">                            where 0 = first timestamp, 7 = eighth timestamp, -1 = last timestamp.  </span>
 <span class="sd">                        Default: None (includes all available timestamps).</span>
 <span class="sd">        :type timestamps: list[Union[str, int]], optional</span>
+<span class="sd">        :param place_holder_value: float values to be used if SIR 3S calculations do not return a result.</span>
+<span class="sd">                        Default: 99999.0</span>
+<span class="sd">        :type place_holder_value: float, optional</span>
 
 <span class="sd">        :return: DataFrame with one row per timestamp and MultiIndex columns:  </span>
 <span class="sd">                - Level 0: tk (device ID)  </span>
@@ -347,7 +354,7 @@
         
         <span class="c1"># --- Resolve given properties ---</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">available_metadata_props</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetPropertiesofElementType</span><span class="p">(</span><span class="n">ElementType</span><span class="o">=</span><span class="n">element_type</span><span class="p">)</span>
+            <span class="n">available_model_data_props</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetPropertiesofElementType</span><span class="p">(</span><span class="n">ElementType</span><span class="o">=</span><span class="n">element_type</span><span class="p">)</span>
             <span class="n">available_result_props</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetResultProperties_from_elementType</span><span class="p">(</span>
                 <span class="n">elementType</span><span class="o">=</span><span class="n">element_type</span><span class="p">,</span>
                 <span class="n">onlySelectedVectors</span><span class="o">=</span><span class="kc">False</span>
@@ -364,11 +371,11 @@
                 <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">properties</span><span class="p">:</span>
                     <span class="k">if</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">available_result_props</span><span class="p">:</span>
                         <span class="n">result_props</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prop</span><span class="p">)</span>
-                    <span class="k">elif</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">available_metadata_props</span><span class="p">:</span>
-                        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[results] Property &#39;</span><span class="si">{</span><span class="n">prop</span><span class="si">}</span><span class="s2">&#39; is a METADATA property; excluded from results.&quot;</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">available_model_data_props</span><span class="p">:</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[results] Property &#39;</span><span class="si">{</span><span class="n">prop</span><span class="si">}</span><span class="s2">&#39; is a model_data property; excluded from results.&quot;</span><span class="p">)</span>
                     <span class="k">else</span><span class="p">:</span>
                         <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
-                            <span class="sa">f</span><span class="s2">&quot;[results] Property &#39;</span><span class="si">{</span><span class="n">prop</span><span class="si">}</span><span class="s2">&#39; not found in metadata or result properties of type </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">. Excluding.&quot;</span>
+                            <span class="sa">f</span><span class="s2">&quot;[results] Property &#39;</span><span class="si">{</span><span class="n">prop</span><span class="si">}</span><span class="s2">&#39; not found in model_data or result properties of type </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">. Excluding.&quot;</span>
                         <span class="p">)</span> 
             <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[results] Using </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">result_props</span><span class="p">)</span><span class="si">}</span><span class="s2"> result properties.&quot;</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
@@ -453,7 +460,7 @@
 
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generates a dataframe containing all instances for a given element type in the open</span>
-<span class="sd">        SIR 3S model. All metadata and most result values</span>
+<span class="sd">        SIR 3S model. All model_data and most result values</span>
 <span class="sd">        (self.GetResultProperties_from_elementType(onlySelectedVectors=True))</span>
 <span class="sd">        for the static timestamp are included.</span>
 
@@ -467,12 +474,12 @@
 <span class="sd">                    Default: None.</span>
 <span class="sd">        :type tks: list[str], optional</span>
 
-<span class="sd">        :return: DataFrame containing one row per element instance, including metadata, end</span>
+<span class="sd">        :return: DataFrame containing one row per element instance, including model_data, end</span>
 <span class="sd">                nodes, geometry, and available static result values.</span>
 <span class="sd">        :rtype: pd.DataFrame</span>
 
 <span class="sd">        :description:</span>
-<span class="sd">        Builds a comprehensive DataFrame containing metadata and static result values for</span>
+<span class="sd">        Builds a comprehensive DataFrame containing model_data and static result values for</span>
 <span class="sd">        all requested elements of the given type. Vectorized pipe results are included</span>
 <span class="sd">        as strings, and scalar results as floats. Geometry and end-node tks are always included.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -480,8 +487,8 @@
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[generate_element_dataframe] Generating df for element type: </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2"> ...&quot;</span><span class="p">)</span>
         
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[generate_element_dataframe] Generating df_metadata for element type: </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2"> ...&quot;</span><span class="p">)</span>
-            <span class="n">df_metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_element_metadata_dataframe</span><span class="p">(</span><span class="n">element_type</span><span class="o">=</span><span class="n">element_type</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[generate_element_dataframe] Generating df_model_data for element type: </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2"> ...&quot;</span><span class="p">)</span>
+            <span class="n">df_model_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_element_model_data_dataframe</span><span class="p">(</span><span class="n">element_type</span><span class="o">=</span><span class="n">element_type</span>
                                                                 <span class="p">,</span><span class="n">tks</span><span class="o">=</span><span class="n">tks</span>
                                                                 <span class="p">,</span><span class="n">properties</span><span class="o">=</span><span class="kc">None</span>
                                                                 <span class="p">,</span><span class="n">geometry</span><span class="o">=</span><span class="kc">True</span>
@@ -498,11 +505,11 @@
                                                                         <span class="p">,</span><span class="n">timestamps</span><span class="o">=</span><span class="p">[</span><span class="n">static_timestamp</span><span class="p">]</span>
             <span class="p">)</span>
 
-            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[generate_element_dataframe] Merging df_metadata with df_results for element type: </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2"> ...&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[generate_element_dataframe] Merging df_model_data with df_results for element type: </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2"> ...&quot;</span><span class="p">)</span>
             <span class="n">df_results</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">df_results</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">droplevel</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
             <span class="n">df_results</span> <span class="o">=</span> <span class="n">df_results</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">unstack</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
             <span class="n">df_results</span> <span class="o">=</span> <span class="n">df_results</span><span class="o">.</span><span class="n">droplevel</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-            <span class="n">df</span> <span class="o">=</span> <span class="n">df_metadata</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">on</span><span class="o">=</span><span class="s2">&quot;tk&quot;</span><span class="p">,</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">df_model_data</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">on</span><span class="o">=</span><span class="s2">&quot;tk&quot;</span><span class="p">,</span>
                                 <span class="n">how</span><span class="o">=</span><span class="s2">&quot;outer&quot;</span><span class="p">,</span>
                                 <span class="n">right</span><span class="o">=</span><span class="n">df_results</span><span class="p">)</span>
             
@@ -612,18 +619,18 @@
 <span class="sd">        :rtype: List[DataFrame|GeoDataFrame]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">df_agsn_metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_element_metadata_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="o">.</span><span class="n">AGSN_HydraulicProfile</span><span class="p">)</span>
-        <span class="n">df_agsn_metadata</span> <span class="o">=</span> <span class="n">df_agsn_metadata</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;Lfdnr&#39;</span><span class="p">)</span>
+        <span class="n">df_agsn_model_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_element_model_data_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="o">.</span><span class="n">AGSN_HydraulicProfile</span><span class="p">)</span>
+        <span class="n">df_agsn_model_data</span> <span class="o">=</span> <span class="n">df_agsn_model_data</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;Lfdnr&#39;</span><span class="p">)</span>
 
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        # Only include active </span>
-<span class="sd">        df_agsn_metadata[&quot;Aktiv&quot;] = df_agsn_metadata[&quot;Aktiv&quot;].astype(str)</span>
-<span class="sd">        df_agsn_metadata = df_agsn_metadata[df_agsn_metadata[&quot;Aktiv&quot;] == &quot;101&quot;]</span>
+<span class="sd">        df_agsn_model_data[&quot;Aktiv&quot;] = df_agsn_model_data[&quot;Aktiv&quot;].astype(str)</span>
+<span class="sd">        df_agsn_model_data = df_agsn_model_data[df_agsn_model_data[&quot;Aktiv&quot;] == &quot;101&quot;]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">dfs</span> <span class="o">=</span> <span class="p">[]</span>
 
-        <span class="k">for</span> <span class="n">tk</span><span class="p">,</span> <span class="n">lfdnr</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">df_agsn_metadata</span><span class="p">[[</span><span class="s1">&#39;tk&#39;</span><span class="p">,</span> <span class="s1">&#39;Lfdnr&#39;</span><span class="p">,</span> <span class="s1">&#39;Name&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">itertuples</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">tk</span><span class="p">,</span> <span class="n">lfdnr</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">df_agsn_model_data</span><span class="p">[[</span><span class="s1">&#39;tk&#39;</span><span class="p">,</span> <span class="s1">&#39;Lfdnr&#39;</span><span class="p">,</span> <span class="s1">&#39;Name&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">itertuples</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 
             <span class="c1"># --- Retrieve Hydraulic Profile</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Retrieving Hydraulic Profile with Lfdnr: </span><span class="si">{</span><span class="n">lfdnr</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
@@ -705,7 +712,7 @@
             <span class="k">for</span> <span class="n">em</span> <span class="ow">in</span> <span class="n">enum_members</span><span class="p">:</span>
                 <span class="n">tks</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTksofElementType</span><span class="p">(</span><span class="n">ElementType</span><span class="o">=</span><span class="n">em</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">tks</span><span class="p">:</span>
-                    <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_element_metadata_dataframe</span><span class="p">(</span>
+                    <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_element_model_data_dataframe</span><span class="p">(</span>
                         <span class="n">element_type</span><span class="o">=</span><span class="n">em</span><span class="p">,</span>
                         <span class="n">properties</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Fkcont&quot;</span><span class="p">],</span>
                         <span class="n">geometry</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -726,16 +733,16 @@
 
     <span class="c1">## Dataframe Creation: Helpers</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">__sort_properties_into_metadata_and_results</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__sort_properties_into_model_data_and_results</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> 
         <span class="n">element_type</span><span class="p">:</span> <span class="n">Enum</span><span class="p">,</span>
         <span class="n">properties</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sorts the given properties into three categories:</span>
-<span class="sd">        - Metadata properties</span>
+<span class="sd">        - model_data properties</span>
 <span class="sd">        - Result properties</span>
-<span class="sd">        - Uncategorized properties (not found in either metadata or result properties)</span>
+<span class="sd">        - Uncategorized properties (not found in either model_data or result properties)</span>
 <span class="sd">        </span>
 <span class="sd">        Args:</span>
 <span class="sd">            element_type (Enum): The type of element to query properties for.</span>
@@ -743,18 +750,18 @@
 <span class="sd">        </span>
 <span class="sd">        Returns:</span>
 <span class="sd">            Tuple[List[str], List[str], List[str]]: A tuple containing three lists:</span>
-<span class="sd">                - metadata_matches</span>
+<span class="sd">                - model_data_matches</span>
 <span class="sd">                - result_matches</span>
 <span class="sd">                - uncategorized</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">metadata_properties</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetPropertiesofElementType</span><span class="p">(</span><span class="n">element_type</span><span class="o">=</span><span class="n">element_type</span><span class="p">)</span>
+        <span class="n">model_data_properties</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetPropertiesofElementType</span><span class="p">(</span><span class="n">element_type</span><span class="o">=</span><span class="n">element_type</span><span class="p">)</span>
         <span class="n">result_properties</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetResultProperties_from_elementType</span><span class="p">(</span><span class="n">elementType</span><span class="o">=</span><span class="n">element_type</span><span class="p">)</span>
 
-        <span class="n">metadata_matches</span> <span class="o">=</span> <span class="p">[</span><span class="n">prop</span> <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">properties</span> <span class="k">if</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">metadata_properties</span><span class="p">]</span>
+        <span class="n">model_data_matches</span> <span class="o">=</span> <span class="p">[</span><span class="n">prop</span> <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">properties</span> <span class="k">if</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">model_data_properties</span><span class="p">]</span>
         <span class="n">result_matches</span> <span class="o">=</span> <span class="p">[</span><span class="n">prop</span> <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">properties</span> <span class="k">if</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">result_properties</span><span class="p">]</span>
-        <span class="n">uncategorized</span> <span class="o">=</span> <span class="p">[</span><span class="n">prop</span> <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">properties</span> <span class="k">if</span> <span class="n">prop</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">metadata_properties</span> <span class="ow">and</span> <span class="n">prop</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">result_properties</span><span class="p">]</span>
+        <span class="n">uncategorized</span> <span class="o">=</span> <span class="p">[</span><span class="n">prop</span> <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">properties</span> <span class="k">if</span> <span class="n">prop</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">model_data_properties</span> <span class="ow">and</span> <span class="n">prop</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">result_properties</span><span class="p">]</span>
 
-        <span class="k">return</span> <span class="n">metadata_matches</span><span class="p">,</span> <span class="n">result_matches</span><span class="p">,</span> <span class="n">uncategorized</span>
+        <span class="k">return</span> <span class="n">model_data_matches</span><span class="p">,</span> <span class="n">result_matches</span><span class="p">,</span> <span class="n">uncategorized</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">__decapitalize</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">s</span><span class="p">[:</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">+</span> <span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="k">if</span> <span class="n">s</span> <span class="k">else</span> <span class="n">s</span>
@@ -787,7 +794,7 @@
             <span class="n">available_tks</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTksofElementType</span><span class="p">(</span><span class="n">ElementType</span><span class="o">=</span><span class="n">element_type</span><span class="p">)</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[Resolving tks] Retrieved </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">available_tks</span><span class="p">)</span><span class="si">}</span><span class="s2"> element(s) of element type </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[metadata] Error retrieving element tks: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[model_data] Error retrieving element tks: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
         
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">available_tks</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
@@ -897,46 +904,46 @@
             <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error validating timestamps: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="p">[]</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">__resolve_given_metadata_properties</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__resolve_given_model_data_properties</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">element_type</span><span class="p">:</span> <span class="n">Enum</span><span class="p">,</span>
         <span class="n">properties</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Checks the validity of given list of metadata properties. </span>
+<span class="sd">        Checks the validity of given list of model_data properties. </span>
 <span class="sd">        If properties=None =&gt; All available properties will be used</span>
 <span class="sd">        If properties=[] =&gt; No properties will be used</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">available_metadata_props</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetPropertiesofElementType</span><span class="p">(</span><span class="n">ElementType</span><span class="o">=</span><span class="n">element_type</span><span class="p">)</span>
+            <span class="n">available_model_data_props</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetPropertiesofElementType</span><span class="p">(</span><span class="n">ElementType</span><span class="o">=</span><span class="n">element_type</span><span class="p">)</span>
             <span class="n">available_result_props</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetResultProperties_from_elementType</span><span class="p">(</span>
                 <span class="n">elementType</span><span class="o">=</span><span class="n">element_type</span><span class="p">,</span>
                 <span class="n">onlySelectedVectors</span><span class="o">=</span><span class="kc">False</span>
             <span class="p">)</span>
 
-            <span class="n">metadata_props</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">model_data_props</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
 
             <span class="k">if</span> <span class="n">properties</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[Resolving Metadata Properties] No properties given → using ALL metadata properties for </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
-                <span class="n">metadata_props</span> <span class="o">=</span> <span class="n">available_metadata_props</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[Resolving model_data Properties] No properties given → using ALL model_data properties for </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+                <span class="n">model_data_props</span> <span class="o">=</span> <span class="n">available_model_data_props</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">properties</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">available_metadata_props</span><span class="p">:</span>
-                        <span class="n">metadata_props</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prop</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">available_model_data_props</span><span class="p">:</span>
+                        <span class="n">model_data_props</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prop</span><span class="p">)</span>
                     <span class="k">elif</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">available_result_props</span><span class="p">:</span>
-                        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[Resolving Metadata Properties] Property &#39;</span><span class="si">{</span><span class="n">prop</span><span class="si">}</span><span class="s2">&#39; is a RESULT property; excluded from metadata.&quot;</span><span class="p">)</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[Resolving model_data Properties] Property &#39;</span><span class="si">{</span><span class="n">prop</span><span class="si">}</span><span class="s2">&#39; is a RESULT property; excluded from model_data.&quot;</span><span class="p">)</span>
                     <span class="k">else</span><span class="p">:</span>
                         <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
-                            <span class="sa">f</span><span class="s2">&quot;[Resolving Metadata Properties] Property &#39;</span><span class="si">{</span><span class="n">prop</span><span class="si">}</span><span class="s2">&#39; not found in metadata or result properties of type </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">. Excluding.&quot;</span>
+                            <span class="sa">f</span><span class="s2">&quot;[Resolving model_data Properties] Property &#39;</span><span class="si">{</span><span class="n">prop</span><span class="si">}</span><span class="s2">&#39; not found in model_data or result properties of type </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">. Excluding.&quot;</span>
                         <span class="p">)</span>
 
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[Resolving Metadata Properties] Using </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">metadata_props</span><span class="p">)</span><span class="si">}</span><span class="s2"> metadata properties.&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[Resolving model_data Properties] Using </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">model_data_props</span><span class="p">)</span><span class="si">}</span><span class="s2"> model_data properties.&quot;</span><span class="p">)</span>
        
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[Resolving Metadata Properties] Error resolving metadata properties: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[Resolving model_data Properties] Error resolving model_data properties: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         
-        <span class="k">return</span> <span class="n">metadata_props</span>
+        <span class="k">return</span> <span class="n">model_data_props</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">__is_get_endnodes_applicable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element_type</span><span class="p">):</span>
         <span class="n">buffer</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">()</span>
@@ -964,7 +971,7 @@
 
     <span class="c1"># Dataframe Operations</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">__apply_metadata_property_updates</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__apply_model_data_property_updates</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">element_type</span><span class="p">:</span> <span class="n">Enum</span><span class="p">,</span>
         <span class="n">updates_df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
@@ -973,11 +980,11 @@
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        WORK IN PROGRESS</span>
-<span class="sd">        Apply metadata updates for a single property using a DataFrame with keys and new values.</span>
+<span class="sd">        Apply model_data updates for a single property using a DataFrame with keys and new values.</span>
 
 <span class="sd">        Expects:</span>
 <span class="sd">        - One key column (default: &#39;tk&#39;), and</span>
-<span class="sd">        - Exactly one column named &#39;&lt;metadata_property&gt;_new&#39; (or pass `property_name` to target one explicitly).</span>
+<span class="sd">        - Exactly one column named &#39;&lt;model_data_property&gt;_new&#39; (or pass `property_name` to target one explicitly).</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -993,7 +1000,7 @@
 <span class="sd">        on : str, default &#39;tk&#39;</span>
 <span class="sd">            Name of the key column in `updates_df`. If it&#39;s the index, it will be reset.</span>
 <span class="sd">        create_missing : bool, default False</span>
-<span class="sd">            If True, allow creating metadata rows that don&#39;t exist yet (your set-logic decides how).</span>
+<span class="sd">            If True, allow creating model_data rows that don&#39;t exist yet (your set-logic decides how).</span>
 <span class="sd">        dry_run : bool, default False</span>
 <span class="sd">            If True, do NOT apply; just return a normalized summary of what would be changed.</span>
 <span class="sd">        allow_na : bool, default True</span>
@@ -1006,7 +1013,7 @@
 <span class="sd">            [&#39;tk&#39;, &#39;property&#39;, &#39;new_value&#39;] (+ &#39;status&#39; when dry_run)</span>
 <span class="sd">            representing the intended updates.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[update] Applying metadata updates for element type: </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[update] Applying model_data updates for element type: </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">updates_df</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">updates_df</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;[update] Empty updates_df provided. Nothing to do.&quot;</span><span class="p">)</span>
@@ -1029,15 +1036,15 @@
         <span class="n">properties_new_in_index</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">properties_new</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[update] In updates_df found: </span><span class="si">{</span><span class="n">properties_new_in_index</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="n">properties_new_stripped</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">removesuffix</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">properties_new</span><span class="p">]</span>
-        <span class="n">metadata_props_new</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__resolve_given_metadata_properties</span><span class="p">(</span><span class="n">element_type</span><span class="o">=</span><span class="n">element_type</span><span class="p">,</span> <span class="n">properties</span><span class="o">=</span><span class="n">properties_new_stripped</span><span class="p">)</span>
-        <span class="n">metadata_props_new_with_suffix</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="o">+</span> <span class="n">tag</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">metadata_props_new</span><span class="p">]</span>
+        <span class="n">model_data_props_new</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__resolve_given_model_data_properties</span><span class="p">(</span><span class="n">element_type</span><span class="o">=</span><span class="n">element_type</span><span class="p">,</span> <span class="n">properties</span><span class="o">=</span><span class="n">properties_new_stripped</span><span class="p">)</span>
+        <span class="n">model_data_props_new_with_suffix</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="o">+</span> <span class="n">tag</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">model_data_props_new</span><span class="p">]</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;[update] Resolved &amp; validated given properties_new&quot;</span><span class="p">)</span>
 
         <span class="c1"># TODO</span>
-        <span class="c1"># --- Set metadata values in model ---</span>
+        <span class="c1"># --- Set model_data values in model ---</span>
         <span class="k">for</span> <span class="n">tk</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTksofElementType</span><span class="p">(</span><span class="n">ElementType</span><span class="o">=</span><span class="n">element_type</span><span class="p">):</span>
-            <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">metadata_props_new</span><span class="p">:</span>
-                <span class="n">msg</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">SetValue</span><span class="p">(</span><span class="n">prop</span><span class="p">,</span> <span class="n">updates_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">tk</span><span class="p">,</span> <span class="n">metadata_props_new_with_suffix</span><span class="p">])</span>
+            <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">model_data_props_new</span><span class="p">:</span>
+                <span class="n">msg</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">SetValue</span><span class="p">(</span><span class="n">prop</span><span class="p">,</span> <span class="n">updates_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">tk</span><span class="p">,</span> <span class="n">model_data_props_new_with_suffix</span><span class="p">])</span>
                 <span class="n">logger</span><span class="o">.</span><span class="n">debug</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">__AddNodesAndPipes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dfXL</span><span class="p">):</span>

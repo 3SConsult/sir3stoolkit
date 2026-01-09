@@ -267,7 +267,7 @@ Model is open for further operation
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_nodes_metadata = s3s.generate_element_metadata_dataframe(element_type=s3s.ObjectTypes.Node, properties=[&#39;Name&#39;, &#39;QmEin&#39;, &#39;bz.PhEin&#39;, &#39;Zkor&#39;, &#39;Ktyp&#39;], geometry=True)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_nodes_model_data = s3s.generate_element_model_data_dataframe(element_type=s3s.ObjectTypes.Node, properties=[&#39;Name&#39;, &#39;QmEin&#39;, &#39;bz.PhEin&#39;, &#39;Zkor&#39;, &#39;Ktyp&#39;], geometry=True)
 </pre></div>
 </div>
 </div>
@@ -276,19 +276,19 @@ Model is open for further operation
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2026-01-09 11:50:23,255] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.Node
-[2026-01-09 11:50:23,257] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieved 9 element(s) of element type ObjectTypes.Node.
-[2026-01-09 11:50:23,273] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 5 metadata properties.
-[2026-01-09 11:50:23,288] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving metadata properties [&#39;Name&#39;, &#39;QmEin&#39;, &#39;bz.PhEin&#39;, &#39;Zkor&#39;, &#39;Ktyp&#39;], geometry...
-[2026-01-09 11:50:23,331] INFO in sir3stoolkit.mantle.dataframes: [metadata] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
-[2026-01-09 11:50:23,338] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (9, 7)
+[2026-01-09 15:38:16,057] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.Node
+[2026-01-09 15:38:16,064] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieved 9 element(s) of element type ObjectTypes.Node.
+[2026-01-09 15:38:16,079] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 5 model_data properties.
+[2026-01-09 15:38:16,080] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving model_data properties [&#39;Name&#39;, &#39;QmEin&#39;, &#39;bz.PhEin&#39;, &#39;Zkor&#39;, &#39;Ktyp&#39;], geometry...
+[2026-01-09 15:38:16,116] INFO in sir3stoolkit.mantle.dataframes: [model_data] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
+[2026-01-09 15:38:16,116] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (9, 7)
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_nodes_metadata.head(3)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_nodes_model_data.head(3)
 </pre></div>
 </div>
 </div>
@@ -372,13 +372,13 @@ Model is open for further operation
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2026-01-09 11:50:23,384] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Node
-[2026-01-09 11:50:23,393] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2025-06-05 15:27:46.000 +02:00 is used
-[2026-01-09 11:50:23,394] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
-[2026-01-09 11:50:23,395] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 9 element(s) of element type ObjectTypes.Node.
-[2026-01-09 11:50:23,397] INFO in sir3stoolkit.mantle.dataframes: [results] Using 3 result properties.
-[2026-01-09 11:50:23,464] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
-[2026-01-09 11:50:23,481] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 27)
+[2026-01-09 15:38:16,163] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Node
+[2026-01-09 15:38:16,167] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2025-06-05 15:27:46.000 +02:00 is used
+[2026-01-09 15:38:16,167] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
+[2026-01-09 15:38:16,173] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 9 element(s) of element type ObjectTypes.Node.
+[2026-01-09 15:38:16,174] INFO in sir3stoolkit.mantle.dataframes: [results] Using 3 result properties.
+[2026-01-09 15:38:16,244] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2026-01-09 15:38:16,266] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 27)
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
@@ -553,7 +553,7 @@ Model is open for further operation
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_nodes_results.columns = df_nodes_results.columns.droplevel([1, 2])
 df_nodes_results = df_nodes_results.T.unstack(level=0).T
 df_nodes_results = df_nodes_results.droplevel(0, axis=0)
-df_nodes = df_nodes_metadata.merge(on=&quot;tk&quot;,
+df_nodes = df_nodes_model_data.merge(on=&quot;tk&quot;,
                     how=&quot;outer&quot;,
                     right=df_nodes_results)
 </pre></div>
@@ -804,7 +804,7 @@ for idx, row in df_nodes.iterrows():
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_metadata = s3s.generate_element_metadata_dataframe(element_type=s3s.ObjectTypes.Pipe, properties=[&#39;L&#39;, &#39;Di&#39;, &#39;Rau&#39;, &#39;Name&#39;], end_nodes=True, geometry=True)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_model_data = s3s.generate_element_model_data_dataframe(element_type=s3s.ObjectTypes.Pipe, properties=[&#39;L&#39;, &#39;Di&#39;, &#39;Rau&#39;, &#39;Name&#39;], end_nodes=True, geometry=True)
 </pre></div>
 </div>
 </div>
@@ -813,20 +813,20 @@ for idx, row in df_nodes.iterrows():
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2026-01-09 11:50:23,604] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.Pipe
-[2026-01-09 11:50:23,607] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieved 9 element(s) of element type ObjectTypes.Pipe.
-[2026-01-09 11:50:23,608] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 4 metadata properties.
-[2026-01-09 11:50:23,609] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving metadata properties [&#39;L&#39;, &#39;Di&#39;, &#39;Rau&#39;, &#39;Name&#39;], geometry, end nodes...
-[2026-01-09 11:50:23,668] INFO in sir3stoolkit.mantle.dataframes: [metadata] 2 non-empty end node columns were created.
-[2026-01-09 11:50:23,676] INFO in sir3stoolkit.mantle.dataframes: [metadata] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
-[2026-01-09 11:50:23,677] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (9, 8)
+[2026-01-09 15:38:16,395] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.Pipe
+[2026-01-09 15:38:16,395] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieved 9 element(s) of element type ObjectTypes.Pipe.
+[2026-01-09 15:38:16,399] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 4 model_data properties.
+[2026-01-09 15:38:16,399] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving model_data properties [&#39;L&#39;, &#39;Di&#39;, &#39;Rau&#39;, &#39;Name&#39;], geometry, end nodes...
+[2026-01-09 15:38:16,447] INFO in sir3stoolkit.mantle.dataframes: [model_data] 2 non-empty end node columns were created.
+[2026-01-09 15:38:16,466] INFO in sir3stoolkit.mantle.dataframes: [model_data] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
+[2026-01-09 15:38:16,467] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (9, 8)
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_metadata.head(3)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_model_data.head(3)
 </pre></div>
 </div>
 </div>
@@ -905,8 +905,8 @@ for idx, row in df_nodes.iterrows():
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_metadata[&#39;Rau&#39;] = df_pipes_metadata[&#39;Rau&#39;].str.replace(&#39;,&#39;, &#39;.&#39;, regex=False)
-df_pipes_metadata[&#39;L&#39;] = df_pipes_metadata[&#39;L&#39;].str.replace(&#39;,&#39;, &#39;.&#39;, regex=False)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_model_data[&#39;Rau&#39;] = df_pipes_model_data[&#39;Rau&#39;].str.replace(&#39;,&#39;, &#39;.&#39;, regex=False)
+df_pipes_model_data[&#39;L&#39;] = df_pipes_model_data[&#39;L&#39;].str.replace(&#39;,&#39;, &#39;.&#39;, regex=False)
 </pre></div>
 </div>
 </div>
@@ -914,7 +914,7 @@ df_pipes_metadata[&#39;L&#39;] = df_pipes_metadata[&#39;L&#39;].str.replace(&#39
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_metadata[&#39;L&#39;] = df_pipes_metadata[&#39;L&#39;].astype(float)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_model_data[&#39;L&#39;] = df_pipes_model_data[&#39;L&#39;].astype(float)
 </pre></div>
 </div>
 </div>
@@ -924,7 +924,7 @@ df_pipes_metadata[&#39;L&#39;] = df_pipes_metadata[&#39;L&#39;].str.replace(&#39
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>ps = {}
 
-for idx, row in df_pipes_metadata.iterrows():
+for idx, row in df_pipes_model_data.iterrows():
     geom = row[&quot;geometry&quot;]
     coords = list(geom.coords)
 
@@ -1664,26 +1664,26 @@ fig.show()
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2026-01-09 11:50:32,078] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.Node
-[2026-01-09 11:50:32,079] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieved 9 element(s) of element type ObjectTypes.Node.
-[2026-01-09 11:50:32,081] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 5 metadata properties.
-[2026-01-09 11:50:32,081] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving metadata properties [&#39;Name&#39;, &#39;Zkor&#39;, &#39;QmEin&#39;, &#39;bz.PhEin&#39;, &#39;Ktyp&#39;], geometry...
-[2026-01-09 11:50:32,089] INFO in sir3stoolkit.mantle.dataframes: [metadata] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
-[2026-01-09 11:50:32,090] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (9, 7)
-[2026-01-09 11:50:32,099] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Node
-[2026-01-09 11:50:32,111] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2025-06-05 15:27:46.000 +02:00 is used
-[2026-01-09 11:50:32,112] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
-[2026-01-09 11:50:32,113] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 9 element(s) of element type ObjectTypes.Node.
-[2026-01-09 11:50:32,114] INFO in sir3stoolkit.mantle.dataframes: [results] Using 3 result properties.
-[2026-01-09 11:50:32,118] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
-[2026-01-09 11:50:32,126] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 27)
-[2026-01-09 11:50:32,161] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.Pipe
-[2026-01-09 11:50:32,161] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieved 9 element(s) of element type ObjectTypes.Pipe.
-[2026-01-09 11:50:32,164] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 4 metadata properties.
-[2026-01-09 11:50:32,164] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving metadata properties [&#39;L&#39;, &#39;Di&#39;, &#39;Rau&#39;, &#39;Name&#39;], geometry, end nodes...
-[2026-01-09 11:50:32,172] INFO in sir3stoolkit.mantle.dataframes: [metadata] 2 non-empty end node columns were created.
-[2026-01-09 11:50:32,180] INFO in sir3stoolkit.mantle.dataframes: [metadata] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
-[2026-01-09 11:50:32,181] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (9, 8)
+[2026-01-09 15:38:25,372] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.Node
+[2026-01-09 15:38:25,374] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieved 9 element(s) of element type ObjectTypes.Node.
+[2026-01-09 15:38:25,376] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 5 model_data properties.
+[2026-01-09 15:38:25,377] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving model_data properties [&#39;Name&#39;, &#39;Zkor&#39;, &#39;QmEin&#39;, &#39;bz.PhEin&#39;, &#39;Ktyp&#39;], geometry...
+[2026-01-09 15:38:25,387] INFO in sir3stoolkit.mantle.dataframes: [model_data] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
+[2026-01-09 15:38:25,388] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (9, 7)
+[2026-01-09 15:38:25,402] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Node
+[2026-01-09 15:38:25,413] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2025-06-05 15:27:46.000 +02:00 is used
+[2026-01-09 15:38:25,414] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
+[2026-01-09 15:38:25,416] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 9 element(s) of element type ObjectTypes.Node.
+[2026-01-09 15:38:25,418] INFO in sir3stoolkit.mantle.dataframes: [results] Using 3 result properties.
+[2026-01-09 15:38:25,424] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2026-01-09 15:38:25,435] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 27)
+[2026-01-09 15:38:25,462] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.Pipe
+[2026-01-09 15:38:25,467] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieved 9 element(s) of element type ObjectTypes.Pipe.
+[2026-01-09 15:38:25,468] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 4 model_data properties.
+[2026-01-09 15:38:25,468] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving model_data properties [&#39;L&#39;, &#39;Di&#39;, &#39;Rau&#39;, &#39;Name&#39;], geometry, end nodes...
+[2026-01-09 15:38:25,474] INFO in sir3stoolkit.mantle.dataframes: [model_data] 2 non-empty end node columns were created.
+[2026-01-09 15:38:25,486] INFO in sir3stoolkit.mantle.dataframes: [model_data] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
+[2026-01-09 15:38:25,486] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (9, 8)
 </pre></div></div>
 </div>
 </section>
