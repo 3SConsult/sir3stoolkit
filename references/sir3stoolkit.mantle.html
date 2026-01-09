@@ -200,22 +200,65 @@ are included; FWVB (district heating consumers) are excluded.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.add_interior_points_to_results_dataframe">
 <span class="sig-name descname"><span class="pre">add_interior_points_to_results_dataframe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df_results</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sir3stoolkit/mantle/dataframes.html#SIR3S_Model_Dataframes.add_interior_points_to_results_dataframe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.add_interior_points_to_results_dataframe" title="Link to this definition"></a></dt>
-<dd><p>Expand vector properties (last column level contains ‘VEC’) from tab-separated strings
-into float segments along a new column MultiIndex level ‘interior points’.
-Non-vector properties get interior point -1 and retain original values.</p>
+<dd><p>Expand vector properties from tab-separated strings into multiple interior-point
+segments along a new MultiIndex column level.</p>
+<p>Vector properties are identified by having ‘VEC’ in the last column-level name.
+Their tab-separated string values are split into float segments representing
+interior points along the device. Non-vector properties have their interior
+point index set to -1 and retain their scalar values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>df_results</strong> (<em>pd.DataFrame</em>) – Results DataFrame containing scalar and vector properties.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A DataFrame in which vector properties are expanded along a new
+MultiIndex level named ‘interior points’, with float values for each
+interior segment. Non-vector properties are assigned interior point -1.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+<dt class="field-even">Description<span class="colon">:</span></dt>
+<dd class="field-even"><p>This method processes the result DataFrame by expanding tab-separated
+vector-valued properties (typically from pipes) into properly structured
+numerical segments. Each vector entry becomes a sequence of interior point
+values along a new index level. Scalar properties remain unchanged and are
+placed under interior point -1 to maintain consistent indexing.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.generate_element_dataframe">
 <span class="sig-name descname"><span class="pre">generate_element_dataframe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">element_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">GeoDataFrame</span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/mantle/dataframes.html#SIR3S_Model_Dataframes.generate_element_dataframe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.generate_element_dataframe" title="Link to this definition"></a></dt>
-<dd><p>Generates a dataframe containing all instances for a given element type in the open SIR 3S model. All metadata and most result values (self.GetResultProperties_from_elementType(onlySelectedVectors=True)) for the static timestamp are included. Result values are given as floats, unless they are in vectorized form (relevant only for pipes), in that case they are strings. Tks of end nodes are included (fkKI, fkKK). Geometry is included.</p>
-<section id="paramters">
-<h3>Paramters<a class="headerlink" href="#paramters" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p>element_type: str: eg. self.ObjectTypes.Node, self.ObjectTypes.Pipe</p></li>
-<li><p>tks: list[str]: list of tks to include</p></li>
+<dd><p>Generates a dataframe containing all instances for a given element type in the open
+SIR 3S model. All metadata and most result values
+(self.GetResultProperties_from_elementType(onlySelectedVectors=True))
+for the static timestamp are included.</p>
+<p>Result values are returned as floats unless they are vectorized (relevant only for
+pipes), in which case they are returned as strings. The tks of end nodes are included
+(fkKI, fkKK). Geometry information is also included.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>element_type</strong> (<em>Enum</em>) – The element type (e.g., self.ObjectTypes.Node, self.ObjectTypes.Pipe).</p></li>
+<li><p><strong>tks</strong> (<em>list</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – List of tks to include in the dataframe.
+Default: None.</p></li>
 </ul>
-</section>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame containing one row per element instance, including metadata, end
+nodes, geometry, and available static result values.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+<dt class="field-even">Description<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
+</dl>
+<p>Builds a comprehensive DataFrame containing metadata and static result values for
+all requested elements of the given type. Vectorized pipe results are included
+as strings, and scalar results as floats. Geometry and end-node tks are always included.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -225,26 +268,37 @@ Non-vector properties get interior point -1 and retain original values.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>element_type</strong> (<em>Enum The element type</em><em> (</em><em>e.g.</em><em>, </em><em>self.ObjectTypes.Node</em><em>)</em><em>.</em>)</p></li>
-<li><p><strong>properties</strong> (<em>list</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – If properties=None =&gt; All available properties will be used
-If properties=[] =&gt; No properties will be used</p></li>
-<li><p><strong>geometry</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, includes geometric information for each element in the dataframe. Note that this is still a regular DataFrame no GeoDataFrame, to convert it you need a crs values.
-Adds a ‘geometry’ column containing spatial data (WKT represenation eg. POINT (x y))
-Default is False.</p></li>
-<li><p><strong>end_nodes</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True and supported by the element type, includes tks of end nodes as cols (fkKI, fkKK, fkKI2, fkKK2) in the dataframe.
-Default is False.</p></li>
-<li><p><strong>filter_container_tks</strong> (<em>list</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – List of tks of containers to use element from. Elements from other containers are not included.</p></li>
-<li><p><strong>element_type_col</strong> (<em>bool</em><em>, </em><em>option</em>) – If true, a column indicating the element type will be added. Useful if df is later merged.</p></li>
+<li><p><strong>element_type</strong> (<em>Enum</em>) – The element type (e.g., self.ObjectTypes.Node).</p></li>
+<li><p><strong>tks</strong> (<em>list</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – List of tks of instances of the element type to include. All other tks will be excluded. Use for filtering.
+Default: None (no filtering)</p></li>
+<li><p><strong>properties</strong> (<em>list</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – List of metadata property names to include.
+If properties=None ⇒ all available properties are used.
+If properties=[] ⇒ no properties are used.
+Default: None.</p></li>
+<li><p><strong>geometry</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, includes geometric information for each element in the dataframe.
+Adds a ‘geometry’ column containing spatial data (WKT representation, e.g. POINT (x y)).
+An attempt will be made to transform the Dataframe into a GeoDataFrame. The success depends on whether an SRID is defined in the SIR 3S model.
+Default: False.</p></li>
+<li><p><strong>end_nodes</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True and supported by the element type, includes tks of end nodes as columns
+(fkKI, fkKK, fkKI2, fkKK2).
+Default: False.</p></li>
+<li><p><strong>element_type_col</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, adds a column indicating the element type.
+Useful when merging dataframes later.
+Default: False.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Dataframe with one row per device (tk) and columns for requested metadata properties, geometry and end nodes.
+<dd class="field-even"><p>DataFrame (or GeoDataFrame) with one row per device (tk) and columns for the requested metadata properties,
+geometry and end nodes.
 Columns: [“tk”, &lt;metadata_props&gt;]</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>pd.DataFrame</p>
+<dd class="field-odd"><p>pd.DataFrame | gpd.GeoDataFrame</p>
 </dd>
+<dt class="field-even">Description<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
 </dl>
+<p>Generates a DataFrame (or GeoDataFrame) containing static metadata for all elements of a given type.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -254,38 +308,68 @@ Columns: [“tk”, &lt;metadata_props&gt;]</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>element_type</strong> (<em>Enum</em><em> or </em><em>str</em>) – The element type (e.g., self.ObjectTypes.Node).</p></li>
-<li><p><strong>properties</strong> (<em>list</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – List of RESULT property names (vectors) to include. If None, includes ALL available result properties. If the calculation of SIR Calc does not yield a value for a requested property it will not be included (this is checked for each element individually).</p></li>
+<li><p><strong>element_type</strong> (<em>Enum</em>) – The element type (e.g., self.ObjectTypes.Node).</p></li>
+<li><p><strong>properties</strong> (<em>list</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – List of RESULT property names to include.
+If properties=None ⇒ includes all available result properties (per element, only if values exist).
+If properties=[] ⇒ no properties are used.
+Default: None.</p></li>
 <li><p><strong>timestamps</strong> (<em>list</em><em>[</em><em>Union</em><em>[</em><em>str</em><em>, </em><em>int</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – <p>List of timestamps to include. Can be:
-- List of timestamp strings (e.g., [“2025-09-25 00:00:00.000 +02:00”, “2025-09-25 00:00:01.000 +02:00”, ‘2025-09-25 00:00:05.000 +02:00’])
-- List of integer indices (e.g., [0, 7, -1]), where:</p>
+- List of timestamp strings</p>
 <blockquote>
-<div><ul>
-<li><p>0 refers to the first simulation timestamp</p></li>
-<li><p>7 refers to the eights simulation timestamp</p></li>
-<li><p>-1 refers to the last available timestamp</p></li>
-</ul>
+<div><p>(e.g., [“2025-09-25 00:00:00.000 +02:00”, “2025-09-25 00:05:00.000 +02:00”])</p>
 </div></blockquote>
+<ul>
+<li><dl class="simple">
+<dt>List of integer indices</dt><dd><p>(e.g., [0, 7, -1])
+where 0 = first timestamp, 7 = eighth timestamp, -1 = last timestamp.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>Default: None (includes all available timestamps).</p>
 </p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Dataframe with one row per timestamp (datatype float, datatype str for vectorized data -&gt; Pipes) and MultiIndex columns:
+<dd class="field-even"><p>DataFrame with one row per timestamp and MultiIndex columns:
 - Level 0: tk (device ID)
 - Level 1: name (device name)
-- Level 2: end_nodes (tuple of connected node IDs as string)
-- Level 3: property (result vector name)</p>
+- Level 2: end_nodes (tuple of connected node tks as string)
+- Level 3: property (result name)
+Data types: float for scalars, str for vectorized data.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>pd.DataFrame</p>
 </dd>
+<dt class="field-even">Description<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
 </dl>
+<p>Generates a DataFrame containing time-dependent result vectors for all selected devices and timestamps.
+Supports both timestamp strings and index-based selection. Produces a MultiIndex-column DataFrame grouped by device, name, end-nodes, and property.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.generate_hydraulic_edge_dataframe">
 <span class="sig-name descname"><span class="pre">generate_hydraulic_edge_dataframe</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/mantle/dataframes.html#SIR3S_Model_Dataframes.generate_hydraulic_edge_dataframe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.generate_hydraulic_edge_dataframe" title="Link to this definition"></a></dt>
-<dd><p>Generates a pandas dataframe containing all edges that are part of the hydraulic model (eg. pipes, valves, compressors, etc.).</p>
+<dd><p>Generates dataframes for longitudinal sections.</p>
+<p>Each section produces two dataframes: VL (supply/flow) and RL (return).
+The returned list follows the structure:
+[section_1_VL, section_1_RL, section_2_VL, section_2_RL, …, section_n_VL, section_n_RL].</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of dataframes representing longitudinal sections in the order
+[section_1_VL, section_1_RL, …, section_n_VL, section_n_RL].</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list[DataFrame | GeoDataFrame]</p>
+</dd>
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Creates a collection of longitudinal-section dataframes for the open SIR 3S model.
+For each section, both supply (VL) and return (RL) lines are extracted.
+Depending on whether geometric information is present, each dataframe may be
+a regular pandas DataFrame or a GeoDataFrame.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">

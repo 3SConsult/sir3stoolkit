@@ -142,33 +142,43 @@
         <span class="n">end_nodes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">element_type_col</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">|</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">:</span>
+
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate a dataframe with metadata (static) properties for all devices of a given element type.</span>
 
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        element_type : Enum The element type (e.g., self.ObjectTypes.Node).</span>
-<span class="sd">        properties : list[str], optional</span>
-<span class="sd">            If properties=None =&gt; All available properties will be used</span>
-<span class="sd">            If properties=[] =&gt; No properties will be used</span>
-<span class="sd">        geometry : bool, optional</span>
-<span class="sd">            If True, includes geometric information for each element in the dataframe. Note that this is still a regular DataFrame no GeoDataFrame, to convert it you need a crs values.</span>
-<span class="sd">            Adds a &#39;geometry&#39; column containing spatial data (WKT represenation eg. POINT (x y))</span>
-<span class="sd">            Default is False.</span>
-<span class="sd">        end_nodes : bool, optional</span>
-<span class="sd">            If True and supported by the element type, includes tks of end nodes as cols (fkKI, fkKK, fkKI2, fkKK2) in the dataframe.</span>
-<span class="sd">            Default is False.</span>
-<span class="sd">        filter_container_tks: list[str], optional</span>
-<span class="sd">            List of tks of containers to use element from. Elements from other containers are not included.</span>
-<span class="sd">        element_type_col: bool, option</span>
-<span class="sd">            If true, a column indicating the element type will be added. Useful if df is later merged.</span>
+<span class="sd">        :param element_type: The element type (e.g., self.ObjectTypes.Node).</span>
+<span class="sd">        :type element_type: Enum</span>
+<span class="sd">        :param tks: List of tks of instances of the element type to include. All other tks will be excluded. Use for filtering.</span>
+<span class="sd">                    Default: None (no filtering)</span>
+<span class="sd">        :type tks: list[str], optional</span>
+<span class="sd">        :param properties: List of metadata property names to include.  </span>
+<span class="sd">                        If properties=None ⇒ all available properties are used.  </span>
+<span class="sd">                        If properties=[] ⇒ no properties are used.</span>
+<span class="sd">                        Default: None.</span>
+<span class="sd">        :type properties: list[str], optional</span>
+<span class="sd">        :param geometry: If True, includes geometric information for each element in the dataframe.  </span>
+<span class="sd">                        Adds a &#39;geometry&#39; column containing spatial data (WKT representation, e.g. POINT (x y)).  </span>
+<span class="sd">                        An attempt will be made to transform the Dataframe into a GeoDataFrame. The success depends on whether an SRID is defined in the SIR 3S model.</span>
+<span class="sd">                        Default: False.</span>
+<span class="sd">        :type geometry: bool, optional</span>
+<span class="sd">        :param end_nodes: If True and supported by the element type, includes tks of end nodes as columns  </span>
+<span class="sd">                        (fkKI, fkKK, fkKI2, fkKK2).</span>
+<span class="sd">                        Default: False.</span>
+<span class="sd">        :type end_nodes: bool, optional</span>
+<span class="sd">        :param element_type_col: If True, adds a column indicating the element type.  </span>
+<span class="sd">                                Useful when merging dataframes later.</span>
+<span class="sd">                                Default: False.</span>
+<span class="sd">        :type element_type_col: bool, optional</span>
 
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        pd.DataFrame</span>
-<span class="sd">            Dataframe with one row per device (tk) and columns for requested metadata properties, geometry and end nodes.</span>
-<span class="sd">            Columns: [&quot;tk&quot;, &lt;metadata_props&gt;]</span>
+<span class="sd">        :return: DataFrame (or GeoDataFrame) with one row per device (tk) and columns for the requested metadata properties,  </span>
+<span class="sd">                geometry and end nodes.  </span>
+<span class="sd">                Columns: [&quot;tk&quot;, &lt;metadata_props&gt;]</span>
+<span class="sd">        :rtype: pd.DataFrame | gpd.GeoDataFrame</span>
+
+<span class="sd">        :description:  </span>
+<span class="sd">        Generates a DataFrame (or GeoDataFrame) containing static metadata for all elements of a given type.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[metadata] Generating metadata dataframe for element type: </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="c1"># --- Collect device keys (tks) ---</span>
@@ -289,32 +299,39 @@
         <span class="n">timestamps</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">place_holder_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="mf">99999.0</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate a dataframe with RESULT (time-dependent) properties for all devices and timestamps.</span>
 
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        element_type : Enum or str</span>
-<span class="sd">            The element type (e.g., self.ObjectTypes.Node).</span>
-<span class="sd">        properties : list[str], optional</span>
-<span class="sd">            List of RESULT property names (vectors) to include. If None, includes ALL available result properties. If the calculation of SIR Calc does not yield a value for a requested property it will not be included (this is checked for each element individually).</span>
-<span class="sd">        timestamps : list[Union[str, int]], optional</span>
-<span class="sd">            List of timestamps to include. Can be:</span>
-<span class="sd">            - List of timestamp strings (e.g., [&quot;2025-09-25 00:00:00.000 +02:00&quot;, &quot;2025-09-25 00:00:01.000 +02:00&quot;, &#39;2025-09-25 00:00:05.000 +02:00&#39;])</span>
-<span class="sd">            - List of integer indices (e.g., [0, 7, -1]), where:</span>
-<span class="sd">                - 0 refers to the first simulation timestamp</span>
-<span class="sd">                - 7 refers to the eights simulation timestamp</span>
-<span class="sd">                - -1 refers to the last available timestamp </span>
+<span class="sd">        :param element_type: The element type (e.g., self.ObjectTypes.Node). </span>
+<span class="sd">        :type element_type: Enum</span>
+<span class="sd">        :param properties: List of RESULT property names to include.  </span>
+<span class="sd">                        If properties=None ⇒ includes all available result properties (per element, only if values exist).  </span>
+<span class="sd">                        If properties=[] ⇒ no properties are used.</span>
+<span class="sd">                        Default: None.</span>
+<span class="sd">        :type properties: list[str], optional</span>
+<span class="sd">        :param timestamps: List of timestamps to include. Can be:  </span>
+<span class="sd">                        - List of timestamp strings  </span>
+<span class="sd">                            (e.g., [&quot;2025-09-25 00:00:00.000 +02:00&quot;, &quot;2025-09-25 00:05:00.000 +02:00&quot;])  </span>
+<span class="sd">                        - List of integer indices  </span>
+<span class="sd">                            (e.g., [0, 7, -1]) </span>
+<span class="sd">                            where 0 = first timestamp, 7 = eighth timestamp, -1 = last timestamp.  </span>
+<span class="sd">                        Default: None (includes all available timestamps).</span>
+<span class="sd">        :type timestamps: list[Union[str, int]], optional</span>
 
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        pd.DataFrame</span>
-<span class="sd">            Dataframe with one row per timestamp (datatype float, datatype str for vectorized data -&gt; Pipes) and MultiIndex columns:</span>
-<span class="sd">            - Level 0: tk (device ID)</span>
-<span class="sd">            - Level 1: name (device name)</span>
-<span class="sd">            - Level 2: end_nodes (tuple of connected node IDs as string)</span>
-<span class="sd">            - Level 3: property (result vector name)</span>
+<span class="sd">        :return: DataFrame with one row per timestamp and MultiIndex columns:  </span>
+<span class="sd">                - Level 0: tk (device ID)  </span>
+<span class="sd">                - Level 1: name (device name)  </span>
+<span class="sd">                - Level 2: end_nodes (tuple of connected node tks as string)  </span>
+<span class="sd">                - Level 3: property (result name)  </span>
+<span class="sd">                Data types: float for scalars, str for vectorized data.</span>
+<span class="sd">        :rtype: pd.DataFrame</span>
+
+<span class="sd">        :description:</span>
+<span class="sd">        Generates a DataFrame containing time-dependent result vectors for all selected devices and timestamps.  </span>
+<span class="sd">        Supports both timestamp strings and index-based selection. Produces a MultiIndex-column DataFrame grouped by device, name, end-nodes, and property.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="c1"># --- Validate time stamps ---</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[results] Generating results dataframe for element type: </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
@@ -433,15 +450,33 @@
         <span class="n">element_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">tks</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">|</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Generates a dataframe containing all instances for a given element type in the open SIR 3S model. All metadata and most result values (self.GetResultProperties_from_elementType(onlySelectedVectors=True)) for the static timestamp are included. Result values are given as floats, unless they are in vectorized form (relevant only for pipes), in that case they are strings. Tks of end nodes are included (fkKI, fkKK). Geometry is included.</span>
-<span class="sd">        </span>
-<span class="sd">        Paramters</span>
-<span class="sd">        ---------</span>
 
-<span class="sd">        - element_type: str: eg. self.ObjectTypes.Node, self.ObjectTypes.Pipe</span>
-<span class="sd">        - tks: list[str]: list of tks to include</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates a dataframe containing all instances for a given element type in the open</span>
+<span class="sd">        SIR 3S model. All metadata and most result values</span>
+<span class="sd">        (self.GetResultProperties_from_elementType(onlySelectedVectors=True))</span>
+<span class="sd">        for the static timestamp are included.</span>
+
+<span class="sd">        Result values are returned as floats unless they are vectorized (relevant only for</span>
+<span class="sd">        pipes), in which case they are returned as strings. The tks of end nodes are included</span>
+<span class="sd">        (fkKI, fkKK). Geometry information is also included.</span>
+
+<span class="sd">        :param element_type: The element type (e.g., self.ObjectTypes.Node, self.ObjectTypes.Pipe).</span>
+<span class="sd">        :type element_type: Enum</span>
+<span class="sd">        :param tks: List of tks to include in the dataframe.</span>
+<span class="sd">                    Default: None.</span>
+<span class="sd">        :type tks: list[str], optional</span>
+
+<span class="sd">        :return: DataFrame containing one row per element instance, including metadata, end</span>
+<span class="sd">                nodes, geometry, and available static result values.</span>
+<span class="sd">        :rtype: pd.DataFrame</span>
+
+<span class="sd">        :description:</span>
+<span class="sd">        Builds a comprehensive DataFrame containing metadata and static result values for</span>
+<span class="sd">        all requested elements of the given type. Vectorized pipe results are included</span>
+<span class="sd">        as strings, and scalar results as floats. Geometry and end-node tks are always included.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[generate_element_dataframe] Generating df for element type: </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2"> ...&quot;</span><span class="p">)</span>
         
         <span class="k">try</span><span class="p">:</span>
@@ -477,13 +512,33 @@
             <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[generate_element_dataframe] Error Generating df for element type: </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
 
             
+
 <div class="viewcode-block" id="SIR3S_Model_Dataframes.add_interior_points_to_results_dataframe">
 <a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.add_interior_points_to_results_dataframe">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">add_interior_points_to_results_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df_results</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Expand vector properties (last column level contains &#39;VEC&#39;) from tab-separated strings</span>
-<span class="sd">        into float segments along a new column MultiIndex level &#39;interior points&#39;.</span>
-<span class="sd">        Non-vector properties get interior point -1 and retain original values.</span>
+<span class="sd">        Expand vector properties from tab-separated strings into multiple interior-point</span>
+<span class="sd">        segments along a new MultiIndex column level.</span>
+
+<span class="sd">        Vector properties are identified by having &#39;VEC&#39; in the last column-level name.</span>
+<span class="sd">        Their tab-separated string values are split into float segments representing</span>
+<span class="sd">        interior points along the device. Non-vector properties have their interior</span>
+<span class="sd">        point index set to -1 and retain their scalar values.</span>
+
+<span class="sd">        :param df_results: Results DataFrame containing scalar and vector properties.</span>
+<span class="sd">        :type df_results: pd.DataFrame</span>
+
+<span class="sd">        :return: A DataFrame in which vector properties are expanded along a new</span>
+<span class="sd">                MultiIndex level named &#39;interior points&#39;, with float values for each</span>
+<span class="sd">                interior segment. Non-vector properties are assigned interior point -1.</span>
+<span class="sd">        :rtype: pd.DataFrame</span>
+
+<span class="sd">        :description:</span>
+<span class="sd">            This method processes the result DataFrame by expanding tab-separated</span>
+<span class="sd">            vector-valued properties (typically from pipes) into properly structured</span>
+<span class="sd">            numerical segments. Each vector entry becomes a sequence of interior point</span>
+<span class="sd">            values along a new index level. Scalar properties remain unchanged and are</span>
+<span class="sd">            placed under interior point -1 to maintain consistent indexing.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">last_level</span> <span class="o">=</span> <span class="n">df_results</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">get_level_values</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
@@ -613,17 +668,30 @@
         <span class="k">return</span> <span class="n">dfs</span></div>
 
     
-
-
-
 <div class="viewcode-block" id="SIR3S_Model_Dataframes.generate_hydraulic_edge_dataframe">
 <a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.generate_hydraulic_edge_dataframe">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">generate_hydraulic_edge_dataframe</span><span class="p">(</span>
         <span class="bp">self</span>      
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Generates a pandas dataframe containing all edges that are part of the hydraulic model (eg. pipes, valves, compressors, etc.).</span>
+<span class="sd">        Generates dataframes for longitudinal sections.</span>
+
+<span class="sd">        Each section produces two dataframes: VL (supply/flow) and RL (return).</span>
+<span class="sd">        The returned list follows the structure:</span>
+<span class="sd">        [section_1_VL, section_1_RL, section_2_VL, section_2_RL, ..., section_n_VL, section_n_RL].</span>
+
+<span class="sd">        :return: List of dataframes representing longitudinal sections in the order</span>
+<span class="sd">                [section_1_VL, section_1_RL, ..., section_n_VL, section_n_RL].</span>
+<span class="sd">        :rtype: list[DataFrame | GeoDataFrame]</span>
+
+<span class="sd">        :description:</span>
+<span class="sd">            Creates a collection of longitudinal-section dataframes for the open SIR 3S model.</span>
+<span class="sd">            For each section, both supply (VL) and return (RL) lines are extracted.</span>
+<span class="sd">            Depending on whether geometric information is present, each dataframe may be</span>
+<span class="sd">            a regular pandas DataFrame or a GeoDataFrame.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="n">edge_types</span> <span class="o">=</span> <span class="p">[</span>
             <span class="s1">&#39;Pipe&#39;</span><span class="p">,</span> <span class="s1">&#39;Valve&#39;</span><span class="p">,</span> <span class="s1">&#39;SafetyValve&#39;</span><span class="p">,</span> <span class="s1">&#39;PressureRegulator&#39;</span><span class="p">,</span> <span class="s1">&#39;DifferentialRegulator&#39;</span><span class="p">,</span>
             <span class="s1">&#39;FlapValve&#39;</span><span class="p">,</span> <span class="s1">&#39;PhaseSeparation&#39;</span><span class="p">,</span> <span class="s1">&#39;FlowControlUnit&#39;</span><span class="p">,</span> <span class="s1">&#39;ControlValve&#39;</span><span class="p">,</span> <span class="s1">&#39;Pump&#39;</span><span class="p">,</span>
