@@ -472,7 +472,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
             logger.error(f"[generate_element_dataframe] Error Generating df for element type: {element_type}: {e}")
             
 
-    def add_interior_points_to_results_dataframe(self, df_results):
+    def add_interior_points_as_multiindex(self, df_results):
         """
         Expand vector properties from tab-separated strings into multiple interior-point
         segments along a new MultiIndex column level.
@@ -553,6 +553,55 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         out = pd.concat(pieces, axis=1)
         out = out.dropna(axis=1, how="all")
         return out
+    
+    def add_interior_points_as_flat_cols(self, df):
+        """
+        Expand tab-separated vector columns (name contains "VEC") into *_0..*_N-1 columns.
+        Non-VEC columns remain unchanged.
+
+        :param df: Input DataFrame with scalar columns and VEC columns containing tab-separated strings.
+        :type df: pd.DataFrame
+
+        :return: DataFrame with new numeric columns for each interior point.
+        :rtype: pd.DataFrame
+
+        :description:
+            This method processes the result DataFrame by expanding tab-separated
+            vector-valued properties (typically from pipes) into properly structured
+            numerical segments. Each vector entry becomes a new column.
+        """
+        df_out = df.copy()
+        vec_cols = [c for c in df_out.columns if "VEC" in str(c)]
+
+        for col in vec_cols:
+            s = df_out[col]
+
+            # Split only string cells; treat empty strings as no segments; strip whitespace
+            split_lists = s.map(
+                lambda x: [p for p in str(x).strip().split("\t") if p != ""]
+                if isinstance(x, str) and x.strip() != ""
+                else []
+            )
+
+            max_len = split_lists.map(len).max()
+            if not max_len:  # no segments anywhere → optionally drop or leave as-is
+                df_out.drop(columns=[col], inplace=True)
+                continue
+
+            # Pad lists to same length and convert to numeric
+            padded = split_lists.map(lambda lst: lst + [None] * (max_len - len(lst)))
+            segs = pd.DataFrame(padded.tolist(), index=df_out.index)
+            segs = segs.apply(pd.to_numeric, errors="coerce")  # floats/NaN
+
+            # Name new columns: <original>_0, <original>_1, ..., <original>_<max_len-1>
+            segs.columns = [f"{col}_{i}" for i in range(max_len)]
+
+            # Attach to output; optionally drop original VEC column
+            df_out[segs.columns] = segs
+            df_out.drop(columns=[col], inplace=True)
+
+        return df_out
+
 
     
     def generate_longitudinal_section_dataframes(
