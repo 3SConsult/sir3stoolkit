@@ -23,9 +23,13 @@ The release notes indicate whether a version includes changes to the C# side and
 Version 90.15.7 (TO BE RELEASED)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Improvements
-^^^^^^^^^^^^
-- dataframes.py: metadata renamed to model data
+Changes
+^^^^^^^
+- dataframes.py: 
+   - metadata renamed to model data
+   - hydraulic edge renamed to edge
+   - add_interior_points_to_results_dataframe renamed to add_interior_points_as_multiindex()
+   - new function: add_interior_points_as_flat_cols()
 
 
 Version 90.15.6

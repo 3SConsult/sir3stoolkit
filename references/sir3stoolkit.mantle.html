@@ -198,8 +198,31 @@ are included; FWVB (district heating consumers) are excluded.</p>
 <dd><p>Bases: <a class="reference internal" href="sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model" title="sir3stoolkit.core.wrapper.SIR3S_Model"><code class="xref py py-class docutils literal notranslate"><span class="pre">SIR3S_Model</span></code></a></p>
 <p>This class is supposed to extend the general SIR3S_Model class with the possibility of using pandas dataframes when working with SIR 3S. Getting dataframes, inserting elements via dataframes, running algorithms on dataframes should be made possible.</p>
 <dl class="py method">
-<dt class="sig sig-object py" id="sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.add_interior_points_to_results_dataframe">
-<span class="sig-name descname"><span class="pre">add_interior_points_to_results_dataframe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df_results</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sir3stoolkit/mantle/dataframes.html#SIR3S_Model_Dataframes.add_interior_points_to_results_dataframe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.add_interior_points_to_results_dataframe" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.add_interior_points_as_flat_cols">
+<span class="sig-name descname"><span class="pre">add_interior_points_as_flat_cols</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sir3stoolkit/mantle/dataframes.html#SIR3S_Model_Dataframes.add_interior_points_as_flat_cols"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.add_interior_points_as_flat_cols" title="Link to this definition"></a></dt>
+<dd><p>Expand tab-separated vector columns (name contains “VEC”) into <a href="#id1"><span class="problematic" id="id2">*</span></a>_0..*_N-1 columns.
+Non-VEC columns remain unchanged.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>df</strong> (<em>pd.DataFrame</em>) – Input DataFrame with scalar columns and VEC columns containing tab-separated strings.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame with new numeric columns for each interior point.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+<dt class="field-even">Description<span class="colon">:</span></dt>
+<dd class="field-even"><p>This method processes the result DataFrame by expanding tab-separated
+vector-valued properties (typically from pipes) into properly structured
+numerical segments. Each vector entry becomes a new column.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.add_interior_points_as_multiindex">
+<span class="sig-name descname"><span class="pre">add_interior_points_as_multiindex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df_results</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sir3stoolkit/mantle/dataframes.html#SIR3S_Model_Dataframes.add_interior_points_as_multiindex"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.add_interior_points_as_multiindex" title="Link to this definition"></a></dt>
 <dd><p>Expand vector properties from tab-separated strings into multiple interior-point
 segments along a new MultiIndex column level.</p>
 <p>Vector properties are identified by having ‘VEC’ in the last column-level name.
