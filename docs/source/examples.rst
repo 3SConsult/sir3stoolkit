@@ -120,12 +120,30 @@ SIR3S_Model_Dataframes() implements interactions between SIR 3S and pandas dataf
 
 .. _Ttu051:
 
-Tutorial 51: Dataframe Creation
-"""""""""""""""""""""""""""""""
+Tutorial 51: Manual Creation of Element Dataframes
+""""""""""""""""""""""""""""""""""""""""""""""""""
 
-This Tutorial demonstrates how to create dataframes.
+This Example demonstrates the capabilities of the class Dataframes_SIR3S_Model that extends SIR3S_Model be abilities to work directley with pandas dataframes. It is shown how to create dataframes containing information about elements such as Nodes, Pipes, etc. existing in a SIR 3S Model. The methods presented are manual, user-defined and detailed. For creating more general dataframes with less input necessary, see Tutorial 52.   
 
 View: `Notebook <tutorials/SIR3S_Model_Mantle/ToolkitTutorial051.html>`_ | Download: :download:`Notebook <tutorials/SIR3S_Model_Mantle/ToolkitTutorial051.ipynb>`.
+
+.. _Ttu052:
+
+Tutorial 52: General Creation of Element Dataframes
+"""""""""""""""""""""""""""""""""""""""""""""""""""
+
+This Example demonstrates the capabilities of the class Dataframes_SIR3S_Model that extends SIR3S_Model be abilities to work directley with pandas dataframes. It is shown how to create dataframes containing information about elements such as Nodes, Pipes, etc. existing in a SIR 3S Model. The methods presented are not user-defined and neither efficient, but get you the most important information quickly. For more detailed methods of creating dataframes, see Tutorial 51.
+
+View: `Notebook <tutorials/SIR3S_Model_Mantle/ToolkitTutorial052.html>`_ | Download: :download:`Notebook <tutorials/SIR3S_Model_Mantle/ToolkitTutorial052.ipynb>`.
+
+.. _Ttu053:
+
+Tutorial 53: General Non-Element Dataframes
+"""""""""""""""""""""""""""""""""""""""""""
+
+This Example demonstrates the capabilities of the class Dataframes_SIR3S_Model that extends SIR3S_Model be abilities to work directley with pandas dataframes. It is shown how to create dataframes containing information that does not concern individual elements types such as Nodes, Pipes, etc. but instead concerning more abstract SIR 3S data such as longitudinal sections or concatenations of multiple element types like hydraulic edges.
+
+View: `Notebook <tutorials/SIR3S_Model_Mantle/ToolkitTutorial053.html>`_ | Download: :download:`Notebook <tutorials/SIR3S_Model_Mantle/ToolkitTutorial053.ipynb>`.
 
 .. _Ttu60-69:
 
@@ -159,14 +177,32 @@ SIR3S_Model_Plotting
 
 SIR3S_Model_Plotting implements general plotting functions for SIR 3S applications.
 
+.. _Ttu071:
+
 Tutorial 71: WORK IN PROGRESS: time curves
 """"""""""""""""""""""""""""""""""""""""""
-
-.. _Ttu072:
 
 This Tutorial demonstrates how to plot time curves.
 
 View: `Notebook <tutorials/SIR3S_Model_Mantle/ToolkitTutorial071.html>`_  | Download: :download:`Notebook <tutorials/SIR3S_Model_Mantle/ToolkitTutorial071.ipynb>`.
+
+.. _Ttu072:
+
+Tutorial 72: WORK IN PROGRESS: agsn
+"""""""""""""""""""""""""""""""""""
+
+This Tutorial demonstrates how to plot time curves.
+
+View: `Notebook <tutorials/SIR3S_Model_Mantle/ToolkitTutorial072.html>`_  | Download: :download:`Notebook <tutorials/SIR3S_Model_Mantle/ToolkitTutorial072.ipynb>`.
+
+.. _Ttu073:
+
+Tutorial 73: Network Color Depiction
+""""""""""""""""""""""""""""""""""""
+
+This example demonstrates how to plot network color depictions (ncd).
+
+View: `Notebook <tutorials/SIR3S_Model_Mantle/ToolkitTutorial073.html>`_  | Download: :download:`Notebook <tutorials/SIR3S_Model_Mantle/ToolkitTutorial073.ipynb>`.
 
 .. 
    .. _Ttu100-149:
