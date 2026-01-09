@@ -50,14 +50,19 @@ class SIR3S_Model_Alternative_Models(SIR3S_Model_Dataframes):
         net = pp.create_empty_network(fluid="water")
 
         # --- Nodes/Junctions ---
-        df_nodes_metadata = self.generate_element_metadata_dataframe(self.ObjectTypes.Node, ['Name', 'Zkor', 'QmEin', 'bz.PhEin', 'Ktyp'], geometry=True)
-        df_nodes_results = self.generate_element_results_dataframe(self.ObjectTypes.Node, ['PH', 'T', 'QM'], self.GetTimeStamps()[0])
-        df_nodes = pd.merge(df_nodes_metadata, df_nodes_results, on='tk', how='inner')
+        df_nodes_metadata = self.generate_element_metadata_dataframe(element_type=self.ObjectTypes.Node, properties=['Name', 'Zkor', 'QmEin', 'bz.PhEin', 'Ktyp'], geometry=True)
+        df_nodes_results = self.generate_element_results_dataframe(element_type=self.ObjectTypes.Node, properties=['PH', 'T', 'QM'], timestamps=self.GetTimeStamps()[0])
+        df_nodes_results.columns = df_nodes_results.columns.droplevel([1, 2])
+        df_nodes_results = df_nodes_results.T.unstack(level=0).T
+        df_nodes_results = df_nodes_results.droplevel(0, axis=0)
+        df_nodes = df_nodes_metadata.merge(on="tk",
+                            how="outer",
+                            right=df_nodes_results)
 
         js = {}
 
         for idx, row in df_nodes.iterrows():
-            geom = wkt.loads(row["geometry"])
+            geom = row["geometry"]
             x, y = geom.x, geom.y
 
             j = pp.create_junction(
@@ -75,16 +80,16 @@ class SIR3S_Model_Alternative_Models(SIR3S_Model_Dataframes):
             js[row['tk']] = j
 
         # --- Pipes ---
-        df_pipes_metadata = self.generate_element_metadata_dataframe(self.ObjectTypes.Pipe, ['L', 'Di', 'Rau', 'Name'], end_nodes=True, geometry=True)
+        df_pipes_metadata = self.generate_element_metadata_dataframe(element_type=self.ObjectTypes.Pipe, properties=['L', 'Di', 'Rau', 'Name'], end_nodes=True, geometry=True)
         
-        for idx,row in df_pipes_metadata.iterrows():
-            raw_value = row["Rau"]
-            row["Rau"] = float(str(raw_value).replace(",", "."))
+        df_pipes_metadata['Rau'] = df_pipes_metadata['Rau'].str.replace(',', '.', regex=False)
+        df_pipes_metadata['L'] = df_pipes_metadata['L'].str.replace(',', '.', regex=False)
+        df_pipes_metadata['L'] = df_pipes_metadata['L'].astype(float)
 
         ps = {}
 
         for idx, row in df_pipes_metadata.iterrows():
-            geom = wkt.loads(row["geometry"])  
+            geom = row["geometry"]
             coords = list(geom.coords)        
 
             # Create pipe
