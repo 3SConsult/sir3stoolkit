@@ -20,8 +20,18 @@ The release notes indicate whether a version includes changes to the C# side and
 90-15 Quebec
 ------------
 
+Version 90.15.7 (TO BE RELEASED)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Improvements
+^^^^^^^^^^^^
+- dataframes.py: metadata renamed to model data
+
+
 Version 90.15.6
 ~~~~~~~~~~~~~~~
+
+For SIR 3S Version: 90-15-00-20-Upd1
 
 C# Changes
 ^^^^^^^^^^

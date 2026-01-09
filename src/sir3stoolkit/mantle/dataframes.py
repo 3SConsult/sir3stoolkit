@@ -2,7 +2,7 @@
 """
 Created on Fri Aug 29 09:22:31 2025
 
-This module implements interactions between SIR 3S and pandas dataframes. You can obtain pandas dfs with meta- or resultdata, insert nodes and pipes via a df, etc.
+This module implements interactions between SIR 3S and pandas dataframes. You can obtain pandas dfs with model- or resultdata, insert nodes and pipes via a df, etc.
 
 @author: Jablonski
 """
@@ -43,7 +43,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
 
     ## Dataframe Creation: Basic Functions
 
-    def generate_element_metadata_dataframe(
+    def generate_element_model_data_dataframe(
         self,
         element_type: Enum,
         tks: Optional[List[str]] = None,
@@ -54,14 +54,14 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
     ) -> pd.DataFrame | gpd.GeoDataFrame:
 
         """
-        Generate a dataframe with metadata (static) properties for all devices of a given element type.
+        Generate a dataframe with model data (static) properties for all devices of a given element type.
 
         :param element_type: The element type (e.g., self.ObjectTypes.Node).
         :type element_type: Enum
         :param tks: List of tks of instances of the element type to include. All other tks will be excluded. Use for filtering.
                     Default: None (no filtering)
         :type tks: list[str], optional
-        :param properties: List of metadata property names to include.  
+        :param properties: List of model data property names to include.  
                         If properties=None ⇒ all available properties are used.  
                         If properties=[] ⇒ no properties are used.
                         Default: None.
@@ -80,26 +80,26 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
                                 Default: False.
         :type element_type_col: bool, optional
 
-        :return: DataFrame (or GeoDataFrame) with one row per device (tk) and columns for the requested metadata properties,  
+        :return: DataFrame (or GeoDataFrame) with one row per device (tk) and columns for the requested model data properties,  
                 geometry and end nodes.  
-                Columns: ["tk", <metadata_props>]
+                Columns: ["tk", <model_data_props>]
         :rtype: pd.DataFrame | gpd.GeoDataFrame
 
         :description:  
-        Generates a DataFrame (or GeoDataFrame) containing static metadata for all elements of a given type.
+        Generates a DataFrame (or GeoDataFrame) containing static model data for all elements of a given type. Columns are of data type object. For decimal numbers "," will be used as a seperators. The user has to manually change to numeric data types, if they are to be used in calculations.
         """
 
-        logger.info(f"[metadata] Generating metadata dataframe for element type: {element_type}")
+        logger.info(f"[model_data] Generating model_data dataframe for element type: {element_type}")
 
         # --- Collect device keys (tks) ---
         try:
             available_tks = self.GetTksofElementType(ElementType=element_type)
         except Exception as e:
-            logger.error(f"[metadata] Error retrieving element tks: {e}")
+            logger.error(f"[model_data] Error retrieving element tks: {e}")
             return pd.DataFrame()
         
         if len(available_tks) < 1:
-            logger.warning(f"[metadata] No elements exist of this element type {element_type}: {e}")
+            logger.warning(f"[model_data] No elements exist of this element type {element_type}: {e}")
             return pd.DataFrame()
         
         # --- Resolve tks ---
@@ -109,21 +109,21 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
                 return pd.DataFrame
         else:
             tks=available_tks
-            logger.info(f"[metadata] Retrieved {len(available_tks)} element(s) of element type {element_type}.")
+            logger.info(f"[model_data] Retrieved {len(available_tks)} element(s) of element type {element_type}.")
           
-        # --- Resolve given metadata properties ---
-        metadata_props = self.__resolve_given_metadata_properties(element_type=element_type, properties=properties)
+        # --- Resolve given model_data properties ---
+        model_data_props = self.__resolve_given_model_data_properties(element_type=element_type, properties=properties)
 
         # --- Retrieve values ---
         to_retrieve = []
-        if metadata_props != []:
-            to_retrieve.append(f"metadata properties {metadata_props}")
+        if model_data_props != []:
+            to_retrieve.append(f"model_data properties {model_data_props}")
         if geometry:
             to_retrieve.append("geometry")
         if end_nodes:
             to_retrieve.append("end nodes")
             
-        logger.info(f"[metadata] Retrieving {', '.join(to_retrieve)}...")
+        logger.info(f"[model_data] Retrieving {', '.join(to_retrieve)}...")
         
         rows = []
 
@@ -132,25 +132,25 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
             if self.__is_get_endnodes_applicable(element_type=element_type):
                 end_nodes_available = True
             else:
-                logger.warning(f"[metadata] End nodes are not defined for element type {element_type}. Dataframe is created without end nodes.")
+                logger.warning(f"[model_data] End nodes are not defined for element type {element_type}. Dataframe is created without end nodes.")
             
         for tk in tks:
             
             row = {"tk": tk}
             
-            # Add metadata properties
-            for prop in metadata_props:
+            # Add model_data properties
+            for prop in model_data_props:
                 try:
                     row[prop] = self.GetValue(Tk=tk, propertyName=prop)[0]
                 except Exception as e:
-                    logger.warning(f"[metadata] Failed to get property '{prop}' for tk '{tk}': {e}")
+                    logger.warning(f"[model_data] Failed to get property '{prop}' for tk '{tk}': {e}")
             
             # Add geometry if requested
             if geometry:
                 try:
                     row["geometry"] = self.GetGeometryInformation(Tk=tk)
                 except Exception as e:
-                    logger.warning(f"[metadata] Failed to get geometry information for tk '{tk}': {e}")
+                    logger.warning(f"[model_data] Failed to get geometry information for tk '{tk}': {e}")
             
             # Add end nodes if requested
             if end_nodes_available:
@@ -158,7 +158,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
                     endnode_tuple = self.GetEndNodes(Tk=tk) 
                     row["fkKI"], row["fkKK"], row["fkKI2"], row["fkKK2"] = endnode_tuple
                 except Exception as e:
-                    logger.warning(f"[metadata] Failed to get end nodes for tk '{tk}': {e}")
+                    logger.warning(f"[model_data] Failed to get end nodes for tk '{tk}': {e}")
             
              # Add element type col if requested
             if element_type_col:
@@ -178,24 +178,25 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
                     for row in rows:
                         row.pop(col, None)
 
-            logger.info(f"[metadata] {len(used_cols)} non-empty end node columns were created.")
+            logger.info(f"[model_data] {len(used_cols)} non-empty end node columns were created.")
 
         # --- Dataframe creation ---
         df = pd.DataFrame(rows)
-
+        
+        # Transform to gpd ---
         if geometry:
             try:
                 df["geometry"] = df["geometry"].apply(wkt.loads)
                 srid, srid2, srid_string = self.get_EPSG()
                 if srid and (srid != '0'):
                     df = gpd.GeoDataFrame(df, geometry="geometry", crs=f"EPSG: {srid}")
-                    logger.info(f"[metadata] Transforming DataFrame to GeoDataFrame successful with EPSG: {srid}")
+                    logger.info(f"[model_data] Transforming DataFrame to GeoDataFrame successful with EPSG: {srid}")
                 else:
-                    logger.warning(f"[metadata] Spatial Reference Identifier (SRID) not defined in model. DataFrame cannot be transformed to GeoDataFrame but geometry column can be created independently of SRID. Returning regular DataFrame with a geometry column.")
+                    logger.warning(f"[model_data] Spatial Reference Identifier (SRID) not defined in model. DataFrame cannot be transformed to GeoDataFrame but geometry column can be created independently of SRID. Returning regular DataFrame with a geometry column.")
             except Exception as e:
-                    logger.error(f"[metadata] Error transforming DataFrame to GeoDataFrame. {e}")
+                    logger.error(f"[model_data] Error transforming DataFrame to GeoDataFrame. {e}")
 
-        logger.info(f"[metadata] Done. Shape: {df.shape}")
+        logger.info(f"[model_data] Done. Shape: {df.shape}")
         return df
 
     def generate_element_results_dataframe(
@@ -212,6 +213,9 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
 
         :param element_type: The element type (e.g., self.ObjectTypes.Node). 
         :type element_type: Enum
+        :param tks: List of tks of instances of the element type to include. All other tks will be excluded. Use for filtering.
+                    Default: None (no filtering)
+        :type tks: list[str], optional
         :param properties: List of RESULT property names to include.  
                         If properties=None ⇒ includes all available result properties (per element, only if values exist).  
                         If properties=[] ⇒ no properties are used.
@@ -225,6 +229,9 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
                             where 0 = first timestamp, 7 = eighth timestamp, -1 = last timestamp.  
                         Default: None (includes all available timestamps).
         :type timestamps: list[Union[str, int]], optional
+        :param place_holder_value: float values to be used if SIR 3S calculations do not return a result.
+                        Default: 99999.0
+        :type place_holder_value: float, optional
 
         :return: DataFrame with one row per timestamp and MultiIndex columns:  
                 - Level 0: tk (device ID)  
@@ -254,7 +261,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         
         # --- Resolve given properties ---
         try:
-            available_metadata_props = self.GetPropertiesofElementType(ElementType=element_type)
+            available_model_data_props = self.GetPropertiesofElementType(ElementType=element_type)
             available_result_props = self.GetResultProperties_from_elementType(
                 elementType=element_type,
                 onlySelectedVectors=False
@@ -271,11 +278,11 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
                 for prop in properties:
                     if prop in available_result_props:
                         result_props.append(prop)
-                    elif prop in available_metadata_props:
-                        logger.warning(f"[results] Property '{prop}' is a METADATA property; excluded from results.")
+                    elif prop in available_model_data_props:
+                        logger.warning(f"[results] Property '{prop}' is a model_data property; excluded from results.")
                     else:
                         logger.warning(
-                            f"[results] Property '{prop}' not found in metadata or result properties of type {element_type}. Excluding."
+                            f"[results] Property '{prop}' not found in model_data or result properties of type {element_type}. Excluding."
                         ) 
             logger.info(f"[results] Using {len(result_props)} result properties.")
         except Exception as e:
@@ -357,7 +364,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
 
         """
         Generates a dataframe containing all instances for a given element type in the open
-        SIR 3S model. All metadata and most result values
+        SIR 3S model. All model_data and most result values
         (self.GetResultProperties_from_elementType(onlySelectedVectors=True))
         for the static timestamp are included.
 
@@ -371,12 +378,12 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
                     Default: None.
         :type tks: list[str], optional
 
-        :return: DataFrame containing one row per element instance, including metadata, end
+        :return: DataFrame containing one row per element instance, including model_data, end
                 nodes, geometry, and available static result values.
         :rtype: pd.DataFrame
 
         :description:
-        Builds a comprehensive DataFrame containing metadata and static result values for
+        Builds a comprehensive DataFrame containing model_data and static result values for
         all requested elements of the given type. Vectorized pipe results are included
         as strings, and scalar results as floats. Geometry and end-node tks are always included.
         """
@@ -384,8 +391,8 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         logger.info(f"[generate_element_dataframe] Generating df for element type: {element_type} ...")
         
         try:
-            logger.debug(f"[generate_element_dataframe] Generating df_metadata for element type: {element_type} ...")
-            df_metadata = self.generate_element_metadata_dataframe(element_type=element_type
+            logger.debug(f"[generate_element_dataframe] Generating df_model_data for element type: {element_type} ...")
+            df_model_data = self.generate_element_model_data_dataframe(element_type=element_type
                                                                 ,tks=tks
                                                                 ,properties=None
                                                                 ,geometry=True
@@ -402,11 +409,11 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
                                                                         ,timestamps=[static_timestamp]
             )
 
-            logger.debug(f"[generate_element_dataframe] Merging df_metadata with df_results for element type: {element_type} ...")
+            logger.debug(f"[generate_element_dataframe] Merging df_model_data with df_results for element type: {element_type} ...")
             df_results.columns = df_results.columns.droplevel([1, 2])
             df_results = df_results.T.unstack(level=0).T
             df_results = df_results.droplevel(0, axis=0)
-            df = df_metadata.merge(on="tk",
+            df = df_model_data.merge(on="tk",
                                 how="outer",
                                 right=df_results)
             
@@ -510,18 +517,18 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         :rtype: List[DataFrame|GeoDataFrame]
         """
 
-        df_agsn_metadata = self.generate_element_metadata_dataframe(self.ObjectTypes.AGSN_HydraulicProfile)
-        df_agsn_metadata = df_agsn_metadata.sort_values('Lfdnr')
+        df_agsn_model_data = self.generate_element_model_data_dataframe(self.ObjectTypes.AGSN_HydraulicProfile)
+        df_agsn_model_data = df_agsn_model_data.sort_values('Lfdnr')
 
         """
         # Only include active 
-        df_agsn_metadata["Aktiv"] = df_agsn_metadata["Aktiv"].astype(str)
-        df_agsn_metadata = df_agsn_metadata[df_agsn_metadata["Aktiv"] == "101"]
+        df_agsn_model_data["Aktiv"] = df_agsn_model_data["Aktiv"].astype(str)
+        df_agsn_model_data = df_agsn_model_data[df_agsn_model_data["Aktiv"] == "101"]
         """
 
         dfs = []
 
-        for tk, lfdnr, name in df_agsn_metadata[['tk', 'Lfdnr', 'Name']].itertuples(index=False):
+        for tk, lfdnr, name in df_agsn_model_data[['tk', 'Lfdnr', 'Name']].itertuples(index=False):
 
             # --- Retrieve Hydraulic Profile
             logger.info(f"Retrieving Hydraulic Profile with Lfdnr: {lfdnr}.")
@@ -600,7 +607,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
             for em in enum_members:
                 tks = self.GetTksofElementType(ElementType=em)
                 if tks:
-                    df = self.generate_element_metadata_dataframe(
+                    df = self.generate_element_model_data_dataframe(
                         element_type=em,
                         properties=["Fkcont"],
                         geometry=True,
@@ -620,16 +627,16 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
 
     ## Dataframe Creation: Helpers
 
-    def __sort_properties_into_metadata_and_results(
+    def __sort_properties_into_model_data_and_results(
         self, 
         element_type: Enum,
         properties: List[str],
     ) -> Tuple[List[str], List[str], List[str]]:
         """
         Sorts the given properties into three categories:
-        - Metadata properties
+        - model_data properties
         - Result properties
-        - Uncategorized properties (not found in either metadata or result properties)
+        - Uncategorized properties (not found in either model_data or result properties)
         
         Args:
             element_type (Enum): The type of element to query properties for.
@@ -637,18 +644,18 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         
         Returns:
             Tuple[List[str], List[str], List[str]]: A tuple containing three lists:
-                - metadata_matches
+                - model_data_matches
                 - result_matches
                 - uncategorized
         """
-        metadata_properties = self.GetPropertiesofElementType(element_type=element_type)
+        model_data_properties = self.GetPropertiesofElementType(element_type=element_type)
         result_properties = self.GetResultProperties_from_elementType(elementType=element_type)
 
-        metadata_matches = [prop for prop in properties if prop in metadata_properties]
+        model_data_matches = [prop for prop in properties if prop in model_data_properties]
         result_matches = [prop for prop in properties if prop in result_properties]
-        uncategorized = [prop for prop in properties if prop not in metadata_properties and prop not in result_properties]
+        uncategorized = [prop for prop in properties if prop not in model_data_properties and prop not in result_properties]
 
-        return metadata_matches, result_matches, uncategorized
+        return model_data_matches, result_matches, uncategorized
 
     def __decapitalize(s: str) -> str:
         return s[:1].lower() + s[1:] if s else s
@@ -678,7 +685,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
             available_tks = self.GetTksofElementType(ElementType=element_type)
             logger.info(f"[Resolving tks] Retrieved {len(available_tks)} element(s) of element type {element_type}.")
         except Exception as e:
-            logger.error(f"[metadata] Error retrieving element tks: {e}")
+            logger.error(f"[model_data] Error retrieving element tks: {e}")
             return pd.DataFrame()
         
         if len(available_tks) < 1:
@@ -788,46 +795,46 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
             logger.error(f"Error validating timestamps: {e}")
             return []
 
-    def __resolve_given_metadata_properties(
+    def __resolve_given_model_data_properties(
         self,
         element_type: Enum,
         properties: Optional[List[str]] = None,
     ) -> List[str]:
         """
-        Checks the validity of given list of metadata properties. 
+        Checks the validity of given list of model_data properties. 
         If properties=None => All available properties will be used
         If properties=[] => No properties will be used
         """
 
         try:
-            available_metadata_props = self.GetPropertiesofElementType(ElementType=element_type)
+            available_model_data_props = self.GetPropertiesofElementType(ElementType=element_type)
             available_result_props = self.GetResultProperties_from_elementType(
                 elementType=element_type,
                 onlySelectedVectors=False
             )
 
-            metadata_props: List[str] = []
+            model_data_props: List[str] = []
 
             if properties is None:
-                logger.info(f"[Resolving Metadata Properties] No properties given → using ALL metadata properties for {element_type}.")
-                metadata_props = available_metadata_props
+                logger.info(f"[Resolving model_data Properties] No properties given → using ALL model_data properties for {element_type}.")
+                model_data_props = available_model_data_props
             else:
                 for prop in properties:
-                    if prop in available_metadata_props:
-                        metadata_props.append(prop)
+                    if prop in available_model_data_props:
+                        model_data_props.append(prop)
                     elif prop in available_result_props:
-                        logger.warning(f"[Resolving Metadata Properties] Property '{prop}' is a RESULT property; excluded from metadata.")
+                        logger.warning(f"[Resolving model_data Properties] Property '{prop}' is a RESULT property; excluded from model_data.")
                     else:
                         logger.warning(
-                            f"[Resolving Metadata Properties] Property '{prop}' not found in metadata or result properties of type {element_type}. Excluding."
+                            f"[Resolving model_data Properties] Property '{prop}' not found in model_data or result properties of type {element_type}. Excluding."
                         )
 
-            logger.info(f"[Resolving Metadata Properties] Using {len(metadata_props)} metadata properties.")
+            logger.info(f"[Resolving model_data Properties] Using {len(model_data_props)} model_data properties.")
        
         except Exception as e:
-            logger.error(f"[Resolving Metadata Properties] Error resolving metadata properties: {e}")
+            logger.error(f"[Resolving model_data Properties] Error resolving model_data properties: {e}")
         
-        return metadata_props
+        return model_data_props
 
     def __is_get_endnodes_applicable(self, element_type):
         buffer = io.StringIO()
@@ -855,7 +862,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
 
     # Dataframe Operations
 
-    def __apply_metadata_property_updates(
+    def __apply_model_data_property_updates(
         self,
         element_type: Enum,
         updates_df: pd.DataFrame,
@@ -864,11 +871,11 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
     ) -> pd.DataFrame:
         """
         WORK IN PROGRESS
-        Apply metadata updates for a single property using a DataFrame with keys and new values.
+        Apply model_data updates for a single property using a DataFrame with keys and new values.
 
         Expects:
         - One key column (default: 'tk'), and
-        - Exactly one column named '<metadata_property>_new' (or pass `property_name` to target one explicitly).
+        - Exactly one column named '<model_data_property>_new' (or pass `property_name` to target one explicitly).
 
         Parameters
         ----------
@@ -884,7 +891,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         on : str, default 'tk'
             Name of the key column in `updates_df`. If it's the index, it will be reset.
         create_missing : bool, default False
-            If True, allow creating metadata rows that don't exist yet (your set-logic decides how).
+            If True, allow creating model_data rows that don't exist yet (your set-logic decides how).
         dry_run : bool, default False
             If True, do NOT apply; just return a normalized summary of what would be changed.
         allow_na : bool, default True
@@ -897,7 +904,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
             ['tk', 'property', 'new_value'] (+ 'status' when dry_run)
             representing the intended updates.
         """
-        logger.info(f"[update] Applying metadata updates for element type: {element_type}")
+        logger.info(f"[update] Applying model_data updates for element type: {element_type}")
 
         if updates_df is None or updates_df.empty:
             logger.warning("[update] Empty updates_df provided. Nothing to do.")
@@ -920,15 +927,15 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         properties_new_in_index=df.columns.intersection(properties_new).tolist()
         logger.info(f"[update] In updates_df found: {properties_new_in_index}")
         properties_new_stripped = [p.removesuffix(tag) for p in properties_new]
-        metadata_props_new=self.__resolve_given_metadata_properties(element_type=element_type, properties=properties_new_stripped)
-        metadata_props_new_with_suffix = [p + tag for p in metadata_props_new]
+        model_data_props_new=self.__resolve_given_model_data_properties(element_type=element_type, properties=properties_new_stripped)
+        model_data_props_new_with_suffix = [p + tag for p in model_data_props_new]
         logger.info("[update] Resolved & validated given properties_new")
 
         # TODO
-        # --- Set metadata values in model ---
+        # --- Set model_data values in model ---
         for tk in self.GetTksofElementType(ElementType=element_type):
-            for prop in metadata_props_new:
-                msg=self.SetValue(prop, updates_df.iloc[tk, metadata_props_new_with_suffix])
+            for prop in model_data_props_new:
+                msg=self.SetValue(prop, updates_df.iloc[tk, model_data_props_new_with_suffix])
                 logger.debug
 
     def __AddNodesAndPipes(self, dfXL):

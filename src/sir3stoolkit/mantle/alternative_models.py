@@ -43,19 +43,19 @@ class SIR3S_Model_Alternative_Models(SIR3S_Model_Dataframes):
         -------
         pandapipes.pandapipesNet
             A pandapipes network object containing:
-            - Junctions with metadata and result values (pressure, temperature, flow).
+            - Junctions with model data and result values (pressure, temperature, flow).
             - Pipes with geometry and physical parameters.
             - External grids (sources) and sinks based on node type and flow direction.
         """
         net = pp.create_empty_network(fluid="water")
 
         # --- Nodes/Junctions ---
-        df_nodes_metadata = self.generate_element_metadata_dataframe(element_type=self.ObjectTypes.Node, properties=['Name', 'Zkor', 'QmEin', 'bz.PhEin', 'Ktyp'], geometry=True)
+        df_nodes_model_data = self.generate_element_model_data_dataframe(element_type=self.ObjectTypes.Node, properties=['Name', 'Zkor', 'QmEin', 'bz.PhEin', 'Ktyp'], geometry=True)
         df_nodes_results = self.generate_element_results_dataframe(element_type=self.ObjectTypes.Node, properties=['PH', 'T', 'QM'], timestamps=self.GetTimeStamps()[0])
         df_nodes_results.columns = df_nodes_results.columns.droplevel([1, 2])
         df_nodes_results = df_nodes_results.T.unstack(level=0).T
         df_nodes_results = df_nodes_results.droplevel(0, axis=0)
-        df_nodes = df_nodes_metadata.merge(on="tk",
+        df_nodes = df_nodes_model_data.merge(on="tk",
                             how="outer",
                             right=df_nodes_results)
 
@@ -80,15 +80,15 @@ class SIR3S_Model_Alternative_Models(SIR3S_Model_Dataframes):
             js[row['tk']] = j
 
         # --- Pipes ---
-        df_pipes_metadata = self.generate_element_metadata_dataframe(element_type=self.ObjectTypes.Pipe, properties=['L', 'Di', 'Rau', 'Name'], end_nodes=True, geometry=True)
+        df_pipes_model_data = self.generate_element_model_data_dataframe(element_type=self.ObjectTypes.Pipe, properties=['L', 'Di', 'Rau', 'Name'], end_nodes=True, geometry=True)
         
-        df_pipes_metadata['Rau'] = df_pipes_metadata['Rau'].str.replace(',', '.', regex=False)
-        df_pipes_metadata['L'] = df_pipes_metadata['L'].str.replace(',', '.', regex=False)
-        df_pipes_metadata['L'] = df_pipes_metadata['L'].astype(float)
+        df_pipes_model_data['Rau'] = df_pipes_model_data['Rau'].str.replace(',', '.', regex=False)
+        df_pipes_model_data['L'] = df_pipes_model_data['L'].str.replace(',', '.', regex=False)
+        df_pipes_model_data['L'] = df_pipes_model_data['L'].astype(float)
 
         ps = {}
 
-        for idx, row in df_pipes_metadata.iterrows():
+        for idx, row in df_pipes_model_data.iterrows():
             geom = row["geometry"]
             coords = list(geom.coords)        
 
@@ -148,14 +148,14 @@ class SIR3S_Model_Alternative_Models(SIR3S_Model_Dataframes):
 
         # --- Nodes ---
         try:
-            df_nodes = self.generate_element_metadata_dataframe(
+            df_nodes = self.generate_element_model_data_dataframe(
                 element_type=self.ObjectTypes.Node,
                 properties=["Fkcont"],
                 geometry=True
             )
             logger.info(f"[graph] Retrieved {len(df_nodes)} nodes.")
         except Exception as e:
-            logger.error(f"[graph] Failed to retrieve node metadata: {e}")
+            logger.error(f"[graph] Failed to retrieve node model_data: {e}")
             return nx.DiGraph()
 
         # --- Edges ---
@@ -240,34 +240,34 @@ class SIR3S_Model_Alternative_Models(SIR3S_Model_Dataframes):
 
         # --- Validate property availability (optional, keep if you want the checks) ---
         try:
-            available_metadata_props = self.GetPropertiesofElementType(ElementType=self.get_object_type_enum(element_type))
+            available_model_data_props = self.GetPropertiesofElementType(ElementType=self.get_object_type_enum(element_type))
             available_result_props = self.GetResultProperties_from_elementType(
                 elementType=self.get_object_type_enum(element_type),
                 onlySelectedVectors=False
             )
-            metadata_props: List[str] = []
+            model_data_props: List[str] = []
             result_props: List[str] = []
             if properties is None:
                 logger.warning(
-                    f"[graph] No properties given → using ALL metadata and STAT result properties for {element_type}. "
+                    f"[graph] No properties given → using ALL model_data and STAT result properties for {element_type}. "
                     "This can lead to long runtimes."
                 )
-                metadata_props = available_metadata_props or []
+                model_data_props = available_model_data_props or []
                 result_props = available_result_props or []
             else:
                 for prop in properties:
                     if prop in (available_result_props or []):
                         result_props.append(prop)
-                    elif prop in (available_metadata_props or []):
-                        metadata_props.append(prop)
+                    elif prop in (available_model_data_props or []):
+                        model_data_props.append(prop)
                     else:
                         logger.warning(
-                            f"[graph] Property '{prop}' not found in metadata or result properties of type {element_type}. Excluding."
+                            f"[graph] Property '{prop}' not found in model_data or result properties of type {element_type}. Excluding."
                         )
-                all_props_to_use = metadata_props + result_props
-            logger.info(f"[graph] Using {len(metadata_props)} metadata props and {len(result_props)} result props.")
+                all_props_to_use = model_data_props + result_props
+            logger.info(f"[graph] Using {len(model_data_props)} model_data props and {len(result_props)} result props.")
         except Exception as e:
-            logger.error(f"[graph] Error validating metadata/result properties: {e}. Aborting.")
+            logger.error(f"[graph] Error validating model_data/result properties: {e}. Aborting.")
             return G
 
         # --- Build dataframe with at least ['tk', *requested_columns] ---
@@ -277,9 +277,9 @@ class SIR3S_Model_Alternative_Models(SIR3S_Model_Dataframes):
                 logger.error(f"[graph] No elements exist for element type: {element_type}: {e}")
                 return G
 
-            df_metadata = self.generate_element_metadata_dataframe(
+            df_model_data = self.generate_element_model_data_dataframe(
                 element_type=self.get_object_type_enum(element_type),
-                properties=metadata_props,
+                properties=model_data_props,
                 element_type_col=False,
                 geometry=False,
                 end_nodes=False
@@ -302,18 +302,18 @@ class SIR3S_Model_Alternative_Models(SIR3S_Model_Dataframes):
             df_results.columns = df_results.columns.droplevel([1, 2])
             df_results = df_results.T.unstack(level=0).T
             df_results = df_results.droplevel(0, axis=0)
-            df = df_metadata.merge(on="tk",
+            df = df_model_data.merge(on="tk",
                              how="outer",
                              right=df_results)
             
             logger.debug(f"{df.columns}")
 
             if df is None or df.empty:
-                logger.info(f"[graph] Empty metadata DataFrame for element_type='{element_type}'. Nothing to add.")
+                logger.info(f"[graph] Empty model_data DataFrame for element_type='{element_type}'. Nothing to add.")
                 return G
 
         except Exception as e:
-            logger.error(f"[graph] Failed to retrieve metadata for enrichment: {e}")
+            logger.error(f"[graph] Failed to retrieve model_data for enrichment: {e}")
             return G
 
         # --- Decide which columns to add; never add these ---
