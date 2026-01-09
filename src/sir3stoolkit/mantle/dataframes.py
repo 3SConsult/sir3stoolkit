@@ -621,26 +621,23 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
 
         return dfs
     
-    def generate_hydraulic_edge_dataframe(
+    def generate_edge_dataframe(
         self      
     ) -> pd.DataFrame:
 
         """
-        Generates dataframes for longitudinal sections.
+        Generates dataframes containing all edges in a SIR 3S model.
 
-        Each section produces two dataframes: VL (supply/flow) and RL (return).
-        The returned list follows the structure:
-        [section_1_VL, section_1_RL, section_2_VL, section_2_RL, ..., section_n_VL, section_n_RL].
+        :return: dataframes containing all edges in a SIR 3S model
+        :rtype: DataFrame
 
-        :return: List of dataframes representing longitudinal sections in the order
-                [section_1_VL, section_1_RL, ..., section_n_VL, section_n_RL].
-        :rtype: list[DataFrame | GeoDataFrame]
-
-        :description:
-            Creates a collection of longitudinal-section dataframes for the open SIR 3S model.
-            For each section, both supply (VL) and return (RL) lines are extracted.
-            Depending on whether geometric information is present, each dataframe may be
-            a regular pandas DataFrame or a GeoDataFrame.
+        :description: edge_types = [
+            'Pipe', 'Valve', 'SafetyValve', 'PressureRegulator', 'DifferentialRegulator',
+            'FlapValve', 'PhaseSeparation', 'FlowControlUnit', 'ControlValve', 'Pump',
+            'DistrictHeatingConsumer', 'DistrictHeatingFeeder', 'Compressor', 'HeaterCooler',
+            'HeatExchanger', 'HeatFeederConsumerStation', 'RART_ControlMode'
+            ] are included.
+            
         """
 
         edge_types = [
@@ -665,9 +662,9 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
                     )
                     dfs.append(df)
             df_edges = pd.concat(dfs, ignore_index=True)
-            logger.info(f"[hydraulic edges dataframe] Retrieved {len(df_edges)} edges from {len(enum_members)} element types.")
+            logger.info(f"[edge dataframe] Retrieved {len(df_edges)} edges from {len(enum_members)} element types.")
         except Exception as e:
-            logger.error(f"[hydraulic edges dataframe] Failed to retrieve edges: {e}")
+            logger.error(f"[edge dataframe] Failed to retrieve edges: {e}")
 
         return df_edges
         
