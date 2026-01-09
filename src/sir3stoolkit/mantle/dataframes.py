@@ -11,6 +11,7 @@ from attrs import field
 from pytoolconfig import dataclass
 
 import pandas as pd
+import re
 import sys
 from dataclasses import dataclass, field
 from typing import List, Optional, Union
@@ -86,7 +87,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         :rtype: pd.DataFrame | gpd.GeoDataFrame
 
         :description:  
-        Generates a DataFrame (or GeoDataFrame) containing static model data for all elements of a given type. Columns are of data type object. For decimal numbers "," will be used as a seperators. The user has to manually change to numeric data types, if they are to be used in calculations.
+        Generates a DataFrame (or GeoDataFrame) containing static model data for all elements of a given type. The core of the sir3stoolkit usually returns values without datatypes, that are then interpreted as strings. This function infers and assigns datatypes based on values, therefore misassignments of data types can happen. Tk retains string data type.
         """
 
         logger.info(f"[model_data] Generating model_data dataframe for element type: {element_type}")
@@ -182,7 +183,53 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
 
         # --- Dataframe creation ---
         df = pd.DataFrame(rows)
-        
+
+        # --- Post Processing: data types ---
+        re_int       = re.compile(r"^[+-]?\d+$")        # 13
+        re_float_dot = re.compile(r"^[+-]?\d+\.\d+$")   # 1.3
+        re_float_com = re.compile(r"^[+-]?\d+,\d+$")    # 1,3
+
+        for col in df.columns:
+            # Skip geometry
+            if col == "geometry":
+                continue
+
+            # tk → string
+            if col == "tk":
+                df[col] = df[col].astype("string")
+                continue
+
+            s = df[col]
+
+            # Build masks
+            non_null = ~s.isna()
+            s_str = s.astype("string").str.strip()
+
+            m_int       = s_str.str.fullmatch(re_int.pattern, na=False)
+            m_float_dot = s_str.str.fullmatch(re_float_dot.pattern, na=False)
+            m_float_com = s_str.str.fullmatch(re_float_com.pattern, na=False)
+
+            valid = m_int | m_float_dot | m_float_com
+
+            # Enforce: each non-null must match one of the three regexes
+            if (valid[non_null]).all():
+                # Convert per value
+                out = []
+                for val in s_str:
+                    if pd.isna(val):
+                        out.append(pd.NA)
+                    elif re_int.fullmatch(val):
+                        out.append(int(val))
+                    elif re_float_dot.fullmatch(val):
+                        out.append(float(val))
+                    elif re_float_com.fullmatch(val):
+                        out.append(float(val.replace(",", ".")))
+                    else:
+                        out.append(val)
+                df[col] = pd.Series(out)
+            else:
+                df[col] = s_str
+
         # Transform to gpd ---
         if geometry:
             try:
@@ -321,10 +368,11 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
 
         df = pd.DataFrame(data_dict)
         df.index.name = "timestamp"
-
+        
+        
         # --- Add Name, End Nodes and Interior points to column MultiIndex ---
         col_tuples = []
-
+        
         for col in df.columns:
             tk, prop = col
             try:
@@ -350,6 +398,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
             col_tuples,
             names=["tk", "name", "end_nodes", "property"]
         )
+       
 
         logger.info(f"[results] Done. Shape: {df.shape}")
         return df
