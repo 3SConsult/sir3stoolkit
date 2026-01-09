@@ -1,0 +1,1526 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tutorial 53: General Non-Element Dataframes &mdash; sir3stoolkit  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+      <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css?v=2aa19091" />
+
+  
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+      <script>let toggleHintShow = 'Click to show';</script>
+      <script>let toggleHintHide = 'Click to hide';</script>
+      <script>let toggleOpenOnPrint = 'true';</script>
+      <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            sir3stoolkit
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples.html">Application Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../releases.html">Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developers.html">For Developers</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">sir3stoolkit</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Tutorial 53: General Non-Element Dataframes</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/tutorials/SIR3S_Model_Mantle/ToolkitTutorial053.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="Tutorial-53:-General-Non-Element-Dataframes">
+<h1>Tutorial 53: General Non-Element Dataframes<a class="headerlink" href="#Tutorial-53:-General-Non-Element-Dataframes" title="Link to this heading"></a></h1>
+<p>This Example demonstrates the capabilities of the class Dataframes_SIR3S_Model that extends SIR3S_Model be abilities to work directley with pandas dataframes. It is shown how to create dataframes containing information that does not concern elements such as Nodes, Pipes, etc. but instead concerning more abstract SIR 3S data such as longitudinal sections.</p>
+</section>
+<section id="Toolkit-Release">
+<h1>Toolkit Release<a class="headerlink" href="#Toolkit-Release" title="Link to this heading"></a></h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>#pip install
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Imports">
+<h1>Imports<a class="headerlink" href="#Imports" title="Link to this heading"></a></h1>
+<section id="SIR-3S-Toolkit">
+<h2>SIR 3S Toolkit<a class="headerlink" href="#SIR-3S-Toolkit" title="Link to this heading"></a></h2>
+<section id="Regular-Import/Init">
+<h3>Regular Import/Init<a class="headerlink" href="#Regular-Import/Init" title="Link to this heading"></a></h3>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r&quot;C:\3S\SIR 3S\SirGraf-90-15-00-20x64_Quebec-Upd1&quot; #change to local path
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sir3stoolkit.core import wrapper
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>wrapper
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;module &#39;sir3stoolkit.core.wrapper&#39; from &#39;C:\\Users\\aUsername\\3S\\sir3stoolkit\\src\\sir3stoolkit\\core\\wrapper.py&#39;&gt;
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>wrapper.Initialize_Toolkit(SIR3S_SIRGRAF_DIR)
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Additional-Import/Init-for-Dataframes-class">
+<h3>Additional Import/Init for Dataframes class<a class="headerlink" href="#Additional-Import/Init-for-Dataframes-class" title="Link to this heading"></a></h3>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sir3stoolkit.mantle.dataframes import SIR3S_Model_Dataframes
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s = SIR3S_Model_Dataframes()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Initialization complete
+</pre></div></div>
+</div>
+</section>
+</section>
+<section id="Additional">
+<h2>Additional<a class="headerlink" href="#Additional" title="Link to this heading"></a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
+from shapely.geometry import Point
+import re
+import folium
+from folium.plugins import HeatMap
+import numpy as np
+import geopandas as gpd
+from shapely import wkt
+import matplotlib.pyplot as plt
+import contextily as cx
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+<section id="Open-Model">
+<h1>Open Model<a class="headerlink" href="#Open-Model" title="Link to this heading"></a></h1>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.OpenModel(dbName=r&quot;C:\Users\aUsername\3S\PT3S\PT3S\Examples\Example3.db3&quot;,
+              providerType=s3s.ProviderTypes.SQLite,
+              Mid=&quot;M-1-0-1&quot;,
+              saveCurrentlyOpenModel=False,
+              namedInstance=&quot;&quot;,
+              userID=&quot;&quot;,
+              password=&quot;&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Model is open for further operation
+</pre></div></div>
+</div>
+</section>
+<section id="Generate-Non-Element-Dataframes">
+<h1>Generate Non-Element Dataframes<a class="headerlink" href="#Generate-Non-Element-Dataframes" title="Link to this heading"></a></h1>
+<section id="AGSN-(Longitudinal-Sections)">
+<h2>AGSN (Longitudinal Sections)<a class="headerlink" href="#AGSN-(Longitudinal-Sections)" title="Link to this heading"></a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dfs = s3s.generate_longitudinal_section_dataframes()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+[2026-01-09 10:33:05,787] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.AGSN_HydraulicProfile
+[2026-01-09 10:33:05,794] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieved 3 element(s) of element type ObjectTypes.AGSN_HydraulicProfile.
+[2026-01-09 10:33:05,805] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] No properties given → using ALL metadata properties for ObjectTypes.AGSN_HydraulicProfile.
+[2026-01-09 10:33:05,806] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 9 metadata properties.
+[2026-01-09 10:33:05,807] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving metadata properties [&#39;Name&#39;, &#39;Lfdnr&#39;, &#39;Aktiv&#39;, &#39;AllNodesAndLinks&#39;, &#39;ObjsString&#39;, &#39;MainWay&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;]...
+[2026-01-09 10:33:05,815] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (3, 10)
+[2026-01-09 10:33:05,818] INFO in sir3stoolkit.mantle.dataframes: Retrieving Hydraulic Profile with Lfdnr: 1.
+[2026-01-09 10:33:05,830] INFO in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df for element type: ObjectTypes.Pipe ...
+[2026-01-09 10:33:05,830] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_metadata for element type: ObjectTypes.Pipe ...
+[2026-01-09 10:33:05,830] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.Pipe
+[2026-01-09 10:33:05,834] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2026-01-09 10:33:05,834] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 44 tks remain after filtering for given tks.
+[2026-01-09 10:33:05,834] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] No properties given → using ALL metadata properties for ObjectTypes.Pipe.
+[2026-01-09 10:33:05,837] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 46 metadata properties.
+[2026-01-09 10:33:05,837] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving metadata properties [&#39;Name&#39;, &#39;FkdtroRowd&#39;, &#39;Fkltgr&#39;, &#39;Fkstrasse&#39;, &#39;L&#39;, &#39;Lzu&#39;, &#39;Rau&#39;, &#39;Jlambs&#39;, &#39;Lambda0&#39;, &#39;Zein&#39;, &#39;Zaus&#39;, &#39;Zuml&#39;, &#39;Asoll&#39;, &#39;Indschall&#39;, &#39;Baujahr&#39;, &#39;Hal&#39;, &#39;Fkcont&#39;, &#39;Fk2lrohr&#39;, &#39;Beschreibung&#39;, &#39;Idreferenz&#39;, &#39;Iplanung&#39;, &#39;Kvr&#39;, &#39;LineWidthMM&#39;, &#39;DottedLine&#39;, &#39;DN&#39;, &#39;Di&#39;, &#39;KvrKlartext&#39;, &#39;HasClosedNSCHs&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;, &#39;Xkor&#39;, &#39;Ykor&#39;, &#39;GeometriesDiffer&#39;, &#39;bz.Fk&#39;, &#39;bz.Qsvb&#39;, &#39;bz.Irtrenn&#39;, &#39;bz.Leckstatus&#39;, &#39;bz.Leckstart&#39;, &#39;bz.Leckend&#39;, &#39;bz.Leckort&#39;, &#39;bz.Leckmenge&#39;, &#39;bz.Imptnz&#39;, &#39;bz.Zvlimptnz&#39;, &#39;bz.Kantenzv&#39;, &#39;bz.ITrennWithNSCH&#39;], geometry, end nodes...
+[2026-01-09 10:33:06,348] INFO in sir3stoolkit.mantle.dataframes: [metadata] 2 non-empty end node columns were created.
+[2026-01-09 10:33:06,358] INFO in sir3stoolkit.mantle.dataframes: [metadata] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
+[2026-01-09 10:33:06,358] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (44, 50)
+[2026-01-09 10:33:06,360] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_results for element type: ObjectTypes.Pipe ...
+[2026-01-09 10:33:06,440] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
+[2026-01-09 10:33:06,507] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2023-02-13 00:00:00.000 +01:00 is used
+[2026-01-09 10:33:06,508] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
+[2026-01-09 10:33:06,510] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2026-01-09 10:33:06,510] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 44 tks remain after filtering for given tks.
+[2026-01-09 10:33:06,513] INFO in sir3stoolkit.mantle.dataframes: [results] Using 31 result properties.
+[2026-01-09 10:33:06,543] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2026-01-09 10:33:06,845] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 1364)
+[2026-01-09 10:33:06,845] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Merging df_metadata with df_results for element type: ObjectTypes.Pipe ...
+[2026-01-09 10:33:06,865] INFO in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df for element type: ObjectTypes.Pipe ...
+[2026-01-09 10:33:06,865] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_metadata for element type: ObjectTypes.Pipe ...
+[2026-01-09 10:33:06,865] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.Pipe
+[2026-01-09 10:33:06,870] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2026-01-09 10:33:06,871] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 44 tks remain after filtering for given tks.
+[2026-01-09 10:33:06,872] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] No properties given → using ALL metadata properties for ObjectTypes.Pipe.
+[2026-01-09 10:33:06,874] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 46 metadata properties.
+[2026-01-09 10:33:06,875] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving metadata properties [&#39;Name&#39;, &#39;FkdtroRowd&#39;, &#39;Fkltgr&#39;, &#39;Fkstrasse&#39;, &#39;L&#39;, &#39;Lzu&#39;, &#39;Rau&#39;, &#39;Jlambs&#39;, &#39;Lambda0&#39;, &#39;Zein&#39;, &#39;Zaus&#39;, &#39;Zuml&#39;, &#39;Asoll&#39;, &#39;Indschall&#39;, &#39;Baujahr&#39;, &#39;Hal&#39;, &#39;Fkcont&#39;, &#39;Fk2lrohr&#39;, &#39;Beschreibung&#39;, &#39;Idreferenz&#39;, &#39;Iplanung&#39;, &#39;Kvr&#39;, &#39;LineWidthMM&#39;, &#39;DottedLine&#39;, &#39;DN&#39;, &#39;Di&#39;, &#39;KvrKlartext&#39;, &#39;HasClosedNSCHs&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;, &#39;Xkor&#39;, &#39;Ykor&#39;, &#39;GeometriesDiffer&#39;, &#39;bz.Fk&#39;, &#39;bz.Qsvb&#39;, &#39;bz.Irtrenn&#39;, &#39;bz.Leckstatus&#39;, &#39;bz.Leckstart&#39;, &#39;bz.Leckend&#39;, &#39;bz.Leckort&#39;, &#39;bz.Leckmenge&#39;, &#39;bz.Imptnz&#39;, &#39;bz.Zvlimptnz&#39;, &#39;bz.Kantenzv&#39;, &#39;bz.ITrennWithNSCH&#39;], geometry, end nodes...
+[2026-01-09 10:33:06,977] INFO in sir3stoolkit.mantle.dataframes: [metadata] 2 non-empty end node columns were created.
+[2026-01-09 10:33:06,996] INFO in sir3stoolkit.mantle.dataframes: [metadata] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
+[2026-01-09 10:33:06,996] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (44, 50)
+[2026-01-09 10:33:06,996] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_results for element type: ObjectTypes.Pipe ...
+[2026-01-09 10:33:07,110] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
+[2026-01-09 10:33:07,181] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2023-02-13 00:00:00.000 +01:00 is used
+[2026-01-09 10:33:07,182] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
+[2026-01-09 10:33:07,184] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2026-01-09 10:33:07,186] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 44 tks remain after filtering for given tks.
+[2026-01-09 10:33:07,187] INFO in sir3stoolkit.mantle.dataframes: [results] Using 31 result properties.
+[2026-01-09 10:33:07,204] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2026-01-09 10:33:07,501] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 1364)
+[2026-01-09 10:33:07,501] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Merging df_metadata with df_results for element type: ObjectTypes.Pipe ...
+[2026-01-09 10:33:07,510] INFO in sir3stoolkit.mantle.dataframes: Retrieving Hydraulic Profile with Lfdnr: 2.
+[2026-01-09 10:33:07,510] INFO in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df for element type: ObjectTypes.Pipe ...
+[2026-01-09 10:33:07,514] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_metadata for element type: ObjectTypes.Pipe ...
+[2026-01-09 10:33:07,514] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.Pipe
+[2026-01-09 10:33:07,516] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2026-01-09 10:33:07,518] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 44 tks remain after filtering for given tks.
+[2026-01-09 10:33:07,519] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] No properties given → using ALL metadata properties for ObjectTypes.Pipe.
+[2026-01-09 10:33:07,520] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 46 metadata properties.
+[2026-01-09 10:33:07,520] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving metadata properties [&#39;Name&#39;, &#39;FkdtroRowd&#39;, &#39;Fkltgr&#39;, &#39;Fkstrasse&#39;, &#39;L&#39;, &#39;Lzu&#39;, &#39;Rau&#39;, &#39;Jlambs&#39;, &#39;Lambda0&#39;, &#39;Zein&#39;, &#39;Zaus&#39;, &#39;Zuml&#39;, &#39;Asoll&#39;, &#39;Indschall&#39;, &#39;Baujahr&#39;, &#39;Hal&#39;, &#39;Fkcont&#39;, &#39;Fk2lrohr&#39;, &#39;Beschreibung&#39;, &#39;Idreferenz&#39;, &#39;Iplanung&#39;, &#39;Kvr&#39;, &#39;LineWidthMM&#39;, &#39;DottedLine&#39;, &#39;DN&#39;, &#39;Di&#39;, &#39;KvrKlartext&#39;, &#39;HasClosedNSCHs&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;, &#39;Xkor&#39;, &#39;Ykor&#39;, &#39;GeometriesDiffer&#39;, &#39;bz.Fk&#39;, &#39;bz.Qsvb&#39;, &#39;bz.Irtrenn&#39;, &#39;bz.Leckstatus&#39;, &#39;bz.Leckstart&#39;, &#39;bz.Leckend&#39;, &#39;bz.Leckort&#39;, &#39;bz.Leckmenge&#39;, &#39;bz.Imptnz&#39;, &#39;bz.Zvlimptnz&#39;, &#39;bz.Kantenzv&#39;, &#39;bz.ITrennWithNSCH&#39;], geometry, end nodes...
+[2026-01-09 10:33:07,627] INFO in sir3stoolkit.mantle.dataframes: [metadata] 2 non-empty end node columns were created.
+[2026-01-09 10:33:07,637] INFO in sir3stoolkit.mantle.dataframes: [metadata] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
+[2026-01-09 10:33:07,637] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (44, 50)
+[2026-01-09 10:33:07,637] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_results for element type: ObjectTypes.Pipe ...
+[2026-01-09 10:33:07,694] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
+[2026-01-09 10:33:07,760] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2023-02-13 00:00:00.000 +01:00 is used
+[2026-01-09 10:33:07,760] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
+[2026-01-09 10:33:07,768] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2026-01-09 10:33:07,770] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 44 tks remain after filtering for given tks.
+[2026-01-09 10:33:07,771] INFO in sir3stoolkit.mantle.dataframes: [results] Using 31 result properties.
+[2026-01-09 10:33:07,775] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2026-01-09 10:33:08,177] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 1364)
+[2026-01-09 10:33:08,177] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Merging df_metadata with df_results for element type: ObjectTypes.Pipe ...
+[2026-01-09 10:33:08,184] INFO in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df for element type: ObjectTypes.Pipe ...
+[2026-01-09 10:33:08,184] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_metadata for element type: ObjectTypes.Pipe ...
+[2026-01-09 10:33:08,184] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.Pipe
+[2026-01-09 10:33:08,188] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2026-01-09 10:33:08,190] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 44 tks remain after filtering for given tks.
+[2026-01-09 10:33:08,192] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] No properties given → using ALL metadata properties for ObjectTypes.Pipe.
+[2026-01-09 10:33:08,192] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 46 metadata properties.
+[2026-01-09 10:33:08,194] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving metadata properties [&#39;Name&#39;, &#39;FkdtroRowd&#39;, &#39;Fkltgr&#39;, &#39;Fkstrasse&#39;, &#39;L&#39;, &#39;Lzu&#39;, &#39;Rau&#39;, &#39;Jlambs&#39;, &#39;Lambda0&#39;, &#39;Zein&#39;, &#39;Zaus&#39;, &#39;Zuml&#39;, &#39;Asoll&#39;, &#39;Indschall&#39;, &#39;Baujahr&#39;, &#39;Hal&#39;, &#39;Fkcont&#39;, &#39;Fk2lrohr&#39;, &#39;Beschreibung&#39;, &#39;Idreferenz&#39;, &#39;Iplanung&#39;, &#39;Kvr&#39;, &#39;LineWidthMM&#39;, &#39;DottedLine&#39;, &#39;DN&#39;, &#39;Di&#39;, &#39;KvrKlartext&#39;, &#39;HasClosedNSCHs&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;, &#39;Xkor&#39;, &#39;Ykor&#39;, &#39;GeometriesDiffer&#39;, &#39;bz.Fk&#39;, &#39;bz.Qsvb&#39;, &#39;bz.Irtrenn&#39;, &#39;bz.Leckstatus&#39;, &#39;bz.Leckstart&#39;, &#39;bz.Leckend&#39;, &#39;bz.Leckort&#39;, &#39;bz.Leckmenge&#39;, &#39;bz.Imptnz&#39;, &#39;bz.Zvlimptnz&#39;, &#39;bz.Kantenzv&#39;, &#39;bz.ITrennWithNSCH&#39;], geometry, end nodes...
+[2026-01-09 10:33:08,302] INFO in sir3stoolkit.mantle.dataframes: [metadata] 2 non-empty end node columns were created.
+[2026-01-09 10:33:08,310] INFO in sir3stoolkit.mantle.dataframes: [metadata] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
+[2026-01-09 10:33:08,310] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (44, 50)
+[2026-01-09 10:33:08,316] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_results for element type: ObjectTypes.Pipe ...
+[2026-01-09 10:33:08,377] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
+[2026-01-09 10:33:08,450] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2023-02-13 00:00:00.000 +01:00 is used
+[2026-01-09 10:33:08,450] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
+[2026-01-09 10:33:08,454] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2026-01-09 10:33:08,455] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 44 tks remain after filtering for given tks.
+[2026-01-09 10:33:08,457] INFO in sir3stoolkit.mantle.dataframes: [results] Using 31 result properties.
+[2026-01-09 10:33:08,463] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2026-01-09 10:33:08,806] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 1364)
+[2026-01-09 10:33:08,807] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Merging df_metadata with df_results for element type: ObjectTypes.Pipe ...
+[2026-01-09 10:33:08,812] INFO in sir3stoolkit.mantle.dataframes: Retrieving Hydraulic Profile with Lfdnr: 3.
+[2026-01-09 10:33:08,812] INFO in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df for element type: ObjectTypes.Pipe ...
+[2026-01-09 10:33:08,812] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_metadata for element type: ObjectTypes.Pipe ...
+[2026-01-09 10:33:08,812] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.Pipe
+[2026-01-09 10:33:08,819] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2026-01-09 10:33:08,819] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 44 tks remain after filtering for given tks.
+[2026-01-09 10:33:08,821] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] No properties given → using ALL metadata properties for ObjectTypes.Pipe.
+[2026-01-09 10:33:08,822] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 46 metadata properties.
+[2026-01-09 10:33:08,822] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving metadata properties [&#39;Name&#39;, &#39;FkdtroRowd&#39;, &#39;Fkltgr&#39;, &#39;Fkstrasse&#39;, &#39;L&#39;, &#39;Lzu&#39;, &#39;Rau&#39;, &#39;Jlambs&#39;, &#39;Lambda0&#39;, &#39;Zein&#39;, &#39;Zaus&#39;, &#39;Zuml&#39;, &#39;Asoll&#39;, &#39;Indschall&#39;, &#39;Baujahr&#39;, &#39;Hal&#39;, &#39;Fkcont&#39;, &#39;Fk2lrohr&#39;, &#39;Beschreibung&#39;, &#39;Idreferenz&#39;, &#39;Iplanung&#39;, &#39;Kvr&#39;, &#39;LineWidthMM&#39;, &#39;DottedLine&#39;, &#39;DN&#39;, &#39;Di&#39;, &#39;KvrKlartext&#39;, &#39;HasClosedNSCHs&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;, &#39;Xkor&#39;, &#39;Ykor&#39;, &#39;GeometriesDiffer&#39;, &#39;bz.Fk&#39;, &#39;bz.Qsvb&#39;, &#39;bz.Irtrenn&#39;, &#39;bz.Leckstatus&#39;, &#39;bz.Leckstart&#39;, &#39;bz.Leckend&#39;, &#39;bz.Leckort&#39;, &#39;bz.Leckmenge&#39;, &#39;bz.Imptnz&#39;, &#39;bz.Zvlimptnz&#39;, &#39;bz.Kantenzv&#39;, &#39;bz.ITrennWithNSCH&#39;], geometry, end nodes...
+[2026-01-09 10:33:08,928] INFO in sir3stoolkit.mantle.dataframes: [metadata] 2 non-empty end node columns were created.
+[2026-01-09 10:33:08,947] INFO in sir3stoolkit.mantle.dataframes: [metadata] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
+[2026-01-09 10:33:08,949] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (44, 50)
+[2026-01-09 10:33:08,949] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_results for element type: ObjectTypes.Pipe ...
+[2026-01-09 10:33:09,010] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
+[2026-01-09 10:33:09,077] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2023-02-13 00:00:00.000 +01:00 is used
+[2026-01-09 10:33:09,077] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
+[2026-01-09 10:33:09,083] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2026-01-09 10:33:09,084] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 44 tks remain after filtering for given tks.
+[2026-01-09 10:33:09,085] INFO in sir3stoolkit.mantle.dataframes: [results] Using 31 result properties.
+[2026-01-09 10:33:09,111] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2026-01-09 10:33:09,403] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 1364)
+[2026-01-09 10:33:09,403] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Merging df_metadata with df_results for element type: ObjectTypes.Pipe ...
+[2026-01-09 10:33:09,412] INFO in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df for element type: ObjectTypes.Pipe ...
+[2026-01-09 10:33:09,412] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_metadata for element type: ObjectTypes.Pipe ...
+[2026-01-09 10:33:09,412] INFO in sir3stoolkit.mantle.dataframes: [metadata] Generating metadata dataframe for element type: ObjectTypes.Pipe
+[2026-01-09 10:33:09,416] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2026-01-09 10:33:09,418] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 44 tks remain after filtering for given tks.
+[2026-01-09 10:33:09,420] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] No properties given → using ALL metadata properties for ObjectTypes.Pipe.
+[2026-01-09 10:33:09,420] INFO in sir3stoolkit.mantle.dataframes: [Resolving Metadata Properties] Using 46 metadata properties.
+[2026-01-09 10:33:09,421] INFO in sir3stoolkit.mantle.dataframes: [metadata] Retrieving metadata properties [&#39;Name&#39;, &#39;FkdtroRowd&#39;, &#39;Fkltgr&#39;, &#39;Fkstrasse&#39;, &#39;L&#39;, &#39;Lzu&#39;, &#39;Rau&#39;, &#39;Jlambs&#39;, &#39;Lambda0&#39;, &#39;Zein&#39;, &#39;Zaus&#39;, &#39;Zuml&#39;, &#39;Asoll&#39;, &#39;Indschall&#39;, &#39;Baujahr&#39;, &#39;Hal&#39;, &#39;Fkcont&#39;, &#39;Fk2lrohr&#39;, &#39;Beschreibung&#39;, &#39;Idreferenz&#39;, &#39;Iplanung&#39;, &#39;Kvr&#39;, &#39;LineWidthMM&#39;, &#39;DottedLine&#39;, &#39;DN&#39;, &#39;Di&#39;, &#39;KvrKlartext&#39;, &#39;HasClosedNSCHs&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;, &#39;Xkor&#39;, &#39;Ykor&#39;, &#39;GeometriesDiffer&#39;, &#39;bz.Fk&#39;, &#39;bz.Qsvb&#39;, &#39;bz.Irtrenn&#39;, &#39;bz.Leckstatus&#39;, &#39;bz.Leckstart&#39;, &#39;bz.Leckend&#39;, &#39;bz.Leckort&#39;, &#39;bz.Leckmenge&#39;, &#39;bz.Imptnz&#39;, &#39;bz.Zvlimptnz&#39;, &#39;bz.Kantenzv&#39;, &#39;bz.ITrennWithNSCH&#39;], geometry, end nodes...
+[2026-01-09 10:33:09,525] INFO in sir3stoolkit.mantle.dataframes: [metadata] 2 non-empty end node columns were created.
+[2026-01-09 10:33:09,531] INFO in sir3stoolkit.mantle.dataframes: [metadata] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
+[2026-01-09 10:33:09,531] INFO in sir3stoolkit.mantle.dataframes: [metadata] Done. Shape: (44, 50)
+[2026-01-09 10:33:09,531] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_results for element type: ObjectTypes.Pipe ...
+[2026-01-09 10:33:09,594] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
+[2026-01-09 10:33:09,657] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2023-02-13 00:00:00.000 +01:00 is used
+[2026-01-09 10:33:09,657] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
+[2026-01-09 10:33:09,667] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2026-01-09 10:33:09,668] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 44 tks remain after filtering for given tks.
+[2026-01-09 10:33:09,669] INFO in sir3stoolkit.mantle.dataframes: [results] Using 31 result properties.
+[2026-01-09 10:33:09,694] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2026-01-09 10:33:09,977] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 1364)
+[2026-01-09 10:33:09,990] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Merging df_metadata with df_results for element type: ObjectTypes.Pipe ...
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dfs[0].head() # Lfdnr 1 VL
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>tk</th>
+      <th>Name</th>
+      <th>FkdtroRowd</th>
+      <th>Fkltgr</th>
+      <th>Fkstrasse</th>
+      <th>L</th>
+      <th>Lzu</th>
+      <th>Rau</th>
+      <th>Jlambs</th>
+      <th>Lambda0</th>
+      <th>Zein</th>
+      <th>Zaus</th>
+      <th>Zuml</th>
+      <th>Asoll</th>
+      <th>Indschall</th>
+      <th>Baujahr</th>
+      <th>Hal</th>
+      <th>Fkcont</th>
+      <th>Fk2lrohr</th>
+      <th>Beschreibung</th>
+      <th>Idreferenz</th>
+      <th>Iplanung</th>
+      <th>Kvr</th>
+      <th>LineWidthMM</th>
+      <th>DottedLine</th>
+      <th>DN</th>
+      <th>Di</th>
+      <th>KvrKlartext</th>
+      <th>HasClosedNSCHs</th>
+      <th>Tk</th>
+      <th>Pk</th>
+      <th>InVariant</th>
+      <th>Xkor</th>
+      <th>Ykor</th>
+      <th>GeometriesDiffer</th>
+      <th>bz.Fk</th>
+      <th>bz.Qsvb</th>
+      <th>bz.Irtrenn</th>
+      <th>bz.Leckstatus</th>
+      <th>bz.Leckstart</th>
+      <th>bz.Leckend</th>
+      <th>bz.Leckort</th>
+      <th>bz.Leckmenge</th>
+      <th>bz.Imptnz</th>
+      <th>bz.Zvlimptnz</th>
+      <th>bz.Kantenzv</th>
+      <th>bz.ITrennWithNSCH</th>
+      <th>geometry</th>
+      <th>fkKI</th>
+      <th>fkKK</th>
+      <th>A</th>
+      <th>DTTR</th>
+      <th>DWVERL</th>
+      <th>DWVERLABS</th>
+      <th>IAKTIV</th>
+      <th>IRTRENN</th>
+      <th>JV</th>
+      <th>MVEC</th>
+      <th>PDAMPF</th>
+      <th>PHR</th>
+      <th>PMIN</th>
+      <th>PVEC</th>
+      <th>PVECMAX_INST</th>
+      <th>PVECMIN_INST</th>
+      <th>QMAV</th>
+      <th>QMI</th>
+      <th>QMK</th>
+      <th>RHOI</th>
+      <th>RHOK</th>
+      <th>RHOVEC</th>
+      <th>SVEC</th>
+      <th>TI</th>
+      <th>TK</th>
+      <th>TTRVEC</th>
+      <th>TVEC</th>
+      <th>VAV</th>
+      <th>VI</th>
+      <th>VK</th>
+      <th>VOLDA</th>
+      <th>WVL</th>
+      <th>ZVEC</th>
+      <th>l_sum</th>
+      <th>AGSN_Lfdnr</th>
+      <th>AGSN_Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>5691533564979419761</td>
+      <td>Rohr V-E0 V-K1683S</td>
+      <td>4816511167455310973</td>
+      <td>4779752876656844188</td>
+      <td>5204829332281547346</td>
+      <td>15,3517</td>
+      <td>0</td>
+      <td>0,05</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1000</td>
+      <td>0</td>
+      <td></td>
+      <td>0</td>
+      <td>5029128874972463118</td>
+      <td>5025945677694931826</td>
+      <td>OSM: Knoten 476971238 -&gt; Knoten 299394923; Län...</td>
+      <td>39785520</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0,00499999987368938</td>
+      <td>0</td>
+      <td>350</td>
+      <td>345,6</td>
+      <td>Vorlauf</td>
+      <td></td>
+      <td>5691533564979419761</td>
+      <td>5691533564979419761</td>
+      <td>False</td>
+      <td>713619,921382501</td>
+      <td>5578218,95448989</td>
+      <td>False</td>
+      <td>5691533564979419761</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>LINESTRING (713619.921 5578218.954, 713614.649...</td>
+      <td>5398100694284104779</td>
+      <td>4825391580467484032</td>
+      <td>0.0</td>
+      <td>0.004844</td>
+      <td>43.12016</td>
+      <td>0.661968</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.152727</td>
+      <td>79.74764\t79.74764\t79.74764</td>
+      <td>0.701074</td>
+      <td>0.002345</td>
+      <td>5.800678</td>
+      <td>5.878785\t5.83973\t5.80068</td>
+      <td>5.878785\t5.83973\t5.80068</td>
+      <td>5.878785\t5.83973\t5.80068</td>
+      <td>287.0915</td>
+      <td>287.0915</td>
+      <td>287.0915</td>
+      <td>965.7</td>
+      <td>965.7012</td>
+      <td>965.7\t965.7006\t965.7012</td>
+      <td>0\t7.67585\t15.3517</td>
+      <td>89.99999</td>
+      <td>89.99802</td>
+      <td>0\t0.002422066\t0.004844132</td>
+      <td>90\t89.99902\t89.99802</td>
+      <td>0.880315</td>
+      <td>0.880315</td>
+      <td>0.880314</td>
+      <td>0.0</td>
+      <td>10082.88</td>
+      <td>541.49\t541.89\t542.29</td>
+      <td>15.351701</td>
+      <td>1</td>
+      <td>Längsschnitt</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>5048873293262650113</td>
+      <td>Rohr V-K1683S V-K1693S</td>
+      <td>4816511167455310973</td>
+      <td>4779752876656844188</td>
+      <td>5204829332281547346</td>
+      <td>12,50895</td>
+      <td>0</td>
+      <td>0,05</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1000</td>
+      <td>0</td>
+      <td></td>
+      <td>0</td>
+      <td>5029128874972463118</td>
+      <td>5216742060270992761</td>
+      <td>OSM: Knoten 299394923 -&gt; Knoten 4105649557; Lä...</td>
+      <td>39785520</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0,00499999987368938</td>
+      <td>0</td>
+      <td>350</td>
+      <td>345,6</td>
+      <td>Vorlauf</td>
+      <td></td>
+      <td>5048873293262650113</td>
+      <td>5048873293262650113</td>
+      <td>False</td>
+      <td>713614,648711719</td>
+      <td>5578233,37231421</td>
+      <td>False</td>
+      <td>5048873293262650113</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>LINESTRING (713614.649 5578233.372, 713614.465...</td>
+      <td>4825391580467484032</td>
+      <td>5180617780362861593</td>
+      <td>0.0</td>
+      <td>0.003947</td>
+      <td>43.5808</td>
+      <td>0.54515</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.152727</td>
+      <td>79.74764\t79.74764\t79.74764</td>
+      <td>0.701027</td>
+      <td>0.00191</td>
+      <td>5.732475</td>
+      <td>5.80068\t5.766575\t5.732475</td>
+      <td>5.80068\t5.766575\t5.732475</td>
+      <td>5.80068\t5.766575\t5.732475</td>
+      <td>287.0915</td>
+      <td>287.0915</td>
+      <td>287.0915</td>
+      <td>965.7012</td>
+      <td>965.7021</td>
+      <td>965.7012\t965.7017\t965.7021</td>
+      <td>0\t6.254474\t12.50895</td>
+      <td>89.99802</td>
+      <td>89.9964</td>
+      <td>0.004844132\t0.006817695\t0.008791257</td>
+      <td>89.99802\t89.99722\t89.9964</td>
+      <td>0.880314</td>
+      <td>0.880314</td>
+      <td>0.880313</td>
+      <td>0.0</td>
+      <td>10081.81</td>
+      <td>542.29\t542.64\t542.99</td>
+      <td>27.860648</td>
+      <td>1</td>
+      <td>Längsschnitt</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>5715081934973525403</td>
+      <td>Rohr V-K2163S V-K1693S</td>
+      <td>4816511167455310973</td>
+      <td>4779752876656844188</td>
+      <td>5204829332281547346</td>
+      <td>6,265505</td>
+      <td>0</td>
+      <td>0,05</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1000</td>
+      <td>0</td>
+      <td></td>
+      <td>0</td>
+      <td>5029128874972463118</td>
+      <td>4919359344392474301</td>
+      <td>OSM: Knoten 299394922 -&gt; Knoten 4105649557; Lä...</td>
+      <td>595926249</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0,00499999987368938</td>
+      <td>0</td>
+      <td>350</td>
+      <td>345,6</td>
+      <td>Vorlauf</td>
+      <td></td>
+      <td>5715081934973525403</td>
+      <td>5715081934973525403</td>
+      <td>False</td>
+      <td>713614,369043203</td>
+      <td>5578252,14468345</td>
+      <td>False</td>
+      <td>5715081934973525403</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>LINESTRING (713614.369 5578252.145, 713614.465...</td>
+      <td>4964920487041183545</td>
+      <td>5180617780362861593</td>
+      <td>0.0</td>
+      <td>0.001977</td>
+      <td>43.50407</td>
+      <td>0.272575</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.152727</td>
+      <td>-79.74764\t-79.74764</td>
+      <td>0.700995</td>
+      <td>0.000957</td>
+      <td>5.699317</td>
+      <td>5.699315\t5.732475</td>
+      <td>5.699315\t5.732475</td>
+      <td>5.699315\t5.732475</td>
+      <td>-287.0915</td>
+      <td>-287.0915</td>
+      <td>-287.0915</td>
+      <td>965.7026</td>
+      <td>965.7021</td>
+      <td>965.7026\t965.7021</td>
+      <td>0\t6.265505</td>
+      <td>89.9956</td>
+      <td>89.9964</td>
+      <td>0.0107683\t0.008791257</td>
+      <td>89.99561\t89.9964</td>
+      <td>-0.880313</td>
+      <td>-0.880313</td>
+      <td>-0.880313</td>
+      <td>0.0</td>
+      <td>-10080.92</td>
+      <td>543.33\t542.99</td>
+      <td>34.126153</td>
+      <td>1</td>
+      <td>Längsschnitt</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>5413647981880727734</td>
+      <td>Rohr V-K2043S V-K2163S</td>
+      <td>4816511167455310973</td>
+      <td>4779752876656844188</td>
+      <td>5204829332281547346</td>
+      <td>14,40754</td>
+      <td>0</td>
+      <td>0,05</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1000</td>
+      <td>0</td>
+      <td></td>
+      <td>0</td>
+      <td>5029128874972463118</td>
+      <td>5299861566239260044</td>
+      <td>OSM: Knoten 299394921 -&gt; Knoten 299394922; Län...</td>
+      <td>595926249</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0,00499999987368938</td>
+      <td>0</td>
+      <td>350</td>
+      <td>345,6</td>
+      <td>Vorlauf</td>
+      <td></td>
+      <td>5413647981880727734</td>
+      <td>5413647981880727734</td>
+      <td>False</td>
+      <td>713616,883648516</td>
+      <td>5578266,3310858</td>
+      <td>False</td>
+      <td>5413647981880727734</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>LINESTRING (713616.884 5578266.331, 713614.369...</td>
+      <td>4794016231137548967</td>
+      <td>4964920487041183545</td>
+      <td>0.0</td>
+      <td>0.004546</td>
+      <td>43.24322</td>
+      <td>0.623028</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.152727</td>
+      <td>-79.74764\t-79.74764\t-79.74764</td>
+      <td>0.70096</td>
+      <td>0.0022</td>
+      <td>5.630823</td>
+      <td>5.630825\t5.66507\t5.699315</td>
+      <td>5.630825\t5.66507\t5.699315</td>
+      <td>5.630825\t5.66507\t5.699315</td>
+      <td>-287.0915</td>
+      <td>-287.0915</td>
+      <td>-287.0915</td>
+      <td>965.7037</td>
+      <td>965.7026</td>
+      <td>965.7037\t965.7032\t965.7026</td>
+      <td>0\t7.203771\t14.40754</td>
+      <td>89.99374</td>
+      <td>89.9956</td>
+      <td>0.01531452\t0.01304141\t0.0107683</td>
+      <td>89.99374\t89.99466\t89.99561</td>
+      <td>-0.880313</td>
+      <td>-0.880312</td>
+      <td>-0.880313</td>
+      <td>0.0</td>
+      <td>-10080.48</td>
+      <td>544.03\t543.6801\t543.33</td>
+      <td>48.533695</td>
+      <td>1</td>
+      <td>Längsschnitt</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5134010500800575790</td>
+      <td>Rohr V-K2033S V-K2043S</td>
+      <td>4816511167455310973</td>
+      <td>4779752876656844188</td>
+      <td>5204829332281547346</td>
+      <td>13,51584</td>
+      <td>0</td>
+      <td>0,05</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1000</td>
+      <td>0</td>
+      <td></td>
+      <td>0</td>
+      <td>5029128874972463118</td>
+      <td>5204837016964086891</td>
+      <td>OSM: Knoten 4105649561 -&gt; Knoten 299394921; Lä...</td>
+      <td>408665320</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0,00499999987368938</td>
+      <td>0</td>
+      <td>350</td>
+      <td>345,6</td>
+      <td>Vorlauf</td>
+      <td></td>
+      <td>5134010500800575790</td>
+      <td>5134010500800575790</td>
+      <td>False</td>
+      <td>713614,238695288</td>
+      <td>5578279,58560368</td>
+      <td>False</td>
+      <td>5134010500800575790</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>LINESTRING (713614.239 5578279.586, 713616.884...</td>
+      <td>5473123125979010325</td>
+      <td>4794016231137548967</td>
+      <td>0.0</td>
+      <td>0.004265</td>
+      <td>42.4949</td>
+      <td>0.574354</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.152727</td>
+      <td>-79.74764\t-79.74764\t-79.74764</td>
+      <td>0.700913</td>
+      <td>0.002064</td>
+      <td>5.580464</td>
+      <td>5.580465\t5.605645\t5.630825</td>
+      <td>5.580465\t5.605645\t5.630825</td>
+      <td>5.580465\t5.605645\t5.630825</td>
+      <td>-287.0915</td>
+      <td>-287.0915</td>
+      <td>-287.0915</td>
+      <td>965.7048</td>
+      <td>965.7037</td>
+      <td>965.7048\t965.7043\t965.7037</td>
+      <td>0\t6.757922\t13.51584</td>
+      <td>89.992</td>
+      <td>89.99374</td>
+      <td>0.01957938\t0.01744695\t0.01531452</td>
+      <td>89.992\t89.99286\t89.99374</td>
+      <td>-0.880312</td>
+      <td>-0.880311</td>
+      <td>-0.880312</td>
+      <td>0.0</td>
+      <td>-10079.47</td>
+      <td>544.54\t544.285\t544.03</td>
+      <td>62.049538</td>
+      <td>1</td>
+      <td>Längsschnitt</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dfs[1].head() # Lfdnr 1 RL
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>tk</th>
+      <th>Name</th>
+      <th>FkdtroRowd</th>
+      <th>Fkltgr</th>
+      <th>Fkstrasse</th>
+      <th>L</th>
+      <th>Lzu</th>
+      <th>Rau</th>
+      <th>Jlambs</th>
+      <th>Lambda0</th>
+      <th>Zein</th>
+      <th>Zaus</th>
+      <th>Zuml</th>
+      <th>Asoll</th>
+      <th>Indschall</th>
+      <th>Baujahr</th>
+      <th>Hal</th>
+      <th>Fkcont</th>
+      <th>Fk2lrohr</th>
+      <th>Beschreibung</th>
+      <th>Idreferenz</th>
+      <th>Iplanung</th>
+      <th>Kvr</th>
+      <th>LineWidthMM</th>
+      <th>DottedLine</th>
+      <th>DN</th>
+      <th>Di</th>
+      <th>KvrKlartext</th>
+      <th>HasClosedNSCHs</th>
+      <th>Tk</th>
+      <th>Pk</th>
+      <th>InVariant</th>
+      <th>Xkor</th>
+      <th>Ykor</th>
+      <th>GeometriesDiffer</th>
+      <th>bz.Fk</th>
+      <th>bz.Qsvb</th>
+      <th>bz.Irtrenn</th>
+      <th>bz.Leckstatus</th>
+      <th>bz.Leckstart</th>
+      <th>bz.Leckend</th>
+      <th>bz.Leckort</th>
+      <th>bz.Leckmenge</th>
+      <th>bz.Imptnz</th>
+      <th>bz.Zvlimptnz</th>
+      <th>bz.Kantenzv</th>
+      <th>bz.ITrennWithNSCH</th>
+      <th>geometry</th>
+      <th>fkKI</th>
+      <th>fkKK</th>
+      <th>A</th>
+      <th>DTTR</th>
+      <th>DWVERL</th>
+      <th>DWVERLABS</th>
+      <th>IAKTIV</th>
+      <th>IRTRENN</th>
+      <th>JV</th>
+      <th>MVEC</th>
+      <th>PDAMPF</th>
+      <th>PHR</th>
+      <th>PMIN</th>
+      <th>PVEC</th>
+      <th>PVECMAX_INST</th>
+      <th>PVECMIN_INST</th>
+      <th>QMAV</th>
+      <th>QMI</th>
+      <th>QMK</th>
+      <th>RHOI</th>
+      <th>RHOK</th>
+      <th>RHOVEC</th>
+      <th>SVEC</th>
+      <th>TI</th>
+      <th>TK</th>
+      <th>TTRVEC</th>
+      <th>TVEC</th>
+      <th>VAV</th>
+      <th>VI</th>
+      <th>VK</th>
+      <th>VOLDA</th>
+      <th>WVL</th>
+      <th>ZVEC</th>
+      <th>l_sum</th>
+      <th>AGSN_Lfdnr</th>
+      <th>AGSN_Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>5025945677694931826</td>
+      <td>Rohr R-E0 R-K4163S</td>
+      <td>4816511167455310973</td>
+      <td>4779752876656844188</td>
+      <td>5204829332281547346</td>
+      <td>15,3517</td>
+      <td>0</td>
+      <td>0,05</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1000</td>
+      <td>0</td>
+      <td></td>
+      <td>0</td>
+      <td>5029128874972463118</td>
+      <td>5691533564979419761</td>
+      <td>OSM: Knoten 476971238 -&gt; Knoten 299394923; Län...</td>
+      <td>39785520</td>
+      <td>0</td>
+      <td>2</td>
+      <td>0,00499999987368938</td>
+      <td>0</td>
+      <td>350</td>
+      <td>345,6</td>
+      <td>Rücklauf</td>
+      <td></td>
+      <td>5025945677694931826</td>
+      <td>5025945677694931826</td>
+      <td>False</td>
+      <td>713621,921382501</td>
+      <td>5578218,95448989</td>
+      <td>False</td>
+      <td>5025945677694931826</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>LINESTRING (713621.921 5578218.954, 713616.649...</td>
+      <td>5160850648779674898</td>
+      <td>4851678476955084637</td>
+      <td>0.0</td>
+      <td>0.004935</td>
+      <td>26.63304</td>
+      <td>0.408862</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.154884</td>
+      <td>-79.74764\t-79.74764\t-79.74764</td>
+      <td>0.197685</td>
+      <td>0.002378</td>
+      <td>3.953687</td>
+      <td>4.0256\t3.98964\t3.953685</td>
+      <td>4.0256\t3.98964\t3.953685</td>
+      <td>4.0256\t3.98964\t3.953685</td>
+      <td>-287.0915</td>
+      <td>-287.0915</td>
+      <td>-287.0915</td>
+      <td>983.7845</td>
+      <td>983.7839</td>
+      <td>983.7845\t983.7842\t983.7839</td>
+      <td>0\t7.67585\t15.3517</td>
+      <td>59.83105</td>
+      <td>59.83229</td>
+      <td>0.3167359\t0.3142685\t0.3118011</td>
+      <td>59.83105\t59.83167\t59.83231</td>
+      <td>-0.864133</td>
+      <td>-0.864133</td>
+      <td>-0.864133</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>541.43\t541.815\t542.2</td>
+      <td>15.351701</td>
+      <td>1</td>
+      <td>Längsschnitt</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>5216742060270992761</td>
+      <td>Rohr R-K4163S R-K4173S</td>
+      <td>4816511167455310973</td>
+      <td>4779752876656844188</td>
+      <td>5204829332281547346</td>
+      <td>12,50895</td>
+      <td>0</td>
+      <td>0,05</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1000</td>
+      <td>0</td>
+      <td></td>
+      <td>0</td>
+      <td>5029128874972463118</td>
+      <td>5048873293262650113</td>
+      <td>OSM: Knoten 299394923 -&gt; Knoten 4105649557; Lä...</td>
+      <td>39785520</td>
+      <td>0</td>
+      <td>2</td>
+      <td>0,00499999987368938</td>
+      <td>0</td>
+      <td>350</td>
+      <td>345,6</td>
+      <td>Rücklauf</td>
+      <td></td>
+      <td>5216742060270992761</td>
+      <td>5216742060270992761</td>
+      <td>False</td>
+      <td>713616,648711719</td>
+      <td>5578233,37231421</td>
+      <td>False</td>
+      <td>5216742060270992761</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>LINESTRING (713616.649 5578233.372, 713616.465...</td>
+      <td>4851678476955084637</td>
+      <td>5469753985021987570</td>
+      <td>0.0</td>
+      <td>0.004021</td>
+      <td>27.238</td>
+      <td>0.340719</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.154884</td>
+      <td>-79.74764\t-79.74764\t-79.74764</td>
+      <td>0.197695</td>
+      <td>0.001937</td>
+      <td>3.885199</td>
+      <td>3.953685\t3.919445\t3.8852</td>
+      <td>3.953685\t3.919445\t3.8852</td>
+      <td>3.953685\t3.919445\t3.8852</td>
+      <td>-287.0915</td>
+      <td>-287.0915</td>
+      <td>-287.0915</td>
+      <td>983.7839</td>
+      <td>983.7833</td>
+      <td>983.7839\t983.7836\t983.7833</td>
+      <td>0\t6.254474\t12.50895</td>
+      <td>59.83229</td>
+      <td>59.8333</td>
+      <td>0.3118011\t0.3097906\t0.3077801</td>
+      <td>59.83231\t59.83279\t59.83331</td>
+      <td>-0.864134</td>
+      <td>-0.864133</td>
+      <td>-0.864134</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>542.2\t542.565\t542.93</td>
+      <td>27.860648</td>
+      <td>1</td>
+      <td>Längsschnitt</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4919359344392474301</td>
+      <td>Rohr R-K4643S R-K4173S</td>
+      <td>4816511167455310973</td>
+      <td>4779752876656844188</td>
+      <td>5204829332281547346</td>
+      <td>6,265505</td>
+      <td>0</td>
+      <td>0,05</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1000</td>
+      <td>0</td>
+      <td></td>
+      <td>0</td>
+      <td>5029128874972463118</td>
+      <td>5715081934973525403</td>
+      <td>OSM: Knoten 299394922 -&gt; Knoten 4105649557; Lä...</td>
+      <td>595926249</td>
+      <td>0</td>
+      <td>2</td>
+      <td>0,00499999987368938</td>
+      <td>0</td>
+      <td>350</td>
+      <td>345,6</td>
+      <td>Rücklauf</td>
+      <td></td>
+      <td>4919359344392474301</td>
+      <td>4919359344392474301</td>
+      <td>False</td>
+      <td>713616,369043203</td>
+      <td>5578252,14468345</td>
+      <td>False</td>
+      <td>4919359344392474301</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>LINESTRING (713616.369 5578252.145, 713616.465...</td>
+      <td>5207603338578264169</td>
+      <td>5469753985021987570</td>
+      <td>0.0</td>
+      <td>0.002014</td>
+      <td>26.41318</td>
+      <td>0.165492</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.154884</td>
+      <td>79.74764\t79.74764</td>
+      <td>0.197702</td>
+      <td>0.00097</td>
+      <td>3.851439</td>
+      <td>3.85144\t3.8852</td>
+      <td>3.85144\t3.8852</td>
+      <td>3.85144\t3.8852</td>
+      <td>287.0915</td>
+      <td>287.0915</td>
+      <td>287.0915</td>
+      <td>983.7831</td>
+      <td>983.7833</td>
+      <td>983.7831\t983.7833</td>
+      <td>0\t6.265505</td>
+      <td>59.8338</td>
+      <td>59.8333</td>
+      <td>0.305766\t0.3077801</td>
+      <td>59.8338\t59.83331</td>
+      <td>0.864134</td>
+      <td>0.864134</td>
+      <td>0.864134</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>543.29\t542.93</td>
+      <td>34.126153</td>
+      <td>1</td>
+      <td>Längsschnitt</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>5299861566239260044</td>
+      <td>Rohr R-K4523S R-K4643S</td>
+      <td>4816511167455310973</td>
+      <td>4779752876656844188</td>
+      <td>5204829332281547346</td>
+      <td>14,40754</td>
+      <td>0</td>
+      <td>0,05</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1000</td>
+      <td>0</td>
+      <td></td>
+      <td>0</td>
+      <td>5029128874972463118</td>
+      <td>5413647981880727734</td>
+      <td>OSM: Knoten 299394921 -&gt; Knoten 299394922; Län...</td>
+      <td>595926249</td>
+      <td>0</td>
+      <td>2</td>
+      <td>0,00499999987368938</td>
+      <td>0</td>
+      <td>350</td>
+      <td>345,6</td>
+      <td>Rücklauf</td>
+      <td></td>
+      <td>5299861566239260044</td>
+      <td>5299861566239260044</td>
+      <td>False</td>
+      <td>713618,883648516</td>
+      <td>5578266,3310858</td>
+      <td>False</td>
+      <td>5299861566239260044</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>LINESTRING (713618.884 5578266.331, 713616.369...</td>
+      <td>5191457421068378074</td>
+      <td>5207603338578264169</td>
+      <td>0.0</td>
+      <td>0.004631</td>
+      <td>27.02701</td>
+      <td>0.389393</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.154884</td>
+      <td>79.74764\t79.74764\t79.74764</td>
+      <td>0.197709</td>
+      <td>0.002231</td>
+      <td>3.773594</td>
+      <td>3.773595\t3.812515\t3.85144</td>
+      <td>3.773595\t3.812515\t3.85144</td>
+      <td>3.773595\t3.812515\t3.85144</td>
+      <td>287.0915</td>
+      <td>287.0915</td>
+      <td>287.0915</td>
+      <td>983.7825</td>
+      <td>983.7831</td>
+      <td>983.7825\t983.7828\t983.7831</td>
+      <td>0\t7.203771\t14.40754</td>
+      <td>59.83496</td>
+      <td>59.8338</td>
+      <td>0.3011347\t0.3034503\t0.305766</td>
+      <td>59.83496\t59.83438\t59.8338</td>
+      <td>0.864135</td>
+      <td>0.864135</td>
+      <td>0.864134</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>544.12\t543.705\t543.29</td>
+      <td>48.533695</td>
+      <td>1</td>
+      <td>Längsschnitt</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5204837016964086891</td>
+      <td>Rohr R-K4513S R-K4523S</td>
+      <td>4816511167455310973</td>
+      <td>4779752876656844188</td>
+      <td>5204829332281547346</td>
+      <td>13,51584</td>
+      <td>0</td>
+      <td>0,05</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1000</td>
+      <td>0</td>
+      <td></td>
+      <td>0</td>
+      <td>5029128874972463118</td>
+      <td>5134010500800575790</td>
+      <td>OSM: Knoten 4105649561 -&gt; Knoten 299394921; Lä...</td>
+      <td>408665320</td>
+      <td>0</td>
+      <td>2</td>
+      <td>0,00499999987368938</td>
+      <td>0</td>
+      <td>350</td>
+      <td>345,6</td>
+      <td>Rücklauf</td>
+      <td></td>
+      <td>5204837016964086891</td>
+      <td>5204837016964086891</td>
+      <td>False</td>
+      <td>713616,238695288</td>
+      <td>5578279,58560368</td>
+      <td>False</td>
+      <td>5204837016964086891</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>LINESTRING (713616.239 5578279.586, 713618.884...</td>
+      <td>4875054825941361274</td>
+      <td>5191457421068378074</td>
+      <td>0.0</td>
+      <td>0.004345</td>
+      <td>27.36959</td>
+      <td>0.369923</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.154884</td>
+      <td>79.74764\t79.74764\t79.74764</td>
+      <td>0.19772</td>
+      <td>0.002093</td>
+      <td>3.72938</td>
+      <td>3.72938\t3.751485\t3.773595</td>
+      <td>3.72938\t3.751485\t3.773595</td>
+      <td>3.72938\t3.751485\t3.773595</td>
+      <td>287.0915</td>
+      <td>287.0915</td>
+      <td>287.0915</td>
+      <td>983.782</td>
+      <td>983.7825</td>
+      <td>983.782\t983.7822\t983.7825</td>
+      <td>0\t6.757922\t13.51584</td>
+      <td>59.83606</td>
+      <td>59.83496</td>
+      <td>0.2967899\t0.2989623\t0.3011346</td>
+      <td>59.83606\t59.83551\t59.83496</td>
+      <td>0.864135</td>
+      <td>0.864135</td>
+      <td>0.864135</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>544.6\t544.36\t544.12</td>
+      <td>62.049538</td>
+      <td>1</td>
+      <td>Längsschnitt</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025 3S Consult GmbH.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
