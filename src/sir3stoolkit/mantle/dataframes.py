@@ -716,6 +716,38 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
             logger.error(f"[edge dataframe] Failed to retrieve edges: {e}")
 
         return df_edges
+    
+    def generate_pipe_vector_dataframe(
+        self,
+        tks: List[str] = None
+    ) -> pd.DataFrame:
+        """
+        Docstring for generate_pipe_vector_dataframe
+        
+        :param self: Description
+        :return: Description
+        :rtype: DataFrame
+        """
+        df_model_data = self.generate_element_dataframe(element_type=self.ObjectTypes.Pipe, tks=tks)
+        df_pipe_vector= self.add_interior_points_as_flat_cols(df_model_data)
+        return df_pipe_vector
+    
+    def generate_longitudinal_section_vector_dataframes(
+        self
+    ) -> pd.DataFrame:
+        """
+        Docstring for generate_pipe_vector_dataframe
+        
+        :param self: Description
+        :return: Description
+        :rtype: DataFrame
+        """
+        dfs_longitudinal_section = self.generate_longitudinal_section_dataframes()
+        dfs_longitudinal_section_vector = []
+        for df in dfs_longitudinal_section:
+            df_vector= self.add_interior_points_as_flat_cols(df)
+            dfs_longitudinal_section_vector.append(df_vector)
+        return dfs_longitudinal_section_vector
         
     def __get_object_type_enums(self, names, enum_class):
         return [getattr(enum_class, name) for name in names if hasattr(enum_class, name)]
