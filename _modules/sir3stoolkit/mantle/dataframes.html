@@ -825,6 +825,44 @@
 
         <span class="k">return</span> <span class="n">df_edges</span></div>
 
+    
+<div class="viewcode-block" id="SIR3S_Model_Dataframes.generate_pipe_vector_dataframe">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.generate_pipe_vector_dataframe">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">generate_pipe_vector_dataframe</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">tks</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Docstring for generate_pipe_vector_dataframe</span>
+<span class="sd">        </span>
+<span class="sd">        :param self: Description</span>
+<span class="sd">        :return: Description</span>
+<span class="sd">        :rtype: DataFrame</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">df_model_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_element_dataframe</span><span class="p">(</span><span class="n">element_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="o">.</span><span class="n">Pipe</span><span class="p">,</span> <span class="n">tks</span><span class="o">=</span><span class="n">tks</span><span class="p">)</span>
+        <span class="n">df_pipe_vector</span><span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_interior_points_as_flat_cols</span><span class="p">(</span><span class="n">df_model_data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">df_pipe_vector</span></div>
+
+    
+<div class="viewcode-block" id="SIR3S_Model_Dataframes.generate_longitudinal_section_vector_dataframes">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.generate_longitudinal_section_vector_dataframes">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">generate_longitudinal_section_vector_dataframes</span><span class="p">(</span>
+        <span class="bp">self</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Docstring for generate_pipe_vector_dataframe</span>
+<span class="sd">        </span>
+<span class="sd">        :param self: Description</span>
+<span class="sd">        :return: Description</span>
+<span class="sd">        :rtype: DataFrame</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dfs_longitudinal_section</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_longitudinal_section_dataframes</span><span class="p">()</span>
+        <span class="n">dfs_longitudinal_section_vector</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">dfs_longitudinal_section</span><span class="p">:</span>
+            <span class="n">df_vector</span><span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_interior_points_as_flat_cols</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+            <span class="n">dfs_longitudinal_section_vector</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df_vector</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">dfs_longitudinal_section_vector</span></div>
+
         
     <span class="k">def</span><span class="w"> </span><span class="nf">__get_object_type_enums</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">names</span><span class="p">,</span> <span class="n">enum_class</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">[</span><span class="nb">getattr</span><span class="p">(</span><span class="n">enum_class</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">names</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">enum_class</span><span class="p">,</span> <span class="n">name</span><span class="p">)]</span>
