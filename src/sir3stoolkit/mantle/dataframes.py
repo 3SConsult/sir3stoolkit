@@ -722,11 +722,11 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         tks: List[str] = None
     ) -> pd.DataFrame:
         """
-        Docstring for generate_pipe_vector_dataframe
+         Generates dataframe containing model data and result data of pipes in a SIR 3S model. Vectorized result data is split into multiple columns.
         
-        :param self: Description
-        :return: Description
-        :rtype: DataFrame
+        :param tk: List of pipe tks to exclusivley include. Other pipes are not included.
+        :return: Dataframe containing model data and result data of pipes
+        :rtype: Dataframe
         """
         df_model_data = self.generate_element_dataframe(element_type=self.ObjectTypes.Pipe, tks=tks)
         df_pipe_vector= self.add_interior_points_as_flat_cols(df_model_data)
@@ -736,11 +736,10 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         self
     ) -> pd.DataFrame:
         """
-        Docstring for generate_pipe_vector_dataframe
+         Generates dataframes containing model data and result data of pipes in a longitudinal section of a SIR 3S model. Vectorized result data is split into multiple columns.
         
-        :param self: Description
-        :return: Description
-        :rtype: DataFrame
+        :return: List of dataframes of the form [section_1_VL, section_1_RL, section_2_VL, section_2_RL, ..., section_lfdnr_VL, section_lfdnr_RL, ...]
+        :rtype: List[DataFrame|GeoDataFrame]
         """
         dfs_longitudinal_section = self.generate_longitudinal_section_dataframes()
         dfs_longitudinal_section_vector = []
