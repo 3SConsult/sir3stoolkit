@@ -1,0 +1,566 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Groups &mdash; sir3stoolkit  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+      <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css?v=2aa19091" />
+
+  
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+      <script>let toggleHintShow = 'Click to show';</script>
+      <script>let toggleHintHide = 'Click to hide';</script>
+      <script>let toggleOpenOnPrint = 'true';</script>
+      <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            sir3stoolkit
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples.html">Application Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../releases.html">Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developers.html">For Developers</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">sir3stoolkit</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Groups</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/tutorials/SIR3S_Model_Mantle/ToolkitTutorialGroups.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="Groups">
+<h1>Groups<a class="headerlink" href="#Groups" title="Link to this heading"></a></h1>
+<p>This example demonstrates how to plot network color depictions (ncd).</p>
+</section>
+<section id="SIR-3S-Installation">
+<h1>SIR 3S Installation<a class="headerlink" href="#SIR-3S-Installation" title="Link to this heading"></a></h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r&quot;C:\3S\SIR 3S\SirGraf-90-15-00-20x64_Quebec-Upd1&quot; #change to local path
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Imports">
+<h1>Imports<a class="headerlink" href="#Imports" title="Link to this heading"></a></h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sir3stoolkit.core import wrapper
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sir3stoolkit.mantle import mantle
+</pre></div>
+</div>
+</div>
+<p>The wrapper package has to be initialized with reference to a SIR 3S (SirGraf) installation.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>wrapper.Initialize_Toolkit(SIR3S_SIRGRAF_DIR)
+</pre></div>
+</div>
+</div>
+<section id="Additional-imports">
+<h2>Additional imports<a class="headerlink" href="#Additional-imports" title="Link to this heading"></a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import os
+import matplotlib.pyplot as plt
+from matplotlib.colors import LinearSegmentedColormap
+import contextily as cx
+</pre></div>
+</div>
+</div>
+<p>…</p>
+</section>
+</section>
+<section id="Initialization">
+<h1>Initialization<a class="headerlink" href="#Initialization" title="Link to this heading"></a></h1>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s = mantle.SIR3S_Model_Mantle()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Initialization complete
+</pre></div></div>
+</div>
+</section>
+<section id="Open-Model">
+<h1>Open Model<a class="headerlink" href="#Open-Model" title="Link to this heading"></a></h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dbFilePath=r&quot;C:\Users\aUsername\3S\PT3S\PT3S\Examples\Example5.db3&quot;
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.OpenModel(dbName=dbFilePath,
+              providerType=s3s.ProviderTypes.SQLite,
+              Mid=&quot;M-1-0-1&quot;,
+              saveCurrentlyOpenModel=False,
+              namedInstance=&quot;&quot;,
+              userID=&quot;&quot;,
+              password=&quot;&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Model is open for further operation
+</pre></div></div>
+</div>
+</section>
+<section id="Prep-Data">
+<h1>Prep Data<a class="headerlink" href="#Prep-Data" title="Link to this heading"></a></h1>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>object_types = [item for item in dir(s3s.ObjectTypes) if not (item.startswith(&#39;__&#39;) and item.endswith(&#39;__&#39;))]
+print(object_types)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;AGSN_HydraulicProfile&#39;, &#39;AirVessel&#39;, &#39;Arrow&#39;, &#39;Atmosphere&#39;, &#39;BlockConnectionNode&#39;, &#39;CalcPari&#39;, &#39;CharacteristicLossTable&#39;, &#39;CharacteristicLossTable_Row&#39;, &#39;Circle&#39;, &#39;Compressor&#39;, &#39;CompressorTable&#39;, &#39;CompressorTable_Row&#39;, &#39;ControlEngineeringNexus&#39;, &#39;ControlMode&#39;, &#39;ControlPointTable&#39;, &#39;ControlPointTable_Row&#39;, &#39;ControlValve&#39;, &#39;ControlVariableConverter&#39;, &#39;ControlVariableConverterRSTE&#39;, &#39;CrossSectionTable&#39;, &#39;CrossSectionTable_Row&#39;, &#39;DPGR_DPKT_DatapointDpgrConnection&#39;, &#39;DPGR_DataPointGroup&#39;, &#39;DPKT_Datapoint&#39;, &#39;DamageRatesTable&#39;, &#39;DamageRatesTable_Row&#39;, &#39;DeadTimeElement&#39;, &#39;Demand&#39;, &#39;DifferentialRegulator&#39;, &#39;DirectionalArrow&#39;, &#39;DistrictHeatingConsumer&#39;, &#39;DistrictHeatingFeeder&#39;, &#39;Divider&#39;, &#39;DriveEfficiencyTable&#39;, &#39;DriveEfficiencyTable_Row&#39;, &#39;DrivePowerTable&#39;, &#39;DrivePowerTable_Row&#39;, &#39;EBES_FeederGroups&#39;, &#39;EfficiencyConverterTable&#39;, &#39;EfficiencyConverterTable_Row&#39;, &#39;ElementQuery&#39;, &#39;EnergyRecoveryTable&#39;, &#39;EnergyRecoveryTable_Row&#39;, &#39;EnvironmentTemp&#39;, &#39;FWBZ_DistrictHeatingReferenceValues&#39;, &#39;FlapValve&#39;, &#39;FlowControlUnit&#39;, &#39;FluidQualityParamSet&#39;, &#39;FluidQualityParamSet_OS&#39;, &#39;FluidThermalPropertyGroup&#39;, &#39;FreeDuct&#39;, &#39;FunctionGenerator&#39;, &#39;FunctionTable&#39;, &#39;FunctionTable_Row&#39;, &#39;GasComponent&#39;, &#39;GasMixture&#39;, &#39;GeneralSection&#39;, &#39;Gravitation&#39;, &#39;HeatExchanger&#39;, &#39;HeatFeederConsumerStation&#39;, &#39;HeaterCooler&#39;, &#39;Histeresis&#39;, &#39;House&#39;, &#39;Hydrant&#39;, &#39;Integrator&#39;, &#39;LAYR_Layer&#39;, &#39;LoadFactorTable&#39;, &#39;LoadFactorTable_Row&#39;, &#39;LogicalComparison&#39;, &#39;LogicalStorage&#39;, &#39;MeasuredVariableTable&#39;, &#39;MeasuredVariableTable_Row&#39;, &#39;MinMaxSelection&#39;, &#39;Multiplier&#39;, &#39;NetValve&#39;, &#39;Node&#39;, &#39;NonReturnValvesTable&#39;, &#39;NonReturnValvesTable_Row&#39;, &#39;NumericalDisplay&#39;, &#39;ObjectContainerSymbol&#39;, &#39;OpenContainer&#39;, &#39;Oval&#39;, &#39;PARZ_TransientCalculationParameters&#39;, &#39;PhaseSeparation&#39;, &#39;PidController&#39;, &#39;Pipe&#39;, &#39;PipeGroup&#39;, &#39;PipeTable&#39;, &#39;PipeTable_Row&#39;, &#39;PipeVertex&#39;, &#39;Polygon&#39;, &#39;Polyline&#39;, &#39;PressureRegulator&#39;, &#39;PressureZone&#39;, &#39;Pt1Controller&#39;, &#39;Pump&#39;, &#39;PumpCharTable&#39;, &#39;PumpCharTable_Row&#39;, &#39;PumpGroup&#39;, &#39;PumpOfPumpGroup&#39;, &#39;PumpSpeedTable&#39;, &#39;PumpSpeedTable_Row&#39;, &#39;RART_ControlMode&#39;, &#39;REGP_ControlParameters&#39;, &#39;RMES_DPTS_RmesInternalDataPoint&#39;, &#39;Rectangle&#39;, &#39;RegulatorsTable&#39;, &#39;RegulatorsTable_Row&#39;, &#39;ReturnTemperaturTable&#39;, &#39;ReturnTemperaturTable_Row&#39;, &#39;RoundRectangle&#39;, &#39;SIRGRAF&#39;, &#39;SPLZ_TimeSeries&#39;, &#39;SafetyValve&#39;, &#39;SetpointDevice&#39;, &#39;SolarCollector&#39;, &#39;StandPipe&#39;, &#39;Street&#39;, &#39;SummingPoint&#39;, &#39;SwitchInBlock&#39;, &#39;TemperatureTable&#39;, &#39;TemperatureTable_Row&#39;, &#39;Text&#39;, &#39;ThermalOutputTable&#39;, &#39;ThermalOutputTable_Row&#39;, &#39;ThermophysPropTable&#39;, &#39;ThermophysPropTable_Row&#39;, &#39;TransitionSymbol&#39;, &#39;Transmitter&#39;, &#39;TransportVariable&#39;, &#39;USCH_UserDefinedProperties&#39;, &#39;Unknown&#39;, &#39;VARA_ColorScale&#39;, &#39;VARA_ROWS_WidthOrScale&#39;, &#39;VRCT_ViewRectangle&#39;, &#39;Valve&#39;, &#39;ValveLiftTable&#39;, &#39;ValveLiftTable_Row&#39;, &#39;VarFlowTable&#39;, &#39;VarFlowTable_Row&#39;, &#39;VarPressureTable&#39;, &#39;VarPressureTable_Row&#39;, &#39;VentOpenCloseTable&#39;, &#39;VentOpenCloseTable_Row&#39;, &#39;VentValve&#39;, &#39;VentilatedPressureAirVessel&#39;, &#39;WBLZ_ThermalBalance&#39;, &#39;WeatherDataTable&#39;, &#39;WeatherDataTable_Row&#39;]
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetPropertiesofElementType(s3s.ObjectTypes.AGSN_HydraulicProfile)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;Name&#39;,
+ &#39;Lfdnr&#39;,
+ &#39;Aktiv&#39;,
+ &#39;AllNodesAndLinks&#39;,
+ &#39;ObjsString&#39;,
+ &#39;MainWay&#39;,
+ &#39;Tk&#39;,
+ &#39;Pk&#39;,
+ &#39;InVariant&#39;]
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetPropertiesofElementType(s3s.ObjectTypes.LAYR_Layer)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;Name&#39;, &#39;Zeigen&#39;, &#39;Setzen&#39;, &#39;Lfdnr&#39;, &#39;Idreferenz&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;]
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>props
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for prop in props:
+    print(f&quot;{prop}: {s3s.GetValue(&#39;4820059270327745227&#39;, prop)}&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Name: (&#39;SIR 3S® GZ Knoten Enden&#39;, &#39;string&#39;)
+Zeigen: (&#39;0&#39;, &#39;int32&#39;)
+Setzen: (&#39;0&#39;, &#39;int32&#39;)
+Lfdnr: (&#39;10&#39;, &#39;int32&#39;)
+Idreferenz: (&#39;-1&#39;, &#39;string&#39;)
+Tk: (&#39;4820059270327745227&#39;, &#39;string&#39;)
+Pk: (&#39;5401506195426463050&#39;, &#39;string&#39;)
+InVariant: (&#39;False&#39;, &#39;boolean&#39;)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetValue(&#39;4820059270327745227&#39;, &quot;ObjsString&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(&#39;&#39;, &#39;&#39;)
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>tks=s3s.GetTksofElementType(s3s.ObjectTypes.LAYR_Layer)
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>tks
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;5746069117076944570&#39;,
+ &#39;4625864872819035606&#39;,
+ &#39;4806369473147683048&#39;,
+ &#39;5053660494393876619&#39;,
+ &#39;4820059270327745227&#39;,
+ &#39;5281235026151080648&#39;,
+ &#39;5364262081037504628&#39;,
+ &#39;4674250176777047898&#39;,
+ &#39;5570318320916203912&#39;,
+ &#39;5178710338013839829&#39;,
+ &#39;4621554329745945977&#39;,
+ &#39;5165048606014980941&#39;,
+ &#39;5321297089676962505&#39;,
+ &#39;5703521779942763973&#39;,
+ &#39;4632315497640162421&#39;,
+ &#39;4927507219669553733&#39;,
+ &#39;4718654982952804285&#39;,
+ &#39;5046917627386733366&#39;,
+ &#39;4785817357634133973&#39;,
+ &#39;4681460659111189226&#39;]
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetPropertiesofElementType(s3s.ObjectTypes.Node)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;Name&#39;,
+ &#39;Ktyp&#39;,
+ &#39;Zkor&#39;,
+ &#39;QmEin&#39;,
+ &#39;Lfakt&#39;,
+ &#39;Fkpzon&#39;,
+ &#39;Fkfstf&#39;,
+ &#39;Fkutmp&#39;,
+ &#39;Fkfqps&#39;,
+ &#39;Fkcont&#39;,
+ &#39;Fk2lknot&#39;,
+ &#39;Beschreibung&#39;,
+ &#39;Idreferenz&#39;,
+ &#39;Iplanung&#39;,
+ &#39;Kvr&#39;,
+ &#39;Qakt&#39;,
+ &#39;Xkor&#39;,
+ &#39;Ykor&#39;,
+ &#39;NodeNamePosition&#39;,
+ &#39;ShowNodeName&#39;,
+ &#39;KvrKlartext&#39;,
+ &#39;NumberOfVERB&#39;,
+ &#39;HasBlockConnection&#39;,
+ &#39;Tk&#39;,
+ &#39;Pk&#39;,
+ &#39;InVariant&#39;,
+ &#39;GeometriesDiffer&#39;,
+ &#39;SymbolFactor&#39;,
+ &#39;bz.Drakonz&#39;,
+ &#39;bz.Fk&#39;,
+ &#39;bz.Fkpvar&#39;,
+ &#39;bz.Fkqvar&#39;,
+ &#39;bz.Fklfkt&#39;,
+ &#39;bz.PhEin&#39;,
+ &#39;bz.Tm&#39;,
+ &#39;bz.Te&#39;,
+ &#39;bz.PhMin&#39;]
+</pre></div></div>
+</div>
+</section>
+<section id="PT3S">
+<h1>PT3S<a class="headerlink" href="#PT3S" title="Link to this heading"></a></h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>try:
+    from PT3S import dxAndMxHelperFcts
+except:
+    import dxAndMxHelperFcts
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>m=dxAndMxHelperFcts.readDxAndMx(dbFile=dbFilePath
+                                ,preventPklDump=True
+                                #,maxRecords=-1
+                                #,SirCalcExePath=r&quot;C:\3S\SIR 3S\SirCalc-90-14-02-12_Potsdam.fix1_x64\SirCalc.exe&quot;
+                                )
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df=m.dx.dfLAYR
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df.head(3)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>pk</th>
+      <th>tk</th>
+      <th>LFDNR</th>
+      <th>NAME</th>
+      <th>AnzDerObjekteInGruppe</th>
+      <th>AnzDerObjekteDesTypsInGruppe</th>
+      <th>TYPE</th>
+      <th>ID</th>
+      <th>NrDesObjektesDesTypsInGruppe</th>
+      <th>NrDesObjektesInGruppe</th>
+      <th>GruppenDesObjektsAnz</th>
+      <th>GruppenDesObjektsNamen</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>4632315497640162421</td>
+      <td>4632315497640162421</td>
+      <td>1.0</td>
+      <td>Gen VL ROHRe</td>
+      <td>836</td>
+      <td>836</td>
+      <td>ROHR</td>
+      <td>4613765641349500151</td>
+      <td>1</td>
+      <td>1</td>
+      <td>3</td>
+      <td>[Gen VL ROHRe, SIR 3S® GZ Gitter, SIR 3S® GZ K...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4632315497640162421</td>
+      <td>4632315497640162421</td>
+      <td>1.0</td>
+      <td>Gen VL ROHRe</td>
+      <td>836</td>
+      <td>836</td>
+      <td>ROHR</td>
+      <td>4614040293856762696</td>
+      <td>2</td>
+      <td>2</td>
+      <td>3</td>
+      <td>[Gen VL ROHRe, SIR 3S® GZ Gitter, SIR 3S® GZ K...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4632315497640162421</td>
+      <td>4632315497640162421</td>
+      <td>1.0</td>
+      <td>Gen VL ROHRe</td>
+      <td>836</td>
+      <td>836</td>
+      <td>ROHR</td>
+      <td>4614199490723616754</td>
+      <td>3</td>
+      <td>3</td>
+      <td>2</td>
+      <td>[Gen VL ROHRe, SIR 3S® GZ Wald]</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025 3S Consult GmbH.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
