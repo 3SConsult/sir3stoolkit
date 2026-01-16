@@ -330,7 +330,7 @@ class SIR3S_Model_Plotting(SIR3S_Model):
         linestyles=None,
         legend=True,
         legend_fontsize=8,
-        legend_loc="upper right",
+        legend_loc="upper left",
         legend_coords=(0.67, 0.33),
         legend_in_figure=True,
         missing="skip",

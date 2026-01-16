@@ -179,8 +179,8 @@ SIR3S_Model_Plotting implements general plotting functions for SIR 3S applicatio
 
 .. _Ttu071:
 
-Tutorial 71: WORK IN PROGRESS: time curves
-""""""""""""""""""""""""""""""""""""""""""
+Tutorial 71: Time Curves
+""""""""""""""""""""""""
 
 This Tutorial demonstrates how to plot time curves.
 
