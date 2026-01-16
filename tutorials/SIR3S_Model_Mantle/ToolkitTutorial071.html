@@ -97,7 +97,7 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r&quot;C:\3S\SIR 3S\SirGraf-90-15-00-19_Quebec&quot;
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r&quot;C:\3S\SIR 3S\SirGraf-90-15-00-20x64_Quebec-Upd1&quot; #change to local path
 </pre></div>
 </div>
 </div>
@@ -139,16 +139,24 @@
 </pre></div>
 </div>
 </div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
+</pre></div>
+</div>
+</div>
 <p>…</p>
 </section>
 </section>
 <section id="Initialization">
 <h1>Initialization<a class="headerlink" href="#Initialization" title="Link to this heading"></a></h1>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s = mantle.Mantle_SIR3S_Model()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s = mantle.SIR3S_Model_Mantle()
 </pre></div>
 </div>
 </div>
@@ -164,7 +172,7 @@ Initialization complete
 <section id="Open-Model">
 <h1>Open Model<a class="headerlink" href="#Open-Model" title="Link to this heading"></a></h1>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dbFilePath=r&quot;C:\Users\aUsername\3S\PT3S\PT3S\Examples\Example2.db3&quot;
@@ -172,7 +180,7 @@ Initialization complete
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.OpenModel(dbName=dbFilePath,
@@ -194,23 +202,42 @@ Model is open for further operation
 </pre></div></div>
 </div>
 </section>
-<section id="Edit">
-<h1>Edit<a class="headerlink" href="#Edit" title="Link to this heading"></a></h1>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>node_tks = [&quot;5471942051669438823&quot;, &quot;5166327497394449628&quot;, &quot;5667818255300782920&quot;, &quot;5262999985134416180&quot;]
-</pre></div>
-</div>
-</div>
+<section id="Obtain-Data">
+<h1>Obtain Data<a class="headerlink" href="#Obtain-Data" title="Link to this heading"></a></h1>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_results = s3s.generate_element_results_dataframe(element_type=s3s.ObjectTypes.Node
-                                                          ,tks=node_tks
-                                                          ,properties=[&quot;QM&quot;, &quot;PH&quot;]
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>object_types = [item for item in dir(s3s.ObjectTypes) if not (item.startswith(&#39;__&#39;) and item.endswith(&#39;__&#39;))]
+print(object_types)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;AGSN_HydraulicProfile&#39;, &#39;AirVessel&#39;, &#39;Arrow&#39;, &#39;Atmosphere&#39;, &#39;BlockConnectionNode&#39;, &#39;CalcPari&#39;, &#39;CharacteristicLossTable&#39;, &#39;CharacteristicLossTable_Row&#39;, &#39;Circle&#39;, &#39;Compressor&#39;, &#39;CompressorTable&#39;, &#39;CompressorTable_Row&#39;, &#39;ControlEngineeringNexus&#39;, &#39;ControlMode&#39;, &#39;ControlPointTable&#39;, &#39;ControlPointTable_Row&#39;, &#39;ControlValve&#39;, &#39;ControlVariableConverter&#39;, &#39;ControlVariableConverterRSTE&#39;, &#39;CrossSectionTable&#39;, &#39;CrossSectionTable_Row&#39;, &#39;DPGR_DPKT_DatapointDpgrConnection&#39;, &#39;DPGR_DataPointGroup&#39;, &#39;DPKT_Datapoint&#39;, &#39;DamageRatesTable&#39;, &#39;DamageRatesTable_Row&#39;, &#39;DeadTimeElement&#39;, &#39;Demand&#39;, &#39;DifferentialRegulator&#39;, &#39;DirectionalArrow&#39;, &#39;DistrictHeatingConsumer&#39;, &#39;DistrictHeatingFeeder&#39;, &#39;Divider&#39;, &#39;DriveEfficiencyTable&#39;, &#39;DriveEfficiencyTable_Row&#39;, &#39;DrivePowerTable&#39;, &#39;DrivePowerTable_Row&#39;, &#39;EBES_FeederGroups&#39;, &#39;EfficiencyConverterTable&#39;, &#39;EfficiencyConverterTable_Row&#39;, &#39;ElementQuery&#39;, &#39;EnergyRecoveryTable&#39;, &#39;EnergyRecoveryTable_Row&#39;, &#39;EnvironmentTemp&#39;, &#39;FWBZ_DistrictHeatingReferenceValues&#39;, &#39;FlapValve&#39;, &#39;FlowControlUnit&#39;, &#39;FluidQualityParamSet&#39;, &#39;FluidQualityParamSet_OS&#39;, &#39;FluidThermalPropertyGroup&#39;, &#39;FreeDuct&#39;, &#39;FunctionGenerator&#39;, &#39;FunctionTable&#39;, &#39;FunctionTable_Row&#39;, &#39;GasComponent&#39;, &#39;GasMixture&#39;, &#39;GeneralSection&#39;, &#39;Gravitation&#39;, &#39;HeatExchanger&#39;, &#39;HeatFeederConsumerStation&#39;, &#39;HeaterCooler&#39;, &#39;Histeresis&#39;, &#39;House&#39;, &#39;Hydrant&#39;, &#39;Integrator&#39;, &#39;LAYR_Layer&#39;, &#39;LoadFactorTable&#39;, &#39;LoadFactorTable_Row&#39;, &#39;LogicalComparison&#39;, &#39;LogicalStorage&#39;, &#39;MeasuredVariableTable&#39;, &#39;MeasuredVariableTable_Row&#39;, &#39;MinMaxSelection&#39;, &#39;Multiplier&#39;, &#39;NetValve&#39;, &#39;Node&#39;, &#39;NonReturnValvesTable&#39;, &#39;NonReturnValvesTable_Row&#39;, &#39;NumericalDisplay&#39;, &#39;ObjectContainerSymbol&#39;, &#39;OpenContainer&#39;, &#39;Oval&#39;, &#39;PARZ_TransientCalculationParameters&#39;, &#39;PhaseSeparation&#39;, &#39;PidController&#39;, &#39;Pipe&#39;, &#39;PipeGroup&#39;, &#39;PipeTable&#39;, &#39;PipeTable_Row&#39;, &#39;PipeVertex&#39;, &#39;Polygon&#39;, &#39;Polyline&#39;, &#39;PressureRegulator&#39;, &#39;PressureZone&#39;, &#39;Pt1Controller&#39;, &#39;Pump&#39;, &#39;PumpCharTable&#39;, &#39;PumpCharTable_Row&#39;, &#39;PumpGroup&#39;, &#39;PumpOfPumpGroup&#39;, &#39;PumpSpeedTable&#39;, &#39;PumpSpeedTable_Row&#39;, &#39;RART_ControlMode&#39;, &#39;REGP_ControlParameters&#39;, &#39;RMES_DPTS_RmesInternalDataPoint&#39;, &#39;Rectangle&#39;, &#39;RegulatorsTable&#39;, &#39;RegulatorsTable_Row&#39;, &#39;ReturnTemperaturTable&#39;, &#39;ReturnTemperaturTable_Row&#39;, &#39;RoundRectangle&#39;, &#39;SIRGRAF&#39;, &#39;SPLZ_TimeSeries&#39;, &#39;SafetyValve&#39;, &#39;SetpointDevice&#39;, &#39;SolarCollector&#39;, &#39;StandPipe&#39;, &#39;Street&#39;, &#39;SummingPoint&#39;, &#39;SwitchInBlock&#39;, &#39;TemperatureTable&#39;, &#39;TemperatureTable_Row&#39;, &#39;Text&#39;, &#39;ThermalOutputTable&#39;, &#39;ThermalOutputTable_Row&#39;, &#39;ThermophysPropTable&#39;, &#39;ThermophysPropTable_Row&#39;, &#39;TransitionSymbol&#39;, &#39;Transmitter&#39;, &#39;TransportVariable&#39;, &#39;USCH_UserDefinedProperties&#39;, &#39;Unknown&#39;, &#39;VARA_ColorScale&#39;, &#39;VARA_ROWS_WidthOrScale&#39;, &#39;VRCT_ViewRectangle&#39;, &#39;Valve&#39;, &#39;ValveLiftTable&#39;, &#39;ValveLiftTable_Row&#39;, &#39;VarFlowTable&#39;, &#39;VarFlowTable_Row&#39;, &#39;VarPressureTable&#39;, &#39;VarPressureTable_Row&#39;, &#39;VentOpenCloseTable&#39;, &#39;VentOpenCloseTable_Row&#39;, &#39;VentValve&#39;, &#39;VentilatedPressureAirVessel&#39;, &#39;WBLZ_ThermalBalance&#39;, &#39;WeatherDataTable&#39;, &#39;WeatherDataTable_Row&#39;]
+</pre></div></div>
+</div>
+<section id="Nodes">
+<h2>Nodes<a class="headerlink" href="#Nodes" title="Link to this heading"></a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>nodes_tks = [&quot;5471942051669438823&quot;, &quot;5166327497394449628&quot;, &quot;5667818255300782920&quot;, &quot;5262999985134416180&quot;]
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_nodes_results = s3s.generate_element_results_dataframe(element_type=s3s.ObjectTypes.Node
+                                                          ,tks=nodes_tks
+                                                          ,properties=[&quot;PH&quot;]
                                                           ,timestamps=None # all available simulation timestamps will be used
                                                           )
 </pre></div>
@@ -221,27 +248,66 @@ Model is open for further operation
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2025-11-21 15:11:52,562] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Node
-[2025-11-21 15:11:52,562] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] No timestamps were given. Checking available simulation timestamps (SIR3S_Model.GetTimeStamps()).
-[2025-11-21 15:11:52,621] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 601 simulation timestamp(s) are available.
-[2025-11-21 15:11:52,693] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 601 valid timestamp(s) will be used.
-[2025-11-21 15:11:52,697] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 635 element(s) of element type ObjectTypes.Node.
-[2025-11-21 15:11:52,698] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 4 tks remain after filering for given tks.
-[2025-11-21 15:11:52,699] INFO in sir3stoolkit.mantle.dataframes: [results] Using 2 result properties.
-[2025-11-21 15:11:52,802] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result properties...
-[2025-11-21 15:11:55,670] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (601, 8)
+[2026-01-16 14:17:27,591] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Node
+[2026-01-16 14:17:27,594] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] No timestamps were given. Checking available simulation timestamps (SIR3S_Model.GetTimeStamps()[0]).
+[2026-01-16 14:17:27,707] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 601 simulation timestamp(s) are available.
+[2026-01-16 14:17:27,773] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 601 valid timestamp(s) will be used.
+[2026-01-16 14:17:27,777] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 635 element(s) of element type ObjectTypes.Node.
+[2026-01-16 14:17:27,778] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 4 tks remain after filtering for given tks.
+[2026-01-16 14:17:27,791] INFO in sir3stoolkit.mantle.dataframes: [results] Using 1 result properties.
+[2026-01-16 14:17:27,866] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2026-01-16 14:17:31,356] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (601, 4)
 </pre></div></div>
 </div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</section>
+<section id="Vents">
+<h2>Vents<a class="headerlink" href="#Vents" title="Link to this heading"></a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_results.head(3)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>vent_tks = [&quot;5303247238968995258&quot;]
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_vent_results = s3s.generate_element_results_dataframe(element_type=s3s.ObjectTypes.FlapValve
+                                                          ,tks=vent_tks
+                                                          ,properties=[&quot;PHI&quot;, &quot;QM&quot;]
+                                                          ,timestamps=None # all available simulation timestamps will be used
+                                                          )
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+[2026-01-16 14:17:31,404] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.FlapValve
+[2026-01-16 14:17:31,407] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] No timestamps were given. Checking available simulation timestamps (SIR3S_Model.GetTimeStamps()[0]).
+[2026-01-16 14:17:31,563] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 601 simulation timestamp(s) are available.
+[2026-01-16 14:17:31,847] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 601 valid timestamp(s) will be used.
+[2026-01-16 14:17:31,849] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 4 element(s) of element type ObjectTypes.FlapValve.
+[2026-01-16 14:17:31,850] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 1 tks remain after filtering for given tks.
+[2026-01-16 14:17:31,854] INFO in sir3stoolkit.mantle.dataframes: [results] Using 2 result properties.
+[2026-01-16 14:17:32,589] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2026-01-16 14:17:34,475] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (601, 2)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_vent_results.head(3)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -267,39 +333,240 @@ Model is open for further operation
   <thead>
     <tr>
       <th>tk</th>
-      <th colspan="2" halign="left">5471942051669438823</th>
-      <th colspan="2" halign="left">5166327497394449628</th>
-      <th colspan="2" halign="left">5667818255300782920</th>
-      <th colspan="2" halign="left">5262999985134416180</th>
+      <th colspan="2" halign="left">5303247238968995258</th>
     </tr>
     <tr>
       <th>name</th>
-      <th colspan="2" halign="left">K0011</th>
-      <th colspan="2" halign="left">5143521_i</th>
-      <th colspan="2" halign="left">791393_3_k</th>
-      <th colspan="2" halign="left">1629686_0_i</th>
+      <th colspan="2" halign="left">Klappe K0013 K0014</th>
     </tr>
     <tr>
       <th>end_nodes</th>
-      <th colspan="2" halign="left">No end nodes on element type</th>
-      <th colspan="2" halign="left">No end nodes on element type</th>
-      <th colspan="2" halign="left">No end nodes on element type</th>
-      <th colspan="2" halign="left">No end nodes on element type</th>
+      <th colspan="2" halign="left">('5154852831768145370', '5018980228933582263', '-1', '-1')</th>
     </tr>
     <tr>
       <th>property</th>
+      <th>PHI</th>
       <th>QM</th>
-      <th>PH</th>
-      <th>QM</th>
-      <th>PH</th>
-      <th>QM</th>
-      <th>PH</th>
-      <th>QM</th>
-      <th>PH</th>
     </tr>
     <tr>
       <th>timestamp</th>
       <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2020-01-28 15:45:01.000 +01:00</th>
+      <td>56.41736</td>
+      <td>18.35320</td>
+    </tr>
+    <tr>
+      <th>2020-01-28 15:45:01.100 +01:00</th>
+      <td>56.40917</td>
+      <td>18.35296</td>
+    </tr>
+    <tr>
+      <th>2020-01-28 15:45:01.200 +01:00</th>
+      <td>56.40861</td>
+      <td>18.35280</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</section>
+<section id="Valves">
+<h2>Valves<a class="headerlink" href="#Valves" title="Link to this heading"></a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>valves_tks = [&quot;5430537691154258843&quot;]
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_valves_results = s3s.generate_element_results_dataframe(element_type=s3s.ObjectTypes.Valve
+                                                          ,tks=valves_tks
+                                                          ,properties=[&quot;QM&quot;]
+                                                          ,timestamps=None # all available simulation timestamps will be used
+                                                          )
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+[2026-01-16 14:17:34,559] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Valve
+[2026-01-16 14:17:34,561] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] No timestamps were given. Checking available simulation timestamps (SIR3S_Model.GetTimeStamps()[0]).
+[2026-01-16 14:17:34,688] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 601 simulation timestamp(s) are available.
+[2026-01-16 14:17:34,794] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 601 valid timestamp(s) will be used.
+[2026-01-16 14:17:34,794] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 9 element(s) of element type ObjectTypes.Valve.
+[2026-01-16 14:17:34,804] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 1 tks remain after filtering for given tks.
+[2026-01-16 14:17:34,806] INFO in sir3stoolkit.mantle.dataframes: [results] Using 1 result properties.
+[2026-01-16 14:17:34,843] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2026-01-16 14:17:36,293] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (601, 1)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_valves_results.head(3)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+
+    .dataframe thead tr:last-of-type th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th>tk</th>
+      <th>5430537691154258843</th>
+    </tr>
+    <tr>
+      <th>name</th>
+      <th>Ventil K0011 PST_out</th>
+    </tr>
+    <tr>
+      <th>end_nodes</th>
+      <th>('5471942051669438823', '5355079936656060238', '-1', '-1')</th>
+    </tr>
+    <tr>
+      <th>property</th>
+      <th>QM</th>
+    </tr>
+    <tr>
+      <th>timestamp</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2020-01-28 15:45:01.000 +01:00</th>
+      <td>36.70272</td>
+    </tr>
+    <tr>
+      <th>2020-01-28 15:45:01.100 +01:00</th>
+      <td>36.70224</td>
+    </tr>
+    <tr>
+      <th>2020-01-28 15:45:01.200 +01:00</th>
+      <td>36.70192</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</section>
+<section id="Concat">
+<h2>Concat<a class="headerlink" href="#Concat" title="Link to this heading"></a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_results = pd.concat([df_nodes_results, df_vent_results, df_valves_results], axis=1, join=&quot;inner&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_results.head(3)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+
+    .dataframe thead tr:last-of-type th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th>tk</th>
+      <th>5471942051669438823</th>
+      <th>5166327497394449628</th>
+      <th>5667818255300782920</th>
+      <th>5262999985134416180</th>
+      <th colspan="2" halign="left">5303247238968995258</th>
+      <th>5430537691154258843</th>
+    </tr>
+    <tr>
+      <th>name</th>
+      <th>K0011</th>
+      <th>5143521_i</th>
+      <th>791393_3_k</th>
+      <th>1629686_0_i</th>
+      <th colspan="2" halign="left">Klappe K0013 K0014</th>
+      <th>Ventil K0011 PST_out</th>
+    </tr>
+    <tr>
+      <th>end_nodes</th>
+      <th>No end nodes on element type</th>
+      <th>No end nodes on element type</th>
+      <th>No end nodes on element type</th>
+      <th>No end nodes on element type</th>
+      <th colspan="2" halign="left">('5154852831768145370', '5018980228933582263', '-1', '-1')</th>
+      <th>('5471942051669438823', '5355079936656060238', '-1', '-1')</th>
+    </tr>
+    <tr>
+      <th>property</th>
+      <th>PH</th>
+      <th>PH</th>
+      <th>PH</th>
+      <th>PH</th>
+      <th>PHI</th>
+      <th>QM</th>
+      <th>QM</th>
+    </tr>
+    <tr>
+      <th>timestamp</th>
       <th></th>
       <th></th>
       <th></th>
@@ -312,162 +579,200 @@ Model is open for further operation
   <tbody>
     <tr>
       <th>2020-01-28 15:45:01.000 +01:00</th>
-      <td>0</td>
       <td>10.59964</td>
-      <td>-5.7E-06</td>
       <td>8.320659</td>
-      <td>-5.7E-06</td>
       <td>6.477164</td>
-      <td>-3.380222E-06</td>
-      <td>0.8816414</td>
+      <td>0.881641</td>
+      <td>56.41736</td>
+      <td>18.35320</td>
+      <td>36.70272</td>
     </tr>
     <tr>
       <th>2020-01-28 15:45:01.100 +01:00</th>
-      <td>0</td>
       <td>10.59981</td>
-      <td>-5.7E-06</td>
       <td>8.320658</td>
-      <td>-5.7E-06</td>
       <td>6.477123</td>
-      <td>-3.380221E-06</td>
-      <td>0.8816413</td>
+      <td>0.881641</td>
+      <td>56.40917</td>
+      <td>18.35296</td>
+      <td>36.70224</td>
     </tr>
     <tr>
       <th>2020-01-28 15:45:01.200 +01:00</th>
-      <td>0</td>
       <td>10.59993</td>
-      <td>-5.7E-06</td>
       <td>8.320656</td>
-      <td>-5.7E-06</td>
-      <td>6.47708</td>
-      <td>-3.380217E-06</td>
-      <td>0.8816391</td>
+      <td>6.477080</td>
+      <td>0.881639</td>
+      <td>56.40861</td>
+      <td>18.35280</td>
+      <td>36.70192</td>
     </tr>
   </tbody>
 </table>
 </div></div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+</section>
+</section>
+<section id="Plot">
+<h1>Plot<a class="headerlink" href="#Plot" title="Link to this heading"></a></h1>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
-import matplotlib.pyplot as plt
-
-def plot_two_common_lowest(df: pd.DataFrame, start=None, end=None, labels=None, figsize=(10, 4)):
-    &quot;&quot;&quot;
-    Plot two minimal-common lowest-level column labels in a single figure
-    using left/right y-axes (twin axes). Each axis shows one label; within
-    each, one line per level-0 group is plotted.
-
-    Parameters
-    ----------
-    df : pd.DataFrame
-        DataFrame with MultiIndex columns: (level-0, ..., lowest-level).
-    start, end : str or None
-        Optional start and end timestamps (ISO format or parseable by pandas).
-        Example: &#39;2020-01-28 15:45:01.000 +01:00&#39;
-    labels : tuple[str, str] or None
-        Optional pair of lowest-level labels (as strings) to plot.
-        If None, the function will compute the intersection across level-0
-        groups and take the first two labels.
-    figsize : tuple
-        Figure size.
-
-    Returns
-    -------
-    fig, ax_left, ax_right, used_labels : (Figure, Axes, Axes, tuple[str, str])
-    &quot;&quot;&quot;
-    if not isinstance(df.columns, pd.MultiIndex):
-        raise ValueError(&quot;DataFrame must have MultiIndex columns.&quot;)
-
-    # Convert index to datetime if possible
-    df = df.copy()
-    try:
-        df.index = pd.to_datetime(df.index)
-    except Exception:
-        pass
-
-    # Apply time filtering if start/end provided
-    if start:
-        start_ts = pd.to_datetime(start)
-        df = df[df.index &gt;= start_ts]
-    if end:
-        end_ts = pd.to_datetime(end)
-        df = df[df.index &lt;= end_ts]
-
-    lvl0 = df.columns.get_level_values(0)
-    lvl_last = df.columns.get_level_values(-1)
-
-    # Map level-0 -&gt; set of lowest-level labels
-    mapping = (
-        pd.Series(lvl_last.astype(str), index=lvl0)
-        .groupby(level=0)
-        .unique()
-    )
-    sets = [set(vals) for vals in mapping]
-    common = sorted(set.intersection(*sets) if sets else set())
-
-    if labels is None:
-        if len(common) &lt; 2:
-            raise ValueError(&quot;Need at least two common lowest-level labels to use twin axes.&quot;)
-        used_labels = (common[0], common[1])
-    else:
-        if len(labels) != 2:
-            raise ValueError(&quot;labels must be a tuple/list of two strings.&quot;)
-        labels_str = tuple(str(x) for x in labels)
-        missing = [l for l in labels_str if l not in common]
-        if missing:
-            raise ValueError(f&quot;Provided labels not common across all groups: {missing}&quot;)
-        used_labels = labels_str
-
-    top_groups = list(mapping.index)
-
-    fig, ax_left = plt.subplots(figsize=figsize)
-    ax_right = ax_left.twinx()
-
-    def plot_label_on_axis(label_str, axis, linestyle=&quot;-&quot;):
-        lines = []
-        for g in top_groups:
-            mask = (df.columns.get_level_values(0).astype(str) == str(g)) &amp; \
-                   (df.columns.get_level_values(-1).astype(str) == label_str)
-            cols = df.columns[mask]
-            if len(cols) == 0:
-                continue
-            series = df[cols].sum(axis=1) if len(cols) &gt; 1 else df[cols[0]]
-            ln, = axis.plot(df.index, series, linestyle=linestyle, label=f&quot;{g}&quot;)
-            lines.append(ln)
-        return lines
-
-    left_label, right_label = used_labels
-    lines_left = plot_label_on_axis(left_label, ax_left, linestyle=&quot;-&quot;)
-    lines_right = plot_label_on_axis(right_label, ax_right, linestyle=&quot;--&quot;)
-
-    ax_left.set_ylabel(str(left_label))
-    ax_right.set_ylabel(str(right_label))
-    ax_left.set_xlabel(&quot;Time&quot;)
-    ax_left.grid(True, linestyle=&quot;--&quot;, alpha=0.3)
-
-    lines_all = lines_left + lines_right
-    labels_all = [l.get_label() for l in lines_all]
-    if lines_all:
-        ax_left.legend(lines_all, labels_all, loc=&quot;best&quot;, fontsize=8)
-
-    fig.tight_layout()
-    return fig, ax_left, ax_right, used_labels
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_results.head(3)
 </pre></div>
 </div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+
+    .dataframe thead tr:last-of-type th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th>tk</th>
+      <th>5471942051669438823</th>
+      <th>5166327497394449628</th>
+      <th>5667818255300782920</th>
+      <th>5262999985134416180</th>
+      <th colspan="2" halign="left">5303247238968995258</th>
+      <th>5430537691154258843</th>
+    </tr>
+    <tr>
+      <th>name</th>
+      <th>K0011</th>
+      <th>5143521_i</th>
+      <th>791393_3_k</th>
+      <th>1629686_0_i</th>
+      <th colspan="2" halign="left">Klappe K0013 K0014</th>
+      <th>Ventil K0011 PST_out</th>
+    </tr>
+    <tr>
+      <th>end_nodes</th>
+      <th>No end nodes on element type</th>
+      <th>No end nodes on element type</th>
+      <th>No end nodes on element type</th>
+      <th>No end nodes on element type</th>
+      <th colspan="2" halign="left">('5154852831768145370', '5018980228933582263', '-1', '-1')</th>
+      <th>('5471942051669438823', '5355079936656060238', '-1', '-1')</th>
+    </tr>
+    <tr>
+      <th>property</th>
+      <th>PH</th>
+      <th>PH</th>
+      <th>PH</th>
+      <th>PH</th>
+      <th>PHI</th>
+      <th>QM</th>
+      <th>QM</th>
+    </tr>
+    <tr>
+      <th>timestamp</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2020-01-28 15:45:01.000 +01:00</th>
+      <td>10.59964</td>
+      <td>8.320659</td>
+      <td>6.477164</td>
+      <td>0.881641</td>
+      <td>56.41736</td>
+      <td>18.35320</td>
+      <td>36.70272</td>
+    </tr>
+    <tr>
+      <th>2020-01-28 15:45:01.100 +01:00</th>
+      <td>10.59981</td>
+      <td>8.320658</td>
+      <td>6.477123</td>
+      <td>0.881641</td>
+      <td>56.40917</td>
+      <td>18.35296</td>
+      <td>36.70224</td>
+    </tr>
+    <tr>
+      <th>2020-01-28 15:45:01.200 +01:00</th>
+      <td>10.59993</td>
+      <td>8.320656</td>
+      <td>6.477080</td>
+      <td>0.881639</td>
+      <td>56.40861</td>
+      <td>18.35280</td>
+      <td>36.70192</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fig, ax_l, ax_r, used = plot_two_common_lowest(
-    df_pipes_results,
-    start=&quot;2020-01-28 14:45:00.000 +01:00&quot;,
-    end=&quot;2020-01-28 15:46:00.000 +01:00&quot;
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fig, axes, used = s3s.plot_time_curves(
+    df=df_results,
+    start=&quot;2020-01-28 15:45:01.000 +01:00&quot;,
+    end=&quot;2020-01-28 15:46:00.000 +01:00&quot;,
+    properties=[&quot;PH&quot;, &quot;QM&quot;, &quot;PHI&quot;],
+    axis_labels=[&quot;PH bar&quot;, &quot;QM m³/h&quot;, &quot;RSK %&quot;],
+    ylims=[(0, 12), (0, 40), (0, 60)],
+    tks_per_property=[
+        [&quot;5471942051669438823&quot;, &quot;5166327497394449628&quot;, &quot;5667818255300782920&quot;, &quot;5262999985134416180&quot;],
+        [&quot;5303247238968995258&quot;, &quot;5430537691154258843&quot;],
+        [&quot;5303247238968995258&quot;],
+    ],
+
+    y_label_ticks=[7, 9, 13],
+    y_grid_ticks=13,
+    x_label_ticks=7,
+    x_grid_ticks=13,
+
+    legend=True,
+    legend_in_figure=True,
+    legend_loc=&quot;upper left&quot;,
+    legend_coords=(0.67, 0.33),
+    legend_fontsize=15,
+
+    title_prefix=&quot;Testplot: &quot;,
+    show_title=True,
+
+    axis_offset=70,
+    linestyles=[&quot;-&quot;, &quot;--&quot;, &quot;:&quot;],
+    rotate_xticks=0,
+
+    grid=True,
+    grid_style=&quot;--&quot;,
+    grid_alpha=0.8,
+
+    missing=&quot;warn&quot;,
+    logger=None,
 )
-plt.show()
 </pre></div>
 </div>
 </div>
@@ -475,18 +780,9 @@ plt.show()
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../_images/tutorials_SIR3S_Model_Mantle_ToolkitTutorial071_22_0.png" src="../../_images/tutorials_SIR3S_Model_Mantle_ToolkitTutorial071_22_0.png" />
+<img alt="../../_images/tutorials_SIR3S_Model_Mantle_ToolkitTutorial071_36_0.png" src="../../_images/tutorials_SIR3S_Model_Mantle_ToolkitTutorial071_36_0.png" />
 </div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>#df_pipes_results.xs(key=&#39;1629686_0_i&#39;, axis=1, level=1)
-</pre></div>
-</div>
-</div>
-<p>…</p>
 </section>
 
 
