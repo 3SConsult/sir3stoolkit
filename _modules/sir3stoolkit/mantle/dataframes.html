@@ -509,8 +509,8 @@
 
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generates a dataframe containing all instances for a given element type in the open</span>
-<span class="sd">        SIR 3S model. All model_data and most result values</span>
-<span class="sd">        (self.GetResultProperties_from_elementType(onlySelectedVectors=True))</span>
+<span class="sd">        SIR 3S model. All model_data and result values</span>
+<span class="sd">        (self.GetResultProperties_from_elementType(onlySelectedVectors=False))</span>
 <span class="sd">        for the static timestamp are included.</span>
 
 <span class="sd">        Result values are returned as floats unless they are vectorized (relevant only for</span>
@@ -546,7 +546,7 @@
             <span class="p">)</span>
             
             <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[generate_element_dataframe] Generating df_results for element type: </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2"> ...&quot;</span><span class="p">)</span>
-            <span class="n">result_values_to_obtain</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetResultProperties_from_elementType</span><span class="p">(</span><span class="n">element_type</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+            <span class="n">result_values_to_obtain</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetResultProperties_from_elementType</span><span class="p">(</span><span class="n">element_type</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
             <span class="n">static_timestamp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTimeStamps</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span>
             <span class="n">df_results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_element_results_dataframe</span><span class="p">(</span><span class="n">element_type</span><span class="o">=</span><span class="n">element_type</span>
                                                                         <span class="p">,</span><span class="n">tks</span><span class="o">=</span><span class="n">tks</span>
