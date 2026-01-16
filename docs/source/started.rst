@@ -42,9 +42,9 @@ PT3S provides powerful access to a model's database and calculation results by r
 
 That's where the SIR 3S Toolkit comes in. It goes beyond file access and interacts directly with the internal structure of a SIR 3S model, enabling full programmatic control over model creation, editing, and analysis.
  
-If you want to make full use of Python's capabilities for working with your SIR 3S model, 
-it is currently recommended to use both packages. In the future it is possible 
-that the PT3S functionalities will be integrated into the SIR 3S Toolkit.
+The most important PT3S functionalities have been reimplemented in the SIR 3S Toolkit. Some Python-3S functionalities are still unique to PT3S, but will be implemented in the SIR 3S Toolkit in the future.
+Therefore if you have used PT3S until now, it is recommended to switch over to the SIR 3S Toolkit, that already has a lot of features that PT3S lacks.
+Furthermore the SIR 3S Toolkit will be continuously updated and improved, while PT3S will not receive any more updates.
 
 .. _installing-toolkit-label: 
 
