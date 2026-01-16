@@ -815,7 +815,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
             return pd.DataFrame()
         
         if len(available_tks) < 1:
-            logger.warning(f"[Resolving tks] No elements exist of this element type {element_type}: {e}")
+            logger.warning(f"[Resolving tks] No elements exist of this element type {element_type}.")
             return pd.DataFrame()
         
         # --- Filter for given tks ---
