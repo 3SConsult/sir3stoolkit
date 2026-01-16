@@ -413,8 +413,8 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
 
         """
         Generates a dataframe containing all instances for a given element type in the open
-        SIR 3S model. All model_data and most result values
-        (self.GetResultProperties_from_elementType(onlySelectedVectors=True))
+        SIR 3S model. All model_data and result values
+        (self.GetResultProperties_from_elementType(onlySelectedVectors=False))
         for the static timestamp are included.
 
         Result values are returned as floats unless they are vectorized (relevant only for
@@ -450,7 +450,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
             )
             
             logger.debug(f"[generate_element_dataframe] Generating df_results for element type: {element_type} ...")
-            result_values_to_obtain = self.GetResultProperties_from_elementType(element_type, True)
+            result_values_to_obtain = self.GetResultProperties_from_elementType(element_type, False)
             static_timestamp = self.GetTimeStamps()[1]
             df_results = self.generate_element_results_dataframe(element_type=element_type
                                                                         ,tks=tks
