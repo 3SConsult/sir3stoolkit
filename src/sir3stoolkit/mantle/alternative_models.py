@@ -153,6 +153,7 @@ class SIR3S_Model_Alternative_Models(SIR3S_Model_Dataframes):
                 properties=["Fkcont"],
                 geometry=True
             )
+            df_nodes['tk'] = df_nodes['tk'].astype('int64')
             logger.info(f"[graph] Retrieved {len(df_nodes)} nodes.")
         except Exception as e:
             logger.error(f"[graph] Failed to retrieve node model_data: {e}")
@@ -160,7 +161,8 @@ class SIR3S_Model_Alternative_Models(SIR3S_Model_Dataframes):
 
         # --- Edges ---
         try:
-            df_edges=self.generate_hydraulic_edge_dataframe()
+            df_edges=self.generate_edge_dataframe()
+            df_edges['tk'] = df_edges['tk'].astype('int64')
         except Exception as e:
             logger.error(f"[graph] Failed to retrieve edges: {e}")
             return nx.DiGraph()
@@ -306,6 +308,8 @@ class SIR3S_Model_Alternative_Models(SIR3S_Model_Dataframes):
                              how="outer",
                              right=df_results)
             
+            df["tk"] = df["tk"].astype('int64')
+
             logger.debug(f"{df.columns}")
 
             if df is None or df.empty:

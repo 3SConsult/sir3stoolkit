@@ -19,11 +19,15 @@ The release notes indicate whether a version includes changes to the C# side and
 
 90-15 Quebec
 ------------
-- plotting.py  
-   - new function: plot_time_curves()
+
 
 Version 90.15.8
 ~~~~~~~~~~~~~~~
+
+- plotting.py  
+   - new function: plot_time_curves()
+
+- Fix: SIR_3S_to_nx_graph(): generate_hydraulic_edge_dataframe() renamed to generate_edge_dataframe() + datatype fix
 
 Version 90.15.7
 ~~~~~~~~~~~~~~~
