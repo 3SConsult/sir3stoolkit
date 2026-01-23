@@ -92,12 +92,30 @@ View: `Notebook <tutorials/SIR3S_Model/Tutorial005_Assets/ToolkitTutorial005.htm
 
 .. _Ttu006:
 
-Tutorial 6: Miscellaneous
+Tutorial 6: Tables
+^^^^^^^^^^^^^^^^^^
+
+This Tutorial demonstrates how to work with tables.
+
+View: `Notebook <tutorials/SIR3S_Model/Tutorial006_Assets/ToolkitTutorial006.html>`_ | Download: `ZIP archive <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorial006_Assets.zip>`_.
+
+.. _Ttu007:
+
+Tutorial 7: Groups
+^^^^^^^^^^^^^^^^^^
+
+This Tutorial demonstrates how to obtain the tks of objects that are part of a Group (Layer) and to change which objects are part of which groups.
+
+View: `Notebook <tutorials/SIR3S_Model/Tutorial007_Assets/ToolkitTutorial007.html>`_ | Download: `ZIP archive <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorial007_Assets.zip>`_.
+
+.. _Ttu008:
+
+Tutorial 8: Miscellaneous
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This Tutorial demonstrates miscellaneous functions of the SIR3S_Model() class that cannot be assigned to one of the previous Tutorial topics.
 
-View: `Notebook <tutorials/SIR3S_Model/Tutorial006_Assets/ToolkitTutorial006.html>`_ | Download: `ZIP archive <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorial006_Assets.zip>`_.
+View: `Notebook <tutorials/SIR3S_Model/Tutorial008_Assets/ToolkitTutorial008.html>`_ | Download: `ZIP archive <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorial008_Assets.zip>`_.
 
 .. _Ttu50-99:
 
