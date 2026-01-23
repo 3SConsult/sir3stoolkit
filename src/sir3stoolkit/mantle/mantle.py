@@ -11,7 +11,8 @@ This module is a collector for all mantle implementations. And provides the SIR3
 from sir3stoolkit.mantle.alternative_models import SIR3S_Model_Alternative_Models
 from sir3stoolkit.mantle.dataframes import SIR3S_Model_Dataframes
 from sir3stoolkit.mantle.plotting import SIR3S_Model_Plotting
+from sir3stoolkit.mantle.advanced_operations import SIR3S_Model_Advanced_Operations
 
-class SIR3S_Model_Mantle(SIR3S_Model_Alternative_Models, SIR3S_Model_Dataframes, SIR3S_Model_Plotting):
+class SIR3S_Model_Mantle(SIR3S_Model_Alternative_Models, SIR3S_Model_Dataframes, SIR3S_Model_Plotting, SIR3S_Model_Advanced_Operations):
 
     pass
