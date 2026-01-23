@@ -1,0 +1,443 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>sir3stoolkit.mantle.advanced_operations &mdash; sir3stoolkit  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=9c3e77be" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=f281be69"></script>
+      <script>let toggleHintShow = 'Click to show';</script>
+      <script>let toggleHintHide = 'Click to hide';</script>
+      <script>let toggleOpenOnPrint = 'true';</script>
+      <script src="../../../_static/togglebutton.js?v=1ae7504c"></script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            sir3stoolkit
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Application Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../releases.html">Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developers.html">For Developers</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">sir3stoolkit</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">sir3stoolkit.mantle.advanced_operations</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for sir3stoolkit.mantle.advanced_operations</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Created on Fri Jan 23 12:11:41 2026</span>
+
+<span class="sd">This module implements functions that extend the basic C# operations with more advanced operations to change a SIR 3S model.</span>
+
+<span class="sd">@author: Jablonski</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Any</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">logger</span><span class="o">.</span><span class="n">hasHandlers</span><span class="p">():</span>
+    <span class="n">handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">()</span>
+    <span class="n">formatter</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span><span class="s1">&#39;[</span><span class="si">%(asctime)s</span><span class="s1">] </span><span class="si">%(levelname)s</span><span class="s1"> in </span><span class="si">%(name)s</span><span class="s1">: </span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">formatter</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">sir3stoolkit.core.wrapper</span><span class="w"> </span><span class="kn">import</span> <span class="n">SIR3S_Model</span>
+
+<div class="viewcode-block" id="SIR3S_Model_Advanced_Operations">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.advanced_operations.SIR3S_Model_Advanced_Operations">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">SIR3S_Model_Advanced_Operations</span><span class="p">(</span><span class="n">SIR3S_Model</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class implements functions that extend the basic C# operations with more advanced operations to change a SIR 3S model.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="SIR3S_Model_Advanced_Operations.add_elements_to_group">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.advanced_operations.SIR3S_Model_Advanced_Operations.add_elements_to_group">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_elements_to_group</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">group_tk</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">element_tks</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span>
+    <span class="p">):</span> 
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Docstring for add_elements_to_group</span>
+<span class="sd">        </span>
+<span class="sd">        :param self: Description</span>
+<span class="sd">        :param group_tk: Description</span>
+<span class="sd">        :type group_tk: int</span>
+<span class="sd">        :param element_tks: Description</span>
+<span class="sd">        :type element_tks: list[tuple(int, int)]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># --- Validate Input Data ---</span>
+        <span class="n">available_group_tks</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">GetTksofElementType</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="o">.</span><span class="n">LAYR_Layer</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">group_tk</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">available_group_tks</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[insert into group] given tk for group </span><span class="si">{</span><span class="n">group_tk</span><span class="si">}</span><span class="s2"> does not exist.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+        
+        <span class="n">object_types</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;__&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">item</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;__&#39;</span><span class="p">))]</span>
+        <span class="n">available_tks</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">object_type</span> <span class="ow">in</span> <span class="n">object_types</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">tk</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTksofElementType</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="p">[</span><span class="n">object_type</span><span class="p">]):</span>
+                <span class="n">available_tks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tk</span><span class="p">)</span>
+
+        <span class="n">valid_element_tks</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">tk</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">element_tks</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">tk</span> <span class="ow">in</span> <span class="n">available_tks</span><span class="p">:</span>
+                <span class="n">valid_element_tks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">element_tks</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[insert into group] element tk </span><span class="si">{</span><span class="n">tk</span><span class="si">}</span><span class="s2"> does not exist in model. Excluding...&quot;</span><span class="p">)</span>
+
+        <span class="c1"># --- Get current group object string ---</span>
+        <span class="n">current_element_tks</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_tks_of_group_elements</span><span class="p">(</span><span class="n">group_tk</span><span class="o">=</span><span class="n">group_tk</span><span class="p">)</span>
+        <span class="n">element_tks_to_be</span> <span class="o">=</span> <span class="n">current_element_tks</span> <span class="o">+</span> <span class="n">valid_element_tks</span>
+        <span class="n">element_obj_string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_group_objs_string</span><span class="p">(</span><span class="n">element_tks_to_be</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SetValue</span><span class="p">(</span><span class="n">group_tk</span><span class="p">,</span> <span class="s2">&quot;ObjsString&quot;</span><span class="p">,</span><span class="n">element_obj_string</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SIR3S_Model_Advanced_Operations.add_element_types_to_tk_list">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.advanced_operations.SIR3S_Model_Advanced_Operations.add_element_types_to_tk_list">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_element_types_to_tk_list</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">tks</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Only works for DistrictHeating networks</span>
+<span class="sd">        </span>
+<span class="sd">        :param self: Description</span>
+<span class="sd">        :param tks: Description</span>
+<span class="sd">        :type tks: List[str]</span>
+<span class="sd">        :return: Description</span>
+<span class="sd">        :rtype: List[Tuple[str, str]]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">element_type_alternative_names</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">tk</span> <span class="ow">in</span> <span class="n">tks</span><span class="p">:</span>
+            <span class="n">element_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_element_type_from_tk</span><span class="p">(</span><span class="n">tk</span><span class="p">)</span>
+            <span class="n">element_type_alternative_name</span> <span class="o">=</span> <span class="n">mapping_for_groups</span><span class="p">[</span><span class="n">element_type</span><span class="p">]</span>
+            <span class="n">element_type_alternative_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">element_type_alternative_name</span><span class="p">)</span>
+
+        <span class="n">element_types_with_tks</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">element_type_alternative_names</span><span class="p">,</span> <span class="n">tks</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">element_types_with_tks</span></div>
+
+
+    
+<div class="viewcode-block" id="SIR3S_Model_Advanced_Operations.get_tks_of_group_elements">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.advanced_operations.SIR3S_Model_Advanced_Operations.get_tks_of_group_elements">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_tks_of_group_elements</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">group_tk</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Docstring for get_tks_of_group_elements</span>
+<span class="sd">        </span>
+<span class="sd">        :param self: Description</span>
+<span class="sd">        :param group_tk: Description</span>
+<span class="sd">        :type group_tk: int</span>
+<span class="sd">        :return: Description</span>
+<span class="sd">        :rtype: Any</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># --- Validate Input Data ---</span>
+        <span class="n">available_group_tks</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">GetTksofElementType</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="o">.</span><span class="n">LAYR_Layer</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">group_tk</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">available_group_tks</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[get group tks] given tk for group </span><span class="si">{</span><span class="n">group_tk</span><span class="si">}</span><span class="s2"> does not exist.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+
+        <span class="c1"># --- Get group object string</span>
+        <span class="n">ObjStr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetValue</span><span class="p">(</span><span class="n">group_tk</span><span class="p">,</span> <span class="s2">&quot;ObjsString&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">current_group_tks</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">ObjStr</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">element</span><span class="p">:</span> 
+                <span class="n">obj_type</span><span class="p">,</span> <span class="n">obj_tk</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;~&#39;</span><span class="p">)</span>
+                <span class="n">current_group_tks</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">obj_type</span><span class="p">,</span> <span class="n">obj_tk</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">current_group_tks</span></div>
+
+
+
+<div class="viewcode-block" id="SIR3S_Model_Advanced_Operations.build_group_objs_string">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.advanced_operations.SIR3S_Model_Advanced_Operations.build_group_objs_string">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">build_group_objs_string</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">group_tks</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">str</span><span class="p">]]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Build an ObjStr from a list of (object_type, object_tk) tuples.</span>
+
+<span class="sd">        Format:</span>
+<span class="sd">        &quot;TYPE~tk\tTYPE~tk\t...&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">obj_type</span><span class="si">}</span><span class="s2">~</span><span class="si">{</span><span class="n">obj_tk</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">obj_type</span><span class="p">,</span> <span class="n">obj_tk</span> <span class="ow">in</span> <span class="n">group_tks</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span></div>
+
+
+<div class="viewcode-block" id="SIR3S_Model_Advanced_Operations.get_element_type_from_tk">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.advanced_operations.SIR3S_Model_Advanced_Operations.get_element_type_from_tk">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_element_type_from_tk</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">tk</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Docstring for get_element_type_from_tk</span>
+<span class="sd">        </span>
+<span class="sd">        :param self: Description</span>
+<span class="sd">        :return: Description</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">object_types</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;__&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">item</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;__&#39;</span><span class="p">))]</span>
+        <span class="k">for</span> <span class="n">object_type</span> <span class="ow">in</span> <span class="n">object_types</span><span class="p">:</span>
+            <span class="n">tks</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">GetTksofElementType</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="p">[</span><span class="n">object_type</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">tk</span> <span class="ow">in</span> <span class="n">tks</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">object_type</span>
+
+        <span class="c1"># If tk is not found     </span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span></div>
+</div>
+
+
+
+<span class="c1"># --- Mappings ---</span>
+    
+<span class="n">mapping_for_groups</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;AGSN_HydraulicProfile&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;AirVessel&#39;</span><span class="p">:</span> <span class="s1">&#39;WIND&#39;</span><span class="p">,</span>
+<span class="s1">&#39;Arrow&#39;</span><span class="p">:</span> <span class="s1">&#39;ARRW&#39;</span><span class="p">,</span>
+<span class="s1">&#39;Atmosphere&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;BlockConnectionNode&#39;</span><span class="p">:</span> <span class="s1">&#39;VKNO&#39;</span><span class="p">,</span>
+<span class="s1">&#39;CalcPari&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;CharacteristicLossTable&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;CharacteristicLossTable_Row&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;Circle&#39;</span><span class="p">:</span> <span class="s1">&#39;CIRC&#39;</span><span class="p">,</span>
+<span class="s1">&#39;Compressor&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;CompressorTable&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;CompressorTable_Row&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;ControlEngineeringNexus&#39;</span><span class="p">:</span> <span class="s1">&#39;CRGL&#39;</span><span class="p">,</span>
+<span class="s1">&#39;ControlMode&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;ControlPointTable&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;ControlPointTable_Row&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;ControlValve&#39;</span><span class="p">:</span> <span class="s1">&#39;REGV&#39;</span><span class="p">,</span>
+<span class="s1">&#39;ControlVariableConverter&#39;</span><span class="p">:</span> <span class="s1">&#39;RSTN&#39;</span><span class="p">,</span>
+<span class="s1">&#39;ControlVariableConverterRSTE&#39;</span><span class="p">:</span> <span class="s1">&#39;RSTE&#39;</span><span class="p">,</span>
+<span class="s1">&#39;CrossSectionTable&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;CrossSectionTable_Row&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;DPGR_DPKT_DatapointDpgrConnection&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;DPGR_DataPointGroup&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;DPKT_Datapoint&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;DamageRatesTable&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;DamageRatesTable_Row&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;DeadTimeElement&#39;</span><span class="p">:</span> <span class="s1">&#39;RTOT&#39;</span><span class="p">,</span>
+<span class="s1">&#39;Demand&#39;</span><span class="p">:</span> <span class="s1">&#39;VERB&#39;</span><span class="p">,</span>
+<span class="s1">&#39;DifferentialRegulator&#39;</span><span class="p">:</span> <span class="s1">&#39;DPRG&#39;</span><span class="p">,</span>
+<span class="s1">&#39;DirectionalArrow&#39;</span><span class="p">:</span> <span class="s1">&#39;RPFL&#39;</span><span class="p">,</span>
+<span class="s1">&#39;DistrictHeatingConsumer&#39;</span><span class="p">:</span> <span class="s1">&#39;FWVB&#39;</span><span class="p">,</span>
+<span class="s1">&#39;DistrictHeatingFeeder&#39;</span><span class="p">:</span> <span class="s1">&#39;FWES&#39;</span><span class="p">,</span>
+<span class="s1">&#39;Divider&#39;</span><span class="p">:</span> <span class="s1">&#39;RDIV&#39;</span><span class="p">,</span>
+<span class="s1">&#39;DriveEfficiencyTable&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;DriveEfficiencyTable_Row&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;DrivePowerTable&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;DrivePowerTable_Row&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;EBES_FeederGroups&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;EfficiencyConverterTable&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;EfficiencyConverterTable_Row&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;ElementQuery&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;EnergyRecoveryTable&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;EnergyRecoveryTable_Row&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;EnvironmentTemp&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;FWBZ_DistrictHeatingReferenceValues&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;FlapValve&#39;</span><span class="p">:</span> <span class="s1">&#39;KLAP&#39;</span><span class="p">,</span>
+<span class="s1">&#39;FlowControlUnit&#39;</span><span class="p">:</span> <span class="s1">&#39;MREG&#39;</span><span class="p">,</span>
+<span class="s1">&#39;FluidQualityParamSet&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;FluidQualityParamSet_OS&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;FluidThermalPropertyGroup&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;FreeDuct&#39;</span><span class="p">:</span> <span class="s1">&#39;FKNL&#39;</span><span class="p">,</span>
+<span class="s1">&#39;FunctionGenerator&#39;</span><span class="p">:</span> <span class="s1">&#39;RFKT&#39;</span><span class="p">,</span>
+<span class="s1">&#39;FunctionTable&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;FunctionTable_Row&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;GasComponent&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;GasMixture&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;GeneralSection&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;Gravitation&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;HeatExchanger&#39;</span><span class="p">:</span> <span class="s1">&#39;FWWU&#39;</span><span class="p">,</span>
+<span class="s1">&#39;HeatFeederConsumerStation&#39;</span><span class="p">:</span> <span class="s1">&#39;FWEA&#39;</span><span class="p">,</span>
+<span class="s1">&#39;HeaterCooler&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;Histeresis&#39;</span><span class="p">:</span> <span class="s1">&#39;RHYS&#39;</span><span class="p">,</span>
+<span class="s1">&#39;House&#39;</span><span class="p">:</span> <span class="s1">&#39;HAUS&#39;</span><span class="p">,</span>
+<span class="s1">&#39;Hydrant&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;Integrator&#39;</span><span class="p">:</span> <span class="s1">&#39;RINT&#39;</span><span class="p">,</span>
+<span class="s1">&#39;LAYR_Layer&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;LoadFactorTable&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;LoadFactorTable_Row&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;LogicalComparison&#39;</span><span class="p">:</span> <span class="s1">&#39;RLVG&#39;</span><span class="p">,</span>
+<span class="s1">&#39;LogicalStorage&#39;</span><span class="p">:</span> <span class="s1">&#39;RLSR&#39;</span><span class="p">,</span>
+<span class="s1">&#39;MeasuredVariableTable&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;MeasuredVariableTable_Row&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;MinMaxSelection&#39;</span><span class="p">:</span> <span class="s1">&#39;RMMA&#39;</span><span class="p">,</span>
+<span class="s1">&#39;Multiplier&#39;</span><span class="p">:</span> <span class="s1">&#39;RMUL&#39;</span><span class="p">,</span>
+<span class="s1">&#39;NetValve&#39;</span><span class="p">:</span> <span class="s1">&#39;NSCH&#39;</span><span class="p">,</span>
+<span class="s1">&#39;Node&#39;</span><span class="p">:</span> <span class="s1">&#39;KNOT&#39;</span><span class="p">,</span>
+<span class="s1">&#39;NonReturnValvesTable&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;NonReturnValvesTable_Row&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;NumericalDisplay&#39;</span><span class="p">:</span> <span class="s1">&#39;NRCV&#39;</span><span class="p">,</span>
+<span class="s1">&#39;ObjectContainerSymbol&#39;</span><span class="p">:</span> <span class="s1">&#39;CONT&#39;</span><span class="p">,</span>
+<span class="s1">&#39;OpenContainer&#39;</span><span class="p">:</span> <span class="s1">&#39;OBEH&#39;</span><span class="p">,</span>
+<span class="s1">&#39;Oval&#39;</span><span class="p">:</span> <span class="s1">&#39;OVAL&#39;</span><span class="p">,</span>
+<span class="s1">&#39;PARZ_TransientCalculationParameters&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;PhaseSeparation&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;PidController&#39;</span><span class="p">:</span> <span class="s1">&#39;RPID&#39;</span><span class="p">,</span>
+<span class="s1">&#39;Pipe&#39;</span><span class="p">:</span> <span class="s1">&#39;ROHR&#39;</span><span class="p">,</span>
+<span class="s1">&#39;PipeGroup&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;PipeTable&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;PipeTable_Row&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;PipeVertex&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;Polygon&#39;</span><span class="p">:</span> <span class="s1">&#39;PLYG&#39;</span><span class="p">,</span>
+<span class="s1">&#39;Polyline&#39;</span><span class="p">:</span> <span class="s1">&#39;POLY&#39;</span><span class="p">,</span>
+<span class="s1">&#39;PressureRegulator&#39;</span><span class="p">:</span> <span class="s1">&#39;PREG&#39;</span><span class="p">,</span>
+<span class="s1">&#39;PressureZone&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;Pt1Controller&#39;</span><span class="p">:</span> <span class="s1">&#39;RPT1&#39;</span><span class="p">,</span>
+<span class="s1">&#39;Pump&#39;</span><span class="p">:</span> <span class="s1">&#39;PUMP&#39;</span><span class="p">,</span>
+<span class="s1">&#39;PumpCharTable&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;PumpCharTable_Row&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;PumpGroup&#39;</span><span class="p">:</span> <span class="s1">&#39;PGRP&#39;</span><span class="p">,</span>
+<span class="s1">&#39;PumpOfPumpGroup&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;PumpSpeedTable&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;PumpSpeedTable_Row&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;RART_ControlMode&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;REGP_ControlParameters&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;RMES_DPTS_RmesInternalDataPoint&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;Rectangle&#39;</span><span class="p">:</span> <span class="s1">&#39;RECT&#39;</span><span class="p">,</span>
+<span class="s1">&#39;RegulatorsTable&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;RegulatorsTable_Row&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;ReturnTemperaturTable&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;ReturnTemperaturTable_Row&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;RoundRectangle&#39;</span><span class="p">:</span> <span class="s1">&#39;RRCT&#39;</span><span class="p">,</span>
+<span class="s1">&#39;SIRGRAF&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;SPLZ_TimeSeries&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;SafetyValve&#39;</span><span class="p">:</span> <span class="s1">&#39;SIVE&#39;</span><span class="p">,</span>
+<span class="s1">&#39;SetpointDevice&#39;</span><span class="p">:</span> <span class="s1">&#39;RSLW&#39;</span><span class="p">,</span>
+<span class="s1">&#39;SolarCollector&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;StandPipe&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;Street&#39;</span><span class="p">:</span> <span class="s1">&#39;STRASSE&#39;</span><span class="p">,</span>
+<span class="s1">&#39;SummingPoint&#39;</span><span class="p">:</span> <span class="s1">&#39;RADD&#39;</span><span class="p">,</span>
+<span class="s1">&#39;SwitchInBlock&#39;</span><span class="p">:</span> <span class="s1">&#39;BREF&#39;</span><span class="p">,</span>
+<span class="s1">&#39;TemperatureTable&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;TemperatureTable_Row&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;Text&#39;</span><span class="p">:</span> <span class="s1">&#39;GTXT&#39;</span><span class="p">,</span>
+<span class="s1">&#39;ThermalOutputTable&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;ThermalOutputTable_Row&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;ThermophysPropTable&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;ThermophysPropTable_Row&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;TransitionSymbol&#39;</span><span class="p">:</span> <span class="s1">&#39;RUES&#39;</span><span class="p">,</span>
+<span class="s1">&#39;Transmitter&#39;</span><span class="p">:</span> <span class="s1">&#39;RMES&#39;</span><span class="p">,</span>
+<span class="s1">&#39;TransportVariable&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;USCH_UserDefinedProperties&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;Unknown&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;VARA_ColorScale&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;VARA_ROWS_WidthOrScale&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;VRCT_ViewRectangle&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;Valve&#39;</span><span class="p">:</span> <span class="s1">&#39;VENT&#39;</span><span class="p">,</span>
+<span class="s1">&#39;ValveLiftTable&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;ValveLiftTable_Row&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;VarFlowTable&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;VarFlowTable_Row&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;VarPressureTable&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;VarPressureTable_Row&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;VentOpenCloseTable&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;VentOpenCloseTable_Row&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;VentValve&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;VentilatedPressureAirVessel&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;WBLZ_ThermalBalance&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;WeatherDataTable&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">&#39;WeatherDataTable_Row&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">}</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025 3S Consult GmbH.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
