@@ -25,10 +25,11 @@ Version 90.15.9 (TO BE RELEASED)
 
 - advanced_operations.py: new module with new class SIR3S_Model_Advanced_Operations()
    - new functions: 
+      - set_group_elements()
       - add_elements_to_group()
+      - remove_elements_from_group()
       - add_element_types_to_tk_list()
       - get_tks_of_group_elements()
-      - build_group_objs_string
       - get_element_type_from_tk()
 
 Version 90.15.8

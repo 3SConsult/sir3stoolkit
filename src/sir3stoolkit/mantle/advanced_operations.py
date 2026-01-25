@@ -25,28 +25,30 @@ class SIR3S_Model_Advanced_Operations(SIR3S_Model):
     """
     This class implements functions that extend the basic C# operations with more advanced operations to change a SIR 3S model.
     """
-
-    def add_elements_to_group(
+    def set_group_elements(
         self,
         group_tk: int,
         element_tks: List[Tuple[str, str]]
-    ): 
+    ):
         """
-        Docstring for add_elements_to_group
+        Overwrites elements in a group with new list of tks of elements.
         
-        :param self: Description
-        :param group_tk: Description
+        :param self
+        :param group_tk: Tk of the group, the elements should be set for.
         :type group_tk: int
-        :param element_tks: Description
+        :param element_tks: Tks of elements, that should be set for group. Eg. [('KNOT', '5428054456958551597'), ('KNOT', '5099111544186125239')]
         :type element_tks: list[tuple(int, int)]
         """
-
+        
         # --- Validate Input Data ---
+        valid_group_tk = -1
         available_group_tks=self.GetTksofElementType(self.ObjectTypes.LAYR_Layer)
         if group_tk not in available_group_tks:
-            logger.debug(f"[insert into group] given tk for group {group_tk} does not exist.")
+            logger.error(f"[validate_group_changes_data] given tk for group {group_tk} does not exist.")
             return -1
-        
+        else:
+            valid_group_tk = group_tk
+            
         object_types = [item for item in dir(self.ObjectTypes) if not (item.startswith('__') and item.endswith('__'))]
         available_tks = []
         for object_type in object_types:
@@ -58,25 +60,158 @@ class SIR3S_Model_Advanced_Operations(SIR3S_Model):
             if tk in available_tks:
                 valid_element_tks.append(element_tks[idx])
             else:
-                logger.info(f"[insert into group] element tk {tk} does not exist in model. Excluding...")
+                logger.info(f"validate_group_changes_data] element tk {tk} does not exist in model. Excluding...")
 
+        # --- Set ---
+        element_obj_string = self._build_group_objs_string(valid_element_tks)
+        self.SetValue(valid_group_tk, "ObjsString",element_obj_string)
+
+        
+        # --- Check ---
+        if len(self.get_tks_of_group_elements(group_tk=valid_group_tk)) == len(valid_element_tks):
+            logger.info(f"[set elements for group] Check successful")
+        else:
+            logger.info(f"[set elements for group] Check unsuccessful. Mismatch in amount of elements in edited group and intended amount.")
+
+
+
+    def add_elements_to_group(
+        self,
+        group_tk: int,
+        element_tks: List[Tuple[str, str]]
+    ): 
+        """
+        Adds elements to a group with list of tks of elements.
+        
+        :param self
+        :param group_tk: Tk of the group, the elements should be added for.
+        :type group_tk: int
+        :param element_tks: Tks of elements, that should be added to the group. Eg. [('KNOT', '5428054456958551597'), ('KNOT', '5099111544186125239')]
+        :type element_tks: list[tuple(int, int)]
+        """
+
+        # --- Validate Input Data ---
+        valid_group_tk, valid_element_tks = self._validate_group_changes_data(group_tk, element_tks, False)
+
+        if valid_group_tk == -1 or len(valid_element_tks) == 0:
+            logger.error(f"[add elements to group] invalid input data")
+            return -1
+        
         # --- Get current group object string ---
         current_element_tks = self.get_tks_of_group_elements(group_tk=group_tk)
         element_tks_to_be = current_element_tks + valid_element_tks
-        element_obj_string = self.build_group_objs_string(element_tks_to_be)
-        self.SetValue(group_tk, "ObjsString",element_obj_string)
+        element_obj_string = self._build_group_objs_string(element_tks_to_be)
+
+        # --- Add --
+        self.SetValue(valid_group_tk, "ObjsString",element_obj_string)
+
+        # --- Check ---
+        if len(self.get_tks_of_group_elements(group_tk=valid_group_tk)) == len(element_tks_to_be):
+            logger.info(f"[add elements to group] Check successful")
+        else:
+            logger.info(f"[add elements to group] Check unsuccessful. Mismatch in amount of elements in edited group and intended amount.")
+
+
+    def remove_elements_from_group(
+        self,
+        group_tk: int,
+        element_tks: List[Tuple[str, str]]
+    ): 
+        """
+        Removes elements fro a group with list of tks of elements.
+        
+        :param self
+        :param group_tk: Tk of the group, the elements should be removed from.
+        :type group_tk: int
+        :param element_tks: Tks of elements, that should be removed from the group. Eg. [('KNOT', '5428054456958551597'), ('KNOT', '5099111544186125239')]
+        :type element_tks: list[tuple(int, int)]
+        """
+
+        # --- Validate Input Data ---
+        valid_group_tk, valid_element_tks = self._validate_group_changes_data(group_tk, element_tks, True)
+
+        if valid_group_tk == -1 or len(valid_element_tks) == 0:
+            logger.info(f"[remove elements from group] invalid input data")
+            return -1
+        
+        # --- Get current group object string ---
+        current_element_tks = self.get_tks_of_group_elements(group_tk=group_tk)
+        remove = set(valid_element_tks) 
+        element_tks_to_be = [tk for tk in current_element_tks if tk not in remove]
+        element_obj_string = self._build_group_objs_string(element_tks_to_be)
+        
+        # --- Add --
+        self.SetValue(valid_group_tk, "ObjsString",element_obj_string)
+
+        # --- Check ---
+        if len(self.get_tks_of_group_elements(group_tk=valid_group_tk)) == len(element_tks_to_be):
+            logger.info(f"[remove elements from group] Check successful")
+        else:
+            logger.info(f"[remove elements from group] Check unsuccessful. Mismatch in amount of elements in edited group and intended amount.")
+
+    def _validate_group_changes_data(
+        self,
+        group_tk: int,
+        element_tks: List[Tuple[str, str]],
+        remove_or_add: bool, # True for remove, False for add
+    ) -> Tuple[int, List[Tuple[str, str]]]:
+        """
+        Needed for remove_elements_from_group() and add_elements_to_group(). validates inputs for them.
+        
+        :param self
+        :param group_tk: Tk of the group that should be validated
+        :type group_tk: int
+        :param element_tks: Tks of elements, that should be validated. Eg. [('KNOT', '5428054456958551597'), ('KNOT', '5099111544186125239')]
+        :type element_tks: list[tuple(int, int)]
+        :param remove_or_add: True for remove, False for add
+        :type remove_or_add: bool
+        """
+        # --- Group tk ---
+        valid_group_tk = -1
+        available_group_tks=self.GetTksofElementType(self.ObjectTypes.LAYR_Layer)
+        if group_tk not in available_group_tks:
+            logger.info(f"[validate_group_changes_data] given tk for group {group_tk} does not exist.")
+        else:
+            valid_group_tk = group_tk
+        
+        # --- Element tks ---
+        object_types = [item for item in dir(self.ObjectTypes) if not (item.startswith('__') and item.endswith('__'))]
+        available_tks = []
+        for object_type in object_types:
+            for tk in self.GetTksofElementType(self.ObjectTypes[object_type]):
+                available_tks.append(tk)
+        available_elements_in_group = self.get_tks_of_group_elements(group_tk=group_tk)
+        available_tks_in_group = [element[1] for element in available_elements_in_group]
+
+        valid_element_tks = []
+        for idx, (_, tk) in enumerate(element_tks):
+            if tk in available_tks:
+                if remove_or_add:
+                    if tk in available_tks_in_group:
+                        valid_element_tks.append(element_tks[idx])
+                    else:
+                        logger.info(f"validate_group_changes_data] element tk {tk} does not lie in group {group_tk}. Excluding...")
+                else:
+                    if tk not in available_tks_in_group:
+                        valid_element_tks.append(element_tks[idx])
+                    else:
+                        logger.info(f"validate_group_changes_data] element tk {tk} already lies in group {group_tk}. Excluding...")
+            else:
+                logger.info(f"validate_group_changes_data] element tk {tk} does not exist in model. Excluding...")
+
+        return valid_group_tk, valid_element_tks
 
     def add_element_types_to_tk_list(
         self,
         tks: List[str]
     ) -> List[Tuple[str, str]]:
         """
-        Only works for DistrictHeating networks
+        Turns list of tks into list of tuples with element type and tk. Only works for DistrictHeating networks. For other mappings we need an additional mapping. see sir3stoolkit/docs/code snippets/mapping_for_groups.ipynb
         
         :param self: Description
-        :param tks: Description
+        :param tks: List of tks of elements like ['5428054456958551597', '50736424189751239']
         :type tks: List[str]
-        :return: Description
+        :return: Description [('KNOT', '5428054456958551597'), ('ROHR', '50736424189751239')]
         :rtype: List[Tuple[str, str]]
         """
 
@@ -95,12 +230,12 @@ class SIR3S_Model_Advanced_Operations(SIR3S_Model):
             group_tk: int
     ) -> List[Tuple[str, str]]:
         """
-        Docstring for get_tks_of_group_elements
+        Returns list of tuples with element type and tk of elements that are part of specific group.
         
         :param self: Description
-        :param group_tk: Description
+        :param group_tk: Tk of group for element tk retrival
         :type group_tk: int
-        :return: Description
+        :return: List of tuples with element type and tk of elements of group.
         :rtype: Any
         """
 
@@ -121,7 +256,7 @@ class SIR3S_Model_Advanced_Operations(SIR3S_Model):
         return current_group_tks
 
 
-    def build_group_objs_string(
+    def _build_group_objs_string(
         self,
         group_tks: List[Tuple[str, int | str]]
     ) -> str:
@@ -139,10 +274,10 @@ class SIR3S_Model_Advanced_Operations(SIR3S_Model):
         tk: str
     ) -> str:
         """
-        Docstring for get_element_type_from_tk
+        Return element type for given tk.
         
-        :param self: Description
-        :return: Description
+        :param self: Tk of element
+        :return: element type
         :rtype: str
         """
 
@@ -157,7 +292,8 @@ class SIR3S_Model_Advanced_Operations(SIR3S_Model):
 
 
 # --- Mappings ---
-    
+
+# Only for District Heating    
 mapping_for_groups = {'AGSN_HydraulicProfile': -1,
 'AirVessel': 'WIND',
 'Arrow': 'ARRW',
