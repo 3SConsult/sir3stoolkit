@@ -113,30 +113,32 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This class implements functions that extend the basic C# operations with more advanced operations to change a SIR 3S model.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-
-<div class="viewcode-block" id="SIR3S_Model_Advanced_Operations.add_elements_to_group">
-<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.advanced_operations.SIR3S_Model_Advanced_Operations.add_elements_to_group">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">add_elements_to_group</span><span class="p">(</span>
+<div class="viewcode-block" id="SIR3S_Model_Advanced_Operations.set_group_elements">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.advanced_operations.SIR3S_Model_Advanced_Operations.set_group_elements">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_group_elements</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">group_tk</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
         <span class="n">element_tks</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span>
-    <span class="p">):</span> 
+    <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Docstring for add_elements_to_group</span>
+<span class="sd">        Overwrites elements in a group with new list of tks of elements.</span>
 <span class="sd">        </span>
-<span class="sd">        :param self: Description</span>
-<span class="sd">        :param group_tk: Description</span>
+<span class="sd">        :param self</span>
+<span class="sd">        :param group_tk: Tk of the group, the elements should be set for.</span>
 <span class="sd">        :type group_tk: int</span>
-<span class="sd">        :param element_tks: Description</span>
+<span class="sd">        :param element_tks: Tks of elements, that should be set for group. Eg. [(&#39;KNOT&#39;, &#39;5428054456958551597&#39;), (&#39;KNOT&#39;, &#39;5099111544186125239&#39;)]</span>
 <span class="sd">        :type element_tks: list[tuple(int, int)]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
+        
         <span class="c1"># --- Validate Input Data ---</span>
+        <span class="n">valid_group_tk</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
         <span class="n">available_group_tks</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">GetTksofElementType</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="o">.</span><span class="n">LAYR_Layer</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">group_tk</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">available_group_tks</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[insert into group] given tk for group </span><span class="si">{</span><span class="n">group_tk</span><span class="si">}</span><span class="s2"> does not exist.&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[validate_group_changes_data] given tk for group </span><span class="si">{</span><span class="n">group_tk</span><span class="si">}</span><span class="s2"> does not exist.&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
-        
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">valid_group_tk</span> <span class="o">=</span> <span class="n">group_tk</span>
+            
         <span class="n">object_types</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;__&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">item</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;__&#39;</span><span class="p">))]</span>
         <span class="n">available_tks</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">object_type</span> <span class="ow">in</span> <span class="n">object_types</span><span class="p">:</span>
@@ -148,14 +150,153 @@
             <span class="k">if</span> <span class="n">tk</span> <span class="ow">in</span> <span class="n">available_tks</span><span class="p">:</span>
                 <span class="n">valid_element_tks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">element_tks</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[insert into group] element tk </span><span class="si">{</span><span class="n">tk</span><span class="si">}</span><span class="s2"> does not exist in model. Excluding...&quot;</span><span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;validate_group_changes_data] element tk </span><span class="si">{</span><span class="n">tk</span><span class="si">}</span><span class="s2"> does not exist in model. Excluding...&quot;</span><span class="p">)</span>
 
+        <span class="c1"># --- Set ---</span>
+        <span class="n">element_obj_string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_group_objs_string</span><span class="p">(</span><span class="n">valid_element_tks</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SetValue</span><span class="p">(</span><span class="n">valid_group_tk</span><span class="p">,</span> <span class="s2">&quot;ObjsString&quot;</span><span class="p">,</span><span class="n">element_obj_string</span><span class="p">)</span>
+
+        
+        <span class="c1"># --- Check ---</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_tks_of_group_elements</span><span class="p">(</span><span class="n">group_tk</span><span class="o">=</span><span class="n">valid_group_tk</span><span class="p">))</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">valid_element_tks</span><span class="p">):</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[set elements for group] Check successful&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[set elements for group] Check unsuccessful. Mismatch in amount of elements in edited group and intended amount.&quot;</span><span class="p">)</span></div>
+
+
+
+
+<div class="viewcode-block" id="SIR3S_Model_Advanced_Operations.add_elements_to_group">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.advanced_operations.SIR3S_Model_Advanced_Operations.add_elements_to_group">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_elements_to_group</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">group_tk</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">element_tks</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span>
+    <span class="p">):</span> 
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds elements to a group with list of tks of elements.</span>
+<span class="sd">        </span>
+<span class="sd">        :param self</span>
+<span class="sd">        :param group_tk: Tk of the group, the elements should be added for.</span>
+<span class="sd">        :type group_tk: int</span>
+<span class="sd">        :param element_tks: Tks of elements, that should be added to the group. Eg. [(&#39;KNOT&#39;, &#39;5428054456958551597&#39;), (&#39;KNOT&#39;, &#39;5099111544186125239&#39;)]</span>
+<span class="sd">        :type element_tks: list[tuple(int, int)]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># --- Validate Input Data ---</span>
+        <span class="n">valid_group_tk</span><span class="p">,</span> <span class="n">valid_element_tks</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validate_group_changes_data</span><span class="p">(</span><span class="n">group_tk</span><span class="p">,</span> <span class="n">element_tks</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">valid_group_tk</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">valid_element_tks</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[add elements to group] invalid input data&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+        
         <span class="c1"># --- Get current group object string ---</span>
         <span class="n">current_element_tks</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_tks_of_group_elements</span><span class="p">(</span><span class="n">group_tk</span><span class="o">=</span><span class="n">group_tk</span><span class="p">)</span>
         <span class="n">element_tks_to_be</span> <span class="o">=</span> <span class="n">current_element_tks</span> <span class="o">+</span> <span class="n">valid_element_tks</span>
-        <span class="n">element_obj_string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_group_objs_string</span><span class="p">(</span><span class="n">element_tks_to_be</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">SetValue</span><span class="p">(</span><span class="n">group_tk</span><span class="p">,</span> <span class="s2">&quot;ObjsString&quot;</span><span class="p">,</span><span class="n">element_obj_string</span><span class="p">)</span></div>
+        <span class="n">element_obj_string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_group_objs_string</span><span class="p">(</span><span class="n">element_tks_to_be</span><span class="p">)</span>
 
+        <span class="c1"># --- Add --</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SetValue</span><span class="p">(</span><span class="n">valid_group_tk</span><span class="p">,</span> <span class="s2">&quot;ObjsString&quot;</span><span class="p">,</span><span class="n">element_obj_string</span><span class="p">)</span>
+
+        <span class="c1"># --- Check ---</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_tks_of_group_elements</span><span class="p">(</span><span class="n">group_tk</span><span class="o">=</span><span class="n">valid_group_tk</span><span class="p">))</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">element_tks_to_be</span><span class="p">):</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[add elements to group] Check successful&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[add elements to group] Check unsuccessful. Mismatch in amount of elements in edited group and intended amount.&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="SIR3S_Model_Advanced_Operations.remove_elements_from_group">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.advanced_operations.SIR3S_Model_Advanced_Operations.remove_elements_from_group">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">remove_elements_from_group</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">group_tk</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">element_tks</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span>
+    <span class="p">):</span> 
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Removes elements fro a group with list of tks of elements.</span>
+<span class="sd">        </span>
+<span class="sd">        :param self</span>
+<span class="sd">        :param group_tk: Tk of the group, the elements should be removed from.</span>
+<span class="sd">        :type group_tk: int</span>
+<span class="sd">        :param element_tks: Tks of elements, that should be removed from the group. Eg. [(&#39;KNOT&#39;, &#39;5428054456958551597&#39;), (&#39;KNOT&#39;, &#39;5099111544186125239&#39;)]</span>
+<span class="sd">        :type element_tks: list[tuple(int, int)]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># --- Validate Input Data ---</span>
+        <span class="n">valid_group_tk</span><span class="p">,</span> <span class="n">valid_element_tks</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validate_group_changes_data</span><span class="p">(</span><span class="n">group_tk</span><span class="p">,</span> <span class="n">element_tks</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">valid_group_tk</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">valid_element_tks</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[remove elements from group] invalid input data&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+        
+        <span class="c1"># --- Get current group object string ---</span>
+        <span class="n">current_element_tks</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_tks_of_group_elements</span><span class="p">(</span><span class="n">group_tk</span><span class="o">=</span><span class="n">group_tk</span><span class="p">)</span>
+        <span class="n">remove</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">valid_element_tks</span><span class="p">)</span> 
+        <span class="n">element_tks_to_be</span> <span class="o">=</span> <span class="p">[</span><span class="n">tk</span> <span class="k">for</span> <span class="n">tk</span> <span class="ow">in</span> <span class="n">current_element_tks</span> <span class="k">if</span> <span class="n">tk</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">remove</span><span class="p">]</span>
+        <span class="n">element_obj_string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_group_objs_string</span><span class="p">(</span><span class="n">element_tks_to_be</span><span class="p">)</span>
+        
+        <span class="c1"># --- Add --</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SetValue</span><span class="p">(</span><span class="n">valid_group_tk</span><span class="p">,</span> <span class="s2">&quot;ObjsString&quot;</span><span class="p">,</span><span class="n">element_obj_string</span><span class="p">)</span>
+
+        <span class="c1"># --- Check ---</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_tks_of_group_elements</span><span class="p">(</span><span class="n">group_tk</span><span class="o">=</span><span class="n">valid_group_tk</span><span class="p">))</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">element_tks_to_be</span><span class="p">):</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[remove elements from group] Check successful&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[remove elements from group] Check unsuccessful. Mismatch in amount of elements in edited group and intended amount.&quot;</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_validate_group_changes_data</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">group_tk</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">element_tks</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]],</span>
+        <span class="n">remove_or_add</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="c1"># True for remove, False for add</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Needed for remove_elements_from_group() and add_elements_to_group(). validates inputs for them.</span>
+<span class="sd">        </span>
+<span class="sd">        :param self</span>
+<span class="sd">        :param group_tk: Tk of the group that should be validated</span>
+<span class="sd">        :type group_tk: int</span>
+<span class="sd">        :param element_tks: Tks of elements, that should be validated. Eg. [(&#39;KNOT&#39;, &#39;5428054456958551597&#39;), (&#39;KNOT&#39;, &#39;5099111544186125239&#39;)]</span>
+<span class="sd">        :type element_tks: list[tuple(int, int)]</span>
+<span class="sd">        :param remove_or_add: True for remove, False for add</span>
+<span class="sd">        :type remove_or_add: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># --- Group tk ---</span>
+        <span class="n">valid_group_tk</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="n">available_group_tks</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">GetTksofElementType</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="o">.</span><span class="n">LAYR_Layer</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">group_tk</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">available_group_tks</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[validate_group_changes_data] given tk for group </span><span class="si">{</span><span class="n">group_tk</span><span class="si">}</span><span class="s2"> does not exist.&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">valid_group_tk</span> <span class="o">=</span> <span class="n">group_tk</span>
+        
+        <span class="c1"># --- Element tks ---</span>
+        <span class="n">object_types</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;__&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">item</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;__&#39;</span><span class="p">))]</span>
+        <span class="n">available_tks</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">object_type</span> <span class="ow">in</span> <span class="n">object_types</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">tk</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTksofElementType</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="p">[</span><span class="n">object_type</span><span class="p">]):</span>
+                <span class="n">available_tks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tk</span><span class="p">)</span>
+        <span class="n">available_elements_in_group</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_tks_of_group_elements</span><span class="p">(</span><span class="n">group_tk</span><span class="o">=</span><span class="n">group_tk</span><span class="p">)</span>
+        <span class="n">available_tks_in_group</span> <span class="o">=</span> <span class="p">[</span><span class="n">element</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">available_elements_in_group</span><span class="p">]</span>
+
+        <span class="n">valid_element_tks</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">tk</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">element_tks</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">tk</span> <span class="ow">in</span> <span class="n">available_tks</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">remove_or_add</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">tk</span> <span class="ow">in</span> <span class="n">available_tks_in_group</span><span class="p">:</span>
+                        <span class="n">valid_element_tks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">element_tks</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;validate_group_changes_data] element tk </span><span class="si">{</span><span class="n">tk</span><span class="si">}</span><span class="s2"> does not lie in group </span><span class="si">{</span><span class="n">group_tk</span><span class="si">}</span><span class="s2">. Excluding...&quot;</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">tk</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">available_tks_in_group</span><span class="p">:</span>
+                        <span class="n">valid_element_tks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">element_tks</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;validate_group_changes_data] element tk </span><span class="si">{</span><span class="n">tk</span><span class="si">}</span><span class="s2"> already lies in group </span><span class="si">{</span><span class="n">group_tk</span><span class="si">}</span><span class="s2">. Excluding...&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;validate_group_changes_data] element tk </span><span class="si">{</span><span class="n">tk</span><span class="si">}</span><span class="s2"> does not exist in model. Excluding...&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">valid_group_tk</span><span class="p">,</span> <span class="n">valid_element_tks</span>
 
 <div class="viewcode-block" id="SIR3S_Model_Advanced_Operations.add_element_types_to_tk_list">
 <a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.advanced_operations.SIR3S_Model_Advanced_Operations.add_element_types_to_tk_list">[docs]</a>
@@ -164,12 +305,12 @@
         <span class="n">tks</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Only works for DistrictHeating networks</span>
+<span class="sd">        Turns list of tks into list of tuples with element type and tk. Only works for DistrictHeating networks. For other mappings we need an additional mapping. see sir3stoolkit/docs/code snippets/mapping_for_groups.ipynb</span>
 <span class="sd">        </span>
 <span class="sd">        :param self: Description</span>
-<span class="sd">        :param tks: Description</span>
+<span class="sd">        :param tks: List of tks of elements like [&#39;5428054456958551597&#39;, &#39;50736424189751239&#39;]</span>
 <span class="sd">        :type tks: List[str]</span>
-<span class="sd">        :return: Description</span>
+<span class="sd">        :return: Description [(&#39;KNOT&#39;, &#39;5428054456958551597&#39;), (&#39;ROHR&#39;, &#39;50736424189751239&#39;)]</span>
 <span class="sd">        :rtype: List[Tuple[str, str]]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -191,12 +332,12 @@
             <span class="n">group_tk</span><span class="p">:</span> <span class="nb">int</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Docstring for get_tks_of_group_elements</span>
+<span class="sd">        Returns list of tuples with element type and tk of elements that are part of specific group.</span>
 <span class="sd">        </span>
 <span class="sd">        :param self: Description</span>
-<span class="sd">        :param group_tk: Description</span>
+<span class="sd">        :param group_tk: Tk of group for element tk retrival</span>
 <span class="sd">        :type group_tk: int</span>
-<span class="sd">        :return: Description</span>
+<span class="sd">        :return: List of tuples with element type and tk of elements of group.</span>
 <span class="sd">        :rtype: Any</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -218,9 +359,7 @@
 
 
 
-<div class="viewcode-block" id="SIR3S_Model_Advanced_Operations.build_group_objs_string">
-<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.advanced_operations.SIR3S_Model_Advanced_Operations.build_group_objs_string">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">build_group_objs_string</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_build_group_objs_string</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">group_tks</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">str</span><span class="p">]]</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
@@ -231,8 +370,7 @@
 <span class="sd">        &quot;TYPE~tk\tTYPE~tk\t...&quot;</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">obj_type</span><span class="si">}</span><span class="s2">~</span><span class="si">{</span><span class="n">obj_tk</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">obj_type</span><span class="p">,</span> <span class="n">obj_tk</span> <span class="ow">in</span> <span class="n">group_tks</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span></div>
-
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">obj_type</span><span class="si">}</span><span class="s2">~</span><span class="si">{</span><span class="n">obj_tk</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">obj_type</span><span class="p">,</span> <span class="n">obj_tk</span> <span class="ow">in</span> <span class="n">group_tks</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span>
 
 <div class="viewcode-block" id="SIR3S_Model_Advanced_Operations.get_element_type_from_tk">
 <a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.advanced_operations.SIR3S_Model_Advanced_Operations.get_element_type_from_tk">[docs]</a>
@@ -241,10 +379,10 @@
         <span class="n">tk</span><span class="p">:</span> <span class="nb">str</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Docstring for get_element_type_from_tk</span>
+<span class="sd">        Return element type for given tk.</span>
 <span class="sd">        </span>
-<span class="sd">        :param self: Description</span>
-<span class="sd">        :return: Description</span>
+<span class="sd">        :param self: Tk of element</span>
+<span class="sd">        :return: element type</span>
 <span class="sd">        :rtype: str</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -261,7 +399,8 @@
 
 
 <span class="c1"># --- Mappings ---</span>
-    
+
+<span class="c1"># Only for District Heating    </span>
 <span class="n">mapping_for_groups</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;AGSN_HydraulicProfile&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
 <span class="s1">&#39;AirVessel&#39;</span><span class="p">:</span> <span class="s1">&#39;WIND&#39;</span><span class="p">,</span>
 <span class="s1">&#39;Arrow&#39;</span><span class="p">:</span> <span class="s1">&#39;ARRW&#39;</span><span class="p">,</span>

@@ -89,7 +89,7 @@
              
   <section id="Tutorial-81:-Groups">
 <h1>Tutorial 81: Groups<a class="headerlink" href="#Tutorial-81:-Groups" title="Link to this heading"></a></h1>
-<p>This example demonstrates how to</p>
+<p>This example demonstrates how add, remove, set elements to groups.</p>
 </section>
 <section id="SIR-3S-Installation">
 <h1>SIR 3S Installation<a class="headerlink" href="#SIR-3S-Installation" title="Link to this heading"></a></h1>
@@ -233,8 +233,9 @@ Model is open for further operation
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-0: 4999103085880923178: Vorlauf
-1: 5238820536187712277: Rücklauf
+0: 5566604953098438347: Vorlauf
+1: 4645068345115859295: Rücklauf
+2: 5499257419847606859: Rohre
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
@@ -251,9 +252,9 @@ Model is open for further operation
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-[(&#39;KNOT&#39;, &#39;4968737254281413660&#39;),
- (&#39;KNOT&#39;, &#39;5130290893660176749&#39;),
- (&#39;ROHR&#39;, &#39;5316743965501398998&#39;)]
+[(&#39;KNOT&#39;, &#39;5428054456958551597&#39;),
+ (&#39;KNOT&#39;, &#39;5099111544186125239&#39;),
+ (&#39;ROHR&#39;, &#39;4742112892005639406&#39;)]
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
@@ -270,57 +271,59 @@ Model is open for further operation
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-[(&#39;KNOT&#39;, &#39;5470637040092884723&#39;),
- (&#39;ROHR&#39;, &#39;5736978569585339616&#39;),
- (&#39;KNOT&#39;, &#39;4906600779019373637&#39;)]
+[(&#39;KNOT&#39;, &#39;5743596851943449715&#39;),
+ (&#39;KNOT&#39;, &#39;5269793380005646745&#39;),
+ (&#39;ROHR&#39;, &#39;5531803347555043206&#39;),
+ (&#39;KNOT&#39;, &#39;5629554381987149893&#39;),
+ (&#39;ROHR&#39;, &#39;5164228635035739777&#39;)]
 </pre></div></div>
 </div>
 <p>Note that when using this function we get lists of tuples containing both the element type and tk of each element. The reason for this is that when adding elements to other classes, we need to now both their element type and tk.</p>
 </section>
-<section id="Add-tk-list-to-group-(supply)">
-<h1>Add tk list to group (supply)<a class="headerlink" href="#Add-tk-list-to-group-(supply)" title="Link to this heading"></a></h1>
-<p>Let’s asssume we have a list of tks (of nodes and pipes) we want to add them to the Vorlauf (supply) group, but dont have their element types saved with them. We can use the add_element_types_to_tk_list() function to add the element types. Note that these element types are not directley equivalent to the s3s.ObjectTypes. This function only works for District Heating network, because for others the element types would carry different names.</p>
+<section id="Remove">
+<h1>Remove<a class="headerlink" href="#Remove" title="Link to this heading"></a></h1>
+<p>The last two elements in the Rücklauf (return) group were mistakenly placed there and actually belong to the Vorlauf (supply) group. First, we remove them from the Rücklauf group.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>tks_given = [&quot;4667643323184213561&quot;, &quot;5146846590039916629&quot;]
-</pre></div>
-</div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>tks_given_with_element_types = s3s.add_element_types_to_tk_list(tks_given)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>tks_to_be_moved = [tks_of_group_elements[1][i] for i in [3,4]]
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>tks_given_with_element_types
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>tks_to_be_moved
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-[(&#39;ROHR&#39;, &#39;4667643323184213561&#39;), (&#39;KNOT&#39;, &#39;5146846590039916629&#39;)]
+[(&#39;KNOT&#39;, &#39;5629554381987149893&#39;), (&#39;ROHR&#39;, &#39;5164228635035739777&#39;)]
 </pre></div></div>
 </div>
-<p>Now we have the desired format of tks and can use it with the function add_elements_to_group().</p>
+<p>Now we have the desired format of tks and can use it with the function remove_elements_from_group().</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.add_elements_to_group(group_tk=group_tks[0], element_tks=tks_given_with_element_types)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.remove_elements_from_group(group_tk=group_tks[1], element_tks=tks_to_be_moved,)
 </pre></div>
 </div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+[2026-01-25 18:18:49,586] INFO in sir3stoolkit.mantle.advanced_operations: [remove elements from group] Check successful
+</pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
@@ -330,9 +333,57 @@ Model is open for further operation
 Value is set
 </pre></div></div>
 </div>
-<p>We can check whether the elements were added.</p>
+<p>We can check whether the elements were removed</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.get_tks_of_group_elements(group_tk=group_tks[1])
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[(&#39;KNOT&#39;, &#39;5743596851943449715&#39;),
+ (&#39;KNOT&#39;, &#39;5269793380005646745&#39;),
+ (&#39;ROHR&#39;, &#39;5531803347555043206&#39;)]
+</pre></div></div>
+</div>
+</section>
+<section id="Add-tk-list-to-group-(supply)">
+<h1>Add tk list to group (supply)<a class="headerlink" href="#Add-tk-list-to-group-(supply)" title="Link to this heading"></a></h1>
+<p>We can now add them to the Vorlauf (supply) group using add_elements_to_group().</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.add_elements_to_group(group_tk=group_tks[0], element_tks=tks_to_be_moved)
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+[2026-01-25 18:18:49,670] INFO in sir3stoolkit.mantle.advanced_operations: [add elements to group] Check successful
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Value is set
+</pre></div></div>
+</div>
+<p>We can check whether they were added.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.get_tks_of_group_elements(group_tk=group_tks[0])
@@ -340,16 +391,332 @@ Value is set
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-[(&#39;KNOT&#39;, &#39;4968737254281413660&#39;),
- (&#39;KNOT&#39;, &#39;5130290893660176749&#39;),
- (&#39;ROHR&#39;, &#39;5316743965501398998&#39;),
- (&#39;ROHR&#39;, &#39;4667643323184213561&#39;),
- (&#39;KNOT&#39;, &#39;5146846590039916629&#39;)]
+[(&#39;KNOT&#39;, &#39;5428054456958551597&#39;),
+ (&#39;KNOT&#39;, &#39;5099111544186125239&#39;),
+ (&#39;ROHR&#39;, &#39;4742112892005639406&#39;),
+ (&#39;KNOT&#39;, &#39;5629554381987149893&#39;),
+ (&#39;ROHR&#39;, &#39;5164228635035739777&#39;)]
+</pre></div></div>
+</div>
+<p>Furthermore we have two tks given, that are outside any group, but we want them to be part of the Vorlauf (supply) group. We dont have their element types saved with them. We can use the add_element_types_to_tk_list() function to add the element types. Note that these element types are not directley equivalent to the s3s.ObjectTypes. This function only works for District Heating network, because for others the element types would carry different names.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>tks_given = [&quot;4651757704563987050&quot;, &quot;5520138268724292357&quot;]
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>tks_given_with_element_types = s3s.add_element_types_to_tk_list(tks_given)
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>tks_given_with_element_types
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[(&#39;ROHR&#39;, &#39;4651757704563987050&#39;), (&#39;KNOT&#39;, &#39;5520138268724292357&#39;)]
+</pre></div></div>
+</div>
+<p>Now we have the desired format of tks and can use it with the function add_elements_to_group().</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.add_elements_to_group(group_tk=group_tks[0], element_tks=tks_given_with_element_types)
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Value is set
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+[2026-01-25 18:18:49,776] INFO in sir3stoolkit.mantle.advanced_operations: [add elements to group] Check successful
+</pre></div></div>
+</div>
+<p>We can check whether the elements were added.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.get_tks_of_group_elements(group_tk=group_tks[0])
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[(&#39;KNOT&#39;, &#39;5428054456958551597&#39;),
+ (&#39;KNOT&#39;, &#39;5099111544186125239&#39;),
+ (&#39;ROHR&#39;, &#39;4742112892005639406&#39;),
+ (&#39;KNOT&#39;, &#39;5629554381987149893&#39;),
+ (&#39;ROHR&#39;, &#39;5164228635035739777&#39;),
+ (&#39;ROHR&#39;, &#39;4651757704563987050&#39;),
+ (&#39;KNOT&#39;, &#39;5520138268724292357&#39;)]
+</pre></div></div>
+</div>
+</section>
+<section id="Overwrite-Group-tk-list">
+<h1>Overwrite Group tk list<a class="headerlink" href="#Overwrite-Group-tk-list" title="Link to this heading"></a></h1>
+<p>Let’s say we want to fill the group Rohre (global list of all pipes). As is is empty at the moment.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.get_tks_of_group_elements(group_tk=group_tks[2])
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[]
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pipe_tks = []
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for group_tk in group_tks:
+    element_tks_with_type = s3s.get_tks_of_group_elements(group_tk=group_tk)
+    for element in element_tks_with_type:
+        if element[0] == &#39;ROHR&#39;:
+            pipe_tks.append(element)
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pipe_tks = list(set(pipe_tks)) # ensure uniqueness
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.set_group_elements(group_tk=group_tks[2], element_tks=pipe_tks)
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+[2026-01-25 18:18:49,867] INFO in sir3stoolkit.mantle.advanced_operations: [set elements for group] Check successful
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Value is set
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.get_tks_of_group_elements(group_tk=group_tks[2])
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[(&#39;ROHR&#39;, &#39;4742112892005639406&#39;),
+ (&#39;ROHR&#39;, &#39;5164228635035739777&#39;),
+ (&#39;ROHR&#39;, &#39;4651757704563987050&#39;),
+ (&#39;ROHR&#39;, &#39;5531803347555043206&#39;)]
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.CloseModel(False)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+True
+</pre></div></div>
+</div>
+</section>
+<section id="Possible-Issue">
+<h1>Possible Issue<a class="headerlink" href="#Possible-Issue" title="Link to this heading"></a></h1>
+<p>If we were to add a node from the Rücklauf (return) group to the Vorlauf (supply) group, but accidentley use ‘ROHR’ instead of ‘KNOT’, it would be added to the tks of the group, as there is no safe guard against this.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.OpenModel(dbName=dbFilePath,
+              providerType=s3s.ProviderTypes.SQLite,
+              Mid=&quot;M-1-0-1&quot;,
+              saveCurrentlyOpenModel=False,
+              namedInstance=&quot;&quot;,
+              userID=&quot;&quot;,
+              password=&quot;&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Model is open for further operation
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.add_elements_to_group(group_tk=group_tks[0], element_tks=[(&#39;ROHR&#39;, &#39;5269793380005646745&#39;)])
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+[2026-01-25 18:18:53,698] INFO in sir3stoolkit.mantle.advanced_operations: [add elements to group] Check successful
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Value is set
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[34]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.get_tks_of_group_elements(group_tk=group_tks[0])
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[34]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[(&#39;KNOT&#39;, &#39;5428054456958551597&#39;),
+ (&#39;KNOT&#39;, &#39;5099111544186125239&#39;),
+ (&#39;ROHR&#39;, &#39;4742112892005639406&#39;),
+ (&#39;ROHR&#39;, &#39;5269793380005646745&#39;)]
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.SaveChanges()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Changes saved successfully
+</pre></div></div>
+</div>
+<p>But after saving the changes, it would we removed automatically from the list.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[36]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.get_tks_of_group_elements(group_tk=group_tks[0])
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[36]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[(&#39;KNOT&#39;, &#39;5428054456958551597&#39;),
+ (&#39;KNOT&#39;, &#39;5099111544186125239&#39;),
+ (&#39;ROHR&#39;, &#39;4742112892005639406&#39;)]
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[37]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.CloseModel(False)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[37]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+True
 </pre></div></div>
 </div>
 </section>
