@@ -113,21 +113,23 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This class implements functions that extend the basic C# operations with more advanced operations to change a SIR 3S model.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
 <div class="viewcode-block" id="SIR3S_Model_Advanced_Operations.set_group_elements">
 <a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.advanced_operations.SIR3S_Model_Advanced_Operations.set_group_elements">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">set_group_elements</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">group_tk</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
         <span class="n">element_tks</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span> <span class="o">|</span> <span class="nb">int</span><span class="p">:</span> 
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span> <span class="o">|</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Overwrites elements in a group with new list of tks of elements.</span>
-<span class="sd">        </span>
-<span class="sd">        :param self</span>
-<span class="sd">        :param group_tk: Tk of the group, the elements should be set for.</span>
+<span class="sd">        Overwrites elements in a group with a new list of elements.</span>
+
+<span class="sd">        :param group_tk: Tk of the group the elements should be set for.</span>
 <span class="sd">        :type group_tk: int</span>
-<span class="sd">        :param element_tks: Tks of elements, that should be set for group. Eg. [(&#39;KNOT&#39;, &#39;5428054456958551597&#39;), (&#39;KNOT&#39;, &#39;5099111544186125239&#39;)]</span>
-<span class="sd">        :type element_tks: list[tuple(str, str)]</span>
+<span class="sd">        :param element_tks: Tks of elements that should be set for the group.</span>
+<span class="sd">            Eg. [(&#39;KNOT&#39;, &#39;5428054456958551597&#39;),</span>
+<span class="sd">                (&#39;KNOT&#39;, &#39;5099111544186125239&#39;)]</span>
+<span class="sd">        :type element_tks: list[tuple[str, str]]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         
         <span class="c1"># --- Validate Input Data ---</span>
@@ -164,24 +166,24 @@
             <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[set elements for group] Check unsuccessful. Mismatch in amount of elements in edited group and intended amount.&quot;</span><span class="p">)</span></div>
 
 
-
-
 <div class="viewcode-block" id="SIR3S_Model_Advanced_Operations.add_elements_to_group">
 <a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.advanced_operations.SIR3S_Model_Advanced_Operations.add_elements_to_group">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">add_elements_to_group</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">group_tk</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
         <span class="n">element_tks</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span> <span class="o">|</span> <span class="nb">int</span><span class="p">:</span> 
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span> <span class="o">|</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Adds elements to a group with list of tks of elements.</span>
-<span class="sd">        </span>
-<span class="sd">        :param self</span>
-<span class="sd">        :param group_tk: Tk of the group, the elements should be added for.</span>
+<span class="sd">        Adds elements to a group with a list of elements.</span>
+
+<span class="sd">        :param group_tk: Tk of the group the elements should be added to.</span>
 <span class="sd">        :type group_tk: int</span>
-<span class="sd">        :param element_tks: Tks of elements, that should be added to the group. Eg. [(&#39;KNOT&#39;, &#39;5428054456958551597&#39;), (&#39;KNOT&#39;, &#39;5099111544186125239&#39;)]</span>
-<span class="sd">        :type element_tks: list[tuple(str, str)]</span>
+<span class="sd">        :param element_tks: Tks of elements that should be added to the group.</span>
+<span class="sd">            Eg. [(&#39;KNOT&#39;, &#39;5428054456958551597&#39;),</span>
+<span class="sd">                (&#39;KNOT&#39;, &#39;5099111544186125239&#39;)]</span>
+<span class="sd">        :type element_tks: list[tuple[str, str]]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+
 
         <span class="c1"># --- Validate Input Data ---</span>
         <span class="n">valid_group_tk</span><span class="p">,</span> <span class="n">valid_element_tks</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validate_group_changes_data</span><span class="p">(</span><span class="n">group_tk</span><span class="p">,</span> <span class="n">element_tks</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
@@ -205,23 +207,24 @@
             <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[add elements to group] Check unsuccessful. Mismatch in amount of elements in edited group and intended amount.&quot;</span><span class="p">)</span></div>
 
 
-
 <div class="viewcode-block" id="SIR3S_Model_Advanced_Operations.remove_elements_from_group">
 <a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.advanced_operations.SIR3S_Model_Advanced_Operations.remove_elements_from_group">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">remove_elements_from_group</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">group_tk</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
         <span class="n">element_tks</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span> <span class="o">|</span> <span class="nb">int</span><span class="p">:</span> 
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span> <span class="o">|</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Removes elements fro a group with list of tks of elements.</span>
-<span class="sd">        </span>
-<span class="sd">        :param self</span>
-<span class="sd">        :param group_tk: Tk of the group, the elements should be removed from.</span>
+<span class="sd">        Removes elements from a group with a list of elements.</span>
+
+<span class="sd">        :param group_tk: Tk of the group the elements should be removed from.</span>
 <span class="sd">        :type group_tk: int</span>
-<span class="sd">        :param element_tks: Tks of elements, that should be removed from the group. Eg. [(&#39;KNOT&#39;, &#39;5428054456958551597&#39;), (&#39;KNOT&#39;, &#39;5099111544186125239&#39;)]</span>
-<span class="sd">        :type element_tks: list[tuple(str, str)]</span>
+<span class="sd">        :param element_tks: Tks of elements that should be removed from the group.</span>
+<span class="sd">            Eg. [(&#39;KNOT&#39;, &#39;5428054456958551597&#39;),</span>
+<span class="sd">                (&#39;KNOT&#39;, &#39;5099111544186125239&#39;)]</span>
+<span class="sd">        :type element_tks: list[tuple[str, str]]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+
 
         <span class="c1"># --- Validate Input Data ---</span>
         <span class="n">valid_group_tk</span><span class="p">,</span> <span class="n">valid_element_tks</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validate_group_changes_data</span><span class="p">(</span><span class="n">group_tk</span><span class="p">,</span> <span class="n">element_tks</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
