@@ -34,6 +34,7 @@ class SIR3S_Model_Advanced_Operations(SIR3S_Model):
         """
         Overwrites elements in a group with a new list of elements.
 
+        :param self
         :param group_tk: Tk of the group the elements should be set for.
         :type group_tk: int
         :param element_tks: Tks of elements that should be set for the group.
@@ -83,6 +84,7 @@ class SIR3S_Model_Advanced_Operations(SIR3S_Model):
         """
         Adds elements to a group with a list of elements.
 
+        :param self:
         :param group_tk: Tk of the group the elements should be added to.
         :type group_tk: int
         :param element_tks: Tks of elements that should be added to the group.
@@ -121,6 +123,7 @@ class SIR3S_Model_Advanced_Operations(SIR3S_Model):
         """
         Removes elements from a group with a list of elements.
 
+        :param self:
         :param group_tk: Tk of the group the elements should be removed from.
         :type group_tk: int
         :param element_tks: Tks of elements that should be removed from the group.
@@ -161,7 +164,7 @@ class SIR3S_Model_Advanced_Operations(SIR3S_Model):
         """
         Needed for remove_elements_from_group() and add_elements_to_group(). validates inputs for them.
         
-        :param self
+        :param self:
         :param group_tk: Tk of the group that should be validated
         :type group_tk: int
         :param element_tks: Tks of elements, that should be validated. Eg. [('KNOT', '5428054456958551597'), ('KNOT', '5099111544186125239')]
@@ -211,7 +214,7 @@ class SIR3S_Model_Advanced_Operations(SIR3S_Model):
         """
         Turns list of tks into list of tuples with element type and tk. Only works for DistrictHeating networks. For other mappings we need an additional mapping. see sir3stoolkit/docs/code snippets/mapping_for_groups.ipynb
         
-        :param self: Description
+        :param self: 
         :param tks: List of tks of elements like ['5428054456958551597', '50736424189751239']
         :type tks: List[str]
         :return: Description [('KNOT', '5428054456958551597'), ('ROHR', '50736424189751239')]
@@ -235,7 +238,7 @@ class SIR3S_Model_Advanced_Operations(SIR3S_Model):
         """
         Returns list of tuples with element type and tk of elements that are part of specific group.
         
-        :param self: Description
+        :param self: 
         :param group_tk: Tk of group for element tk retrival
         :type group_tk: int
         :return: List of tuples with element type and tk of elements of group.
@@ -279,7 +282,9 @@ class SIR3S_Model_Advanced_Operations(SIR3S_Model):
         """
         Return element type for given tk.
         
-        :param self: Tk of element
+        :param self:
+        :param tk: Tk of element
+        :type tk: int
         :return: element type
         :rtype: str
         """
