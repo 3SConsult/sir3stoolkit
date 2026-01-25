@@ -25,19 +25,21 @@ class SIR3S_Model_Advanced_Operations(SIR3S_Model):
     """
     This class implements functions that extend the basic C# operations with more advanced operations to change a SIR 3S model.
     """
+
     def set_group_elements(
         self,
         group_tk: int,
         element_tks: List[Tuple[str, str]]
-    ) -> None | int: 
+    ) -> None | int:
         """
-        Overwrites elements in a group with new list of tks of elements.
-        
-        :param self
-        :param group_tk: Tk of the group, the elements should be set for.
+        Overwrites elements in a group with a new list of elements.
+
+        :param group_tk: Tk of the group the elements should be set for.
         :type group_tk: int
-        :param element_tks: Tks of elements, that should be set for group. Eg. [('KNOT', '5428054456958551597'), ('KNOT', '5099111544186125239')]
-        :type element_tks: list[tuple(str, str)]
+        :param element_tks: Tks of elements that should be set for the group.
+            Eg. [('KNOT', '5428054456958551597'),
+                ('KNOT', '5099111544186125239')]
+        :type element_tks: list[tuple[str, str]]
         """
         
         # --- Validate Input Data ---
@@ -73,22 +75,22 @@ class SIR3S_Model_Advanced_Operations(SIR3S_Model):
         else:
             logger.info(f"[set elements for group] Check unsuccessful. Mismatch in amount of elements in edited group and intended amount.")
 
-
-
     def add_elements_to_group(
         self,
         group_tk: int,
         element_tks: List[Tuple[str, str]]
-    ) -> None | int: 
+    ) -> None | int:
         """
-        Adds elements to a group with list of tks of elements.
-        
-        :param self
-        :param group_tk: Tk of the group, the elements should be added for.
+        Adds elements to a group with a list of elements.
+
+        :param group_tk: Tk of the group the elements should be added to.
         :type group_tk: int
-        :param element_tks: Tks of elements, that should be added to the group. Eg. [('KNOT', '5428054456958551597'), ('KNOT', '5099111544186125239')]
-        :type element_tks: list[tuple(str, str)]
+        :param element_tks: Tks of elements that should be added to the group.
+            Eg. [('KNOT', '5428054456958551597'),
+                ('KNOT', '5099111544186125239')]
+        :type element_tks: list[tuple[str, str]]
         """
+
 
         # --- Validate Input Data ---
         valid_group_tk, valid_element_tks = self._validate_group_changes_data(group_tk, element_tks, False)
@@ -111,21 +113,22 @@ class SIR3S_Model_Advanced_Operations(SIR3S_Model):
         else:
             logger.info(f"[add elements to group] Check unsuccessful. Mismatch in amount of elements in edited group and intended amount.")
 
-
     def remove_elements_from_group(
         self,
         group_tk: int,
         element_tks: List[Tuple[str, str]]
-    ) -> None | int: 
+    ) -> None | int:
         """
-        Removes elements fro a group with list of tks of elements.
-        
-        :param self
-        :param group_tk: Tk of the group, the elements should be removed from.
+        Removes elements from a group with a list of elements.
+
+        :param group_tk: Tk of the group the elements should be removed from.
         :type group_tk: int
-        :param element_tks: Tks of elements, that should be removed from the group. Eg. [('KNOT', '5428054456958551597'), ('KNOT', '5099111544186125239')]
-        :type element_tks: list[tuple(str, str)]
+        :param element_tks: Tks of elements that should be removed from the group.
+            Eg. [('KNOT', '5428054456958551597'),
+                ('KNOT', '5099111544186125239')]
+        :type element_tks: list[tuple[str, str]]
         """
+
 
         # --- Validate Input Data ---
         valid_group_tk, valid_element_tks = self._validate_group_changes_data(group_tk, element_tks, True)
