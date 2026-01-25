@@ -34,7 +34,7 @@ class SIR3S_Model_Advanced_Operations(SIR3S_Model):
         """
         Overwrites elements in a group with a new list of elements.
 
-        :param self
+        :param self:
         :param group_tk: Tk of the group the elements should be set for.
         :type group_tk: int
         :param element_tks: Tks of elements that should be set for the group.
@@ -217,7 +217,7 @@ class SIR3S_Model_Advanced_Operations(SIR3S_Model):
         :param self: 
         :param tks: List of tks of elements like ['5428054456958551597', '50736424189751239']
         :type tks: List[str]
-        :return: Description [('KNOT', '5428054456958551597'), ('ROHR', '50736424189751239')]
+        :return: [('KNOT', '5428054456958551597'), ('ROHR', '50736424189751239')]
         :rtype: List[Tuple[str, str]]
         """
 
