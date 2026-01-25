@@ -1,5 +1,5 @@
 # This script is AI-generated
-# cd ...\sir3stoolkit\docs\source\tutorials before running this script
+# cd ...\sir3stoolkit\docs\source\tutorials\SIR3S_Model before running this script
 
 import os
 import re

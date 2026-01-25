@@ -29,7 +29,7 @@ class SIR3S_Model_Advanced_Operations(SIR3S_Model):
         self,
         group_tk: int,
         element_tks: List[Tuple[str, str]]
-    ):
+    ) -> None | int: 
         """
         Overwrites elements in a group with new list of tks of elements.
         
@@ -37,7 +37,7 @@ class SIR3S_Model_Advanced_Operations(SIR3S_Model):
         :param group_tk: Tk of the group, the elements should be set for.
         :type group_tk: int
         :param element_tks: Tks of elements, that should be set for group. Eg. [('KNOT', '5428054456958551597'), ('KNOT', '5099111544186125239')]
-        :type element_tks: list[tuple(int, int)]
+        :type element_tks: list[tuple(str, str)]
         """
         
         # --- Validate Input Data ---
@@ -79,7 +79,7 @@ class SIR3S_Model_Advanced_Operations(SIR3S_Model):
         self,
         group_tk: int,
         element_tks: List[Tuple[str, str]]
-    ): 
+    ) -> None | int: 
         """
         Adds elements to a group with list of tks of elements.
         
@@ -87,7 +87,7 @@ class SIR3S_Model_Advanced_Operations(SIR3S_Model):
         :param group_tk: Tk of the group, the elements should be added for.
         :type group_tk: int
         :param element_tks: Tks of elements, that should be added to the group. Eg. [('KNOT', '5428054456958551597'), ('KNOT', '5099111544186125239')]
-        :type element_tks: list[tuple(int, int)]
+        :type element_tks: list[tuple(str, str)]
         """
 
         # --- Validate Input Data ---
@@ -116,7 +116,7 @@ class SIR3S_Model_Advanced_Operations(SIR3S_Model):
         self,
         group_tk: int,
         element_tks: List[Tuple[str, str]]
-    ): 
+    ) -> None | int: 
         """
         Removes elements fro a group with list of tks of elements.
         
@@ -124,7 +124,7 @@ class SIR3S_Model_Advanced_Operations(SIR3S_Model):
         :param group_tk: Tk of the group, the elements should be removed from.
         :type group_tk: int
         :param element_tks: Tks of elements, that should be removed from the group. Eg. [('KNOT', '5428054456958551597'), ('KNOT', '5099111544186125239')]
-        :type element_tks: list[tuple(int, int)]
+        :type element_tks: list[tuple(str, str)]
         """
 
         # --- Validate Input Data ---
@@ -162,7 +162,7 @@ class SIR3S_Model_Advanced_Operations(SIR3S_Model):
         :param group_tk: Tk of the group that should be validated
         :type group_tk: int
         :param element_tks: Tks of elements, that should be validated. Eg. [('KNOT', '5428054456958551597'), ('KNOT', '5099111544186125239')]
-        :type element_tks: list[tuple(int, int)]
+        :type element_tks: list[tuple(str, str)]
         :param remove_or_add: True for remove, False for add
         :type remove_or_add: bool
         """

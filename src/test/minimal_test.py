@@ -7,7 +7,7 @@ class BasicImportTest(unittest.TestCase):
         except ImportError as e:
             self.fail(f"Import failed: {e}")
         try:
-            SIR3S_SIRGRAF_DIR = r"C:\3S\SIR 3S\SirGraf-90-15-00-20x64_Quebec-Upd1" #change to local path
+            SIR3S_SIRGRAF_DIR = r"C:\3S\SIR 3S\SirGraf-90-15-00-21_Quebec-Upd2" #change to local path
             
             from sir3stoolkit.core import wrapper
             wrapper.Initialize_Toolkit(SIR3S_SIRGRAF_DIR)
@@ -22,6 +22,9 @@ class BasicImportTest(unittest.TestCase):
 
             from sir3stoolkit.mantle.plotting import SIR3S_Model_Plotting
             s3s = SIR3S_Model_Plotting
+
+            from sir3stoolkit.mantle.advanced_operations import SIR3S_Model_Advanced_Operations
+            s3s = SIR3S_Model_Advanced_Operations()
 
             from sir3stoolkit.mantle.mantle import SIR3S_Model_Mantle
             s3s = SIR3S_Model_Mantle()
