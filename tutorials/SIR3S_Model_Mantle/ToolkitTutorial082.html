@@ -1,0 +1,968 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tutorial 82: Tables &mdash; sir3stoolkit  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=9c3e77be" />
+      <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css?v=2aa19091" />
+
+  
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+      <script>let toggleHintShow = 'Click to show';</script>
+      <script>let toggleHintHide = 'Click to hide';</script>
+      <script>let toggleOpenOnPrint = 'true';</script>
+      <script src="../../_static/togglebutton.js?v=1ae7504c"></script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            sir3stoolkit
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples.html">Application Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../releases.html">Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developers.html">For Developers</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">sir3stoolkit</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Tutorial 82: Tables</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/tutorials/SIR3S_Model_Mantle/ToolkitTutorial082.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="Tutorial-82:-Tables">
+<h1>Tutorial 82: Tables<a class="headerlink" href="#Tutorial-82:-Tables" title="Link to this heading"></a></h1>
+<p>This example demonstrates how view, create, delete and edit measured variable tables (Sollwerttabellen).</p>
+</section>
+<section id="SIR-3S-Installation">
+<h1>SIR 3S Installation<a class="headerlink" href="#SIR-3S-Installation" title="Link to this heading"></a></h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[69]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r&quot;C:\3S\SIR 3S\SirGraf-90-15-00-21_Quebec-Upd2&quot; #change to local path
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Imports">
+<h1>Imports<a class="headerlink" href="#Imports" title="Link to this heading"></a></h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[70]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sir3stoolkit.core import wrapper
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[71]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sir3stoolkit.mantle import mantle
+</pre></div>
+</div>
+</div>
+<p>The wrapper package has to be initialized with reference to a SIR 3S (SirGraf) installation.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[72]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>wrapper.Initialize_Toolkit(SIR3S_SIRGRAF_DIR)
+</pre></div>
+</div>
+</div>
+<section id="Additional-imports">
+<h2>Additional imports<a class="headerlink" href="#Additional-imports" title="Link to this heading"></a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[73]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
+import numpy as np
+<br/></pre></div>
+</div>
+</div>
+<p>…</p>
+</section>
+</section>
+<section id="Initialization">
+<h1>Initialization<a class="headerlink" href="#Initialization" title="Link to this heading"></a></h1>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[74]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s = mantle.SIR3S_Model_Mantle()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Initialization complete
+</pre></div></div>
+</div>
+</section>
+<section id="Open-Model">
+<h1>Open Model<a class="headerlink" href="#Open-Model" title="Link to this heading"></a></h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[75]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dbFilePath=r&quot;Toolkit_Tutorial82_Model.db3&quot;
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[76]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.OpenModel(dbName=dbFilePath,
+              providerType=s3s.ProviderTypes.SQLite,
+              Mid=&quot;M-1-0-1&quot;,
+              saveCurrentlyOpenModel=False,
+              namedInstance=&quot;&quot;,
+              userID=&quot;&quot;,
+              password=&quot;&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Model is open for further operation
+</pre></div></div>
+</div>
+</section>
+<section id="Create-new-measured-variable-tables">
+<h1>Create new measured variable tables<a class="headerlink" href="#Create-new-measured-variable-tables" title="Link to this heading"></a></h1>
+<p>Let’s insert Variable 1 as a placeholder example.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[77]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetPropertiesofElementType(ElementType=s3s.ObjectTypes.MeasuredVariableTable)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[77]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;Name&#39;,
+ &#39;Beschreibung&#39;,
+ &#39;Zeitoption&#39;,
+ &#39;Intpol&#39;,
+ &#39;Idreferenz&#39;,
+ &#39;Pk&#39;,
+ &#39;InVariant&#39;]
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[78]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>measured_variable_table_1 = s3s.InsertElement(ElementType=s3s.ObjectTypes.MeasuredVariableTable, IdRef=&quot;1&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Element inserted successfully into the model with Tk: 5556095326232269080
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[79]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.SetValue(Tk=measured_variable_table_1, propertyName=&quot;Name&quot;, Value=&quot;Variable 1&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Value is set
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[80]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.SetValue(Tk=measured_variable_table_1, propertyName=&quot;Zeitoption&quot;, Value=&quot;0&quot;) # We do not want special time reference, see general SIR 3S documentation for details
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Value is set
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[81]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.SetValue(Tk=measured_variable_table_1, propertyName=&quot;Intpol&quot;, Value=&quot;0&quot;) # We choose linear interpolation scheme. Use 9 for step function
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Value is set
+</pre></div></div>
+</div>
+<section id="Insert-values">
+<h2>Insert values<a class="headerlink" href="#Insert-values" title="Link to this heading"></a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[82]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetPropertiesofElementType(ElementType=s3s.ObjectTypes.MeasuredVariableTable_Row)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[82]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;Name&#39;, &#39;Fk&#39;, &#39;Zeit&#39;, &#39;Zeitstempel&#39;, &#39;W&#39;, &#39;Pk&#39;, &#39;InVariant&#39;]
+</pre></div></div>
+</div>
+<p>W is the value that is given as a function of time W = f(t)</p>
+<p>The sample data we provide is in ‘measured’ in constant time intervals and the values are random between 0 and 100.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[83]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Create time vector: 0 to 600 seconds, step 20
+time = np.arange(0, 601, 20)
+
+# Create variable values between 0 and 100
+# For reproducible randomness:
+np.random.seed(42)
+variable1 = np.random.randint(0, 101, size=len(time))
+
+# Build the DataFrame
+df = pd.DataFrame({
+    &quot;Time [s]&quot;: time,
+    &quot;Variable 1 [?]&quot;: variable1
+})
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[84]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df.head()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[84]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Time [s]</th>
+      <th>Variable 1 [?]</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>51</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>20</td>
+      <td>92</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>40</td>
+      <td>14</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>60</td>
+      <td>71</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>80</td>
+      <td>60</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[85]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for id, row in df.iterrows():
+    t = row[&#39;Time [s]&#39;]
+    v = row[&#39;Variable 1 [?]&#39;]
+    tk_new_row = s3s.AddTableRow(tablePkTk=measured_variable_table_1)[0]
+    s3s.SetValue(Tk=tk_new_row, propertyName=&quot;Zeit&quot;, Value=str(t))
+    s3s.SetValue(Tk=tk_new_row, propertyName=&quot;W&quot;, Value=str(v))
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Row is added to the table with Tk: 5605805671787936164
+Value is set
+Value is set
+Row is added to the table with Tk: 4830041275781582429
+Value is set
+Value is set
+Row is added to the table with Tk: 5035519669336724198
+Value is set
+Value is set
+Row is added to the table with Tk: 5161577548136955601
+Value is set
+Value is set
+Row is added to the table with Tk: 5724893327685092194
+Value is set
+Value is set
+Row is added to the table with Tk: 4923681690310231574
+Value is set
+Value is set
+Row is added to the table with Tk: 4956262252197347867
+Value is set
+Value is set
+Row is added to the table with Tk: 5451319129873794667
+Value is set
+Value is set
+Row is added to the table with Tk: 5314723006334780533
+Value is set
+Value is set
+Row is added to the table with Tk: 5125858064995569359
+Value is set
+Value is set
+Row is added to the table with Tk: 4884168479466324455
+Value is set
+Value is set
+Row is added to the table with Tk: 5136878820999409148
+Value is set
+Value is set
+Row is added to the table with Tk: 5313983467961602850
+Value is set
+Value is set
+Row is added to the table with Tk: 4997300364831407147
+Value is set
+Value is set
+Row is added to the table with Tk: 4848551681885122119
+Value is set
+Value is set
+Row is added to the table with Tk: 4914214899877470833
+Value is set
+Value is set
+Row is added to the table with Tk: 5485499359042498809
+Value is set
+Value is set
+Row is added to the table with Tk: 5008093782636841186
+Value is set
+Value is set
+Row is added to the table with Tk: 5317412826758340571
+Value is set
+Value is set
+Row is added to the table with Tk: 5473660880095457621
+Value is set
+Value is set
+Row is added to the table with Tk: 5405936844014202784
+Value is set
+Value is set
+Row is added to the table with Tk: 4953422237900253247
+Value is set
+Value is set
+Row is added to the table with Tk: 4818608034379658632
+Value is set
+Value is set
+Row is added to the table with Tk: 4882779508649417634
+Value is set
+Value is set
+Row is added to the table with Tk: 5276616568635909514
+Value is set
+Value is set
+Row is added to the table with Tk: 5383666648245695106
+Value is set
+Value is set
+Row is added to the table with Tk: 5699939662922560358
+Value is set
+Value is set
+Row is added to the table with Tk: 5742187869888660198
+Value is set
+Value is set
+Row is added to the table with Tk: 5414489261982186590
+Value is set
+Value is set
+Row is added to the table with Tk: 5280513295549992810
+Value is set
+Value is set
+Row is added to the table with Tk: 5492899067520510068
+Value is set
+Value is set
+</pre></div></div>
+</div>
+</section>
+</section>
+<section id="View-measured-value-tables">
+<h1>View measured value tables<a class="headerlink" href="#View-measured-value-tables" title="Link to this heading"></a></h1>
+<section id="Create-dfs-of-values">
+<h2>Create dfs of values<a class="headerlink" href="#Create-dfs-of-values" title="Link to this heading"></a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[86]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>table_tks = []
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[87]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for id, tk in enumerate(s3s.GetTksofElementType(s3s.ObjectTypes.MeasuredVariableTable)):
+    table_tks.append(tk)
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[88]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>table_dfs = []
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[89]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for tk in table_tks:
+    rows = s3s.GetTableRows(tablePkTk=tk)
+    row_tks = list(rows[0])
+    properties_rows_of_interest = [&#39;Zeit&#39;, &#39;W&#39;]
+    data = {
+        tk: {prop: s3s.GetValue(tk, prop)[0] for prop in properties_rows_of_interest}
+        for tk in row_tks
+    }
+    if data == {}:
+        df = pd.DataFrame()
+    else:
+        df = pd.DataFrame.from_dict(data, orient=&#39;index&#39;)
+    table_dfs.append(df)
+</pre></div>
+</div>
+</div>
+</section>
+<section id="View-value-dfs-and-other-data-per-measured-variable-table">
+<h2>View value dfs and other data per measured variable table<a class="headerlink" href="#View-value-dfs-and-other-data-per-measured-variable-table" title="Link to this heading"></a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[90]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def view_non_value_data_of_measured_variable_table(measured_variable_table_tk):
+    name = s3s.GetValue(Tk=measured_variable_table_tk, propertyName=&quot;Name&quot;)[0]
+    intpol = s3s.GetValue(Tk=measured_variable_table_tk, propertyName=&quot;Intpol&quot;)[0]
+    if intpol == &quot;0&quot;:
+        intpol_clear = &quot;linear&quot;
+    elif intpol == &quot;9&quot;:
+        intpol_clear = &quot;step function&quot;
+    else:
+        intpol_clear = &quot;invalid intpol&quot;
+    print(f&quot;Tk: {measured_variable_table_tk}, Name: {name}, Interpolation scheme: {intpol_clear}&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[91]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>len(table_tks)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[91]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+3
+</pre></div></div>
+</div>
+<p>We have 3 tables to view.</p>
+<section id="1">
+<h3>1<a class="headerlink" href="#1" title="Link to this heading"></a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[92]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>view_non_value_data_of_measured_variable_table(table_tks[0])
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Tk: 4690496339163833971, Name: Variable 2, Interpolation scheme: step function
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[93]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>table_dfs[0].head(10)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[93]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Zeit</th>
+      <th>W</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>5238119681362566577</th>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>5061575663051528766</th>
+      <td>18</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>5723804092965624436</th>
+      <td>22</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>5048369715933631343</th>
+      <td>39</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4615214940344953271</th>
+      <td>52</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>5375069532035517868</th>
+      <td>62</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>5339268850669424190</th>
+      <td>64</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4965172431638973451</th>
+      <td>74</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>5205745981304652816</th>
+      <td>81</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>5367678067024287502</th>
+      <td>84</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</section>
+<section id="2">
+<h3>2<a class="headerlink" href="#2" title="Link to this heading"></a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[94]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>view_non_value_data_of_measured_variable_table(table_tks[1])
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Tk: 4775965132419647289, Name: Variable 2, Interpolation scheme: step function
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[95]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>table_dfs[1].head(10)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[95]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Zeit</th>
+      <th>W</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>5015901035241501518</th>
+      <td>0</td>
+      <td>99999</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>The second table obtained, does not contain any valid values, furthermore it carries the same name as the first one. So it probably is some duplicate relict from model creation. We can delete it afterwards.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[96]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>table_tk_to_delete = table_tks[1]
+</pre></div>
+</div>
+</div>
+</section>
+<section id="3">
+<h3>3<a class="headerlink" href="#3" title="Link to this heading"></a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[97]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>view_non_value_data_of_measured_variable_table(table_tks[2])
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Tk: 5556095326232269080, Name: Variable 1, Interpolation scheme: linear
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[98]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>table_dfs[2].head(10)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[98]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Zeit</th>
+      <th>W</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>5605805671787936164</th>
+      <td>0</td>
+      <td>51</td>
+    </tr>
+    <tr>
+      <th>4830041275781582429</th>
+      <td>20</td>
+      <td>92</td>
+    </tr>
+    <tr>
+      <th>5035519669336724198</th>
+      <td>40</td>
+      <td>14</td>
+    </tr>
+    <tr>
+      <th>5161577548136955601</th>
+      <td>60</td>
+      <td>71</td>
+    </tr>
+    <tr>
+      <th>5724893327685092194</th>
+      <td>80</td>
+      <td>60</td>
+    </tr>
+    <tr>
+      <th>4923681690310231574</th>
+      <td>100</td>
+      <td>20</td>
+    </tr>
+    <tr>
+      <th>4956262252197347867</th>
+      <td>120</td>
+      <td>82</td>
+    </tr>
+    <tr>
+      <th>5451319129873794667</th>
+      <td>140</td>
+      <td>86</td>
+    </tr>
+    <tr>
+      <th>5314723006334780533</th>
+      <td>160</td>
+      <td>74</td>
+    </tr>
+    <tr>
+      <th>5125858064995569359</th>
+      <td>180</td>
+      <td>74</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>This is the table we created earlier, as can be seen, it worked out fine.</p>
+</section>
+</section>
+</section>
+<section id="Delete-measured-variable-table">
+<h1>Delete measured variable table<a class="headerlink" href="#Delete-measured-variable-table" title="Link to this heading"></a></h1>
+<p>We can delete the faulty duplicate measured variable table as any other element. The rows depending on it will be deleted as well.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[99]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.DeleteElement(Tk=str(table_tk_to_delete))
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Element deleted successfully
+</pre></div></div>
+</div>
+</section>
+<section id="WORK-IN-PROGRESS:-Joint-view-of-all-measured-variable-tables">
+<h1>WORK IN PROGRESS: Joint view of all measured variable tables<a class="headerlink" href="#WORK-IN-PROGRESS:-Joint-view-of-all-measured-variable-tables" title="Link to this heading"></a></h1>
+<p>The main challenge when trying to display multiple measured variable tablese is that the can have different time intervals. Many are measured in the same intervals, but some may only be</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[100]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.CloseModel(False)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[100]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+True
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025 3S Consult GmbH.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
