@@ -222,12 +222,14 @@ This example demonstrates how to plot network color depictions (ncd).
 
 View: `Notebook <tutorials/SIR3S_Model_Mantle/ToolkitTutorial073.html>`_  | Download: :download:`Notebook <tutorials/SIR3S_Model_Mantle/ToolkitTutorial073.ipynb>`.
 
-.. _Ttu081:
+.. _Ttu80-89:
 
 SIR3S_Advanced_Operations
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
 SIR3S_Advanced_Operations implements functions that extend the basic C# operations with more advanced operations to change a SIR 3S model.
+
+.. _Ttu081:
 
 Tutorial 81: Groups
 """"""""""""""""""""""""""""""""""""
@@ -235,6 +237,17 @@ Tutorial 81: Groups
 This example demonstrates how add, remove, set elements to groups.
 
 View: `Notebook <tutorials/SIR3S_Model_Mantle/ToolkitTutorial081.html>`_  | Download: :download:`Notebook <tutorials/SIR3S_Model_Mantle/ToolkitTutorial081.ipynb>`.
+
+.. _Ttu082:
+
+SIR3S_Advanced_Operations implements functions that extend the basic C# operations with more advanced operations to change a SIR 3S model.
+
+Tutorial 82: Measured Value Tables
+""""""""""""""""""""""""""""""""""""
+
+This example demonstrates how view, create, delete and edit measured variable tables (Sollwerttabellen).
+
+View: `Notebook <tutorials/SIR3S_Model_Mantle/ToolkitTutorial082.html>`_  | Download: :download:`Notebook <tutorials/SIR3S_Model_Mantle/ToolkitTutorial082.ipynb>`.
 
 .. 
    .. _Ttu100-149:
