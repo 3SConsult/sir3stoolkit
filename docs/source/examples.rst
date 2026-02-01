@@ -122,7 +122,7 @@ View: `Notebook <tutorials/SIR3S_Model/Tutorial008_Assets/ToolkitTutorial008.htm
 SIR3S_Model_Mantle
 ~~~~~~~~~~~~~~~~~~
 
-SIR3S_Model_Mantle() is a collector class that contains the functions from all other classes defined in the mantle.
+SIR3S_Model_Mantle() is a collector class that contains the functions from all other classes defined in the mantle. As of now the model data for these tutorials is not publicly available (internal: T:\SCRATCH\Jablonski\Toolkit).
 
 .. _Ttu50-59:
 
