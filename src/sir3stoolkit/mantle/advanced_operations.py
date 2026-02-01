@@ -310,8 +310,8 @@ class SIR3S_Model_Advanced_Operations(SIR3S_Model):
         """
         Sets (overwrites previous) time-value pairs for measured variable table (Sollwerttabelle) based on provided dataframe.
         
-        :param self: Description
-        :param measured_variable_table_tk: Description
+        :param self:
+        :param measured_variable_table_tk: Tk of measured variable table to set time-value pairs for.
         :type measured_variable_table_tk: int
         :param dataframe: Pandas dataframe with timecol (eg. 0, 30, 60, 90, ... // no timestamp) and value_col (-74, 1, 3.5, 25)
         :type dataframe: pd.Dataframe
@@ -367,8 +367,8 @@ class SIR3S_Model_Advanced_Operations(SIR3S_Model):
         """
         Obtain measured variable table in format of a pandas dataframe with time and value column. Only works for non-Timestamp time data.
         
-        :param self: Description
-        :param measured_variable_table_tk: Description
+        :param self: 
+        :param measured_variable_table_tk: Tk of measured variable table to get time-value pairs from.
         :type measured_variable_table_tk: str
         :param value_col: Name given to the value column, Default = "W"
         :type value_col: str
