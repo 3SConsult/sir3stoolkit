@@ -8,6 +8,7 @@ This module implements functions that extend the basic C# operations with more a
 """
 
 from typing import List, Tuple, Any
+import pandas as pd
 
 import logging
 logger = logging.getLogger(__name__)
@@ -298,6 +299,114 @@ class SIR3S_Model_Advanced_Operations(SIR3S_Model):
         # If tk is not found     
         return -1
 
+    # Measured Variable Table
+    def insert_dataframe_into_measured_variable_table(
+        self,
+        measured_variable_table_tk: str,
+        dataframe: pd.DataFrame,
+        time_col: str,
+        value_col: str,
+    ) -> None:
+        """
+        Sets (overwrites previous) time-value pairs for measured variable table (Sollwerttabelle) based on provided dataframe.
+        
+        :param self: Description
+        :param measured_variable_table_tk: Description
+        :type measured_variable_table_tk: int
+        :param dataframe: Pandas dataframe with timecol (eg. 0, 30, 60, 90, ... // no timestamp) and value_col (-74, 1, 3.5, 25)
+        :type dataframe: pd.Dataframe
+        :param time_col: Name of time col in dataframe
+        :type dataframe: stsr
+        :param value_col: Name of value col in dataframe
+        :type value_col: str
+        """
+
+        # --- Input data validation ---
+        logger.info("[insert dataframe into measured variable table] Validating input data ...")
+        available_measured_variable_table_tks=self.GetTksofElementType(self.ObjectTypes.MeasuredVariableTable)
+
+        if measured_variable_table_tk not in available_measured_variable_table_tks:
+            logger.error(f"[insert dataframe into measured variable table] Measured variable table with tk {measured_variable_table_tk} does not exist.")
+            return -1
+        
+        if dataframe.empty:
+            logger.error(f"[insert dataframe into measured variable table] Dataframe is empty.")
+            return -1
+        
+        available_dataframe_columns = dataframe.columns
+        if time_col not in available_dataframe_columns:
+            logger.error(f"[insert dataframe into measured variable table] Time col {time_col} not in dataframe columns.")
+            return -1
+        if value_col not in available_dataframe_columns:
+            logger.error(f"[insert dataframe into measured variable table] Value col {value_col} not in dataframe columns.")
+            return -1
+        
+        df = dataframe[[time_col, value_col]].copy()
+        logger.info("[insert dataframe into measured variable table] Successfully validated input data.")
+
+        # --- Inserting value pairs into model ---
+        logger.info("[insert dataframe into measured variable table] Inserting value pairs ...")
+        try:
+            for id, row in df.iterrows():
+                t = row[time_col]
+                v = row[value_col]
+                tk_new_row = self.AddTableRow(tablePkTk=measured_variable_table_tk)[0]
+                self.SetValue(Tk=tk_new_row, propertyName="Zeit", Value=str(t))
+                self.SetValue(Tk=tk_new_row, propertyName="W", Value=str(v))
+        except Exception as e:
+            logger.error(f"[insert dataframe into measured variable table] Error inserting value pairs into model: {e}")
+        
+        logger.info("[insert dataframe into measured variable table] Successfully inserted value pairs")
+        
+    def get_dataframe_from_measured_variable_table(
+        self,
+        measured_variable_table_tk: str,
+        value_col: str = "W",
+        time_col: str = "Zeit"
+    ) -> None:
+        """
+        Obtain measured variable table in format of a pandas dataframe with time and value column. Only works for non-Timestamp time data.
+        
+        :param self: Description
+        :param measured_variable_table_tk: Description
+        :type measured_variable_table_tk: str
+        :param value_col: Name given to the value column, Default = "W"
+        :type value_col: str
+        :param time_col: Name given to the time column, Default = "Zeit"
+        :type time_col: str
+        """
+
+        # --- Input data validation ---
+        logger.info("[get dataframe from measured variable table] Validating input data ...")
+        available_measured_variable_table_tks=self.GetTksofElementType(self.ObjectTypes.MeasuredVariableTable)
+
+        if measured_variable_table_tk not in available_measured_variable_table_tks:
+            logger.error(f"[get dataframe from measured variable table] Measured variable table with tk {measured_variable_table_tk} does not exist.")
+            return -1
+
+        logger.info("[get dataframe from measured variable table] Successfully validated input data.")
+
+        # --- Build dataframe
+        logger.info("[get dataframe from measured variable table] Building dataframe ...")
+
+        rows = self.GetTableRows(tablePkTk=measured_variable_table_tk)
+        row_tks = list(rows[0])  
+        properties_rows_of_interest = ['Zeit', 'W']
+        data = {
+            tk: {prop: self.GetValue(tk, prop)[0] for prop in properties_rows_of_interest}
+            for tk in row_tks
+        }
+        if data == {}:
+            logger.error("[get dataframe from measured variable table] Measured variable table is empty.")
+            df = pd.DataFrame
+        else:
+            df = pd.DataFrame.from_dict(data, orient='index')
+            df = df.rename(columns={"W": value_col, "Zeit": time_col})
+            logger.info("[get dataframe from measured variable table] Successfully built dataframe.")
+
+        return df
+
+         
 
 # --- Mappings ---
 

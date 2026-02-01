@@ -18,10 +18,22 @@ There are two types of updates:
 The release notes indicate whether a version includes changes to the C# side and therefore if (2) is necessary. 
 
 90-15 Quebec
-
 ------------
+
+Version 90.15.10
+~~~~~~~~~~~~~~~~
+
+For SIR 3S Version: 90-15-00-21-Upd2
+
+- advanced_operations.py:
+   - new functions: 
+      - insert_dataframe_into_measured_variable_table()
+      - get_dataframe_from_measured_variable_table()
+
 Version 90.15.9
 ~~~~~~~~~~~~~~~
+
+For SIR 3S Version: 90-15-00-21-Upd2
 
 - advanced_operations.py: new module with new class SIR3S_Model_Advanced_Operations()
    - new functions: 
@@ -35,6 +47,8 @@ Version 90.15.9
 Version 90.15.8
 ~~~~~~~~~~~~~~~
 
+For SIR 3S Version: 90-15-00-20-Upd1
+
 - plotting.py  
    - new function: plot_time_curves()
 
@@ -42,6 +56,8 @@ Version 90.15.8
 
 Version 90.15.7
 ~~~~~~~~~~~~~~~
+
+For SIR 3S Version: 90-15-00-20-Upd1
 
 Changes
 ^^^^^^^
