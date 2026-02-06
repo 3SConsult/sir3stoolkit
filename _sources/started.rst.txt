@@ -74,5 +74,14 @@ To install the SIR 3S Toolkit, follow these steps:
    .. code-block:: bash
 
        pip install sir3stoolkit[mantle]
+
+5. **Optional: Install in editable mode (for contributors):** If you want to use the newest version of the SIR 3S Toolkit available on `GitHub Repository <https://github.com/3SConsult/sir3stoolkit>`_, enter the folling into a cmd.
+
+   .. code-block:: bash
+
+       cd "C:/Users/User/3S"
+       git clone https://github.com/3SConsult/sir3stoolkit
+       cd "C:/Users/User/3S/sir3stoolkit"
+       "C:\3S\SIR 3S\Common\Python312\python.exe" -m pip install -e .
        
 To learn how the SIR 3S Toolkit is used in practice, take a look at the :doc:`examples` page.
