@@ -513,17 +513,7 @@
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get DataFrames for all time tables of a given type and a joint horizontally concatenated DataFrame.</span>
-
-<span class="sd">        This function:</span>
-<span class="sd">        1) Validates the requested time table type.</span>
-<span class="sd">        2) Retrieves all table tokens (TKs) for that type.</span>
-<span class="sd">        3) Builds one DataFrame per TK via ``self.get_dataframe_from_time_table(...)`` with the</span>
-<span class="sd">            table&#39;s Name property used as the value column name.</span>
-<span class="sd">        4) If more than one table exists, horizontally concatenates them (column-wise) aligned on</span>
-<span class="sd">            their row indexes using an **outer join**, then sorts the index ascending.</span>
-<span class="sd">            Otherwise, returns the single DataFrame as-is.</span>
-<span class="sd">        5) Returns the joint DataFrame, the per-TK DataFrames mapping, and the ordered list of TKs.</span>
-
+<span class="sd">        </span>
 <span class="sd">        :param self:</span>
 <span class="sd">        :param time_table_type: The time table type to extract. Must be one of:</span>
 <span class="sd">                                [&quot;VarPressureTable&quot;, &quot;VarFlowTable&quot;, &quot;ValveLiftTable&quot;,</span>

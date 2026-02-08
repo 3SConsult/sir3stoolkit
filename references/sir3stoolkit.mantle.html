@@ -174,22 +174,6 @@ Eg. [(‘KNOT’, ‘5428054456958551597’),</p>
 <dt class="sig sig-object py" id="sir3stoolkit.mantle.advanced_operations.SIR3S_Model_Advanced_Operations.get_dataframes_from_time_table_type">
 <span class="sig-name descname"><span class="pre">get_dataframes_from_time_table_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_table_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">DataFrame</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/mantle/advanced_operations.html#SIR3S_Model_Advanced_Operations.get_dataframes_from_time_table_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.mantle.advanced_operations.SIR3S_Model_Advanced_Operations.get_dataframes_from_time_table_type" title="Link to this definition"></a></dt>
 <dd><p>Get DataFrames for all time tables of a given type and a joint horizontally concatenated DataFrame.</p>
-<p>This function:
-1) Validates the requested time table type.
-2) Retrieves all table tokens (TKs) for that type.
-3) Builds one DataFrame per TK via <code class="docutils literal notranslate"><span class="pre">self.get_dataframe_from_time_table(...)</span></code> with the</p>
-<blockquote>
-<div><p>table’s Name property used as the value column name.</p>
-</div></blockquote>
-<ol class="arabic simple" start="4">
-<li><dl class="simple">
-<dt>If more than one table exists, horizontally concatenates them (column-wise) aligned on</dt><dd><p>their row indexes using an <strong>outer join</strong>, then sorts the index ascending.
-Otherwise, returns the single DataFrame as-is.</p>
-</dd>
-</dl>
-</li>
-<li><p>Returns the joint DataFrame, the per-TK DataFrames mapping, and the ordered list of TKs.</p></li>
-</ol>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
