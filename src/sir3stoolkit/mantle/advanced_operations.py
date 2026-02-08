@@ -402,17 +402,7 @@ class SIR3S_Model_Advanced_Operations(SIR3S_Model):
     ) -> List[pd.DataFrame]:
         """
         Get DataFrames for all time tables of a given type and a joint horizontally concatenated DataFrame.
-
-        This function:
-        1) Validates the requested time table type.
-        2) Retrieves all table tokens (TKs) for that type.
-        3) Builds one DataFrame per TK via ``self.get_dataframe_from_time_table(...)`` with the
-            table's Name property used as the value column name.
-        4) If more than one table exists, horizontally concatenates them (column-wise) aligned on
-            their row indexes using an **outer join**, then sorts the index ascending.
-            Otherwise, returns the single DataFrame as-is.
-        5) Returns the joint DataFrame, the per-TK DataFrames mapping, and the ordered list of TKs.
-
+        
         :param self:
         :param time_table_type: The time table type to extract. Must be one of:
                                 ["VarPressureTable", "VarFlowTable", "ValveLiftTable",
