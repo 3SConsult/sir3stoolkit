@@ -20,6 +20,18 @@ The release notes indicate whether a version includes changes to the C# side and
 90-15 Quebec
 ------------
 
+Version 90.15.11
+~~~~~~~~~~~~~~~~
+
+For SIR 3S Version: 90-15-00-21-Upd2
+
+- advanced_operations.py:
+   - new function:
+      - get_dataframes_from_time_table_type()
+   - changed functions: 
+      - insert_dataframe_into_measured_variable_table() changed to insert_dataframe_into_time_table()
+      - get_dataframe_from_measured_variable_table() changed to get_dataframe_from_time_table()
+
 Version 90.15.10
 ~~~~~~~~~~~~~~~~
 
