@@ -32,6 +32,7 @@ C# Changes
 Bug Fixes
 ^^^^^^^^^^
 - insert_dataframe_into_time_table(): internal_ref_time = self.GetTimeStamps()[0][0]
+- dataframes.py: generate_element_dataframe() minor safe guard added
 
 Version 90.15.11
 ~~~~~~~~~~~~~~~~

@@ -448,6 +448,9 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
                                                                 ,end_nodes=True
                                                                 ,element_type_col=False
             )
+            if df_model_data.empty:
+                logger.error(f"[generate_element_dataframe] Obtained model dataframe is empty.")
+                return pd.DataFrame()
             
             logger.debug(f"[generate_element_dataframe] Generating df_results for element type: {element_type} ...")
             result_values_to_obtain = self.GetResultProperties_from_elementType(element_type, False)
@@ -457,7 +460,9 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
                                                                         ,properties=result_values_to_obtain
                                                                         ,timestamps=[static_timestamp]
             )
-
+            if df_results.empty:
+                logger.error(f"[generate_element_dataframe] Obtained results dataframe is empty.")
+                return pd.DataFrame()
             logger.debug(f"[generate_element_dataframe] Merging df_model_data with df_results for element type: {element_type} ...")
             df_results.columns = df_results.columns.droplevel([1, 2])
             df_results = df_results.T.unstack(level=0).T

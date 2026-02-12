@@ -77,14 +77,10 @@ class SIR3S_Model_Alternative_Models(SIR3S_Model_Dataframes):
             net.junction_geodata.at[j, "x"] = x
             net.junction_geodata.at[j, "y"] = y
 
-            js[row['tk']] = j
+            js[int(row['tk'])] = j
 
         # --- Pipes ---
         df_pipes_model_data = self.generate_element_model_data_dataframe(element_type=self.ObjectTypes.Pipe, properties=['L', 'Di', 'Rau', 'Name'], end_nodes=True, geometry=True)
-        
-        df_pipes_model_data['Rau'] = df_pipes_model_data['Rau'].str.replace(',', '.', regex=False)
-        df_pipes_model_data['L'] = df_pipes_model_data['L'].str.replace(',', '.', regex=False)
-        df_pipes_model_data['L'] = df_pipes_model_data['L'].astype(float)
 
         ps = {}
 
@@ -109,7 +105,7 @@ class SIR3S_Model_Alternative_Models(SIR3S_Model_Dataframes):
         # --- Source/Sinks ---
         for idx, row in df_nodes.iterrows():
             ktyp = (row.get("Ktyp"))
-            tk = row.get("tk")
+            tk = int(row.get("tk"))
 
             # Create source if Ktyp is PKON and PH > 0
             if ktyp == "PKON" and float(row.get("PH", 0)) > 0:
