@@ -1,0 +1,561 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tutorial 61: nx-Graph &mdash; sir3stoolkit  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=9c3e77be" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/nbsphinx-code-cells.css?v=2aa19091" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=f281be69"></script>
+      <script>let toggleHintShow = 'Click to show';</script>
+      <script>let toggleHintHide = 'Click to hide';</script>
+      <script>let toggleOpenOnPrint = 'true';</script>
+      <script src="../../../_static/togglebutton.js?v=1ae7504c"></script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            sir3stoolkit
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Application Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../releases.html">Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developers.html">For Developers</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">sir3stoolkit</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Tutorial 61: nx-Graph</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/tutorials/SIR3S_Model_Mantle/Tutorial061_Assets/ToolkitTutorial061.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="Tutorial-61:-nx-Graph">
+<h1>Tutorial 61: nx-Graph<a class="headerlink" href="#Tutorial-61:-nx-Graph" title="Link to this heading"></a></h1>
+<p>This example demonstrates how to use the SIR_3S_to_nx_graph() of the SIR 3S Toolkit to generate a nx-Graph based on a SIR 3S model.</p>
+</section>
+<section id="SIR-3S-Installation">
+<h1>SIR 3S Installation<a class="headerlink" href="#SIR-3S-Installation" title="Link to this heading"></a></h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r&quot;C:\3S\SIR 3S\SirGraf-90-15-00-22_Quebec-Upd2&quot; #change to local path
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Imports">
+<h1>Imports<a class="headerlink" href="#Imports" title="Link to this heading"></a></h1>
+<p>Note: The SIR 3S Toolkit requires the Sir3S_Toolkit.dll included in SIR 3S installations (version Quebec and higher).</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import sir3stoolkit
+</pre></div>
+</div>
+</div>
+<p>The core of sir3stoolkit is a Python wrapper around basic functionality of SIR 3S, offering a low-level access to the creation, modification and simulation of SIR 3S models. In the future pure python subpackages may be added.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sir3stoolkit.core import wrapper
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sir3stoolkit.mantle.alternative_models import SIR3S_Model_Alternative_Models
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sir3stoolkit
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;module &#39;sir3stoolkit&#39; from &#39;C:\\Users\\aUsername\\3S\\sir3stoolkit\\src\\sir3stoolkit\\__init__.py&#39;&gt;
+</pre></div></div>
+</div>
+<p>The wrapper package has to be initialized with reference to a SIR 3S (SirGraf) installation.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>wrapper.Initialize_Toolkit(SIR3S_SIRGRAF_DIR)
+</pre></div>
+</div>
+</div>
+<section id="Additional-imports">
+<h2>Additional imports<a class="headerlink" href="#Additional-imports" title="Link to this heading"></a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import os
+import pandas as pd
+import networkx as nx
+import matplotlib.pyplot as plt
+import logging
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+<section id="Initialization">
+<h1>Initialization<a class="headerlink" href="#Initialization" title="Link to this heading"></a></h1>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s = SIR3S_Model_Alternative_Models()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Initialization complete
+</pre></div></div>
+</div>
+</section>
+<section id="Open-Model">
+<h1>Open Model<a class="headerlink" href="#Open-Model" title="Link to this heading"></a></h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dbFilePath=r&quot;C:\Users\aUsername\3S\PT3S\PT3S\Examples\Example5.db3&quot;
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.OpenModel(dbName=dbFilePath,
+              providerType=s3s.ProviderTypes.SQLite,
+              Mid=&quot;M-1-0-1&quot;,
+              saveCurrentlyOpenModel=False,
+              namedInstance=&quot;&quot;,
+              userID=&quot;&quot;,
+              password=&quot;&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Model is open for further operation
+</pre></div></div>
+</div>
+</section>
+<section id="Generate-nx-Graph">
+<h1>Generate nx Graph<a class="headerlink" href="#Generate-nx-Graph" title="Link to this heading"></a></h1>
+<p>We can use the <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.alternative_models.Alternative_Models_SIR3S_Model.SIR_3S_to_nx_graph">SIR_3S_to_nx_graph()</a> method to create a nx graph representing a SIR 3S model.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>logging.disable(logging.INFO)
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>G=s3s.SIR_3S_to_nx_graph()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+[2026-02-12 16:22:41,387] WARNING in sir3stoolkit.mantle.dataframes: [model_data] Spatial Reference Identifier (SRID) not defined in model. DataFrame cannot be transformed to GeoDataFrame but geometry column can be created independently of SRID. Returning regular DataFrame with a geometry column.
+[2026-02-12 16:22:41,960] WARNING in sir3stoolkit.mantle.dataframes: [model_data] Spatial Reference Identifier (SRID) not defined in model. DataFrame cannot be transformed to GeoDataFrame but geometry column can be created independently of SRID. Returning regular DataFrame with a geometry column.
+[2026-02-12 16:22:42,345] WARNING in sir3stoolkit.mantle.dataframes: [model_data] Spatial Reference Identifier (SRID) not defined in model. DataFrame cannot be transformed to GeoDataFrame but geometry column can be created independently of SRID. Returning regular DataFrame with a geometry column.
+[2026-02-12 16:22:42,371] WARNING in sir3stoolkit.mantle.dataframes: [model_data] Spatial Reference Identifier (SRID) not defined in model. DataFrame cannot be transformed to GeoDataFrame but geometry column can be created independently of SRID. Returning regular DataFrame with a geometry column.
+[2026-02-12 16:22:42,398] WARNING in sir3stoolkit.mantle.dataframes: [model_data] Spatial Reference Identifier (SRID) not defined in model. DataFrame cannot be transformed to GeoDataFrame but geometry column can be created independently of SRID. Returning regular DataFrame with a geometry column.
+[2026-02-12 16:22:42,544] WARNING in sir3stoolkit.mantle.dataframes: [model_data] Spatial Reference Identifier (SRID) not defined in model. DataFrame cannot be transformed to GeoDataFrame but geometry column can be created independently of SRID. Returning regular DataFrame with a geometry column.
+[2026-02-12 16:22:42,679] WARNING in sir3stoolkit.mantle.dataframes: [model_data] Spatial Reference Identifier (SRID) not defined in model. DataFrame cannot be transformed to GeoDataFrame but geometry column can be created independently of SRID. Returning regular DataFrame with a geometry column.
+[2026-02-12 16:22:42,698] WARNING in sir3stoolkit.mantle.dataframes: [model_data] Spatial Reference Identifier (SRID) not defined in model. DataFrame cannot be transformed to GeoDataFrame but geometry column can be created independently of SRID. Returning regular DataFrame with a geometry column.
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>logging.disable(logging.NOTSET)
+</pre></div>
+</div>
+</div>
+</section>
+<section id="View-generated-Graph">
+<h1>View generated Graph<a class="headerlink" href="#View-generated-Graph" title="Link to this heading"></a></h1>
+<p>As you can see below the graph does not contain any additional properties or result values.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>node_attrs = {n: data for n, data in G.nodes(data=True)}
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>node_attrs[4680103632661687203]
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;tk&#39;: 4680103632661687203,
+ &#39;Fkcont&#39;: 5478326535335532120,
+ &#39;geometry&#39;: &lt;POINT (55176.324 98780.495)&gt;}
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>edge_attrs = {(u, v): data for u, v, data in G.edges(data=True)}
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>edge_attrs[(4680103632661687203, 5432609004919372061)][&#39;Fkcont&#39;]
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+5478326535335532120
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>nx.is_weakly_connected(G) # Is connected as an undirected graph
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+True
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def plot_nx_graph(G, main_container):
+    # Extract node positions from geometry and filter by Fkcont
+    pos = {
+        node_id: (data[&#39;geometry&#39;].x, data[&#39;geometry&#39;].y)
+        for node_id, data in G.nodes(data=True)
+        if &#39;geometry&#39; in data and hasattr(data[&#39;geometry&#39;], &#39;x&#39;) and hasattr(data[&#39;geometry&#39;], &#39;y&#39;)
+        and data.get(&#39;Fkcont&#39;) == main_container
+    }
+
+    # Extract edges with valid geometry and both nodes in pos
+    edges = [
+        (u, v, data) for u, v, data in G.edges(data=True)
+        if u in pos and v in pos and &#39;geometry&#39; in data and data[&#39;geometry&#39;].geom_type != &#39;Point&#39;
+    ]
+
+    # Plot
+    plt.figure(figsize=(20, 14))
+    for _, _, data in edges:
+        geom = data[&#39;geometry&#39;]
+        x, y = geom.xy
+        plt.plot(x, y, color=&#39;black&#39;, linewidth=1)
+
+    # Only draw nodes that have positions
+    nx.draw_networkx_nodes(G, pos=pos, nodelist=list(pos.keys()), node_color=&#39;black&#39;, node_size=10)
+    plt.title(f&quot;nx-Graph&#39;{main_container}&#39;&quot;)
+    plt.axis(&#39;equal&#39;)
+    plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plot_nx_graph(G, int(s3s.GetMainContainer()[0]))
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/tutorials_SIR3S_Model_Mantle_Tutorial061_Assets_ToolkitTutorial061_36_0.png" src="../../../_images/tutorials_SIR3S_Model_Mantle_Tutorial061_Assets_ToolkitTutorial061_36_0.png" />
+</div>
+</div>
+</section>
+<section id="Add-properities-to-graph">
+<h1>Add properities to graph<a class="headerlink" href="#Add-properities-to-graph" title="Link to this heading"></a></h1>
+<p>Now, we can model data properties and result properties to the nodes and edges.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>props_to_add = [&quot;Kvr&quot;, &quot;T&quot;, &quot;BCIND&quot;]
+G = s3s.add_properties_to_graph(
+    G=G,
+    element_type=&quot;Node&quot;,
+    properties=props_to_add,
+)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+[2026-02-12 16:22:44,843] INFO in sir3stoolkit.mantle.alternative_models: [graph] Enriching graph with properties for element_type=&#39;Node&#39;
+[2026-02-12 16:22:44,845] INFO in sir3stoolkit.mantle.alternative_models: [graph] Using 1 model_data props and 2 result props.
+[2026-02-12 16:22:44,849] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.Node
+[2026-02-12 16:22:44,851] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieved 1559 element(s) of element type ObjectTypes.Node.
+[2026-02-12 16:22:44,851] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 1 model_data properties.
+[2026-02-12 16:22:44,851] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving model_data properties [&#39;Kvr&#39;]...
+[2026-02-12 16:22:44,930] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (1559, 2)
+[2026-02-12 16:22:45,164] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Node
+[2026-02-12 16:22:45,508] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2025-09-24 00:00:00.000 +02:00 is used
+[2026-02-12 16:22:45,511] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
+[2026-02-12 16:22:45,516] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 1559 element(s) of element type ObjectTypes.Node.
+[2026-02-12 16:22:45,520] INFO in sir3stoolkit.mantle.dataframes: [results] Using 2 result properties.
+[2026-02-12 16:22:45,594] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2026-02-12 16:22:46,450] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 3118)
+[2026-02-12 16:22:46,463] DEBUG in sir3stoolkit.mantle.alternative_models: Index([&#39;tk&#39;, &#39;Kvr&#39;, &#39;BCIND&#39;, &#39;T&#39;], dtype=&#39;object&#39;)
+[2026-02-12 16:22:46,513] INFO in sir3stoolkit.mantle.alternative_models: [graph] Enrichment summary for element_type=&#39;Node&#39;: nodes_updated=1559; edges_updated=0; cols_added=[&#39;Kvr&#39;, &#39;T&#39;, &#39;BCIND&#39;]
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>node_attrs = {n: data for n, data in G.nodes(data=True)}
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>node_attrs[4680103632661687203]
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;tk&#39;: 4680103632661687203,
+ &#39;Fkcont&#39;: 5478326535335532120,
+ &#39;geometry&#39;: &lt;POINT (55176.324 98780.495)&gt;,
+ &#39;Kvr&#39;: 1,
+ &#39;T&#39;: 125.03,
+ &#39;BCIND&#39;: 17.0}
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>props_to_add = [&quot;DN&quot;, &quot;L&quot;, &quot;JV&quot;, &quot;PHR&quot;]
+G = s3s.add_properties_to_graph(
+    G=G,
+    element_type=&quot;Pipe&quot;,
+    properties=props_to_add,
+)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+[2026-02-12 16:22:46,569] INFO in sir3stoolkit.mantle.alternative_models: [graph] Enriching graph with properties for element_type=&#39;Pipe&#39;
+[2026-02-12 16:22:46,577] INFO in sir3stoolkit.mantle.alternative_models: [graph] Using 2 model_data props and 2 result props.
+[2026-02-12 16:22:46,583] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.Pipe
+[2026-02-12 16:22:46,590] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieved 1672 element(s) of element type ObjectTypes.Pipe.
+[2026-02-12 16:22:46,594] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 2 model_data properties.
+[2026-02-12 16:22:46,595] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving model_data properties [&#39;DN&#39;, &#39;L&#39;]...
+[2026-02-12 16:22:46,952] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (1672, 3)
+[2026-02-12 16:22:47,317] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
+[2026-02-12 16:22:48,041] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2025-09-24 00:00:00.000 +02:00 is used
+[2026-02-12 16:22:48,041] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
+[2026-02-12 16:22:48,047] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 1672 element(s) of element type ObjectTypes.Pipe.
+[2026-02-12 16:22:48,051] INFO in sir3stoolkit.mantle.dataframes: [results] Using 2 result properties.
+[2026-02-12 16:22:48,127] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2026-02-12 16:22:49,776] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 3344)
+[2026-02-12 16:22:49,781] DEBUG in sir3stoolkit.mantle.alternative_models: Index([&#39;tk&#39;, &#39;DN&#39;, &#39;L&#39;, &#39;JV&#39;, &#39;PHR&#39;], dtype=&#39;object&#39;)
+[2026-02-12 16:22:49,793] INFO in sir3stoolkit.mantle.alternative_models: [graph] Enrichment summary for element_type=&#39;Pipe&#39;: nodes_updated=0; edges_updated=1672; cols_added=[&#39;DN&#39;, &#39;L&#39;, &#39;JV&#39;, &#39;PHR&#39;]
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>edge_attrs = {(u, v): data for u, v, data in G.edges(data=True)}
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>edge_attrs[(4680103632661687203, 5432609004919372061)]
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;tk&#39;: 5460759352148475007,
+ &#39;Fkcont&#39;: 5478326535335532120,
+ &#39;geometry&#39;: &lt;LINESTRING (55176.324 98780.495, 55231.478 98824.335)&gt;,
+ &#39;fkKI&#39;: 4680103632661687203,
+ &#39;fkKK&#39;: 5432609004919372061,
+ &#39;element type&#39;: &#39;Pipe&#39;,
+ &#39;DN&#39;: 125,
+ &#39;L&#39;: 75.0,
+ &#39;JV&#39;: 0.04940455,
+ &#39;PHR&#39;: 0.003705341}
+</pre></div></div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025 3S Consult GmbH.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

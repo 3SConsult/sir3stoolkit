@@ -1,0 +1,816 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tutorial 71: Time Curves &mdash; sir3stoolkit  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=9c3e77be" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/nbsphinx-code-cells.css?v=2aa19091" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=f281be69"></script>
+      <script>let toggleHintShow = 'Click to show';</script>
+      <script>let toggleHintHide = 'Click to hide';</script>
+      <script>let toggleOpenOnPrint = 'true';</script>
+      <script src="../../../_static/togglebutton.js?v=1ae7504c"></script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            sir3stoolkit
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Application Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../releases.html">Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developers.html">For Developers</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">sir3stoolkit</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Tutorial 71: Time Curves</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/tutorials/SIR3S_Model_Mantle/Tutorial071_Assets/ToolkitTutorial071.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="Tutorial-71:-Time-Curves">
+<h1>Tutorial 71: Time Curves<a class="headerlink" href="#Tutorial-71:-Time-Curves" title="Link to this heading"></a></h1>
+<p>This example demonstrates how to obtain necessary data and plot time curves.</p>
+</section>
+<section id="SIR-3S-Installation">
+<h1>SIR 3S Installation<a class="headerlink" href="#SIR-3S-Installation" title="Link to this heading"></a></h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r&quot;C:\3S\SIR 3S\SirGraf-90-15-00-20x64_Quebec-Upd1&quot; #change to local path
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Imports">
+<h1>Imports<a class="headerlink" href="#Imports" title="Link to this heading"></a></h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sir3stoolkit.core import wrapper
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sir3stoolkit.mantle import mantle
+</pre></div>
+</div>
+</div>
+<p>The wrapper package has to be initialized with reference to a SIR 3S (SirGraf) installation.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>wrapper.Initialize_Toolkit(SIR3S_SIRGRAF_DIR)
+</pre></div>
+</div>
+</div>
+<section id="Additional-imports">
+<h2>Additional imports<a class="headerlink" href="#Additional-imports" title="Link to this heading"></a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import os
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
+</pre></div>
+</div>
+</div>
+<p>…</p>
+</section>
+</section>
+<section id="Initialization">
+<h1>Initialization<a class="headerlink" href="#Initialization" title="Link to this heading"></a></h1>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s = mantle.SIR3S_Model_Mantle()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Initialization complete
+</pre></div></div>
+</div>
+</section>
+<section id="Open-Model">
+<h1>Open Model<a class="headerlink" href="#Open-Model" title="Link to this heading"></a></h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dbFilePath=r&quot;C:\Users\aUsername\3S\PT3S\PT3S\Examples\Example2.db3&quot;
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.OpenModel(dbName=dbFilePath,
+              providerType=s3s.ProviderTypes.SQLite,
+              Mid=&quot;M-1-0-1&quot;,
+              saveCurrentlyOpenModel=False,
+              namedInstance=&quot;&quot;,
+              userID=&quot;&quot;,
+              password=&quot;&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Model is open for further operation
+</pre></div></div>
+</div>
+</section>
+<section id="Obtain-Data">
+<h1>Obtain Data<a class="headerlink" href="#Obtain-Data" title="Link to this heading"></a></h1>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>object_types = [item for item in dir(s3s.ObjectTypes) if not (item.startswith(&#39;__&#39;) and item.endswith(&#39;__&#39;))]
+print(object_types)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;AGSN_HydraulicProfile&#39;, &#39;AirVessel&#39;, &#39;Arrow&#39;, &#39;Atmosphere&#39;, &#39;BlockConnectionNode&#39;, &#39;CalcPari&#39;, &#39;CharacteristicLossTable&#39;, &#39;CharacteristicLossTable_Row&#39;, &#39;Circle&#39;, &#39;Compressor&#39;, &#39;CompressorTable&#39;, &#39;CompressorTable_Row&#39;, &#39;ControlEngineeringNexus&#39;, &#39;ControlMode&#39;, &#39;ControlPointTable&#39;, &#39;ControlPointTable_Row&#39;, &#39;ControlValve&#39;, &#39;ControlVariableConverter&#39;, &#39;ControlVariableConverterRSTE&#39;, &#39;CrossSectionTable&#39;, &#39;CrossSectionTable_Row&#39;, &#39;DPGR_DPKT_DatapointDpgrConnection&#39;, &#39;DPGR_DataPointGroup&#39;, &#39;DPKT_Datapoint&#39;, &#39;DamageRatesTable&#39;, &#39;DamageRatesTable_Row&#39;, &#39;DeadTimeElement&#39;, &#39;Demand&#39;, &#39;DifferentialRegulator&#39;, &#39;DirectionalArrow&#39;, &#39;DistrictHeatingConsumer&#39;, &#39;DistrictHeatingFeeder&#39;, &#39;Divider&#39;, &#39;DriveEfficiencyTable&#39;, &#39;DriveEfficiencyTable_Row&#39;, &#39;DrivePowerTable&#39;, &#39;DrivePowerTable_Row&#39;, &#39;EBES_FeederGroups&#39;, &#39;EfficiencyConverterTable&#39;, &#39;EfficiencyConverterTable_Row&#39;, &#39;ElementQuery&#39;, &#39;EnergyRecoveryTable&#39;, &#39;EnergyRecoveryTable_Row&#39;, &#39;EnvironmentTemp&#39;, &#39;FWBZ_DistrictHeatingReferenceValues&#39;, &#39;FlapValve&#39;, &#39;FlowControlUnit&#39;, &#39;FluidQualityParamSet&#39;, &#39;FluidQualityParamSet_OS&#39;, &#39;FluidThermalPropertyGroup&#39;, &#39;FreeDuct&#39;, &#39;FunctionGenerator&#39;, &#39;FunctionTable&#39;, &#39;FunctionTable_Row&#39;, &#39;GasComponent&#39;, &#39;GasMixture&#39;, &#39;GeneralSection&#39;, &#39;Gravitation&#39;, &#39;HeatExchanger&#39;, &#39;HeatFeederConsumerStation&#39;, &#39;HeaterCooler&#39;, &#39;Histeresis&#39;, &#39;House&#39;, &#39;Hydrant&#39;, &#39;Integrator&#39;, &#39;LAYR_Layer&#39;, &#39;LoadFactorTable&#39;, &#39;LoadFactorTable_Row&#39;, &#39;LogicalComparison&#39;, &#39;LogicalStorage&#39;, &#39;MeasuredVariableTable&#39;, &#39;MeasuredVariableTable_Row&#39;, &#39;MinMaxSelection&#39;, &#39;Multiplier&#39;, &#39;NetValve&#39;, &#39;Node&#39;, &#39;NonReturnValvesTable&#39;, &#39;NonReturnValvesTable_Row&#39;, &#39;NumericalDisplay&#39;, &#39;ObjectContainerSymbol&#39;, &#39;OpenContainer&#39;, &#39;Oval&#39;, &#39;PARZ_TransientCalculationParameters&#39;, &#39;PhaseSeparation&#39;, &#39;PidController&#39;, &#39;Pipe&#39;, &#39;PipeGroup&#39;, &#39;PipeTable&#39;, &#39;PipeTable_Row&#39;, &#39;PipeVertex&#39;, &#39;Polygon&#39;, &#39;Polyline&#39;, &#39;PressureRegulator&#39;, &#39;PressureZone&#39;, &#39;Pt1Controller&#39;, &#39;Pump&#39;, &#39;PumpCharTable&#39;, &#39;PumpCharTable_Row&#39;, &#39;PumpGroup&#39;, &#39;PumpOfPumpGroup&#39;, &#39;PumpSpeedTable&#39;, &#39;PumpSpeedTable_Row&#39;, &#39;RART_ControlMode&#39;, &#39;REGP_ControlParameters&#39;, &#39;RMES_DPTS_RmesInternalDataPoint&#39;, &#39;Rectangle&#39;, &#39;RegulatorsTable&#39;, &#39;RegulatorsTable_Row&#39;, &#39;ReturnTemperaturTable&#39;, &#39;ReturnTemperaturTable_Row&#39;, &#39;RoundRectangle&#39;, &#39;SIRGRAF&#39;, &#39;SPLZ_TimeSeries&#39;, &#39;SafetyValve&#39;, &#39;SetpointDevice&#39;, &#39;SolarCollector&#39;, &#39;StandPipe&#39;, &#39;Street&#39;, &#39;SummingPoint&#39;, &#39;SwitchInBlock&#39;, &#39;TemperatureTable&#39;, &#39;TemperatureTable_Row&#39;, &#39;Text&#39;, &#39;ThermalOutputTable&#39;, &#39;ThermalOutputTable_Row&#39;, &#39;ThermophysPropTable&#39;, &#39;ThermophysPropTable_Row&#39;, &#39;TransitionSymbol&#39;, &#39;Transmitter&#39;, &#39;TransportVariable&#39;, &#39;USCH_UserDefinedProperties&#39;, &#39;Unknown&#39;, &#39;VARA_ColorScale&#39;, &#39;VARA_ROWS_WidthOrScale&#39;, &#39;VRCT_ViewRectangle&#39;, &#39;Valve&#39;, &#39;ValveLiftTable&#39;, &#39;ValveLiftTable_Row&#39;, &#39;VarFlowTable&#39;, &#39;VarFlowTable_Row&#39;, &#39;VarPressureTable&#39;, &#39;VarPressureTable_Row&#39;, &#39;VentOpenCloseTable&#39;, &#39;VentOpenCloseTable_Row&#39;, &#39;VentValve&#39;, &#39;VentilatedPressureAirVessel&#39;, &#39;WBLZ_ThermalBalance&#39;, &#39;WeatherDataTable&#39;, &#39;WeatherDataTable_Row&#39;]
+</pre></div></div>
+</div>
+<section id="Nodes">
+<h2>Nodes<a class="headerlink" href="#Nodes" title="Link to this heading"></a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>nodes_tks = [&quot;5471942051669438823&quot;, &quot;5166327497394449628&quot;, &quot;5667818255300782920&quot;, &quot;5262999985134416180&quot;]
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_nodes_results = s3s.generate_element_results_dataframe(element_type=s3s.ObjectTypes.Node
+                                                          ,tks=nodes_tks
+                                                          ,properties=[&quot;PH&quot;]
+                                                          ,timestamps=None # all available simulation timestamps will be used
+                                                          )
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+[2026-01-16 14:17:27,591] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Node
+[2026-01-16 14:17:27,594] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] No timestamps were given. Checking available simulation timestamps (SIR3S_Model.GetTimeStamps()[0]).
+[2026-01-16 14:17:27,707] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 601 simulation timestamp(s) are available.
+[2026-01-16 14:17:27,773] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 601 valid timestamp(s) will be used.
+[2026-01-16 14:17:27,777] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 635 element(s) of element type ObjectTypes.Node.
+[2026-01-16 14:17:27,778] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 4 tks remain after filtering for given tks.
+[2026-01-16 14:17:27,791] INFO in sir3stoolkit.mantle.dataframes: [results] Using 1 result properties.
+[2026-01-16 14:17:27,866] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2026-01-16 14:17:31,356] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (601, 4)
+</pre></div></div>
+</div>
+</section>
+<section id="Vents">
+<h2>Vents<a class="headerlink" href="#Vents" title="Link to this heading"></a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>vent_tks = [&quot;5303247238968995258&quot;]
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_vent_results = s3s.generate_element_results_dataframe(element_type=s3s.ObjectTypes.FlapValve
+                                                          ,tks=vent_tks
+                                                          ,properties=[&quot;PHI&quot;, &quot;QM&quot;]
+                                                          ,timestamps=None # all available simulation timestamps will be used
+                                                          )
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+[2026-01-16 14:17:31,404] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.FlapValve
+[2026-01-16 14:17:31,407] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] No timestamps were given. Checking available simulation timestamps (SIR3S_Model.GetTimeStamps()[0]).
+[2026-01-16 14:17:31,563] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 601 simulation timestamp(s) are available.
+[2026-01-16 14:17:31,847] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 601 valid timestamp(s) will be used.
+[2026-01-16 14:17:31,849] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 4 element(s) of element type ObjectTypes.FlapValve.
+[2026-01-16 14:17:31,850] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 1 tks remain after filtering for given tks.
+[2026-01-16 14:17:31,854] INFO in sir3stoolkit.mantle.dataframes: [results] Using 2 result properties.
+[2026-01-16 14:17:32,589] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2026-01-16 14:17:34,475] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (601, 2)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_vent_results.head(3)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+
+    .dataframe thead tr:last-of-type th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th>tk</th>
+      <th colspan="2" halign="left">5303247238968995258</th>
+    </tr>
+    <tr>
+      <th>name</th>
+      <th colspan="2" halign="left">Klappe K0013 K0014</th>
+    </tr>
+    <tr>
+      <th>end_nodes</th>
+      <th colspan="2" halign="left">('5154852831768145370', '5018980228933582263', '-1', '-1')</th>
+    </tr>
+    <tr>
+      <th>property</th>
+      <th>PHI</th>
+      <th>QM</th>
+    </tr>
+    <tr>
+      <th>timestamp</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2020-01-28 15:45:01.000 +01:00</th>
+      <td>56.41736</td>
+      <td>18.35320</td>
+    </tr>
+    <tr>
+      <th>2020-01-28 15:45:01.100 +01:00</th>
+      <td>56.40917</td>
+      <td>18.35296</td>
+    </tr>
+    <tr>
+      <th>2020-01-28 15:45:01.200 +01:00</th>
+      <td>56.40861</td>
+      <td>18.35280</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</section>
+<section id="Valves">
+<h2>Valves<a class="headerlink" href="#Valves" title="Link to this heading"></a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>valves_tks = [&quot;5430537691154258843&quot;]
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_valves_results = s3s.generate_element_results_dataframe(element_type=s3s.ObjectTypes.Valve
+                                                          ,tks=valves_tks
+                                                          ,properties=[&quot;QM&quot;]
+                                                          ,timestamps=None # all available simulation timestamps will be used
+                                                          )
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+[2026-01-16 14:17:34,559] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Valve
+[2026-01-16 14:17:34,561] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] No timestamps were given. Checking available simulation timestamps (SIR3S_Model.GetTimeStamps()[0]).
+[2026-01-16 14:17:34,688] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 601 simulation timestamp(s) are available.
+[2026-01-16 14:17:34,794] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 601 valid timestamp(s) will be used.
+[2026-01-16 14:17:34,794] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 9 element(s) of element type ObjectTypes.Valve.
+[2026-01-16 14:17:34,804] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 1 tks remain after filtering for given tks.
+[2026-01-16 14:17:34,806] INFO in sir3stoolkit.mantle.dataframes: [results] Using 1 result properties.
+[2026-01-16 14:17:34,843] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2026-01-16 14:17:36,293] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (601, 1)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_valves_results.head(3)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+
+    .dataframe thead tr:last-of-type th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th>tk</th>
+      <th>5430537691154258843</th>
+    </tr>
+    <tr>
+      <th>name</th>
+      <th>Ventil K0011 PST_out</th>
+    </tr>
+    <tr>
+      <th>end_nodes</th>
+      <th>('5471942051669438823', '5355079936656060238', '-1', '-1')</th>
+    </tr>
+    <tr>
+      <th>property</th>
+      <th>QM</th>
+    </tr>
+    <tr>
+      <th>timestamp</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2020-01-28 15:45:01.000 +01:00</th>
+      <td>36.70272</td>
+    </tr>
+    <tr>
+      <th>2020-01-28 15:45:01.100 +01:00</th>
+      <td>36.70224</td>
+    </tr>
+    <tr>
+      <th>2020-01-28 15:45:01.200 +01:00</th>
+      <td>36.70192</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</section>
+<section id="Concat">
+<h2>Concat<a class="headerlink" href="#Concat" title="Link to this heading"></a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_results = pd.concat([df_nodes_results, df_vent_results, df_valves_results], axis=1, join=&quot;inner&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_results.head(3)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+
+    .dataframe thead tr:last-of-type th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th>tk</th>
+      <th>5471942051669438823</th>
+      <th>5166327497394449628</th>
+      <th>5667818255300782920</th>
+      <th>5262999985134416180</th>
+      <th colspan="2" halign="left">5303247238968995258</th>
+      <th>5430537691154258843</th>
+    </tr>
+    <tr>
+      <th>name</th>
+      <th>K0011</th>
+      <th>5143521_i</th>
+      <th>791393_3_k</th>
+      <th>1629686_0_i</th>
+      <th colspan="2" halign="left">Klappe K0013 K0014</th>
+      <th>Ventil K0011 PST_out</th>
+    </tr>
+    <tr>
+      <th>end_nodes</th>
+      <th>No end nodes on element type</th>
+      <th>No end nodes on element type</th>
+      <th>No end nodes on element type</th>
+      <th>No end nodes on element type</th>
+      <th colspan="2" halign="left">('5154852831768145370', '5018980228933582263', '-1', '-1')</th>
+      <th>('5471942051669438823', '5355079936656060238', '-1', '-1')</th>
+    </tr>
+    <tr>
+      <th>property</th>
+      <th>PH</th>
+      <th>PH</th>
+      <th>PH</th>
+      <th>PH</th>
+      <th>PHI</th>
+      <th>QM</th>
+      <th>QM</th>
+    </tr>
+    <tr>
+      <th>timestamp</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2020-01-28 15:45:01.000 +01:00</th>
+      <td>10.59964</td>
+      <td>8.320659</td>
+      <td>6.477164</td>
+      <td>0.881641</td>
+      <td>56.41736</td>
+      <td>18.35320</td>
+      <td>36.70272</td>
+    </tr>
+    <tr>
+      <th>2020-01-28 15:45:01.100 +01:00</th>
+      <td>10.59981</td>
+      <td>8.320658</td>
+      <td>6.477123</td>
+      <td>0.881641</td>
+      <td>56.40917</td>
+      <td>18.35296</td>
+      <td>36.70224</td>
+    </tr>
+    <tr>
+      <th>2020-01-28 15:45:01.200 +01:00</th>
+      <td>10.59993</td>
+      <td>8.320656</td>
+      <td>6.477080</td>
+      <td>0.881639</td>
+      <td>56.40861</td>
+      <td>18.35280</td>
+      <td>36.70192</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</section>
+</section>
+<section id="Plot">
+<h1>Plot<a class="headerlink" href="#Plot" title="Link to this heading"></a></h1>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_results.head(3)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+
+    .dataframe thead tr:last-of-type th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th>tk</th>
+      <th>5471942051669438823</th>
+      <th>5166327497394449628</th>
+      <th>5667818255300782920</th>
+      <th>5262999985134416180</th>
+      <th colspan="2" halign="left">5303247238968995258</th>
+      <th>5430537691154258843</th>
+    </tr>
+    <tr>
+      <th>name</th>
+      <th>K0011</th>
+      <th>5143521_i</th>
+      <th>791393_3_k</th>
+      <th>1629686_0_i</th>
+      <th colspan="2" halign="left">Klappe K0013 K0014</th>
+      <th>Ventil K0011 PST_out</th>
+    </tr>
+    <tr>
+      <th>end_nodes</th>
+      <th>No end nodes on element type</th>
+      <th>No end nodes on element type</th>
+      <th>No end nodes on element type</th>
+      <th>No end nodes on element type</th>
+      <th colspan="2" halign="left">('5154852831768145370', '5018980228933582263', '-1', '-1')</th>
+      <th>('5471942051669438823', '5355079936656060238', '-1', '-1')</th>
+    </tr>
+    <tr>
+      <th>property</th>
+      <th>PH</th>
+      <th>PH</th>
+      <th>PH</th>
+      <th>PH</th>
+      <th>PHI</th>
+      <th>QM</th>
+      <th>QM</th>
+    </tr>
+    <tr>
+      <th>timestamp</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2020-01-28 15:45:01.000 +01:00</th>
+      <td>10.59964</td>
+      <td>8.320659</td>
+      <td>6.477164</td>
+      <td>0.881641</td>
+      <td>56.41736</td>
+      <td>18.35320</td>
+      <td>36.70272</td>
+    </tr>
+    <tr>
+      <th>2020-01-28 15:45:01.100 +01:00</th>
+      <td>10.59981</td>
+      <td>8.320658</td>
+      <td>6.477123</td>
+      <td>0.881641</td>
+      <td>56.40917</td>
+      <td>18.35296</td>
+      <td>36.70224</td>
+    </tr>
+    <tr>
+      <th>2020-01-28 15:45:01.200 +01:00</th>
+      <td>10.59993</td>
+      <td>8.320656</td>
+      <td>6.477080</td>
+      <td>0.881639</td>
+      <td>56.40861</td>
+      <td>18.35280</td>
+      <td>36.70192</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fig, axes, used = s3s.plot_time_curves(
+    df=df_results,
+    start=&quot;2020-01-28 15:45:01.000 +01:00&quot;,
+    end=&quot;2020-01-28 15:46:00.000 +01:00&quot;,
+    properties=[&quot;PH&quot;, &quot;QM&quot;, &quot;PHI&quot;],
+    axis_labels=[&quot;PH bar&quot;, &quot;QM m³/h&quot;, &quot;RSK %&quot;],
+    ylims=[(0, 12), (0, 40), (0, 60)],
+    tks_per_property=[
+        [&quot;5471942051669438823&quot;, &quot;5166327497394449628&quot;, &quot;5667818255300782920&quot;, &quot;5262999985134416180&quot;],
+        [&quot;5303247238968995258&quot;, &quot;5430537691154258843&quot;],
+        [&quot;5303247238968995258&quot;],
+    ],
+
+    y_label_ticks=[7, 9, 13],
+    y_grid_ticks=13,
+    x_label_ticks=7,
+    x_grid_ticks=13,
+
+    legend=True,
+    legend_in_figure=True,
+    legend_loc=&quot;upper left&quot;,
+    legend_coords=(0.67, 0.33),
+    legend_fontsize=15,
+
+    title_prefix=&quot;Testplot: &quot;,
+    show_title=True,
+
+    axis_offset=70,
+    linestyles=[&quot;-&quot;, &quot;--&quot;, &quot;:&quot;],
+    rotate_xticks=0,
+
+    grid=True,
+    grid_style=&quot;--&quot;,
+    grid_alpha=0.8,
+
+    missing=&quot;warn&quot;,
+    logger=None,
+)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/tutorials_SIR3S_Model_Mantle_Tutorial071_Assets_ToolkitTutorial071_36_0.png" src="../../../_images/tutorials_SIR3S_Model_Mantle_Tutorial071_Assets_ToolkitTutorial071_36_0.png" />
+</div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025 3S Consult GmbH.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

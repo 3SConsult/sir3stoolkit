@@ -464,10 +464,15 @@
         <span class="k">if</span> <span class="n">value_col</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">available_dataframe_columns</span><span class="p">:</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[insert dataframe into time table] Value col </span><span class="si">{</span><span class="n">value_col</span><span class="si">}</span><span class="s2"> not in dataframe columns.&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
-    
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">internal_ref_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTimeStamps</span><span class="p">()[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">internal_ref_time</span> <span class="o">=</span> <span class="kc">None</span>
+
         <span class="k">if</span> <span class="n">reference_time_stamp</span><span class="p">:</span>
             <span class="n">used_reference_time_stamp</span> <span class="o">=</span> <span class="n">reference_time_stamp</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTimeStamps</span><span class="p">()[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span>
+        <span class="k">elif</span> <span class="n">internal_ref_time</span><span class="p">:</span>
             <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTimeStamps</span><span class="p">()[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
             <span class="n">used_reference_time_stamp</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>

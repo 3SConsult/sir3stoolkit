@@ -1,0 +1,2127 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tutorial 62: Pandapipes &mdash; sir3stoolkit  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=9c3e77be" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/nbsphinx-code-cells.css?v=2aa19091" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=f281be69"></script>
+      <script>let toggleHintShow = 'Click to show';</script>
+      <script>let toggleHintHide = 'Click to hide';</script>
+      <script>let toggleOpenOnPrint = 'true';</script>
+      <script src="../../../_static/togglebutton.js?v=1ae7504c"></script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            sir3stoolkit
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Application Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../releases.html">Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developers.html">For Developers</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">sir3stoolkit</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Tutorial 62: Pandapipes</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/tutorials/SIR3S_Model_Mantle/Tutorial062_Assets/ToolkitTutorial062.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="Tutorial-62:-Pandapipes">
+<h1>Tutorial 62: Pandapipes<a class="headerlink" href="#Tutorial-62:-Pandapipes" title="Link to this heading"></a></h1>
+<p>This Example demonstrates how to generate a pandapipes network based on a SIR 3S model. When working with SIR 3S, pandapipes used to offer some freedom in creating simple DH models via Python, but with the introduction of the SIR 3S Toolkit, pandapipes is no longer necessary for this. Therefore the main benefit of pandapipes for SIR 3S users is for comparing calculations to SIR 3S results.</p>
+<p>Note that the SIR 3S model we are using in this Example is quite simple.</p>
+<p>In this Example we will first generate the pandapipes network manually by obtaining element dataframes for pipes and nodes via SIR 3S Toolkit. Then we will perform the same steps but built into one single Toolkit function.</p>
+</section>
+<section id="Toolkit-Release">
+<h1>Toolkit Release<a class="headerlink" href="#Toolkit-Release" title="Link to this heading"></a></h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>#pip install
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Imports">
+<h1>Imports<a class="headerlink" href="#Imports" title="Link to this heading"></a></h1>
+<section id="SIR-3S-Toolkit">
+<h2>SIR 3S Toolkit<a class="headerlink" href="#SIR-3S-Toolkit" title="Link to this heading"></a></h2>
+<section id="Regular-Import/Init">
+<h3>Regular Import/Init<a class="headerlink" href="#Regular-Import/Init" title="Link to this heading"></a></h3>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r&quot;C:\3S\SIR 3S\SirGraf-90-15-00-20x64_Quebec-Upd1&quot; #change to local path
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import sir3stoolkit
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sir3stoolkit.core import wrapper
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sir3stoolkit
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;module &#39;sir3stoolkit&#39; from &#39;C:\\Users\\aUsername\\3S\\sir3stoolkit\\src\\sir3stoolkit\\__init__.py&#39;&gt;
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>wrapper.Initialize_Toolkit(SIR3S_SIRGRAF_DIR)
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Additional-Import/Init-for-Alternative_Models-class">
+<h3>Additional Import/Init for Alternative_Models class<a class="headerlink" href="#Additional-Import/Init-for-Alternative_Models-class" title="Link to this heading"></a></h3>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sir3stoolkit.mantle import alternative_models
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s = alternative_models.SIR3S_Model_Alternative_Models()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Initialization complete
+</pre></div></div>
+</div>
+</section>
+</section>
+<section id="Additional">
+<h2>Additional<a class="headerlink" href="#Additional" title="Link to this heading"></a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandapipes as pp
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from shapely import wkt
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandapipes.plotting as pp_plot
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+<section id="Open-SIR-3S-Model">
+<h1>Open SIR 3S Model<a class="headerlink" href="#Open-SIR-3S-Model" title="Link to this heading"></a></h1>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.OpenModel(dbName=r&quot;C:\Users\aUsername\3S\PT3S\PT3S\Examples\Example9_2.db3&quot;,
+              providerType=s3s.ProviderTypes.SQLite,
+              Mid=&quot;M-1-0-1&quot;,
+              saveCurrentlyOpenModel=False,
+              namedInstance=&quot;&quot;,
+              userID=&quot;&quot;,
+              password=&quot;&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Model is open for further operation
+</pre></div></div>
+</div>
+</section>
+<section id="Generate-Pandapipes-network-manually">
+<h1>Generate Pandapipes network manually<a class="headerlink" href="#Generate-Pandapipes-network-manually" title="Link to this heading"></a></h1>
+<section id="Create-pandapipes-network">
+<h2>Create pandapipes network<a class="headerlink" href="#Create-pandapipes-network" title="Link to this heading"></a></h2>
+<section id="Nodes">
+<h3>Nodes<a class="headerlink" href="#Nodes" title="Link to this heading"></a></h3>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>net = pp.create_empty_network(fluid=&quot;water&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_nodes_model_data = s3s.generate_element_model_data_dataframe(element_type=s3s.ObjectTypes.Node, properties=[&#39;Name&#39;, &#39;QmEin&#39;, &#39;bz.PhEin&#39;, &#39;Zkor&#39;, &#39;Ktyp&#39;], geometry=True)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+[2026-01-09 15:38:16,057] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.Node
+[2026-01-09 15:38:16,064] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieved 9 element(s) of element type ObjectTypes.Node.
+[2026-01-09 15:38:16,079] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 5 model_data properties.
+[2026-01-09 15:38:16,080] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving model_data properties [&#39;Name&#39;, &#39;QmEin&#39;, &#39;bz.PhEin&#39;, &#39;Zkor&#39;, &#39;Ktyp&#39;], geometry...
+[2026-01-09 15:38:16,116] INFO in sir3stoolkit.mantle.dataframes: [model_data] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
+[2026-01-09 15:38:16,116] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (9, 7)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_nodes_model_data.head(3)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>tk</th>
+      <th>Name</th>
+      <th>QmEin</th>
+      <th>bz.PhEin</th>
+      <th>Zkor</th>
+      <th>Ktyp</th>
+      <th>geometry</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>5136506604482101815</td>
+      <td>K0000</td>
+      <td>0</td>
+      <td>100</td>
+      <td>10</td>
+      <td>PKON</td>
+      <td>POINT (150 500)</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>5174640379525019821</td>
+      <td>K0001</td>
+      <td>0</td>
+      <td>0</td>
+      <td>10</td>
+      <td>QKON</td>
+      <td>POINT (350 600)</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>5665004361761998834</td>
+      <td>K0002</td>
+      <td>0</td>
+      <td>0</td>
+      <td>10</td>
+      <td>QKON</td>
+      <td>POINT (550 600)</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_nodes_results = s3s.generate_element_results_dataframe(element_type=s3s.ObjectTypes.Node, properties=[&#39;PH&#39;, &#39;T&#39;, &#39;QM&#39;], timestamps=s3s.GetTimeStamps()[0])
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+[2026-01-09 15:38:16,163] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Node
+[2026-01-09 15:38:16,167] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2025-06-05 15:27:46.000 +02:00 is used
+[2026-01-09 15:38:16,167] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
+[2026-01-09 15:38:16,173] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 9 element(s) of element type ObjectTypes.Node.
+[2026-01-09 15:38:16,174] INFO in sir3stoolkit.mantle.dataframes: [results] Using 3 result properties.
+[2026-01-09 15:38:16,244] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2026-01-09 15:38:16,266] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 27)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_nodes_results.head(3)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+
+    .dataframe thead tr:last-of-type th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th>tk</th>
+      <th colspan="3" halign="left">5136506604482101815</th>
+      <th colspan="3" halign="left">5174640379525019821</th>
+      <th colspan="3" halign="left">5665004361761998834</th>
+      <th colspan="3" halign="left">5185493728872360834</th>
+      <th colspan="3" halign="left">4776931467066465913</th>
+      <th colspan="3" halign="left">5229509832448527475</th>
+      <th colspan="3" halign="left">5073490478136313655</th>
+      <th colspan="3" halign="left">5417314986988666587</th>
+      <th colspan="3" halign="left">5366461594623940805</th>
+    </tr>
+    <tr>
+      <th>name</th>
+      <th colspan="3" halign="left">K0000</th>
+      <th colspan="3" halign="left">K0001</th>
+      <th colspan="3" halign="left">K0002</th>
+      <th colspan="3" halign="left">K0003</th>
+      <th colspan="3" halign="left">K0004</th>
+      <th colspan="3" halign="left">K0005</th>
+      <th colspan="3" halign="left">K0006</th>
+      <th colspan="3" halign="left">K0007</th>
+      <th colspan="3" halign="left">K0008</th>
+    </tr>
+    <tr>
+      <th>end_nodes</th>
+      <th colspan="3" halign="left">No end nodes on element type</th>
+      <th colspan="3" halign="left">No end nodes on element type</th>
+      <th colspan="3" halign="left">No end nodes on element type</th>
+      <th colspan="3" halign="left">No end nodes on element type</th>
+      <th colspan="3" halign="left">No end nodes on element type</th>
+      <th colspan="3" halign="left">No end nodes on element type</th>
+      <th colspan="3" halign="left">No end nodes on element type</th>
+      <th colspan="3" halign="left">No end nodes on element type</th>
+      <th colspan="3" halign="left">No end nodes on element type</th>
+    </tr>
+    <tr>
+      <th>property</th>
+      <th>PH</th>
+      <th>T</th>
+      <th>QM</th>
+      <th>PH</th>
+      <th>T</th>
+      <th>QM</th>
+      <th>PH</th>
+      <th>T</th>
+      <th>QM</th>
+      <th>PH</th>
+      <th>T</th>
+      <th>QM</th>
+      <th>PH</th>
+      <th>T</th>
+      <th>QM</th>
+      <th>PH</th>
+      <th>T</th>
+      <th>QM</th>
+      <th>PH</th>
+      <th>T</th>
+      <th>QM</th>
+      <th>PH</th>
+      <th>T</th>
+      <th>QM</th>
+      <th>PH</th>
+      <th>T</th>
+      <th>QM</th>
+    </tr>
+    <tr>
+      <th>timestamp</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2025-06-05 15:27:46.000 +02:00</th>
+      <td>100.0</td>
+      <td>0.0</td>
+      <td>400.0</td>
+      <td>99.98262</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>99.91648</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>99.77149</td>
+      <td>0.0</td>
+      <td>-100.0</td>
+      <td>99.77149</td>
+      <td>0.0</td>
+      <td>-100.0</td>
+      <td>99.95844</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>99.91686</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>99.90903</td>
+      <td>0.0</td>
+      <td>-100.0</td>
+      <td>99.90903</td>
+      <td>0.0</td>
+      <td>-100.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_nodes_results.columns = df_nodes_results.columns.droplevel([1, 2])
+df_nodes_results = df_nodes_results.T.unstack(level=0).T
+df_nodes_results = df_nodes_results.droplevel(0, axis=0)
+df_nodes = df_nodes_model_data.merge(on=&quot;tk&quot;,
+                    how=&quot;outer&quot;,
+                    right=df_nodes_results)
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_nodes.head(3)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>tk</th>
+      <th>Name</th>
+      <th>QmEin</th>
+      <th>bz.PhEin</th>
+      <th>Zkor</th>
+      <th>Ktyp</th>
+      <th>geometry</th>
+      <th>PH</th>
+      <th>QM</th>
+      <th>T</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>4776931467066465913</td>
+      <td>K0004</td>
+      <td>-100</td>
+      <td>0</td>
+      <td>10</td>
+      <td>QKON</td>
+      <td>POINT (750 550)</td>
+      <td>99.77149</td>
+      <td>-100.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>5073490478136313655</td>
+      <td>K0006</td>
+      <td>0</td>
+      <td>0</td>
+      <td>10</td>
+      <td>QKON</td>
+      <td>POINT (550 400)</td>
+      <td>99.91686</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>5136506604482101815</td>
+      <td>K0000</td>
+      <td>0</td>
+      <td>100</td>
+      <td>10</td>
+      <td>PKON</td>
+      <td>POINT (150 500)</td>
+      <td>100.00000</td>
+      <td>400.0</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>js = {}
+
+for idx, row in df_nodes.iterrows():
+    geom = row[&quot;geometry&quot;]
+    x, y = geom.x, geom.y
+
+    j = pp.create_junction(
+        net,
+        pn_bar=1 + float(row[&#39;PH&#39;]),
+        tfluid_k=273.15 + float(row[&#39;T&#39;]),
+        height_m=float(row[&#39;Zkor&#39;]),
+        name=f&quot;{row[&#39;Name&#39;]}~{row[&#39;tk&#39;]}&quot;
+    )
+
+    # Assign geodata to junction_geodata table
+    net.junction_geodata.at[j, &quot;x&quot;] = x
+    net.junction_geodata.at[j, &quot;y&quot;] = y
+
+    js[row[&#39;tk&#39;]] = j
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>net.junction
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name</th>
+      <th>pn_bar</th>
+      <th>tfluid_k</th>
+      <th>height_m</th>
+      <th>in_service</th>
+      <th>type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>K0004~4776931467066465913</td>
+      <td>100.77149</td>
+      <td>273.15</td>
+      <td>10.0</td>
+      <td>True</td>
+      <td>junction</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>K0006~5073490478136313655</td>
+      <td>100.91686</td>
+      <td>273.15</td>
+      <td>10.0</td>
+      <td>True</td>
+      <td>junction</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>K0000~5136506604482101815</td>
+      <td>101.00000</td>
+      <td>273.15</td>
+      <td>10.0</td>
+      <td>True</td>
+      <td>junction</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>K0001~5174640379525019821</td>
+      <td>100.98262</td>
+      <td>273.15</td>
+      <td>10.0</td>
+      <td>True</td>
+      <td>junction</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>K0003~5185493728872360834</td>
+      <td>100.77149</td>
+      <td>273.15</td>
+      <td>10.0</td>
+      <td>True</td>
+      <td>junction</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>K0005~5229509832448527475</td>
+      <td>100.95844</td>
+      <td>273.15</td>
+      <td>10.0</td>
+      <td>True</td>
+      <td>junction</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>K0008~5366461594623940805</td>
+      <td>100.90903</td>
+      <td>273.15</td>
+      <td>10.0</td>
+      <td>True</td>
+      <td>junction</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>K0007~5417314986988666587</td>
+      <td>100.90903</td>
+      <td>273.15</td>
+      <td>10.0</td>
+      <td>True</td>
+      <td>junction</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>K0002~5665004361761998834</td>
+      <td>100.91648</td>
+      <td>273.15</td>
+      <td>10.0</td>
+      <td>True</td>
+      <td>junction</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</section>
+<section id="pipes">
+<h3>pipes<a class="headerlink" href="#pipes" title="Link to this heading"></a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_model_data = s3s.generate_element_model_data_dataframe(element_type=s3s.ObjectTypes.Pipe, properties=[&#39;L&#39;, &#39;Di&#39;, &#39;Rau&#39;, &#39;Name&#39;], end_nodes=True, geometry=True)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+[2026-01-09 15:38:16,395] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.Pipe
+[2026-01-09 15:38:16,395] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieved 9 element(s) of element type ObjectTypes.Pipe.
+[2026-01-09 15:38:16,399] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 4 model_data properties.
+[2026-01-09 15:38:16,399] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving model_data properties [&#39;L&#39;, &#39;Di&#39;, &#39;Rau&#39;, &#39;Name&#39;], geometry, end nodes...
+[2026-01-09 15:38:16,447] INFO in sir3stoolkit.mantle.dataframes: [model_data] 2 non-empty end node columns were created.
+[2026-01-09 15:38:16,466] INFO in sir3stoolkit.mantle.dataframes: [model_data] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
+[2026-01-09 15:38:16,467] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (9, 8)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_model_data.head(3)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>tk</th>
+      <th>L</th>
+      <th>Di</th>
+      <th>Rau</th>
+      <th>Name</th>
+      <th>geometry</th>
+      <th>fkKI</th>
+      <th>fkKK</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>4762947358005495341</td>
+      <td>1000</td>
+      <td>450</td>
+      <td>0,25</td>
+      <td>Rohr K0000 K0001</td>
+      <td>LINESTRING (150 500, 350 600)</td>
+      <td>5136506604482101815</td>
+      <td>5174640379525019821</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>5479123649362439650</td>
+      <td>1000</td>
+      <td>250</td>
+      <td>0,25</td>
+      <td>Rohr K0002 K0003</td>
+      <td>LINESTRING (550 600, 750 650)</td>
+      <td>5665004361761998834</td>
+      <td>5185493728872360834</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>5367303884852200682</td>
+      <td>1000</td>
+      <td>250</td>
+      <td>0,25</td>
+      <td>Rohr K0002 K0004</td>
+      <td>LINESTRING (550 600, 750 550)</td>
+      <td>5665004361761998834</td>
+      <td>4776931467066465913</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_model_data[&#39;Rau&#39;] = df_pipes_model_data[&#39;Rau&#39;].str.replace(&#39;,&#39;, &#39;.&#39;, regex=False)
+df_pipes_model_data[&#39;L&#39;] = df_pipes_model_data[&#39;L&#39;].str.replace(&#39;,&#39;, &#39;.&#39;, regex=False)
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_model_data[&#39;L&#39;] = df_pipes_model_data[&#39;L&#39;].astype(float)
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>ps = {}
+
+for idx, row in df_pipes_model_data.iterrows():
+    geom = row[&quot;geometry&quot;]
+    coords = list(geom.coords)
+
+    # Create pipe
+    p = pp.create_pipe_from_parameters(
+        net,
+        from_junction=js[row[&#39;fkKI&#39;]],
+        to_junction=js[row[&#39;fkKK&#39;]],
+        length_km=float(row[&#39;L&#39;]) / 1000.,
+        diameter_m=float(row[&#39;Di&#39;]) / 1000.,
+        k_mm=float(row[&#39;Rau&#39;]),
+        name=f&quot;{row[&#39;Name&#39;]}~{row[&#39;tk&#39;]}&quot;
+    )
+    ps[row[&#39;tk&#39;]] = p
+
+    net.pipe_geodata.at[p, &quot;coords&quot;] = coords
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>net.pipe.head(3)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name</th>
+      <th>from_junction</th>
+      <th>to_junction</th>
+      <th>std_type</th>
+      <th>length_km</th>
+      <th>diameter_m</th>
+      <th>k_mm</th>
+      <th>loss_coefficient</th>
+      <th>u_w_per_m2k</th>
+      <th>text_k</th>
+      <th>qext_w</th>
+      <th>sections</th>
+      <th>in_service</th>
+      <th>type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Rohr K0000 K0001~4762947358005495341</td>
+      <td>2</td>
+      <td>3</td>
+      <td>None</td>
+      <td>1.0</td>
+      <td>0.45</td>
+      <td>0.25</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>NaN</td>
+      <td>0.0</td>
+      <td>1</td>
+      <td>True</td>
+      <td>pipe</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Rohr K0002 K0003~5479123649362439650</td>
+      <td>8</td>
+      <td>4</td>
+      <td>None</td>
+      <td>1.0</td>
+      <td>0.25</td>
+      <td>0.25</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>NaN</td>
+      <td>0.0</td>
+      <td>1</td>
+      <td>True</td>
+      <td>pipe</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Rohr K0002 K0004~5367303884852200682</td>
+      <td>8</td>
+      <td>0</td>
+      <td>None</td>
+      <td>1.0</td>
+      <td>0.25</td>
+      <td>0.25</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>NaN</td>
+      <td>0.0</td>
+      <td>1</td>
+      <td>True</td>
+      <td>pipe</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</section>
+<section id="sources/sinks">
+<h3>sources/sinks<a class="headerlink" href="#sources/sinks" title="Link to this heading"></a></h3>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for idx, row in df_nodes.iterrows():
+    ktyp = (row.get(&quot;Ktyp&quot;))
+    tk = row.get(&quot;tk&quot;)
+
+    # Create source if Ktyp is PKON and PH &gt; 0
+    if ktyp == &quot;PKON&quot; and float(row.get(&quot;PH&quot;, 0)) &gt; 0:
+        pp.create_ext_grid(
+            net,
+            junction=js[tk],
+            p_bar=1 + float(row[&quot;PH&quot;]),
+            t_k=273.15 + float(row[&quot;T&quot;]),
+            name=f&quot;Src: {row[&#39;Name&#39;]}~{tk}&quot;
+        )
+
+    # Create sink if Ktyp is QKON and QM &lt; 0
+    elif ktyp == &quot;QKON&quot; and float(row.get(&quot;QM&quot;, 0)) &lt; 0:
+        pp.create_sink(
+            net,
+            junction=js[tk],
+            mdot_kg_per_s=abs(float(row[&quot;QM&quot;])),
+            name=f&quot;Snk: {row[&#39;Name&#39;]}~{tk}&quot;
+        )
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>net.ext_grid
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name</th>
+      <th>junction</th>
+      <th>p_bar</th>
+      <th>t_k</th>
+      <th>in_service</th>
+      <th>type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Src: K0000~5136506604482101815</td>
+      <td>2</td>
+      <td>101.0</td>
+      <td>273.15</td>
+      <td>True</td>
+      <td>pt</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>net.sink
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name</th>
+      <th>junction</th>
+      <th>mdot_kg_per_s</th>
+      <th>scaling</th>
+      <th>in_service</th>
+      <th>type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Snk: K0004~4776931467066465913</td>
+      <td>0</td>
+      <td>100.0</td>
+      <td>1.0</td>
+      <td>True</td>
+      <td>sink</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Snk: K0003~5185493728872360834</td>
+      <td>4</td>
+      <td>100.0</td>
+      <td>1.0</td>
+      <td>True</td>
+      <td>sink</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Snk: K0008~5366461594623940805</td>
+      <td>6</td>
+      <td>100.0</td>
+      <td>1.0</td>
+      <td>True</td>
+      <td>sink</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Snk: K0007~5417314986988666587</td>
+      <td>7</td>
+      <td>100.0</td>
+      <td>1.0</td>
+      <td>True</td>
+      <td>sink</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</section>
+</section>
+<section id="Calculate">
+<h2>Calculate<a class="headerlink" href="#Calculate" title="Link to this heading"></a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pp.pipeflow(net)
+</pre></div>
+</div>
+</div>
+<section id="View-Results">
+<h3>View Results<a class="headerlink" href="#View-Results" title="Link to this heading"></a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>net.res_junction
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>p_bar</th>
+      <th>t_k</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>98.417039</td>
+      <td>273.15</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>100.068190</td>
+      <td>273.15</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>101.000000</td>
+      <td>273.15</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>100.823662</td>
+      <td>273.15</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>98.417039</td>
+      <td>273.15</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>100.534095</td>
+      <td>273.15</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>99.991334</td>
+      <td>273.15</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>99.991334</td>
+      <td>273.15</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>100.064571</td>
+      <td>273.15</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[34]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>net.res_pipe
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[34]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>v_mean_m_per_s</th>
+      <th>p_from_bar</th>
+      <th>p_to_bar</th>
+      <th>t_from_k</th>
+      <th>t_to_k</th>
+      <th>t_outlet_k</th>
+      <th>mdot_from_kg_per_s</th>
+      <th>mdot_to_kg_per_s</th>
+      <th>vdot_m3_per_s</th>
+      <th>reynolds</th>
+      <th>lambda</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.956300</td>
+      <td>101.000000</td>
+      <td>100.823662</td>
+      <td>273.15</td>
+      <td>273.15</td>
+      <td>273.15</td>
+      <td>152.074654</td>
+      <td>-152.074654</td>
+      <td>0.152093</td>
+      <td>241084.757059</td>
+      <td>0.017356</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2.037427</td>
+      <td>100.064571</td>
+      <td>98.417039</td>
+      <td>273.15</td>
+      <td>273.15</td>
+      <td>273.15</td>
+      <td>100.000000</td>
+      <td>-100.000000</td>
+      <td>0.100012</td>
+      <td>285354.955734</td>
+      <td>0.019847</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2.037427</td>
+      <td>100.064571</td>
+      <td>98.417039</td>
+      <td>273.15</td>
+      <td>273.15</td>
+      <td>273.15</td>
+      <td>100.000000</td>
+      <td>-100.000000</td>
+      <td>0.100012</td>
+      <td>285354.955734</td>
+      <td>0.019847</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1.559043</td>
+      <td>101.000000</td>
+      <td>100.534095</td>
+      <td>273.15</td>
+      <td>273.15</td>
+      <td>273.15</td>
+      <td>247.925346</td>
+      <td>-247.925346</td>
+      <td>0.247955</td>
+      <td>393037.366793</td>
+      <td>0.017253</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1.559043</td>
+      <td>100.534095</td>
+      <td>100.068190</td>
+      <td>273.15</td>
+      <td>273.15</td>
+      <td>273.15</td>
+      <td>247.925346</td>
+      <td>-247.925346</td>
+      <td>0.247955</td>
+      <td>393037.366793</td>
+      <td>0.017253</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0.628836</td>
+      <td>100.068190</td>
+      <td>99.991334</td>
+      <td>273.15</td>
+      <td>273.15</td>
+      <td>273.15</td>
+      <td>100.000000</td>
+      <td>-100.000000</td>
+      <td>0.100012</td>
+      <td>158530.530963</td>
+      <td>0.017494</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0.628836</td>
+      <td>100.068190</td>
+      <td>99.991334</td>
+      <td>273.15</td>
+      <td>273.15</td>
+      <td>273.15</td>
+      <td>100.000000</td>
+      <td>-100.000000</td>
+      <td>0.100012</td>
+      <td>158530.530963</td>
+      <td>0.017494</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>3.098411</td>
+      <td>100.823662</td>
+      <td>100.064571</td>
+      <td>273.15</td>
+      <td>273.15</td>
+      <td>273.15</td>
+      <td>152.074654</td>
+      <td>-152.074654</td>
+      <td>0.152093</td>
+      <td>433952.562707</td>
+      <td>0.019770</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>-0.301372</td>
+      <td>100.064571</td>
+      <td>100.068190</td>
+      <td>273.15</td>
+      <td>273.15</td>
+      <td>273.15</td>
+      <td>-47.925346</td>
+      <td>47.925346</td>
+      <td>-0.047931</td>
+      <td>75976.304867</td>
+      <td>0.017933</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>net.res_sink
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>mdot_kg_per_s</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>100.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>100.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>100.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>100.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[36]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>net.res_ext_grid
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[36]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>mdot_kg_per_s</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>-400.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</section>
+</section>
+<section id="Plot">
+<h2>Plot<a class="headerlink" href="#Plot" title="Link to this heading"></a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[37]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pp_plot.simple_plot(net)
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/tutorials_SIR3S_Model_Mantle_Tutorial062_Assets_ToolkitTutorial062_55_0.png" src="../../../_images/tutorials_SIR3S_Model_Mantle_Tutorial062_Assets_ToolkitTutorial062_55_0.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[37]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;Axes: &gt;
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[38]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import plotly.express as px
+
+junctions = net.res_junction.copy()
+junctions[&quot;x&quot;] = net.junction_geodata[&quot;x&quot;]
+junctions[&quot;y&quot;] = net.junction_geodata[&quot;y&quot;]
+
+fig = px.scatter(
+    junctions,
+    x=&quot;x&quot;, y=&quot;y&quot;,
+    color=&quot;p_bar&quot;,
+    hover_data=[&quot;p_bar&quot;],
+    title=&quot;Junctions: Pressure and Temperature&quot;,
+    labels={&quot;p_bar&quot;: &quot;Pressure [bar]&quot;}
+)
+fig.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="admonition warning">
+<p>Data type cannot be displayed: application/vnd.plotly.v1+json</p>
+</div>
+</div>
+</div>
+<p>The above depiction is not displayed in the online documentation.</p>
+</section>
+</section>
+<section id="Generating-Pandapipes-network-using-alternative_models()-class-from-SIR-3S-Toolkit">
+<h1>Generating Pandapipes network using alternative_models() class from SIR 3S Toolkit<a class="headerlink" href="#Generating-Pandapipes-network-using-alternative_models()-class-from-SIR-3S-Toolkit" title="Link to this heading"></a></h1>
+<section id="Create">
+<h2>Create<a class="headerlink" href="#Create" title="Link to this heading"></a></h2>
+<p>Now we can perform the same steps above confined into one method using <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.alternative_models.Alternative_Models_SIR3S_Model.SIR_3S_to_pandapipes">SIR_3S_to_pandapipes()</a>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[39]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pp_net = s3s.SIR_3S_to_pandapipes()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+[2026-01-09 15:38:25,372] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.Node
+[2026-01-09 15:38:25,374] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieved 9 element(s) of element type ObjectTypes.Node.
+[2026-01-09 15:38:25,376] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 5 model_data properties.
+[2026-01-09 15:38:25,377] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving model_data properties [&#39;Name&#39;, &#39;Zkor&#39;, &#39;QmEin&#39;, &#39;bz.PhEin&#39;, &#39;Ktyp&#39;], geometry...
+[2026-01-09 15:38:25,387] INFO in sir3stoolkit.mantle.dataframes: [model_data] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
+[2026-01-09 15:38:25,388] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (9, 7)
+[2026-01-09 15:38:25,402] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Node
+[2026-01-09 15:38:25,413] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2025-06-05 15:27:46.000 +02:00 is used
+[2026-01-09 15:38:25,414] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
+[2026-01-09 15:38:25,416] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 9 element(s) of element type ObjectTypes.Node.
+[2026-01-09 15:38:25,418] INFO in sir3stoolkit.mantle.dataframes: [results] Using 3 result properties.
+[2026-01-09 15:38:25,424] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2026-01-09 15:38:25,435] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 27)
+[2026-01-09 15:38:25,462] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.Pipe
+[2026-01-09 15:38:25,467] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieved 9 element(s) of element type ObjectTypes.Pipe.
+[2026-01-09 15:38:25,468] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 4 model_data properties.
+[2026-01-09 15:38:25,468] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving model_data properties [&#39;L&#39;, &#39;Di&#39;, &#39;Rau&#39;, &#39;Name&#39;], geometry, end nodes...
+[2026-01-09 15:38:25,474] INFO in sir3stoolkit.mantle.dataframes: [model_data] 2 non-empty end node columns were created.
+[2026-01-09 15:38:25,486] INFO in sir3stoolkit.mantle.dataframes: [model_data] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
+[2026-01-09 15:38:25,486] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (9, 8)
+</pre></div></div>
+</div>
+</section>
+<section id="id1">
+<h2>Calculate<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[40]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pp.pipeflow(net)
+</pre></div>
+</div>
+</div>
+<section id="id2">
+<h3>View Results<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[41]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>net.res_junction
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[41]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>p_bar</th>
+      <th>t_k</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>98.417039</td>
+      <td>273.15</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>100.068190</td>
+      <td>273.15</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>101.000000</td>
+      <td>273.15</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>100.823662</td>
+      <td>273.15</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>98.417039</td>
+      <td>273.15</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>100.534095</td>
+      <td>273.15</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>99.991334</td>
+      <td>273.15</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>99.991334</td>
+      <td>273.15</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>100.064571</td>
+      <td>273.15</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[42]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>net.res_pipe
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[42]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>v_mean_m_per_s</th>
+      <th>p_from_bar</th>
+      <th>p_to_bar</th>
+      <th>t_from_k</th>
+      <th>t_to_k</th>
+      <th>t_outlet_k</th>
+      <th>mdot_from_kg_per_s</th>
+      <th>mdot_to_kg_per_s</th>
+      <th>vdot_m3_per_s</th>
+      <th>reynolds</th>
+      <th>lambda</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.956300</td>
+      <td>101.000000</td>
+      <td>100.823662</td>
+      <td>273.15</td>
+      <td>273.15</td>
+      <td>273.15</td>
+      <td>152.074654</td>
+      <td>-152.074654</td>
+      <td>0.152093</td>
+      <td>241084.757059</td>
+      <td>0.017356</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2.037427</td>
+      <td>100.064571</td>
+      <td>98.417039</td>
+      <td>273.15</td>
+      <td>273.15</td>
+      <td>273.15</td>
+      <td>100.000000</td>
+      <td>-100.000000</td>
+      <td>0.100012</td>
+      <td>285354.955734</td>
+      <td>0.019847</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2.037427</td>
+      <td>100.064571</td>
+      <td>98.417039</td>
+      <td>273.15</td>
+      <td>273.15</td>
+      <td>273.15</td>
+      <td>100.000000</td>
+      <td>-100.000000</td>
+      <td>0.100012</td>
+      <td>285354.955734</td>
+      <td>0.019847</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1.559043</td>
+      <td>101.000000</td>
+      <td>100.534095</td>
+      <td>273.15</td>
+      <td>273.15</td>
+      <td>273.15</td>
+      <td>247.925346</td>
+      <td>-247.925346</td>
+      <td>0.247955</td>
+      <td>393037.366793</td>
+      <td>0.017253</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1.559043</td>
+      <td>100.534095</td>
+      <td>100.068190</td>
+      <td>273.15</td>
+      <td>273.15</td>
+      <td>273.15</td>
+      <td>247.925346</td>
+      <td>-247.925346</td>
+      <td>0.247955</td>
+      <td>393037.366793</td>
+      <td>0.017253</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0.628836</td>
+      <td>100.068190</td>
+      <td>99.991334</td>
+      <td>273.15</td>
+      <td>273.15</td>
+      <td>273.15</td>
+      <td>100.000000</td>
+      <td>-100.000000</td>
+      <td>0.100012</td>
+      <td>158530.530963</td>
+      <td>0.017494</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0.628836</td>
+      <td>100.068190</td>
+      <td>99.991334</td>
+      <td>273.15</td>
+      <td>273.15</td>
+      <td>273.15</td>
+      <td>100.000000</td>
+      <td>-100.000000</td>
+      <td>0.100012</td>
+      <td>158530.530963</td>
+      <td>0.017494</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>3.098411</td>
+      <td>100.823662</td>
+      <td>100.064571</td>
+      <td>273.15</td>
+      <td>273.15</td>
+      <td>273.15</td>
+      <td>152.074654</td>
+      <td>-152.074654</td>
+      <td>0.152093</td>
+      <td>433952.562707</td>
+      <td>0.019770</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>-0.301372</td>
+      <td>100.064571</td>
+      <td>100.068190</td>
+      <td>273.15</td>
+      <td>273.15</td>
+      <td>273.15</td>
+      <td>-47.925346</td>
+      <td>47.925346</td>
+      <td>-0.047931</td>
+      <td>75976.304867</td>
+      <td>0.017933</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[43]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>net.res_sink
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[43]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>mdot_kg_per_s</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>100.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>100.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>100.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>100.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[44]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>net.res_ext_grid
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[44]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>mdot_kg_per_s</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>-400.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</section>
+</section>
+<section id="id3">
+<h2>Plot<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[45]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import plotly.express as px
+
+junctions = net.res_junction.copy()
+junctions[&quot;x&quot;] = net.junction_geodata[&quot;x&quot;]
+junctions[&quot;y&quot;] = net.junction_geodata[&quot;y&quot;]
+
+fig = px.scatter(
+    junctions,
+    x=&quot;x&quot;, y=&quot;y&quot;,
+    color=&quot;p_bar&quot;,
+    hover_data=[&quot;p_bar&quot;],
+    title=&quot;Junctions: Pressure and Temperature&quot;,
+    labels={&quot;p_bar&quot;: &quot;Pressure [bar]&quot;}
+)
+fig.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="admonition warning">
+<p>Data type cannot be displayed: application/vnd.plotly.v1+json</p>
+</div>
+</div>
+</div>
+<p>The above depiction is not displayed in the online documentation.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025 3S Consult GmbH.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
