@@ -20,8 +20,8 @@ The release notes indicate whether a version includes changes to the C# side and
 90-15 Quebec
 ------------
 
-Version 90.15.12 (TO BE RELEASED)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Version 90.15.12
+~~~~~~~~~~~~~~~~
 
 For SIR 3S Version: 90-15-00-22-Upd2
 
