@@ -20,13 +20,14 @@ The included networks illustrate typical topologies of SIR 3S models.
 Tutorials
 ---------
 
-These tutorials are designed to introduce new users to the functionalities of the SIR 3S Toolkit. Each class holding functions has its own section of tutorials. The sections come in pairs of a core class and its respective pure python mantle class. Every class has 50 tutorial slots assigned to it, therefore some jumps in the numbering occur. For collector classes every sub-class has 10 designated slots.
+These tutorials are designed to introduce new users to the functionalities of the SIR 3S Toolkit. 
 
 .. image:: _static/images/Toolkit_structure_core_mantle.png
    :alt: Toolkit Structure
    :align: right
    :width: 150px
 
+Each class holding functions has its own section of tutorials. The sections come in pairs of a core class and its respective pure python mantle class. Every class has 50 tutorial slots assigned to it, therefore some jumps in the numbering occur. For collector classes every sub-class has 10 designated slots.
 
 Each tutorial is available for **previewing** as a rendered notebook.
 
