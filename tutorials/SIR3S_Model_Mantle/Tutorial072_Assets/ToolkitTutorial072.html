@@ -97,7 +97,7 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r&quot;C:\3S\SIR 3S\SirGraf-90-15-00-20x64_Quebec-Upd1&quot; #change to local path
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r&quot;C:\3S\SIR 3S\SirGraf-90-15-00-22_Quebec-Upd2&quot; #change to local path
 </pre></div>
 </div>
 </div>
@@ -167,7 +167,7 @@ Initialization complete
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dbFilePath=r&quot;C:\Users\aUsername\3S\PT3S\PT3S\Examples\Example3.db3&quot;
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dbFilePath=r&quot;Toolkit_Tutorial72_Model.db3&quot;
 </pre></div>
 </div>
 </div>
@@ -194,24 +194,19 @@ Model is open for further operation
 </pre></div></div>
 </div>
 </section>
-<section id="Get-Data">
-<h1>Get Data<a class="headerlink" href="#Get-Data" title="Link to this heading"></a></h1>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<section id="Calculate-Model">
+<h1>Calculate Model<a class="headerlink" href="#Calculate-Model" title="Link to this heading"></a></h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.ExecCalculation(True)
 </pre></div>
 </div>
 </div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-Could not start Model Calculation: SirCalc Path &#39;C:\3S Consult\SIR3S-90-15-00-19-Quebec\SirCalc-90-15-02-20_Quebec\SirCalc.exe&#39; not found.
-</pre></div></div>
-</div>
+</section>
+<section id="Get-Data">
+<h1>Get Data<a class="headerlink" href="#Get-Data" title="Link to this heading"></a></h1>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
@@ -220,49 +215,149 @@ Could not start Model Calculation: SirCalc Path &#39;C:\3S Consult\SIR3S-90-15-0
 </pre></div>
 </div>
 </div>
-<div class="nboutput docutils container">
+<div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2026-01-18 22:35:34,457] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.AGSN_HydraulicProfile
-[2026-01-18 22:35:34,469] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieved 3 element(s) of element type ObjectTypes.AGSN_HydraulicProfile.
-[2026-01-18 22:35:34,495] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] No properties given → using ALL model_data properties for ObjectTypes.AGSN_HydraulicProfile.
-[2026-01-18 22:35:34,496] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 9 model_data properties.
-[2026-01-18 22:35:34,497] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving model_data properties [&#39;Name&#39;, &#39;Lfdnr&#39;, &#39;Aktiv&#39;, &#39;AllNodesAndLinks&#39;, &#39;ObjsString&#39;, &#39;MainWay&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;]...
-[2026-01-18 22:35:34,576] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (3, 10)
-[2026-01-18 22:35:34,583] INFO in sir3stoolkit.mantle.dataframes: Retrieving Hydraulic Profile with Lfdnr: 1.
-[2026-01-18 22:35:34,610] INFO in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df for element type: ObjectTypes.Pipe ...
-[2026-01-18 22:35:34,612] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_model_data for element type: ObjectTypes.Pipe ...
-[2026-01-18 22:35:34,613] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.Pipe
-[2026-01-18 22:35:34,619] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
-[2026-01-18 22:35:34,622] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 44 tks remain after filtering for given tks.
-[2026-01-18 22:35:34,625] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] No properties given → using ALL model_data properties for ObjectTypes.Pipe.
-[2026-01-18 22:35:34,629] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 46 model_data properties.
-[2026-01-18 22:35:34,631] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving model_data properties [&#39;Name&#39;, &#39;FkdtroRowd&#39;, &#39;Fkltgr&#39;, &#39;Fkstrasse&#39;, &#39;L&#39;, &#39;Lzu&#39;, &#39;Rau&#39;, &#39;Jlambs&#39;, &#39;Lambda0&#39;, &#39;Zein&#39;, &#39;Zaus&#39;, &#39;Zuml&#39;, &#39;Asoll&#39;, &#39;Indschall&#39;, &#39;Baujahr&#39;, &#39;Hal&#39;, &#39;Fkcont&#39;, &#39;Fk2lrohr&#39;, &#39;Beschreibung&#39;, &#39;Idreferenz&#39;, &#39;Iplanung&#39;, &#39;Kvr&#39;, &#39;LineWidthMM&#39;, &#39;DottedLine&#39;, &#39;DN&#39;, &#39;Di&#39;, &#39;KvrKlartext&#39;, &#39;HasClosedNSCHs&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;, &#39;Xkor&#39;, &#39;Ykor&#39;, &#39;GeometriesDiffer&#39;, &#39;bz.Fk&#39;, &#39;bz.Qsvb&#39;, &#39;bz.Irtrenn&#39;, &#39;bz.Leckstatus&#39;, &#39;bz.Leckstart&#39;, &#39;bz.Leckend&#39;, &#39;bz.Leckort&#39;, &#39;bz.Leckmenge&#39;, &#39;bz.Imptnz&#39;, &#39;bz.Zvlimptnz&#39;, &#39;bz.Kantenzv&#39;, &#39;bz.ITrennWithNSCH&#39;], geometry, end nodes...
-[2026-01-18 22:35:35,698] INFO in sir3stoolkit.mantle.dataframes: [model_data] 2 non-empty end node columns were created.
-[2026-01-18 22:35:35,900] INFO in sir3stoolkit.mantle.dataframes: [model_data] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
-[2026-01-18 22:35:35,900] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (44, 50)
-[2026-01-18 22:35:35,905] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_results for element type: ObjectTypes.Pipe ...
-[2026-01-18 22:35:35,912] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
-[2026-01-18 22:35:35,928] WARNING in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Timestamp  is not valid (SIR3S_Model.GetTimeStamps()). It will be excluded.
-[2026-01-18 22:35:35,930] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 0 valid timestamp(s) will be used.
-[2026-01-18 22:35:35,930] WARNING in sir3stoolkit.mantle.dataframes: [results] No valid timestamps. Returning empty dataframe.
-[2026-01-18 22:35:35,934] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Merging df_model_data with df_results for element type: ObjectTypes.Pipe ...
-[2026-01-18 22:35:35,935] ERROR in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Error Generating df for element type: ObjectTypes.Pipe: Too many levels: Index has only 1 level, not 2
-ERROR:root:Error retrieving Hydraulic Profile with Lfdnr: 1.
+[2026-02-12 18:09:20,837] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.AGSN_HydraulicProfile
+[2026-02-12 18:09:20,848] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieved 3 element(s) of element type ObjectTypes.AGSN_HydraulicProfile.
+[2026-02-12 18:09:20,878] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] No properties given → using ALL model_data properties for ObjectTypes.AGSN_HydraulicProfile.
+[2026-02-12 18:09:20,881] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 9 model_data properties.
+[2026-02-12 18:09:20,887] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving model_data properties [&#39;Name&#39;, &#39;Lfdnr&#39;, &#39;Aktiv&#39;, &#39;AllNodesAndLinks&#39;, &#39;ObjsString&#39;, &#39;MainWay&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;]...
+[2026-02-12 18:09:20,958] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (3, 10)
+[2026-02-12 18:09:20,965] INFO in sir3stoolkit.mantle.dataframes: Retrieving Hydraulic Profile with Lfdnr: 1.
+[2026-02-12 18:09:21,003] INFO in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df for element type: ObjectTypes.Pipe ...
+[2026-02-12 18:09:21,006] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_model_data for element type: ObjectTypes.Pipe ...
+[2026-02-12 18:09:21,007] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.Pipe
+[2026-02-12 18:09:21,013] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2026-02-12 18:09:21,015] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 44 tks remain after filtering for given tks.
+[2026-02-12 18:09:21,020] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] No properties given → using ALL model_data properties for ObjectTypes.Pipe.
+[2026-02-12 18:09:21,023] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 46 model_data properties.
+[2026-02-12 18:09:21,024] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving model_data properties [&#39;Name&#39;, &#39;FkdtroRowd&#39;, &#39;Fkltgr&#39;, &#39;Fkstrasse&#39;, &#39;L&#39;, &#39;Lzu&#39;, &#39;Rau&#39;, &#39;Jlambs&#39;, &#39;Lambda0&#39;, &#39;Zein&#39;, &#39;Zaus&#39;, &#39;Zuml&#39;, &#39;Asoll&#39;, &#39;Indschall&#39;, &#39;Baujahr&#39;, &#39;Hal&#39;, &#39;Fkcont&#39;, &#39;Fk2lrohr&#39;, &#39;Beschreibung&#39;, &#39;Idreferenz&#39;, &#39;Iplanung&#39;, &#39;Kvr&#39;, &#39;LineWidthMM&#39;, &#39;DottedLine&#39;, &#39;DN&#39;, &#39;Di&#39;, &#39;KvrKlartext&#39;, &#39;HasClosedNSCHs&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;, &#39;Xkor&#39;, &#39;Ykor&#39;, &#39;GeometriesDiffer&#39;, &#39;bz.Fk&#39;, &#39;bz.Qsvb&#39;, &#39;bz.Irtrenn&#39;, &#39;bz.Leckstatus&#39;, &#39;bz.Leckstart&#39;, &#39;bz.Leckend&#39;, &#39;bz.Leckort&#39;, &#39;bz.Leckmenge&#39;, &#39;bz.Imptnz&#39;, &#39;bz.Zvlimptnz&#39;, &#39;bz.Kantenzv&#39;, &#39;bz.ITrennWithNSCH&#39;], geometry, end nodes...
+[2026-02-12 18:09:22,210] INFO in sir3stoolkit.mantle.dataframes: [model_data] 2 non-empty end node columns were created.
+[2026-02-12 18:09:22,428] INFO in sir3stoolkit.mantle.dataframes: [model_data] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
+[2026-02-12 18:09:22,428] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (44, 50)
+[2026-02-12 18:09:22,434] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_results for element type: ObjectTypes.Pipe ...
+[2026-02-12 18:09:22,609] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
+[2026-02-12 18:09:22,777] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2023-02-13 00:00:00.000 +01:00 is used
+[2026-02-12 18:09:22,782] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
+[2026-02-12 18:09:22,785] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2026-02-12 18:09:22,788] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 44 tks remain after filtering for given tks.
+[2026-02-12 18:09:22,793] INFO in sir3stoolkit.mantle.dataframes: [results] Using 82 result properties.
+[2026-02-12 18:09:22,835] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2026-02-12 18:09:26,275] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 3608)
+[2026-02-12 18:09:26,279] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Merging df_model_data with df_results for element type: ObjectTypes.Pipe ...
+[2026-02-12 18:09:26,437] INFO in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df for element type: ObjectTypes.Pipe ...
+[2026-02-12 18:09:26,439] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_model_data for element type: ObjectTypes.Pipe ...
+[2026-02-12 18:09:26,442] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.Pipe
+[2026-02-12 18:09:26,445] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2026-02-12 18:09:26,453] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 44 tks remain after filtering for given tks.
+[2026-02-12 18:09:26,460] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] No properties given → using ALL model_data properties for ObjectTypes.Pipe.
+[2026-02-12 18:09:26,462] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 46 model_data properties.
+[2026-02-12 18:09:26,463] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving model_data properties [&#39;Name&#39;, &#39;FkdtroRowd&#39;, &#39;Fkltgr&#39;, &#39;Fkstrasse&#39;, &#39;L&#39;, &#39;Lzu&#39;, &#39;Rau&#39;, &#39;Jlambs&#39;, &#39;Lambda0&#39;, &#39;Zein&#39;, &#39;Zaus&#39;, &#39;Zuml&#39;, &#39;Asoll&#39;, &#39;Indschall&#39;, &#39;Baujahr&#39;, &#39;Hal&#39;, &#39;Fkcont&#39;, &#39;Fk2lrohr&#39;, &#39;Beschreibung&#39;, &#39;Idreferenz&#39;, &#39;Iplanung&#39;, &#39;Kvr&#39;, &#39;LineWidthMM&#39;, &#39;DottedLine&#39;, &#39;DN&#39;, &#39;Di&#39;, &#39;KvrKlartext&#39;, &#39;HasClosedNSCHs&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;, &#39;Xkor&#39;, &#39;Ykor&#39;, &#39;GeometriesDiffer&#39;, &#39;bz.Fk&#39;, &#39;bz.Qsvb&#39;, &#39;bz.Irtrenn&#39;, &#39;bz.Leckstatus&#39;, &#39;bz.Leckstart&#39;, &#39;bz.Leckend&#39;, &#39;bz.Leckort&#39;, &#39;bz.Leckmenge&#39;, &#39;bz.Imptnz&#39;, &#39;bz.Zvlimptnz&#39;, &#39;bz.Kantenzv&#39;, &#39;bz.ITrennWithNSCH&#39;], geometry, end nodes...
+[2026-02-12 18:09:27,056] INFO in sir3stoolkit.mantle.dataframes: [model_data] 2 non-empty end node columns were created.
+[2026-02-12 18:09:27,260] INFO in sir3stoolkit.mantle.dataframes: [model_data] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
+[2026-02-12 18:09:27,268] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (44, 50)
+[2026-02-12 18:09:27,270] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_results for element type: ObjectTypes.Pipe ...
+[2026-02-12 18:09:27,441] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
+[2026-02-12 18:09:27,610] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2023-02-13 00:00:00.000 +01:00 is used
+[2026-02-12 18:09:27,611] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
+[2026-02-12 18:09:27,614] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2026-02-12 18:09:27,618] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 44 tks remain after filtering for given tks.
+[2026-02-12 18:09:27,624] INFO in sir3stoolkit.mantle.dataframes: [results] Using 82 result properties.
+[2026-02-12 18:09:27,671] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2026-02-12 18:09:29,412] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 3608)
+[2026-02-12 18:09:29,414] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Merging df_model_data with df_results for element type: ObjectTypes.Pipe ...
+[2026-02-12 18:09:29,439] INFO in sir3stoolkit.mantle.dataframes: Retrieving Hydraulic Profile with Lfdnr: 2.
+[2026-02-12 18:09:29,441] INFO in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df for element type: ObjectTypes.Pipe ...
+[2026-02-12 18:09:29,442] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_model_data for element type: ObjectTypes.Pipe ...
+[2026-02-12 18:09:29,444] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.Pipe
+[2026-02-12 18:09:29,448] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2026-02-12 18:09:29,449] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 44 tks remain after filtering for given tks.
+[2026-02-12 18:09:29,454] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] No properties given → using ALL model_data properties for ObjectTypes.Pipe.
+[2026-02-12 18:09:29,456] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 46 model_data properties.
+[2026-02-12 18:09:29,458] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving model_data properties [&#39;Name&#39;, &#39;FkdtroRowd&#39;, &#39;Fkltgr&#39;, &#39;Fkstrasse&#39;, &#39;L&#39;, &#39;Lzu&#39;, &#39;Rau&#39;, &#39;Jlambs&#39;, &#39;Lambda0&#39;, &#39;Zein&#39;, &#39;Zaus&#39;, &#39;Zuml&#39;, &#39;Asoll&#39;, &#39;Indschall&#39;, &#39;Baujahr&#39;, &#39;Hal&#39;, &#39;Fkcont&#39;, &#39;Fk2lrohr&#39;, &#39;Beschreibung&#39;, &#39;Idreferenz&#39;, &#39;Iplanung&#39;, &#39;Kvr&#39;, &#39;LineWidthMM&#39;, &#39;DottedLine&#39;, &#39;DN&#39;, &#39;Di&#39;, &#39;KvrKlartext&#39;, &#39;HasClosedNSCHs&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;, &#39;Xkor&#39;, &#39;Ykor&#39;, &#39;GeometriesDiffer&#39;, &#39;bz.Fk&#39;, &#39;bz.Qsvb&#39;, &#39;bz.Irtrenn&#39;, &#39;bz.Leckstatus&#39;, &#39;bz.Leckstart&#39;, &#39;bz.Leckend&#39;, &#39;bz.Leckort&#39;, &#39;bz.Leckmenge&#39;, &#39;bz.Imptnz&#39;, &#39;bz.Zvlimptnz&#39;, &#39;bz.Kantenzv&#39;, &#39;bz.ITrennWithNSCH&#39;], geometry, end nodes...
+[2026-02-12 18:09:29,702] INFO in sir3stoolkit.mantle.dataframes: [model_data] 2 non-empty end node columns were created.
+[2026-02-12 18:09:29,832] INFO in sir3stoolkit.mantle.dataframes: [model_data] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
+[2026-02-12 18:09:29,832] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (44, 50)
+[2026-02-12 18:09:29,835] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_results for element type: ObjectTypes.Pipe ...
+[2026-02-12 18:09:29,940] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
+[2026-02-12 18:09:30,076] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2023-02-13 00:00:00.000 +01:00 is used
+[2026-02-12 18:09:30,076] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
+[2026-02-12 18:09:30,080] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2026-02-12 18:09:30,082] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 44 tks remain after filtering for given tks.
+[2026-02-12 18:09:30,085] INFO in sir3stoolkit.mantle.dataframes: [results] Using 82 result properties.
+[2026-02-12 18:09:30,117] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2026-02-12 18:09:32,007] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 3608)
+[2026-02-12 18:09:32,009] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Merging df_model_data with df_results for element type: ObjectTypes.Pipe ...
+[2026-02-12 18:09:32,028] INFO in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df for element type: ObjectTypes.Pipe ...
+[2026-02-12 18:09:32,029] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_model_data for element type: ObjectTypes.Pipe ...
+[2026-02-12 18:09:32,031] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.Pipe
+[2026-02-12 18:09:32,037] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2026-02-12 18:09:32,039] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 44 tks remain after filtering for given tks.
+[2026-02-12 18:09:32,043] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] No properties given → using ALL model_data properties for ObjectTypes.Pipe.
+[2026-02-12 18:09:32,043] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 46 model_data properties.
+[2026-02-12 18:09:32,046] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving model_data properties [&#39;Name&#39;, &#39;FkdtroRowd&#39;, &#39;Fkltgr&#39;, &#39;Fkstrasse&#39;, &#39;L&#39;, &#39;Lzu&#39;, &#39;Rau&#39;, &#39;Jlambs&#39;, &#39;Lambda0&#39;, &#39;Zein&#39;, &#39;Zaus&#39;, &#39;Zuml&#39;, &#39;Asoll&#39;, &#39;Indschall&#39;, &#39;Baujahr&#39;, &#39;Hal&#39;, &#39;Fkcont&#39;, &#39;Fk2lrohr&#39;, &#39;Beschreibung&#39;, &#39;Idreferenz&#39;, &#39;Iplanung&#39;, &#39;Kvr&#39;, &#39;LineWidthMM&#39;, &#39;DottedLine&#39;, &#39;DN&#39;, &#39;Di&#39;, &#39;KvrKlartext&#39;, &#39;HasClosedNSCHs&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;, &#39;Xkor&#39;, &#39;Ykor&#39;, &#39;GeometriesDiffer&#39;, &#39;bz.Fk&#39;, &#39;bz.Qsvb&#39;, &#39;bz.Irtrenn&#39;, &#39;bz.Leckstatus&#39;, &#39;bz.Leckstart&#39;, &#39;bz.Leckend&#39;, &#39;bz.Leckort&#39;, &#39;bz.Leckmenge&#39;, &#39;bz.Imptnz&#39;, &#39;bz.Zvlimptnz&#39;, &#39;bz.Kantenzv&#39;, &#39;bz.ITrennWithNSCH&#39;], geometry, end nodes...
+[2026-02-12 18:09:32,260] INFO in sir3stoolkit.mantle.dataframes: [model_data] 2 non-empty end node columns were created.
+[2026-02-12 18:09:32,376] INFO in sir3stoolkit.mantle.dataframes: [model_data] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
+[2026-02-12 18:09:32,376] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (44, 50)
+[2026-02-12 18:09:32,376] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_results for element type: ObjectTypes.Pipe ...
+[2026-02-12 18:09:32,473] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
+[2026-02-12 18:09:32,566] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2023-02-13 00:00:00.000 +01:00 is used
+[2026-02-12 18:09:32,567] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
+[2026-02-12 18:09:32,571] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2026-02-12 18:09:32,572] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 44 tks remain after filtering for given tks.
+[2026-02-12 18:09:32,574] INFO in sir3stoolkit.mantle.dataframes: [results] Using 82 result properties.
+[2026-02-12 18:09:32,600] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2026-02-12 18:09:33,727] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 3608)
+[2026-02-12 18:09:33,727] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Merging df_model_data with df_results for element type: ObjectTypes.Pipe ...
+[2026-02-12 18:09:33,743] INFO in sir3stoolkit.mantle.dataframes: Retrieving Hydraulic Profile with Lfdnr: 3.
+[2026-02-12 18:09:33,743] INFO in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df for element type: ObjectTypes.Pipe ...
+[2026-02-12 18:09:33,747] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_model_data for element type: ObjectTypes.Pipe ...
+[2026-02-12 18:09:33,749] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.Pipe
+[2026-02-12 18:09:33,752] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2026-02-12 18:09:33,753] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 44 tks remain after filtering for given tks.
+[2026-02-12 18:09:33,755] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] No properties given → using ALL model_data properties for ObjectTypes.Pipe.
+[2026-02-12 18:09:33,756] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 46 model_data properties.
+[2026-02-12 18:09:33,757] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving model_data properties [&#39;Name&#39;, &#39;FkdtroRowd&#39;, &#39;Fkltgr&#39;, &#39;Fkstrasse&#39;, &#39;L&#39;, &#39;Lzu&#39;, &#39;Rau&#39;, &#39;Jlambs&#39;, &#39;Lambda0&#39;, &#39;Zein&#39;, &#39;Zaus&#39;, &#39;Zuml&#39;, &#39;Asoll&#39;, &#39;Indschall&#39;, &#39;Baujahr&#39;, &#39;Hal&#39;, &#39;Fkcont&#39;, &#39;Fk2lrohr&#39;, &#39;Beschreibung&#39;, &#39;Idreferenz&#39;, &#39;Iplanung&#39;, &#39;Kvr&#39;, &#39;LineWidthMM&#39;, &#39;DottedLine&#39;, &#39;DN&#39;, &#39;Di&#39;, &#39;KvrKlartext&#39;, &#39;HasClosedNSCHs&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;, &#39;Xkor&#39;, &#39;Ykor&#39;, &#39;GeometriesDiffer&#39;, &#39;bz.Fk&#39;, &#39;bz.Qsvb&#39;, &#39;bz.Irtrenn&#39;, &#39;bz.Leckstatus&#39;, &#39;bz.Leckstart&#39;, &#39;bz.Leckend&#39;, &#39;bz.Leckort&#39;, &#39;bz.Leckmenge&#39;, &#39;bz.Imptnz&#39;, &#39;bz.Zvlimptnz&#39;, &#39;bz.Kantenzv&#39;, &#39;bz.ITrennWithNSCH&#39;], geometry, end nodes...
+[2026-02-12 18:09:33,893] INFO in sir3stoolkit.mantle.dataframes: [model_data] 2 non-empty end node columns were created.
+[2026-02-12 18:09:33,976] INFO in sir3stoolkit.mantle.dataframes: [model_data] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
+[2026-02-12 18:09:33,976] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (44, 50)
+[2026-02-12 18:09:33,980] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_results for element type: ObjectTypes.Pipe ...
+[2026-02-12 18:09:34,053] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
+[2026-02-12 18:09:34,169] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2023-02-13 00:00:00.000 +01:00 is used
+[2026-02-12 18:09:34,169] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
+[2026-02-12 18:09:34,172] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2026-02-12 18:09:34,173] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 44 tks remain after filtering for given tks.
+[2026-02-12 18:09:34,176] INFO in sir3stoolkit.mantle.dataframes: [results] Using 82 result properties.
+[2026-02-12 18:09:34,214] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2026-02-12 18:09:35,211] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 3608)
+[2026-02-12 18:09:35,215] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Merging df_model_data with df_results for element type: ObjectTypes.Pipe ...
+[2026-02-12 18:09:35,224] INFO in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df for element type: ObjectTypes.Pipe ...
+[2026-02-12 18:09:35,226] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_model_data for element type: ObjectTypes.Pipe ...
+[2026-02-12 18:09:35,226] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.Pipe
+[2026-02-12 18:09:35,229] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2026-02-12 18:09:35,232] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 44 tks remain after filtering for given tks.
+[2026-02-12 18:09:35,234] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] No properties given → using ALL model_data properties for ObjectTypes.Pipe.
+[2026-02-12 18:09:35,235] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 46 model_data properties.
+[2026-02-12 18:09:35,236] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving model_data properties [&#39;Name&#39;, &#39;FkdtroRowd&#39;, &#39;Fkltgr&#39;, &#39;Fkstrasse&#39;, &#39;L&#39;, &#39;Lzu&#39;, &#39;Rau&#39;, &#39;Jlambs&#39;, &#39;Lambda0&#39;, &#39;Zein&#39;, &#39;Zaus&#39;, &#39;Zuml&#39;, &#39;Asoll&#39;, &#39;Indschall&#39;, &#39;Baujahr&#39;, &#39;Hal&#39;, &#39;Fkcont&#39;, &#39;Fk2lrohr&#39;, &#39;Beschreibung&#39;, &#39;Idreferenz&#39;, &#39;Iplanung&#39;, &#39;Kvr&#39;, &#39;LineWidthMM&#39;, &#39;DottedLine&#39;, &#39;DN&#39;, &#39;Di&#39;, &#39;KvrKlartext&#39;, &#39;HasClosedNSCHs&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;, &#39;Xkor&#39;, &#39;Ykor&#39;, &#39;GeometriesDiffer&#39;, &#39;bz.Fk&#39;, &#39;bz.Qsvb&#39;, &#39;bz.Irtrenn&#39;, &#39;bz.Leckstatus&#39;, &#39;bz.Leckstart&#39;, &#39;bz.Leckend&#39;, &#39;bz.Leckort&#39;, &#39;bz.Leckmenge&#39;, &#39;bz.Imptnz&#39;, &#39;bz.Zvlimptnz&#39;, &#39;bz.Kantenzv&#39;, &#39;bz.ITrennWithNSCH&#39;], geometry, end nodes...
+[2026-02-12 18:09:35,369] INFO in sir3stoolkit.mantle.dataframes: [model_data] 2 non-empty end node columns were created.
+[2026-02-12 18:09:35,450] INFO in sir3stoolkit.mantle.dataframes: [model_data] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
+[2026-02-12 18:09:35,451] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (44, 50)
+[2026-02-12 18:09:35,452] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_results for element type: ObjectTypes.Pipe ...
+[2026-02-12 18:09:35,528] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
+[2026-02-12 18:09:35,597] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2023-02-13 00:00:00.000 +01:00 is used
+[2026-02-12 18:09:35,600] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
+[2026-02-12 18:09:35,603] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2026-02-12 18:09:35,605] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 44 tks remain after filtering for given tks.
+[2026-02-12 18:09:35,608] INFO in sir3stoolkit.mantle.dataframes: [results] Using 82 result properties.
+[2026-02-12 18:09:35,637] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2026-02-12 18:09:36,506] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 3608)
+[2026-02-12 18:09:36,506] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Merging df_model_data with df_results for element type: ObjectTypes.Pipe ...
 </pre></div></div>
 </div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-Error :
-Error :
-</pre></div></div>
-</div>
-<div class="nbinput docutils container">
+<div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
@@ -270,21 +365,8 @@ Error :
 </pre></div>
 </div>
 </div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-<span class="ansi-red-intense-fg ansi-bold">---------------------------------------------------------------------------</span>
-<span class="ansi-red-intense-fg ansi-bold">IndexError</span>                                Traceback (most recent call last)
-Cell <span class="ansi-green-intense-fg ansi-bold">In[11], line 1</span>
-<span class="ansi-green-intense-fg ansi-bold">----&gt; 1</span> df<span style="color: rgb(98,98,98)">=</span>dfs[<span style="color: rgb(98,98,98)">0</span>]
-
-<span class="ansi-red-intense-fg ansi-bold">IndexError</span>: list index out of range
-</pre></div></div>
-</div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_vec=s3s.add_interior_points_as_multiindex(df)
@@ -292,7 +374,7 @@ Cell <span class="ansi-green-intense-fg ansi-bold">In[11], line 1</span>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_vec[(&quot;l_sum&quot;, -1)]
@@ -300,7 +382,8 @@ Cell <span class="ansi-green-intense-fg ansi-bold">In[11], line 1</span>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
@@ -355,7 +438,7 @@ Name: (l_sum, -1), dtype: float64
 <section id="Plot">
 <h1>Plot<a class="headerlink" href="#Plot" title="Link to this heading"></a></h1>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><br/><span></span>from __future__ import annotations
@@ -738,7 +821,7 @@ def plot_time_curves(
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetResultProperties_from_elementType(s3s.ObjectTypes.Pipe,False)
@@ -746,7 +829,8 @@ def plot_time_curves(
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
@@ -835,7 +919,7 @@ def plot_time_curves(
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_vec.head(3)
@@ -843,7 +927,8 @@ def plot_time_curves(
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
 <div>
@@ -1302,9 +1387,9 @@ def plot_time_curves(
       <td>99999.0</td>
       <td>99999.0</td>
       <td>99999.0</td>
-      <td>79.74764</td>
-      <td>79.74764</td>
-      <td>79.74764</td>
+      <td>79.74765</td>
+      <td>79.74765</td>
+      <td>79.74765</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -1317,7 +1402,7 @@ def plot_time_curves(
       <td>0.701074</td>
       <td>0.002345</td>
       <td>99999.0</td>
-      <td>5.800678</td>
+      <td>5.800679</td>
       <td>99999.0</td>
       <td>5.878785</td>
       <td>5.839730</td>
@@ -1500,7 +1585,7 @@ def plot_time_curves(
       <td>99999.0</td>
       <td>99999.0</td>
       <td>0.003947</td>
-      <td>43.5808</td>
+      <td>43.58079</td>
       <td>0.54515</td>
       <td>99999.0</td>
       <td>99999.0</td>
@@ -1523,9 +1608,9 @@ def plot_time_curves(
       <td>99999.0</td>
       <td>99999.0</td>
       <td>99999.0</td>
-      <td>79.74764</td>
-      <td>79.74764</td>
-      <td>79.74764</td>
+      <td>79.74765</td>
+      <td>79.74765</td>
+      <td>79.74765</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -1596,7 +1681,7 @@ def plot_time_curves(
       <td>NaN</td>
       <td>NaN</td>
       <td>0</td>
-      <td>6.254474</td>
+      <td>6.254475</td>
       <td>12.50895</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -1744,8 +1829,8 @@ def plot_time_curves(
       <td>99999.0</td>
       <td>99999.0</td>
       <td>99999.0</td>
-      <td>-79.74764</td>
-      <td>-79.74764</td>
+      <td>-79.74765</td>
+      <td>-79.74765</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -1884,7 +1969,7 @@ def plot_time_curves(
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fig, axes, used = plot_time_curves(
@@ -1933,11 +2018,11 @@ def plot_time_curves(
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../../_images/tutorials_SIR3S_Model_Mantle_Tutorial072_Assets_ToolkitTutorial072_27_0.png" src="../../../_images/tutorials_SIR3S_Model_Mantle_Tutorial072_Assets_ToolkitTutorial072_27_0.png" />
+<img alt="../../../_images/tutorials_SIR3S_Model_Mantle_Tutorial072_Assets_ToolkitTutorial072_28_0.png" src="../../../_images/tutorials_SIR3S_Model_Mantle_Tutorial072_Assets_ToolkitTutorial072_28_0.png" />
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>1/0
@@ -2113,7 +2198,7 @@ Cell <span class="ansi-green-intense-fg ansi-bold">In[22], line 9</span>, in <sp
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../../_images/tutorials_SIR3S_Model_Mantle_Tutorial072_Assets_ToolkitTutorial072_33_1.png" src="../../../_images/tutorials_SIR3S_Model_Mantle_Tutorial072_Assets_ToolkitTutorial072_33_1.png" />
+<img alt="../../../_images/tutorials_SIR3S_Model_Mantle_Tutorial072_Assets_ToolkitTutorial072_34_1.png" src="../../../_images/tutorials_SIR3S_Model_Mantle_Tutorial072_Assets_ToolkitTutorial072_34_1.png" />
 </div>
 </div>
 <p>…</p>

@@ -94,7 +94,7 @@
 <section id="SIR-3S-Installation">
 <h1>SIR 3S Installation<a class="headerlink" href="#SIR-3S-Installation" title="Link to this heading"></a></h1>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r&quot;C:\3S\SIR 3S\SirGraf-90-15-00-22_Quebec-Upd2&quot; #change to local path
@@ -105,7 +105,7 @@
 <section id="Imports">
 <h1>Imports<a class="headerlink" href="#Imports" title="Link to this heading"></a></h1>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sir3stoolkit.core import wrapper
@@ -113,7 +113,7 @@
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sir3stoolkit.mantle import mantle
@@ -122,7 +122,7 @@
 </div>
 <p>The wrapper package has to be initialized with reference to a SIR 3S (SirGraf) installation.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>wrapper.Initialize_Toolkit(SIR3S_SIRGRAF_DIR)
@@ -132,7 +132,7 @@
 <section id="Additional-imports">
 <h2>Additional imports<a class="headerlink" href="#Additional-imports" title="Link to this heading"></a></h2>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import os
@@ -148,7 +148,7 @@ import contextily as cx
 <section id="Initialization">
 <h1>Initialization<a class="headerlink" href="#Initialization" title="Link to this heading"></a></h1>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s = mantle.SIR3S_Model_Mantle()
@@ -167,15 +167,15 @@ Initialization complete
 <section id="Open-Model">
 <h1>Open Model<a class="headerlink" href="#Open-Model" title="Link to this heading"></a></h1>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dbFilePath=r&quot;C:\Users\aUsername\3S\PT3S\PT3S\Examples\Example5.db3&quot;
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dbFilePath=r&quot;ToolkitTutorial073.db3&quot;
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.OpenModel(dbName=dbFilePath,
@@ -202,7 +202,7 @@ Model is open for further operation
 <section id="District-Heating-consumers">
 <h2>District Heating consumers<a class="headerlink" href="#District-Heating-consumers" title="Link to this heading"></a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_district_heating_consumer_model_data = s3s.generate_element_model_data_dataframe(s3s.ObjectTypes.DistrictHeatingConsumer
@@ -216,16 +216,16 @@ Model is open for further operation
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2026-02-12 16:20:57,477] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.DistrictHeatingConsumer
-[2026-02-12 16:20:57,483] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieved 656 element(s) of element type ObjectTypes.DistrictHeatingConsumer.
-[2026-02-12 16:20:57,499] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 0 model_data properties.
-[2026-02-12 16:20:57,499] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving geometry...
-[2026-02-12 16:20:57,564] WARNING in sir3stoolkit.mantle.dataframes: [model_data] Spatial Reference Identifier (SRID) not defined in model. DataFrame cannot be transformed to GeoDataFrame but geometry column can be created independently of SRID. Returning regular DataFrame with a geometry column.
-[2026-02-12 16:20:57,565] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (656, 2)
+[2026-02-12 18:11:18,046] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.DistrictHeatingConsumer
+[2026-02-12 18:11:18,061] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieved 656 element(s) of element type ObjectTypes.DistrictHeatingConsumer.
+[2026-02-12 18:11:18,074] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 0 model_data properties.
+[2026-02-12 18:11:18,075] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving geometry...
+[2026-02-12 18:11:18,154] WARNING in sir3stoolkit.mantle.dataframes: [model_data] Spatial Reference Identifier (SRID) not defined in model. DataFrame cannot be transformed to GeoDataFrame but geometry column can be created independently of SRID. Returning regular DataFrame with a geometry column.
+[2026-02-12 18:11:18,154] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (656, 2)
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_district_heating_consumer_results=s3s.generate_element_results_dataframe(element_type=s3s.ObjectTypes.DistrictHeatingConsumer
@@ -239,17 +239,17 @@ Model is open for further operation
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2026-02-12 16:20:57,576] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.DistrictHeatingConsumer
-[2026-02-12 16:20:57,824] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2025-09-24 00:00:00.000 +02:00 is used
-[2026-02-12 16:20:57,824] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
-[2026-02-12 16:20:57,826] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 656 element(s) of element type ObjectTypes.DistrictHeatingConsumer.
-[2026-02-12 16:20:57,829] INFO in sir3stoolkit.mantle.dataframes: [results] Using 1 result properties.
-[2026-02-12 16:20:58,236] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
-[2026-02-12 16:20:58,367] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 656)
+[2026-02-12 18:11:18,170] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.DistrictHeatingConsumer
+[2026-02-12 18:11:18,410] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2025-09-24 00:00:00.000 +02:00 is used
+[2026-02-12 18:11:18,420] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
+[2026-02-12 18:11:18,422] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 656 element(s) of element type ObjectTypes.DistrictHeatingConsumer.
+[2026-02-12 18:11:18,423] INFO in sir3stoolkit.mantle.dataframes: [results] Using 1 result properties.
+[2026-02-12 18:11:18,818] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2026-02-12 18:11:18,958] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 656)
 </pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_district_heating_consumer_results.columns = df_district_heating_consumer_results.columns.droplevel([1, 2])
@@ -262,7 +262,7 @@ df_district_heating_consumer = df_district_heating_consumer_model_data.merge(on=
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_district_heating_consumer.head(3)
@@ -270,7 +270,7 @@ df_district_heating_consumer = df_district_heating_consumer_model_data.merge(on=
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -324,7 +324,7 @@ df_district_heating_consumer = df_district_heating_consumer_model_data.merge(on=
 <section id="Pipes">
 <h2>Pipes<a class="headerlink" href="#Pipes" title="Link to this heading"></a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_model_data=s3s.generate_element_model_data_dataframe(s3s.ObjectTypes.Pipe
@@ -338,16 +338,16 @@ df_district_heating_consumer = df_district_heating_consumer_model_data.merge(on=
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2026-02-12 16:20:58,428] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.Pipe
-[2026-02-12 16:20:58,432] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieved 1672 element(s) of element type ObjectTypes.Pipe.
-[2026-02-12 16:20:58,434] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 1 model_data properties.
-[2026-02-12 16:20:58,434] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving model_data properties [&#39;DN&#39;], geometry...
-[2026-02-12 16:20:58,694] WARNING in sir3stoolkit.mantle.dataframes: [model_data] Spatial Reference Identifier (SRID) not defined in model. DataFrame cannot be transformed to GeoDataFrame but geometry column can be created independently of SRID. Returning regular DataFrame with a geometry column.
-[2026-02-12 16:20:58,694] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (1672, 3)
+[2026-02-12 18:11:19,033] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.Pipe
+[2026-02-12 18:11:19,037] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieved 1672 element(s) of element type ObjectTypes.Pipe.
+[2026-02-12 18:11:19,040] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 1 model_data properties.
+[2026-02-12 18:11:19,041] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving model_data properties [&#39;DN&#39;], geometry...
+[2026-02-12 18:11:19,277] WARNING in sir3stoolkit.mantle.dataframes: [model_data] Spatial Reference Identifier (SRID) not defined in model. DataFrame cannot be transformed to GeoDataFrame but geometry column can be created independently of SRID. Returning regular DataFrame with a geometry column.
+[2026-02-12 18:11:19,277] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (1672, 3)
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_results=s3s.generate_element_results_dataframe(element_type=s3s.ObjectTypes.Pipe
@@ -361,17 +361,17 @@ df_district_heating_consumer = df_district_heating_consumer_model_data.merge(on=
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2026-02-12 16:20:58,714] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
-[2026-02-12 16:20:58,926] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2025-09-24 00:00:00.000 +02:00 is used
-[2026-02-12 16:20:58,928] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
-[2026-02-12 16:20:58,931] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 1672 element(s) of element type ObjectTypes.Pipe.
-[2026-02-12 16:20:58,932] INFO in sir3stoolkit.mantle.dataframes: [results] Using 1 result properties.
-[2026-02-12 16:20:59,011] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
-[2026-02-12 16:20:59,506] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 1672)
+[2026-02-12 18:11:19,293] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
+[2026-02-12 18:11:19,499] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2025-09-24 00:00:00.000 +02:00 is used
+[2026-02-12 18:11:19,502] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
+[2026-02-12 18:11:19,506] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 1672 element(s) of element type ObjectTypes.Pipe.
+[2026-02-12 18:11:19,507] INFO in sir3stoolkit.mantle.dataframes: [results] Using 1 result properties.
+[2026-02-12 18:11:19,583] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2026-02-12 18:11:19,991] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 1672)
 </pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_results.columns = df_pipes_results.columns.droplevel([1, 2])
@@ -384,7 +384,7 @@ df_pipes = df_pipes_model_data.merge(on=&quot;tk&quot;,
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes[&#39;QMAVAbs&#39;] = df_pipes[&#39;QMAV&#39;].abs()
@@ -392,7 +392,7 @@ df_pipes = df_pipes_model_data.merge(on=&quot;tk&quot;,
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes.head(3)
@@ -400,7 +400,7 @@ df_pipes = df_pipes_model_data.merge(on=&quot;tk&quot;,
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -465,7 +465,7 @@ df_pipes = df_pipes_model_data.merge(on=&quot;tk&quot;,
 <p><a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.plotting.SIR3S_Model_Plotting.plot_node_layer">plot_node_layer()</a></p>
 <p><a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.plotting.SIR3S_Model_Plotting.plot_pipe_layer">plot_pipe_layer</a></p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def plot_Result_ncd(df_pipes, df_district_heating_consumer, axTitle=&#39;ncd&#39;):
@@ -529,7 +529,7 @@ df_pipes = df_pipes_model_data.merge(on=&quot;tk&quot;,
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plot_Result_ncd(df_pipes, df_district_heating_consumer)
@@ -541,12 +541,12 @@ df_pipes = df_pipes_model_data.merge(on=&quot;tk&quot;,
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2026-02-12 16:20:59,618] INFO in sir3stoolkit.mantle.plotting: [plot] Plotting nodes (size=&#39;None&#39;, color=&#39;None&#39;, attr=&#39;QM&#39;)
-[2026-02-12 16:20:59,646] INFO in sir3stoolkit.mantle.plotting: [plot] Nodes: plotted 656 points.
-[2026-02-12 16:20:59,647] INFO in sir3stoolkit.mantle.plotting: [plot] Plotting pipes (width=&#39;None&#39;, color=&#39;None&#39;, attr=&#39;DN&#39;)
-[2026-02-12 16:20:59,733] INFO in sir3stoolkit.mantle.plotting: [plot] Pipes: plotted 1672 segments.
-[2026-02-12 16:20:59,733] INFO in sir3stoolkit.mantle.plotting: [plot] Plotting pipes (width=&#39;None&#39;, color=&#39;None&#39;, attr=&#39;QMAVAbs&#39;)
-[2026-02-12 16:20:59,810] INFO in sir3stoolkit.mantle.plotting: [plot] Pipes: plotted 1672 segments.
+[2026-02-12 18:11:20,166] INFO in sir3stoolkit.mantle.plotting: [plot] Plotting nodes (size=&#39;None&#39;, color=&#39;None&#39;, attr=&#39;QM&#39;)
+[2026-02-12 18:11:20,189] INFO in sir3stoolkit.mantle.plotting: [plot] Nodes: plotted 656 points.
+[2026-02-12 18:11:20,190] INFO in sir3stoolkit.mantle.plotting: [plot] Plotting pipes (width=&#39;None&#39;, color=&#39;None&#39;, attr=&#39;DN&#39;)
+[2026-02-12 18:11:20,260] INFO in sir3stoolkit.mantle.plotting: [plot] Pipes: plotted 1672 segments.
+[2026-02-12 18:11:20,260] INFO in sir3stoolkit.mantle.plotting: [plot] Plotting pipes (width=&#39;None&#39;, color=&#39;None&#39;, attr=&#39;QMAVAbs&#39;)
+[2026-02-12 18:11:20,340] INFO in sir3stoolkit.mantle.plotting: [plot] Pipes: plotted 1672 segments.
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">

@@ -544,6 +544,9 @@
                                                                 <span class="p">,</span><span class="n">end_nodes</span><span class="o">=</span><span class="kc">True</span>
                                                                 <span class="p">,</span><span class="n">element_type_col</span><span class="o">=</span><span class="kc">False</span>
             <span class="p">)</span>
+            <span class="k">if</span> <span class="n">df_model_data</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[generate_element_dataframe] Obtained model dataframe is empty.&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
             
             <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[generate_element_dataframe] Generating df_results for element type: </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2"> ...&quot;</span><span class="p">)</span>
             <span class="n">result_values_to_obtain</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetResultProperties_from_elementType</span><span class="p">(</span><span class="n">element_type</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
@@ -553,7 +556,9 @@
                                                                         <span class="p">,</span><span class="n">properties</span><span class="o">=</span><span class="n">result_values_to_obtain</span>
                                                                         <span class="p">,</span><span class="n">timestamps</span><span class="o">=</span><span class="p">[</span><span class="n">static_timestamp</span><span class="p">]</span>
             <span class="p">)</span>
-
+            <span class="k">if</span> <span class="n">df_results</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[generate_element_dataframe] Obtained results dataframe is empty.&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[generate_element_dataframe] Merging df_model_data with df_results for element type: </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2"> ...&quot;</span><span class="p">)</span>
             <span class="n">df_results</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">df_results</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">droplevel</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
             <span class="n">df_results</span> <span class="o">=</span> <span class="n">df_results</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">unstack</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>

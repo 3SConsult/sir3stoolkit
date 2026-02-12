@@ -81,7 +81,7 @@
    "metadata": {},
    "outputs": [],
    "source": [
-    "SIR3S_SIRGRAF_DIR = r\"C:\\3S\\SIR 3S\\SirGraf-90-15-00-20x64_Quebec-Upd1\" #change to local path"
+    "SIR3S_SIRGRAF_DIR = r\"C:\\3S\\SIR 3S\\SirGraf-90-15-00-22_Quebec-Upd2\" #change to local path"
    ]
   },
   {
@@ -242,13 +242,39 @@
     }
    ],
    "source": [
-    "s3s.OpenModel(dbName=r\"C:\\Users\\aUsername\\3S\\PT3S\\PT3S\\Examples\\Example9_2.db3\",\n",
+    "s3s.OpenModel(dbName=r\"Toolkit_Tutorial62_Model.db3\",\n",
     "              providerType=s3s.ProviderTypes.SQLite,\n",
     "              Mid=\"M-1-0-1\",\n",
     "              saveCurrentlyOpenModel=False,\n",
     "              namedInstance=\"\",\n",
     "              userID=\"\",\n",
     "              password=\"\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "e6da7651",
+   "metadata": {},
+   "source": [
+    "# Calculate Model"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "id": "ad53c5c9",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Model Calculation is complete\n"
+     ]
+    }
+   ],
+   "source": [
+    "s3s.ExecCalculation(True) # To ensure result data"
    ]
   },
   {
@@ -277,7 +303,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 14,
+   "execution_count": 15,
    "id": "c7d4cfc2",
    "metadata": {},
    "outputs": [],
@@ -287,7 +313,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 15,
+   "execution_count": 16,
    "id": "7c1b1e36",
    "metadata": {},
    "outputs": [
@@ -295,12 +321,12 @@
      "name": "stderr",
      "output_type": "stream",
      "text": [
-      "[2026-01-09 15:38:16,057] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.Node\n",
-      "[2026-01-09 15:38:16,064] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieved 9 element(s) of element type ObjectTypes.Node.\n",
-      "[2026-01-09 15:38:16,079] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 5 model_data properties.\n",
-      "[2026-01-09 15:38:16,080] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving model_data properties ['Name', 'QmEin', 'bz.PhEin', 'Zkor', 'Ktyp'], geometry...\n",
-      "[2026-01-09 15:38:16,116] INFO in sir3stoolkit.mantle.dataframes: [model_data] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832\n",
-      "[2026-01-09 15:38:16,116] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (9, 7)\n"
+      "[2026-02-12 17:57:48,610] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.Node\n",
+      "[2026-02-12 17:57:48,621] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieved 9 element(s) of element type ObjectTypes.Node.\n",
+      "[2026-02-12 17:57:48,632] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 5 model_data properties.\n",
+      "[2026-02-12 17:57:48,632] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving model_data properties ['Name', 'QmEin', 'bz.PhEin', 'Zkor', 'Ktyp'], geometry...\n",
+      "[2026-02-12 17:57:48,664] INFO in sir3stoolkit.mantle.dataframes: [model_data] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832\n",
+      "[2026-02-12 17:57:48,664] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (9, 7)\n"
      ]
     }
    ],
@@ -310,7 +336,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 16,
+   "execution_count": 17,
    "id": "106646f2",
    "metadata": {},
    "outputs": [
@@ -380,13 +406,13 @@
        "</div>"
       ],
       "text/plain": [
-       "                    tk   Name QmEin bz.PhEin Zkor  Ktyp         geometry\n",
-       "0  5136506604482101815  K0000     0      100   10  PKON  POINT (150 500)\n",
-       "1  5174640379525019821  K0001     0        0   10  QKON  POINT (350 600)\n",
-       "2  5665004361761998834  K0002     0        0   10  QKON  POINT (550 600)"
+       "                    tk   Name  QmEin  bz.PhEin  Zkor  Ktyp         geometry\n",
+       "0  5136506604482101815  K0000      0       100    10  PKON  POINT (150 500)\n",
+       "1  5174640379525019821  K0001      0         0    10  QKON  POINT (350 600)\n",
+       "2  5665004361761998834  K0002      0         0    10  QKON  POINT (550 600)"
       ]
      },
-     "execution_count": 16,
+     "execution_count": 17,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -397,7 +423,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 17,
+   "execution_count": 18,
    "id": "1d394cb2",
    "metadata": {},
    "outputs": [
@@ -405,13 +431,19 @@
      "name": "stderr",
      "output_type": "stream",
      "text": [
-      "[2026-01-09 15:38:16,163] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Node\n",
-      "[2026-01-09 15:38:16,167] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2025-06-05 15:27:46.000 +02:00 is used\n",
-      "[2026-01-09 15:38:16,167] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.\n",
-      "[2026-01-09 15:38:16,173] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 9 element(s) of element type ObjectTypes.Node.\n",
-      "[2026-01-09 15:38:16,174] INFO in sir3stoolkit.mantle.dataframes: [results] Using 3 result properties.\n",
-      "[2026-01-09 15:38:16,244] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...\n",
-      "[2026-01-09 15:38:16,266] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 27)\n"
+      "[2026-02-12 17:57:48,716] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Node\n"
+     ]
+    },
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "[2026-02-12 17:57:48,724] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2025-06-05 15:27:46.000 +02:00 is used\n",
+      "[2026-02-12 17:57:48,724] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.\n",
+      "[2026-02-12 17:57:48,726] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 9 element(s) of element type ObjectTypes.Node.\n",
+      "[2026-02-12 17:57:48,728] INFO in sir3stoolkit.mantle.dataframes: [results] Using 3 result properties.\n",
+      "[2026-02-12 17:57:48,793] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...\n",
+      "[2026-02-12 17:57:48,811] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 27)\n"
      ]
     }
    ],
@@ -421,7 +453,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 18,
+   "execution_count": 19,
    "id": "71797db9",
    "metadata": {},
    "outputs": [
@@ -551,28 +583,28 @@
        "      <td>100.0</td>\n",
        "      <td>0.0</td>\n",
        "      <td>400.0</td>\n",
-       "      <td>99.98262</td>\n",
+       "      <td>99.98263</td>\n",
        "      <td>0.0</td>\n",
        "      <td>0.0</td>\n",
-       "      <td>99.91648</td>\n",
+       "      <td>99.91653</td>\n",
        "      <td>0.0</td>\n",
        "      <td>0.0</td>\n",
-       "      <td>99.77149</td>\n",
-       "      <td>0.0</td>\n",
-       "      <td>-100.0</td>\n",
-       "      <td>99.77149</td>\n",
+       "      <td>99.77161</td>\n",
        "      <td>0.0</td>\n",
        "      <td>-100.0</td>\n",
-       "      <td>99.95844</td>\n",
-       "      <td>0.0</td>\n",
-       "      <td>0.0</td>\n",
-       "      <td>99.91686</td>\n",
-       "      <td>0.0</td>\n",
-       "      <td>0.0</td>\n",
-       "      <td>99.90903</td>\n",
+       "      <td>99.77161</td>\n",
        "      <td>0.0</td>\n",
        "      <td>-100.0</td>\n",
-       "      <td>99.90903</td>\n",
+       "      <td>99.95845</td>\n",
+       "      <td>0.0</td>\n",
+       "      <td>0.0</td>\n",
+       "      <td>99.91691</td>\n",
+       "      <td>0.0</td>\n",
+       "      <td>0.0</td>\n",
+       "      <td>99.90907</td>\n",
+       "      <td>0.0</td>\n",
+       "      <td>-100.0</td>\n",
+       "      <td>99.90907</td>\n",
        "      <td>0.0</td>\n",
        "      <td>-100.0</td>\n",
        "    </tr>\n",
@@ -593,59 +625,59 @@
        "end_nodes                      No end nodes on element type             \n",
        "property                                                 PH    T   QM   \n",
        "timestamp                                                               \n",
-       "2025-06-05 15:27:46.000 +02:00                     99.98262  0.0  0.0   \n",
+       "2025-06-05 15:27:46.000 +02:00                     99.98263  0.0  0.0   \n",
        "\n",
        "tk                                      5665004361761998834            \\\n",
        "name                                                  K0002             \n",
        "end_nodes                      No end nodes on element type             \n",
        "property                                                 PH    T   QM   \n",
        "timestamp                                                               \n",
-       "2025-06-05 15:27:46.000 +02:00                     99.91648  0.0  0.0   \n",
+       "2025-06-05 15:27:46.000 +02:00                     99.91653  0.0  0.0   \n",
        "\n",
        "tk                                      5185493728872360834              \\\n",
        "name                                                  K0003               \n",
        "end_nodes                      No end nodes on element type               \n",
        "property                                                 PH    T     QM   \n",
        "timestamp                                                                 \n",
-       "2025-06-05 15:27:46.000 +02:00                     99.77149  0.0 -100.0   \n",
+       "2025-06-05 15:27:46.000 +02:00                     99.77161  0.0 -100.0   \n",
        "\n",
        "tk                                      4776931467066465913              \\\n",
        "name                                                  K0004               \n",
        "end_nodes                      No end nodes on element type               \n",
        "property                                                 PH    T     QM   \n",
        "timestamp                                                                 \n",
-       "2025-06-05 15:27:46.000 +02:00                     99.77149  0.0 -100.0   \n",
+       "2025-06-05 15:27:46.000 +02:00                     99.77161  0.0 -100.0   \n",
        "\n",
        "tk                                      5229509832448527475            \\\n",
        "name                                                  K0005             \n",
        "end_nodes                      No end nodes on element type             \n",
        "property                                                 PH    T   QM   \n",
        "timestamp                                                               \n",
-       "2025-06-05 15:27:46.000 +02:00                     99.95844  0.0  0.0   \n",
+       "2025-06-05 15:27:46.000 +02:00                     99.95845  0.0  0.0   \n",
        "\n",
        "tk                                      5073490478136313655            \\\n",
        "name                                                  K0006             \n",
        "end_nodes                      No end nodes on element type             \n",
        "property                                                 PH    T   QM   \n",
        "timestamp                                                               \n",
-       "2025-06-05 15:27:46.000 +02:00                     99.91686  0.0  0.0   \n",
+       "2025-06-05 15:27:46.000 +02:00                     99.91691  0.0  0.0   \n",
        "\n",
        "tk                                      5417314986988666587              \\\n",
        "name                                                  K0007               \n",
        "end_nodes                      No end nodes on element type               \n",
        "property                                                 PH    T     QM   \n",
        "timestamp                                                                 \n",
-       "2025-06-05 15:27:46.000 +02:00                     99.90903  0.0 -100.0   \n",
+       "2025-06-05 15:27:46.000 +02:00                     99.90907  0.0 -100.0   \n",
        "\n",
        "tk                                      5366461594623940805              \n",
        "name                                                  K0008              \n",
        "end_nodes                      No end nodes on element type              \n",
        "property                                                 PH    T     QM  \n",
        "timestamp                                                                \n",
-       "2025-06-05 15:27:46.000 +02:00                     99.90903  0.0 -100.0  "
+       "2025-06-05 15:27:46.000 +02:00                     99.90907  0.0 -100.0  "
       ]
      },
-     "execution_count": 18,
+     "execution_count": 19,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -656,7 +688,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 19,
+   "execution_count": 20,
    "id": "3c4b0954",
    "metadata": {},
    "outputs": [],
@@ -671,7 +703,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 20,
+   "execution_count": 21,
    "id": "4ca02538",
    "metadata": {},
    "outputs": [
@@ -718,7 +750,7 @@
        "      <td>10</td>\n",
        "      <td>QKON</td>\n",
        "      <td>POINT (750 550)</td>\n",
-       "      <td>99.77149</td>\n",
+       "      <td>99.77161</td>\n",
        "      <td>-100.0</td>\n",
        "      <td>0.0</td>\n",
        "    </tr>\n",
@@ -731,7 +763,7 @@
        "      <td>10</td>\n",
        "      <td>QKON</td>\n",
        "      <td>POINT (550 400)</td>\n",
-       "      <td>99.91686</td>\n",
+       "      <td>99.91691</td>\n",
        "      <td>0.0</td>\n",
        "      <td>0.0</td>\n",
        "    </tr>\n",
@@ -753,18 +785,18 @@
        "</div>"
       ],
       "text/plain": [
-       "                    tk   Name QmEin bz.PhEin Zkor  Ktyp         geometry  \\\n",
-       "0  4776931467066465913  K0004  -100        0   10  QKON  POINT (750 550)   \n",
-       "1  5073490478136313655  K0006     0        0   10  QKON  POINT (550 400)   \n",
-       "2  5136506604482101815  K0000     0      100   10  PKON  POINT (150 500)   \n",
+       "                    tk   Name  QmEin  bz.PhEin  Zkor  Ktyp         geometry  \\\n",
+       "0  4776931467066465913  K0004   -100         0    10  QKON  POINT (750 550)   \n",
+       "1  5073490478136313655  K0006      0         0    10  QKON  POINT (550 400)   \n",
+       "2  5136506604482101815  K0000      0       100    10  PKON  POINT (150 500)   \n",
        "\n",
        "          PH     QM    T  \n",
-       "0   99.77149 -100.0  0.0  \n",
-       "1   99.91686    0.0  0.0  \n",
+       "0   99.77161 -100.0  0.0  \n",
+       "1   99.91691    0.0  0.0  \n",
        "2  100.00000  400.0  0.0  "
       ]
      },
-     "execution_count": 20,
+     "execution_count": 21,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -775,7 +807,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 21,
+   "execution_count": 22,
    "id": "2eb58471",
    "metadata": {},
    "outputs": [],
@@ -798,12 +830,12 @@
     "    net.junction_geodata.at[j, \"x\"] = x\n",
     "    net.junction_geodata.at[j, \"y\"] = y\n",
     "\n",
-    "    js[row['tk']] = j"
+    "    js[int(row['tk'])] = j"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 22,
+   "execution_count": 23,
    "id": "e9b757ab",
    "metadata": {},
    "outputs": [
@@ -840,7 +872,7 @@
        "    <tr>\n",
        "      <th>0</th>\n",
        "      <td>K0004~4776931467066465913</td>\n",
-       "      <td>100.77149</td>\n",
+       "      <td>100.77161</td>\n",
        "      <td>273.15</td>\n",
        "      <td>10.0</td>\n",
        "      <td>True</td>\n",
@@ -849,7 +881,7 @@
        "    <tr>\n",
        "      <th>1</th>\n",
        "      <td>K0006~5073490478136313655</td>\n",
-       "      <td>100.91686</td>\n",
+       "      <td>100.91691</td>\n",
        "      <td>273.15</td>\n",
        "      <td>10.0</td>\n",
        "      <td>True</td>\n",
@@ -867,7 +899,7 @@
        "    <tr>\n",
        "      <th>3</th>\n",
        "      <td>K0001~5174640379525019821</td>\n",
-       "      <td>100.98262</td>\n",
+       "      <td>100.98263</td>\n",
        "      <td>273.15</td>\n",
        "      <td>10.0</td>\n",
        "      <td>True</td>\n",
@@ -876,7 +908,7 @@
        "    <tr>\n",
        "      <th>4</th>\n",
        "      <td>K0003~5185493728872360834</td>\n",
-       "      <td>100.77149</td>\n",
+       "      <td>100.77161</td>\n",
        "      <td>273.15</td>\n",
        "      <td>10.0</td>\n",
        "      <td>True</td>\n",
@@ -885,7 +917,7 @@
        "    <tr>\n",
        "      <th>5</th>\n",
        "      <td>K0005~5229509832448527475</td>\n",
-       "      <td>100.95844</td>\n",
+       "      <td>100.95845</td>\n",
        "      <td>273.15</td>\n",
        "      <td>10.0</td>\n",
        "      <td>True</td>\n",
@@ -894,7 +926,7 @@
        "    <tr>\n",
        "      <th>6</th>\n",
        "      <td>K0008~5366461594623940805</td>\n",
-       "      <td>100.90903</td>\n",
+       "      <td>100.90907</td>\n",
        "      <td>273.15</td>\n",
        "      <td>10.0</td>\n",
        "      <td>True</td>\n",
@@ -903,7 +935,7 @@
        "    <tr>\n",
        "      <th>7</th>\n",
        "      <td>K0007~5417314986988666587</td>\n",
-       "      <td>100.90903</td>\n",
+       "      <td>100.90907</td>\n",
        "      <td>273.15</td>\n",
        "      <td>10.0</td>\n",
        "      <td>True</td>\n",
@@ -912,7 +944,7 @@
        "    <tr>\n",
        "      <th>8</th>\n",
        "      <td>K0002~5665004361761998834</td>\n",
-       "      <td>100.91648</td>\n",
+       "      <td>100.91653</td>\n",
        "      <td>273.15</td>\n",
        "      <td>10.0</td>\n",
        "      <td>True</td>\n",
@@ -924,15 +956,15 @@
       ],
       "text/plain": [
        "                        name     pn_bar  tfluid_k  height_m  in_service  \\\n",
-       "0  K0004~4776931467066465913  100.77149    273.15      10.0        True   \n",
-       "1  K0006~5073490478136313655  100.91686    273.15      10.0        True   \n",
+       "0  K0004~4776931467066465913  100.77161    273.15      10.0        True   \n",
+       "1  K0006~5073490478136313655  100.91691    273.15      10.0        True   \n",
        "2  K0000~5136506604482101815  101.00000    273.15      10.0        True   \n",
-       "3  K0001~5174640379525019821  100.98262    273.15      10.0        True   \n",
-       "4  K0003~5185493728872360834  100.77149    273.15      10.0        True   \n",
-       "5  K0005~5229509832448527475  100.95844    273.15      10.0        True   \n",
-       "6  K0008~5366461594623940805  100.90903    273.15      10.0        True   \n",
-       "7  K0007~5417314986988666587  100.90903    273.15      10.0        True   \n",
-       "8  K0002~5665004361761998834  100.91648    273.15      10.0        True   \n",
+       "3  K0001~5174640379525019821  100.98263    273.15      10.0        True   \n",
+       "4  K0003~5185493728872360834  100.77161    273.15      10.0        True   \n",
+       "5  K0005~5229509832448527475  100.95845    273.15      10.0        True   \n",
+       "6  K0008~5366461594623940805  100.90907    273.15      10.0        True   \n",
+       "7  K0007~5417314986988666587  100.90907    273.15      10.0        True   \n",
+       "8  K0002~5665004361761998834  100.91653    273.15      10.0        True   \n",
        "\n",
        "       type  \n",
        "0  junction  \n",
@@ -946,7 +978,7 @@
        "8  junction  "
       ]
      },
-     "execution_count": 22,
+     "execution_count": 23,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -965,7 +997,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 23,
+   "execution_count": 24,
    "id": "b7fa4c24",
    "metadata": {},
    "outputs": [
@@ -973,13 +1005,13 @@
      "name": "stderr",
      "output_type": "stream",
      "text": [
-      "[2026-01-09 15:38:16,395] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.Pipe\n",
-      "[2026-01-09 15:38:16,395] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieved 9 element(s) of element type ObjectTypes.Pipe.\n",
-      "[2026-01-09 15:38:16,399] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 4 model_data properties.\n",
-      "[2026-01-09 15:38:16,399] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving model_data properties ['L', 'Di', 'Rau', 'Name'], geometry, end nodes...\n",
-      "[2026-01-09 15:38:16,447] INFO in sir3stoolkit.mantle.dataframes: [model_data] 2 non-empty end node columns were created.\n",
-      "[2026-01-09 15:38:16,466] INFO in sir3stoolkit.mantle.dataframes: [model_data] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832\n",
-      "[2026-01-09 15:38:16,467] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (9, 8)\n"
+      "[2026-02-12 17:57:48,942] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.Pipe\n",
+      "[2026-02-12 17:57:48,944] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieved 9 element(s) of element type ObjectTypes.Pipe.\n",
+      "[2026-02-12 17:57:48,946] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 4 model_data properties.\n",
+      "[2026-02-12 17:57:48,947] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving model_data properties ['L', 'Di', 'Rau', 'Name'], geometry, end nodes...\n",
+      "[2026-02-12 17:57:48,999] INFO in sir3stoolkit.mantle.dataframes: [model_data] 2 non-empty end node columns were created.\n",
+      "[2026-02-12 17:57:49,015] INFO in sir3stoolkit.mantle.dataframes: [model_data] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832\n",
+      "[2026-02-12 17:57:49,015] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (9, 8)\n"
      ]
     }
    ],
@@ -989,7 +1021,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 24,
+   "execution_count": 25,
    "id": "c394549a",
    "metadata": {},
    "outputs": [
@@ -1028,9 +1060,9 @@
        "    <tr>\n",
        "      <th>0</th>\n",
        "      <td>4762947358005495341</td>\n",
-       "      <td>1000</td>\n",
+       "      <td>1000.0</td>\n",
        "      <td>450</td>\n",
-       "      <td>0,25</td>\n",
+       "      <td>0.25</td>\n",
        "      <td>Rohr K0000 K0001</td>\n",
        "      <td>LINESTRING (150 500, 350 600)</td>\n",
        "      <td>5136506604482101815</td>\n",
@@ -1039,9 +1071,9 @@
        "    <tr>\n",
        "      <th>1</th>\n",
        "      <td>5479123649362439650</td>\n",
-       "      <td>1000</td>\n",
+       "      <td>1000.0</td>\n",
        "      <td>250</td>\n",
-       "      <td>0,25</td>\n",
+       "      <td>0.25</td>\n",
        "      <td>Rohr K0002 K0003</td>\n",
        "      <td>LINESTRING (550 600, 750 650)</td>\n",
        "      <td>5665004361761998834</td>\n",
@@ -1050,9 +1082,9 @@
        "    <tr>\n",
        "      <th>2</th>\n",
        "      <td>5367303884852200682</td>\n",
-       "      <td>1000</td>\n",
+       "      <td>1000.0</td>\n",
        "      <td>250</td>\n",
-       "      <td>0,25</td>\n",
+       "      <td>0.25</td>\n",
        "      <td>Rohr K0002 K0004</td>\n",
        "      <td>LINESTRING (550 600, 750 550)</td>\n",
        "      <td>5665004361761998834</td>\n",
@@ -1063,10 +1095,10 @@
        "</div>"
       ],
       "text/plain": [
-       "                    tk     L   Di   Rau              Name  \\\n",
-       "0  4762947358005495341  1000  450  0,25  Rohr K0000 K0001   \n",
-       "1  5479123649362439650  1000  250  0,25  Rohr K0002 K0003   \n",
-       "2  5367303884852200682  1000  250  0,25  Rohr K0002 K0004   \n",
+       "                    tk       L   Di   Rau              Name  \\\n",
+       "0  4762947358005495341  1000.0  450  0.25  Rohr K0000 K0001   \n",
+       "1  5479123649362439650  1000.0  250  0.25  Rohr K0002 K0003   \n",
+       "2  5367303884852200682  1000.0  250  0.25  Rohr K0002 K0004   \n",
        "\n",
        "                        geometry                 fkKI                 fkKK  \n",
        "0  LINESTRING (150 500, 350 600)  5136506604482101815  5174640379525019821  \n",
@@ -1074,7 +1106,7 @@
        "2  LINESTRING (550 600, 750 550)  5665004361761998834  4776931467066465913  "
       ]
      },
-     "execution_count": 24,
+     "execution_count": 25,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1085,28 +1117,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 25,
-   "id": "491677b6",
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "df_pipes_model_data['Rau'] = df_pipes_model_data['Rau'].str.replace(',', '.', regex=False)\n",
-    "df_pipes_model_data['L'] = df_pipes_model_data['L'].str.replace(',', '.', regex=False)"
-   ]
-  },
-  {
-   "cell_type": "code",
    "execution_count": 26,
-   "id": "34f87c18",
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "df_pipes_model_data['L'] = df_pipes_model_data['L'].astype(float)"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 27,
    "id": "21c5f0bc",
    "metadata": {},
    "outputs": [],
@@ -1134,7 +1145,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 28,
+   "execution_count": 27,
    "id": "f946ad6e",
    "metadata": {},
    "outputs": [
@@ -1248,7 +1259,7 @@
        "2         1        True  pipe  "
       ]
      },
-     "execution_count": 28,
+     "execution_count": 27,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1267,14 +1278,14 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 29,
+   "execution_count": 28,
    "id": "7fa2168a",
    "metadata": {},
    "outputs": [],
    "source": [
     "for idx, row in df_nodes.iterrows():\n",
     "    ktyp = (row.get(\"Ktyp\"))\n",
-    "    tk = row.get(\"tk\")\n",
+    "    tk = int(row.get(\"tk\"))\n",
     "\n",
     "    # Create source if Ktyp is PKON and PH > 0\n",
     "    if ktyp == \"PKON\" and float(row.get(\"PH\", 0)) > 0:\n",
@@ -1298,7 +1309,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 30,
+   "execution_count": 29,
    "id": "2aa47c56",
    "metadata": {},
    "outputs": [
@@ -1350,7 +1361,7 @@
        "0  Src: K0000~5136506604482101815         2  101.0  273.15        True   pt"
       ]
      },
-     "execution_count": 30,
+     "execution_count": 29,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1361,7 +1372,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 31,
+   "execution_count": 30,
    "id": "4081d2f2",
    "metadata": {},
    "outputs": [
@@ -1449,7 +1460,7 @@
        "3        True  sink  "
       ]
      },
-     "execution_count": 31,
+     "execution_count": 30,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1468,7 +1479,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 32,
+   "execution_count": 31,
    "id": "73ef9a8b",
    "metadata": {},
    "outputs": [],
@@ -1486,7 +1497,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 33,
+   "execution_count": 32,
    "id": "80ae2f42",
    "metadata": {},
    "outputs": [
@@ -1578,7 +1589,7 @@
        "8  100.064571  273.15"
       ]
      },
-     "execution_count": 33,
+     "execution_count": 32,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1589,7 +1600,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 34,
+   "execution_count": 33,
    "id": "7d5ef546",
    "metadata": {},
    "outputs": [
@@ -1793,7 +1804,7 @@
        "8  0.017933  "
       ]
      },
-     "execution_count": 34,
+     "execution_count": 33,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1804,7 +1815,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 35,
+   "execution_count": 34,
    "id": "c9923d56",
    "metadata": {},
    "outputs": [
@@ -1861,7 +1872,7 @@
        "3          100.0"
       ]
      },
-     "execution_count": 35,
+     "execution_count": 34,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1872,7 +1883,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 36,
+   "execution_count": 35,
    "id": "7d4636f8",
    "metadata": {},
    "outputs": [
@@ -1914,7 +1925,7 @@
        "0         -400.0"
       ]
      },
-     "execution_count": 36,
+     "execution_count": 35,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1933,7 +1944,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 37,
+   "execution_count": 36,
    "id": "82d44447",
    "metadata": {},
    "outputs": [
@@ -1953,7 +1964,7 @@
        "<Axes: >"
       ]
      },
-     "execution_count": 37,
+     "execution_count": 36,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1964,7 +1975,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 38,
+   "execution_count": 37,
    "id": "b19a24b7",
    "metadata": {},
    "outputs": [
@@ -3004,7 +3015,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 39,
+   "execution_count": 38,
    "id": "9465e500",
    "metadata": {},
    "outputs": [
@@ -3012,32 +3023,26 @@
      "name": "stderr",
      "output_type": "stream",
      "text": [
-      "[2026-01-09 15:38:25,372] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.Node\n",
-      "[2026-01-09 15:38:25,374] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieved 9 element(s) of element type ObjectTypes.Node.\n",
-      "[2026-01-09 15:38:25,376] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 5 model_data properties.\n",
-      "[2026-01-09 15:38:25,377] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving model_data properties ['Name', 'Zkor', 'QmEin', 'bz.PhEin', 'Ktyp'], geometry...\n",
-      "[2026-01-09 15:38:25,387] INFO in sir3stoolkit.mantle.dataframes: [model_data] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832\n",
-      "[2026-01-09 15:38:25,388] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (9, 7)\n",
-      "[2026-01-09 15:38:25,402] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Node\n",
-      "[2026-01-09 15:38:25,413] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2025-06-05 15:27:46.000 +02:00 is used\n",
-      "[2026-01-09 15:38:25,414] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.\n",
-      "[2026-01-09 15:38:25,416] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 9 element(s) of element type ObjectTypes.Node.\n",
-      "[2026-01-09 15:38:25,418] INFO in sir3stoolkit.mantle.dataframes: [results] Using 3 result properties.\n",
-      "[2026-01-09 15:38:25,424] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...\n",
-      "[2026-01-09 15:38:25,435] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 27)\n"
-     ]
-    },
-    {
-     "name": "stderr",
-     "output_type": "stream",
-     "text": [
-      "[2026-01-09 15:38:25,462] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.Pipe\n",
-      "[2026-01-09 15:38:25,467] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieved 9 element(s) of element type ObjectTypes.Pipe.\n",
-      "[2026-01-09 15:38:25,468] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 4 model_data properties.\n",
-      "[2026-01-09 15:38:25,468] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving model_data properties ['L', 'Di', 'Rau', 'Name'], geometry, end nodes...\n",
-      "[2026-01-09 15:38:25,474] INFO in sir3stoolkit.mantle.dataframes: [model_data] 2 non-empty end node columns were created.\n",
-      "[2026-01-09 15:38:25,486] INFO in sir3stoolkit.mantle.dataframes: [model_data] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832\n",
-      "[2026-01-09 15:38:25,486] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (9, 8)\n"
+      "[2026-02-12 17:57:56,855] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.Node\n",
+      "[2026-02-12 17:57:56,856] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieved 9 element(s) of element type ObjectTypes.Node.\n",
+      "[2026-02-12 17:57:56,857] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 5 model_data properties.\n",
+      "[2026-02-12 17:57:56,858] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving model_data properties ['Name', 'Zkor', 'QmEin', 'bz.PhEin', 'Ktyp'], geometry...\n",
+      "[2026-02-12 17:57:56,877] INFO in sir3stoolkit.mantle.dataframes: [model_data] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832\n",
+      "[2026-02-12 17:57:56,877] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (9, 7)\n",
+      "[2026-02-12 17:57:56,895] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Node\n",
+      "[2026-02-12 17:57:56,907] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2025-06-05 15:27:46.000 +02:00 is used\n",
+      "[2026-02-12 17:57:56,907] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.\n",
+      "[2026-02-12 17:57:56,908] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 9 element(s) of element type ObjectTypes.Node.\n",
+      "[2026-02-12 17:57:56,911] INFO in sir3stoolkit.mantle.dataframes: [results] Using 3 result properties.\n",
+      "[2026-02-12 17:57:56,915] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...\n",
+      "[2026-02-12 17:57:56,919] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 27)\n",
+      "[2026-02-12 17:57:56,949] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.Pipe\n",
+      "[2026-02-12 17:57:56,950] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieved 9 element(s) of element type ObjectTypes.Pipe.\n",
+      "[2026-02-12 17:57:56,951] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 4 model_data properties.\n",
+      "[2026-02-12 17:57:56,952] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving model_data properties ['L', 'Di', 'Rau', 'Name'], geometry, end nodes...\n",
+      "[2026-02-12 17:57:56,959] INFO in sir3stoolkit.mantle.dataframes: [model_data] 2 non-empty end node columns were created.\n",
+      "[2026-02-12 17:57:56,978] INFO in sir3stoolkit.mantle.dataframes: [model_data] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832\n",
+      "[2026-02-12 17:57:56,979] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (9, 8)\n"
      ]
     }
    ],
@@ -3055,7 +3060,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 40,
+   "execution_count": 39,
    "id": "7c371e7b",
    "metadata": {},
    "outputs": [],
@@ -3073,7 +3078,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 41,
+   "execution_count": 40,
    "id": "11790d86",
    "metadata": {},
    "outputs": [
@@ -3165,7 +3170,7 @@
        "8  100.064571  273.15"
       ]
      },
-     "execution_count": 41,
+     "execution_count": 40,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -3176,7 +3181,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 42,
+   "execution_count": 41,
    "id": "46adfa26",
    "metadata": {},
    "outputs": [
@@ -3380,7 +3385,7 @@
        "8  0.017933  "
       ]
      },
-     "execution_count": 42,
+     "execution_count": 41,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -3391,7 +3396,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 43,
+   "execution_count": 42,
    "id": "9d3cbfc5",
    "metadata": {},
    "outputs": [
@@ -3448,7 +3453,7 @@
        "3          100.0"
       ]
      },
-     "execution_count": 43,
+     "execution_count": 42,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -3459,7 +3464,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 44,
+   "execution_count": 43,
    "id": "4bc775d7",
    "metadata": {},
    "outputs": [
@@ -3501,7 +3506,7 @@
        "0         -400.0"
       ]
      },
-     "execution_count": 44,
+     "execution_count": 43,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -3520,7 +3525,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 45,
+   "execution_count": 44,
    "id": "55f45516",
    "metadata": {},
    "outputs": [

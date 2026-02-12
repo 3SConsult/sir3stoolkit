@@ -114,7 +114,7 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r&quot;C:\3S\SIR 3S\SirGraf-90-15-00-20x64_Quebec-Upd1&quot; #change to local path
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r&quot;C:\3S\SIR 3S\SirGraf-90-15-00-22_Quebec-Upd2&quot; #change to local path
 </pre></div>
 </div>
 </div>
@@ -230,7 +230,7 @@ Initialization complete
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.OpenModel(dbName=r&quot;C:\Users\aUsername\3S\PT3S\PT3S\Examples\Example9_2.db3&quot;,
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.OpenModel(dbName=r&quot;Toolkit_Tutorial62_Model.db3&quot;,
               providerType=s3s.ProviderTypes.SQLite,
               Mid=&quot;M-1-0-1&quot;,
               saveCurrentlyOpenModel=False,
@@ -249,6 +249,25 @@ Model is open for further operation
 </pre></div></div>
 </div>
 </section>
+<section id="Calculate-Model">
+<h1>Calculate Model<a class="headerlink" href="#Calculate-Model" title="Link to this heading"></a></h1>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.ExecCalculation(True) # To ensure result data
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Model Calculation is complete
+</pre></div></div>
+</div>
+</section>
 <section id="Generate-Pandapipes-network-manually">
 <h1>Generate Pandapipes network manually<a class="headerlink" href="#Generate-Pandapipes-network-manually" title="Link to this heading"></a></h1>
 <section id="Create-pandapipes-network">
@@ -256,7 +275,7 @@ Model is open for further operation
 <section id="Nodes">
 <h3>Nodes<a class="headerlink" href="#Nodes" title="Link to this heading"></a></h3>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>net = pp.create_empty_network(fluid=&quot;water&quot;)
@@ -264,7 +283,7 @@ Model is open for further operation
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_nodes_model_data = s3s.generate_element_model_data_dataframe(element_type=s3s.ObjectTypes.Node, properties=[&#39;Name&#39;, &#39;QmEin&#39;, &#39;bz.PhEin&#39;, &#39;Zkor&#39;, &#39;Ktyp&#39;], geometry=True)
@@ -276,16 +295,16 @@ Model is open for further operation
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2026-01-09 15:38:16,057] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.Node
-[2026-01-09 15:38:16,064] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieved 9 element(s) of element type ObjectTypes.Node.
-[2026-01-09 15:38:16,079] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 5 model_data properties.
-[2026-01-09 15:38:16,080] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving model_data properties [&#39;Name&#39;, &#39;QmEin&#39;, &#39;bz.PhEin&#39;, &#39;Zkor&#39;, &#39;Ktyp&#39;], geometry...
-[2026-01-09 15:38:16,116] INFO in sir3stoolkit.mantle.dataframes: [model_data] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
-[2026-01-09 15:38:16,116] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (9, 7)
+[2026-02-12 17:57:48,610] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.Node
+[2026-02-12 17:57:48,621] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieved 9 element(s) of element type ObjectTypes.Node.
+[2026-02-12 17:57:48,632] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 5 model_data properties.
+[2026-02-12 17:57:48,632] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving model_data properties [&#39;Name&#39;, &#39;QmEin&#39;, &#39;bz.PhEin&#39;, &#39;Zkor&#39;, &#39;Ktyp&#39;], geometry...
+[2026-02-12 17:57:48,664] INFO in sir3stoolkit.mantle.dataframes: [model_data] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
+[2026-02-12 17:57:48,664] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (9, 7)
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_nodes_model_data.head(3)
@@ -293,7 +312,7 @@ Model is open for further operation
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -360,7 +379,7 @@ Model is open for further operation
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_nodes_results = s3s.generate_element_results_dataframe(element_type=s3s.ObjectTypes.Node, properties=[&#39;PH&#39;, &#39;T&#39;, &#39;QM&#39;], timestamps=s3s.GetTimeStamps()[0])
@@ -372,17 +391,17 @@ Model is open for further operation
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2026-01-09 15:38:16,163] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Node
-[2026-01-09 15:38:16,167] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2025-06-05 15:27:46.000 +02:00 is used
-[2026-01-09 15:38:16,167] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
-[2026-01-09 15:38:16,173] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 9 element(s) of element type ObjectTypes.Node.
-[2026-01-09 15:38:16,174] INFO in sir3stoolkit.mantle.dataframes: [results] Using 3 result properties.
-[2026-01-09 15:38:16,244] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
-[2026-01-09 15:38:16,266] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 27)
+[2026-02-12 17:57:48,716] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Node
+[2026-02-12 17:57:48,724] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2025-06-05 15:27:46.000 +02:00 is used
+[2026-02-12 17:57:48,724] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
+[2026-02-12 17:57:48,726] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 9 element(s) of element type ObjectTypes.Node.
+[2026-02-12 17:57:48,728] INFO in sir3stoolkit.mantle.dataframes: [results] Using 3 result properties.
+[2026-02-12 17:57:48,793] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2026-02-12 17:57:48,811] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 27)
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_nodes_results.head(3)
@@ -390,7 +409,7 @@ Model is open for further operation
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -517,28 +536,28 @@ Model is open for further operation
       <td>100.0</td>
       <td>0.0</td>
       <td>400.0</td>
-      <td>99.98262</td>
+      <td>99.98263</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>99.91648</td>
+      <td>99.91653</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>99.77149</td>
-      <td>0.0</td>
-      <td>-100.0</td>
-      <td>99.77149</td>
+      <td>99.77161</td>
       <td>0.0</td>
       <td>-100.0</td>
-      <td>99.95844</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>99.91686</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>99.90903</td>
+      <td>99.77161</td>
       <td>0.0</td>
       <td>-100.0</td>
-      <td>99.90903</td>
+      <td>99.95845</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>99.91691</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>99.90907</td>
+      <td>0.0</td>
+      <td>-100.0</td>
+      <td>99.90907</td>
       <td>0.0</td>
       <td>-100.0</td>
     </tr>
@@ -547,7 +566,7 @@ Model is open for further operation
 </div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_nodes_results.columns = df_nodes_results.columns.droplevel([1, 2])
@@ -560,7 +579,7 @@ df_nodes = df_nodes_model_data.merge(on=&quot;tk&quot;,
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_nodes.head(3)
@@ -568,7 +587,7 @@ df_nodes = df_nodes_model_data.merge(on=&quot;tk&quot;,
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -612,7 +631,7 @@ df_nodes = df_nodes_model_data.merge(on=&quot;tk&quot;,
       <td>10</td>
       <td>QKON</td>
       <td>POINT (750 550)</td>
-      <td>99.77149</td>
+      <td>99.77161</td>
       <td>-100.0</td>
       <td>0.0</td>
     </tr>
@@ -625,7 +644,7 @@ df_nodes = df_nodes_model_data.merge(on=&quot;tk&quot;,
       <td>10</td>
       <td>QKON</td>
       <td>POINT (550 400)</td>
-      <td>99.91686</td>
+      <td>99.91691</td>
       <td>0.0</td>
       <td>0.0</td>
     </tr>
@@ -647,7 +666,7 @@ df_nodes = df_nodes_model_data.merge(on=&quot;tk&quot;,
 </div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>js = {}
@@ -668,12 +687,12 @@ for idx, row in df_nodes.iterrows():
     net.junction_geodata.at[j, &quot;x&quot;] = x
     net.junction_geodata.at[j, &quot;y&quot;] = y
 
-    js[row[&#39;tk&#39;]] = j
+    js[int(row[&#39;tk&#39;])] = j
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>net.junction
@@ -681,7 +700,7 @@ for idx, row in df_nodes.iterrows():
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -715,7 +734,7 @@ for idx, row in df_nodes.iterrows():
     <tr>
       <th>0</th>
       <td>K0004~4776931467066465913</td>
-      <td>100.77149</td>
+      <td>100.77161</td>
       <td>273.15</td>
       <td>10.0</td>
       <td>True</td>
@@ -724,7 +743,7 @@ for idx, row in df_nodes.iterrows():
     <tr>
       <th>1</th>
       <td>K0006~5073490478136313655</td>
-      <td>100.91686</td>
+      <td>100.91691</td>
       <td>273.15</td>
       <td>10.0</td>
       <td>True</td>
@@ -742,7 +761,7 @@ for idx, row in df_nodes.iterrows():
     <tr>
       <th>3</th>
       <td>K0001~5174640379525019821</td>
-      <td>100.98262</td>
+      <td>100.98263</td>
       <td>273.15</td>
       <td>10.0</td>
       <td>True</td>
@@ -751,7 +770,7 @@ for idx, row in df_nodes.iterrows():
     <tr>
       <th>4</th>
       <td>K0003~5185493728872360834</td>
-      <td>100.77149</td>
+      <td>100.77161</td>
       <td>273.15</td>
       <td>10.0</td>
       <td>True</td>
@@ -760,7 +779,7 @@ for idx, row in df_nodes.iterrows():
     <tr>
       <th>5</th>
       <td>K0005~5229509832448527475</td>
-      <td>100.95844</td>
+      <td>100.95845</td>
       <td>273.15</td>
       <td>10.0</td>
       <td>True</td>
@@ -769,7 +788,7 @@ for idx, row in df_nodes.iterrows():
     <tr>
       <th>6</th>
       <td>K0008~5366461594623940805</td>
-      <td>100.90903</td>
+      <td>100.90907</td>
       <td>273.15</td>
       <td>10.0</td>
       <td>True</td>
@@ -778,7 +797,7 @@ for idx, row in df_nodes.iterrows():
     <tr>
       <th>7</th>
       <td>K0007~5417314986988666587</td>
-      <td>100.90903</td>
+      <td>100.90907</td>
       <td>273.15</td>
       <td>10.0</td>
       <td>True</td>
@@ -787,7 +806,7 @@ for idx, row in df_nodes.iterrows():
     <tr>
       <th>8</th>
       <td>K0002~5665004361761998834</td>
-      <td>100.91648</td>
+      <td>100.91653</td>
       <td>273.15</td>
       <td>10.0</td>
       <td>True</td>
@@ -801,7 +820,7 @@ for idx, row in df_nodes.iterrows():
 <section id="pipes">
 <h3>pipes<a class="headerlink" href="#pipes" title="Link to this heading"></a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_model_data = s3s.generate_element_model_data_dataframe(element_type=s3s.ObjectTypes.Pipe, properties=[&#39;L&#39;, &#39;Di&#39;, &#39;Rau&#39;, &#39;Name&#39;], end_nodes=True, geometry=True)
@@ -813,17 +832,17 @@ for idx, row in df_nodes.iterrows():
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2026-01-09 15:38:16,395] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.Pipe
-[2026-01-09 15:38:16,395] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieved 9 element(s) of element type ObjectTypes.Pipe.
-[2026-01-09 15:38:16,399] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 4 model_data properties.
-[2026-01-09 15:38:16,399] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving model_data properties [&#39;L&#39;, &#39;Di&#39;, &#39;Rau&#39;, &#39;Name&#39;], geometry, end nodes...
-[2026-01-09 15:38:16,447] INFO in sir3stoolkit.mantle.dataframes: [model_data] 2 non-empty end node columns were created.
-[2026-01-09 15:38:16,466] INFO in sir3stoolkit.mantle.dataframes: [model_data] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
-[2026-01-09 15:38:16,467] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (9, 8)
+[2026-02-12 17:57:48,942] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.Pipe
+[2026-02-12 17:57:48,944] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieved 9 element(s) of element type ObjectTypes.Pipe.
+[2026-02-12 17:57:48,946] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 4 model_data properties.
+[2026-02-12 17:57:48,947] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving model_data properties [&#39;L&#39;, &#39;Di&#39;, &#39;Rau&#39;, &#39;Name&#39;], geometry, end nodes...
+[2026-02-12 17:57:48,999] INFO in sir3stoolkit.mantle.dataframes: [model_data] 2 non-empty end node columns were created.
+[2026-02-12 17:57:49,015] INFO in sir3stoolkit.mantle.dataframes: [model_data] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
+[2026-02-12 17:57:49,015] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (9, 8)
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_model_data.head(3)
@@ -831,7 +850,7 @@ for idx, row in df_nodes.iterrows():
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -867,9 +886,9 @@ for idx, row in df_nodes.iterrows():
     <tr>
       <th>0</th>
       <td>4762947358005495341</td>
-      <td>1000</td>
+      <td>1000.0</td>
       <td>450</td>
-      <td>0,25</td>
+      <td>0.25</td>
       <td>Rohr K0000 K0001</td>
       <td>LINESTRING (150 500, 350 600)</td>
       <td>5136506604482101815</td>
@@ -878,9 +897,9 @@ for idx, row in df_nodes.iterrows():
     <tr>
       <th>1</th>
       <td>5479123649362439650</td>
-      <td>1000</td>
+      <td>1000.0</td>
       <td>250</td>
-      <td>0,25</td>
+      <td>0.25</td>
       <td>Rohr K0002 K0003</td>
       <td>LINESTRING (550 600, 750 650)</td>
       <td>5665004361761998834</td>
@@ -889,9 +908,9 @@ for idx, row in df_nodes.iterrows():
     <tr>
       <th>2</th>
       <td>5367303884852200682</td>
-      <td>1000</td>
+      <td>1000.0</td>
       <td>250</td>
-      <td>0,25</td>
+      <td>0.25</td>
       <td>Rohr K0002 K0004</td>
       <td>LINESTRING (550 600, 750 550)</td>
       <td>5665004361761998834</td>
@@ -902,24 +921,7 @@ for idx, row in df_nodes.iterrows():
 </div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_model_data[&#39;Rau&#39;] = df_pipes_model_data[&#39;Rau&#39;].str.replace(&#39;,&#39;, &#39;.&#39;, regex=False)
-df_pipes_model_data[&#39;L&#39;] = df_pipes_model_data[&#39;L&#39;].str.replace(&#39;,&#39;, &#39;.&#39;, regex=False)
-</pre></div>
-</div>
-</div>
-<div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_model_data[&#39;L&#39;] = df_pipes_model_data[&#39;L&#39;].astype(float)
-</pre></div>
-</div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>ps = {}
@@ -945,7 +947,7 @@ for idx, row in df_pipes_model_data.iterrows():
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>net.pipe.head(3)
@@ -953,7 +955,7 @@ for idx, row in df_pipes_model_data.iterrows():
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1051,12 +1053,12 @@ for idx, row in df_pipes_model_data.iterrows():
 <section id="sources/sinks">
 <h3>sources/sinks<a class="headerlink" href="#sources/sinks" title="Link to this heading"></a></h3>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for idx, row in df_nodes.iterrows():
     ktyp = (row.get(&quot;Ktyp&quot;))
-    tk = row.get(&quot;tk&quot;)
+    tk = int(row.get(&quot;tk&quot;))
 
     # Create source if Ktyp is PKON and PH &gt; 0
     if ktyp == &quot;PKON&quot; and float(row.get(&quot;PH&quot;, 0)) &gt; 0:
@@ -1080,7 +1082,7 @@ for idx, row in df_pipes_model_data.iterrows():
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>net.ext_grid
@@ -1088,7 +1090,7 @@ for idx, row in df_pipes_model_data.iterrows():
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1133,7 +1135,7 @@ for idx, row in df_pipes_model_data.iterrows():
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>net.sink
@@ -1141,7 +1143,7 @@ for idx, row in df_pipes_model_data.iterrows():
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1217,7 +1219,7 @@ for idx, row in df_pipes_model_data.iterrows():
 <section id="Calculate">
 <h2>Calculate<a class="headerlink" href="#Calculate" title="Link to this heading"></a></h2>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pp.pipeflow(net)
@@ -1227,7 +1229,7 @@ for idx, row in df_pipes_model_data.iterrows():
 <section id="View-Results">
 <h3>View Results<a class="headerlink" href="#View-Results" title="Link to this heading"></a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>net.res_junction
@@ -1235,7 +1237,7 @@ for idx, row in df_pipes_model_data.iterrows():
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1312,7 +1314,7 @@ for idx, row in df_pipes_model_data.iterrows():
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[34]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>net.res_pipe
@@ -1320,7 +1322,7 @@ for idx, row in df_pipes_model_data.iterrows():
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[34]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1487,7 +1489,7 @@ for idx, row in df_pipes_model_data.iterrows():
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[34]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>net.res_sink
@@ -1495,7 +1497,7 @@ for idx, row in df_pipes_model_data.iterrows():
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[34]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1542,7 +1544,7 @@ for idx, row in df_pipes_model_data.iterrows():
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[36]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>net.res_ext_grid
@@ -1550,7 +1552,7 @@ for idx, row in df_pipes_model_data.iterrows():
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[36]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1589,7 +1591,7 @@ for idx, row in df_pipes_model_data.iterrows():
 <section id="Plot">
 <h2>Plot<a class="headerlink" href="#Plot" title="Link to this heading"></a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[37]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[36]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pp_plot.simple_plot(net)
@@ -1604,7 +1606,7 @@ for idx, row in df_pipes_model_data.iterrows():
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[37]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[36]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -1613,7 +1615,7 @@ for idx, row in df_pipes_model_data.iterrows():
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[38]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[37]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import plotly.express as px
@@ -1652,7 +1654,7 @@ fig.show()
 <h2>Create<a class="headerlink" href="#Create" title="Link to this heading"></a></h2>
 <p>Now we can perform the same steps above confined into one method using <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.alternative_models.Alternative_Models_SIR3S_Model.SIR_3S_to_pandapipes">SIR_3S_to_pandapipes()</a>.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[39]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[38]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pp_net = s3s.SIR_3S_to_pandapipes()
@@ -1664,33 +1666,33 @@ fig.show()
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2026-01-09 15:38:25,372] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.Node
-[2026-01-09 15:38:25,374] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieved 9 element(s) of element type ObjectTypes.Node.
-[2026-01-09 15:38:25,376] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 5 model_data properties.
-[2026-01-09 15:38:25,377] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving model_data properties [&#39;Name&#39;, &#39;Zkor&#39;, &#39;QmEin&#39;, &#39;bz.PhEin&#39;, &#39;Ktyp&#39;], geometry...
-[2026-01-09 15:38:25,387] INFO in sir3stoolkit.mantle.dataframes: [model_data] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
-[2026-01-09 15:38:25,388] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (9, 7)
-[2026-01-09 15:38:25,402] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Node
-[2026-01-09 15:38:25,413] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2025-06-05 15:27:46.000 +02:00 is used
-[2026-01-09 15:38:25,414] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
-[2026-01-09 15:38:25,416] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 9 element(s) of element type ObjectTypes.Node.
-[2026-01-09 15:38:25,418] INFO in sir3stoolkit.mantle.dataframes: [results] Using 3 result properties.
-[2026-01-09 15:38:25,424] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
-[2026-01-09 15:38:25,435] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 27)
-[2026-01-09 15:38:25,462] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.Pipe
-[2026-01-09 15:38:25,467] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieved 9 element(s) of element type ObjectTypes.Pipe.
-[2026-01-09 15:38:25,468] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 4 model_data properties.
-[2026-01-09 15:38:25,468] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving model_data properties [&#39;L&#39;, &#39;Di&#39;, &#39;Rau&#39;, &#39;Name&#39;], geometry, end nodes...
-[2026-01-09 15:38:25,474] INFO in sir3stoolkit.mantle.dataframes: [model_data] 2 non-empty end node columns were created.
-[2026-01-09 15:38:25,486] INFO in sir3stoolkit.mantle.dataframes: [model_data] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
-[2026-01-09 15:38:25,486] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (9, 8)
+[2026-02-12 17:57:56,855] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.Node
+[2026-02-12 17:57:56,856] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieved 9 element(s) of element type ObjectTypes.Node.
+[2026-02-12 17:57:56,857] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 5 model_data properties.
+[2026-02-12 17:57:56,858] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving model_data properties [&#39;Name&#39;, &#39;Zkor&#39;, &#39;QmEin&#39;, &#39;bz.PhEin&#39;, &#39;Ktyp&#39;], geometry...
+[2026-02-12 17:57:56,877] INFO in sir3stoolkit.mantle.dataframes: [model_data] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
+[2026-02-12 17:57:56,877] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (9, 7)
+[2026-02-12 17:57:56,895] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Node
+[2026-02-12 17:57:56,907] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2025-06-05 15:27:46.000 +02:00 is used
+[2026-02-12 17:57:56,907] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
+[2026-02-12 17:57:56,908] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 9 element(s) of element type ObjectTypes.Node.
+[2026-02-12 17:57:56,911] INFO in sir3stoolkit.mantle.dataframes: [results] Using 3 result properties.
+[2026-02-12 17:57:56,915] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2026-02-12 17:57:56,919] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 27)
+[2026-02-12 17:57:56,949] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.Pipe
+[2026-02-12 17:57:56,950] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieved 9 element(s) of element type ObjectTypes.Pipe.
+[2026-02-12 17:57:56,951] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 4 model_data properties.
+[2026-02-12 17:57:56,952] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving model_data properties [&#39;L&#39;, &#39;Di&#39;, &#39;Rau&#39;, &#39;Name&#39;], geometry, end nodes...
+[2026-02-12 17:57:56,959] INFO in sir3stoolkit.mantle.dataframes: [model_data] 2 non-empty end node columns were created.
+[2026-02-12 17:57:56,978] INFO in sir3stoolkit.mantle.dataframes: [model_data] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
+[2026-02-12 17:57:56,979] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (9, 8)
 </pre></div></div>
 </div>
 </section>
 <section id="id1">
 <h2>Calculate<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[40]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[39]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pp.pipeflow(net)
@@ -1700,7 +1702,7 @@ fig.show()
 <section id="id2">
 <h3>View Results<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[41]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[40]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>net.res_junction
@@ -1708,7 +1710,7 @@ fig.show()
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[41]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[40]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1785,7 +1787,7 @@ fig.show()
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[42]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[41]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>net.res_pipe
@@ -1793,7 +1795,7 @@ fig.show()
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[42]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[41]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1960,7 +1962,7 @@ fig.show()
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[43]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[42]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>net.res_sink
@@ -1968,7 +1970,7 @@ fig.show()
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[43]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[42]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -2015,7 +2017,7 @@ fig.show()
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[44]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[43]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>net.res_ext_grid
@@ -2023,7 +2025,7 @@ fig.show()
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[44]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[43]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -2062,7 +2064,7 @@ fig.show()
 <section id="id3">
 <h2>Plot<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[45]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[44]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import plotly.express as px
