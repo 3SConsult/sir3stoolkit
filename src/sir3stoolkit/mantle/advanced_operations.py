@@ -356,10 +356,15 @@ class SIR3S_Model_Advanced_Operations(SIR3S_Model):
         if value_col not in available_dataframe_columns:
             logger.error(f"[insert dataframe into time table] Value col {value_col} not in dataframe columns.")
             return -1
-    
+
+        try:
+            internal_ref_time = self.GetTimeStamps()[0][0]
+        except:
+            internal_ref_time = None
+
         if reference_time_stamp:
             used_reference_time_stamp = reference_time_stamp
-        elif self.GetTimeStamps()[0][0]:
+        elif internal_ref_time:
             s = self.GetTimeStamps()[0][0]
             used_reference_time_stamp = s.split()[0] + " " + s.split()[1]
         else:

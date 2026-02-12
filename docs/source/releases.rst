@@ -20,6 +20,19 @@ The release notes indicate whether a version includes changes to the C# side and
 90-15 Quebec
 ------------
 
+Version 90.15.12 (TO BE RELEASED)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+For SIR 3S Version: 90-15-00-22-Upd2
+
+C# Changes
+^^^^^^^^^^
+- Fixed Calculation Bug: Could not start Model Calculation: SirCalc Path 'C:\3S Consult\SIR3S-90-15-00-19-Quebec\SirCalc-90-15-02-20_Quebec\SirCalc.exe' not found
+
+Bug Fixes
+^^^^^^^^^^
+- insert_dataframe_into_time_table(): internal_ref_time = self.GetTimeStamps()[0][0]
+
 Version 90.15.11
 ~~~~~~~~~~~~~~~~
 
