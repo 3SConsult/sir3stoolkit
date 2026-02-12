@@ -112,7 +112,7 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r&quot;C:\3S\SIR 3S\SirGraf-90-15-00-20x64_Quebec-Upd1&quot; #change to local path
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r&quot;C:\3S\SIR 3S\SirGraf-90-15-00-22_Quebec-Upd2&quot; #change to local path
 </pre></div>
 </div>
 </div>
@@ -205,7 +205,7 @@ import contextily as cx
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.OpenModel(dbName=r&quot;C:\Users\aUsername\3S\PT3S\PT3S\Examples\Example3.db3&quot;,
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.OpenModel(dbName=r&quot;Toolkit_Tutorial52_Model.db3&quot;,
               providerType=s3s.ProviderTypes.SQLite,
               Mid=&quot;M-1-0-1&quot;,
               saveCurrentlyOpenModel=False,
@@ -224,13 +224,32 @@ Model is open for further operation
 </pre></div></div>
 </div>
 </section>
+<section id="Calculate-Model">
+<h1>Calculate Model<a class="headerlink" href="#Calculate-Model" title="Link to this heading"></a></h1>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.ExecCalculation(True) # To ensure result data
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Model Calculation is complete
+</pre></div></div>
+</div>
+</section>
 <section id="Generate-Element-Dataframes">
 <h1>Generate Element Dataframes<a class="headerlink" href="#Generate-Element-Dataframes" title="Link to this heading"></a></h1>
 <p>We can use the <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.generate_element_dataframe">generate_element_dataframe()</a> method to quickly generate basic dataframes containing all instances of hydraulic element types (Node, Pipe, etc.) in a SIR 3S model.</p>
 <p>All model_data and most result values (self.GetResultProperties_from_elementType(onlySelectedVectors=True)) for the static timestamp are included. Result values are given as floats, unless they are in vectorized form (relevant only for pipes), in that case they are strings.</p>
 <p>The pd.Dataframe will automatically be transformed into a gpd.GeoDataFrame if a SRID is defined in the model, after a geometry column is created.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>object_types = [item for item in dir(s3s.ObjectTypes) if not (item.startswith(&#39;__&#39;) and item.endswith(&#39;__&#39;))]
@@ -250,7 +269,7 @@ print(object_types) # Check for hydraulic elmement types
 <section id="Node">
 <h2>Node<a class="headerlink" href="#Node" title="Link to this heading"></a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(s3s.generate_element_dataframe(element_type=s3s.ObjectTypes.Node, tks=None)).head(3)
@@ -262,29 +281,29 @@ print(object_types) # Check for hydraulic elmement types
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2026-01-10 17:43:02,097] INFO in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df for element type: ObjectTypes.Node ...
-[2026-01-10 17:43:02,098] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_model_data for element type: ObjectTypes.Node ...
-[2026-01-10 17:43:02,100] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.Node
-[2026-01-10 17:43:02,107] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieved 517 element(s) of element type ObjectTypes.Node.
-[2026-01-10 17:43:02,123] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] No properties given → using ALL model_data properties for ObjectTypes.Node.
-[2026-01-10 17:43:02,124] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 37 model_data properties.
-[2026-01-10 17:43:02,124] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving model_data properties [&#39;Name&#39;, &#39;Ktyp&#39;, &#39;Zkor&#39;, &#39;QmEin&#39;, &#39;Lfakt&#39;, &#39;Fkpzon&#39;, &#39;Fkfstf&#39;, &#39;Fkutmp&#39;, &#39;Fkfqps&#39;, &#39;Fkcont&#39;, &#39;Fk2lknot&#39;, &#39;Beschreibung&#39;, &#39;Idreferenz&#39;, &#39;Iplanung&#39;, &#39;Kvr&#39;, &#39;Qakt&#39;, &#39;Xkor&#39;, &#39;Ykor&#39;, &#39;NodeNamePosition&#39;, &#39;ShowNodeName&#39;, &#39;KvrKlartext&#39;, &#39;NumberOfVERB&#39;, &#39;HasBlockConnection&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;, &#39;GeometriesDiffer&#39;, &#39;SymbolFactor&#39;, &#39;bz.Drakonz&#39;, &#39;bz.Fk&#39;, &#39;bz.Fkpvar&#39;, &#39;bz.Fkqvar&#39;, &#39;bz.Fklfkt&#39;, &#39;bz.PhEin&#39;, &#39;bz.Tm&#39;, &#39;bz.Te&#39;, &#39;bz.PhMin&#39;], geometry, end nodes...
-[2026-01-10 17:43:02,208] WARNING in sir3stoolkit.mantle.dataframes: [model_data] End nodes are not defined for element type ObjectTypes.Node. Dataframe is created without end nodes.
-[2026-01-10 17:43:03,437] INFO in sir3stoolkit.mantle.dataframes: [model_data] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
-[2026-01-10 17:43:03,444] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (517, 39)
-[2026-01-10 17:43:03,444] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_results for element type: ObjectTypes.Node ...
-[2026-01-10 17:43:03,517] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Node
-[2026-01-10 17:43:03,597] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2023-02-13 00:00:00.000 +01:00 is used
-[2026-01-10 17:43:03,598] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
-[2026-01-10 17:43:03,598] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 517 element(s) of element type ObjectTypes.Node.
-[2026-01-10 17:43:03,602] INFO in sir3stoolkit.mantle.dataframes: [results] Using 21 result properties.
-[2026-01-10 17:43:03,610] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
-[2026-01-10 17:43:05,089] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 10857)
-[2026-01-10 17:43:05,089] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Merging df_model_data with df_results for element type: ObjectTypes.Node ...
+[2026-02-12 17:33:07,995] INFO in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df for element type: ObjectTypes.Node ...
+[2026-02-12 17:33:07,997] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_model_data for element type: ObjectTypes.Node ...
+[2026-02-12 17:33:07,998] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.Node
+[2026-02-12 17:33:08,011] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieved 517 element(s) of element type ObjectTypes.Node.
+[2026-02-12 17:33:08,035] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] No properties given → using ALL model_data properties for ObjectTypes.Node.
+[2026-02-12 17:33:08,035] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 37 model_data properties.
+[2026-02-12 17:33:08,040] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving model_data properties [&#39;Name&#39;, &#39;Ktyp&#39;, &#39;Zkor&#39;, &#39;QmEin&#39;, &#39;Lfakt&#39;, &#39;Fkpzon&#39;, &#39;Fkfstf&#39;, &#39;Fkutmp&#39;, &#39;Fkfqps&#39;, &#39;Fkcont&#39;, &#39;Fk2lknot&#39;, &#39;Beschreibung&#39;, &#39;Idreferenz&#39;, &#39;Iplanung&#39;, &#39;Kvr&#39;, &#39;Qakt&#39;, &#39;Xkor&#39;, &#39;Ykor&#39;, &#39;NodeNamePosition&#39;, &#39;ShowNodeName&#39;, &#39;KvrKlartext&#39;, &#39;NumberOfVERB&#39;, &#39;HasBlockConnection&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;, &#39;GeometriesDiffer&#39;, &#39;SymbolFactor&#39;, &#39;bz.Drakonz&#39;, &#39;bz.Fk&#39;, &#39;bz.Fkpvar&#39;, &#39;bz.Fkqvar&#39;, &#39;bz.Fklfkt&#39;, &#39;bz.PhEin&#39;, &#39;bz.Tm&#39;, &#39;bz.Te&#39;, &#39;bz.PhMin&#39;], geometry, end nodes...
+[2026-02-12 17:33:08,289] WARNING in sir3stoolkit.mantle.dataframes: [model_data] End nodes are not defined for element type ObjectTypes.Node. Dataframe is created without end nodes.
+[2026-02-12 17:33:10,489] INFO in sir3stoolkit.mantle.dataframes: [model_data] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
+[2026-02-12 17:33:10,490] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (517, 39)
+[2026-02-12 17:33:10,491] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_results for element type: ObjectTypes.Node ...
+[2026-02-12 17:33:10,599] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Node
+[2026-02-12 17:33:10,715] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2023-02-13 00:00:00.000 +01:00 is used
+[2026-02-12 17:33:10,715] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
+[2026-02-12 17:33:10,720] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 517 element(s) of element type ObjectTypes.Node.
+[2026-02-12 17:33:10,723] INFO in sir3stoolkit.mantle.dataframes: [results] Using 73 result properties.
+[2026-02-12 17:33:10,727] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2026-02-12 17:33:17,777] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 37741)
+[2026-02-12 17:33:17,782] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Merging df_model_data with df_results for element type: ObjectTypes.Node ...
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -346,26 +365,78 @@ print(object_types) # Check for hydraulic elmement types
       <th>bz.PhMin</th>
       <th>geometry</th>
       <th>BCIND</th>
+      <th>BCIND_CALC</th>
+      <th>BCIND_FLOW</th>
+      <th>BCIND_MODEL</th>
+      <th>BCIND_SOURCE</th>
+      <th>BCIND_TYPE</th>
+      <th>CHLORID</th>
+      <th>CP</th>
       <th>DP</th>
       <th>DPH</th>
+      <th>DYNVISKO</th>
+      <th>EH</th>
+      <th>EISENFILT</th>
+      <th>EISENGES</th>
+      <th>ESQUELLSP</th>
+      <th>FITT_ANGLE</th>
+      <th>FITT_BASTYPE</th>
+      <th>FITT_DP1</th>
+      <th>FITT_DP2</th>
+      <th>FITT_DP3</th>
+      <th>FITT_STATE</th>
+      <th>FITT_SUBTYPE</th>
+      <th>FITT_VBTYPE1</th>
+      <th>FITT_VBTYPE2</th>
+      <th>FITT_VBTYPE3</th>
+      <th>FITT_ZETA1</th>
+      <th>FITT_ZETA2</th>
+      <th>FITT_ZETA3</th>
+      <th>FSTF_NAME</th>
+      <th>GMIX_NAME</th>
       <th>H</th>
+      <th>HI</th>
       <th>HMAX_INST</th>
       <th>HMIN_INST</th>
+      <th>HS</th>
       <th>IAKTIV</th>
+      <th>INDUV</th>
+      <th>K</th>
+      <th>KP</th>
+      <th>KT</th>
+      <th>LEITFAEH</th>
       <th>LFAKTAKT</th>
+      <th>LFKT</th>
+      <th>M</th>
+      <th>MAINELEMENT</th>
+      <th>MN</th>
       <th>P</th>
       <th>PDAMPF</th>
       <th>PH</th>
       <th>PHMINMAXDIF</th>
+      <th>PHWERT</th>
       <th>PH_EIN</th>
       <th>PH_MIN</th>
       <th>PMAX_INST</th>
       <th>PMIN_INST</th>
+      <th>PVAR</th>
+      <th>Q2</th>
       <th>QM</th>
+      <th>QMABS</th>
+      <th>QVAR</th>
       <th>RHO</th>
+      <th>RHON</th>
+      <th>RHONQUAL</th>
+      <th>SULFAT</th>
       <th>T</th>
+      <th>TE</th>
+      <th>TEMP</th>
+      <th>TMAX_INST</th>
+      <th>TMIN_INST</th>
       <th>TTR</th>
       <th>VOLD</th>
+      <th>WALTER</th>
+      <th>ZHKNR</th>
     </tr>
   </thead>
   <tbody>
@@ -411,26 +482,78 @@ print(object_types) # Check for hydraulic elmement types
       <td>0</td>
       <td>POINT (714332.858 5578924.328)</td>
       <td>17.0</td>
-      <td>0.007826</td>
-      <td>0.007826</td>
-      <td>1.121131</td>
-      <td>1.121131</td>
-      <td>1.121131</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>0.007884</td>
+      <td>0.007884</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>1.121165</td>
+      <td>99999.0</td>
+      <td>1.121165</td>
+      <td>1.121165</td>
+      <td>99999.0</td>
       <td>1.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>1.0</td>
-      <td>1.772014</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>1.772049</td>
       <td>0.012300</td>
-      <td>0.772014</td>
+      <td>0.772049</td>
       <td>0.0</td>
-      <td>0.772014</td>
+      <td>99999.0</td>
+      <td>0.772049</td>
       <td>0.0</td>
-      <td>1.772014</td>
-      <td>1.772014</td>
+      <td>1.772049</td>
+      <td>1.772049</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>0.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>1000.3000</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>10.00000</td>
-      <td>0.000000</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>1.334227e+07</td>
       <td>0.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
     </tr>
     <tr>
       <th>1</th>
@@ -474,26 +597,78 @@ print(object_types) # Check for hydraulic elmement types
       <td>0</td>
       <td>POINT (713611.071 5578598.067)</td>
       <td>17.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>1.650540</td>
       <td>1.650540</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>4.942585</td>
+      <td>99999.0</td>
       <td>4.942585</td>
       <td>4.942585</td>
-      <td>4.942585</td>
+      <td>99999.0</td>
       <td>0.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>1.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>5.132555</td>
       <td>0.695561</td>
       <td>4.132555</td>
       <td>0.0</td>
+      <td>99999.0</td>
       <td>4.132555</td>
       <td>0.0</td>
       <td>5.132555</td>
       <td>5.132555</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>0.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>965.8268</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>89.78860</td>
-      <td>0.213703</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>2.137034e-01</td>
       <td>0.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
     </tr>
     <tr>
       <th>2</th>
@@ -537,26 +712,78 @@ print(object_types) # Check for hydraulic elmement types
       <td>0</td>
       <td>POINT (713542.639 5578804.842)</td>
       <td>17.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>1.542220</td>
       <td>1.542220</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>3.360220</td>
+      <td>99999.0</td>
       <td>3.360220</td>
       <td>3.360220</td>
-      <td>3.360220</td>
+      <td>99999.0</td>
       <td>0.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>1.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>2.890204</td>
       <td>0.197127</td>
       <td>1.890204</td>
       <td>0.0</td>
+      <td>99999.0</td>
       <td>1.890204</td>
       <td>0.0</td>
       <td>2.890204</td>
       <td>2.890204</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>0.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>983.8152</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>59.76965</td>
-      <td>0.168082</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>1.680822e-01</td>
       <td>0.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
     </tr>
   </tbody>
 </table>
@@ -566,7 +793,7 @@ print(object_types) # Check for hydraulic elmement types
 <section id="Pipe">
 <h2>Pipe<a class="headerlink" href="#Pipe" title="Link to this heading"></a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(s3s.generate_element_dataframe(element_type=s3s.ObjectTypes.Pipe, tks=None)).head(3)
@@ -578,29 +805,29 @@ print(object_types) # Check for hydraulic elmement types
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2026-01-10 17:43:05,138] INFO in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df for element type: ObjectTypes.Pipe ...
-[2026-01-10 17:43:05,144] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_model_data for element type: ObjectTypes.Pipe ...
-[2026-01-10 17:43:05,145] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.Pipe
-[2026-01-10 17:43:05,147] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
-[2026-01-10 17:43:05,150] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] No properties given → using ALL model_data properties for ObjectTypes.Pipe.
-[2026-01-10 17:43:05,151] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 46 model_data properties.
-[2026-01-10 17:43:05,152] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving model_data properties [&#39;Name&#39;, &#39;FkdtroRowd&#39;, &#39;Fkltgr&#39;, &#39;Fkstrasse&#39;, &#39;L&#39;, &#39;Lzu&#39;, &#39;Rau&#39;, &#39;Jlambs&#39;, &#39;Lambda0&#39;, &#39;Zein&#39;, &#39;Zaus&#39;, &#39;Zuml&#39;, &#39;Asoll&#39;, &#39;Indschall&#39;, &#39;Baujahr&#39;, &#39;Hal&#39;, &#39;Fkcont&#39;, &#39;Fk2lrohr&#39;, &#39;Beschreibung&#39;, &#39;Idreferenz&#39;, &#39;Iplanung&#39;, &#39;Kvr&#39;, &#39;LineWidthMM&#39;, &#39;DottedLine&#39;, &#39;DN&#39;, &#39;Di&#39;, &#39;KvrKlartext&#39;, &#39;HasClosedNSCHs&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;, &#39;Xkor&#39;, &#39;Ykor&#39;, &#39;GeometriesDiffer&#39;, &#39;bz.Fk&#39;, &#39;bz.Qsvb&#39;, &#39;bz.Irtrenn&#39;, &#39;bz.Leckstatus&#39;, &#39;bz.Leckstart&#39;, &#39;bz.Leckend&#39;, &#39;bz.Leckort&#39;, &#39;bz.Leckmenge&#39;, &#39;bz.Imptnz&#39;, &#39;bz.Zvlimptnz&#39;, &#39;bz.Kantenzv&#39;, &#39;bz.ITrennWithNSCH&#39;], geometry, end nodes...
-[2026-01-10 17:43:06,477] INFO in sir3stoolkit.mantle.dataframes: [model_data] 2 non-empty end node columns were created.
-[2026-01-10 17:43:06,612] INFO in sir3stoolkit.mantle.dataframes: [model_data] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
-[2026-01-10 17:43:06,614] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (524, 50)
-[2026-01-10 17:43:06,617] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_results for element type: ObjectTypes.Pipe ...
-[2026-01-10 17:43:06,678] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
-[2026-01-10 17:43:06,736] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2023-02-13 00:00:00.000 +01:00 is used
-[2026-01-10 17:43:06,736] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
-[2026-01-10 17:43:06,742] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
-[2026-01-10 17:43:06,744] INFO in sir3stoolkit.mantle.dataframes: [results] Using 31 result properties.
-[2026-01-10 17:43:06,766] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
-[2026-01-10 17:43:10,358] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 16244)
-[2026-01-10 17:43:10,361] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Merging df_model_data with df_results for element type: ObjectTypes.Pipe ...
+[2026-02-12 17:33:17,897] INFO in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df for element type: ObjectTypes.Pipe ...
+[2026-02-12 17:33:17,898] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_model_data for element type: ObjectTypes.Pipe ...
+[2026-02-12 17:33:17,900] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.Pipe
+[2026-02-12 17:33:17,903] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2026-02-12 17:33:17,905] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] No properties given → using ALL model_data properties for ObjectTypes.Pipe.
+[2026-02-12 17:33:17,906] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 46 model_data properties.
+[2026-02-12 17:33:17,908] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving model_data properties [&#39;Name&#39;, &#39;FkdtroRowd&#39;, &#39;Fkltgr&#39;, &#39;Fkstrasse&#39;, &#39;L&#39;, &#39;Lzu&#39;, &#39;Rau&#39;, &#39;Jlambs&#39;, &#39;Lambda0&#39;, &#39;Zein&#39;, &#39;Zaus&#39;, &#39;Zuml&#39;, &#39;Asoll&#39;, &#39;Indschall&#39;, &#39;Baujahr&#39;, &#39;Hal&#39;, &#39;Fkcont&#39;, &#39;Fk2lrohr&#39;, &#39;Beschreibung&#39;, &#39;Idreferenz&#39;, &#39;Iplanung&#39;, &#39;Kvr&#39;, &#39;LineWidthMM&#39;, &#39;DottedLine&#39;, &#39;DN&#39;, &#39;Di&#39;, &#39;KvrKlartext&#39;, &#39;HasClosedNSCHs&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;, &#39;Xkor&#39;, &#39;Ykor&#39;, &#39;GeometriesDiffer&#39;, &#39;bz.Fk&#39;, &#39;bz.Qsvb&#39;, &#39;bz.Irtrenn&#39;, &#39;bz.Leckstatus&#39;, &#39;bz.Leckstart&#39;, &#39;bz.Leckend&#39;, &#39;bz.Leckort&#39;, &#39;bz.Leckmenge&#39;, &#39;bz.Imptnz&#39;, &#39;bz.Zvlimptnz&#39;, &#39;bz.Kantenzv&#39;, &#39;bz.ITrennWithNSCH&#39;], geometry, end nodes...
+[2026-02-12 17:33:19,527] INFO in sir3stoolkit.mantle.dataframes: [model_data] 2 non-empty end node columns were created.
+[2026-02-12 17:33:19,687] INFO in sir3stoolkit.mantle.dataframes: [model_data] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
+[2026-02-12 17:33:19,690] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (524, 50)
+[2026-02-12 17:33:19,691] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_results for element type: ObjectTypes.Pipe ...
+[2026-02-12 17:33:19,755] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
+[2026-02-12 17:33:19,826] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2023-02-13 00:00:00.000 +01:00 is used
+[2026-02-12 17:33:19,829] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
+[2026-02-12 17:33:19,829] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2026-02-12 17:33:19,832] INFO in sir3stoolkit.mantle.dataframes: [results] Using 82 result properties.
+[2026-02-12 17:33:19,843] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2026-02-12 17:33:29,944] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 42968)
+[2026-02-12 17:33:29,950] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Merging df_model_data with df_results for element type: ObjectTypes.Pipe ...
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -673,35 +900,86 @@ print(object_types) # Check for hydraulic elmement types
       <th>fkKI</th>
       <th>fkKK</th>
       <th>A</th>
+      <th>ACALC</th>
+      <th>CPI</th>
+      <th>CPK</th>
+      <th>DH</th>
+      <th>DP</th>
+      <th>DRAGRED</th>
+      <th>DRAKONZ</th>
+      <th>DSI</th>
+      <th>DSK</th>
       <th>DTTR</th>
       <th>DWVERL</th>
       <th>DWVERLABS</th>
+      <th>ETAAV</th>
+      <th>FS</th>
+      <th>HR</th>
+      <th>HVEC</th>
       <th>IAKTIV</th>
       <th>IRTRENN</th>
       <th>JV</th>
+      <th>JV2</th>
+      <th>LAMBDA</th>
+      <th>LECKEINAUS</th>
+      <th>LECKMENGE</th>
+      <th>LECKORT</th>
+      <th>LINEPACK</th>
+      <th>LINEPACKGEOM</th>
+      <th>LINEPACKRATE</th>
+      <th>MAINELEMENT</th>
+      <th>MAV</th>
+      <th>MI</th>
+      <th>MK</th>
+      <th>MKOND</th>
+      <th>MMAX_INST</th>
+      <th>MMIN_INST</th>
       <th>MVEC</th>
+      <th>MVECMAX_INST</th>
+      <th>MVECMIN_INST</th>
+      <th>PAV</th>
       <th>PDAMPF</th>
       <th>PHR</th>
+      <th>PHVEC</th>
+      <th>PMAX</th>
       <th>PMIN</th>
+      <th>PR</th>
       <th>PVEC</th>
       <th>PVECMAX_INST</th>
       <th>PVECMIN_INST</th>
+      <th>QI2</th>
+      <th>QK2</th>
       <th>QMAV</th>
       <th>QMI</th>
       <th>QMK</th>
+      <th>QMMAX_INST</th>
+      <th>QMMIN_INST</th>
+      <th>QMVEC</th>
+      <th>QSVB</th>
+      <th>RHOAV</th>
       <th>RHOI</th>
       <th>RHOK</th>
       <th>RHOVEC</th>
       <th>SVEC</th>
+      <th>TAV</th>
       <th>TI</th>
       <th>TK</th>
       <th>TTRVEC</th>
       <th>TVEC</th>
+      <th>TVECMAX_INST</th>
+      <th>TVECMIN_INST</th>
       <th>VAV</th>
       <th>VI</th>
       <th>VK</th>
+      <th>VMAX_INST</th>
+      <th>VMIN_INST</th>
       <th>VOLDA</th>
+      <th>WALTERI</th>
+      <th>WALTERK</th>
       <th>WVL</th>
+      <th>ZAUS</th>
+      <th>ZEIN</th>
+      <th>ZHKNR</th>
       <th>ZVEC</th>
     </tr>
   </thead>
@@ -759,35 +1037,86 @@ print(object_types) # Check for hydraulic elmement types
       <td>4730066059089961857</td>
       <td>4917189080965035120</td>
       <td>0.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>7.780674</td>
       <td>0.0</td>
       <td>0.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>1.0</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>-2.837623E-10\t-2.837623E-10</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>-4.292815E-10\t-4.292815E-10</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>0.0123</td>
       <td>0.0</td>
-      <td>1.615081</td>
-      <td>1.61508\t1.688655</td>
-      <td>1.61508\t1.688655</td>
-      <td>1.61508\t1.688655</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>1.615057</td>
+      <td>99999.0</td>
+      <td>1.615055\t1.68863</td>
+      <td>1.615055\t1.68863</td>
+      <td>1.615055\t1.68863</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>-0.0</td>
       <td>-0.0</td>
       <td>-0.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>1000.3</td>
       <td>1000.3</td>
       <td>1000.3\t1000.3</td>
       <td>0\t7.780674</td>
+      <td>99999.0</td>
       <td>9.999994</td>
       <td>9.999994</td>
-      <td>4.795364E+07\t4.795363E+07</td>
+      <td>6.236402E+07\t6.236401E+07</td>
       <td>10\t10</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>-0.0</td>
       <td>-0.0</td>
       <td>-0.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>0.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>0.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>545.09\t544.34</td>
     </tr>
     <tr>
@@ -843,35 +1172,86 @@ print(object_types) # Check for hydraulic elmement types
       <td>5129584372458662150</td>
       <td>5332825919690090061</td>
       <td>0.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>64.28724</td>
       <td>0.0</td>
       <td>0.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>1.0</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>2.983143E-10\t2.983143E-10\t2.983143E-10\t2.98...</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>-1.018634E-10\t-1.018634E-10\t-1.018634E-10\t-...</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>0.0123</td>
       <td>0.0</td>
-      <td>3.304884</td>
-      <td>3.304885\t3.345665\t3.386445\t3.427225\t3.4680...</td>
-      <td>3.304885\t3.345665\t3.386445\t3.427225\t3.4680...</td>
-      <td>3.304885\t3.345665\t3.386445\t3.427225\t3.4680...</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>3.304718</td>
+      <td>99999.0</td>
+      <td>3.304715\t3.3455\t3.38628\t3.42706\t3.46784\t3...</td>
+      <td>3.304715\t3.3455\t3.38628\t3.42706\t3.46784\t3...</td>
+      <td>3.304715\t3.3455\t3.38628\t3.42706\t3.46784\t3...</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>-0.0</td>
+      <td>-0.0</td>
+      <td>-0.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>1000.3</td>
       <td>1000.3</td>
       <td>1000.3\t1000.3\t1000.3\t1000.3\t1000.3\t1000.3...</td>
       <td>0\t9.183891\t18.36778\t27.55167\t36.73557\t45....</td>
+      <td>99999.0</td>
       <td>9.999994</td>
       <td>9.999994</td>
-      <td>203.6129\t212.7968\t221.9807\t231.1646\t240.34...</td>
+      <td>107.3669\t98.18304\t88.99916\t79.81527\t70.631...</td>
       <td>10\t10\t10\t10\t10\t10\t10\t10</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>-0.0</td>
+      <td>-0.0</td>
+      <td>-0.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>0.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>565.84\t565.4243\t565.0086\t564.5929\t564.1771...</td>
     </tr>
     <tr>
@@ -927,35 +1307,86 @@ print(object_types) # Check for hydraulic elmement types
       <td>5070795580168283912</td>
       <td>5725848577942138606</td>
       <td>0.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>0.002291</td>
       <td>16.2622</td>
       <td>0.064347</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.211137</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>-4.251046\t-4.251046</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>0.198023</td>
       <td>0.000835</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>2.19867</td>
+      <td>99999.0</td>
       <td>2.210375\t2.19867</td>
       <td>2.210375\t2.19867</td>
       <td>2.210375\t2.19867</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>-15.30376</td>
       <td>-15.30376</td>
       <td>-15.30376</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>983.7663</td>
       <td>983.7645</td>
       <td>983.7663\t983.7645</td>
       <td>0\t3.956838</td>
+      <td>99999.0</td>
       <td>59.86739</td>
       <td>59.871</td>
       <td>0.05545082\t0.05315937</td>
       <td>59.8674\t59.871</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>-0.479662</td>
       <td>-0.479662</td>
       <td>-0.479662</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>0.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>0.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>563.01\t563.14</td>
     </tr>
   </tbody>
@@ -968,7 +1399,7 @@ print(object_types) # Check for hydraulic elmement types
 <section id="Pipe-vector">
 <h1>Pipe vector<a class="headerlink" href="#Pipe-vector" title="Link to this heading"></a></h1>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(s3s.generate_pipe_vector_dataframe()).head(3)
@@ -980,25 +1411,25 @@ print(object_types) # Check for hydraulic elmement types
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2026-01-10 17:43:10,410] INFO in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df for element type: ObjectTypes.Pipe ...
-[2026-01-10 17:43:10,411] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_model_data for element type: ObjectTypes.Pipe ...
-[2026-01-10 17:43:10,411] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.Pipe
-[2026-01-10 17:43:10,414] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
-[2026-01-10 17:43:10,416] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] No properties given → using ALL model_data properties for ObjectTypes.Pipe.
-[2026-01-10 17:43:10,417] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 46 model_data properties.
-[2026-01-10 17:43:10,417] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving model_data properties [&#39;Name&#39;, &#39;FkdtroRowd&#39;, &#39;Fkltgr&#39;, &#39;Fkstrasse&#39;, &#39;L&#39;, &#39;Lzu&#39;, &#39;Rau&#39;, &#39;Jlambs&#39;, &#39;Lambda0&#39;, &#39;Zein&#39;, &#39;Zaus&#39;, &#39;Zuml&#39;, &#39;Asoll&#39;, &#39;Indschall&#39;, &#39;Baujahr&#39;, &#39;Hal&#39;, &#39;Fkcont&#39;, &#39;Fk2lrohr&#39;, &#39;Beschreibung&#39;, &#39;Idreferenz&#39;, &#39;Iplanung&#39;, &#39;Kvr&#39;, &#39;LineWidthMM&#39;, &#39;DottedLine&#39;, &#39;DN&#39;, &#39;Di&#39;, &#39;KvrKlartext&#39;, &#39;HasClosedNSCHs&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;, &#39;Xkor&#39;, &#39;Ykor&#39;, &#39;GeometriesDiffer&#39;, &#39;bz.Fk&#39;, &#39;bz.Qsvb&#39;, &#39;bz.Irtrenn&#39;, &#39;bz.Leckstatus&#39;, &#39;bz.Leckstart&#39;, &#39;bz.Leckend&#39;, &#39;bz.Leckort&#39;, &#39;bz.Leckmenge&#39;, &#39;bz.Imptnz&#39;, &#39;bz.Zvlimptnz&#39;, &#39;bz.Kantenzv&#39;, &#39;bz.ITrennWithNSCH&#39;], geometry, end nodes...
-[2026-01-10 17:43:11,711] INFO in sir3stoolkit.mantle.dataframes: [model_data] 2 non-empty end node columns were created.
-[2026-01-10 17:43:11,861] INFO in sir3stoolkit.mantle.dataframes: [model_data] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
-[2026-01-10 17:43:11,861] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (524, 50)
-[2026-01-10 17:43:11,861] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_results for element type: ObjectTypes.Pipe ...
-[2026-01-10 17:43:11,928] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
-[2026-01-10 17:43:11,996] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2023-02-13 00:00:00.000 +01:00 is used
-[2026-01-10 17:43:11,997] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
-[2026-01-10 17:43:11,997] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
-[2026-01-10 17:43:12,001] INFO in sir3stoolkit.mantle.dataframes: [results] Using 31 result properties.
-[2026-01-10 17:43:12,028] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
-[2026-01-10 17:43:15,515] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 16244)
-[2026-01-10 17:43:15,515] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Merging df_model_data with df_results for element type: ObjectTypes.Pipe ...
+[2026-02-12 17:33:30,035] INFO in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df for element type: ObjectTypes.Pipe ...
+[2026-02-12 17:33:30,036] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_model_data for element type: ObjectTypes.Pipe ...
+[2026-02-12 17:33:30,037] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.Pipe
+[2026-02-12 17:33:30,039] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2026-02-12 17:33:30,042] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] No properties given → using ALL model_data properties for ObjectTypes.Pipe.
+[2026-02-12 17:33:30,042] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 46 model_data properties.
+[2026-02-12 17:33:30,044] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving model_data properties [&#39;Name&#39;, &#39;FkdtroRowd&#39;, &#39;Fkltgr&#39;, &#39;Fkstrasse&#39;, &#39;L&#39;, &#39;Lzu&#39;, &#39;Rau&#39;, &#39;Jlambs&#39;, &#39;Lambda0&#39;, &#39;Zein&#39;, &#39;Zaus&#39;, &#39;Zuml&#39;, &#39;Asoll&#39;, &#39;Indschall&#39;, &#39;Baujahr&#39;, &#39;Hal&#39;, &#39;Fkcont&#39;, &#39;Fk2lrohr&#39;, &#39;Beschreibung&#39;, &#39;Idreferenz&#39;, &#39;Iplanung&#39;, &#39;Kvr&#39;, &#39;LineWidthMM&#39;, &#39;DottedLine&#39;, &#39;DN&#39;, &#39;Di&#39;, &#39;KvrKlartext&#39;, &#39;HasClosedNSCHs&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;, &#39;Xkor&#39;, &#39;Ykor&#39;, &#39;GeometriesDiffer&#39;, &#39;bz.Fk&#39;, &#39;bz.Qsvb&#39;, &#39;bz.Irtrenn&#39;, &#39;bz.Leckstatus&#39;, &#39;bz.Leckstart&#39;, &#39;bz.Leckend&#39;, &#39;bz.Leckort&#39;, &#39;bz.Leckmenge&#39;, &#39;bz.Imptnz&#39;, &#39;bz.Zvlimptnz&#39;, &#39;bz.Kantenzv&#39;, &#39;bz.ITrennWithNSCH&#39;], geometry, end nodes...
+[2026-02-12 17:33:31,507] INFO in sir3stoolkit.mantle.dataframes: [model_data] 2 non-empty end node columns were created.
+[2026-02-12 17:33:31,653] INFO in sir3stoolkit.mantle.dataframes: [model_data] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
+[2026-02-12 17:33:31,654] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (524, 50)
+[2026-02-12 17:33:31,655] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_results for element type: ObjectTypes.Pipe ...
+[2026-02-12 17:33:31,711] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
+[2026-02-12 17:33:31,777] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2023-02-13 00:00:00.000 +01:00 is used
+[2026-02-12 17:33:31,777] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
+[2026-02-12 17:33:31,779] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2026-02-12 17:33:31,781] INFO in sir3stoolkit.mantle.dataframes: [results] Using 82 result properties.
+[2026-02-12 17:33:31,791] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2026-02-12 17:33:40,810] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 42968)
+[2026-02-12 17:33:40,818] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Merging df_model_data with df_results for element type: ObjectTypes.Pipe ...
 c:\Users\aUsername\AppData\Local\anaconda3\Lib\site-packages\geopandas\geodataframe.py:1968: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
   super().__setitem__(key, value)
 c:\Users\aUsername\AppData\Local\anaconda3\Lib\site-packages\geopandas\geodataframe.py:1968: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
@@ -1132,7 +1563,7 @@ c:\Users\aUsername\AppData\Local\anaconda3\Lib\site-packages\geopandas\geodatafr
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1205,27 +1636,71 @@ c:\Users\aUsername\AppData\Local\anaconda3\Lib\site-packages\geopandas\geodatafr
       <th>fkKI</th>
       <th>fkKK</th>
       <th>A</th>
+      <th>ACALC</th>
+      <th>CPI</th>
+      <th>CPK</th>
+      <th>DH</th>
+      <th>DP</th>
+      <th>DRAGRED</th>
+      <th>DRAKONZ</th>
+      <th>DSI</th>
+      <th>DSK</th>
       <th>DTTR</th>
       <th>DWVERL</th>
       <th>DWVERLABS</th>
+      <th>ETAAV</th>
+      <th>FS</th>
+      <th>HR</th>
       <th>IAKTIV</th>
       <th>IRTRENN</th>
       <th>JV</th>
+      <th>JV2</th>
+      <th>LAMBDA</th>
+      <th>LECKEINAUS</th>
+      <th>LECKMENGE</th>
+      <th>LECKORT</th>
+      <th>LINEPACK</th>
+      <th>LINEPACKGEOM</th>
+      <th>LINEPACKRATE</th>
+      <th>MAINELEMENT</th>
+      <th>MAV</th>
+      <th>MI</th>
+      <th>MK</th>
+      <th>MKOND</th>
+      <th>MMAX_INST</th>
+      <th>MMIN_INST</th>
+      <th>PAV</th>
       <th>PDAMPF</th>
       <th>PHR</th>
+      <th>PMAX</th>
       <th>PMIN</th>
+      <th>PR</th>
+      <th>QI2</th>
+      <th>QK2</th>
       <th>QMAV</th>
       <th>QMI</th>
       <th>QMK</th>
+      <th>QMMAX_INST</th>
+      <th>QMMIN_INST</th>
+      <th>QSVB</th>
+      <th>RHOAV</th>
       <th>RHOI</th>
       <th>RHOK</th>
+      <th>TAV</th>
       <th>TI</th>
       <th>TK</th>
       <th>VAV</th>
       <th>VI</th>
       <th>VK</th>
+      <th>VMAX_INST</th>
+      <th>VMIN_INST</th>
       <th>VOLDA</th>
+      <th>WALTERI</th>
+      <th>WALTERK</th>
       <th>WVL</th>
+      <th>ZAUS</th>
+      <th>ZEIN</th>
+      <th>ZHKNR</th>
       <th>MVEC_0</th>
       <th>MVEC_1</th>
       <th>MVEC_2</th>
@@ -1444,29 +1919,73 @@ c:\Users\aUsername\AppData\Local\anaconda3\Lib\site-packages\geopandas\geodatafr
       <td>4730066059089961857</td>
       <td>4917189080965035120</td>
       <td>0.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>7.780674</td>
       <td>0.0</td>
       <td>0.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>1.0</td>
       <td>0.0</td>
       <td>0.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>0.0123</td>
       <td>0.0</td>
-      <td>1.615081</td>
+      <td>99999.0</td>
+      <td>1.615057</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>-0.0</td>
       <td>-0.0</td>
       <td>-0.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>1000.3</td>
       <td>1000.3</td>
+      <td>99999.0</td>
       <td>9.999994</td>
       <td>9.999994</td>
       <td>-0.0</td>
       <td>-0.0</td>
       <td>-0.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>0.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>0.0</td>
-      <td>-2.837623e-10</td>
-      <td>-2.837623e-10</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>-4.292815e-10</td>
+      <td>-4.292815e-10</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -1483,8 +2002,8 @@ c:\Users\aUsername\AppData\Local\anaconda3\Lib\site-packages\geopandas\geodatafr
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>1.615080</td>
-      <td>1.688655</td>
+      <td>1.615055</td>
+      <td>1.68863</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -1501,8 +2020,8 @@ c:\Users\aUsername\AppData\Local\anaconda3\Lib\site-packages\geopandas\geodatafr
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>1.615080</td>
-      <td>1.688655</td>
+      <td>1.615055</td>
+      <td>1.68863</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -1519,8 +2038,8 @@ c:\Users\aUsername\AppData\Local\anaconda3\Lib\site-packages\geopandas\geodatafr
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>1.615080</td>
-      <td>1.688655</td>
+      <td>1.615055</td>
+      <td>1.68863</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -1573,8 +2092,8 @@ c:\Users\aUsername\AppData\Local\anaconda3\Lib\site-packages\geopandas\geodatafr
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>4.795364e+07</td>
-      <td>4.795363e+07</td>
+      <td>6.236402e+07</td>
+      <td>6.236401e+07</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -1681,35 +2200,79 @@ c:\Users\aUsername\AppData\Local\anaconda3\Lib\site-packages\geopandas\geodatafr
       <td>5129584372458662150</td>
       <td>5332825919690090061</td>
       <td>0.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>64.28724</td>
       <td>0.0</td>
       <td>0.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>1.0</td>
       <td>0.0</td>
       <td>0.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>0.0123</td>
       <td>0.0</td>
-      <td>3.304884</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
+      <td>99999.0</td>
+      <td>3.304718</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>-0.0</td>
+      <td>-0.0</td>
+      <td>-0.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>1000.3</td>
       <td>1000.3</td>
+      <td>99999.0</td>
       <td>9.999994</td>
       <td>9.999994</td>
+      <td>-0.0</td>
+      <td>-0.0</td>
+      <td>-0.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>0.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>2.983143e-10</td>
-      <td>2.983143e-10</td>
-      <td>2.983143e-10</td>
-      <td>2.983143e-10</td>
-      <td>2.983143e-10</td>
-      <td>2.983143e-10</td>
-      <td>2.983143e-10</td>
-      <td>2.983143e-10</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>-1.018634e-10</td>
+      <td>-1.018634e-10</td>
+      <td>-1.018634e-10</td>
+      <td>-1.018634e-10</td>
+      <td>-1.018634e-10</td>
+      <td>-1.018634e-10</td>
+      <td>-1.018634e-10</td>
+      <td>-1.018634e-10</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -1720,14 +2283,14 @@ c:\Users\aUsername\AppData\Local\anaconda3\Lib\site-packages\geopandas\geodatafr
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>3.304885</td>
-      <td>3.345665</td>
-      <td>3.386445</td>
-      <td>3.427225</td>
-      <td>3.468005</td>
-      <td>3.508785</td>
-      <td>3.549565</td>
-      <td>3.590345</td>
+      <td>3.304715</td>
+      <td>3.34550</td>
+      <td>3.38628</td>
+      <td>3.42706</td>
+      <td>3.46784</td>
+      <td>3.50862</td>
+      <td>3.5494</td>
+      <td>3.59018</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -1738,14 +2301,14 @@ c:\Users\aUsername\AppData\Local\anaconda3\Lib\site-packages\geopandas\geodatafr
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>3.304885</td>
-      <td>3.345665</td>
-      <td>3.386445</td>
-      <td>3.427225</td>
-      <td>3.468005</td>
-      <td>3.508785</td>
-      <td>3.549565</td>
-      <td>3.590345</td>
+      <td>3.304715</td>
+      <td>3.34550</td>
+      <td>3.38628</td>
+      <td>3.42706</td>
+      <td>3.46784</td>
+      <td>3.50862</td>
+      <td>3.5494</td>
+      <td>3.59018</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -1756,14 +2319,14 @@ c:\Users\aUsername\AppData\Local\anaconda3\Lib\site-packages\geopandas\geodatafr
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>3.304885</td>
-      <td>3.345665</td>
-      <td>3.386445</td>
-      <td>3.427225</td>
-      <td>3.468005</td>
-      <td>3.508785</td>
-      <td>3.549565</td>
-      <td>3.590345</td>
+      <td>3.304715</td>
+      <td>3.34550</td>
+      <td>3.38628</td>
+      <td>3.42706</td>
+      <td>3.46784</td>
+      <td>3.50862</td>
+      <td>3.5494</td>
+      <td>3.59018</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -1810,14 +2373,14 @@ c:\Users\aUsername\AppData\Local\anaconda3\Lib\site-packages\geopandas\geodatafr
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>2.036129e+02</td>
-      <td>2.127968e+02</td>
-      <td>221.9807</td>
-      <td>231.1646</td>
-      <td>240.3485</td>
-      <td>249.5324</td>
-      <td>258.7163</td>
-      <td>267.9001</td>
+      <td>1.073669e+02</td>
+      <td>9.818304e+01</td>
+      <td>88.99916</td>
+      <td>79.81527</td>
+      <td>70.63138</td>
+      <td>61.44748</td>
+      <td>52.2636</td>
+      <td>43.0797</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -1918,27 +2481,71 @@ c:\Users\aUsername\AppData\Local\anaconda3\Lib\site-packages\geopandas\geodatafr
       <td>5070795580168283912</td>
       <td>5725848577942138606</td>
       <td>0.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>0.002291</td>
       <td>16.2622</td>
       <td>0.064347</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.211137</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>0.198023</td>
       <td>0.000835</td>
+      <td>99999.0</td>
       <td>2.19867</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>-15.30376</td>
       <td>-15.30376</td>
       <td>-15.30376</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>983.7663</td>
       <td>983.7645</td>
+      <td>99999.0</td>
       <td>59.86739</td>
       <td>59.871</td>
       <td>-0.479662</td>
       <td>-0.479662</td>
       <td>-0.479662</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>0.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>0.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>-4.251046e+00</td>
       <td>-4.251046e+00</td>
       <td>NaN</td>
@@ -1958,7 +2565,7 @@ c:\Users\aUsername\AppData\Local\anaconda3\Lib\site-packages\geopandas\geodatafr
       <td>NaN</td>
       <td>NaN</td>
       <td>2.210375</td>
-      <td>2.198670</td>
+      <td>2.19867</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -1976,7 +2583,7 @@ c:\Users\aUsername\AppData\Local\anaconda3\Lib\site-packages\geopandas\geodatafr
       <td>NaN</td>
       <td>NaN</td>
       <td>2.210375</td>
-      <td>2.198670</td>
+      <td>2.19867</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -1994,7 +2601,7 @@ c:\Users\aUsername\AppData\Local\anaconda3\Lib\site-packages\geopandas\geodatafr
       <td>NaN</td>
       <td>NaN</td>
       <td>2.210375</td>
-      <td>2.198670</td>
+      <td>2.19867</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -2109,7 +2716,7 @@ c:\Users\aUsername\AppData\Local\anaconda3\Lib\site-packages\geopandas\geodatafr
 <section id="DistrictHeatingConsumer">
 <h2>DistrictHeatingConsumer<a class="headerlink" href="#DistrictHeatingConsumer" title="Link to this heading"></a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(s3s.generate_element_dataframe(element_type=s3s.ObjectTypes.DistrictHeatingConsumer, tks=None)).head(3)
@@ -2121,29 +2728,29 @@ c:\Users\aUsername\AppData\Local\anaconda3\Lib\site-packages\geopandas\geodatafr
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2026-01-10 17:43:15,760] INFO in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df for element type: ObjectTypes.DistrictHeatingConsumer ...
-[2026-01-10 17:43:15,761] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_model_data for element type: ObjectTypes.DistrictHeatingConsumer ...
-[2026-01-10 17:43:15,763] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.DistrictHeatingConsumer
-[2026-01-10 17:43:15,765] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieved 337 element(s) of element type ObjectTypes.DistrictHeatingConsumer.
-[2026-01-10 17:43:15,768] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] No properties given → using ALL model_data properties for ObjectTypes.DistrictHeatingConsumer.
-[2026-01-10 17:43:15,768] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 55 model_data properties.
-[2026-01-10 17:43:15,768] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving model_data properties [&#39;Name&#39;, &#39;Beschreibung&#39;, &#39;Ind0&#39;, &#39;W0&#39;, &#39;Qm0&#39;, &#39;Tvl0&#39;, &#39;Trs0&#39;, &#39;Lfk&#39;, &#39;Rho0&#39;, &#39;Dtmin&#39;, &#39;Indtr&#39;, &#39;Trsk&#39;, &#39;Fktrft&#39;, &#39;A&#39;, &#39;B&#39;, &#39;C&#39;, &#39;Vtyp&#39;, &#39;V0&#39;, &#39;P1soll&#39;, &#39;Dpvlmin&#39;, &#39;Fkzep1vl&#39;, &#39;Tsvl&#39;, &#39;Zevk&#39;, &#39;Dphaus&#39;, &#39;Dprlmin&#39;, &#39;Fkzep1rl&#39;, &#39;Tsrl&#39;, &#39;Imbg&#39;, &#39;Irfv&#39;, &#39;Fkcont&#39;, &#39;Idreferenz&#39;, &#39;Iplanung&#39;, &#39;CPM&#39;, &#39;NumberOfVERB&#39;, &#39;IndtrKlartext&#39;, &#39;M0Estimated&#39;, &#39;W0Estimated&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;, &#39;Xkor&#39;, &#39;Ykor&#39;, &#39;ShowDescription&#39;, &#39;PositionOfDescription&#39;, &#39;Angle&#39;, &#39;SymbolFactor&#39;, &#39;GeometriesDiffer&#39;, &#39;bz.Fk&#39;, &#39;bz.Indlast&#39;, &#39;bz.Indlfkt2&#39;, &#39;bz.Fklfkt&#39;, &#39;bz.Fklfkt2&#39;, &#39;bz.Fkqvar&#39;, &#39;bz.Fktevt&#39;, &#39;bz.IndlastKlartext&#39;], geometry, end nodes...
-[2026-01-10 17:43:16,850] INFO in sir3stoolkit.mantle.dataframes: [model_data] 2 non-empty end node columns were created.
-[2026-01-10 17:43:16,998] INFO in sir3stoolkit.mantle.dataframes: [model_data] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
-[2026-01-10 17:43:16,998] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (337, 59)
-[2026-01-10 17:43:16,998] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_results for element type: ObjectTypes.DistrictHeatingConsumer ...
-[2026-01-10 17:43:17,061] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.DistrictHeatingConsumer
-[2026-01-10 17:43:17,131] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2023-02-13 00:00:00.000 +01:00 is used
-[2026-01-10 17:43:17,131] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
-[2026-01-10 17:43:17,133] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 337 element(s) of element type ObjectTypes.DistrictHeatingConsumer.
-[2026-01-10 17:43:17,133] INFO in sir3stoolkit.mantle.dataframes: [results] Using 20 result properties.
-[2026-01-10 17:43:17,147] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
-[2026-01-10 17:43:18,231] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 6740)
-[2026-01-10 17:43:18,231] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Merging df_model_data with df_results for element type: ObjectTypes.DistrictHeatingConsumer ...
+[2026-02-12 17:33:41,196] INFO in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df for element type: ObjectTypes.DistrictHeatingConsumer ...
+[2026-02-12 17:33:41,197] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_model_data for element type: ObjectTypes.DistrictHeatingConsumer ...
+[2026-02-12 17:33:41,198] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.DistrictHeatingConsumer
+[2026-02-12 17:33:41,200] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieved 337 element(s) of element type ObjectTypes.DistrictHeatingConsumer.
+[2026-02-12 17:33:41,202] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] No properties given → using ALL model_data properties for ObjectTypes.DistrictHeatingConsumer.
+[2026-02-12 17:33:41,202] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 55 model_data properties.
+[2026-02-12 17:33:41,203] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving model_data properties [&#39;Name&#39;, &#39;Beschreibung&#39;, &#39;Ind0&#39;, &#39;W0&#39;, &#39;Qm0&#39;, &#39;Tvl0&#39;, &#39;Trs0&#39;, &#39;Lfk&#39;, &#39;Rho0&#39;, &#39;Dtmin&#39;, &#39;Indtr&#39;, &#39;Trsk&#39;, &#39;Fktrft&#39;, &#39;A&#39;, &#39;B&#39;, &#39;C&#39;, &#39;Vtyp&#39;, &#39;V0&#39;, &#39;P1soll&#39;, &#39;Dpvlmin&#39;, &#39;Fkzep1vl&#39;, &#39;Tsvl&#39;, &#39;Zevk&#39;, &#39;Dphaus&#39;, &#39;Dprlmin&#39;, &#39;Fkzep1rl&#39;, &#39;Tsrl&#39;, &#39;Imbg&#39;, &#39;Irfv&#39;, &#39;Fkcont&#39;, &#39;Idreferenz&#39;, &#39;Iplanung&#39;, &#39;CPM&#39;, &#39;NumberOfVERB&#39;, &#39;IndtrKlartext&#39;, &#39;M0Estimated&#39;, &#39;W0Estimated&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;, &#39;Xkor&#39;, &#39;Ykor&#39;, &#39;ShowDescription&#39;, &#39;PositionOfDescription&#39;, &#39;Angle&#39;, &#39;SymbolFactor&#39;, &#39;GeometriesDiffer&#39;, &#39;bz.Fk&#39;, &#39;bz.Indlast&#39;, &#39;bz.Indlfkt2&#39;, &#39;bz.Fklfkt&#39;, &#39;bz.Fklfkt2&#39;, &#39;bz.Fkqvar&#39;, &#39;bz.Fktevt&#39;, &#39;bz.IndlastKlartext&#39;], geometry, end nodes...
+[2026-02-12 17:33:42,333] INFO in sir3stoolkit.mantle.dataframes: [model_data] 2 non-empty end node columns were created.
+[2026-02-12 17:33:42,474] INFO in sir3stoolkit.mantle.dataframes: [model_data] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
+[2026-02-12 17:33:42,477] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (337, 59)
+[2026-02-12 17:33:42,478] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_results for element type: ObjectTypes.DistrictHeatingConsumer ...
+[2026-02-12 17:33:42,541] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.DistrictHeatingConsumer
+[2026-02-12 17:33:42,602] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2023-02-13 00:00:00.000 +01:00 is used
+[2026-02-12 17:33:42,603] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
+[2026-02-12 17:33:42,605] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 337 element(s) of element type ObjectTypes.DistrictHeatingConsumer.
+[2026-02-12 17:33:42,606] INFO in sir3stoolkit.mantle.dataframes: [results] Using 36 result properties.
+[2026-02-12 17:33:42,626] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2026-02-12 17:33:44,327] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 12132)
+[2026-02-12 17:33:44,330] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Merging df_model_data with df_results for element type: ObjectTypes.DistrictHeatingConsumer ...
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -2230,20 +2837,36 @@ c:\Users\aUsername\AppData\Local\anaconda3\Lib\site-packages\geopandas\geodatafr
       <th>IAKTIV</th>
       <th>INDUV</th>
       <th>LFH</th>
+      <th>LFKT</th>
       <th>LFT</th>
       <th>M</th>
+      <th>MAINELEMENT</th>
       <th>MHYUV</th>
+      <th>MSOLL</th>
       <th>MTHUV</th>
+      <th>P1</th>
+      <th>P2</th>
+      <th>P3</th>
+      <th>PH1</th>
+      <th>PH2</th>
+      <th>PH3</th>
       <th>PHIRL</th>
       <th>PHIVL</th>
       <th>QM</th>
+      <th>QM13</th>
+      <th>QM31</th>
+      <th>QMI</th>
+      <th>QMK</th>
+      <th>QVAR</th>
       <th>RHOI</th>
       <th>RHOK</th>
       <th>TI</th>
       <th>TK</th>
       <th>TVMIN</th>
       <th>W</th>
+      <th>WHYUV</th>
       <th>WSOLL</th>
+      <th>WTHUV</th>
     </tr>
   </thead>
   <tbody>
@@ -2308,26 +2931,42 @@ c:\Users\aUsername\AppData\Local\anaconda3\Lib\site-packages\geopandas\geodatafr
       <td>POINT (713675.3 5578705.193)</td>
       <td>4673701597187411685</td>
       <td>4995788945387711669</td>
-      <td>17.178450</td>
+      <td>17.178460</td>
       <td>1.583806</td>
       <td>1.583806</td>
       <td>0.0</td>
       <td>-1.0</td>
       <td>0.288343</td>
+      <td>99999.0</td>
       <td>0.283131</td>
       <td>0.318879</td>
+      <td>99999.0</td>
       <td>-0.829086</td>
+      <td>99999.0</td>
       <td>-0.829086</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>-3.333333e+32</td>
       <td>-3.333333e+32</td>
       <td>1.147966</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>966.0245</td>
       <td>983.7</td>
       <td>89.4592</td>
       <td>60.0</td>
       <td>68.50781</td>
-      <td>39.36750</td>
-      <td>39.36750</td>
+      <td>39.36751</td>
+      <td>99999.0</td>
+      <td>39.36751</td>
+      <td>99999.0</td>
     </tr>
     <tr>
       <th>1</th>
@@ -2390,26 +3029,42 @@ c:\Users\aUsername\AppData\Local\anaconda3\Lib\site-packages\geopandas\geodatafr
       <td>POINT (714251.332 5578925.001)</td>
       <td>5015101891725198603</td>
       <td>5751808837348052764</td>
-      <td>0.069769</td>
-      <td>0.006844</td>
-      <td>0.006844</td>
+      <td>0.070358</td>
+      <td>0.006902</td>
+      <td>0.006902</td>
       <td>1.0</td>
       <td>-1.0</td>
       <td>0.000000</td>
+      <td>99999.0</td>
       <td>0.000000</td>
       <td>0.000000</td>
+      <td>99999.0</td>
       <td>0.000000</td>
+      <td>99999.0</td>
       <td>0.000000</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>-3.333333e+32</td>
       <td>-3.333333e+32</td>
       <td>0.000000</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>1000.3000</td>
       <td>983.7</td>
       <td>10.0000</td>
       <td>60.0</td>
       <td>10.00000</td>
       <td>0.00000</td>
+      <td>99999.0</td>
       <td>0.00000</td>
+      <td>99999.0</td>
     </tr>
     <tr>
       <th>2</th>
@@ -2478,20 +3133,36 @@ c:\Users\aUsername\AppData\Local\anaconda3\Lib\site-packages\geopandas\geodatafr
       <td>0.0</td>
       <td>-1.0</td>
       <td>0.287407</td>
+      <td>99999.0</td>
       <td>0.283131</td>
       <td>0.243774</td>
+      <td>99999.0</td>
       <td>-0.633813</td>
+      <td>99999.0</td>
       <td>-0.633813</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>-3.333333e+32</td>
       <td>-3.333333e+32</td>
       <td>0.877587</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
+      <td>99999.0</td>
       <td>965.9670</td>
       <td>983.7</td>
       <td>89.5549</td>
       <td>60.0</td>
       <td>68.50781</td>
-      <td>30.19337</td>
-      <td>30.19337</td>
+      <td>30.19338</td>
+      <td>99999.0</td>
+      <td>30.19338</td>
+      <td>99999.0</td>
     </tr>
   </tbody>
 </table>
