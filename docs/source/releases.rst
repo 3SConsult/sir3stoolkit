@@ -12,7 +12,7 @@ There are two types of updates:
 
       pip install --upgrade sir3stoolkit
 
-      .. code-block:: bash
+   .. code-block:: bash
 
       pip install --upgrade sir3stoolkit==90.15.12 # for specific version
 
