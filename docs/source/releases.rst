@@ -12,6 +12,10 @@ There are two types of updates:
 
       pip install --upgrade sir3stoolkit
 
+      .. code-block:: bash
+
+      pip install --upgrade sir3stoolkit==90.15.12 # for specific version
+
 2. **Core updates with DLL changes** - Requires manual replacement of ``Sir3S_Toolkit.dll`` in the SirGraf directory after pip upgrade (1). The newest version of the ``Sir3S_Toolkit.dll`` is shipped alongside the updated pure python code.    
 
 
@@ -20,22 +24,25 @@ The release notes indicate whether a version includes changes to the C# side and
 90-15 Quebec
 ------------
 
+90-15-00-22-Upd2
+^^^^^^^^^^^^^^^^
+
 Version 90.15.12
-~~~~~~~~~~~~~~~~
+""""""""""""""""
 
 For SIR 3S Version: 90-15-00-22-Upd2
 
 C# Changes
-^^^^^^^^^^
+~~~~~~~~~~
 - Fixed Calculation Bug: Could not start Model Calculation: SirCalc Path 'C:\3S Consult\SIR3S-90-15-00-19-Quebec\SirCalc-90-15-02-20_Quebec\SirCalc.exe' not found
 
 Bug Fixes
-^^^^^^^^^^
+~~~~~~~~~~
 - insert_dataframe_into_time_table(): internal_ref_time = self.GetTimeStamps()[0][0]
 - dataframes.py: generate_element_dataframe() minor safe guard added
 
 Version 90.15.11
-~~~~~~~~~~~~~~~~
+""""""""""""""""
 
 For SIR 3S Version: 90-15-00-21-Upd2
 
@@ -46,8 +53,11 @@ For SIR 3S Version: 90-15-00-21-Upd2
       - insert_dataframe_into_measured_variable_table() changed to insert_dataframe_into_time_table()
       - get_dataframe_from_measured_variable_table() changed to get_dataframe_from_time_table()
 
+90-15-00-21-Upd2
+^^^^^^^^^^^^^^^^
+
 Version 90.15.10
-~~~~~~~~~~~~~~~~
+""""""""""""""""
 
 For SIR 3S Version: 90-15-00-21-Upd2
 
@@ -57,7 +67,7 @@ For SIR 3S Version: 90-15-00-21-Upd2
       - get_dataframe_from_measured_variable_table()
 
 Version 90.15.9
-~~~~~~~~~~~~~~~
+"""""""""""""""
 
 For SIR 3S Version: 90-15-00-21-Upd2
 
@@ -70,8 +80,11 @@ For SIR 3S Version: 90-15-00-21-Upd2
       - get_tks_of_group_elements()
       - get_element_type_from_tk()
 
+90-15-00-20-Upd1
+^^^^^^^^^^^^^^^^
+
 Version 90.15.8
-~~~~~~~~~~~~~~~
+"""""""""""""""
 
 For SIR 3S Version: 90-15-00-20-Upd1
 
@@ -81,12 +94,12 @@ For SIR 3S Version: 90-15-00-20-Upd1
 - Fix: SIR_3S_to_nx_graph(): generate_hydraulic_edge_dataframe() renamed to generate_edge_dataframe() + datatype fix
 
 Version 90.15.7
-~~~~~~~~~~~~~~~
+"""""""""""""""
 
 For SIR 3S Version: 90-15-00-20-Upd1
 
 Changes
-^^^^^^^
+~~~~~~~
 - dataframes.py: 
    - metadata renamed to model data
    - hydraulic edge renamed to edge
@@ -95,18 +108,23 @@ Changes
    - new function: generate_longitudinal_section_vector_dataframes()
    - new function: generate_pipe_vector_dataframe()
 
+- mantle sub classes renaming:
+   - from Alternative_Models_SIR3S_Model to SIR3S_Model_Alternative_Models
+   - from Dataframes_SIR3S_Model to SIR3S_Model_Dataframes
+   - from Plotting_SIR3S_Model to SIR3S_Model_Plotting
+
 Version 90.15.6
-~~~~~~~~~~~~~~~
+"""""""""""""""
 
 For SIR 3S Version: 90-15-00-20-Upd1
 
 C# Changes
-^^^^^^^^^^
+~~~~~~~~~~
 
 - Hydraulic Profile related functions added
 
 Improvements
-^^^^^^^^^^^^
+~~~~~~~~~~~~
 
 - dataframes.py
    - generate_element_results_dataframe() returns float values instead of object type
@@ -117,25 +135,28 @@ Improvements
 - plotting.py
    - plot_pipe_layer() and plot_node_layer() introduced as new functions for network color depictions
 
+90-15-00-19
+^^^^^^^^^^^
+
 Version 90.15.5
-~~~~~~~~~~~~~~~
+"""""""""""""""
 
 For SIR 3S Version: 90-15-00-19
 
 C# Changes
-^^^^^^^^^^
+~~~~~~~~~~
 
 - Model Repair Class added
 
 Bug Fixes
-^^^^^^^^^^
+~~~~~~~~~~
 
 - dataframes.py: 
    - logger.error(f"[metadata] Error occured while filtering with filter_container_tks.") no longer triggers unwarranted
    - logger.info(f"[metadata] {len(used_cols)} non-empty end node columns were created.") no longer triggers unwarranted
 
 Improvements
-^^^^^^^^^^^^
+~~~~~~~~~~~~
 
 - alternative_models.py: 
    - SIR_3S_to_nx_graph() now created minimal graph with additional properties
@@ -147,7 +168,7 @@ Improvements
    - new function generate_hydraulic_edge_dataframe() returns a pandas dataframe containing all hydraulic edges of a model (eg. pipes, valves, compressors, etc.)
 
 Version 90.15.4
-~~~~~~~~~~~~~~~
+"""""""""""""""
 
 - For SIR 3S Version: 90-15-00-19
 - Implementation of Higher level functions (mantle):
@@ -161,7 +182,7 @@ Version 90.15.4
 - Mantle Import fixed: mantle dependencies no longer needed, when importing sir3stoolkit
 
 Version 90.15.3 (Initial Release)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+"""""""""""""""""""""""""""""""""
 
 - First official public release of the SIR 3S Toolkit (for SIR 3S Version: 90-15-00-16)
 - Introduced core wrapping API for SIR 3S object model (nodes, pipes, etc.)
