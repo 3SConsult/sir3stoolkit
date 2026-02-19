@@ -108,11 +108,6 @@ Changes
    - new function: generate_longitudinal_section_vector_dataframes()
    - new function: generate_pipe_vector_dataframe()
 
-- mantle sub classes renaming:
-   - from Alternative_Models_SIR3S_Model to SIR3S_Model_Alternative_Models
-   - from Dataframes_SIR3S_Model to SIR3S_Model_Dataframes
-   - from Plotting_SIR3S_Model to SIR3S_Model_Plotting
-
 Version 90.15.6
 """""""""""""""
 
@@ -134,6 +129,14 @@ Improvements
 
 - plotting.py
    - plot_pipe_layer() and plot_node_layer() introduced as new functions for network color depictions
+
+Changes
+~~~~~~~
+
+- mantle sub classes renaming:
+   - from Alternative_Models_SIR3S_Model to SIR3S_Model_Alternative_Models
+   - from Dataframes_SIR3S_Model to SIR3S_Model_Dataframes
+   - from Plotting_SIR3S_Model to SIR3S_Model_Plotting
 
 90-15-00-19
 ^^^^^^^^^^^
