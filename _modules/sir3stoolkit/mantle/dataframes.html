@@ -98,6 +98,7 @@
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
@@ -108,6 +109,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">defaultdict</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">geopandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">gpd</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">shapely</span><span class="w"> </span><span class="kn">import</span> <span class="n">wkt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
@@ -1277,6 +1279,251 @@
 
         <span class="k">return</span> <span class="n">dfPipes</span>
 
+    <span class="c1">## Dataframe Operations: Time Table</span>
+<div class="viewcode-block" id="SIR3S_Model_Dataframes.insert_dataframe_into_time_table">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.insert_dataframe_into_time_table">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">insert_dataframe_into_time_table</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">time_table_tk</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">dataframe</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+        <span class="n">reference_time_stamp</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">date_col</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;TAG&quot;</span><span class="p">,</span>
+        <span class="n">time_col</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;UHRZEIT&quot;</span><span class="p">,</span>
+        <span class="n">value_col</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;WERT&quot;</span><span class="p">,</span>
+        <span class="n">dt_format</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets (overwrites previous) time-value pairs for time table based on provided dataframe.</span>
+
+<span class="sd">        :param self:</span>
+<span class="sd">        :param time_table_tk: Tk of time table ([&quot;VarPressureTable&quot;, &quot;VarFlowTable&quot;, &quot;ValveLiftTable&quot;, &quot;PumpSpeedTable&quot;, &quot;MeasuredVariableTable&quot;, &quot;LoadFactorTable&quot;]) to set time-value pairs for.</span>
+<span class="sd">        :type time_table_tk: int</span>
+<span class="sd">        :param dataframe: Pandas dataframe with date_col, time_col, value_col</span>
+<span class="sd">        :type dataframe: pd.Dataframe</span>
+<span class="sd">        :param reference_time_stamp: &quot;0-timestamp&quot; - the difference to this timestamp will be calculated for each timestamp in the dataframe and used in the time table, default=self.GetTimeStamps()[0][0] - first simulation timestamp, values like &quot;%Y-%m-%d %H:%M:%S.%f&quot;</span>
+<span class="sd">        :type reference_time_stamp: str</span>
+<span class="sd">        :param date_col: Name of date col in dataframe, default = &quot;TAG&quot;, values like &quot;2026-01-01&quot;, &quot;%Y-%m-%d&quot;</span>
+<span class="sd">        :type date_col: str</span>
+<span class="sd">        :param time_col: Name of time col in dataframe, default = &quot;UHRZEIT&quot;, values like &quot;00:00:20.000000&quot;, &quot;%H:%M:%S.%f&quot;</span>
+<span class="sd">        :type time_col: str</span>
+<span class="sd">        :param value_col: Name of value col in dataframe, default = &quot;WERT&quot;, values like 83 or 1.2</span>
+<span class="sd">        :type value_col: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># --- Input data validation ---</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;[insert dataframe into time table] Validating input data ...&quot;</span><span class="p">)</span>
+        <span class="n">available_time_table_tks</span><span class="o">=</span><span class="p">[]</span>
+
+        <span class="k">for</span> <span class="nb">type</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;VarPressureTable&quot;</span><span class="p">,</span> <span class="s2">&quot;VarFlowTable&quot;</span><span class="p">,</span> <span class="s2">&quot;ValveLiftTable&quot;</span><span class="p">,</span> <span class="s2">&quot;PumpSpeedTable&quot;</span><span class="p">,</span> <span class="s2">&quot;MeasuredVariableTable&quot;</span><span class="p">,</span> <span class="s2">&quot;LoadFactorTable&quot;</span><span class="p">]:</span>
+            <span class="n">tks</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTksofElementType</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="p">[</span><span class="nb">type</span><span class="p">])</span>
+            <span class="n">available_time_table_tks</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">tks</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">time_table_tk</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">available_time_table_tks</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[insert dataframe into time table] Time table with tk </span><span class="si">{</span><span class="n">time_table_tk</span><span class="si">}</span><span class="s2"> does not exist.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+        
+        <span class="k">if</span> <span class="n">dataframe</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[insert dataframe into time table] Dataframe is empty.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+        
+        <span class="n">available_dataframe_columns</span> <span class="o">=</span> <span class="n">dataframe</span><span class="o">.</span><span class="n">columns</span>
+        <span class="k">if</span> <span class="n">date_col</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">available_dataframe_columns</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[insert dataframe into time table] Date col </span><span class="si">{</span><span class="n">date_col</span><span class="si">}</span><span class="s2"> not in dataframe columns.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="k">if</span> <span class="n">time_col</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">available_dataframe_columns</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[insert dataframe into time table] Time col </span><span class="si">{</span><span class="n">time_col</span><span class="si">}</span><span class="s2"> not in dataframe columns.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="k">if</span> <span class="n">value_col</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">available_dataframe_columns</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[insert dataframe into time table] Value col </span><span class="si">{</span><span class="n">value_col</span><span class="si">}</span><span class="s2"> not in dataframe columns.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">internal_ref_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTimeStamps</span><span class="p">()[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">internal_ref_time</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="n">reference_time_stamp</span><span class="p">:</span>
+            <span class="n">used_reference_time_stamp</span> <span class="o">=</span> <span class="n">reference_time_stamp</span>
+        <span class="k">elif</span> <span class="n">internal_ref_time</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTimeStamps</span><span class="p">()[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">used_reference_time_stamp</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[insert dataframe into time table] No valid simulation timestamp in model, nor reference time stamp given.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="n">used_reference_time_stamp_as_datetime</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">used_reference_time_stamp</span><span class="p">,</span> <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="n">df</span> <span class="o">=</span> <span class="n">dataframe</span><span class="p">[[</span><span class="n">date_col</span><span class="p">,</span> <span class="n">time_col</span><span class="p">,</span> <span class="n">value_col</span><span class="p">]]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;[insert dataframe into time table] Successfully validated input data.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># --- From timestamp to simulation time ---</span>
+        <span class="n">ts_series</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span>
+            <span class="n">df</span><span class="p">[</span><span class="n">date_col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">df</span><span class="p">[</span><span class="n">time_col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">),</span>
+            <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="n">errors</span><span class="o">=</span><span class="s2">&quot;coerce&quot;</span>     
+        <span class="p">)</span>
+
+        <span class="n">delta_sec</span> <span class="o">=</span> <span class="p">(</span><span class="n">ts_series</span> <span class="o">-</span> <span class="n">used_reference_time_stamp_as_datetime</span><span class="p">)</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span>
+        <span class="n">df</span><span class="p">[</span><span class="s2">&quot;delta_time_col&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">delta_sec</span>
+
+        <span class="n">property_name</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_time_table_col_name_from_tk</span><span class="p">(</span><span class="n">time_table_tk</span><span class="o">=</span><span class="n">time_table_tk</span><span class="p">)</span>
+
+        <span class="c1"># --- Inserting value pairs into model ---</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;[insert dataframe into time table] Inserting value pairs ...&quot;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">for</span> <span class="nb">id</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+                <span class="n">t</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;delta_time_col&quot;</span><span class="p">]</span>
+                <span class="n">v</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="n">value_col</span><span class="p">]</span>
+                <span class="n">tk_new_row</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AddTableRow</span><span class="p">(</span><span class="n">tablePkTk</span><span class="o">=</span><span class="n">time_table_tk</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">SetValue</span><span class="p">(</span><span class="n">Tk</span><span class="o">=</span><span class="n">tk_new_row</span><span class="p">,</span> <span class="n">propertyName</span><span class="o">=</span><span class="s2">&quot;Zeit&quot;</span><span class="p">,</span> <span class="n">Value</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">SetValue</span><span class="p">(</span><span class="n">Tk</span><span class="o">=</span><span class="n">tk_new_row</span><span class="p">,</span> <span class="n">propertyName</span><span class="o">=</span><span class="n">property_name</span><span class="p">,</span> <span class="n">Value</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[insert dataframe into time table] Error inserting value pairs into model: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;[insert dataframe into time table] Successfully inserted value pairs&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SIR3S_Model_Dataframes.get_dataframes_from_time_table_type">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.get_dataframes_from_time_table_type">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_dataframes_from_time_table_type</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">time_table_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get DataFrames for all time tables of a given type and a joint horizontally concatenated DataFrame.</span>
+<span class="sd">        </span>
+<span class="sd">        :param self:</span>
+<span class="sd">        :param time_table_type: The time table type to extract. Must be one of:</span>
+<span class="sd">                                [&quot;VarPressureTable&quot;, &quot;VarFlowTable&quot;, &quot;ValveLiftTable&quot;,</span>
+<span class="sd">                                &quot;PumpSpeedTable&quot;, &quot;MeasuredVariableTable&quot;, &quot;LoadFactorTable&quot;].</span>
+<span class="sd">        :type time_table_type: str</span>
+<span class="sd">        :return: A tuple containing:</span>
+<span class="sd">                - df_h: The joint DataFrame. If multiple tables are found, this is a column-wise</span>
+<span class="sd">                        concatenation (``axis=1``, ``join=&#39;outer&#39;``) of all per-TK DataFrames with</span>
+<span class="sd">                        the index sorted ascending. If only one table exists, it is returned directly.</span>
+<span class="sd">                - dfs: A dictionary mapping each TK to its corresponding DataFrame</span>
+<span class="sd">                        (key: TK, value: DataFrame).</span>
+<span class="sd">                - tks_of_time_table_type: The list of TKs for the requested time table type, in the</span>
+<span class="sd">                        order returned by ``GetTksofElementType``.</span>
+<span class="sd">        :rtype: tuple[pd.DataFrame, dict[Any, pd.DataFrame], list[Any]]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[get dataframes from time table type] ...&quot;</span><span class="p">)</span>
+        <span class="c1"># --- Validate input ---</span>
+        
+        <span class="k">if</span> <span class="n">time_table_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;VarPressureTable&quot;</span><span class="p">,</span> <span class="s2">&quot;VarFlowTable&quot;</span><span class="p">,</span> <span class="s2">&quot;ValveLiftTable&quot;</span><span class="p">,</span> <span class="s2">&quot;PumpSpeedTable&quot;</span><span class="p">,</span> <span class="s2">&quot;MeasuredVariableTable&quot;</span><span class="p">,</span> <span class="s2">&quot;LoadFactorTable&quot;</span><span class="p">]:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid time table type. Has to be of type: [&#39;VarPressureTable&#39;, &#39;VarFlowTable&#39;, &#39;ValveLiftTable&#39;, &#39;PumpSpeedTable&#39;, &#39;MeasuredVariableTable&#39;, &#39;LoadFactorTable&#39;]&quot;</span><span class="p">)</span>
+        
+        <span class="c1"># --- Obtain tks of time table type ---</span>
+        <span class="n">tks_of_time_table_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTksofElementType</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="p">[</span><span class="n">time_table_type</span><span class="p">])</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">_value_col_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_time_table_col_name_from_tk</span><span class="p">(</span><span class="n">time_table_tk</span><span class="o">=</span><span class="n">tks_of_time_table_type</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> 
+        
+        <span class="n">dfs</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="c1"># --- Obtain table for each tk ---</span>
+        <span class="k">for</span> <span class="n">tk</span> <span class="ow">in</span>  <span class="n">tks_of_time_table_type</span><span class="p">:</span>
+            <span class="n">table_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetValue</span><span class="p">(</span><span class="n">Tk</span><span class="o">=</span><span class="n">tk</span><span class="p">,</span> <span class="n">propertyName</span><span class="o">=</span><span class="s2">&quot;Name&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">dfs</span><span class="p">[</span><span class="n">tk</span><span class="p">]</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_dataframe_from_time_table</span><span class="p">(</span><span class="n">time_table_tk</span><span class="o">=</span><span class="n">tk</span><span class="p">,</span> <span class="n">value_col_name</span><span class="o">=</span><span class="n">table_name</span><span class="p">)</span><span class="c1"># + &quot; &quot; + _value_col_name)</span>
+
+        <span class="c1"># --- Create Joint df ---</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dfs</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">df_h</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">dfs</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">join</span><span class="o">=</span><span class="s1">&#39;outer&#39;</span><span class="p">)</span>
+            <span class="n">df_h</span> <span class="o">=</span> <span class="n">df_h</span><span class="o">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">df_h</span> <span class="o">=</span> <span class="n">dfs</span><span class="p">[</span><span class="n">tks_of_time_table_type</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[get dataframes from time table type] Successful&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">df_h</span><span class="p">,</span> <span class="n">dfs</span><span class="p">,</span> <span class="n">tks_of_time_table_type</span></div>
+
+        
+
+<div class="viewcode-block" id="SIR3S_Model_Dataframes.get_dataframe_from_time_table">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.get_dataframe_from_time_table">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_dataframe_from_time_table</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">time_table_tk</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">value_col_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">time_col</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Zeit [s]&quot;</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Obtain time variable table (tables = [&quot;VarPressureTable&quot;, &quot;VarFlowTable&quot;, &quot;ValveLiftTable&quot;, &quot;PumpSpeedTable&quot;, &quot;MeasuredVariableTable&quot;, &quot;LoadFactorTable&quot;]) in format of a pandas dataframe with time and value column.</span>
+<span class="sd">        </span>
+<span class="sd">        :param self: </span>
+<span class="sd">        :param time_table_tk: Tk of time table to get time-value pairs from.</span>
+<span class="sd">        :type time_table_tk: str</span>
+<span class="sd">        :param value_col: Name given to the value column</span>
+<span class="sd">        :type value_col: str</span>
+<span class="sd">        :param time_col: Name given to the time column, Default = &quot;Zeit&quot;</span>
+<span class="sd">        :type time_col: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># --- Validate input tk and find time table type ---</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[get dataframe from time table] Validating input data (time_table_tk=</span><span class="si">{</span><span class="n">time_table_tk</span><span class="si">}</span><span class="s2">)...&quot;</span><span class="p">)</span>
+
+        <span class="n">value_name</span><span class="p">,</span> <span class="n">_value_col_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_time_table_col_name_from_tk</span><span class="p">(</span><span class="n">time_table_tk</span><span class="o">=</span><span class="n">time_table_tk</span><span class="p">)</span> 
+        <span class="k">if</span> <span class="n">value_name</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+
+        <span class="k">if</span> <span class="n">value_col_name</span><span class="p">:</span>
+            <span class="n">value_col_name_to_use</span> <span class="o">=</span> <span class="n">value_col_name</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">value_col_name_to_use</span> <span class="o">=</span> <span class="n">_value_col_name</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;[get dataframe from time table] Successfully validated input data.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># --- Build dataframe</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;[get dataframe from time table] Building dataframe ...&quot;</span><span class="p">)</span>
+
+        <span class="n">rows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTableRows</span><span class="p">(</span><span class="n">tablePkTk</span><span class="o">=</span><span class="n">time_table_tk</span><span class="p">)</span>
+        <span class="n">row_tks</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">rows</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> 
+
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">tk</span> <span class="ow">in</span> <span class="n">row_tks</span><span class="p">:</span>
+            <span class="n">time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetValue</span><span class="p">(</span><span class="n">tk</span><span class="p">,</span> <span class="s2">&quot;Zeit&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">time</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">time</span><span class="p">)</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetValue</span><span class="p">(</span><span class="n">tk</span><span class="p">,</span> <span class="n">value_name</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="n">data</span><span class="p">[</span><span class="n">time</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+        <span class="k">if</span> <span class="n">data</span> <span class="o">==</span> <span class="p">{}:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;[get dataframe from time table] time table is empty.&quot;</span><span class="p">)</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">[[</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">]],</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="mf">0.0</span><span class="p">],</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">value_name</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">value_col_name_to_use</span><span class="p">])</span>
+            <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">time_col</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;[get dataframe from time table] Successfully built dataframe.&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">df</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_time_table_col_name_from_tk</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">time_table_tk</span><span class="p">:</span> <span class="nb">str</span>        
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        
+        <span class="k">if</span> <span class="n">time_table_tk</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTksofElementType</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="o">.</span><span class="n">VarPressureTable</span><span class="p">):</span>
+            <span class="n">value_name</span> <span class="o">=</span> <span class="s1">&#39;Ph&#39;</span>                                                                    <span class="c1"># needed to retrieve numeric value from row</span>
+            <span class="n">_value_col_name</span> <span class="o">=</span> <span class="s1">&#39;Druck p [bar]&#39;</span>                                                     <span class="c1"># needed to name column in output df</span>
+        <span class="k">elif</span> <span class="n">time_table_tk</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTksofElementType</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="o">.</span><span class="n">VarFlowTable</span><span class="p">):</span>
+            <span class="n">value_name</span> <span class="o">=</span> <span class="s1">&#39;Qm&#39;</span>
+            <span class="n">_value_col_name</span> <span class="o">=</span> <span class="s1">&#39;Einspeisung/Abnahme Q [m^3/h]&#39;</span>
+        <span class="k">elif</span> <span class="n">time_table_tk</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTksofElementType</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="o">.</span><span class="n">ValveLiftTable</span><span class="p">):</span>
+            <span class="n">value_name</span> <span class="o">=</span> <span class="s1">&#39;Phi&#39;</span>
+            <span class="n">_value_col_name</span> <span class="o">=</span> <span class="s1">&#39;Stellung phi [%]&#39;</span>
+        <span class="k">elif</span> <span class="n">time_table_tk</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTksofElementType</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="o">.</span><span class="n">PumpSpeedTable</span><span class="p">):</span>
+            <span class="n">value_name</span> <span class="o">=</span> <span class="s1">&#39;N&#39;</span>
+            <span class="n">_value_col_name</span> <span class="o">=</span> <span class="s1">&#39;Drehzahl [1/min]&#39;</span>
+        <span class="k">elif</span> <span class="n">time_table_tk</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTksofElementType</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="o">.</span><span class="n">MeasuredVariableTable</span><span class="p">):</span>
+            <span class="n">value_name</span> <span class="o">=</span> <span class="s1">&#39;W&#39;</span>
+            <span class="n">_value_col_name</span> <span class="o">=</span> <span class="s1">&#39;Sollwert&#39;</span>
+        <span class="k">elif</span> <span class="n">time_table_tk</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTksofElementType</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="o">.</span><span class="n">LoadFactorTable</span><span class="p">):</span>
+            <span class="n">value_name</span> <span class="o">=</span> <span class="s1">&#39;Lf&#39;</span>
+            <span class="n">_value_col_name</span> <span class="o">=</span> <span class="s1">&#39;Lastfaktor [-]&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[_get_time_table_col_name_from_tk] No time table with tk </span><span class="si">{</span><span class="n">time_table_tk</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span>
+        
+        <span class="k">return</span> <span class="n">value_name</span><span class="p">,</span> <span class="n">_value_col_name</span>
 
     <span class="c1"># Miscellaneous</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">__Get_Node_Tks_From_Pipe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pipe_tk</span><span class="p">):</span>
@@ -1372,7 +1619,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2025 3S Consult GmbH.</p>
+    <p>&#169; Copyright 2025 - 2026 3S Consult GmbH.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

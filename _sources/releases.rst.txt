@@ -29,8 +29,13 @@ Below all available Toolkit version from 90.15.3 to 90.15.XX are listed. For eac
 SIR 3S: 90-15-00-22-Upd2
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-Version 90.15.13 (TO BE RELEASED)
-"""""""""""""""""""""""""""""""""
+Version 90.15.13
+""""""""""""""""
+
+Changes
+~~~~~~~
+
+- All time table related functions moved from advanced_operations.py (SIR3S_Model_Advanced_Operations) to dataframes.py (SIR3S_Model_Dataframes)
 
 Bug Fixes
 ~~~~~~~~~
