@@ -169,6 +169,17 @@ This Example demonstrates the capabilities of the class SIR3S_Model_Dataframes t
 
 View: `Notebook <tutorials/SIR3S_Model_Mantle/Tutorial053_Assets/ToolkitTutorial053.html>`_ | Download: :download:`Notebook <tutorials/SIR3S_Model_Mantle/Tutorial053_Assets/ToolkitTutorial053.ipynb>`.
 
+.. _Ttu054:
+
+SIR3S_Advanced_Operations implements functions that extend the basic C# operations with more advanced operations to change a SIR 3S model.
+
+Tutorial 54: Measured Value Tables
+""""""""""""""""""""""""""""""""""
+
+This example demonstrates how view, create, delete and edit measured variable tables (Sollwerttabellen).
+
+View: `Notebook <tutorials/SIR3S_Model_Mantle/Tutorial054_Assets/ToolkitTutorial054.html>`_  | Download: :download:`Notebook <tutorials/SIR3S_Model_Mantle/Tutorial054_Assets/ToolkitTutorial054.ipynb>`.
+
 .. _Ttu60-69:
 
 SIR3S_Model_Alternative_Models
@@ -243,17 +254,6 @@ Tutorial 81: Groups
 This example demonstrates how add, remove, set elements to groups.
 
 View: `Notebook <tutorials/SIR3S_Model_Mantle/Tutorial081_Assets/ToolkitTutorial081.html>`_  | Download: :download:`Notebook <tutorials/SIR3S_Model_Mantle/Tutorial081_Assets/ToolkitTutorial081.ipynb>`.
-
-.. _Ttu082:
-
-SIR3S_Advanced_Operations implements functions that extend the basic C# operations with more advanced operations to change a SIR 3S model.
-
-Tutorial 82: Measured Value Tables
-""""""""""""""""""""""""""""""""""""
-
-This example demonstrates how view, create, delete and edit measured variable tables (Sollwerttabellen).
-
-View: `Notebook <tutorials/SIR3S_Model_Mantle/Tutorial082_Assets/ToolkitTutorial082.html>`_  | Download: :download:`Notebook <tutorials/SIR3S_Model_Mantle/Tutorial082_Assets/ToolkitTutorial082.ipynb>`.
 
 .. 
    .. _Ttu100-149:
