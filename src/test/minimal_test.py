@@ -7,7 +7,7 @@ class BasicImportTest(unittest.TestCase):
         except ImportError as e:
             self.fail(f"Import failed: {e}")
         try:
-            SIR3S_SIRGRAF_DIR = r"C:\3S\SIR 3S\SirGraf-90-15-00-21_Quebec-Upd2" #change to local path
+            SIR3S_SIRGRAF_DIR = r"C:\3S\SIR 3S\SirGraf-90-15-00-22_Quebec-Upd2" #change to local path
             
             from sir3stoolkit.core import wrapper
             wrapper.Initialize_Toolkit(SIR3S_SIRGRAF_DIR)

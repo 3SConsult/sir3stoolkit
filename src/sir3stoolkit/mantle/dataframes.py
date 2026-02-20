@@ -12,6 +12,7 @@ from pytoolconfig import dataclass
 
 import pandas as pd
 import re
+import numpy as np
 import sys
 from dataclasses import dataclass, field
 from typing import List, Optional, Union

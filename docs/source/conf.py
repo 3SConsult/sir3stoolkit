@@ -5,13 +5,15 @@
 
 import os
 import sys
+from datetime import datetime
+
 sys.path.insert(0, os.path.abspath('../src'))
 
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = 'sir3stoolkit'
-copyright = '2025 3S Consult GmbH'
+copyright = f'2025 - {datetime.now().year} 3S Consult GmbH'
 author = '3S Consult GmbH'
 
 # -- General configuration ---------------------------------------------------
