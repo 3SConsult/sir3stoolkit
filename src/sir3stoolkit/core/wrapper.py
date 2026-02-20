@@ -420,7 +420,7 @@ class SIR3S_Model:
         :type waitForSirCalcToExit: bool
         :return: None
         :rtype: None
-        :description: This is a wrapper method for ExecCalculation() from toolkit; Watch out for errors for more information.
+        :description: This is a wrapper method for ExecCalculation() from toolkit; Watch out for errors for more information. Use Exit_status = instance.GetResultValue(instance.GetTksofElementType(instance.ObjectTypes.GeneralSection)[0],"EXSTAT")[0] afterwards to check status of calculation.
         """
         isExecuted, error = self.toolkit.ExecCalculation(waitForSirCalcToExit)
         if not isExecuted:
@@ -741,7 +741,7 @@ class SIR3S_Model:
 
         :return: None
         :rtype: None
-        :description: This is a wrapper method for RefreshViews() from toolkit; Watch out for errors for more information.
+        :description: This is a wrapper method for RefreshViews() from toolkit; Watch out for errors for more information. Important to note is that if you open a model via python outside from SIR Graf and make changes while having the model open in SIR Graf, this function will not make changes in SIR Graf visible. To do that you need to reopen the model in SIR Graf.
         """
         result, error = self.toolkit.RefreshViews()
         if not result:
