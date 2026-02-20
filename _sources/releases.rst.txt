@@ -29,6 +29,14 @@ Below all available Toolkit version from 90.15.3 to 90.15.XX are listed. For eac
 SIR 3S: 90-15-00-22-Upd2
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
+Version 90.15.13 (TO BE RELEASED)
+"""""""""""""""""""""""""""""""""
+
+Bug Fixes
+~~~~~~~~~
+
+- dataframes.py: logger(f"{e}"") without except fixed
+
 Version 90.15.12
 """"""""""""""""
 
@@ -39,7 +47,7 @@ C# Changes
 - Fixed Calculation Bug: Could not start Model Calculation: SirCalc Path 'C:\3S Consult\SIR3S-90-15-00-19-Quebec\SirCalc-90-15-02-20_Quebec\SirCalc.exe' not found
 
 Bug Fixes
-~~~~~~~~~~
+~~~~~~~~~
 - insert_dataframe_into_time_table(): internal_ref_time = self.GetTimeStamps()[0][0]
 - dataframes.py: generate_element_dataframe() minor safe guard added
 
