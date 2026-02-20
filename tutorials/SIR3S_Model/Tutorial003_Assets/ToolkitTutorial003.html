@@ -90,14 +90,13 @@
   <section id="Tutorial-3:-Accessing-simulation-results">
 <h1>Tutorial 3: Accessing simulation results<a class="headerlink" href="#Tutorial-3:-Accessing-simulation-results" title="Link to this heading"></a></h1>
 <p>This tutorial demonstrates how to get result values of objects based on their tk.</p>
-<p>The database used for this Tutorial is based on <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/examples.html#network-1">Network1</a>.</p>
 <section id="SIR-3S-Installation">
 <h2>SIR 3S Installation<a class="headerlink" href="#SIR-3S-Installation" title="Link to this heading"></a></h2>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r&quot;C:\3S\SIR 3S\SirGraf-90-15-00-20x64_Quebec-Upd1&quot; #change to local path
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r&quot;C:\3S\SIR 3S\SirGraf-90-15-00-22_Quebec-Upd2&quot; #change to local path
 </pre></div>
 </div>
 </div>
@@ -246,16 +245,62 @@ NetworkType.Water
 </pre></div>
 </div>
 </div>
+<p>We can check the status of the calculation</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>Exit_status = s3s.GetResultValue(s3s.GetTksofElementType(s3s.ObjectTypes.GeneralSection)[0],&quot;EXSTAT&quot;)[0]
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(Exit_status)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+0
+</pre></div></div>
+</div>
+<p>German Interpretation:</p>
+<ul class="simple">
+<li><p>-1=undefiniert</p></li>
+<li><p>0=normal</p></li>
+<li><p>1=Benutzerabbruch</p></li>
+<li><p>2=fragwürdige Ergebnisse</p></li>
+<li><p>3=schlechte oder ungültige Ergebnisse</p></li>
+<li><p>100=Ergebnisse halten für Analyse</p></li>
+<li><p>101=Stopp-Signal für Analyse</p></li>
+</ul>
+<p>English Interpretation:</p>
+<ul class="simple">
+<li><p>-1=undefined</p></li>
+<li><p>0=normal</p></li>
+<li><p>1=user-interrupt</p></li>
+<li><p>2=questionable results</p></li>
+<li><p>3=bad or invald result</p></li>
+<li><p>100=holding results for analysis</p></li>
+<li><p>101=stop-signal for analysis</p></li>
+</ul>
+<p>Our results are normal.</p>
 </section>
 <section id="Get-Result-Values">
 <h2>Get Result Values<a class="headerlink" href="#Get-Result-Values" title="Link to this heading"></a></h2>
-<p>Our goal is to find how the pressure value in Node10 changes from 11:08 to 11:11.</p>
+<p>Our goal is to find how the pressure value in Node10 changes from 12:00 to 12:05.</p>
 <p>The <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetResultValue">GetResultValue()</a> function requires a tk to the object and the internal SIR 3S attribute name of the value we want to obtain. This guide will walk you through how to obtain those.</p>
 <section id="SIR-3S-object-types">
 <h3>SIR 3S object types<a class="headerlink" href="#SIR-3S-object-types" title="Link to this heading"></a></h3>
 <p>As we did with non-result values, we need to obtain the internal SIR 3S object types to be passed to our function for obtaining the attribute names.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>node_type=s3s.ObjectTypes.Node
@@ -263,7 +308,7 @@ NetworkType.Water
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pipe_type=s3s.ObjectTypes.Pipe
@@ -271,7 +316,7 @@ NetworkType.Water
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pump_type = s3s.ObjectTypes.Pump
@@ -279,7 +324,7 @@ NetworkType.Water
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>container_type = s3s.ObjectTypes.OpenContainer
@@ -292,7 +337,7 @@ NetworkType.Water
 <p>As we did with non-result values, we obtain the tks of the nodes and pipes in this model.</p>
 <p>We use <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetTksofElementType">GetTksofElementType()</a> to create a list of all node tks in the model.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>nodes=s3s.GetTksofElementType(ElementType=node_type)
@@ -300,17 +345,17 @@ NetworkType.Water
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for node in nodes:
-    if(s3s.GetValue(node, &#39;Name&#39;)[0]==&#39;Node10&#39;):
+    if(s3s.GetValue(node, &#39;Name&#39;)[0]==&#39;K0011&#39;):
         tk_of_interest=s3s.GetValue(node, &#39;tk&#39;)[0]
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(tk_of_interest)
@@ -322,7 +367,7 @@ NetworkType.Water
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-5452027739517825954
+5028478813255134383
 </pre></div></div>
 </div>
 </section>
@@ -330,7 +375,7 @@ NetworkType.Water
 <h3>GetResultProperties_from_elementTypes<a class="headerlink" href="#GetResultProperties_from_elementTypes" title="Link to this heading"></a></h3>
 <p>Similar to non-result values, we use <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetResultProperties_from_elementType">GetResultProperties_from_elementTypes()</a> to create a list of all result properties of the different objects that exist in our model.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>node_result_properties=s3s.GetResultProperties_from_elementType(elementType=node_type, onlySelectedVectors=False)
@@ -338,7 +383,7 @@ NetworkType.Water
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(node_result_properties)
@@ -354,7 +399,7 @@ NetworkType.Water
 </pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pipe_result_properties=s3s.GetResultProperties_from_elementType(elementType=pipe_type, onlySelectedVectors=False)
@@ -362,7 +407,7 @@ NetworkType.Water
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(pipe_result_properties)
@@ -378,7 +423,7 @@ NetworkType.Water
 </pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pump_result_properties=s3s.GetResultProperties_from_elementType(elementType=pump_type, onlySelectedVectors=False)
@@ -386,7 +431,7 @@ NetworkType.Water
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(pump_result_properties)
@@ -402,7 +447,7 @@ NetworkType.Water
 </pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>tank_result_properties=s3s.GetResultProperties_from_elementType(elementType=container_type, onlySelectedVectors=False)
@@ -410,7 +455,7 @@ NetworkType.Water
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(tank_result_properties)
@@ -430,7 +475,7 @@ NetworkType.Water
 <h3>GetResultProperties_from_elementKey<a class="headerlink" href="#GetResultProperties_from_elementKey" title="Link to this heading"></a></h3>
 <p>Alternatively, we can use <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetResultProperties_from_elementKey">GetResultProperties_from_elementKey()</a> to create a list of all result properties of one one specific object based on its tk.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>node_result_properties_alternative=s3s.GetResultProperties_from_elementKey(elementKey=nodes[0])
@@ -438,7 +483,7 @@ NetworkType.Water
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(node_result_properties_alternative)
@@ -459,7 +504,7 @@ NetworkType.Water
 <p>The <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetResultValue">GetResultValue()</a> function gives the value corresponding to the currently selected timestamp for the model. You can check the current timestamp using <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetCurrentTimeStamp">GetCurrentTimeStamp()</a> and change it using
 <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.SetCurrentTimeStamp">SetCurrentTimeStamp()</a>.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetCurrentTimeStamp()
@@ -467,17 +512,17 @@ NetworkType.Water
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&#39;2025-07-18 11:07:35.000 +02:00&#39;
+&#39;2025-07-18 12:00:00.000 +02:00&#39;
 </pre></div></div>
 </div>
 <p>We can check what Timestamps are available in this model using <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetTimeStamps">GetTimeStamps()</a>. The function returns a tuple (list[str], str, str, str) with all simulation timestamps, tsStat, tsMin, tsMax.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>available_timestamps=s3s.GetTimeStamps()
@@ -485,7 +530,7 @@ NetworkType.Water
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(available_timestamps)
@@ -497,19 +542,20 @@ NetworkType.Water
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-([&#39;2025-07-18 11:07:35.000 +02:00&#39;, &#39;2025-07-18 11:08:35.000 +02:00&#39;, &#39;2025-07-18 11:09:35.000 +02:00&#39;, &#39;2025-07-18 11:10:35.000 +02:00&#39;, &#39;2025-07-18 11:11:35.000 +02:00&#39;, &#39;2025-07-18 11:12:35.000 +02:00&#39;, &#39;2025-07-18 11:13:35.000 +02:00&#39;, &#39;2025-07-18 11:14:35.000 +02:00&#39;, &#39;2025-07-18 11:15:35.000 +02:00&#39;, &#39;2025-07-18 11:16:35.000 +02:00&#39;, &#39;2025-07-18 11:17:35.000 +02:00&#39;, &#39;2025-07-18 11:18:35.000 +02:00&#39;, &#39;2025-07-18 11:19:35.000 +02:00&#39;, &#39;2025-07-18 11:20:35.000 +02:00&#39;, &#39;2025-07-18 11:21:35.000 +02:00&#39;, &#39;2025-07-18 11:22:35.000 +02:00&#39;, &#39;2025-07-18 11:23:35.000 +02:00&#39;, &#39;2025-07-18 11:24:35.000 +02:00&#39;, &#39;2025-07-18 11:25:35.000 +02:00&#39;, &#39;2025-07-18 11:26:35.000 +02:00&#39;, &#39;2025-07-18 11:27:35.000 +02:00&#39;, &#39;2025-07-18 11:28:35.000 +02:00&#39;, &#39;2025-07-18 11:29:35.000 +02:00&#39;, &#39;2025-07-18 11:30:35.000 +02:00&#39;, &#39;2025-07-18 11:31:35.000 +02:00&#39;, &#39;2025-07-18 11:32:35.000 +02:00&#39;, &#39;2025-07-18 11:33:35.000 +02:00&#39;, &#39;2025-07-18 11:34:35.000 +02:00&#39;, &#39;2025-07-18 11:35:35.000 +02:00&#39;, &#39;2025-07-18 11:36:35.000 +02:00&#39;, &#39;2025-07-18 11:37:35.000 +02:00&#39;, &#39;2025-07-18 11:38:35.000 +02:00&#39;, &#39;2025-07-18 11:39:35.000 +02:00&#39;, &#39;2025-07-18 11:40:35.000 +02:00&#39;, &#39;2025-07-18 11:41:35.000 +02:00&#39;, &#39;2025-07-18 11:42:35.000 +02:00&#39;, &#39;2025-07-18 11:43:35.000 +02:00&#39;, &#39;2025-07-18 11:44:35.000 +02:00&#39;, &#39;2025-07-18 11:45:35.000 +02:00&#39;, &#39;2025-07-18 11:46:35.000 +02:00&#39;, &#39;2025-07-18 11:47:35.000 +02:00&#39;, &#39;2025-07-18 11:48:35.000 +02:00&#39;, &#39;2025-07-18 11:49:35.000 +02:00&#39;, &#39;2025-07-18 11:50:35.000 +02:00&#39;, &#39;2025-07-18 11:51:35.000 +02:00&#39;, &#39;2025-07-18 11:52:35.000 +02:00&#39;, &#39;2025-07-18 11:53:35.000 +02:00&#39;, &#39;2025-07-18 11:54:35.000 +02:00&#39;, &#39;2025-07-18 11:55:35.000 +02:00&#39;, &#39;2025-07-18 11:56:35.000 +02:00&#39;, &#39;2025-07-18 11:57:35.000 +02:00&#39;, &#39;2025-07-18 11:58:35.000 +02:00&#39;, &#39;2025-07-18 11:59:35.000 +02:00&#39;, &#39;2025-07-18 12:00:35.000 +02:00&#39;, &#39;2025-07-18 12:01:35.000 +02:00&#39;, &#39;2025-07-18 12:02:35.000 +02:00&#39;, &#39;2025-07-18 12:03:35.000 +02:00&#39;, &#39;2025-07-18 12:04:35.000 +02:00&#39;, &#39;2025-07-18 12:05:35.000 +02:00&#39;, &#39;2025-07-18 12:06:35.000 +02:00&#39;, &#39;2025-07-18 12:07:35.000 +02:00&#39;, &#39;2025-07-18 12:08:35.000 +02:00&#39;, &#39;2025-07-18 12:09:35.000 +02:00&#39;, &#39;2025-07-18 12:10:35.000 +02:00&#39;, &#39;2025-07-18 12:11:35.000 +02:00&#39;, &#39;2025-07-18 12:12:35.000 +02:00&#39;, &#39;2025-07-18 12:13:35.000 +02:00&#39;, &#39;2025-07-18 12:14:35.000 +02:00&#39;, &#39;2025-07-18 12:15:35.000 +02:00&#39;, &#39;2025-07-18 12:16:35.000 +02:00&#39;, &#39;2025-07-18 12:17:35.000 +02:00&#39;, &#39;2025-07-18 12:18:35.000 +02:00&#39;, &#39;2025-07-18 12:19:35.000 +02:00&#39;, &#39;2025-07-18 12:20:35.000 +02:00&#39;, &#39;2025-07-18 12:21:35.000 +02:00&#39;, &#39;2025-07-18 12:22:35.000 +02:00&#39;, &#39;2025-07-18 12:23:35.000 +02:00&#39;, &#39;2025-07-18 12:24:35.000 +02:00&#39;, &#39;2025-07-18 12:25:35.000 +02:00&#39;, &#39;2025-07-18 12:26:35.000 +02:00&#39;, &#39;2025-07-18 12:27:35.000 +02:00&#39;, &#39;2025-07-18 12:28:35.000 +02:00&#39;, &#39;2025-07-18 12:29:35.000 +02:00&#39;, &#39;2025-07-18 12:30:35.000 +02:00&#39;, &#39;2025-07-18 12:31:35.000 +02:00&#39;, &#39;2025-07-18 12:32:35.000 +02:00&#39;, &#39;2025-07-18 12:33:35.000 +02:00&#39;, &#39;2025-07-18 12:34:35.000 +02:00&#39;, &#39;2025-07-18 12:35:35.000 +02:00&#39;, &#39;2025-07-18 12:36:35.000 +02:00&#39;, &#39;2025-07-18 12:37:35.000 +02:00&#39;, &#39;2025-07-18 12:38:35.000 +02:00&#39;, &#39;2025-07-18 12:39:35.000 +02:00&#39;, &#39;2025-07-18 12:40:35.000 +02:00&#39;, &#39;2025-07-18 12:41:35.000 +02:00&#39;, &#39;2025-07-18 12:42:35.000 +02:00&#39;, &#39;2025-07-18 12:43:35.000 +02:00&#39;, &#39;2025-07-18 12:44:35.000 +02:00&#39;, &#39;2025-07-18 12:45:35.000 +02:00&#39;, &#39;2025-07-18 12:46:35.000 +02:00&#39;, &#39;2025-07-18 12:47:35.000 +02:00&#39;, &#39;2025-07-18 12:48:35.000 +02:00&#39;, &#39;2025-07-18 12:49:35.000 +02:00&#39;, &#39;2025-07-18 12:50:35.000 +02:00&#39;, &#39;2025-07-18 12:51:35.000 +02:00&#39;, &#39;2025-07-18 12:52:35.000 +02:00&#39;, &#39;2025-07-18 12:53:35.000 +02:00&#39;, &#39;2025-07-18 12:54:35.000 +02:00&#39;, &#39;2025-07-18 12:55:35.000 +02:00&#39;, &#39;2025-07-18 12:56:35.000 +02:00&#39;, &#39;2025-07-18 12:57:35.000 +02:00&#39;, &#39;2025-07-18 12:58:35.000 +02:00&#39;, &#39;2025-07-18 12:59:35.000 +02:00&#39;, &#39;2025-07-18 13:00:35.000 +02:00&#39;, &#39;2025-07-18 13:01:35.000 +02:00&#39;, &#39;2025-07-18 13:02:35.000 +02:00&#39;, &#39;2025-07-18 13:03:35.000 +02:00&#39;, &#39;2025-07-18 13:04:35.000 +02:00&#39;, &#39;2025-07-18 13:05:35.000 +02:00&#39;, &#39;2025-07-18 13:06:35.000 +02:00&#39;, &#39;2025-07-18 13:07:35.000 +02:00&#39;, &#39;2025-07-18 13:08:35.000 +02:00&#39;, &#39;2025-07-18 13:09:35.000 +02:00&#39;, &#39;2025-07-18 13:10:35.000 +02:00&#39;, &#39;2025-07-18 13:11:35.000 +02:00&#39;, &#39;2025-07-18 13:12:35.000 +02:00&#39;, &#39;2025-07-18 13:13:35.000 +02:00&#39;, &#39;2025-07-18 13:14:35.000 +02:00&#39;, &#39;2025-07-18 13:15:35.000 +02:00&#39;, &#39;2025-07-18 13:16:35.000 +02:00&#39;, &#39;2025-07-18 13:17:35.000 +02:00&#39;, &#39;2025-07-18 13:18:35.000 +02:00&#39;, &#39;2025-07-18 13:19:35.000 +02:00&#39;, &#39;2025-07-18 13:20:35.000 +02:00&#39;, &#39;2025-07-18 13:21:35.000 +02:00&#39;, &#39;2025-07-18 13:22:35.000 +02:00&#39;, &#39;2025-07-18 13:23:35.000 +02:00&#39;, &#39;2025-07-18 13:24:35.000 +02:00&#39;, &#39;2025-07-18 13:25:35.000 +02:00&#39;, &#39;2025-07-18 13:26:35.000 +02:00&#39;, &#39;2025-07-18 13:27:35.000 +02:00&#39;, &#39;2025-07-18 13:28:35.000 +02:00&#39;, &#39;2025-07-18 13:29:35.000 +02:00&#39;, &#39;2025-07-18 13:30:35.000 +02:00&#39;, &#39;2025-07-18 13:31:35.000 +02:00&#39;, &#39;2025-07-18 13:32:35.000 +02:00&#39;, &#39;2025-07-18 13:33:35.000 +02:00&#39;, &#39;2025-07-18 13:34:35.000 +02:00&#39;, &#39;2025-07-18 13:35:35.000 +02:00&#39;, &#39;2025-07-18 13:36:35.000 +02:00&#39;, &#39;2025-07-18 13:37:35.000 +02:00&#39;, &#39;2025-07-18 13:38:35.000 +02:00&#39;, &#39;2025-07-18 13:39:35.000 +02:00&#39;, &#39;2025-07-18 13:40:35.000 +02:00&#39;, &#39;2025-07-18 13:41:35.000 +02:00&#39;, &#39;2025-07-18 13:42:35.000 +02:00&#39;, &#39;2025-07-18 13:43:35.000 +02:00&#39;, &#39;2025-07-18 13:44:35.000 +02:00&#39;, &#39;2025-07-18 13:45:35.000 +02:00&#39;, &#39;2025-07-18 13:46:35.000 +02:00&#39;, &#39;2025-07-18 13:47:35.000 +02:00&#39;, &#39;2025-07-18 13:48:35.000 +02:00&#39;, &#39;2025-07-18 13:49:35.000 +02:00&#39;, &#39;2025-07-18 13:50:35.000 +02:00&#39;, &#39;2025-07-18 13:51:35.000 +02:00&#39;, &#39;2025-07-18 13:52:35.000 +02:00&#39;, &#39;2025-07-18 13:53:35.000 +02:00&#39;, &#39;2025-07-18 13:54:35.000 +02:00&#39;, &#39;2025-07-18 13:55:35.000 +02:00&#39;, &#39;2025-07-18 13:56:35.000 +02:00&#39;, &#39;2025-07-18 13:57:35.000 +02:00&#39;, &#39;2025-07-18 13:58:35.000 +02:00&#39;, &#39;2025-07-18 13:59:35.000 +02:00&#39;, &#39;2025-07-18 14:00:35.000 +02:00&#39;, &#39;2025-07-18 14:01:35.000 +02:00&#39;, &#39;2025-07-18 14:02:35.000 +02:00&#39;, &#39;2025-07-18 14:03:35.000 +02:00&#39;, &#39;2025-07-18 14:04:35.000 +02:00&#39;, &#39;2025-07-18 14:05:35.000 +02:00&#39;, &#39;2025-07-18 14:06:35.000 +02:00&#39;, &#39;2025-07-18 14:07:35.000 +02:00&#39;, &#39;2025-07-18 14:08:35.000 +02:00&#39;, &#39;2025-07-18 14:09:35.000 +02:00&#39;, &#39;2025-07-18 14:10:35.000 +02:00&#39;, &#39;2025-07-18 14:11:35.000 +02:00&#39;, &#39;2025-07-18 14:12:35.000 +02:00&#39;, &#39;2025-07-18 14:13:35.000 +02:00&#39;, &#39;2025-07-18 14:14:35.000 +02:00&#39;, &#39;2025-07-18 14:15:35.000 +02:00&#39;, &#39;2025-07-18 14:16:35.000 +02:00&#39;, &#39;2025-07-18 14:17:35.000 +02:00&#39;, &#39;2025-07-18 14:18:35.000 +02:00&#39;, &#39;2025-07-18 14:19:35.000 +02:00&#39;, &#39;2025-07-18 14:20:35.000 +02:00&#39;, &#39;2025-07-18 14:21:35.000 +02:00&#39;, &#39;2025-07-18 14:22:35.000 +02:00&#39;, &#39;2025-07-18 14:23:35.000 +02:00&#39;, &#39;2025-07-18 14:24:35.000 +02:00&#39;, &#39;2025-07-18 14:25:35.000 +02:00&#39;, &#39;2025-07-18 14:26:35.000 +02:00&#39;, &#39;2025-07-18 14:27:35.000 +02:00&#39;, &#39;2025-07-18 14:28:35.000 +02:00&#39;, &#39;2025-07-18 14:29:35.000 +02:00&#39;, &#39;2025-07-18 14:30:35.000 +02:00&#39;, &#39;2025-07-18 14:31:35.000 +02:00&#39;, &#39;2025-07-18 14:32:35.000 +02:00&#39;, &#39;2025-07-18 14:33:35.000 +02:00&#39;, &#39;2025-07-18 14:34:35.000 +02:00&#39;, &#39;2025-07-18 14:35:35.000 +02:00&#39;, &#39;2025-07-18 14:36:35.000 +02:00&#39;, &#39;2025-07-18 14:37:35.000 +02:00&#39;, &#39;2025-07-18 14:38:35.000 +02:00&#39;, &#39;2025-07-18 14:39:35.000 +02:00&#39;, &#39;2025-07-18 14:40:35.000 +02:00&#39;, &#39;2025-07-18 14:41:35.000 +02:00&#39;, &#39;2025-07-18 14:42:35.000 +02:00&#39;, &#39;2025-07-18 14:43:35.000 +02:00&#39;, &#39;2025-07-18 14:44:35.000 +02:00&#39;, &#39;2025-07-18 14:45:35.000 +02:00&#39;, &#39;2025-07-18 14:46:35.000 +02:00&#39;, &#39;2025-07-18 14:47:35.000 +02:00&#39;, &#39;2025-07-18 14:48:35.000 +02:00&#39;, &#39;2025-07-18 14:49:35.000 +02:00&#39;, &#39;2025-07-18 14:50:35.000 +02:00&#39;, &#39;2025-07-18 14:51:35.000 +02:00&#39;, &#39;2025-07-18 14:52:35.000 +02:00&#39;, &#39;2025-07-18 14:53:35.000 +02:00&#39;, &#39;2025-07-18 14:54:35.000 +02:00&#39;, &#39;2025-07-18 14:55:35.000 +02:00&#39;, &#39;2025-07-18 14:56:35.000 +02:00&#39;, &#39;2025-07-18 14:57:35.000 +02:00&#39;, &#39;2025-07-18 14:58:35.000 +02:00&#39;, &#39;2025-07-18 14:59:35.000 +02:00&#39;, &#39;2025-07-18 15:00:35.000 +02:00&#39;, &#39;2025-07-18 15:01:35.000 +02:00&#39;, &#39;2025-07-18 15:02:35.000 +02:00&#39;, &#39;2025-07-18 15:03:35.000 +02:00&#39;, &#39;2025-07-18 15:04:35.000 +02:00&#39;, &#39;2025-07-18 15:05:35.000 +02:00&#39;, &#39;2025-07-18 15:06:35.000 +02:00&#39;, &#39;2025-07-18 15:07:35.000 +02:00&#39;, &#39;2025-07-18 15:08:35.000 +02:00&#39;, &#39;2025-07-18 15:09:35.000 +02:00&#39;, &#39;2025-07-18 15:10:35.000 +02:00&#39;, &#39;2025-07-18 15:11:35.000 +02:00&#39;, &#39;2025-07-18 15:12:35.000 +02:00&#39;, &#39;2025-07-18 15:13:35.000 +02:00&#39;, &#39;2025-07-18 15:14:35.000 +02:00&#39;, &#39;2025-07-18 15:15:35.000 +02:00&#39;, &#39;2025-07-18 15:16:35.000 +02:00&#39;, &#39;2025-07-18 15:17:35.000 +02:00&#39;, &#39;2025-07-18 15:18:35.000 +02:00&#39;, &#39;2025-07-18 15:19:35.000 +02:00&#39;, &#39;2025-07-18 15:20:35.000 +02:00&#39;, &#39;2025-07-18 15:21:35.000 +02:00&#39;, &#39;2025-07-18 15:22:35.000 +02:00&#39;, &#39;2025-07-18 15:23:35.000 +02:00&#39;, &#39;2025-07-18 15:24:35.000 +02:00&#39;, &#39;2025-07-18 15:25:35.000 +02:00&#39;, &#39;2025-07-18 15:26:35.000 +02:00&#39;, &#39;2025-07-18 15:27:35.000 +02:00&#39;, &#39;2025-07-18 15:28:35.000 +02:00&#39;, &#39;2025-07-18 15:29:35.000 +02:00&#39;, &#39;2025-07-18 15:30:35.000 +02:00&#39;, &#39;2025-07-18 15:31:35.000 +02:00&#39;, &#39;2025-07-18 15:32:35.000 +02:00&#39;, &#39;2025-07-18 15:33:35.000 +02:00&#39;, &#39;2025-07-18 15:34:35.000 +02:00&#39;, &#39;2025-07-18 15:35:35.000 +02:00&#39;, &#39;2025-07-18 15:36:35.000 +02:00&#39;, &#39;2025-07-18 15:37:35.000 +02:00&#39;, &#39;2025-07-18 15:38:35.000 +02:00&#39;, &#39;2025-07-18 15:39:35.000 +02:00&#39;, &#39;2025-07-18 15:40:35.000 +02:00&#39;, &#39;2025-07-18 15:41:35.000 +02:00&#39;, &#39;2025-07-18 15:42:35.000 +02:00&#39;, &#39;2025-07-18 15:43:35.000 +02:00&#39;, &#39;2025-07-18 15:44:35.000 +02:00&#39;, &#39;2025-07-18 15:45:35.000 +02:00&#39;, &#39;2025-07-18 15:46:35.000 +02:00&#39;, &#39;2025-07-18 15:47:35.000 +02:00&#39;, &#39;2025-07-18 15:48:35.000 +02:00&#39;, &#39;2025-07-18 15:49:35.000 +02:00&#39;, &#39;2025-07-18 15:50:35.000 +02:00&#39;, &#39;2025-07-18 15:51:35.000 +02:00&#39;, &#39;2025-07-18 15:52:35.000 +02:00&#39;, &#39;2025-07-18 15:53:35.000 +02:00&#39;, &#39;2025-07-18 15:54:35.000 +02:00&#39;, &#39;2025-07-18 15:55:35.000 +02:00&#39;, &#39;2025-07-18 15:56:35.000 +02:00&#39;, &#39;2025-07-18 15:57:35.000 +02:00&#39;, &#39;2025-07-18 15:58:35.000 +02:00&#39;, &#39;2025-07-18 15:59:35.000 +02:00&#39;, &#39;2025-07-18 16:00:35.000 +02:00&#39;, &#39;2025-07-18 16:01:35.000 +02:00&#39;, &#39;2025-07-18 16:02:35.000 +02:00&#39;, &#39;2025-07-18 16:03:35.000 +02:00&#39;, &#39;2025-07-18 16:04:35.000 +02:00&#39;, &#39;2025-07-18 16:05:35.000 +02:00&#39;, &#39;2025-07-18 16:06:35.000 +02:00&#39;, &#39;2025-07-18 16:07:35.000 +02:00&#39;, &#39;2025-07-18 16:08:35.000 +02:00&#39;, &#39;2025-07-18 16:09:35.000 +02:00&#39;, &#39;2025-07-18 16:10:35.000 +02:00&#39;, &#39;2025-07-18 16:11:35.000 +02:00&#39;, &#39;2025-07-18 16:12:35.000 +02:00&#39;, &#39;2025-07-18 16:13:35.000 +02:00&#39;, &#39;2025-07-18 16:14:35.000 +02:00&#39;, &#39;2025-07-18 16:15:35.000 +02:00&#39;, &#39;2025-07-18 16:16:35.000 +02:00&#39;, &#39;2025-07-18 16:17:35.000 +02:00&#39;, &#39;2025-07-18 16:18:35.000 +02:00&#39;, &#39;2025-07-18 16:19:35.000 +02:00&#39;, &#39;2025-07-18 16:20:35.000 +02:00&#39;, &#39;2025-07-18 16:21:35.000 +02:00&#39;, &#39;2025-07-18 16:22:35.000 +02:00&#39;, &#39;2025-07-18 16:23:35.000 +02:00&#39;, &#39;2025-07-18 16:24:35.000 +02:00&#39;, &#39;2025-07-18 16:25:35.000 +02:00&#39;, &#39;2025-07-18 16:26:35.000 +02:00&#39;, &#39;2025-07-18 16:27:35.000 +02:00&#39;, &#39;2025-07-18 16:28:35.000 +02:00&#39;, &#39;2025-07-18 16:29:35.000 +02:00&#39;, &#39;2025-07-18 16:30:35.000 +02:00&#39;, &#39;2025-07-18 16:31:35.000 +02:00&#39;, &#39;2025-07-18 16:32:35.000 +02:00&#39;, &#39;2025-07-18 16:33:35.000 +02:00&#39;, &#39;2025-07-18 16:34:35.000 +02:00&#39;, &#39;2025-07-18 16:35:35.000 +02:00&#39;, &#39;2025-07-18 16:36:35.000 +02:00&#39;, &#39;2025-07-18 16:37:35.000 +02:00&#39;, &#39;2025-07-18 16:38:35.000 +02:00&#39;, &#39;2025-07-18 16:39:35.000 +02:00&#39;, &#39;2025-07-18 16:40:35.000 +02:00&#39;, &#39;2025-07-18 16:41:35.000 +02:00&#39;, &#39;2025-07-18 16:42:35.000 +02:00&#39;, &#39;2025-07-18 16:43:35.000 +02:00&#39;, &#39;2025-07-18 16:44:35.000 +02:00&#39;, &#39;2025-07-18 16:45:35.000 +02:00&#39;, &#39;2025-07-18 16:46:35.000 +02:00&#39;, &#39;2025-07-18 16:47:35.000 +02:00&#39;, &#39;2025-07-18 16:48:35.000 +02:00&#39;, &#39;2025-07-18 16:49:35.000 +02:00&#39;, &#39;2025-07-18 16:50:35.000 +02:00&#39;, &#39;2025-07-18 16:51:35.000 +02:00&#39;, &#39;2025-07-18 16:52:35.000 +02:00&#39;, &#39;2025-07-18 16:53:35.000 +02:00&#39;, &#39;2025-07-18 16:54:35.000 +02:00&#39;, &#39;2025-07-18 16:55:35.000 +02:00&#39;, &#39;2025-07-18 16:56:35.000 +02:00&#39;, &#39;2025-07-18 16:57:35.000 +02:00&#39;, &#39;2025-07-18 16:58:35.000 +02:00&#39;, &#39;2025-07-18 16:59:35.000 +02:00&#39;, &#39;2025-07-18 17:00:35.000 +02:00&#39;, &#39;2025-07-18 17:01:35.000 +02:00&#39;, &#39;2025-07-18 17:02:35.000 +02:00&#39;, &#39;2025-07-18 17:03:35.000 +02:00&#39;, &#39;2025-07-18 17:04:35.000 +02:00&#39;, &#39;2025-07-18 17:05:35.000 +02:00&#39;, &#39;2025-07-18 17:06:35.000 +02:00&#39;, &#39;2025-07-18 17:07:35.000 +02:00&#39;, &#39;2025-07-18 17:08:35.000 +02:00&#39;, &#39;2025-07-18 17:09:35.000 +02:00&#39;, &#39;2025-07-18 17:10:35.000 +02:00&#39;, &#39;2025-07-18 17:11:35.000 +02:00&#39;, &#39;2025-07-18 17:12:35.000 +02:00&#39;, &#39;2025-07-18 17:13:35.000 +02:00&#39;, &#39;2025-07-18 17:14:35.000 +02:00&#39;, &#39;2025-07-18 17:15:35.000 +02:00&#39;, &#39;2025-07-18 17:16:35.000 +02:00&#39;, &#39;2025-07-18 17:17:35.000 +02:00&#39;, &#39;2025-07-18 17:18:35.000 +02:00&#39;, &#39;2025-07-18 17:19:35.000 +02:00&#39;, &#39;2025-07-18 17:20:35.000 +02:00&#39;, &#39;2025-07-18 17:21:35.000 +02:00&#39;, &#39;2025-07-18 17:22:35.000 +02:00&#39;, &#39;2025-07-18 17:23:35.000 +02:00&#39;, &#39;2025-07-18 17:24:35.000 +02:00&#39;, &#39;2025-07-18 17:25:35.000 +02:00&#39;, &#39;2025-07-18 17:26:35.000 +02:00&#39;, &#39;2025-07-18 17:27:35.000 +02:00&#39;, &#39;2025-07-18 17:28:35.000 +02:00&#39;, &#39;2025-07-18 17:29:35.000 +02:00&#39;, &#39;2025-07-18 17:30:35.000 +02:00&#39;, &#39;2025-07-18 17:31:35.000 +02:00&#39;, &#39;2025-07-18 17:32:35.000 +02:00&#39;, &#39;2025-07-18 17:33:35.000 +02:00&#39;, &#39;2025-07-18 17:34:35.000 +02:00&#39;, &#39;2025-07-18 17:35:35.000 +02:00&#39;, &#39;2025-07-18 17:36:35.000 +02:00&#39;, &#39;2025-07-18 17:37:35.000 +02:00&#39;, &#39;2025-07-18 17:38:35.000 +02:00&#39;, &#39;2025-07-18 17:39:35.000 +02:00&#39;, &#39;2025-07-18 17:40:35.000 +02:00&#39;, &#39;2025-07-18 17:41:35.000 +02:00&#39;, &#39;2025-07-18 17:42:35.000 +02:00&#39;, &#39;2025-07-18 17:43:35.000 +02:00&#39;, &#39;2025-07-18 17:44:35.000 +02:00&#39;, &#39;2025-07-18 17:45:35.000 +02:00&#39;, &#39;2025-07-18 17:46:35.000 +02:00&#39;, &#39;2025-07-18 17:47:35.000 +02:00&#39;, &#39;2025-07-18 17:48:35.000 +02:00&#39;, &#39;2025-07-18 17:49:35.000 +02:00&#39;, &#39;2025-07-18 17:50:35.000 +02:00&#39;, &#39;2025-07-18 17:51:35.000 +02:00&#39;, &#39;2025-07-18 17:52:35.000 +02:00&#39;, &#39;2025-07-18 17:53:35.000 +02:00&#39;, &#39;2025-07-18 17:54:35.000 +02:00&#39;, &#39;2025-07-18 17:55:35.000 +02:00&#39;, &#39;2025-07-18 17:56:35.000 +02:00&#39;, &#39;2025-07-18 17:57:35.000 +02:00&#39;, &#39;2025-07-18 17:58:35.000 +02:00&#39;, &#39;2025-07-18 17:59:35.000 +02:00&#39;, &#39;2025-07-18 18:00:35.000 +02:00&#39;, &#39;2025-07-18 18:01:35.000 +02:00&#39;, &#39;2025-07-18 18:02:35.000 +02:00&#39;, &#39;2025-07-18 18:03:35.000 +02:00&#39;, &#39;2025-07-18 18:04:35.000 +02:00&#39;, &#39;2025-07-18 18:05:35.000 +02:00&#39;, &#39;2025-07-18 18:06:35.000 +02:00&#39;, &#39;2025-07-18 18:07:35.000 +02:00&#39;, &#39;2025-07-18 18:08:35.000 +02:00&#39;, &#39;2025-07-18 18:09:35.000 +02:00&#39;, &#39;2025-07-18 18:10:35.000 +02:00&#39;, &#39;2025-07-18 18:11:35.000 +02:00&#39;, &#39;2025-07-18 18:12:35.000 +02:00&#39;, &#39;2025-07-18 18:13:35.000 +02:00&#39;, &#39;2025-07-18 18:14:35.000 +02:00&#39;, &#39;2025-07-18 18:15:35.000 +02:00&#39;, &#39;2025-07-18 18:16:35.000 +02:00&#39;, &#39;2025-07-18 18:17:35.000 +02:00&#39;, &#39;2025-07-18 18:18:35.000 +02:00&#39;, &#39;2025-07-18 18:19:35.000 +02:00&#39;, &#39;2025-07-18 18:20:35.000 +02:00&#39;, &#39;2025-07-18 18:21:35.000 +02:00&#39;, &#39;2025-07-18 18:22:35.000 +02:00&#39;, &#39;2025-07-18 18:23:35.000 +02:00&#39;, &#39;2025-07-18 18:24:35.000 +02:00&#39;, &#39;2025-07-18 18:25:35.000 +02:00&#39;, &#39;2025-07-18 18:26:35.000 +02:00&#39;, &#39;2025-07-18 18:27:35.000 +02:00&#39;, &#39;2025-07-18 18:28:35.000 +02:00&#39;, &#39;2025-07-18 18:29:35.000 +02:00&#39;, &#39;2025-07-18 18:30:35.000 +02:00&#39;, &#39;2025-07-18 18:31:35.000 +02:00&#39;, &#39;2025-07-18 18:32:35.000 +02:00&#39;, &#39;2025-07-18 18:33:35.000 +02:00&#39;, &#39;2025-07-18 18:34:35.000 +02:00&#39;, &#39;2025-07-18 18:35:35.000 +02:00&#39;, &#39;2025-07-18 18:36:35.000 +02:00&#39;, &#39;2025-07-18 18:37:35.000 +02:00&#39;, &#39;2025-07-18 18:38:35.000 +02:00&#39;, &#39;2025-07-18 18:39:35.000 +02:00&#39;, &#39;2025-07-18 18:40:35.000 +02:00&#39;, &#39;2025-07-18 18:41:35.000 +02:00&#39;, &#39;2025-07-18 18:42:35.000 +02:00&#39;, &#39;2025-07-18 18:43:35.000 +02:00&#39;, &#39;2025-07-18 18:44:35.000 +02:00&#39;, &#39;2025-07-18 18:45:35.000 +02:00&#39;, &#39;2025-07-18 18:46:35.000 +02:00&#39;, &#39;2025-07-18 18:47:35.000 +02:00&#39;, &#39;2025-07-18 18:48:35.000 +02:00&#39;, &#39;2025-07-18 18:49:35.000 +02:00&#39;, &#39;2025-07-18 18:50:35.000 +02:00&#39;, &#39;2025-07-18 18:51:35.000 +02:00&#39;, &#39;2025-07-18 18:52:35.000 +02:00&#39;, &#39;2025-07-18 18:53:35.000 +02:00&#39;, &#39;2025-07-18 18:54:35.000 +02:00&#39;, &#39;2025-07-18 18:55:35.000 +02:00&#39;, &#39;2025-07-18 18:56:35.000 +02:00&#39;, &#39;2025-07-18 18:57:35.000 +02:00&#39;, &#39;2025-07-18 18:58:35.000 +02:00&#39;, &#39;2025-07-18 18:59:35.000 +02:00&#39;, &#39;2025-07-18 19:00:35.000 +02:00&#39;, &#39;2025-07-18 19:01:35.000 +02:00&#39;, &#39;2025-07-18 19:02:35.000 +02:00&#39;, &#39;2025-07-18 19:03:35.000 +02:00&#39;, &#39;2025-07-18 19:04:35.000 +02:00&#39;, &#39;2025-07-18 19:05:35.000 +02:00&#39;, &#39;2025-07-18 19:06:35.000 +02:00&#39;, &#39;2025-07-18 19:07:35.000 +02:00&#39;, &#39;2025-07-18 19:08:35.000 +02:00&#39;, &#39;2025-07-18 19:09:35.000 +02:00&#39;, &#39;2025-07-18 19:10:35.000 +02:00&#39;, &#39;2025-07-18 19:11:35.000 +02:00&#39;, &#39;2025-07-18 19:12:35.000 +02:00&#39;, &#39;2025-07-18 19:13:35.000 +02:00&#39;, &#39;2025-07-18 19:14:35.000 +02:00&#39;, &#39;2025-07-18 19:15:35.000 +02:00&#39;, &#39;2025-07-18 19:16:35.000 +02:00&#39;, &#39;2025-07-18 19:17:35.000 +02:00&#39;, &#39;2025-07-18 19:18:35.000 +02:00&#39;, &#39;2025-07-18 19:19:35.000 +02:00&#39;, &#39;2025-07-18 19:20:35.000 +02:00&#39;, &#39;2025-07-18 19:21:35.000 +02:00&#39;, &#39;2025-07-18 19:22:35.000 +02:00&#39;, &#39;2025-07-18 19:23:35.000 +02:00&#39;, &#39;2025-07-18 19:24:35.000 +02:00&#39;, &#39;2025-07-18 19:25:35.000 +02:00&#39;, &#39;2025-07-18 19:26:35.000 +02:00&#39;, &#39;2025-07-18 19:27:35.000 +02:00&#39;, &#39;2025-07-18 19:28:35.000 +02:00&#39;, &#39;2025-07-18 19:29:35.000 +02:00&#39;, &#39;2025-07-18 19:30:35.000 +02:00&#39;, &#39;2025-07-18 19:31:35.000 +02:00&#39;, &#39;2025-07-18 19:32:35.000 +02:00&#39;, &#39;2025-07-18 19:33:35.000 +02:00&#39;, &#39;2025-07-18 19:34:35.000 +02:00&#39;, &#39;2025-07-18 19:35:35.000 +02:00&#39;, &#39;2025-07-18 19:36:35.000 +02:00&#39;, &#39;2025-07-18 19:37:35.000 +02:00&#39;, &#39;2025-07-18 19:38:35.000 +02:00&#39;, &#39;2025-07-18 19:39:35.000 +02:00&#39;, &#39;2025-07-18 19:40:35.000 +02:00&#39;, &#39;2025-07-18 19:41:35.000 +02:00&#39;, &#39;2025-07-18 19:42:35.000 +02:00&#39;, &#39;2025-07-18 19:43:35.000 +02:00&#39;, &#39;2025-07-18 19:44:35.000 +02:00&#39;, &#39;2025-07-18 19:45:35.000 +02:00&#39;, &#39;2025-07-18 19:46:35.000 +02:00&#39;, &#39;2025-07-18 19:47:35.000 +02:00&#39;, &#39;2025-07-18 19:48:35.000 +02:00&#39;, &#39;2025-07-18 19:49:35.000 +02:00&#39;, &#39;2025-07-18 19:50:35.000 +02:00&#39;, &#39;2025-07-18 19:51:35.000 +02:00&#39;, &#39;2025-07-18 19:52:35.000 +02:00&#39;, &#39;2025-07-18 19:53:35.000 +02:00&#39;, &#39;2025-07-18 19:54:35.000 +02:00&#39;, &#39;2025-07-18 19:55:35.000 +02:00&#39;, &#39;2025-07-18 19:56:35.000 +02:00&#39;, &#39;2025-07-18 19:57:35.000 +02:00&#39;, &#39;2025-07-18 19:58:35.000 +02:00&#39;, &#39;2025-07-18 19:59:35.000 +02:00&#39;, &#39;2025-07-18 20:00:35.000 +02:00&#39;, &#39;2025-07-18 20:01:35.000 +02:00&#39;, &#39;2025-07-18 20:02:35.000 +02:00&#39;, &#39;2025-07-18 20:03:35.000 +02:00&#39;, &#39;2025-07-18 20:04:35.000 +02:00&#39;, &#39;2025-07-18 20:05:35.000 +02:00&#39;, &#39;2025-07-18 20:06:35.000 +02:00&#39;, &#39;2025-07-18 20:07:35.000 +02:00&#39;, &#39;2025-07-18 20:08:35.000 +02:00&#39;, &#39;2025-07-18 20:09:35.000 +02:00&#39;, &#39;2025-07-18 20:10:35.000 +02:00&#39;, &#39;2025-07-18 20:11:35.000 +02:00&#39;, &#39;2025-07-18 20:12:35.000 +02:00&#39;, &#39;2025-07-18 20:13:35.000 +02:00&#39;, &#39;2025-07-18 20:14:35.000 +02:00&#39;, &#39;2025-07-18 20:15:35.000 +02:00&#39;, &#39;2025-07-18 20:16:35.000 +02:00&#39;, &#39;2025-07-18 20:17:35.000 +02:00&#39;, &#39;2025-07-18 20:18:35.000 +02:00&#39;, &#39;2025-07-18 20:19:35.000 +02:00&#39;, &#39;2025-07-18 20:20:35.000 +02:00&#39;, &#39;2025-07-18 20:21:35.000 +02:00&#39;, &#39;2025-07-18 20:22:35.000 +02:00&#39;, &#39;2025-07-18 20:23:35.000 +02:00&#39;, &#39;2025-07-18 20:24:35.000 +02:00&#39;, &#39;2025-07-18 20:25:35.000 +02:00&#39;, &#39;2025-07-18 20:26:35.000 +02:00&#39;, &#39;2025-07-18 20:27:35.000 +02:00&#39;, &#39;2025-07-18 20:28:35.000 +02:00&#39;, &#39;2025-07-18 20:29:35.000 +02:00&#39;, &#39;2025-07-18 20:30:35.000 +02:00&#39;, &#39;2025-07-18 20:31:35.000 +02:00&#39;, &#39;2025-07-18 20:32:35.000 +02:00&#39;, &#39;2025-07-18 20:33:35.000 +02:00&#39;, &#39;2025-07-18 20:34:35.000 +02:00&#39;, &#39;2025-07-18 20:35:35.000 +02:00&#39;, &#39;2025-07-18 20:36:35.000 +02:00&#39;, &#39;2025-07-18 20:37:35.000 +02:00&#39;, &#39;2025-07-18 20:38:35.000 +02:00&#39;, &#39;2025-07-18 20:39:35.000 +02:00&#39;, &#39;2025-07-18 20:40:35.000 +02:00&#39;, &#39;2025-07-18 20:41:35.000 +02:00&#39;, &#39;2025-07-18 20:42:35.000 +02:00&#39;, &#39;2025-07-18 20:43:35.000 +02:00&#39;, &#39;2025-07-18 20:44:35.000 +02:00&#39;, &#39;2025-07-18 20:45:35.000 +02:00&#39;, &#39;2025-07-18 20:46:35.000 +02:00&#39;, &#39;2025-07-18 20:47:35.000 +02:00&#39;, &#39;2025-07-18 20:48:35.000 +02:00&#39;, &#39;2025-07-18 20:49:35.000 +02:00&#39;, &#39;2025-07-18 20:50:35.000 +02:00&#39;, &#39;2025-07-18 20:51:35.000 +02:00&#39;, &#39;2025-07-18 20:52:35.000 +02:00&#39;, &#39;2025-07-18 20:53:35.000 +02:00&#39;, &#39;2025-07-18 20:54:35.000 +02:00&#39;, &#39;2025-07-18 20:55:35.000 +02:00&#39;, &#39;2025-07-18 20:56:35.000 +02:00&#39;, &#39;2025-07-18 20:57:35.000 +02:00&#39;, &#39;2025-07-18 20:58:35.000 +02:00&#39;, &#39;2025-07-18 20:59:35.000 +02:00&#39;, &#39;2025-07-18 21:00:35.000 +02:00&#39;, &#39;2025-07-18 21:01:35.000 +02:00&#39;, &#39;2025-07-18 21:02:35.000 +02:00&#39;, &#39;2025-07-18 21:03:35.000 +02:00&#39;, &#39;2025-07-18 21:04:35.000 +02:00&#39;, &#39;2025-07-18 21:05:35.000 +02:00&#39;, &#39;2025-07-18 21:06:35.000 +02:00&#39;, &#39;2025-07-18 21:07:35.000 +02:00&#39;, &#39;2025-07-18 21:08:35.000 +02:00&#39;, &#39;2025-07-18 21:09:35.000 +02:00&#39;, &#39;2025-07-18 21:10:35.000 +02:00&#39;, &#39;2025-07-18 21:11:35.000 +02:00&#39;, &#39;2025-07-18 21:12:35.000 +02:00&#39;, &#39;2025-07-18 21:13:35.000 +02:00&#39;, &#39;2025-07-18 21:14:35.000 +02:00&#39;, &#39;2025-07-18 21:15:35.000 +02:00&#39;, &#39;2025-07-18 21:16:35.000 +02:00&#39;, &#39;2025-07-18 21:17:35.000 +02:00&#39;, &#39;2025-07-18 21:18:35.000 +02:00&#39;, &#39;2025-07-18 21:19:35.000 +02:00&#39;, &#39;2025-07-18 21:20:35.000 +02:00&#39;, &#39;2025-07-18 21:21:35.000 +02:00&#39;, &#39;2025-07-18 21:22:35.000 +02:00&#39;, &#39;2025-07-18 21:23:35.000 +02:00&#39;, &#39;2025-07-18 21:24:35.000 +02:00&#39;, &#39;2025-07-18 21:25:35.000 +02:00&#39;, &#39;2025-07-18 21:26:35.000 +02:00&#39;, &#39;2025-07-18 21:27:35.000 +02:00&#39;, &#39;2025-07-18 21:28:35.000 +02:00&#39;, &#39;2025-07-18 21:29:35.000 +02:00&#39;, &#39;2025-07-18 21:30:35.000 +02:00&#39;, &#39;2025-07-18 21:31:35.000 +02:00&#39;, &#39;2025-07-18 21:32:35.000 +02:00&#39;, &#39;2025-07-18 21:33:35.000 +02:00&#39;, &#39;2025-07-18 21:34:35.000 +02:00&#39;, &#39;2025-07-18 21:35:35.000 +02:00&#39;, &#39;2025-07-18 21:36:35.000 +02:00&#39;, &#39;2025-07-18 21:37:35.000 +02:00&#39;, &#39;2025-07-18 21:38:35.000 +02:00&#39;, &#39;2025-07-18 21:39:35.000 +02:00&#39;, &#39;2025-07-18 21:40:35.000 +02:00&#39;, &#39;2025-07-18 21:41:35.000 +02:00&#39;, &#39;2025-07-18 21:42:35.000 +02:00&#39;, &#39;2025-07-18 21:43:35.000 +02:00&#39;, &#39;2025-07-18 21:44:35.000 +02:00&#39;, &#39;2025-07-18 21:45:35.000 +02:00&#39;, &#39;2025-07-18 21:46:35.000 +02:00&#39;, &#39;2025-07-18 21:47:35.000 +02:00&#39;, &#39;2025-07-18 21:48:35.000 +02:00&#39;, &#39;2025-07-18 21:49:35.000 +02:00&#39;, &#39;2025-07-18 21:50:35.000 +02:00&#39;, &#39;2025-07-18 21:51:35.000 +02:00&#39;, &#39;2025-07-18 21:52:35.000 +02:00&#39;, &#39;2025-07-18 21:53:35.000 +02:00&#39;, &#39;2025-07-18 21:54:35.000 +02:00&#39;, &#39;2025-07-18 21:55:35.000 +02:00&#39;, &#39;2025-07-18 21:56:35.000 +02:00&#39;, &#39;2025-07-18 21:57:35.000 +02:00&#39;, &#39;2025-07-18 21:58:35.000 +02:00&#39;, &#39;2025-07-18 21:59:35.000 +02:00&#39;, &#39;2025-07-18 22:00:35.000 +02:00&#39;, &#39;2025-07-18 22:01:35.000 +02:00&#39;, &#39;2025-07-18 22:02:35.000 +02:00&#39;, &#39;2025-07-18 22:03:35.000 +02:00&#39;, &#39;2025-07-18 22:04:35.000 +02:00&#39;, &#39;2025-07-18 22:05:35.000 +02:00&#39;, &#39;2025-07-18 22:06:35.000 +02:00&#39;, &#39;2025-07-18 22:07:35.000 +02:00&#39;, &#39;2025-07-18 22:08:35.000 +02:00&#39;, &#39;2025-07-18 22:09:35.000 +02:00&#39;, &#39;2025-07-18 22:10:35.000 +02:00&#39;, &#39;2025-07-18 22:11:35.000 +02:00&#39;, &#39;2025-07-18 22:12:35.000 +02:00&#39;, &#39;2025-07-18 22:13:35.000 +02:00&#39;, &#39;2025-07-18 22:14:35.000 +02:00&#39;, &#39;2025-07-18 22:15:35.000 +02:00&#39;, &#39;2025-07-18 22:16:35.000 +02:00&#39;, &#39;2025-07-18 22:17:35.000 +02:00&#39;, &#39;2025-07-18 22:18:35.000 +02:00&#39;, &#39;2025-07-18 22:19:35.000 +02:00&#39;, &#39;2025-07-18 22:20:35.000 +02:00&#39;, &#39;2025-07-18 22:21:35.000 +02:00&#39;, &#39;2025-07-18 22:22:35.000 +02:00&#39;, &#39;2025-07-18 22:23:35.000 +02:00&#39;, &#39;2025-07-18 22:24:35.000 +02:00&#39;, &#39;2025-07-18 22:25:35.000 +02:00&#39;, &#39;2025-07-18 22:26:35.000 +02:00&#39;, &#39;2025-07-18 22:27:35.000 +02:00&#39;], &#39;2025-07-18 11:07:35.000 +02:00&#39;, &#39;&#39;, &#39;&#39;)
+([&#39;2025-07-18 12:00:00.000 +02:00&#39;, &#39;2025-07-18 12:01:00.000 +02:00&#39;, &#39;2025-07-18 12:02:00.000 +02:00&#39;, &#39;2025-07-18 12:03:00.000 +02:00&#39;, &#39;2025-07-18 12:04:00.000 +02:00&#39;, &#39;2025-07-18 12:05:00.000 +02:00&#39;], &#39;2025-07-18 12:00:00.000 +02:00&#39;, &#39;&#39;, &#39;&#39;)
 </pre></div></div>
 </div>
+<p>available_timestamps = [[simulation timestamps], static timestamp, min timestamp, max timestamp]</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[34]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.SetCurrentTimeStamp(timestamp=&#39;2025-07-18 11:08:35.000 +02:00&#39;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.SetCurrentTimeStamp(timestamp=available_timestamps[0][1]) # second simulation step
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetCurrentTimeStamp() # Check whether the change worked
@@ -517,12 +563,12 @@ NetworkType.Water
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&#39;2025-07-18 11:08:35.000 +02:00&#39;
+&#39;2025-07-18 12:01:00.000 +02:00&#39;
 </pre></div></div>
 </div>
 </section>
@@ -530,7 +576,7 @@ NetworkType.Water
 <h3>GetResultValue()<a class="headerlink" href="#GetResultValue()" title="Link to this heading"></a></h3>
 <p>Now we can obtain the pressure value for one of our nodes at two different timestamps</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[34]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[36]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetCurrentTimeStamp()
@@ -538,16 +584,16 @@ NetworkType.Water
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[34]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[36]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&#39;2025-07-18 11:08:35.000 +02:00&#39;
+&#39;2025-07-18 12:01:00.000 +02:00&#39;
 </pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[37]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pressure1=s3s.GetResultValue(elementKey=tk_of_interest, propertyName=&#39;P&#39;)[0]
@@ -555,7 +601,7 @@ NetworkType.Water
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[36]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[38]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(pressure1)
@@ -567,20 +613,20 @@ NetworkType.Water
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-6.505175
+11
 </pre></div></div>
 </div>
 <p>Manually moving the timestamp forward by three minutes:</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[37]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[39]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.SetCurrentTimeStamp(timestamp=&#39;2025-07-18 11:11:35.000 +02:00&#39;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.SetCurrentTimeStamp(timestamp=available_timestamps[0][4])
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[38]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[40]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetCurrentTimeStamp() # Check whether the change worked
@@ -588,16 +634,16 @@ NetworkType.Water
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[38]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[40]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&#39;2025-07-18 11:11:35.000 +02:00&#39;
+&#39;2025-07-18 12:04:00.000 +02:00&#39;
 </pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[39]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[41]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pressure2=s3s.GetResultValue(elementKey=tk_of_interest, propertyName=&#39;P&#39;)[0]
@@ -605,7 +651,7 @@ NetworkType.Water
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[40]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[42]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(pressure2)
@@ -617,23 +663,23 @@ NetworkType.Water
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-8.001184
+26
 </pre></div></div>
 </div>
 <p>Alternatively, the result can be obtained with the single, compact <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetResultfortimestamp">GetResultfortimestamp()</a> function.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[41]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[43]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pressure2=s3s.GetResultfortimestamp(timestamp=&#39;2025-07-18 11:11:35.000 +02:00&#39;, Tk=tk_of_interest, property=&#39;P&#39;)[0]
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pressure2=s3s.GetResultfortimestamp(timestamp=available_timestamps[0][4], Tk=tk_of_interest, property=&#39;P&#39;)[0]
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[42]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[44]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(f&quot;Difference in Pressure 11:08 to 11:11: {float(pressure1)-float(pressure2)} bar&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(f&quot;Difference in Pressure 12:01 to 12:04: {float(pressure1)-float(pressure2)} bar&quot;)
 </pre></div>
 </div>
 </div>
@@ -642,13 +688,13 @@ NetworkType.Water
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Difference in Pressure 11:08 to 11:11: -1.496009 bar
+Difference in Pressure 12:01 to 12:04: -15.0 bar
 </pre></div></div>
 </div>
 <p>We determined a pressure drop between the two timestamps.</p>
 <p>The pressure values for the respective node for all timestamps can be obtained using the <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetResultforAllTimestamp">GetResultforAllTimestamp()</a>funtion.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[43]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[45]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetResultforAllTimestamp(Tk=tk_of_interest, property=&#39;P&#39;)
@@ -656,692 +702,17 @@ Difference in Pressure 11:08 to 11:11: -1.496009 bar
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[43]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[45]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-[(&#39;2025-07-18 11:07:35.000 +02:00&#39;, &#39;6.01436&#39;, &#39;float&#39;),
- (&#39;2025-07-18 11:08:35.000 +02:00&#39;, &#39;6.505175&#39;, &#39;float&#39;),
- (&#39;2025-07-18 11:09:35.000 +02:00&#39;, &#39;7.007565&#39;, &#39;float&#39;),
- (&#39;2025-07-18 11:10:35.000 +02:00&#39;, &#39;7.502397&#39;, &#39;float&#39;),
- (&#39;2025-07-18 11:11:35.000 +02:00&#39;, &#39;8.001184&#39;, &#39;float&#39;),
- (&#39;2025-07-18 11:12:35.000 +02:00&#39;, &#39;8.490408&#39;, &#39;float&#39;),
- (&#39;2025-07-18 11:13:35.000 +02:00&#39;, &#39;8.951271&#39;, &#39;float&#39;),
- (&#39;2025-07-18 11:14:35.000 +02:00&#39;, &#39;9.492414&#39;, &#39;float&#39;),
- (&#39;2025-07-18 11:15:35.000 +02:00&#39;, &#39;9.98864&#39;, &#39;float&#39;),
- (&#39;2025-07-18 11:16:35.000 +02:00&#39;, &#39;10.49222&#39;, &#39;float&#39;),
- (&#39;2025-07-18 11:17:35.000 +02:00&#39;, &#39;10.49815&#39;, &#39;float&#39;),
- (&#39;2025-07-18 11:18:35.000 +02:00&#39;, &#39;10.49436&#39;, &#39;float&#39;),
- (&#39;2025-07-18 11:19:35.000 +02:00&#39;, &#39;10.49679&#39;, &#39;float&#39;),
- (&#39;2025-07-18 11:20:35.000 +02:00&#39;, &#39;10.49524&#39;, &#39;float&#39;),
- (&#39;2025-07-18 11:21:35.000 +02:00&#39;, &#39;10.49623&#39;, &#39;float&#39;),
- (&#39;2025-07-18 11:22:35.000 +02:00&#39;, &#39;10.49559&#39;, &#39;float&#39;),
- (&#39;2025-07-18 11:23:35.000 +02:00&#39;, &#39;10.496&#39;, &#39;float&#39;),
- (&#39;2025-07-18 11:24:35.000 +02:00&#39;, &#39;10.49574&#39;, &#39;float&#39;),
- (&#39;2025-07-18 11:25:35.000 +02:00&#39;, &#39;10.4959&#39;, &#39;float&#39;),
- (&#39;2025-07-18 11:26:35.000 +02:00&#39;, &#39;10.4958&#39;, &#39;float&#39;),
- (&#39;2025-07-18 11:27:35.000 +02:00&#39;, &#39;10.49587&#39;, &#39;float&#39;),
- (&#39;2025-07-18 11:28:35.000 +02:00&#39;, &#39;10.49582&#39;, &#39;float&#39;),
- (&#39;2025-07-18 11:29:35.000 +02:00&#39;, &#39;10.49585&#39;, &#39;float&#39;),
- (&#39;2025-07-18 11:30:35.000 +02:00&#39;, &#39;10.49583&#39;, &#39;float&#39;),
- (&#39;2025-07-18 11:31:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 11:32:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 11:33:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 11:34:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 11:35:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 11:36:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 11:37:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 11:38:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 11:39:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 11:40:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 11:41:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 11:42:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 11:43:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 11:44:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 11:45:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 11:46:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 11:47:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 11:48:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 11:49:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 11:50:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 11:51:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 11:52:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 11:53:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 11:54:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 11:55:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 11:56:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 11:57:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 11:58:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 11:59:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:00:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:01:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:02:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:03:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:04:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:05:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:06:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:07:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:08:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:09:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:10:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:11:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:12:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:13:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:14:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:15:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:16:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:17:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:18:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:19:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:20:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:21:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:22:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:23:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:24:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:25:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:26:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:27:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:28:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:29:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:30:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:31:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:32:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:33:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:34:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:35:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:36:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:37:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:38:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:39:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:40:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:41:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:42:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:43:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:44:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:45:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:46:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:47:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:48:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:49:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:50:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:51:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:52:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:53:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:54:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:55:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:56:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:57:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:58:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 12:59:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:00:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:01:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:02:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:03:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:04:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:05:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:06:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:07:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:08:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:09:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:10:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:11:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:12:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:13:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:14:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:15:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:16:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:17:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:18:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:19:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:20:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:21:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:22:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:23:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:24:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:25:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:26:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:27:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:28:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:29:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:30:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:31:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:32:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:33:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:34:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:35:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:36:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:37:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:38:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:39:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:40:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:41:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:42:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:43:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:44:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:45:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:46:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:47:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:48:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:49:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:50:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:51:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:52:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:53:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:54:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:55:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:56:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:57:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:58:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 13:59:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:00:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:01:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:02:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:03:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:04:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:05:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:06:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:07:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:08:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:09:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:10:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:11:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:12:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:13:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:14:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:15:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:16:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:17:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:18:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:19:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:20:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:21:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:22:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:23:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:24:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:25:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:26:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:27:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:28:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:29:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:30:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:31:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:32:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:33:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:34:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:35:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:36:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:37:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:38:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:39:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:40:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:41:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:42:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:43:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:44:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:45:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:46:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:47:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:48:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:49:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:50:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:51:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:52:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:53:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:54:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:55:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:56:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:57:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:58:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 14:59:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:00:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:01:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:02:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:03:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:04:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:05:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:06:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:07:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:08:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:09:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:10:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:11:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:12:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:13:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:14:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:15:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:16:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:17:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:18:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:19:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:20:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:21:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:22:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:23:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:24:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:25:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:26:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:27:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:28:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:29:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:30:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:31:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:32:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:33:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:34:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:35:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:36:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:37:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:38:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:39:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:40:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:41:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:42:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:43:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:44:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:45:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:46:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:47:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:48:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:49:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:50:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:51:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:52:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:53:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:54:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:55:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:56:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:57:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:58:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 15:59:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:00:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:01:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:02:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:03:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:04:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:05:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:06:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:07:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:08:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:09:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:10:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:11:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:12:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:13:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:14:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:15:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:16:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:17:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:18:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:19:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:20:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:21:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:22:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:23:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:24:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:25:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:26:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:27:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:28:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:29:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:30:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:31:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:32:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:33:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:34:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:35:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:36:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:37:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:38:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:39:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:40:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:41:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:42:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:43:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:44:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:45:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:46:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:47:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:48:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:49:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:50:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:51:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:52:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:53:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:54:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:55:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:56:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:57:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:58:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 16:59:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:00:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:01:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:02:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:03:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:04:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:05:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:06:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:07:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:08:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:09:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:10:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:11:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:12:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:13:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:14:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:15:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:16:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:17:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:18:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:19:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:20:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:21:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:22:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:23:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:24:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:25:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:26:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:27:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:28:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:29:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:30:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:31:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:32:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:33:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:34:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:35:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:36:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:37:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:38:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:39:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:40:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:41:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:42:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:43:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:44:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:45:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:46:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:47:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:48:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:49:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:50:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:51:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:52:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:53:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:54:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:55:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:56:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:57:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:58:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 17:59:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:00:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:01:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:02:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:03:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:04:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:05:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:06:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:07:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:08:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:09:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:10:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:11:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:12:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:13:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:14:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:15:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:16:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:17:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:18:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:19:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:20:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:21:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:22:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:23:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:24:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:25:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:26:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:27:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:28:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:29:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:30:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:31:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:32:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:33:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:34:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:35:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:36:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:37:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:38:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:39:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:40:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:41:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:42:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:43:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:44:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:45:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:46:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:47:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:48:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:49:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:50:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:51:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:52:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:53:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:54:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:55:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:56:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:57:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:58:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 18:59:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:00:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:01:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:02:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:03:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:04:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:05:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:06:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:07:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:08:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:09:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:10:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:11:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:12:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:13:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:14:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:15:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:16:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:17:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:18:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:19:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:20:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:21:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:22:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:23:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:24:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:25:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:26:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:27:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:28:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:29:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:30:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:31:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:32:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:33:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:34:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:35:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:36:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:37:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:38:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:39:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:40:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:41:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:42:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:43:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:44:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:45:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:46:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:47:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:48:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:49:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:50:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:51:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:52:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:53:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:54:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:55:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:56:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:57:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:58:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 19:59:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:00:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:01:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:02:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:03:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:04:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:05:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:06:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:07:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:08:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:09:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:10:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:11:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:12:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:13:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:14:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:15:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:16:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:17:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:18:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:19:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:20:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:21:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:22:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:23:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:24:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:25:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:26:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:27:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:28:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:29:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:30:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:31:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:32:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:33:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:34:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:35:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:36:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:37:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:38:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:39:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:40:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:41:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:42:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:43:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:44:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:45:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:46:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:47:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:48:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:49:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:50:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:51:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:52:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:53:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:54:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:55:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:56:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:57:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:58:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 20:59:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:00:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:01:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:02:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:03:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:04:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:05:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:06:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:07:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:08:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:09:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:10:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:11:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:12:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:13:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:14:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:15:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:16:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:17:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:18:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:19:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:20:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:21:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:22:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:23:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:24:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:25:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:26:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:27:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:28:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:29:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:30:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:31:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:32:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:33:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:34:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:35:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:36:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:37:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:38:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:39:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:40:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:41:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:42:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:43:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:44:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:45:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:46:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:47:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:48:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:49:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:50:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:51:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:52:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:53:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:54:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:55:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:56:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:57:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:58:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 21:59:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 22:00:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 22:01:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 22:02:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 22:03:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 22:04:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 22:05:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 22:06:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 22:07:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 22:08:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 22:09:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 22:10:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 22:11:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 22:12:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 22:13:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 22:14:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 22:15:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 22:16:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 22:17:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 22:18:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 22:19:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 22:20:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 22:21:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 22:22:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 22:23:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 22:24:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 22:25:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 22:26:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;),
- (&#39;2025-07-18 22:27:35.000 +02:00&#39;, &#39;10.49584&#39;, &#39;float&#39;)]
+[(&#39;2025-07-18 12:00:00.000 +02:00&#39;, &#39;6&#39;, &#39;float&#39;),
+ (&#39;2025-07-18 12:01:00.000 +02:00&#39;, &#39;11&#39;, &#39;float&#39;),
+ (&#39;2025-07-18 12:02:00.000 +02:00&#39;, &#39;16&#39;, &#39;float&#39;),
+ (&#39;2025-07-18 12:03:00.000 +02:00&#39;, &#39;21&#39;, &#39;float&#39;),
+ (&#39;2025-07-18 12:04:00.000 +02:00&#39;, &#39;26&#39;, &#39;float&#39;),
+ (&#39;2025-07-18 12:05:00.000 +02:00&#39;, &#39;21&#39;, &#39;float&#39;)]
 </pre></div></div>
 </div>
 </section>
@@ -1349,7 +720,7 @@ Difference in Pressure 11:08 to 11:11: -1.496009 bar
 <h3>GetMax/MinResult()<a class="headerlink" href="#GetMax/MinResult()" title="Link to this heading"></a></h3>
 <p>The <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetMinResult">GetMinResult()</a> and <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetMaxResult">GetMaxResult()</a> functions return the min/max result value for a given property and element type over all timestamps.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[44]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[46]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetMinResult(elementType=node_type, propertyName=&#39;P&#39;)
@@ -1357,17 +728,17 @@ Difference in Pressure 11:08 to 11:11: -1.496009 bar
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[44]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[46]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-(&#39;1&#39;, &#39;5196977599086967050&#39;, &#39;float&#39;)
+(&#39;2.980399&#39;, &#39;5335506849591751028&#39;, &#39;float&#39;)
 </pre></div></div>
 </div>
-<p>We can see that the minimal pressure value over all nodes and timestamps is 1 and the tk of the node where it occurs is given.</p>
+<p>We can see the the minimal pressure value over all nodes and timestamps.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[45]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[47]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetMaxResult(elementType=node_type, propertyName=&#39;P&#39;)
@@ -1375,75 +746,75 @@ Difference in Pressure 11:08 to 11:11: -1.496009 bar
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[45]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[47]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-(&#39;11.08869&#39;, &#39;4794716974138007716&#39;, &#39;float&#39;)
+(&#39;21&#39;, &#39;5196977599086967050&#39;, &#39;float&#39;)
 </pre></div></div>
 </div>
-<p>We can see that the maximal pressure value over all nodes and timestamps is 11 and the tk of the node where it occurs is given.</p>
+<p>We can see the the minimal pressure value over all nodes and timestamps.</p>
 </section>
 <section id="GetMax/MinResult_for_timestamp()">
 <h3>GetMax/MinResult_for_timestamp()<a class="headerlink" href="#GetMax/MinResult_for_timestamp()" title="Link to this heading"></a></h3>
 <p>The <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetMinResult_for_timestamp">GetMinResult_for_timestamp()</a> and <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetMaxResult_for_timestamp">GetMaxResult_for_timestamp()</a> functions return the min/max result value for a given property, element type and timestamp.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[46]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetMinResult_for_timestamp(timestamp=&#39;2025-07-18 11:08:35.000 +02:00&#39;, elementType=node_type, propertyName=&#39;P&#39;)
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[46]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-(&#39;1&#39;, &#39;5196977599086967050&#39;, &#39;float&#39;)
-</pre></div></div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[47]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetMinResult_for_timestamp(timestamp=&#39;2025-07-18 11:12:35.000 +02:00&#39;, elementType=node_type, propertyName=&#39;P&#39;)
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[47]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-(&#39;1&#39;, &#39;5196977599086967050&#39;, &#39;float&#39;)
-</pre></div></div>
-</div>
-<p>We an observe that the min pressure value over all nodes stays the same from 8 to 12 minutes and occurs at the same node.</p>
-<div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[48]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>max_pressure1=s3s.GetMaxResult_for_timestamp(timestamp=&#39;2025-07-18 11:08:35.000 +02:00&#39;, elementType= node_type, propertyName=&#39;P&#39;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetMinResult_for_timestamp(timestamp=&#39;2025-07-18 12:01:00.000 +02:00&#39;, elementType=node_type, propertyName=&#39;P&#39;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[48]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(&#39;2.663651&#39;, &#39;5335506849591751028&#39;, &#39;float&#39;)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[49]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetMinResult_for_timestamp(timestamp=&#39;2025-07-18 12:01:00.000 +02:00&#39;, elementType=node_type, propertyName=&#39;P&#39;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[49]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(&#39;2.663651&#39;, &#39;5335506849591751028&#39;, &#39;float&#39;)
+</pre></div></div>
+</div>
+<p>We an observe that the min pressure value over all nodes stays the same from 1 to 4 minutes and occurs at the same node.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[50]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>max_pressure1=s3s.GetMaxResult_for_timestamp(timestamp=&#39;2025-07-18 12:01:00.000 +02:00&#39;, elementType= node_type, propertyName=&#39;P&#39;)
 </pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[49]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[51]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>max_pressure2=s3s.GetMaxResult_for_timestamp(timestamp=&#39;2025-07-18 11:12:35.000 +02:00&#39;,elementType=node_type, propertyName=&#39;P&#39;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>max_pressure2=s3s.GetMaxResult_for_timestamp(timestamp=&#39;2025-07-18 12:04:00.000 +02:00&#39;,elementType=node_type, propertyName=&#39;P&#39;)
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[50]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[52]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(f&quot;Max Pressure 11:08: {max_pressure1[0]} bar at {max_pressure1[1]} compared to 11:11: {max_pressure2[0]} bar at {max_pressure2[1]}.&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(f&quot;Max Pressure 12:01: {max_pressure1[0]} bar at {max_pressure1[1]} compared to 12:04: {max_pressure2[0]} bar at {max_pressure2[1]}.&quot;)
 </pre></div>
 </div>
 </div>
@@ -1452,7 +823,7 @@ Difference in Pressure 11:08 to 11:11: -1.496009 bar
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Max Pressure 11:08: 6.505175 bar at 5452027739517825954 compared to 11:11: 8.5 bar at 5135870410338621985.
+Max Pressure 12:01: 11 bar at 5196977599086967050 compared to 12:04: 26 bar at 5196977599086967050.
 </pre></div></div>
 </div>
 <p><strong>Next:</strong> Tutorial 4: Editing a SIR 3S model safely and effectively</p>
