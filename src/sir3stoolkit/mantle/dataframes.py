@@ -22,6 +22,7 @@ from enum import Enum
 from collections import defaultdict
 import geopandas as gpd
 from shapely import wkt
+from datetime import datetime
 
 import logging
 logger = logging.getLogger(__name__)
@@ -1159,6 +1160,242 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
 
         return dfPipes
 
+    ## Dataframe Operations: Time Table
+    def insert_dataframe_into_time_table(
+        self,
+        time_table_tk: str,
+        dataframe: pd.DataFrame,
+        reference_time_stamp = None,
+        date_col: str = "TAG",
+        time_col: str = "UHRZEIT",
+        value_col: str = "WERT",
+        dt_format: str = "%Y-%m-%d %H:%M:%S.%f",
+    ) -> None:
+        """
+        Sets (overwrites previous) time-value pairs for time table based on provided dataframe.
+
+        :param self:
+        :param time_table_tk: Tk of time table (["VarPressureTable", "VarFlowTable", "ValveLiftTable", "PumpSpeedTable", "MeasuredVariableTable", "LoadFactorTable"]) to set time-value pairs for.
+        :type time_table_tk: int
+        :param dataframe: Pandas dataframe with date_col, time_col, value_col
+        :type dataframe: pd.Dataframe
+        :param reference_time_stamp: "0-timestamp" - the difference to this timestamp will be calculated for each timestamp in the dataframe and used in the time table, default=self.GetTimeStamps()[0][0] - first simulation timestamp, values like "%Y-%m-%d %H:%M:%S.%f"
+        :type reference_time_stamp: str
+        :param date_col: Name of date col in dataframe, default = "TAG", values like "2026-01-01", "%Y-%m-%d"
+        :type date_col: str
+        :param time_col: Name of time col in dataframe, default = "UHRZEIT", values like "00:00:20.000000", "%H:%M:%S.%f"
+        :type time_col: str
+        :param value_col: Name of value col in dataframe, default = "WERT", values like 83 or 1.2
+        :type value_col: str
+        """
+
+        # --- Input data validation ---
+        logger.info("[insert dataframe into time table] Validating input data ...")
+        available_time_table_tks=[]
+
+        for type in ["VarPressureTable", "VarFlowTable", "ValveLiftTable", "PumpSpeedTable", "MeasuredVariableTable", "LoadFactorTable"]:
+            tks = self.GetTksofElementType(self.ObjectTypes[type])
+            available_time_table_tks.extend(tks)
+
+        if time_table_tk not in available_time_table_tks:
+            logger.error(f"[insert dataframe into time table] Time table with tk {time_table_tk} does not exist.")
+            return -1
+        
+        if dataframe.empty:
+            logger.error(f"[insert dataframe into time table] Dataframe is empty.")
+            return -1
+        
+        available_dataframe_columns = dataframe.columns
+        if date_col not in available_dataframe_columns:
+            logger.error(f"[insert dataframe into time table] Date col {date_col} not in dataframe columns.")
+            return -1
+        if time_col not in available_dataframe_columns:
+            logger.error(f"[insert dataframe into time table] Time col {time_col} not in dataframe columns.")
+            return -1
+        if value_col not in available_dataframe_columns:
+            logger.error(f"[insert dataframe into time table] Value col {value_col} not in dataframe columns.")
+            return -1
+
+        try:
+            internal_ref_time = self.GetTimeStamps()[0][0]
+        except:
+            internal_ref_time = None
+
+        if reference_time_stamp:
+            used_reference_time_stamp = reference_time_stamp
+        elif internal_ref_time:
+            s = self.GetTimeStamps()[0][0]
+            used_reference_time_stamp = s.split()[0] + " " + s.split()[1]
+        else:
+            logger.error(f"[insert dataframe into time table] No valid simulation timestamp in model, nor reference time stamp given.")
+            return -1
+        used_reference_time_stamp_as_datetime = datetime.strptime(used_reference_time_stamp, "%Y-%m-%d %H:%M:%S.%f")
+
+        df = dataframe[[date_col, time_col, value_col]].copy()
+        logger.info("[insert dataframe into time table] Successfully validated input data.")
+
+        # --- From timestamp to simulation time ---
+        ts_series = pd.to_datetime(
+            df[date_col].astype(str) + " " + df[time_col].astype(str),
+            format="%Y-%m-%d %H:%M:%S.%f",
+            errors="coerce"     
+        )
+
+        delta_sec = (ts_series - used_reference_time_stamp_as_datetime).dt.total_seconds()
+        df["delta_time_col"] = delta_sec
+
+        property_name, _ = self._get_time_table_col_name_from_tk(time_table_tk=time_table_tk)
+
+        # --- Inserting value pairs into model ---
+        logger.info("[insert dataframe into time table] Inserting value pairs ...")
+        try:
+            for id, row in df.iterrows():
+                t = row["delta_time_col"]
+                v = row[value_col]
+                tk_new_row = self.AddTableRow(tablePkTk=time_table_tk)[0]
+                self.SetValue(Tk=tk_new_row, propertyName="Zeit", Value=str(t))
+                self.SetValue(Tk=tk_new_row, propertyName=property_name, Value=str(v))
+        except Exception as e:
+            logger.error(f"[insert dataframe into time table] Error inserting value pairs into model: {e}")
+        
+        logger.info("[insert dataframe into time table] Successfully inserted value pairs")
+
+    def get_dataframes_from_time_table_type(
+        self,
+        time_table_type: str,
+    ) -> List[pd.DataFrame]:
+        """
+        Get DataFrames for all time tables of a given type and a joint horizontally concatenated DataFrame.
+        
+        :param self:
+        :param time_table_type: The time table type to extract. Must be one of:
+                                ["VarPressureTable", "VarFlowTable", "ValveLiftTable",
+                                "PumpSpeedTable", "MeasuredVariableTable", "LoadFactorTable"].
+        :type time_table_type: str
+        :return: A tuple containing:
+                - df_h: The joint DataFrame. If multiple tables are found, this is a column-wise
+                        concatenation (``axis=1``, ``join='outer'``) of all per-TK DataFrames with
+                        the index sorted ascending. If only one table exists, it is returned directly.
+                - dfs: A dictionary mapping each TK to its corresponding DataFrame
+                        (key: TK, value: DataFrame).
+                - tks_of_time_table_type: The list of TKs for the requested time table type, in the
+                        order returned by ``GetTksofElementType``.
+        :rtype: tuple[pd.DataFrame, dict[Any, pd.DataFrame], list[Any]]
+        """
+        logger.info(f"[get dataframes from time table type] ...")
+        # --- Validate input ---
+        
+        if time_table_type not in ["VarPressureTable", "VarFlowTable", "ValveLiftTable", "PumpSpeedTable", "MeasuredVariableTable", "LoadFactorTable"]:
+            logger.error(f"Invalid time table type. Has to be of type: ['VarPressureTable', 'VarFlowTable', 'ValveLiftTable', 'PumpSpeedTable', 'MeasuredVariableTable', 'LoadFactorTable']")
+        
+        # --- Obtain tks of time table type ---
+        tks_of_time_table_type = self.GetTksofElementType(self.ObjectTypes[time_table_type])
+        _, _value_col_name = self._get_time_table_col_name_from_tk(time_table_tk=tks_of_time_table_type[0]) 
+        
+        dfs = {}
+
+        # --- Obtain table for each tk ---
+        for tk in  tks_of_time_table_type:
+            table_name = self.GetValue(Tk=tk, propertyName="Name")[0]
+            dfs[tk]=self.get_dataframe_from_time_table(time_table_tk=tk, value_col_name=table_name)# + " " + _value_col_name)
+
+        # --- Create Joint df ---
+
+        if len(dfs) > 1:
+            df_h = pd.concat(dfs.values(), axis=1, join='outer')
+            df_h = df_h.sort_index(ascending=True)
+        else:
+            df_h = dfs[tks_of_time_table_type[0]]
+
+        logger.info(f"[get dataframes from time table type] Successful")
+
+        return df_h, dfs, tks_of_time_table_type
+        
+
+    def get_dataframe_from_time_table(
+        self,
+        time_table_tk: str,
+        value_col_name: str = None,
+        time_col: str = "Zeit [s]"
+    ) -> None:
+        """
+        Obtain time variable table (tables = ["VarPressureTable", "VarFlowTable", "ValveLiftTable", "PumpSpeedTable", "MeasuredVariableTable", "LoadFactorTable"]) in format of a pandas dataframe with time and value column.
+        
+        :param self: 
+        :param time_table_tk: Tk of time table to get time-value pairs from.
+        :type time_table_tk: str
+        :param value_col: Name given to the value column
+        :type value_col: str
+        :param time_col: Name given to the time column, Default = "Zeit"
+        :type time_col: str
+        """
+
+        # --- Validate input tk and find time table type ---
+        logger.info(f"[get dataframe from time table] Validating input data (time_table_tk={time_table_tk})...")
+
+        value_name, _value_col_name = self._get_time_table_col_name_from_tk(time_table_tk=time_table_tk) 
+        if value_name == -1:
+            return -1
+
+        if value_col_name:
+            value_col_name_to_use = value_col_name
+        else:
+            value_col_name_to_use = _value_col_name
+
+        logger.info("[get dataframe from time table] Successfully validated input data.")
+
+        # --- Build dataframe
+        logger.info("[get dataframe from time table] Building dataframe ...")
+
+        rows = self.GetTableRows(tablePkTk=time_table_tk)
+        row_tks = list(rows[0]) 
+
+        data = {}
+        for tk in row_tks:
+            time = self.GetValue(tk, "Zeit")[0]
+            time = float(time)
+            value = self.GetValue(tk, value_name)[0]
+            value = float(value)
+            data[time] = value
+
+        if data == {}:
+            logger.info("[get dataframe from time table] time table is empty.")
+            df = pd.DataFrame(data=[[np.nan]], index=[0.0], columns=[value_name])
+        else:
+            df = pd.DataFrame.from_dict(data, orient='index', columns=[value_col_name_to_use])
+            df.index.name = time_col
+            logger.info("[get dataframe from time table] Successfully built dataframe.")
+
+        return df
+
+    def _get_time_table_col_name_from_tk(
+        self,
+        time_table_tk: str        
+    ) -> str:
+        
+        if time_table_tk in self.GetTksofElementType(self.ObjectTypes.VarPressureTable):
+            value_name = 'Ph'                                                                    # needed to retrieve numeric value from row
+            _value_col_name = 'Druck p [bar]'                                                     # needed to name column in output df
+        elif time_table_tk in self.GetTksofElementType(self.ObjectTypes.VarFlowTable):
+            value_name = 'Qm'
+            _value_col_name = 'Einspeisung/Abnahme Q [m^3/h]'
+        elif time_table_tk in self.GetTksofElementType(self.ObjectTypes.ValveLiftTable):
+            value_name = 'Phi'
+            _value_col_name = 'Stellung phi [%]'
+        elif time_table_tk in self.GetTksofElementType(self.ObjectTypes.PumpSpeedTable):
+            value_name = 'N'
+            _value_col_name = 'Drehzahl [1/min]'
+        elif time_table_tk in self.GetTksofElementType(self.ObjectTypes.MeasuredVariableTable):
+            value_name = 'W'
+            _value_col_name = 'Sollwert'
+        elif time_table_tk in self.GetTksofElementType(self.ObjectTypes.LoadFactorTable):
+            value_name = 'Lf'
+            _value_col_name = 'Lastfaktor [-]'
+        else:
+            logger.error(f"[_get_time_table_col_name_from_tk] No time table with tk {time_table_tk}")
+            return -1, -1
+        
+        return value_name, _value_col_name
 
     # Miscellaneous
     def __Get_Node_Tks_From_Pipe(self, pipe_tk):
