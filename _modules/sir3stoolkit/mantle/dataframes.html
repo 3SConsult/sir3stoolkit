@@ -179,7 +179,7 @@
 <span class="sd">        :rtype: pd.DataFrame | gpd.GeoDataFrame</span>
 
 <span class="sd">        :description:  </span>
-<span class="sd">        Generates a DataFrame (or GeoDataFrame) containing static model data for all elements of a given type. The core of the sir3stoolkit usually returns values without datatypes, that are then interpreted as strings. This function infers and assigns datatypes based on values, therefore misassignments of data types can happen. Tk retains string data type.</span>
+<span class="sd">        Generates a DataFrame (or GeoDataFrame) containing static model data for all elements of a given type. The core of the sir3stoolkit usually returns values without datatypes, that are then interpreted as strings. This function infers and assigns datatypes based on values, therefore misassignments of data types can happen. Tk retains string data type. Vectorized values are split into three columsn property_start, property_end, property_sequence(closed interval including start and end).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[model_data] Generating model_data dataframe for element type: </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -346,8 +346,11 @@
         <span class="n">element_type</span><span class="p">:</span> <span class="n">Enum</span><span class="p">,</span>
         <span class="n">tks</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">properties</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">timestamps</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">place_holder_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="mf">99999.0</span>
+        <span class="n">timestamps</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">place_holder_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="mf">99999.0</span><span class="p">,</span>
+        <span class="n">drop_full_place_holder_columns</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+        
+
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
 
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -371,9 +374,12 @@
 <span class="sd">                            where 0 = first timestamp, 7 = eighth timestamp, -1 = last timestamp.  </span>
 <span class="sd">                        Default: None (includes all available timestamps).</span>
 <span class="sd">        :type timestamps: list[Union[str, int]], optional</span>
-<span class="sd">        :param place_holder_value: float values to be used if SIR 3S calculations do not return a result.</span>
+<span class="sd">        :param place_holder_value: float values to be used if SIR 3S calculations do not return results.</span>
 <span class="sd">                        Default: 99999.0</span>
 <span class="sd">        :type place_holder_value: float, optional</span>
+<span class="sd">        :param drop_full_place_holder_columns: Determine whether columns, that are completley filled with place holder values, get dropped.</span>
+<span class="sd">                Default: True</span>
+<span class="sd">        :type drop_full_place_holder_columns: bool, optional</span>
 
 <span class="sd">        :return: DataFrame with one row per timestamp and MultiIndex columns:  </span>
 <span class="sd">                - Level 0: tk (device ID)  </span>
@@ -447,6 +453,7 @@
                         <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetResultfortimestamp</span><span class="p">(</span><span class="n">timestamp</span><span class="o">=</span><span class="n">ts</span><span class="p">,</span> <span class="n">Tk</span><span class="o">=</span><span class="n">tk</span><span class="p">,</span> <span class="nb">property</span><span class="o">=</span><span class="n">prop</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
                         <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
                             <span class="n">data_dict</span><span class="p">[(</span><span class="n">tk</span><span class="p">,</span> <span class="n">prop</span><span class="p">)][</span><span class="n">ts</span><span class="p">]</span> <span class="o">=</span> <span class="n">place_holder_value</span>
+
                         <span class="k">elif</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">available_result_vector_props</span><span class="p">:</span>
                             <span class="n">value</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
                             <span class="n">data_dict</span><span class="p">[(</span><span class="n">tk</span><span class="p">,</span> <span class="n">prop</span><span class="p">)][</span><span class="n">ts</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
@@ -462,6 +469,11 @@
                         <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[results] Failed to get result &#39;</span><span class="si">{</span><span class="n">prop</span><span class="si">}</span><span class="s2">&#39; for tk &#39;</span><span class="si">{</span><span class="n">tk</span><span class="si">}</span><span class="s2">&#39; at &#39;</span><span class="si">{</span><span class="n">ts</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data_dict</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">drop_full_place_holder_columns</span><span class="p">:</span>
+            <span class="n">mask_placeholder_all</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">eq</span><span class="p">(</span><span class="n">place_holder_value</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+            <span class="n">amount_of_dropped_cols</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">mask_placeholder_all</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="o">~</span><span class="n">mask_placeholder_all</span><span class="p">]</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[results] </span><span class="si">{</span><span class="n">amount_of_dropped_cols</span><span class="si">}</span><span class="s2"> fully NaN columns dropped.&quot;</span><span class="p">)</span>
         <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;timestamp&quot;</span>
         
         
@@ -506,7 +518,8 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">generate_element_dataframe</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">element_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">tks</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">tks</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">timestamp</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">|</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">:</span>
 
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -524,7 +537,9 @@
 <span class="sd">        :param tks: List of tks to include in the dataframe.</span>
 <span class="sd">                    Default: None.</span>
 <span class="sd">        :type tks: list[str], optional</span>
-
+<span class="sd">        :param timestamp: Timestamp used for obtaining result values.</span>
+<span class="sd">                    Default: Static.</span>
+<span class="sd">        :type timestamp: str, optional</span>
 <span class="sd">        :return: DataFrame containing one row per element instance, including model_data, end</span>
 <span class="sd">                nodes, geometry, and available static result values.</span>
 <span class="sd">        :rtype: pd.DataFrame</span>
@@ -543,20 +558,35 @@
                                                                 <span class="p">,</span><span class="n">tks</span><span class="o">=</span><span class="n">tks</span>
                                                                 <span class="p">,</span><span class="n">properties</span><span class="o">=</span><span class="kc">None</span>
                                                                 <span class="p">,</span><span class="n">geometry</span><span class="o">=</span><span class="kc">True</span>
-                                                                <span class="p">,</span><span class="n">end_nodes</span><span class="o">=</span><span class="kc">True</span>
+                                                                <span class="p">,</span><span class="n">end_nodes</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__is_get_endnodes_applicable</span><span class="p">(</span><span class="n">element_type</span><span class="p">)</span>
                                                                 <span class="p">,</span><span class="n">element_type_col</span><span class="o">=</span><span class="kc">False</span>
             <span class="p">)</span>
             <span class="k">if</span> <span class="n">df_model_data</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
                 <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[generate_element_dataframe] Obtained model dataframe is empty.&quot;</span><span class="p">)</span>
                 <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
             
-            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[generate_element_dataframe] Generating df_results for element type: </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2"> ...&quot;</span><span class="p">)</span>
+            <span class="c1"># Timestamps</span>
             <span class="n">result_values_to_obtain</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetResultProperties_from_elementType</span><span class="p">(</span><span class="n">element_type</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
-            <span class="n">static_timestamp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTimeStamps</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span>
+            
+            <span class="k">if</span> <span class="n">timestamp</span><span class="p">:</span>
+                <span class="n">available_timestamps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTimeStamps</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">timestamp</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">timestamp</span> <span class="ow">in</span> <span class="n">available_timestamps</span><span class="p">:</span>
+                        <span class="n">used_timestamp</span> <span class="o">=</span> <span class="n">timestamp</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[generate_element_dataframe] Timestamp </span><span class="si">{</span><span class="n">timestamp</span><span class="si">}</span><span class="s2"> not in available simulation timestamps (self.GetTimeStamps()[0]).&quot;</span><span class="p">)</span>
+                        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+                <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">timestamp</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+                    <span class="n">used_timestamp</span> <span class="o">=</span> <span class="n">available_timestamps</span><span class="p">[</span><span class="n">timestamp</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">used_timestamp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTimeStamps</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span> <span class="c1"># static</span>
+
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[generate_element_dataframe] Generating df_results for element type: </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">; at timestamp: </span><span class="si">{</span><span class="n">used_timestamp</span><span class="si">}</span><span class="s2"> ...&quot;</span><span class="p">)</span>
             <span class="n">df_results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_element_results_dataframe</span><span class="p">(</span><span class="n">element_type</span><span class="o">=</span><span class="n">element_type</span>
                                                                         <span class="p">,</span><span class="n">tks</span><span class="o">=</span><span class="n">tks</span>
                                                                         <span class="p">,</span><span class="n">properties</span><span class="o">=</span><span class="n">result_values_to_obtain</span>
-                                                                        <span class="p">,</span><span class="n">timestamps</span><span class="o">=</span><span class="p">[</span><span class="n">static_timestamp</span><span class="p">]</span>
+                                                                        <span class="p">,</span><span class="n">timestamps</span><span class="o">=</span><span class="p">[</span><span class="n">used_timestamp</span><span class="p">]</span>
+                                                                        
             <span class="p">)</span>
             <span class="k">if</span> <span class="n">df_results</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
                 <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[generate_element_dataframe] Obtained results dataframe is empty.&quot;</span><span class="p">)</span>
@@ -568,11 +598,14 @@
             <span class="n">df</span> <span class="o">=</span> <span class="n">df_model_data</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">on</span><span class="o">=</span><span class="s2">&quot;tk&quot;</span><span class="p">,</span>
                                 <span class="n">how</span><span class="o">=</span><span class="s2">&quot;outer&quot;</span><span class="p">,</span>
                                 <span class="n">right</span><span class="o">=</span><span class="n">df_results</span><span class="p">)</span>
+
+            <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_interior_points_to_start_end_sequence</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
             
             <span class="k">return</span> <span class="n">df</span>
         
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[generate_element_dataframe] Error Generating df for element type: </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[generate_element_dataframe] Error Generating df for element type: </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span></div>
 
             
 
@@ -660,7 +693,84 @@
         <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">out</span></div>
 
-    
+            
+<div class="viewcode-block" id="SIR3S_Model_Dataframes.add_interior_points_to_start_end_sequence">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.add_interior_points_to_start_end_sequence">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_interior_points_to_start_end_sequence</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df_results</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convert VEC vector columns from tab-separated strings into:</span>
+<span class="sd">        - &lt;prop&gt;_start:   first element</span>
+<span class="sd">        - &lt;prop&gt;_end:     last element</span>
+<span class="sd">        - &lt;prop&gt;_sequence: a tuple containing all elements</span>
+
+<span class="sd">        Non-VEC properties remain scalar and unchanged.</span>
+
+<span class="sd">        :param df_results: pd.DataFrame with VEC properties as tab-separated strings</span>
+<span class="sd">        :type df_results: pd.DataFrame</span>
+<span class="sd">        :return: DataFrame with expanded scalar VEC columns</span>
+<span class="sd">        :rtype: pd.DataFrame</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">last_level</span> <span class="o">=</span> <span class="n">df_results</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">get_level_values</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">vec_props</span> <span class="o">=</span> <span class="p">{</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">last_level</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span> <span class="k">if</span> <span class="s2">&quot;VEC&quot;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">p</span><span class="p">)}</span>
+
+        <span class="n">is_multi</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">df_results</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">MultiIndex</span><span class="p">)</span>
+
+        <span class="n">pieces</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">col_key</span> <span class="ow">in</span> <span class="n">df_results</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+
+            <span class="n">key</span> <span class="o">=</span> <span class="n">col_key</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">col_key</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="k">else</span> <span class="p">(</span><span class="n">col_key</span><span class="p">,)</span>
+            <span class="n">prop</span> <span class="o">=</span> <span class="n">key</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">base_key</span> <span class="o">=</span> <span class="n">key</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># everything except the last level (property name)</span>
+            <span class="n">col</span> <span class="o">=</span> <span class="n">df_results</span><span class="p">[</span><span class="n">col_key</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">vec_props</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_column_has_vector_values</span><span class="p">(</span><span class="n">col</span><span class="p">):</span>
+
+                <span class="c1"># Convert tab-separated string → list of values</span>
+                <span class="n">split_lists</span> <span class="o">=</span> <span class="n">col</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+                    <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">else</span> <span class="p">[]</span>
+                <span class="p">)</span>
+
+                <span class="c1"># Extract start, end, and full tuple</span>
+                <span class="n">start</span> <span class="o">=</span> <span class="n">split_lists</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">lst</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">lst</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">if</span> <span class="n">lst</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span>
+                <span class="n">end</span> <span class="o">=</span> <span class="n">split_lists</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">lst</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">lst</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="k">if</span> <span class="n">lst</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span>
+                <span class="n">sequence</span> <span class="o">=</span> <span class="n">split_lists</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+                    <span class="k">lambda</span> <span class="n">lst</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">)</span> <span class="k">if</span> <span class="n">lst</span> <span class="k">else</span> <span class="p">()</span>
+                <span class="p">)</span>
+
+                <span class="c1"># Build a DataFrame for these three new columns</span>
+                <span class="n">df_vec</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+                    <span class="p">{</span>
+                        <span class="n">prop</span> <span class="o">+</span> <span class="s2">&quot;_start&quot;</span><span class="p">:</span> <span class="n">start</span><span class="p">,</span>
+                        <span class="n">prop</span> <span class="o">+</span> <span class="s2">&quot;_end&quot;</span><span class="p">:</span> <span class="n">end</span><span class="p">,</span>
+                        <span class="n">prop</span> <span class="o">+</span> <span class="s2">&quot;_sequence&quot;</span><span class="p">:</span> <span class="n">sequence</span>
+                    <span class="p">},</span>
+                    <span class="n">index</span><span class="o">=</span><span class="n">df_results</span><span class="o">.</span><span class="n">index</span>
+                <span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">is_multi</span><span class="p">:</span>
+                    <span class="n">df_vec</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">MultiIndex</span><span class="o">.</span><span class="n">from_tuples</span><span class="p">(</span>
+                        <span class="p">[</span><span class="n">base_key</span> <span class="o">+</span> <span class="p">(</span><span class="n">c</span><span class="p">,)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">df_vec</span><span class="o">.</span><span class="n">columns</span><span class="p">],</span>
+                        <span class="n">names</span><span class="o">=</span><span class="n">df_results</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">names</span>
+                    <span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">df_vec</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span>
+                        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prop</span><span class="si">}</span><span class="s2">_start&quot;</span><span class="p">,</span>
+                        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prop</span><span class="si">}</span><span class="s2">_end&quot;</span><span class="p">,</span>
+                        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prop</span><span class="si">}</span><span class="s2">_sequence&quot;</span>
+                    <span class="p">]</span>
+
+                <span class="n">pieces</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df_vec</span><span class="p">)</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Keep scalar property untouched</span>
+                <span class="n">pieces</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">col</span><span class="o">.</span><span class="n">to_frame</span><span class="p">())</span>
+
+        <span class="n">out</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">pieces</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">out</span></div>
+
+
 <div class="viewcode-block" id="SIR3S_Model_Dataframes.add_interior_points_as_flat_cols">
 <a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.add_interior_points_as_flat_cols">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">add_interior_points_as_flat_cols</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
@@ -760,7 +870,6 @@
                 <span class="n">df_pipes_VL</span><span class="p">[</span><span class="s2">&quot;AGSN_Name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">name</span>
                 <span class="n">df_pipes_VL</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;l_sum&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
                 <span class="n">df_pipes_VL</span> <span class="o">=</span> <span class="n">df_pipes_VL</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-                <span class="n">dfs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df_pipes_VL</span><span class="p">)</span>
                     
                 <span class="c1"># RL</span>
                 <span class="n">nodes_RL</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">hydraulicProfile</span><span class="o">.</span><span class="n">nodesRL</span><span class="p">)</span>
@@ -775,7 +884,9 @@
                 <span class="n">df_pipes_RL</span><span class="p">[</span><span class="s2">&quot;AGSN_Name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">name</span>
                 <span class="n">df_pipes_RL</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;l_sum&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
                 <span class="n">df_pipes_RL</span> <span class="o">=</span> <span class="n">df_pipes_RL</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-                <span class="n">dfs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df_pipes_RL</span><span class="p">)</span>
+                
+                <span class="n">dfs_pipes_tuple</span> <span class="o">=</span> <span class="p">(</span><span class="n">df_pipes_VL</span><span class="p">,</span> <span class="n">df_pipes_RL</span><span class="p">)</span>
+                <span class="n">dfs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dfs_pipes_tuple</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error retrieving Hydraulic Profile with Lfdnr: </span><span class="si">{</span><span class="n">lfdnr</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
                 <span class="k">return</span> <span class="p">[]</span>
@@ -831,43 +942,6 @@
             <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[edge dataframe] Failed to retrieve edges: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">df_edges</span></div>
-
-    
-<div class="viewcode-block" id="SIR3S_Model_Dataframes.generate_pipe_vector_dataframe">
-<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.generate_pipe_vector_dataframe">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">generate_pipe_vector_dataframe</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">tks</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">         Generates dataframe containing model data and result data of pipes in a SIR 3S model. Vectorized result data is split into multiple columns.</span>
-<span class="sd">        </span>
-<span class="sd">        :param tk: List of pipe tks to exclusivley include. Other pipes are not included.</span>
-<span class="sd">        :return: Dataframe containing model data and result data of pipes</span>
-<span class="sd">        :rtype: Dataframe</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">df_model_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_element_dataframe</span><span class="p">(</span><span class="n">element_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="o">.</span><span class="n">Pipe</span><span class="p">,</span> <span class="n">tks</span><span class="o">=</span><span class="n">tks</span><span class="p">)</span>
-        <span class="n">df_pipe_vector</span><span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_interior_points_as_flat_cols</span><span class="p">(</span><span class="n">df_model_data</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">df_pipe_vector</span></div>
-
-    
-<div class="viewcode-block" id="SIR3S_Model_Dataframes.generate_longitudinal_section_vector_dataframes">
-<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.generate_longitudinal_section_vector_dataframes">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">generate_longitudinal_section_vector_dataframes</span><span class="p">(</span>
-        <span class="bp">self</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">         Generates dataframes containing model data and result data of pipes in a longitudinal section of a SIR 3S model. Vectorized result data is split into multiple columns.</span>
-<span class="sd">        </span>
-<span class="sd">        :return: List of dataframes of the form [section_1_VL, section_1_RL, section_2_VL, section_2_RL, ..., section_lfdnr_VL, section_lfdnr_RL, ...]</span>
-<span class="sd">        :rtype: List[DataFrame|GeoDataFrame]</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">dfs_longitudinal_section</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_longitudinal_section_dataframes</span><span class="p">()</span>
-        <span class="n">dfs_longitudinal_section_vector</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">dfs_longitudinal_section</span><span class="p">:</span>
-            <span class="n">df_vector</span><span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_interior_points_as_flat_cols</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-            <span class="n">dfs_longitudinal_section_vector</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df_vector</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">dfs_longitudinal_section_vector</span></div>
 
         
     <span class="k">def</span><span class="w"> </span><span class="nf">__get_object_type_enums</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">names</span><span class="p">,</span> <span class="n">enum_class</span><span class="p">):</span>
@@ -1524,6 +1598,10 @@
             <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span>
         
         <span class="k">return</span> <span class="n">value_name</span><span class="p">,</span> <span class="n">_value_col_name</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="nf">_column_has_vector_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">col</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return True if at least one value contains tabs.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">col</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">()</span>
 
     <span class="c1"># Miscellaneous</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">__Get_Node_Tks_From_Pipe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pipe_tk</span><span class="p">):</span>

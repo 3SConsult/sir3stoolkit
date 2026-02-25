@@ -176,7 +176,7 @@ SIR3S_Advanced_Operations implements functions that extend the basic C# operatio
 Tutorial 54: Measured Value Tables
 """"""""""""""""""""""""""""""""""
 
-This example demonstrates how view, create, delete and edit measured variable tables (Sollwerttabellen).
+This example demonstrates how view, create, delete and edit measured variable tables (Sollwerttabellen) with pandas dataframes as python representation.
 
 View: `Notebook <tutorials/SIR3S_Model_Mantle/Tutorial054_Assets/ToolkitTutorial054.html>`_  | Download: :download:`Notebook <tutorials/SIR3S_Model_Mantle/Tutorial054_Assets/ToolkitTutorial054.ipynb>`.
 
