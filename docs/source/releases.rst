@@ -29,6 +29,25 @@ Below all available Toolkit version from 90.15.3 to 90.15.XX are listed. For eac
 SIR 3S: 90-15-00-22-Upd2
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
+Version 90.15.14
+""""""""""""""""
+
+For SIR 3S Version: 90-15-00-22-Upd2
+
+Changes
+~~~~~~~
+
+- dataframes.py:
+   - new function: add_interior_points_to_start_end_sequence(): turn column of a vectorized propertry in three columns: property_start(float), propertry_end(float), propertry_sequence(Tuple: start, ..., end)
+   - generate_element_dataframe():
+      - uses add_interior_points_to_start_end_sequence() to format vectorized result dataframe
+      - new param: timestamp to determine for which timestamp result values should be obtained
+      - end nodes only attempted to return if they are defined for element type: removes unnessesary warning 
+   - generate_element_result_dataframe():
+      - new param: drop_full_place_holder_columns:  Determine whether columns, that are completley filled with place holder values, get dropped.
+   - deleted generate_pipe_vector_dataframe() and generate_longitudinal_section_vector_dataframes(), since handeling vectorized data is now built into lower level functions, therefore generate_element_dataframe(self.ObjectTypes.Pipe) also returns vectorized results.
+   - generate_longitudinal_section_dataframes(): instead of lists of dataframes a list of size-2-tuples with Supply and Return is returned.
+
 Version 90.15.13
 """"""""""""""""
 

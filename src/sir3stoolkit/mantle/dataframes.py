@@ -89,7 +89,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         :rtype: pd.DataFrame | gpd.GeoDataFrame
 
         :description:  
-        Generates a DataFrame (or GeoDataFrame) containing static model data for all elements of a given type. The core of the sir3stoolkit usually returns values without datatypes, that are then interpreted as strings. This function infers and assigns datatypes based on values, therefore misassignments of data types can happen. Tk retains string data type.
+        Generates a DataFrame (or GeoDataFrame) containing static model data for all elements of a given type. The core of the sir3stoolkit usually returns values without datatypes, that are then interpreted as strings. This function infers and assigns datatypes based on values, therefore misassignments of data types can happen. Tk retains string data type. Vectorized values are split into three columsn property_start, property_end, property_sequence(closed interval including start and end).
         """
 
         logger.info(f"[model_data] Generating model_data dataframe for element type: {element_type}")
@@ -253,8 +253,11 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         element_type: Enum,
         tks: Optional[List[str]] = None,
         properties: Optional[List[str]] = None,
-        timestamps: Optional[List[str]] = None,
-        place_holder_value: Optional[float] = 99999.0
+        timestamps: Optional[Union[List[str], List[int]]] = None,
+        place_holder_value: Optional[float] = 99999.0,
+        drop_full_place_holder_columns: Optional[bool] = True
+        
+
     ) -> pd.DataFrame:
 
         """
@@ -278,9 +281,12 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
                             where 0 = first timestamp, 7 = eighth timestamp, -1 = last timestamp.  
                         Default: None (includes all available timestamps).
         :type timestamps: list[Union[str, int]], optional
-        :param place_holder_value: float values to be used if SIR 3S calculations do not return a result.
+        :param place_holder_value: float values to be used if SIR 3S calculations do not return results.
                         Default: 99999.0
         :type place_holder_value: float, optional
+        :param drop_full_place_holder_columns: Determine whether columns, that are completley filled with place holder values, get dropped.
+                Default: True
+        :type drop_full_place_holder_columns: bool, optional
 
         :return: DataFrame with one row per timestamp and MultiIndex columns:  
                 - Level 0: tk (device ID)  
@@ -354,6 +360,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
                         value = self.GetResultfortimestamp(timestamp=ts, Tk=tk, property=prop)[0]
                         if value == "":
                             data_dict[(tk, prop)][ts] = place_holder_value
+
                         elif prop in available_result_vector_props:
                             value = str(value)
                             data_dict[(tk, prop)][ts] = value
@@ -369,6 +376,11 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
                         logger.warning(f"[results] Failed to get result '{prop}' for tk '{tk}' at '{ts}': {e}")
 
         df = pd.DataFrame(data_dict)
+        if drop_full_place_holder_columns:
+            mask_placeholder_all = df.eq(place_holder_value).all()
+            amount_of_dropped_cols = int(mask_placeholder_all.sum())
+            df = df.loc[:, ~mask_placeholder_all]
+            logger.info(f"[results] {amount_of_dropped_cols} fully NaN columns dropped.")
         df.index.name = "timestamp"
         
         
@@ -410,7 +422,8 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
     def generate_element_dataframe(
         self,
         element_type: str,
-        tks: Optional[list[str]] = None
+        tks: Optional[list[str]] = None,
+        timestamp: Optional[Union[str, int]] = None,
     ) -> pd.DataFrame | gpd.GeoDataFrame:
 
         """
@@ -428,7 +441,9 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         :param tks: List of tks to include in the dataframe.
                     Default: None.
         :type tks: list[str], optional
-
+        :param timestamp: Timestamp used for obtaining result values.
+                    Default: Static.
+        :type timestamp: str, optional
         :return: DataFrame containing one row per element instance, including model_data, end
                 nodes, geometry, and available static result values.
         :rtype: pd.DataFrame
@@ -447,20 +462,35 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
                                                                 ,tks=tks
                                                                 ,properties=None
                                                                 ,geometry=True
-                                                                ,end_nodes=True
+                                                                ,end_nodes=self.__is_get_endnodes_applicable(element_type)
                                                                 ,element_type_col=False
             )
             if df_model_data.empty:
                 logger.error(f"[generate_element_dataframe] Obtained model dataframe is empty.")
                 return pd.DataFrame()
             
-            logger.debug(f"[generate_element_dataframe] Generating df_results for element type: {element_type} ...")
+            # Timestamps
             result_values_to_obtain = self.GetResultProperties_from_elementType(element_type, False)
-            static_timestamp = self.GetTimeStamps()[1]
+            
+            if timestamp:
+                available_timestamps = self.GetTimeStamps()[0]
+                if isinstance(timestamp, str):
+                    if timestamp in available_timestamps:
+                        used_timestamp = timestamp
+                    else:
+                        logger.error(f"[generate_element_dataframe] Timestamp {timestamp} not in available simulation timestamps (self.GetTimeStamps()[0]).")
+                        return pd.DataFrame()
+                elif isinstance(timestamp, int):
+                    used_timestamp = available_timestamps[timestamp]
+            else:
+                used_timestamp = self.GetTimeStamps()[1] # static
+
+            logger.debug(f"[generate_element_dataframe] Generating df_results for element type: {element_type}; at timestamp: {used_timestamp} ...")
             df_results = self.generate_element_results_dataframe(element_type=element_type
                                                                         ,tks=tks
                                                                         ,properties=result_values_to_obtain
-                                                                        ,timestamps=[static_timestamp]
+                                                                        ,timestamps=[used_timestamp]
+                                                                        
             )
             if df_results.empty:
                 logger.error(f"[generate_element_dataframe] Obtained results dataframe is empty.")
@@ -472,11 +502,14 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
             df = df_model_data.merge(on="tk",
                                 how="outer",
                                 right=df_results)
+
+            df = self.add_interior_points_to_start_end_sequence(df)
             
             return df
         
         except Exception as e:
             logger.error(f"[generate_element_dataframe] Error Generating df for element type: {element_type}: {e}")
+            return pd.DataFrame()
             
 
     def add_interior_points_as_multiindex(self, df_results):
@@ -560,7 +593,81 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         out = pd.concat(pieces, axis=1)
         out = out.dropna(axis=1, how="all")
         return out
-    
+            
+    def add_interior_points_to_start_end_sequence(self, df_results):
+        """
+        Convert VEC vector columns from tab-separated strings into:
+        - <prop>_start:   first element
+        - <prop>_end:     last element
+        - <prop>_sequence: a tuple containing all elements
+
+        Non-VEC properties remain scalar and unchanged.
+
+        :param df_results: pd.DataFrame with VEC properties as tab-separated strings
+        :type df_results: pd.DataFrame
+        :return: DataFrame with expanded scalar VEC columns
+        :rtype: pd.DataFrame
+        """
+
+        last_level = df_results.columns.get_level_values(-1)
+        vec_props = {p for p in last_level.unique() if "VEC" in str(p)}
+
+        is_multi = isinstance(df_results.columns, pd.MultiIndex)
+
+        pieces = []
+
+        for col_key in df_results.columns:
+
+            key = col_key if isinstance(col_key, tuple) else (col_key,)
+            prop = key[-1]
+            base_key = key[:-1]  # everything except the last level (property name)
+            col = df_results[col_key]
+
+            if prop in vec_props and self._column_has_vector_values(col):
+
+                # Convert tab-separated string → list of values
+                split_lists = col.apply(
+                    lambda x: x.split("\t") if isinstance(x, str) else []
+                )
+
+                # Extract start, end, and full tuple
+                start = split_lists.apply(lambda lst: float(lst[0]) if lst else None)
+                end = split_lists.apply(lambda lst: float(lst[-1]) if lst else None)
+                sequence = split_lists.apply(
+                    lambda lst: tuple(float(x) for x in lst) if lst else ()
+                )
+
+                # Build a DataFrame for these three new columns
+                df_vec = pd.DataFrame(
+                    {
+                        prop + "_start": start,
+                        prop + "_end": end,
+                        prop + "_sequence": sequence
+                    },
+                    index=df_results.index
+                )
+
+                if is_multi:
+                    df_vec.columns = pd.MultiIndex.from_tuples(
+                        [base_key + (c,) for c in df_vec.columns],
+                        names=df_results.columns.names
+                    )
+                else:
+                    df_vec.columns = [
+                        f"{prop}_start",
+                        f"{prop}_end",
+                        f"{prop}_sequence"
+                    ]
+
+                pieces.append(df_vec)
+
+            else:
+                # Keep scalar property untouched
+                pieces.append(col.to_frame())
+
+        out = pd.concat(pieces, axis=1)
+        return out
+
     def add_interior_points_as_flat_cols(self, df):
         """
         Expand tab-separated vector columns (name contains "VEC") into *_0..*_N-1 columns.
@@ -655,7 +762,6 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
                 df_pipes_VL["AGSN_Name"] = name
                 df_pipes_VL.sort_values(by='l_sum', ascending=True, inplace=True)
                 df_pipes_VL = df_pipes_VL.reset_index(drop=True)
-                dfs.append(df_pipes_VL)
                     
                 # RL
                 nodes_RL = list(hydraulicProfile.nodesRL)
@@ -670,7 +776,9 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
                 df_pipes_RL["AGSN_Name"] = name
                 df_pipes_RL.sort_values(by='l_sum', ascending=True, inplace=True)
                 df_pipes_RL = df_pipes_RL.reset_index(drop=True)
-                dfs.append(df_pipes_RL)
+                
+                dfs_pipes_tuple = (df_pipes_VL, df_pipes_RL)
+                dfs.append(dfs_pipes_tuple)
             except Exception as e:
                 logging.error(f"Error retrieving Hydraulic Profile with Lfdnr: {lfdnr}.")
                 return []
@@ -723,37 +831,6 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
             logger.error(f"[edge dataframe] Failed to retrieve edges: {e}")
 
         return df_edges
-    
-    def generate_pipe_vector_dataframe(
-        self,
-        tks: List[str] = None
-    ) -> pd.DataFrame:
-        """
-         Generates dataframe containing model data and result data of pipes in a SIR 3S model. Vectorized result data is split into multiple columns.
-        
-        :param tk: List of pipe tks to exclusivley include. Other pipes are not included.
-        :return: Dataframe containing model data and result data of pipes
-        :rtype: Dataframe
-        """
-        df_model_data = self.generate_element_dataframe(element_type=self.ObjectTypes.Pipe, tks=tks)
-        df_pipe_vector= self.add_interior_points_as_flat_cols(df_model_data)
-        return df_pipe_vector
-    
-    def generate_longitudinal_section_vector_dataframes(
-        self
-    ) -> pd.DataFrame:
-        """
-         Generates dataframes containing model data and result data of pipes in a longitudinal section of a SIR 3S model. Vectorized result data is split into multiple columns.
-        
-        :return: List of dataframes of the form [section_1_VL, section_1_RL, section_2_VL, section_2_RL, ..., section_lfdnr_VL, section_lfdnr_RL, ...]
-        :rtype: List[DataFrame|GeoDataFrame]
-        """
-        dfs_longitudinal_section = self.generate_longitudinal_section_dataframes()
-        dfs_longitudinal_section_vector = []
-        for df in dfs_longitudinal_section:
-            df_vector= self.add_interior_points_as_flat_cols(df)
-            dfs_longitudinal_section_vector.append(df_vector)
-        return dfs_longitudinal_section_vector
         
     def __get_object_type_enums(self, names, enum_class):
         return [getattr(enum_class, name) for name in names if hasattr(enum_class, name)]
@@ -1397,6 +1474,10 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
             return -1, -1
         
         return value_name, _value_col_name
+    
+    def _column_has_vector_values(self, col):
+        """Return True if at least one value contains tabs."""
+        return col.dropna().astype(str).str.contains("\t").any()
 
     # Miscellaneous
     def __Get_Node_Tks_From_Pipe(self, pipe_tk):
