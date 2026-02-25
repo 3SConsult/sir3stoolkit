@@ -32,7 +32,7 @@ SIR 3S: 90-15-00-22-Upd2
 Version 90.15.14
 """"""""""""""""
 
-For SIR 3S Version: 90-15-00-22-Upd2
+Developed and tested using SIR 3S Version: 90-15-00-22-Upd2
 
 Changes
 ~~~~~~~
@@ -64,7 +64,7 @@ Bug Fixes
 Version 90.15.12
 """"""""""""""""
 
-For SIR 3S Version: 90-15-00-22-Upd2
+Developed and tested using SIR 3S Version: 90-15-00-22-Upd2
 
 C# Changes
 ~~~~~~~~~~
@@ -78,7 +78,7 @@ Bug Fixes
 Version 90.15.11
 """"""""""""""""
 
-For SIR 3S Version: 90-15-00-21-Upd2
+Developed and tested using SIR 3S Version: 90-15-00-21-Upd2
 
 - advanced_operations.py:
    - new function:
@@ -93,7 +93,7 @@ SIR 3S: 90-15-00-21-Upd2
 Version 90.15.10
 """"""""""""""""
 
-For SIR 3S Version: 90-15-00-21-Upd2
+Developed and tested using SIR 3S Version: 90-15-00-21-Upd2
 
 - advanced_operations.py:
    - new functions: 
@@ -103,7 +103,7 @@ For SIR 3S Version: 90-15-00-21-Upd2
 Version 90.15.9
 """""""""""""""
 
-For SIR 3S Version: 90-15-00-21-Upd2
+Developed and tested using SIR 3S Version: 90-15-00-21-Upd2
 
 - advanced_operations.py: new module with new class SIR3S_Model_Advanced_Operations()
    - new functions: 
@@ -120,7 +120,7 @@ SIR 3S: 90-15-00-20-Upd1
 Version 90.15.8
 """""""""""""""
 
-For SIR 3S Version: 90-15-00-20-Upd1
+Developed and tested using SIR 3S Version: 90-15-00-20-Upd1
 
 - plotting.py  
    - new function: plot_time_curves()
@@ -130,7 +130,7 @@ For SIR 3S Version: 90-15-00-20-Upd1
 Version 90.15.7
 """""""""""""""
 
-For SIR 3S Version: 90-15-00-20-Upd1
+Developed and tested using SIR 3S Version: 90-15-00-20-Upd1
 
 Changes
 ~~~~~~~
@@ -145,7 +145,7 @@ Changes
 Version 90.15.6
 """""""""""""""
 
-For SIR 3S Version: 90-15-00-20-Upd1
+Developed and tested using SIR 3S Version: 90-15-00-20-Upd1
 
 C# Changes
 ~~~~~~~~~~
@@ -178,7 +178,7 @@ SIR 3S: 90-15-00-19
 Version 90.15.5
 """""""""""""""
 
-For SIR 3S Version: 90-15-00-19
+Developed and tested using SIR 3S Version: 90-15-00-19
 
 C# Changes
 ~~~~~~~~~~
@@ -207,7 +207,7 @@ Improvements
 Version 90.15.4
 """""""""""""""
 
-- For SIR 3S Version: 90-15-00-19
+Developed and tested using SIR 3S Version: 90-15-00-19
 - Implementation of Higher level functions (mantle):
    - alternative_models.py
       - nx graphs
@@ -218,10 +218,15 @@ Version 90.15.4
    - mantle.py: collector for above modules
 - Mantle Import fixed: mantle dependencies no longer needed, when importing sir3stoolkit
 
+SIR 3S: 90-15-00-15
+^^^^^^^^^^^^^^^^^^^
+
 Version 90.15.3 (Initial Release)
 """""""""""""""""""""""""""""""""
 
-- First official public release of the SIR 3S Toolkit (for SIR 3S Version: 90-15-00-16)
+Developed and tested using SIR 3S Version: 90-15-00-15
+
+- First official public release of the SIR 3S Toolkit
 - Introduced core wrapping API for SIR 3S object model (nodes, pipes, etc.)
 - Compatible with SIR 3S 90-15 Quebec (requires Sir3S_Toolkit.dll)
 - Included example workflows and basic simulation access
