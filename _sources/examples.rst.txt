@@ -2,32 +2,30 @@
 Application Examples
 ====================
 
-Here, you will find a variety of tutorials, examples and networks. 
-Before proceeding, ensure that the SIR 3S Toolkit is properly installed (see :ref:`Installation instructions <installing-toolkit-label>`). 
+Here, you will find a variety of tutorials, examples and networks (examples of SIR 3S model topologies). 
+Before proceeding, ensure that the SIR 3S Toolkit is properly installed (see :ref:`Installation <installing-toolkit-label>`). 
 
-The tutorials are designed to help new users to get started with the basic functionalities of the SIR 3S Toolkit.
-The application examples build on that foundation and demonstrate how the SIR 3S Toolkit can be used in real-world scenarios.
-The included networks illustrate typical topologies of SIR 3S models.
+The tutorials are designed to help new users to get started with the basic functionalities of the SIR 3S Toolkit. The tutorials demonstrate how the toolkit can be used in one's own models and real-world scenarios.
 
 .. tip::
 
    📘 Are you new to the SIR 3S Toolkit? Start with the Tutorials below.
 
-   🧭 Interested in model topologies? Explore the Networks.
+   🧭 Interested in creating/generating models? Explore the Networks Section.
 
    .. ⚙️ Looking for practical scenarios? Jump to the Examples section.
 
 Tutorials
 ---------
 
-These tutorials are designed to introduce new users to the functionalities of the SIR 3S Toolkit. 
+These tutorials are designed to introduce new users to the basic functionalities of the SIR 3S Toolkit. 
 
 .. image:: _static/images/Toolkit_structure_core_mantle.png
    :alt: Toolkit Structure
    :align: right
    :width: 150px
 
-Each class holding functions has its own section of tutorials. The sections come in pairs of a core class and its respective pure python mantle class. Every class has 50 tutorial slots assigned to it, therefore some jumps in the numbering occur. For collector classes every sub-class has 10 designated slots.
+Each class holding functions has its own section of tutorials. The sections come in pairs of a core class and its respective mantle class (pure python). Every class has 50 tutorial slots assigned to it, therefore some jumps in the numbering occur. For collector classes every sub-class has 10 designated slots.
 
 Each tutorial is available for **previewing** as a rendered notebook.
 

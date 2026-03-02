@@ -6,19 +6,19 @@ This guide is your first step towards understanding and utilizing the SIR 3S Too
 .. note::
     In order to use the SIR 3S Toolkit, access to SIR 3S models and a licensed SIR 3S version are necessary.
 
-What is SIR 3S Toolkit?
------------------------
+What is the SIR 3S Toolkit?
+---------------------------
 
 **SIR 3S Toolkit** is a Python package that provides a programming interface for SIR 3S - 
 a software for the simulation, analysis and optimization of flow processes in gas/water/heat supply networks, 
 plants, pipelines and caverns.
 
-While SIR 3S itself is a graphical user interface (GUI) based application that is primarily operated through manual user input, 
+While SIR 3S itself provides a graphical user interface (GUI) based application that is primarily operated through manual user input, 
 the SIR 3S Toolkit adds a powerful layer of automation and programmability. It enables users to interact with SIR 3S models through 
-Python code, making it possible to develop custom workflows, perform batch simulations, and integrate SIR 3S into larger analytical 
+Python code, making it possible to develop custom workflows, perform batch calculations, and integrate SIR 3S into larger analytical 
 or operational pipelines.
 
-At its core, the package wraps basic functionality of SIR 3S, offering a low-level access to the creation, modification and simulation of SIR 3S models. 
+At its core, the package wraps basic functionality of SIR 3S, offering a low-level access to the creation, modification and calculation of SIR 3S models. 
 A variety of method operations — such as Get, Set, Add, Delete, and Insert — are available to directly manipulate model components.
 This gives you a variety of opportunities, e.g.:
 
@@ -29,7 +29,7 @@ This gives you a variety of opportunities, e.g.:
 
 * You can build models solely from scratch, defining nodes, pipes, and more, flexibly adapted to your available data sources, thus extending SIR 3S's built-in import tools.
 
-* The analysis of model data and simulation results can leverage the entire Python data science ecosystem, enabling powerful insights using tools like pandas, NumPy, and others.
+* The analysis of model data and simulation results can leverage the entire Python data science ecosystem, enabling powerful insights using tools like pandas, NetworkX, SciPy, and others.
 
 On top of this core, higher-level functionality is provided in the so-called mantle, enabling more powerful and intuitive interactions with SIR 3S models. 
 
@@ -44,7 +44,7 @@ That's where the SIR 3S Toolkit comes in. It goes beyond file access and interac
  
 The most important PT3S functionalities have been reimplemented in the SIR 3S Toolkit. Some Python-3S functionalities are still unique to PT3S, but will be implemented in the SIR 3S Toolkit in the future.
 Therefore if you have used PT3S until now, it is recommended to switch over to the SIR 3S Toolkit, that already has a lot of features that PT3S lacks.
-Furthermore the SIR 3S Toolkit will be continuously updated and improved, while PT3S will not receive any more updates.
+Furthermore the SIR 3S Toolkit will be continuously updated and improved, while **PT3S will not receive any more updates**.
 
 .. _installing-toolkit-label: 
 
@@ -82,6 +82,6 @@ To install the SIR 3S Toolkit, follow these steps:
        cd "C:/Users/User/3S"
        git clone https://github.com/3SConsult/sir3stoolkit
        cd "C:/Users/User/3S/sir3stoolkit"
-       "C:\3S\SIR 3S\Common\Python312\python.exe" -m pip install -e .
+       python.exe -m pip install -e .
        
 To learn how the SIR 3S Toolkit is used in practice, take a look at the :doc:`examples` page.
