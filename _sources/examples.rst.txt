@@ -69,8 +69,8 @@ View: `Notebook <tutorials/SIR3S_Model/Tutorial002_Assets/ToolkitTutorial002.htm
 
 .. _Ttu003:
 
-Tutorial 3: Accessing simulation results
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Tutorial 3: Accessing calculation results
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This tutorial demonstrates how to get result values of objects based on their tk.
 
