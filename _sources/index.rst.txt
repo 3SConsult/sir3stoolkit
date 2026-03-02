@@ -10,7 +10,7 @@ SIR 3S Toolkit
 a software for the simulation, analysis and optimization of flow processes in gas/water/heat supply networks, 
 plants, pipelines and caverns. 
 
-At its core, the package wraps basic functionality of SIR 3S, offering a low-level access to the creation, modification and simulation of SIR 3S models.
+At its core, the package wraps basic functionality of SIR 3S, offering a low-level access to the creation, modification and calculation of SIR 3S models.
 
 On top of this core, higher-level functionality is provided, enabling more powerful and intuitive interactions with SIR 3S models. 
 
