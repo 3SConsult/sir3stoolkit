@@ -16,9 +16,9 @@ Each tutorials is available for **downloading**.
 SIR3S_Model()
 ~~~~~~~~~~~~~
 
-SIR3S_Model() implements basic functionalities regarding interactions between Python and a SIR 3S model.
+The SIR3S_Model() class implements basic functionalities regarding interactions between Python and a SIR 3S model.
 
-You can also download all tutorials regarding SIR3S_Model (0 - 49) and their respective data in a joint `.zip` archive at once `here <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorials000-049_Assets.zip>`_.
+You can also download all tutorials regarding SIR3S_Model() (0 - 49) and their respective data in a joint `.zip` archive at once `here <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorials000-049_Assets.zip>`_.
 
 .. _Ttu000:
 
@@ -125,7 +125,7 @@ View: `Notebook <tutorials/SIR3S_Model_Mantle/Tutorial050_Assets/ToolkitTutorial
 Tutorial 51: Manual Creation of Element Dataframes
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This Example demonstrates the capabilities of the class SIR3S_Model_Dataframes that extends SIR3S_Model be abilities to work directley with pandas dataframes. It is shown how to create dataframes containing information about elements such as Nodes, Pipes, etc. existing in a SIR 3S Model. The methods presented are manual, user-defined and detailed. For creating more general dataframes with less input necessary, see Tutorial 52.   
+This Example demonstrates the capabilities of the class SIR3S_Model_Dataframes that extends SIR3S_Model be abilities to work directley with pandas dataframes. It is shown how to create dataframes containing information about elements such as Nodes, Pipes, etc. existing in a SIR 3S Model. The methods presented are manual, user-defined and detailed. For creating more general dataframes with less input necessary, see :ref:`Tutorial 52 <_Ttu052>`.
 
 View: `Notebook <tutorials/SIR3S_Model_Mantle/Tutorial051_Assets/ToolkitTutorial051.html>`_ | Download: :download:`Notebook <tutorials/SIR3S_Model_Mantle/Tutorial051_Assets/ToolkitTutorial051.ipynb>`.
 
@@ -134,7 +134,7 @@ View: `Notebook <tutorials/SIR3S_Model_Mantle/Tutorial051_Assets/ToolkitTutorial
 Tutorial 52: General Creation of Element Dataframes
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This Example demonstrates the capabilities of the class SIR3S_Model_Dataframes that extends SIR3S_Model be abilities to work directley with pandas dataframes. It is shown how to create dataframes containing information about elements such as Nodes, Pipes, etc. existing in a SIR 3S Model. The methods presented are not user-defined and neither efficient, but get you the most important information quickly. For more detailed methods of creating dataframes, see Tutorial 51.
+This Example demonstrates the capabilities of the class SIR3S_Model_Dataframes that extends SIR3S_Model be abilities to work directley with pandas dataframes. It is shown how to create dataframes containing information about elements such as Nodes, Pipes, etc. existing in a SIR 3S Model. The methods presented are not user-defined and neither efficient, but get you the most important information quickly. For more detailed methods of creating dataframes, see :ref:`Tutorial 51 <_Ttu051>`.
 
 View: `Notebook <tutorials/SIR3S_Model_Mantle/Tutorial052_Assets/ToolkitTutorial052.html>`_ | Download: :download:`Notebook <tutorials/SIR3S_Model_Mantle/Tutorial052_Assets/ToolkitTutorial052.ipynb>`.
 
