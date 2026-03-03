@@ -60,7 +60,7 @@ Below an overview over all Toolkit Versions for SIR 3S 90-15 Quebec is given. It
 | 90.15.3 (Init) | 90-15-00-15               | Yes         | 2025-10-09   |
 +----------------+---------------------------+-------------+--------------+
 
-Below the realse history with all changes is given in detail.
+Below the release history with all changes is given in detail.
 
 SIR 3S: 90-15-00-23-Upd2
 ^^^^^^^^^^^^^^^^^^^^^^^^
