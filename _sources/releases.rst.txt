@@ -26,6 +26,18 @@ SIR 3S: 90-15 Quebec
 
 Below all available Toolkit version from 90.15.3 to 90.15.XX are listed. For each version it is indicated to which SIR 3S version the Toolkit Version precisley belongs (Like Toolkit version 90.15.12 belonging to SIR 3S version 90-15-00-22-Upd2). This is also indicated by the super heading of each version.
 
+SIR 3S: 90-15-00-23-Upd2
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+Version 90.15.15 (TO BE RELEASED)
+"""""""""""""""""""""""""""""""""
+
+Developed and tested using SIR 3S Version: 90-15-00-23-Upd2
+
+C# Changes
+~~~~~~~~~~
+- Deleting objects: References to the object are reset/handled.
+
 SIR 3S: 90-15-00-22-Upd2
 ^^^^^^^^^^^^^^^^^^^^^^^^
 

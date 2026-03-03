@@ -141,7 +141,7 @@
 &lt;module &#39;sir3stoolkit.core.wrapper&#39; from &#39;C:\\Users\\aUsername\\3S\\sir3stoolkit\\src\\sir3stoolkit\\core\\wrapper.py&#39;&gt;
 </pre></div></div>
 </div>
-<div class="nbinput nblast docutils container">
+<div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
@@ -149,11 +149,32 @@
 </pre></div>
 </div>
 </div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-intense-fg ansi-bold">---------------------------------------------------------------------------</span>
+<span class="ansi-red-intense-fg ansi-bold">FileNotFoundException</span>                     Traceback (most recent call last)
+Cell <span class="ansi-green-intense-fg ansi-bold">In[5], line 1</span>
+<span class="ansi-green-intense-fg ansi-bold">----&gt; 1</span> wrapper<span style="color: rgb(98,98,98)">.</span>Initialize_Toolkit(SIR3S_SIRGRAF_DIR)
+
+File <span class="ansi-green-intense-fg ansi-bold">~\3S\sir3stoolkit\src\sir3stoolkit\core\wrapper.py:109</span>, in <span class="ansi-cyan-fg">Initialize_Toolkit</span><span class="ansi-blue-intense-fg ansi-bold">(basePath)</span>
+<span class="ansi-green-fg">    105</span> sys<span style="color: rgb(98,98,98)">.</span>path<span style="color: rgb(98,98,98)">.</span>append(SIR3S_SIRGRAF_DIR)
+<span class="ansi-green-fg">    107</span> net<span style="color: rgb(98,98,98)">.</span>AddReference(<span style="color: rgb(175,0,0)">r</span><span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">System</span><span style="color: rgb(175,0,0)">&#34;</span>)
+<span class="ansi-green-intense-fg ansi-bold">--&gt; 109</span> net<span style="color: rgb(98,98,98)">.</span>AddReference(SIR3S_SIRGRAF_DIR<span style="color: rgb(98,98,98)">+</span><span style="color: rgb(175,0,0)">r</span><span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">\</span><span style="color: rgb(175,0,0)">Sir3S_Repository.Utilities</span><span style="color: rgb(175,0,0)">&#34;</span>)
+<span class="ansi-green-fg">    111</span> <span style="color: rgb(95,135,135)"># THE COMPILED DLL FOR Sir3S_Toolkit SHOULD ALSO BE COPIED TO SIR3S_SIRGRAF_DIR</span>
+<span class="ansi-green-fg">    112</span> net<span style="color: rgb(98,98,98)">.</span>AddReference(SIR3S_SIRGRAF_DIR<span style="color: rgb(98,98,98)">+</span><span style="color: rgb(175,0,0)">r</span><span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">\</span><span style="color: rgb(175,0,0)">Sir3S_Toolkit</span><span style="color: rgb(175,0,0)">&#34;</span>)
+
+<span class="ansi-red-intense-fg ansi-bold">FileNotFoundException</span>: Unable to find assembly &#39;C:\3S\SIR 3S\SirGraf-90-15-00-22_Quebec-Upd2\Sir3S_Repository.Utilities&#39;.
+   bei Python.Runtime.CLRModule.AddReference(String name)
+</pre></div></div>
+</div>
 </section>
 <section id="Additional-Import/Init-for-Dataframes-class">
 <h3>Additional Import/Init for Dataframes class<a class="headerlink" href="#Additional-Import/Init-for-Dataframes-class" title="Link to this heading"></a></h3>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sir3stoolkit.mantle.dataframes import SIR3S_Model_Dataframes
@@ -161,7 +182,7 @@
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s = SIR3S_Model_Dataframes()
@@ -181,7 +202,7 @@ Initialization complete
 <section id="Additional">
 <h2>Additional<a class="headerlink" href="#Additional" title="Link to this heading"></a></h2>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
@@ -202,7 +223,7 @@ import contextily as cx
 <section id="Open-Model">
 <h1>Open Model<a class="headerlink" href="#Open-Model" title="Link to this heading"></a></h1>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.OpenModel(dbName=r&quot;Toolkit_Tutorial51_Model.db3&quot;,
@@ -227,7 +248,7 @@ Model is open for further operation
 <section id="Calculate-Model">
 <h1>Calculate Model<a class="headerlink" href="#Calculate-Model" title="Link to this heading"></a></h1>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.ExecCalculation(True) # To ensure result data
@@ -250,7 +271,7 @@ Model Calculation is complete
 <p>We can use the <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.Dataframes_SIR3S_Model.generate_element_model_data_dataframe">generate_element_model_data_dataframe()</a> method to obtain a dataframe for all instances of a specifc component type (Nodes, Pipes, etc.) with user defined model_data properties (all non-result data related to a component) to be added. For this example we will use nodes.</p>
 <p>In this case we are interested in Nodes, let’s check what model_data properties are available for this element.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetPropertiesofElementType(s3s.ObjectTypes.Node)
@@ -258,8 +279,7 @@ Model Calculation is complete
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
@@ -307,7 +327,7 @@ Model Calculation is complete
 <h3>Subcase 1: Minimal<a class="headerlink" href="#Subcase-1:-Minimal" title="Link to this heading"></a></h3>
 <p>Let’s say for now we only want a dataframe with all node tks without any related data.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(s3s.generate_element_model_data_dataframe(element_type=s3s.ObjectTypes.Node
@@ -329,8 +349,7 @@ Model Calculation is complete
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
 <div>
@@ -376,7 +395,7 @@ Model Calculation is complete
 <h3>Subcase 2: Specific Properties<a class="headerlink" href="#Subcase-2:-Specific-Properties" title="Link to this heading"></a></h3>
 <p>Let’s say we now want the minimal dataframe extended with supply/return info (kvr) and height (Zkor) of the nodes.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(s3s.generate_element_model_data_dataframe(element_type=s3s.ObjectTypes.Node
@@ -398,8 +417,7 @@ Model Calculation is complete
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
 <div>
@@ -454,7 +472,7 @@ Model Calculation is complete
 <p>Let’s say now we want basically all available model_data (non-result data) related to nodes.</p>
 <p>If geometry=True, the 2D Point geometry will be added for Nodes and it will be attempted to transform the DataFrame into a GeoDataFrame using the SRID (eg. EPSG: 25832) defined in the model. If no SRID is defined, the DataFrame will remain as a DataFrame, but the geometry column with be added nonetheless.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(s3s.generate_element_model_data_dataframe(element_type=s3s.ObjectTypes.Node
@@ -479,8 +497,7 @@ Model Calculation is complete
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
 <div>
@@ -678,7 +695,7 @@ Model Calculation is complete
 <h3>Subcase 4: Filtering + Element Type Col<a class="headerlink" href="#Subcase-4:-Filtering-+-Element-Type-Col" title="Link to this heading"></a></h3>
 <p>Let’s say we only want nodes inside a specific container and we also want to have an element type col adding “Node” to each row (useful when joining with other dataframes later).</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for container_id in (s3s.GetTksofElementType(s3s.ObjectTypes.ObjectContainerSymbol)):
@@ -700,7 +717,7 @@ Model Calculation is complete
 </pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>all_tks = s3s.GetTksofElementType(s3s.ObjectTypes.Node)
@@ -708,7 +725,7 @@ Model Calculation is complete
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>good_tks = []
@@ -716,7 +733,7 @@ Model Calculation is complete
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for tk in all_tks:
@@ -727,7 +744,7 @@ Model Calculation is complete
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(s3s.generate_element_model_data_dataframe(element_type=s3s.ObjectTypes.Node
@@ -753,8 +770,7 @@ Model Calculation is complete
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
 <div>
@@ -810,7 +826,7 @@ Model Calculation is complete
 <p>We can use the <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.Dataframes_SIR3S_Model.generate_element_results_dataframe">generate_element_model_data_dataframe()</a> method to obtain a dataframe for all instances of a specifc component type (Nodes, Pipes, etc.) with user defined result values for certain timestamps to be added. For this example we will use pipes.</p>
 <p>Let’s check what result properties are available for Pipes.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetResultProperties_from_elementType(elementType=s3s.ObjectTypes.Pipe
@@ -820,8 +836,7 @@ Model Calculation is complete
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
@@ -911,7 +926,7 @@ Model Calculation is complete
 </div>
 <p>Let’s also check what simulation timestamps are available in the model.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetTimeStamps()[0] # list of simulation timestamps
@@ -919,8 +934,7 @@ Model Calculation is complete
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
@@ -952,7 +966,7 @@ Model Calculation is complete
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetTimeStamps()[1] # Static
@@ -960,8 +974,7 @@ Model Calculation is complete
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
@@ -972,7 +985,7 @@ Model Calculation is complete
 <section id="Subcase-1:-Static-+-All-Result-Values">
 <h3>Subcase 1: Static + All Result Values<a class="headerlink" href="#Subcase-1:-Static-+-All-Result-Values" title="Link to this heading"></a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(s3s.generate_element_results_dataframe(element_type=s3s.ObjectTypes.Pipe
@@ -999,8 +1012,7 @@ Model Calculation is complete
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
 <div>
@@ -3856,7 +3868,7 @@ Model Calculation is complete
 <section id="Subcase-2:-All-Timestamps-+-Specific-Values">
 <h3>Subcase 2: All Timestamps + Specific Values<a class="headerlink" href="#Subcase-2:-All-Timestamps-+-Specific-Values" title="Link to this heading"></a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_2 = s3s.generate_element_results_dataframe(element_type=s3s.ObjectTypes.Pipe
@@ -3883,7 +3895,7 @@ Model Calculation is complete
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_2.head(3)
@@ -3891,8 +3903,7 @@ Model Calculation is complete
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
 <div>
@@ -9806,7 +9817,7 @@ Model Calculation is complete
 </div>
 <p>We can access individual values as follows.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_2.loc[
@@ -9817,8 +9828,7 @@ Model Calculation is complete
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
@@ -9830,7 +9840,7 @@ Model Calculation is complete
 <h3>Subcase 3: Specific Timestamps + Specific Values<a class="headerlink" href="#Subcase-3:-Specific-Timestamps-+-Specific-Values" title="Link to this heading"></a></h3>
 <p>We can specify the list of timestamps to include either as a list of str timestamps …</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(s3s.generate_element_results_dataframe(element_type=s3s.ObjectTypes.Pipe
@@ -9855,8 +9865,7 @@ Model Calculation is complete
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
 <div>
@@ -15770,7 +15779,7 @@ Model Calculation is complete
 </div>
 <p>… or as a list of int indices.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>simulation_timestamps=s3s.GetTimeStamps()[0]
@@ -15778,7 +15787,7 @@ Model Calculation is complete
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for idx, timestamp in enumerate(simulation_timestamps):
@@ -15819,7 +15828,7 @@ Model Calculation is complete
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(s3s.generate_element_results_dataframe(element_type=s3s.ObjectTypes.Pipe
@@ -15844,8 +15853,7 @@ Model Calculation is complete
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
 <div>
@@ -21762,7 +21770,7 @@ Model Calculation is complete
 <h3>Subcase 4: Specific Timestamps + Specific Values + Filtering<a class="headerlink" href="#Subcase-4:-Specific-Timestamps-+-Specific-Values-+-Filtering" title="Link to this heading"></a></h3>
 <p>If we want to filter for more than just the container, we have to filter tks outside the function and then pass them. Works same way as for model_data.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>all_tks = s3s.GetTksofElementType(s3s.ObjectTypes.Pipe)
@@ -21770,7 +21778,7 @@ Model Calculation is complete
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>len(all_tks)
@@ -21778,8 +21786,7 @@ Model Calculation is complete
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
@@ -21787,7 +21794,7 @@ Model Calculation is complete
 </pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>good_tks = []
@@ -21795,7 +21802,7 @@ Model Calculation is complete
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[34]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for tk in all_tks:
@@ -21806,7 +21813,7 @@ Model Calculation is complete
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>len(good_tks)
@@ -21814,8 +21821,7 @@ Model Calculation is complete
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
@@ -21823,7 +21829,7 @@ Model Calculation is complete
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[36]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(s3s.generate_element_results_dataframe(element_type=s3s.ObjectTypes.Pipe
@@ -21850,8 +21856,7 @@ Model Calculation is complete
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[36]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
 <div>
@@ -27768,7 +27773,7 @@ Model Calculation is complete
 <h3>Subcase 5: Specific Vectorized results + Specific Timestamps<a class="headerlink" href="#Subcase-5:-Specific-Vectorized-results-+-Specific-Timestamps" title="Link to this heading"></a></h3>
 <p>For pipes we have interior point result values. These are usually found as vectors with the postfix VEC.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[37]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>available_result_props=s3s.GetResultProperties_from_elementType(s3s.ObjectTypes.Pipe,False)
@@ -27776,7 +27781,7 @@ Model Calculation is complete
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[38]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>available_result_props
@@ -27784,8 +27789,7 @@ Model Calculation is complete
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[38]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
@@ -27874,7 +27878,7 @@ Model Calculation is complete
 </pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[39]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>available_result_vector_props=[available_result_props for available_result_props in available_result_props if &quot;VEC&quot; in available_result_props]
@@ -27882,7 +27886,7 @@ Model Calculation is complete
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[40]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>available_result_vector_props
@@ -27890,8 +27894,7 @@ Model Calculation is complete
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[40]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
@@ -27914,7 +27917,7 @@ Model Calculation is complete
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[41]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes = s3s.generate_element_results_dataframe(element_type=s3s.ObjectTypes.Pipe
@@ -27939,7 +27942,7 @@ Model Calculation is complete
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[42]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes.head(3)
@@ -27947,8 +27950,7 @@ Model Calculation is complete
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[42]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
 <div>
@@ -33412,7 +33414,7 @@ Model Calculation is complete
 </div>
 <p>As can be seen, the vectorized result values are written as strings with “/” seperators. For better access we can extend these values to a multiindex using <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.add_interior_points_as_multiindex">add_interior_points_as_multiindex()</a>.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[43]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_interior_points = s3s.add_interior_points_as_multiindex(df_pipes)
@@ -33420,7 +33422,7 @@ Model Calculation is complete
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[44]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_interior_points.head(3)
@@ -33428,8 +33430,7 @@ Model Calculation is complete
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[44]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
 <div>
@@ -38530,7 +38531,7 @@ Model Calculation is complete
 <p>Note that an additional multiindex is created that indexes the interior points. Non-vectorized properties get index -1 in the new multiindex .</p>
 <p>We can access individual values as follows.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[45]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_interior_points.loc[
@@ -38541,8 +38542,7 @@ Model Calculation is complete
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[45]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
@@ -38558,7 +38558,7 @@ Model Calculation is complete
 <section id="model_data">
 <h4>model_data<a class="headerlink" href="#model_data" title="Link to this heading"></a></h4>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[46]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_model_data = s3s.generate_element_model_data_dataframe(element_type=s3s.ObjectTypes.Pipe
@@ -38582,7 +38582,7 @@ Model Calculation is complete
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[47]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_model_data.head(3)
@@ -38590,8 +38590,7 @@ Model Calculation is complete
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[47]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
 <div>
@@ -38648,7 +38647,7 @@ Model Calculation is complete
 <section id="Results">
 <h4>Results<a class="headerlink" href="#Results" title="Link to this heading"></a></h4>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[48]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_results = s3s.generate_element_results_dataframe(element_type=s3s.ObjectTypes.Pipe
@@ -38674,7 +38673,7 @@ Model Calculation is complete
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[49]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_results.head(3)
@@ -38682,8 +38681,7 @@ Model Calculation is complete
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[49]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
 <div>
@@ -42120,7 +42118,7 @@ Model Calculation is complete
 <section id="Merge">
 <h3>Merge<a class="headerlink" href="#Merge" title="Link to this heading"></a></h3>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[50]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_results.columns = df_pipes_results.columns.droplevel([1, 2])
@@ -42133,7 +42131,7 @@ df_pipes = df_pipes_model_data.merge(on=&quot;tk&quot;,
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[51]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes.head(3)
@@ -42141,8 +42139,7 @@ df_pipes = df_pipes_model_data.merge(on=&quot;tk&quot;,
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[51]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
 <div>
@@ -42217,7 +42214,7 @@ df_pipes = df_pipes_model_data.merge(on=&quot;tk&quot;,
 <h2>Expand vectorized results<a class="headerlink" href="#Expand-vectorized-results" title="Link to this heading"></a></h2>
 <p>We an use the <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.add_interior_points_to_start_end_sequence">add_interior_points_to_start_end_sequence()</a> method to replace vector cols by three new cols: vec_start, vec_end, vec_sequence (closed interval with start and end).</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[52]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_vector = s3s.add_interior_points_to_start_end_sequence(df_pipes)
@@ -42225,7 +42222,7 @@ df_pipes = df_pipes_model_data.merge(on=&quot;tk&quot;,
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[53]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_vector.head(3)
@@ -42233,8 +42230,7 @@ df_pipes = df_pipes_model_data.merge(on=&quot;tk&quot;,
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[53]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
 <div>
