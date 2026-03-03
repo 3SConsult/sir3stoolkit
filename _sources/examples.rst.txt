@@ -1,40 +1,20 @@
 
-Application Examples
-====================
-
-Here, you will find a variety of tutorials, examples and networks (examples of SIR 3S model topologies). 
-Before proceeding, ensure that the SIR 3S Toolkit is properly installed (see :ref:`Installation <installing-toolkit-label>`). 
-
-The tutorials are designed to help new users to get started with the basic functionalities of the SIR 3S Toolkit. The tutorials demonstrate how the toolkit can be used in one's own models and real-world scenarios.
-
-.. tip::
-
-   📘 Are you new to the SIR 3S Toolkit? Start with the Tutorials below.
-
-   🧭 Interested in creating/generating models? Explore the Networks Section.
-
-   .. ⚙️ Looking for practical scenarios? Jump to the Examples section.
-
 Tutorials
----------
+=========
+
+Here, you will find a variety of tutorials.
+Before proceeding, ensure that the SIR 3S Toolkit is properly installed (see :ref:`Installation <installing-toolkit-label>`). 
 
 These tutorials are designed to introduce new users to the basic functionalities of the SIR 3S Toolkit. 
 
-.. image:: _static/images/Toolkit_structure_core_mantle.png
-   :alt: Toolkit Structure
-   :align: right
-   :width: 150px
-
-Each class holding functions has its own section of tutorials. The sections come in pairs of a core class and its respective mantle class (pure python). Every class has 50 tutorial slots assigned to it, therefore some jumps in the numbering occur. For collector classes every sub-class has 10 designated slots.
-
 Each tutorial is available for **previewing** as a rendered notebook.
 
-Some tutorials are available **downloading** as a `.zip` archive containing all required files.
+Each tutorials is available for **downloading**.
 
 .. _Ttu1-49:
 
-SIR3S_Model
-~~~~~~~~~~~
+SIR3S_Model()
+~~~~~~~~~~~~~
 
 SIR3S_Model() implements basic functionalities regarding interactions between Python and a SIR 3S model.
 
@@ -78,10 +58,10 @@ View: `Notebook <tutorials/SIR3S_Model/Tutorial003_Assets/ToolkitTutorial003.htm
 
 .. _Ttu004:
 
-Tutorial 4: Editing a SIR 3S model safely and effectively
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Tutorial 4: Editing a SIR 3S using Transactions/EditSessions
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This Tutorial demonstrates how to change SIR 3S models properly by grouping changes and saving them.
+This Tutorial demonstrates how to change SIR 3S models by grouping changes into Transactions/EditSessions.
 
 View: `Notebook <tutorials/SIR3S_Model/Tutorial004_Assets/ToolkitTutorial004.html>`_ | Download: `ZIP archive <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorial004_Assets.zip>`_.
 
@@ -99,7 +79,7 @@ View: `Notebook <tutorials/SIR3S_Model/Tutorial005_Assets/ToolkitTutorial005.htm
 Tutorial 6: Tables
 ^^^^^^^^^^^^^^^^^^
 
-This Tutorial demonstrates how to work with tables.
+This Tutorial demonstrates how to view SIR 3S tables in python and add rows to them. For time tables some more advanced features are available: :ref:`Tutorial 54 <_Ttu054>`
 
 View: `Notebook <tutorials/SIR3S_Model/Tutorial006_Assets/ToolkitTutorial006.html>`_ | Download: `ZIP archive <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorial006_Assets.zip>`_.
 
@@ -123,27 +103,27 @@ View: `Notebook <tutorials/SIR3S_Model/Tutorial008_Assets/ToolkitTutorial008.htm
 
 .. _Ttu50-99:
 
-SIR3S_Model_Mantle
-~~~~~~~~~~~~~~~~~~
+.. image:: _static/images/Toolkit_structure_core_mantle.png
+   :alt: Toolkit Structure
+   :align: right
+   :width: 150px
 
-SIR3S_Model_Mantle() is a collector class that contains the functions from all other classes defined in the mantle. As of now the model data for these tutorials is not publicly available (internal: T:\\SCRATCH\\Jablonski\\Toolkit).
+SIR3S_Model_Mantle()
+~~~~~~~~~~~~~~~~~~~~
 
-.. _Ttu50-59:
+SIR3S_Model_Mantle() is a collector class that extends the SIR3S_Model() class. As of now the model data for these tutorials is not publicly available (internal: T:\\SCRATCH\\Jablonski\\Toolkit).
+
+.. _Ttu050:
 
 Tutorial 50: Mantle Import
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 View: `Notebook <tutorials/SIR3S_Model_Mantle/Tutorial050_Assets/ToolkitTutorial050.html>`_ | Download: :download:`Notebook <tutorials/SIR3S_Model_Mantle/Tutorial050_Assets/ToolkitTutorial050.ipynb>`.
 
-SIR3S_Model_Dataframes
-^^^^^^^^^^^^^^^^^^^^^^
-
-SIR3S_Model_Dataframes() implements interactions between SIR 3S and pandas dataframes. You can obtain pandas dfs with meta- or resultdata, insert nodes and pipes via a df, etc.
-
 .. _Ttu051:
 
 Tutorial 51: Manual Creation of Element Dataframes
-""""""""""""""""""""""""""""""""""""""""""""""""""
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This Example demonstrates the capabilities of the class SIR3S_Model_Dataframes that extends SIR3S_Model be abilities to work directley with pandas dataframes. It is shown how to create dataframes containing information about elements such as Nodes, Pipes, etc. existing in a SIR 3S Model. The methods presented are manual, user-defined and detailed. For creating more general dataframes with less input necessary, see Tutorial 52.   
 
@@ -152,7 +132,7 @@ View: `Notebook <tutorials/SIR3S_Model_Mantle/Tutorial051_Assets/ToolkitTutorial
 .. _Ttu052:
 
 Tutorial 52: General Creation of Element Dataframes
-"""""""""""""""""""""""""""""""""""""""""""""""""""
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This Example demonstrates the capabilities of the class SIR3S_Model_Dataframes that extends SIR3S_Model be abilities to work directley with pandas dataframes. It is shown how to create dataframes containing information about elements such as Nodes, Pipes, etc. existing in a SIR 3S Model. The methods presented are not user-defined and neither efficient, but get you the most important information quickly. For more detailed methods of creating dataframes, see Tutorial 51.
 
@@ -160,8 +140,8 @@ View: `Notebook <tutorials/SIR3S_Model_Mantle/Tutorial052_Assets/ToolkitTutorial
 
 .. _Ttu053:
 
-Tutorial 53: General Non-Element Dataframes
-"""""""""""""""""""""""""""""""""""""""""""
+Tutorial 53: Creation of  Non-Element Dataframes
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This Example demonstrates the capabilities of the class SIR3S_Model_Dataframes that extends SIR3S_Model be abilities to work directley with pandas dataframes. It is shown how to create dataframes containing information that does not concern individual elements types such as Nodes, Pipes, etc. but instead concerning more abstract SIR 3S data such as longitudinal sections or concatenations of multiple element types like hydraulic edges.
 
@@ -171,24 +151,17 @@ View: `Notebook <tutorials/SIR3S_Model_Mantle/Tutorial053_Assets/ToolkitTutorial
 
 SIR3S_Advanced_Operations implements functions that extend the basic C# operations with more advanced operations to change a SIR 3S model.
 
-Tutorial 54: Measured Value Tables
-""""""""""""""""""""""""""""""""""
+Tutorial 54: Measured Variable Tables
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This example demonstrates how view, create, delete and edit measured variable tables (Sollwerttabellen) with pandas dataframes as python representation.
+This example demonstrates how view, create, delete and edit measured variable tables (Sollwerttabellen) with pandas dataframes as python representation. The functions presented work for any kind of time table.
 
 View: `Notebook <tutorials/SIR3S_Model_Mantle/Tutorial054_Assets/ToolkitTutorial054.html>`_  | Download: :download:`Notebook <tutorials/SIR3S_Model_Mantle/Tutorial054_Assets/ToolkitTutorial054.ipynb>`.
 
-.. _Ttu60-69:
-
-SIR3S_Model_Alternative_Models
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-SIR3S_Model_Alternative_Models() implements the generation of SIR 3S models in alternative model formats such as pandapipes or nx-Graphs.
-
 .. _Ttu061:
 
-Tutorial 61: nx-Graph
-"""""""""""""""""""""
+Tutorial 61: Nx-Graph
+^^^^^^^^^^^^^^^^^^^^^
 
 This Tutorial demonstrates how to create a nx-Graph from a SIR 3S model.
 
@@ -196,24 +169,17 @@ View: `Notebook <tutorials/SIR3S_Model_Mantle/Tutorial061_Assets/ToolkitTutorial
 
 .. _Ttu062:
 
-Tutorial 62: pandapipes
-"""""""""""""""""""""""
+Tutorial 62: Pandapipes
+^^^^^^^^^^^^^^^^^^^^^^^
 
 This Tutorial demonstrates how to create a pandapipes model from a SIR 3S model.
 
 View: `Notebook <tutorials/SIR3S_Model_Mantle/Tutorial062_Assets/ToolkitTutorial062.html>`_  | Download: :download:`Notebook <tutorials/SIR3S_Model_Mantle/Tutorial062_Assets/ToolkitTutorial062.ipynb>`.
 
-.. _Ttu70-79:
-
-SIR3S_Model_Plotting
-^^^^^^^^^^^^^^^^^^^^
-
-SIR3S_Model_Plotting implements general plotting functions for SIR 3S applications.
-
 .. _Ttu071:
 
 Tutorial 71: Time Curves
-""""""""""""""""""""""""
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 This Tutorial demonstrates how to plot time curves.
 
@@ -221,58 +187,31 @@ View: `Notebook <tutorials/SIR3S_Model_Mantle/Tutorial071_Assets/ToolkitTutorial
 
 .. _Ttu072:
 
-Tutorial 72: WORK IN PROGRESS: agsn
-"""""""""""""""""""""""""""""""""""
+Tutorial 72: Longitudinal Sections (soon)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This Tutorial demonstrates how to plot time curves.
+This Tutorial demonstrates how to plot time curves. WORK IN PROGRESS
 
 View: `Notebook <tutorials/SIR3S_Model_Mantle/Tutorial072_Assets/ToolkitTutorial072.html>`_  | Download: :download:`Notebook <tutorials/SIR3S_Model_Mantle/Tutorial072_Assets/ToolkitTutorial072.ipynb>`.
 
 .. _Ttu073:
 
 Tutorial 73: Network Color Depiction
-""""""""""""""""""""""""""""""""""""
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This example demonstrates how to plot network color depictions (ncd).
 
 View: `Notebook <tutorials/SIR3S_Model_Mantle/Tutorial073_Assets/ToolkitTutorial073.html>`_  | Download: :download:`Notebook <tutorials/SIR3S_Model_Mantle/Tutorial073_Assets/ToolkitTutorial073.ipynb>`.
 
-.. _Ttu80-89:
-
-SIR3S_Advanced_Operations
-^^^^^^^^^^^^^^^^^^^^^^^^^
-
-SIR3S_Advanced_Operations implements functions that extend the basic C# operations with more advanced operations to change a SIR 3S model.
-
 .. _Ttu081:
 
 Tutorial 81: Groups
-""""""""""""""""""""""""""""""""""""
+^^^^^^^^^^^^^^^^^^^
 
 This example demonstrates how add, remove, set elements to groups.
 
 View: `Notebook <tutorials/SIR3S_Model_Mantle/Tutorial081_Assets/ToolkitTutorial081.html>`_  | Download: :download:`Notebook <tutorials/SIR3S_Model_Mantle/Tutorial081_Assets/ToolkitTutorial081.ipynb>`.
 
-.. 
-   .. _Ttu100-149:
-
-   SIR3S_View: 100 - 149
-   ~~~~~~~~~~~~~~~~~~~~~
-
-   .. _Ttu150-199:
-
-   SIR3S_View_Mantle: 150 - 199
-   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-   .. _Ttu200-249:
-
-   SIR3S_ModelRepair: 200 - 249
-   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-   .. _Ttu250-299:
-
-   SIR3S_ModelRepair_Mantle: 250 - 299
-   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ..
    Examples
    --------
@@ -305,25 +244,25 @@ View: `Notebook <tutorials/SIR3S_Model_Mantle/Tutorial081_Assets/ToolkitTutorial
 
    View: `Notebook <examples/Toolkit_ExampleX.html>`_ | Download: :download:`Notebook <examples/Toolkit_ExampleX.ipynb>`.
 
+..
+   Networks
+   --------
 
-Networks
---------
+   The networks are examples of SIR 3S model topologies.
 
-The networks are examples of SIR 3S model topologies.
+   Each network is available for **previewing** and **downloading** as an `.py` file. You can open and run it using the Python Console in SIR 3S.
 
-Each network is available for **previewing** and **downloading** as an `.py` file. You can open and run it using the Python Console in SIR 3S.
+   .. _Tnw1:
 
-.. _Tnw1:
+   Network 1
+   ^^^^^^^^^
 
-Network 1
-^^^^^^^^^
+   You can view the code below
 
-You can view the code below
+   .. toggle::
 
-.. toggle::
+      .. literalinclude:: Networks/Network1.py
+         :language: python
+         :linenos:
 
-   .. literalinclude:: Networks/Network1.py
-      :language: python
-      :linenos:
-
-You can download the Network file :download:`here <Networks/Network1.py>`.
+   You can download the Network file :download:`here <Networks/Network1.py>`.

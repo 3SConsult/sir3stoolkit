@@ -1,8 +1,7 @@
 Releases
 ========
 
-The SIR 3S Toolkit will first be released alongside SIR 3S version 90-15 Quebec, under the version 90.15.2. 
-Between major SIR 3S releases, the Toolkit may receive interim updates to fix bugs or extend functionality.
+The SIR 3S Toolkit python package often receives updates including bug fixes or new functionalities.
 
 There are two types of updates:
 
@@ -24,10 +23,15 @@ The release notes indicate whether a version includes changes to the C# side and
 SIR 3S: 90-15 Quebec
 --------------------
 
-Below an overview over all Toolkit Versions for SIR 3S 90-15 Quebec is given. It is stated with which specific SIR 3S version the Toolkit version was developed and tested and whether replacing the Sir3S_Toolkit.dll due to C# Changes is necessary.
+.. _Overview:
+
+Overview
+^^^^^^^^
+
+Below an overview over all Toolkit Versions for SIR 3S 90-15 Quebec is given. It is stated with which specific SIR 3S version the Toolkit version was developed and tested and whether replacing the Sir3S_Toolkit.dll is necessary.
 
 +----------------+---------------------------+-------------+--------------+
-| Toolkit Version| SIR 3S Version            | C# Changes  | Release Date |
+| Toolkit Version| SIR 3S Version            | dll changed | Release Date |
 +================+===========================+=============+==============+
 | 90.15.XX (Soon)| 90-15-00-23-Upd2          | Yes         | 2026-03-XX   |
 +----------------+---------------------------+-------------+--------------+
@@ -53,10 +57,10 @@ Below an overview over all Toolkit Versions for SIR 3S 90-15 Quebec is given. It
 +----------------+---------------------------+-------------+--------------+
 | 90.15.4        | 90-15-00-19               | No          | 2025-10-31   |
 +----------------+---------------------------+-------------+--------------+
-| 90.15.3 (Init) | 90-15-00-15               | No          | 2025-10-09   |
+| 90.15.3 (Init) | 90-15-00-15               | Yes         | 2025-10-09   |
 +----------------+---------------------------+-------------+--------------+
 
-Below all available Toolkit version from 90.15.3 to 90.15.XX are listed in detail. For each version it is indicated to which SIR 3S version the Toolkit Version precisley belongs (Like Toolkit version 90.15.12 belonging to SIR 3S version 90-15-00-22-Upd2). This is also indicated by the super heading of each version.
+Below the realse history with all changes is given in detail.
 
 SIR 3S: 90-15-00-23-Upd2
 ^^^^^^^^^^^^^^^^^^^^^^^^
