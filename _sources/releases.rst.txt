@@ -24,7 +24,7 @@ The release notes indicate whether a version includes changes to the C# side and
 SIR 3S: 90-15 Quebec
 --------------------
 
-Below an overview over all Toolkit Versions for SIR 3S 90-15 Quebec is given. It is stated with which specific SIR 3S version the Toolkit version was developed and tested and whether a the replacement of the Sir3S_Toolkit.dll due to C# Changes is necessary.
+Below an overview over all Toolkit Versions for SIR 3S 90-15 Quebec is given. It is stated with which specific SIR 3S version the Toolkit version was developed and tested and whether replacing the Sir3S_Toolkit.dll due to C# Changes is necessary.
 
 +----------------+---------------------------+-------------+--------------+
 | Toolkit Version| SIR 3S Version            | C# Changes  | Release Date |
@@ -53,7 +53,7 @@ Below an overview over all Toolkit Versions for SIR 3S 90-15 Quebec is given. It
 +----------------+---------------------------+-------------+--------------+
 | 90.15.4        | 90-15-00-19               | No          | 2025-10-31   |
 +----------------+---------------------------+-------------+--------------+
-| 90.15.3        | 90-15-00-15               | No          | 2025-10-09   |
+| 90.15.3 (Init) | 90-15-00-15               | No          | 2025-10-09   |
 +----------------+---------------------------+-------------+--------------+
 
 Below all available Toolkit version from 90.15.3 to 90.15.XX are listed in detail. For each version it is indicated to which SIR 3S version the Toolkit Version precisley belongs (Like Toolkit version 90.15.12 belonging to SIR 3S version 90-15-00-22-Upd2). This is also indicated by the super heading of each version.
