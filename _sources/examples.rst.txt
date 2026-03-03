@@ -3,13 +3,10 @@ Tutorials
 =========
 
 Here, you will find a variety of tutorials.
+
 Before proceeding, ensure that the SIR 3S Toolkit is properly installed (see :ref:`Installation <installing-toolkit-label>`). 
 
 These tutorials are designed to introduce new users to the basic functionalities of the SIR 3S Toolkit. 
-
-Each tutorial is available for **previewing** as a rendered notebook.
-
-Each tutorials is available for **downloading**.
 
 .. _Ttu1-49:
 
@@ -117,6 +114,8 @@ SIR3S_Model_Mantle() is a collector class that extends the SIR3S_Model() class. 
 
 Tutorial 50: Mantle Import
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This Example demonstrates how to instantiate the SIR3S_Model_Mantle() class and its subclasses.
 
 View: `Notebook <tutorials/SIR3S_Model_Mantle/Tutorial050_Assets/ToolkitTutorial050.html>`_ | Download: :download:`Notebook <tutorials/SIR3S_Model_Mantle/Tutorial050_Assets/ToolkitTutorial050.ipynb>`.
 
