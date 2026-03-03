@@ -55,27 +55,34 @@ To install the SIR 3S Toolkit, follow these steps:
 
 1. **Obtain SIR 3S:** The SIR 3S Toolkit requires an installed SIR 3S version of 90-15 Quebec or higher, which includes the ``Sir3S_Toolkit.dll``.
 
-2. **Install the SIR 3S Toolkit via pip in SIR 3S Environment:** Open a cmd and enter the following commands to install the SIR 3S Toolkit in the Python environment in the ``Common`` folder of your SIR 3S installation:
+2. **Determine SIR 3S Toolkit version**: Every Toolkit version is developed and tested with a certain SIR 3S version. Therefore you need to :ref:`look up <overview>` the newest Toolkit version compatible with your SIR 3S version.
+
+3. **Install the SIR 3S Toolkit via pip in SIR 3S Environment:** Open a cmd and enter the following commands to install the SIR 3S Toolkit in the Python environment in the ``Common`` folder of your SIR 3S installation:
 
    .. code-block:: bash
 
        cd "C:/3S/Common/Python312" # change to your local path
-       python.exe -m pip install sir3stoolkit
+       python.exe -m pip install sir3stoolkit==90.15.XX # change to version that is optimal for you
+   
+   .. code-block:: bash
+
+       cd "C:/3S/Common/Python312" # change to your local path
+       python.exe -m pip install sir3stoolkit # newest version
 
 
-3. **Optional: Install the SIR 3S Toolkit via pip in another Python environment:** Open a cmd in the desired Python environment (e.g. Anaconda Python installation) and enter the following commands to install the SIR 3S Toolkit:
+4. **Optional: Install the SIR 3S Toolkit via pip in another Python environment:** Open a cmd in the desired Python environment (e.g. Anaconda Python installation) and enter the following commands to install the SIR 3S Toolkit:
 
    .. code-block:: bash
 
        pip install sir3stoolkit
 
-4. **Optional: Install mantle dependencies:** The mantle of the sir3stoolkit contains many additional functions. To reduce the dependencies required for the core installation, they have to be installed seperately if needed. Open a cmd in the desired Python environment (e.g. Anaconda Python installation) and enter the following commands to install mantle dependencies of the SIR 3S Toolkit:
+5. **Optional: Install mantle dependencies:** The mantle of the sir3stoolkit contains many additional functions. To reduce the dependencies required for the core installation, they have to be installed seperately if needed. Open a cmd in the desired Python environment (e.g. Anaconda Python installation) and enter the following commands to install mantle dependencies of the SIR 3S Toolkit:
 
    .. code-block:: bash
 
        pip install sir3stoolkit[mantle]
 
-5. **Optional: Install in editable mode (for contributors):** If you want to use the newest version of the SIR 3S Toolkit available on `GitHub Repository <https://github.com/3SConsult/sir3stoolkit>`_, enter the folling into a cmd.
+6. **Optional: Install in editable mode (for contributors):** If you want to use the newest version of the SIR 3S Toolkit available on `GitHub Repository <https://github.com/3SConsult/sir3stoolkit>`_, enter the folling into a cmd.
 
    .. code-block:: bash
 
