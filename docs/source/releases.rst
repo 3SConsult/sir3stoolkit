@@ -33,7 +33,7 @@ Below an overview over all Toolkit Versions for SIR 3S 90-15 Quebec is given. It
 +----------------+---------------------------+-------------+--------------+
 | Toolkit Version| SIR 3S Version            | dll changed | Release Date |
 +================+===========================+=============+==============+
-| 90.15.XX (Soon)| 90-15-00-23-Upd2          | Yes         | 2026-03-XX   |
+| 90.15.15       | 90-15-00-23-Upd2          | Yes         | 2026-03-03   |
 +----------------+---------------------------+-------------+--------------+
 | 90.15.14       | 90-15-00-22-Upd2          | No          | 2026-02-25   |
 +----------------+---------------------------+-------------+--------------+
@@ -65,14 +65,21 @@ Below the release history with all changes is given in detail.
 SIR 3S: 90-15-00-23-Upd2
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-Version 90.15.15 (TO BE RELEASED)
-"""""""""""""""""""""""""""""""""
+Version 90.15.15
+""""""""""""""""
 
 Developed and tested using SIR 3S Version: 90-15-00-23-Upd2
 
 C# Changes
 ~~~~~~~~~~
 - Deleting objects: References to the object are reset/handled.
+
+Bug Fixes
+~~~~~~~~~
+- insert_dataframe_into_time_table():
+   - Now works in addition with s3s.ObjectTypes.ThermalOutputTable" and s3s.ObjectTypes.TemperatureTable
+   - ","-"." formatting issue for milliseconds Fixed
+   - previous entries in table are deleted properly
 
 SIR 3S: 90-15-00-22-Upd2
 ^^^^^^^^^^^^^^^^^^^^^^^^

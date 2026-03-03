@@ -1247,13 +1247,12 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         date_col: str = "TAG",
         time_col: str = "UHRZEIT",
         value_col: str = "WERT",
-        dt_format: str = "%Y-%m-%d %H:%M:%S.%f",
     ) -> None:
         """
-        Sets (overwrites previous) time-value pairs for time table based on provided dataframe.
+        Sets (overwrites) time-value pairs for time table based on provided dataframe. All previous entries are deleted.
 
         :param self:
-        :param time_table_tk: Tk of time table (["VarPressureTable", "VarFlowTable", "ValveLiftTable", "PumpSpeedTable", "MeasuredVariableTable", "LoadFactorTable"]) to set time-value pairs for.
+        :param time_table_tk: Tk of time table (["VarPressureTable", "VarFlowTable", "ValveLiftTable", "PumpSpeedTable", "MeasuredVariableTable", "LoadFactorTable", "ThermalOutputTable", "TemperatureTable"]) to set time-value pairs for. Does not work with weather data table.
         :type time_table_tk: int
         :param dataframe: Pandas dataframe with date_col, time_col, value_col
         :type dataframe: pd.Dataframe
@@ -1271,7 +1270,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         logger.info("[insert dataframe into time table] Validating input data ...")
         available_time_table_tks=[]
 
-        for type in ["VarPressureTable", "VarFlowTable", "ValveLiftTable", "PumpSpeedTable", "MeasuredVariableTable", "LoadFactorTable"]:
+        for type in ["VarPressureTable", "VarFlowTable", "ValveLiftTable", "PumpSpeedTable", "MeasuredVariableTable", "LoadFactorTable", "ThermalOutputTable", "TemperatureTable"]:
             tks = self.GetTksofElementType(self.ObjectTypes[type])
             available_time_table_tks.extend(tks)
 
@@ -1312,6 +1311,12 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         df = dataframe[[date_col, time_col, value_col]].copy()
         logger.info("[insert dataframe into time table] Successfully validated input data.")
 
+        # --- Wipe table ---
+        logger.info("[insert dataframe into time table] Deleting previous table rows ...")
+        row_tks = list((self.GetTableRows(tablePkTk=time_table_tk))[0])
+        for row_tk in row_tks:
+            self.DeleteElement(row_tk)
+
         # --- From timestamp to simulation time ---
         ts_series = pd.to_datetime(
             df[date_col].astype(str) + " " + df[time_col].astype(str),
@@ -1321,6 +1326,10 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
 
         delta_sec = (ts_series - used_reference_time_stamp_as_datetime).dt.total_seconds()
         df["delta_time_col"] = delta_sec
+        
+        df["delta_time_col_str"] = df["delta_time_col"].map(
+            lambda v: (f"{v:.6f}".replace(".", ",")) if pd.notna(v) else ""
+        )
 
         property_name, _ = self._get_time_table_col_name_from_tk(time_table_tk=time_table_tk)
 
@@ -1328,10 +1337,10 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         logger.info("[insert dataframe into time table] Inserting value pairs ...")
         try:
             for id, row in df.iterrows():
-                t = row["delta_time_col"]
+                t = row["delta_time_col_str"]
                 v = row[value_col]
                 tk_new_row = self.AddTableRow(tablePkTk=time_table_tk)[0]
-                self.SetValue(Tk=tk_new_row, propertyName="Zeit", Value=str(t))
+                self.SetValue(Tk=tk_new_row, propertyName="Zeit", Value=t)
                 self.SetValue(Tk=tk_new_row, propertyName=property_name, Value=str(v))
         except Exception as e:
             logger.error(f"[insert dataframe into time table] Error inserting value pairs into model: {e}")
@@ -1363,7 +1372,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         logger.info(f"[get dataframes from time table type] ...")
         # --- Validate input ---
         
-        if time_table_type not in ["VarPressureTable", "VarFlowTable", "ValveLiftTable", "PumpSpeedTable", "MeasuredVariableTable", "LoadFactorTable"]:
+        if time_table_type not in ["VarPressureTable", "VarFlowTable", "ValveLiftTable", "PumpSpeedTable", "MeasuredVariableTable", "LoadFactorTable", "ThermalOutputTable", "TemperatureTable"]:
             logger.error(f"Invalid time table type. Has to be of type: ['VarPressureTable', 'VarFlowTable', 'ValveLiftTable', 'PumpSpeedTable', 'MeasuredVariableTable', 'LoadFactorTable']")
         
         # --- Obtain tks of time table type ---
@@ -1397,7 +1406,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         time_col: str = "Zeit [s]"
     ) -> None:
         """
-        Obtain time variable table (tables = ["VarPressureTable", "VarFlowTable", "ValveLiftTable", "PumpSpeedTable", "MeasuredVariableTable", "LoadFactorTable"]) in format of a pandas dataframe with time and value column.
+        Obtain time variable table (tables = ["VarPressureTable", "VarFlowTable", "ValveLiftTable", "PumpSpeedTable", "MeasuredVariableTable", "LoadFactorTable", "ThermalOutputTable", "TemperatureTable"]) in format of a pandas dataframe with time and value column.
         
         :param self: 
         :param time_table_tk: Tk of time table to get time-value pairs from.
@@ -1431,7 +1440,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         data = {}
         for tk in row_tks:
             time = self.GetValue(tk, "Zeit")[0]
-            time = float(time)
+            time = float(time.replace(",", "."))
             value = self.GetValue(tk, value_name)[0]
             value = float(value)
             data[time] = value
@@ -1452,8 +1461,8 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
     ) -> str:
         
         if time_table_tk in self.GetTksofElementType(self.ObjectTypes.VarPressureTable):
-            value_name = 'Ph'                                                                    # needed to retrieve numeric value from row
-            _value_col_name = 'Druck p [bar]'                                                     # needed to name column in output df
+            value_name = 'Ph'                                                                    # needed to retrieve numeric value from row: s3s.GetPropertiesofElementType(s3s.ObjectTypes.VarPressureTable) 
+            _value_col_name = 'Druck p [bar]'                                                     # needed to name column in output df: look up in SIR Graf
         elif time_table_tk in self.GetTksofElementType(self.ObjectTypes.VarFlowTable):
             value_name = 'Qm'
             _value_col_name = 'Einspeisung/Abnahme Q [m^3/h]'
@@ -1469,6 +1478,13 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         elif time_table_tk in self.GetTksofElementType(self.ObjectTypes.LoadFactorTable):
             value_name = 'Lf'
             _value_col_name = 'Lastfaktor [-]'
+        elif time_table_tk in self.GetTksofElementType(self.ObjectTypes.ThermalOutputTable):
+            value_name = 'W'
+            _value_col_name = 'Leistung [kW]'
+        elif time_table_tk in self.GetTksofElementType(self.ObjectTypes.TemperatureTable):
+            value_name = 'T'
+            _value_col_name = 'Temperatur T [°C]'
+        # could extend for WeatherDataTable
         else:
             logger.error(f"[_get_time_table_col_name_from_tk] No time table with tk {time_table_tk}")
             return -1, -1
