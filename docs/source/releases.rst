@@ -33,6 +33,8 @@ Below an overview over all Toolkit Versions for SIR 3S 90-15 Quebec is given. It
 +----------------+---------------------------+-------------+--------------+
 | Toolkit Version| SIR 3S Version            | dll changed | Release Date |
 +================+===========================+=============+==============+
+| 90.15.16       | 90-15-00-24-Upd2          | No          | 2026-03-15   |
++----------------+---------------------------+-------------+--------------+
 | 90.15.15       | 90-15-00-23-Upd2          | Yes         | 2026-03-03   |
 +----------------+---------------------------+-------------+--------------+
 | 90.15.14       | 90-15-00-22-Upd2          | No          | 2026-02-25   |
@@ -61,6 +63,17 @@ Below an overview over all Toolkit Versions for SIR 3S 90-15 Quebec is given. It
 +----------------+---------------------------+-------------+--------------+
 
 Below the release history with all changes is given in detail.
+
+SIR 3S: 90-15-00-24-Upd2
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+Version 90.15.16
+""""""""""""""""
+
+Bug Fixes
+~~~~~~~~~
+- dataframes.py: get_dataframe_from_time_table() fixed importing float-valued time tables from SIR Graf
+- dll files now included under src/sir3stoolkit/lib/ in every PyPI release
 
 SIR 3S: 90-15-00-23-Upd2
 ^^^^^^^^^^^^^^^^^^^^^^^^

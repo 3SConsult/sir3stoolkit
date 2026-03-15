@@ -1442,7 +1442,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
             time = self.GetValue(tk, "Zeit")[0]
             time = float(time.replace(",", "."))
             value = self.GetValue(tk, value_name)[0]
-            value = float(value)
+            value = float(value.replace(",", "."))
             data[time] = value
 
         if data == {}:

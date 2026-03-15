@@ -46,10 +46,10 @@ View: `Notebook <tutorials/SIR3S_Model/Tutorial002_Assets/ToolkitTutorial002.htm
 
 .. _Ttu003:
 
-Tutorial 3: Accessing calculation results
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Tutorial 3: Calculating and Accessing results
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This tutorial demonstrates how to get result values of objects based on their tk.
+This tutorial demonstrates how to execute calculations and access their results.
 
 View: `Notebook <tutorials/SIR3S_Model/Tutorial003_Assets/ToolkitTutorial003.html>`_ | Download: `ZIP archive <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorial003_Assets.zip>`_.
 
