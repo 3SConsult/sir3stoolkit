@@ -91,4 +91,10 @@ To install the SIR 3S Toolkit, follow these steps:
        cd "C:/Users/User/3S/sir3stoolkit"
        python.exe -m pip install -e .
        
+Contact
+-------
+If you'd like to report a bug or suggest an improvement for the SIR 3S Toolkit, please `open a new issue on GitHub <https://github.com/3SConsult/sir3stoolkit/issues>`_. Describe the situation in detail — whether it's a bug you encountered or a feature you'd like to see improved. Provide the SIR Graf, SIR Calc and SIR 3S Toolkit versions you used. Feel free to attach images or other relevant materials to help us better understand your request.
+
+For other requests, please contact us at `sir3stoolkit@3sconsult.de <mailto:sir3stoolkit@3sconsult.de>`_.
+
 To learn how the SIR 3S Toolkit is used in practice, take a look at the :doc:`examples` page.
