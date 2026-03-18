@@ -157,8 +157,6 @@ View: `Notebook <tutorials/SIR3S_Model_Mantle/Tutorial054_Assets/ToolkitTutorial
 
 .. _Ttu055:
 
-SIR3S_Advanced_Operations implements functions that extend the basic C# operations with more advanced operations to change a SIR 3S model.
-
 Tutorial 55:  Compare Calculations
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
