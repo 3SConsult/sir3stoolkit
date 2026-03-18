@@ -148,14 +148,23 @@ View: `Notebook <tutorials/SIR3S_Model_Mantle/Tutorial053_Assets/ToolkitTutorial
 
 .. _Ttu054:
 
-SIR3S_Advanced_Operations implements functions that extend the basic C# operations with more advanced operations to change a SIR 3S model.
-
 Tutorial 54: Measured Variable Tables
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This example demonstrates how view, create, delete and edit measured variable tables (Sollwerttabellen) with pandas dataframes as python representation. The functions presented work for any kind of time table.
 
 View: `Notebook <tutorials/SIR3S_Model_Mantle/Tutorial054_Assets/ToolkitTutorial054.html>`_  | Download: :download:`Notebook <tutorials/SIR3S_Model_Mantle/Tutorial054_Assets/ToolkitTutorial054.ipynb>`.
+
+.. _Ttu055:
+
+SIR3S_Advanced_Operations implements functions that extend the basic C# operations with more advanced operations to change a SIR 3S model.
+
+Tutorial 55:  Compare Calculations
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The Tutorial demonstrates how to execute calculations for the same model in adjusted valve states and view the individual results.
+
+View: `Notebook <tutorials/SIR3S_Model_Mantle/Tutorial055_Assets/ToolkitTutorial055.html>`_  | Download: :download:`Notebook <tutorials/SIR3S_Model_Mantle/Tutorial055_Assets/ToolkitTutorial055.ipynb>`.
 
 .. _Ttu061:
 
