@@ -1,0 +1,2167 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tutorial 55: Compare Calculations &mdash; sir3stoolkit  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=9c3e77be" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/nbsphinx-code-cells.css?v=2aa19091" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=f281be69"></script>
+      <script>let toggleHintShow = 'Click to show';</script>
+      <script>let toggleHintHide = 'Click to hide';</script>
+      <script>let toggleOpenOnPrint = 'true';</script>
+      <script src="../../../_static/togglebutton.js?v=1ae7504c"></script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            sir3stoolkit
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../releases.html">Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developers.html">For Developers</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">sir3stoolkit</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Tutorial 55: Compare Calculations</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/tutorials/SIR3S_Model_Mantle/Tutorial055_Assets/ToolkitTutorial055.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="Tutorial-55:-Compare-Calculations">
+<h1>Tutorial 55: Compare Calculations<a class="headerlink" href="#Tutorial-55:-Compare-Calculations" title="Link to this heading"></a></h1>
+<p>The Tutorial demonstrates how to execute calculations for the same model in adjusted valve states and view the individual results.</p>
+</section>
+<section id="Toolkit-Release">
+<h1>Toolkit Release<a class="headerlink" href="#Toolkit-Release" title="Link to this heading"></a></h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>#pip install
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Imports">
+<h1>Imports<a class="headerlink" href="#Imports" title="Link to this heading"></a></h1>
+<section id="SIR-3S-Toolkit">
+<h2>SIR 3S Toolkit<a class="headerlink" href="#SIR-3S-Toolkit" title="Link to this heading"></a></h2>
+<section id="Regular-Import/Init">
+<h3>Regular Import/Init<a class="headerlink" href="#Regular-Import/Init" title="Link to this heading"></a></h3>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r&quot;C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2&quot; #change to local path
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sir3stoolkit.core import wrapper
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>wrapper
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;module &#39;sir3stoolkit.core.wrapper&#39; from &#39;C:\\Users\\aUsername\\3S\\sir3stoolkit\\src\\sir3stoolkit\\core\\wrapper.py&#39;&gt;
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>wrapper.Initialize_Toolkit(SIR3S_SIRGRAF_DIR)
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Additional-Import/Init-for-Dataframes-class">
+<h3>Additional Import/Init for Dataframes class<a class="headerlink" href="#Additional-Import/Init-for-Dataframes-class" title="Link to this heading"></a></h3>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sir3stoolkit.mantle.dataframes import SIR3S_Model_Dataframes
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s = SIR3S_Model_Dataframes()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Initialization complete
+</pre></div></div>
+</div>
+</section>
+</section>
+<section id="Additional">
+<h2>Additional<a class="headerlink" href="#Additional" title="Link to this heading"></a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import matplotlib.pyplot as plt
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+<section id="Open-Model">
+<h1>Open Model<a class="headerlink" href="#Open-Model" title="Link to this heading"></a></h1>
+<p>For the tutorial we have a simple hydraulic setup. A node with 4 t/h net outflow simulates some consumption. It is supplied by two pipes. The one from the left has a boundary pressure of 6 bar and a valve, we will control, the one from the right has a boundary pressure of 3 bar and no valve.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.OpenModel(dbName=r&quot;Toolkit_Tutorial55_Model.db3&quot;,
+              providerType=s3s.ProviderTypes.SQLite,
+              Mid=&quot;M-1-0-1&quot;,
+              saveCurrentlyOpenModel=False,
+              namedInstance=&quot;&quot;,
+              userID=&quot;&quot;,
+              password=&quot;&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Model is open for further operation
+</pre></div></div>
+</div>
+<p>Valves:</p>
+<ul class="simple">
+<li><p>‘bz.Indphi’: -1: geschlossen, 0: offen, 1: Tabellenverweis, 2: variabel</p></li>
+<li><p>‘bz.Phio’: Stellung offen [%]</p></li>
+<li><p>‘bz.Phig’: Stellung geschlossen [%]</p></li>
+<li><p>‘bz.Phisoll’: Stellung variabel [%]</p></li>
+<li><p>‘bz.Fkphi1’,</p></li>
+<li><p>‘bz.Tiv’,</p></li>
+<li><p>‘bz.IndPhiKonst’,</p></li>
+<li><p>‘bz.IndphiKlartext’</p></li>
+</ul>
+</section>
+<section id="Get-Tk">
+<h1>Get Tk<a class="headerlink" href="#Get-Tk" title="Link to this heading"></a></h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>valve = s3s.GetTksofElementType(s3s.ObjectTypes.Valve)[0]
+</pre></div>
+</div>
+</div>
+</section>
+<section id="1.-Scenario:-Valve-open-(100%)">
+<h1>1. Scenario: Valve open (100%)<a class="headerlink" href="#1.-Scenario:-Valve-open-(100%)" title="Link to this heading"></a></h1>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.SetValue(Tk=valve, propertyName=&quot;bz.Indphi&quot;, Value=&quot;0&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Value is set
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.ExecCalculation(True)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Model Calculation is complete
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_nodes_1 = s3s.generate_element_dataframe(s3s.ObjectTypes.Node)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+[2026-03-18 13:51:20,968] INFO in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df for element type: ObjectTypes.Node ...
+[2026-03-18 13:51:20,970] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_model_data for element type: ObjectTypes.Node ...
+[2026-03-18 13:51:21,044] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.Node
+[2026-03-18 13:51:21,044] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieved 4 element(s) of element type ObjectTypes.Node.
+[2026-03-18 13:51:21,061] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] No properties given → using ALL model_data properties for ObjectTypes.Node.
+[2026-03-18 13:51:21,061] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 37 model_data properties.
+[2026-03-18 13:51:21,061] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving model_data properties [&#39;Name&#39;, &#39;Ktyp&#39;, &#39;Zkor&#39;, &#39;QmEin&#39;, &#39;Lfakt&#39;, &#39;Fkpzon&#39;, &#39;Fkfstf&#39;, &#39;Fkutmp&#39;, &#39;Fkfqps&#39;, &#39;Fkcont&#39;, &#39;Fk2lknot&#39;, &#39;Beschreibung&#39;, &#39;Idreferenz&#39;, &#39;Iplanung&#39;, &#39;Kvr&#39;, &#39;Qakt&#39;, &#39;Xkor&#39;, &#39;Ykor&#39;, &#39;NodeNamePosition&#39;, &#39;ShowNodeName&#39;, &#39;KvrKlartext&#39;, &#39;NumberOfVERB&#39;, &#39;HasBlockConnection&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;, &#39;GeometriesDiffer&#39;, &#39;SymbolFactor&#39;, &#39;bz.Drakonz&#39;, &#39;bz.Fk&#39;, &#39;bz.Fkpvar&#39;, &#39;bz.Fkqvar&#39;, &#39;bz.Fklfkt&#39;, &#39;bz.PhEin&#39;, &#39;bz.Tm&#39;, &#39;bz.Te&#39;, &#39;bz.PhMin&#39;], geometry...
+[2026-03-18 13:51:21,482] WARNING in sir3stoolkit.mantle.dataframes: [model_data] Spatial Reference Identifier (SRID) not defined in model. DataFrame cannot be transformed to GeoDataFrame but geometry column can be created independently of SRID. Returning regular DataFrame with a geometry column.
+[2026-03-18 13:51:21,482] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (4, 39)
+[2026-03-18 13:51:21,493] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_results for element type: ObjectTypes.Node; at timestamp: 2026-03-18 10:16:50.000 +01:00 ...
+[2026-03-18 13:51:21,493] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Node
+[2026-03-18 13:51:21,511] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2026-03-18 10:16:50.000 +01:00 is used
+[2026-03-18 13:51:21,511] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
+[2026-03-18 13:51:21,519] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 4 element(s) of element type ObjectTypes.Node.
+[2026-03-18 13:51:21,522] INFO in sir3stoolkit.mantle.dataframes: [results] Using 73 result properties.
+[2026-03-18 13:51:21,527] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2026-03-18 13:51:21,539] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;ESQUELLSP&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;:
+[2026-03-18 13:51:21,555] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FITT_SUBTYPE&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:21,557] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FITT_VBTYPE1&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:21,557] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FITT_VBTYPE2&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:21,559] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FITT_VBTYPE3&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:21,561] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FSTF_NAME&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: Standard
+[2026-03-18 13:51:21,565] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;LFKT&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:21,576] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;PVAR&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:21,577] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;QVAR&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:21,581] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;ESQUELLSP&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;:
+[2026-03-18 13:51:21,581] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FITT_SUBTYPE&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:21,581] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FITT_VBTYPE1&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:21,581] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FITT_VBTYPE2&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:21,584] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FITT_VBTYPE3&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:21,584] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FSTF_NAME&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: Standard
+[2026-03-18 13:51:21,588] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;LFKT&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:21,590] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;PVAR&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:21,591] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;QVAR&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:21,594] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;ESQUELLSP&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;:
+[2026-03-18 13:51:21,595] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FITT_SUBTYPE&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:21,595] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FITT_VBTYPE1&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:21,596] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FITT_VBTYPE2&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:21,598] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FITT_VBTYPE3&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:21,599] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FSTF_NAME&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: Standard
+[2026-03-18 13:51:21,600] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;LFKT&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:21,601] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;PVAR&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:21,603] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;QVAR&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:21,606] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;ESQUELLSP&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;:
+[2026-03-18 13:51:21,608] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FITT_SUBTYPE&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:21,608] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FITT_VBTYPE1&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:21,610] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FITT_VBTYPE2&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:21,611] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FITT_VBTYPE3&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:21,611] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FSTF_NAME&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: Standard
+[2026-03-18 13:51:21,613] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;LFKT&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:21,615] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;PVAR&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:21,617] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;QVAR&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:21,625] INFO in sir3stoolkit.mantle.dataframes: [results] 76 fully NaN columns dropped.
+[2026-03-18 13:51:21,632] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 216)
+[2026-03-18 13:51:21,632] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Merging df_model_data with df_results for element type: ObjectTypes.Node ...
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_nodes_1
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>tk</th>
+      <th>Name</th>
+      <th>Ktyp</th>
+      <th>Zkor</th>
+      <th>QmEin</th>
+      <th>Lfakt</th>
+      <th>Fkpzon</th>
+      <th>Fkfstf</th>
+      <th>Fkutmp</th>
+      <th>Fkfqps</th>
+      <th>Fkcont</th>
+      <th>Fk2lknot</th>
+      <th>Beschreibung</th>
+      <th>Idreferenz</th>
+      <th>Iplanung</th>
+      <th>Kvr</th>
+      <th>Qakt</th>
+      <th>Xkor</th>
+      <th>Ykor</th>
+      <th>NodeNamePosition</th>
+      <th>ShowNodeName</th>
+      <th>KvrKlartext</th>
+      <th>NumberOfVERB</th>
+      <th>HasBlockConnection</th>
+      <th>Tk</th>
+      <th>Pk</th>
+      <th>InVariant</th>
+      <th>GeometriesDiffer</th>
+      <th>SymbolFactor</th>
+      <th>bz.Drakonz</th>
+      <th>bz.Fk</th>
+      <th>bz.Fkpvar</th>
+      <th>bz.Fkqvar</th>
+      <th>bz.Fklfkt</th>
+      <th>bz.PhEin</th>
+      <th>bz.Tm</th>
+      <th>bz.Te</th>
+      <th>bz.PhMin</th>
+      <th>geometry</th>
+      <th>BCIND</th>
+      <th>BCIND_CALC</th>
+      <th>BCIND_FLOW</th>
+      <th>BCIND_MODEL</th>
+      <th>BCIND_SOURCE</th>
+      <th>BCIND_TYPE</th>
+      <th>CP</th>
+      <th>DP</th>
+      <th>DPH</th>
+      <th>DYNVISKO</th>
+      <th>ESQUELLSP</th>
+      <th>FITT_ANGLE</th>
+      <th>FITT_BASTYPE</th>
+      <th>FITT_DP1</th>
+      <th>FITT_DP2</th>
+      <th>FITT_DP3</th>
+      <th>FITT_STATE</th>
+      <th>FITT_SUBTYPE</th>
+      <th>FITT_VBTYPE1</th>
+      <th>FITT_VBTYPE2</th>
+      <th>FITT_VBTYPE3</th>
+      <th>FITT_ZETA1</th>
+      <th>FITT_ZETA2</th>
+      <th>FITT_ZETA3</th>
+      <th>FSTF_NAME</th>
+      <th>H</th>
+      <th>HMAX_INST</th>
+      <th>HMIN_INST</th>
+      <th>IAKTIV</th>
+      <th>LFAKTAKT</th>
+      <th>LFKT</th>
+      <th>M</th>
+      <th>P</th>
+      <th>PDAMPF</th>
+      <th>PH</th>
+      <th>PHMINMAXDIF</th>
+      <th>PH_EIN</th>
+      <th>PH_MIN</th>
+      <th>PMAX_INST</th>
+      <th>PMIN_INST</th>
+      <th>PVAR</th>
+      <th>Q2</th>
+      <th>QM</th>
+      <th>QMABS</th>
+      <th>QVAR</th>
+      <th>RHO</th>
+      <th>T</th>
+      <th>TE</th>
+      <th>TMAX_INST</th>
+      <th>TMIN_INST</th>
+      <th>TTR</th>
+      <th>VOLD</th>
+      <th>WALTER</th>
+      <th>ZHKNR</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>4627226928120134070</td>
+      <td>NODE02</td>
+      <td>QKON</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>-1</td>
+      <td>5035918757120503777</td>
+      <td>4966523102239983321</td>
+      <td>-1</td>
+      <td>4744960050823542042</td>
+      <td>-1</td>
+      <td>Upstream of valve</td>
+      <td>2</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>40</td>
+      <td>0</td>
+      <td>1</td>
+      <td>False</td>
+      <td>Vorlauf</td>
+      <td>0</td>
+      <td>False</td>
+      <td>4627226928120134070</td>
+      <td>4627226928120134070</td>
+      <td>False</td>
+      <td>False</td>
+      <td>1</td>
+      <td>0</td>
+      <td>4627226928120134070</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>POINT Z (40 0 0)</td>
+      <td>17.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>16.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>4.2074</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>0.001729</td>
+      <td>NaN</td>
+      <td>-3.333333e+32</td>
+      <td>-333333333.0</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>-333333333.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>NaN</td>
+      <td>3.127404</td>
+      <td>3.127404</td>
+      <td>3.127404</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>NaN</td>
+      <td>0.000000</td>
+      <td>4.127404</td>
+      <td>0.0066</td>
+      <td>3.127404</td>
+      <td>0.0</td>
+      <td>3.127404</td>
+      <td>0.0</td>
+      <td>4.127404</td>
+      <td>4.127404</td>
+      <td>NaN</td>
+      <td>-3.333333e+32</td>
+      <td>0.00000</td>
+      <td>0.00000</td>
+      <td>NaN</td>
+      <td>1000.5</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000479</td>
+      <td>0.0</td>
+      <td>-3.333333e+32</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4853856122080314724</td>
+      <td>NODE03</td>
+      <td>QKON</td>
+      <td>0</td>
+      <td>-4</td>
+      <td>1</td>
+      <td>-1</td>
+      <td>5035918757120503777</td>
+      <td>4966523102239983321</td>
+      <td>-1</td>
+      <td>4744960050823542042</td>
+      <td>-1</td>
+      <td>Downstream of valve</td>
+      <td>3</td>
+      <td>1</td>
+      <td>1</td>
+      <td>-4</td>
+      <td>80</td>
+      <td>0</td>
+      <td>1</td>
+      <td>False</td>
+      <td>Vorlauf</td>
+      <td>0</td>
+      <td>False</td>
+      <td>4853856122080314724</td>
+      <td>4853856122080314724</td>
+      <td>False</td>
+      <td>False</td>
+      <td>1</td>
+      <td>0</td>
+      <td>4853856122080314724</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>POINT Z (80 0 0)</td>
+      <td>21.0</td>
+      <td>0.0</td>
+      <td>4.0</td>
+      <td>16.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>4.2074</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>0.001729</td>
+      <td>NaN</td>
+      <td>-3.333333e+32</td>
+      <td>-333333333.0</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>-333333333.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>NaN</td>
+      <td>3.093694</td>
+      <td>3.093694</td>
+      <td>3.093694</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>NaN</td>
+      <td>-1.111111</td>
+      <td>4.093695</td>
+      <td>0.0066</td>
+      <td>3.093694</td>
+      <td>0.0</td>
+      <td>3.093694</td>
+      <td>0.0</td>
+      <td>4.093695</td>
+      <td>4.093695</td>
+      <td>NaN</td>
+      <td>-3.333333e+32</td>
+      <td>-4.00000</td>
+      <td>4.00000</td>
+      <td>NaN</td>
+      <td>1000.5</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000479</td>
+      <td>0.0</td>
+      <td>-3.333333e+32</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>5631143277892559364</td>
+      <td>NODE04</td>
+      <td>PKON</td>
+      <td>0</td>
+      <td>-10</td>
+      <td>1</td>
+      <td>-1</td>
+      <td>5035918757120503777</td>
+      <td>4966523102239983321</td>
+      <td>-1</td>
+      <td>4744960050823542042</td>
+      <td>-1</td>
+      <td>Template Element for single Node Creation</td>
+      <td>3S5612430692880892331</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>120</td>
+      <td>0</td>
+      <td>1</td>
+      <td>False</td>
+      <td>Vorlauf</td>
+      <td>0</td>
+      <td>False</td>
+      <td>5631143277892559364</td>
+      <td>5631143277892559364</td>
+      <td>False</td>
+      <td>False</td>
+      <td>1</td>
+      <td>0</td>
+      <td>5631143277892559364</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>POINT Z (120 0 0)</td>
+      <td>20.0</td>
+      <td>0.0</td>
+      <td>4.0</td>
+      <td>16.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>4.2074</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>0.001729</td>
+      <td>NaN</td>
+      <td>-3.333333e+32</td>
+      <td>-333333333.0</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>-333333333.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>NaN</td>
+      <td>2.000000</td>
+      <td>2.000000</td>
+      <td>2.000000</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>NaN</td>
+      <td>-3.559523</td>
+      <td>3.000000</td>
+      <td>0.0066</td>
+      <td>2.000000</td>
+      <td>0.0</td>
+      <td>2.000000</td>
+      <td>0.0</td>
+      <td>3.000000</td>
+      <td>3.000000</td>
+      <td>NaN</td>
+      <td>-3.333333e+32</td>
+      <td>-12.81428</td>
+      <td>12.81428</td>
+      <td>NaN</td>
+      <td>1000.5</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.001106</td>
+      <td>0.0</td>
+      <td>-3.333333e+32</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>5698868843196465579</td>
+      <td>NODE01</td>
+      <td>PKON</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>-1</td>
+      <td>5035918757120503777</td>
+      <td>4966523102239983321</td>
+      <td>-1</td>
+      <td>4744960050823542042</td>
+      <td>-1</td>
+      <td>Upstream of valve</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>False</td>
+      <td>Vorlauf</td>
+      <td>0</td>
+      <td>False</td>
+      <td>5698868843196465579</td>
+      <td>5698868843196465579</td>
+      <td>False</td>
+      <td>False</td>
+      <td>1</td>
+      <td>0</td>
+      <td>5698868843196465579</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>5</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>POINT Z (0 0 0)</td>
+      <td>24.0</td>
+      <td>0.0</td>
+      <td>8.0</td>
+      <td>16.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>4.2074</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>0.001729</td>
+      <td>NaN</td>
+      <td>-3.333333e+32</td>
+      <td>-333333333.0</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>-333333333.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>NaN</td>
+      <td>5.000000</td>
+      <td>5.000000</td>
+      <td>5.000000</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>NaN</td>
+      <td>4.670634</td>
+      <td>6.000000</td>
+      <td>0.0066</td>
+      <td>5.000000</td>
+      <td>0.0</td>
+      <td>5.000000</td>
+      <td>0.0</td>
+      <td>6.000000</td>
+      <td>6.000000</td>
+      <td>NaN</td>
+      <td>-3.333333e+32</td>
+      <td>16.81428</td>
+      <td>16.81428</td>
+      <td>NaN</td>
+      <td>1000.5</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>-3.333333e+32</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</section>
+<section id="2.-Scenario:-Valve-closed-(0%)">
+<h1>2. Scenario: Valve closed (0%)<a class="headerlink" href="#2.-Scenario:-Valve-closed-(0%)" title="Link to this heading"></a></h1>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.SetValue(Tk=valve, propertyName=&quot;bz.Indphi&quot;, Value=&quot;-1&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Value is set
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.ExecCalculation(True)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Model Calculation is complete
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_nodes_2 = s3s.generate_element_dataframe(s3s.ObjectTypes.Node)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+[2026-03-18 13:51:25,597] INFO in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df for element type: ObjectTypes.Node ...
+[2026-03-18 13:51:25,597] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_model_data for element type: ObjectTypes.Node ...
+[2026-03-18 13:51:25,605] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.Node
+[2026-03-18 13:51:25,607] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieved 4 element(s) of element type ObjectTypes.Node.
+[2026-03-18 13:51:25,608] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] No properties given → using ALL model_data properties for ObjectTypes.Node.
+[2026-03-18 13:51:25,610] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 37 model_data properties.
+[2026-03-18 13:51:25,610] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving model_data properties [&#39;Name&#39;, &#39;Ktyp&#39;, &#39;Zkor&#39;, &#39;QmEin&#39;, &#39;Lfakt&#39;, &#39;Fkpzon&#39;, &#39;Fkfstf&#39;, &#39;Fkutmp&#39;, &#39;Fkfqps&#39;, &#39;Fkcont&#39;, &#39;Fk2lknot&#39;, &#39;Beschreibung&#39;, &#39;Idreferenz&#39;, &#39;Iplanung&#39;, &#39;Kvr&#39;, &#39;Qakt&#39;, &#39;Xkor&#39;, &#39;Ykor&#39;, &#39;NodeNamePosition&#39;, &#39;ShowNodeName&#39;, &#39;KvrKlartext&#39;, &#39;NumberOfVERB&#39;, &#39;HasBlockConnection&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;, &#39;GeometriesDiffer&#39;, &#39;SymbolFactor&#39;, &#39;bz.Drakonz&#39;, &#39;bz.Fk&#39;, &#39;bz.Fkpvar&#39;, &#39;bz.Fkqvar&#39;, &#39;bz.Fklfkt&#39;, &#39;bz.PhEin&#39;, &#39;bz.Tm&#39;, &#39;bz.Te&#39;, &#39;bz.PhMin&#39;], geometry...
+[2026-03-18 13:51:25,661] WARNING in sir3stoolkit.mantle.dataframes: [model_data] Spatial Reference Identifier (SRID) not defined in model. DataFrame cannot be transformed to GeoDataFrame but geometry column can be created independently of SRID. Returning regular DataFrame with a geometry column.
+[2026-03-18 13:51:25,661] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (4, 39)
+[2026-03-18 13:51:25,674] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_results for element type: ObjectTypes.Node; at timestamp: 2026-03-18 10:16:50.000 +01:00 ...
+[2026-03-18 13:51:25,674] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Node
+[2026-03-18 13:51:25,685] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2026-03-18 10:16:50.000 +01:00 is used
+[2026-03-18 13:51:25,688] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
+[2026-03-18 13:51:25,689] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 4 element(s) of element type ObjectTypes.Node.
+[2026-03-18 13:51:25,691] INFO in sir3stoolkit.mantle.dataframes: [results] Using 73 result properties.
+[2026-03-18 13:51:25,695] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2026-03-18 13:51:25,696] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;ESQUELLSP&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;:
+[2026-03-18 13:51:25,698] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FITT_SUBTYPE&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:25,698] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FITT_VBTYPE1&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:25,700] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FITT_VBTYPE2&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:25,700] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FITT_VBTYPE3&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:25,702] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FSTF_NAME&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: Standard
+[2026-03-18 13:51:25,704] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;LFKT&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:25,705] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;PVAR&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:25,705] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;QVAR&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:25,710] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;ESQUELLSP&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;:
+[2026-03-18 13:51:25,711] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FITT_SUBTYPE&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:25,711] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FITT_VBTYPE1&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:25,711] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FITT_VBTYPE2&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:25,713] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FITT_VBTYPE3&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:25,715] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FSTF_NAME&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: Standard
+[2026-03-18 13:51:25,716] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;LFKT&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:25,718] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;PVAR&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:25,719] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;QVAR&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:25,720] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;ESQUELLSP&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;:
+[2026-03-18 13:51:25,723] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FITT_SUBTYPE&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:25,723] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FITT_VBTYPE1&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:25,723] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FITT_VBTYPE2&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:25,725] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FITT_VBTYPE3&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:25,727] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FSTF_NAME&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: Standard
+[2026-03-18 13:51:25,729] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;LFKT&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:25,730] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;PVAR&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:25,731] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;QVAR&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:25,733] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;ESQUELLSP&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;:
+[2026-03-18 13:51:25,736] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FITT_SUBTYPE&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:25,736] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FITT_VBTYPE1&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:25,737] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FITT_VBTYPE2&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:25,738] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FITT_VBTYPE3&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:25,738] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FSTF_NAME&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: Standard
+[2026-03-18 13:51:25,742] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;LFKT&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:25,743] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;PVAR&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:25,743] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;QVAR&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:25,748] INFO in sir3stoolkit.mantle.dataframes: [results] 76 fully NaN columns dropped.
+[2026-03-18 13:51:25,760] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 216)
+[2026-03-18 13:51:25,760] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Merging df_model_data with df_results for element type: ObjectTypes.Node ...
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_nodes_2
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>tk</th>
+      <th>Name</th>
+      <th>Ktyp</th>
+      <th>Zkor</th>
+      <th>QmEin</th>
+      <th>Lfakt</th>
+      <th>Fkpzon</th>
+      <th>Fkfstf</th>
+      <th>Fkutmp</th>
+      <th>Fkfqps</th>
+      <th>Fkcont</th>
+      <th>Fk2lknot</th>
+      <th>Beschreibung</th>
+      <th>Idreferenz</th>
+      <th>Iplanung</th>
+      <th>Kvr</th>
+      <th>Qakt</th>
+      <th>Xkor</th>
+      <th>Ykor</th>
+      <th>NodeNamePosition</th>
+      <th>ShowNodeName</th>
+      <th>KvrKlartext</th>
+      <th>NumberOfVERB</th>
+      <th>HasBlockConnection</th>
+      <th>Tk</th>
+      <th>Pk</th>
+      <th>InVariant</th>
+      <th>GeometriesDiffer</th>
+      <th>SymbolFactor</th>
+      <th>bz.Drakonz</th>
+      <th>bz.Fk</th>
+      <th>bz.Fkpvar</th>
+      <th>bz.Fkqvar</th>
+      <th>bz.Fklfkt</th>
+      <th>bz.PhEin</th>
+      <th>bz.Tm</th>
+      <th>bz.Te</th>
+      <th>bz.PhMin</th>
+      <th>geometry</th>
+      <th>BCIND</th>
+      <th>BCIND_CALC</th>
+      <th>BCIND_FLOW</th>
+      <th>BCIND_MODEL</th>
+      <th>BCIND_SOURCE</th>
+      <th>BCIND_TYPE</th>
+      <th>CP</th>
+      <th>DP</th>
+      <th>DPH</th>
+      <th>DYNVISKO</th>
+      <th>ESQUELLSP</th>
+      <th>FITT_ANGLE</th>
+      <th>FITT_BASTYPE</th>
+      <th>FITT_DP1</th>
+      <th>FITT_DP2</th>
+      <th>FITT_DP3</th>
+      <th>FITT_STATE</th>
+      <th>FITT_SUBTYPE</th>
+      <th>FITT_VBTYPE1</th>
+      <th>FITT_VBTYPE2</th>
+      <th>FITT_VBTYPE3</th>
+      <th>FITT_ZETA1</th>
+      <th>FITT_ZETA2</th>
+      <th>FITT_ZETA3</th>
+      <th>FSTF_NAME</th>
+      <th>H</th>
+      <th>HMAX_INST</th>
+      <th>HMIN_INST</th>
+      <th>IAKTIV</th>
+      <th>LFAKTAKT</th>
+      <th>LFKT</th>
+      <th>M</th>
+      <th>P</th>
+      <th>PDAMPF</th>
+      <th>PH</th>
+      <th>PHMINMAXDIF</th>
+      <th>PH_EIN</th>
+      <th>PH_MIN</th>
+      <th>PMAX_INST</th>
+      <th>PMIN_INST</th>
+      <th>PVAR</th>
+      <th>Q2</th>
+      <th>QM</th>
+      <th>QMABS</th>
+      <th>QVAR</th>
+      <th>RHO</th>
+      <th>T</th>
+      <th>TE</th>
+      <th>TMAX_INST</th>
+      <th>TMIN_INST</th>
+      <th>TTR</th>
+      <th>VOLD</th>
+      <th>WALTER</th>
+      <th>ZHKNR</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>4627226928120134070</td>
+      <td>NODE02</td>
+      <td>QKON</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>-1</td>
+      <td>5035918757120503777</td>
+      <td>4966523102239983321</td>
+      <td>-1</td>
+      <td>4744960050823542042</td>
+      <td>-1</td>
+      <td>Upstream of valve</td>
+      <td>2</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>40</td>
+      <td>0</td>
+      <td>1</td>
+      <td>False</td>
+      <td>Vorlauf</td>
+      <td>0</td>
+      <td>False</td>
+      <td>4627226928120134070</td>
+      <td>4627226928120134070</td>
+      <td>False</td>
+      <td>False</td>
+      <td>1</td>
+      <td>0</td>
+      <td>4627226928120134070</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>POINT Z (40 0 0)</td>
+      <td>17.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>16.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>4.2074</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>0.001729</td>
+      <td>NaN</td>
+      <td>-3.333333e+32</td>
+      <td>-333333333.0</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>-333333333.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>NaN</td>
+      <td>4.999999</td>
+      <td>4.999999</td>
+      <td>4.999999</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>NaN</td>
+      <td>0.000000</td>
+      <td>5.999999</td>
+      <td>0.0066</td>
+      <td>4.999999</td>
+      <td>0.0</td>
+      <td>4.999999</td>
+      <td>0.0</td>
+      <td>5.999999</td>
+      <td>5.999999</td>
+      <td>NaN</td>
+      <td>-3.333333e+32</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>NaN</td>
+      <td>1000.5</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>10.000000</td>
+      <td>0.0</td>
+      <td>-3.333333e+32</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4853856122080314724</td>
+      <td>NODE03</td>
+      <td>QKON</td>
+      <td>0</td>
+      <td>-4</td>
+      <td>1</td>
+      <td>-1</td>
+      <td>5035918757120503777</td>
+      <td>4966523102239983321</td>
+      <td>-1</td>
+      <td>4744960050823542042</td>
+      <td>-1</td>
+      <td>Downstream of valve</td>
+      <td>3</td>
+      <td>1</td>
+      <td>1</td>
+      <td>-4</td>
+      <td>80</td>
+      <td>0</td>
+      <td>1</td>
+      <td>False</td>
+      <td>Vorlauf</td>
+      <td>0</td>
+      <td>False</td>
+      <td>4853856122080314724</td>
+      <td>4853856122080314724</td>
+      <td>False</td>
+      <td>False</td>
+      <td>1</td>
+      <td>0</td>
+      <td>4853856122080314724</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>POINT Z (80 0 0)</td>
+      <td>21.0</td>
+      <td>0.0</td>
+      <td>4.0</td>
+      <td>16.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>4.2074</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>0.001729</td>
+      <td>NaN</td>
+      <td>-3.333333e+32</td>
+      <td>-333333333.0</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>-333333333.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>NaN</td>
+      <td>1.888348</td>
+      <td>1.888348</td>
+      <td>1.888348</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>NaN</td>
+      <td>-1.111111</td>
+      <td>2.888347</td>
+      <td>0.0066</td>
+      <td>1.888348</td>
+      <td>0.0</td>
+      <td>1.888348</td>
+      <td>0.0</td>
+      <td>2.888347</td>
+      <td>2.888347</td>
+      <td>NaN</td>
+      <td>-3.333333e+32</td>
+      <td>-4.000000</td>
+      <td>4.000000</td>
+      <td>NaN</td>
+      <td>1000.5</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.003818</td>
+      <td>0.0</td>
+      <td>-3.333333e+32</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>5631143277892559364</td>
+      <td>NODE04</td>
+      <td>PKON</td>
+      <td>0</td>
+      <td>-10</td>
+      <td>1</td>
+      <td>-1</td>
+      <td>5035918757120503777</td>
+      <td>4966523102239983321</td>
+      <td>-1</td>
+      <td>4744960050823542042</td>
+      <td>-1</td>
+      <td>Template Element for single Node Creation</td>
+      <td>3S5612430692880892331</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>120</td>
+      <td>0</td>
+      <td>1</td>
+      <td>False</td>
+      <td>Vorlauf</td>
+      <td>0</td>
+      <td>False</td>
+      <td>5631143277892559364</td>
+      <td>5631143277892559364</td>
+      <td>False</td>
+      <td>False</td>
+      <td>1</td>
+      <td>0</td>
+      <td>5631143277892559364</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>POINT Z (120 0 0)</td>
+      <td>24.0</td>
+      <td>0.0</td>
+      <td>8.0</td>
+      <td>16.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>4.2074</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>0.001729</td>
+      <td>NaN</td>
+      <td>-3.333333e+32</td>
+      <td>-333333333.0</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>-333333333.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>NaN</td>
+      <td>2.000000</td>
+      <td>2.000000</td>
+      <td>2.000000</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>NaN</td>
+      <td>1.110910</td>
+      <td>3.000000</td>
+      <td>0.0066</td>
+      <td>2.000000</td>
+      <td>0.0</td>
+      <td>2.000000</td>
+      <td>0.0</td>
+      <td>3.000000</td>
+      <td>3.000000</td>
+      <td>NaN</td>
+      <td>-3.333333e+32</td>
+      <td>3.999278</td>
+      <td>3.999278</td>
+      <td>NaN</td>
+      <td>1000.5</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>-3.333333e+32</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>5698868843196465579</td>
+      <td>NODE01</td>
+      <td>PKON</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>-1</td>
+      <td>5035918757120503777</td>
+      <td>4966523102239983321</td>
+      <td>-1</td>
+      <td>4744960050823542042</td>
+      <td>-1</td>
+      <td>Upstream of valve</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>False</td>
+      <td>Vorlauf</td>
+      <td>0</td>
+      <td>False</td>
+      <td>5698868843196465579</td>
+      <td>5698868843196465579</td>
+      <td>False</td>
+      <td>False</td>
+      <td>1</td>
+      <td>0</td>
+      <td>5698868843196465579</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>5</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>POINT Z (0 0 0)</td>
+      <td>24.0</td>
+      <td>0.0</td>
+      <td>8.0</td>
+      <td>16.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>4.2074</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>0.001729</td>
+      <td>NaN</td>
+      <td>-3.333333e+32</td>
+      <td>-333333333.0</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>-333333333.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>NaN</td>
+      <td>5.000000</td>
+      <td>5.000000</td>
+      <td>5.000000</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>NaN</td>
+      <td>0.000201</td>
+      <td>6.000000</td>
+      <td>0.0066</td>
+      <td>5.000000</td>
+      <td>0.0</td>
+      <td>5.000000</td>
+      <td>0.0</td>
+      <td>6.000000</td>
+      <td>6.000000</td>
+      <td>NaN</td>
+      <td>-3.333333e+32</td>
+      <td>0.000722</td>
+      <td>0.000722</td>
+      <td>NaN</td>
+      <td>1000.5</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>-3.333333e+32</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</section>
+<section id="3.-Scenario:-Valve-variable-(55%)">
+<h1>3. Scenario: Valve variable (55%)<a class="headerlink" href="#3.-Scenario:-Valve-variable-(55%)" title="Link to this heading"></a></h1>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.SetValue(Tk=valve, propertyName=&quot;bz.Indphi&quot;, Value=&quot;2&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Value is set
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.ExecCalculation(True)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Model Calculation is complete
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_nodes_3 = s3s.generate_element_dataframe(s3s.ObjectTypes.Node)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+[2026-03-18 13:51:29,715] INFO in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df for element type: ObjectTypes.Node ...
+[2026-03-18 13:51:29,716] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_model_data for element type: ObjectTypes.Node ...
+[2026-03-18 13:51:29,722] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.Node
+[2026-03-18 13:51:29,723] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieved 4 element(s) of element type ObjectTypes.Node.
+[2026-03-18 13:51:29,726] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] No properties given → using ALL model_data properties for ObjectTypes.Node.
+[2026-03-18 13:51:29,726] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 37 model_data properties.
+[2026-03-18 13:51:29,726] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving model_data properties [&#39;Name&#39;, &#39;Ktyp&#39;, &#39;Zkor&#39;, &#39;QmEin&#39;, &#39;Lfakt&#39;, &#39;Fkpzon&#39;, &#39;Fkfstf&#39;, &#39;Fkutmp&#39;, &#39;Fkfqps&#39;, &#39;Fkcont&#39;, &#39;Fk2lknot&#39;, &#39;Beschreibung&#39;, &#39;Idreferenz&#39;, &#39;Iplanung&#39;, &#39;Kvr&#39;, &#39;Qakt&#39;, &#39;Xkor&#39;, &#39;Ykor&#39;, &#39;NodeNamePosition&#39;, &#39;ShowNodeName&#39;, &#39;KvrKlartext&#39;, &#39;NumberOfVERB&#39;, &#39;HasBlockConnection&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;, &#39;GeometriesDiffer&#39;, &#39;SymbolFactor&#39;, &#39;bz.Drakonz&#39;, &#39;bz.Fk&#39;, &#39;bz.Fkpvar&#39;, &#39;bz.Fkqvar&#39;, &#39;bz.Fklfkt&#39;, &#39;bz.PhEin&#39;, &#39;bz.Tm&#39;, &#39;bz.Te&#39;, &#39;bz.PhMin&#39;], geometry...
+[2026-03-18 13:51:29,780] WARNING in sir3stoolkit.mantle.dataframes: [model_data] Spatial Reference Identifier (SRID) not defined in model. DataFrame cannot be transformed to GeoDataFrame but geometry column can be created independently of SRID. Returning regular DataFrame with a geometry column.
+[2026-03-18 13:51:29,781] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (4, 39)
+[2026-03-18 13:51:29,793] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_results for element type: ObjectTypes.Node; at timestamp: 2026-03-18 10:16:50.000 +01:00 ...
+[2026-03-18 13:51:29,795] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Node
+[2026-03-18 13:51:29,808] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2026-03-18 10:16:50.000 +01:00 is used
+[2026-03-18 13:51:29,811] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
+[2026-03-18 13:51:29,811] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 4 element(s) of element type ObjectTypes.Node.
+[2026-03-18 13:51:29,814] INFO in sir3stoolkit.mantle.dataframes: [results] Using 73 result properties.
+[2026-03-18 13:51:29,815] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2026-03-18 13:51:29,819] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;ESQUELLSP&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;:
+[2026-03-18 13:51:29,821] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FITT_SUBTYPE&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:29,822] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FITT_VBTYPE1&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:29,824] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FITT_VBTYPE2&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:29,826] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FITT_VBTYPE3&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:29,827] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FSTF_NAME&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: Standard
+[2026-03-18 13:51:29,829] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;LFKT&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:29,829] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;PVAR&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:29,832] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;QVAR&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:29,835] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;ESQUELLSP&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;:
+[2026-03-18 13:51:29,836] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FITT_SUBTYPE&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:29,838] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FITT_VBTYPE1&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:29,839] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FITT_VBTYPE2&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:29,840] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FITT_VBTYPE3&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:29,841] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FSTF_NAME&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: Standard
+[2026-03-18 13:51:29,844] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;LFKT&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:29,846] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;PVAR&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:29,846] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;QVAR&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:29,849] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;ESQUELLSP&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;:
+[2026-03-18 13:51:29,849] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FITT_SUBTYPE&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:29,851] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FITT_VBTYPE1&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:29,853] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FITT_VBTYPE2&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:29,853] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FITT_VBTYPE3&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:29,855] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FSTF_NAME&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: Standard
+[2026-03-18 13:51:29,857] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;LFKT&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:29,860] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;PVAR&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:29,861] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;QVAR&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:29,863] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;ESQUELLSP&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;:
+[2026-03-18 13:51:29,865] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FITT_SUBTYPE&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:29,866] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FITT_VBTYPE1&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:29,867] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FITT_VBTYPE2&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:29,867] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FITT_VBTYPE3&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:29,869] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;FSTF_NAME&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: Standard
+[2026-03-18 13:51:29,871] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;LFKT&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:29,874] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;PVAR&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:29,875] WARNING in sir3stoolkit.mantle.dataframes: [results] Non-numeric value for &#39;QVAR&#39; at &#39;2026-03-18 10:16:50.000 +01:00&#39;: [2026-03-18 13:51:29,880] INFO in sir3stoolkit.mantle.dataframes: [results] 76 fully NaN columns dropped.
+[2026-03-18 13:51:29,893] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 216)
+[2026-03-18 13:51:29,893] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Merging df_model_data with df_results for element type: ObjectTypes.Node ...
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_nodes_3
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>tk</th>
+      <th>Name</th>
+      <th>Ktyp</th>
+      <th>Zkor</th>
+      <th>QmEin</th>
+      <th>Lfakt</th>
+      <th>Fkpzon</th>
+      <th>Fkfstf</th>
+      <th>Fkutmp</th>
+      <th>Fkfqps</th>
+      <th>Fkcont</th>
+      <th>Fk2lknot</th>
+      <th>Beschreibung</th>
+      <th>Idreferenz</th>
+      <th>Iplanung</th>
+      <th>Kvr</th>
+      <th>Qakt</th>
+      <th>Xkor</th>
+      <th>Ykor</th>
+      <th>NodeNamePosition</th>
+      <th>ShowNodeName</th>
+      <th>KvrKlartext</th>
+      <th>NumberOfVERB</th>
+      <th>HasBlockConnection</th>
+      <th>Tk</th>
+      <th>Pk</th>
+      <th>InVariant</th>
+      <th>GeometriesDiffer</th>
+      <th>SymbolFactor</th>
+      <th>bz.Drakonz</th>
+      <th>bz.Fk</th>
+      <th>bz.Fkpvar</th>
+      <th>bz.Fkqvar</th>
+      <th>bz.Fklfkt</th>
+      <th>bz.PhEin</th>
+      <th>bz.Tm</th>
+      <th>bz.Te</th>
+      <th>bz.PhMin</th>
+      <th>geometry</th>
+      <th>BCIND</th>
+      <th>BCIND_CALC</th>
+      <th>BCIND_FLOW</th>
+      <th>BCIND_MODEL</th>
+      <th>BCIND_SOURCE</th>
+      <th>BCIND_TYPE</th>
+      <th>CP</th>
+      <th>DP</th>
+      <th>DPH</th>
+      <th>DYNVISKO</th>
+      <th>ESQUELLSP</th>
+      <th>FITT_ANGLE</th>
+      <th>FITT_BASTYPE</th>
+      <th>FITT_DP1</th>
+      <th>FITT_DP2</th>
+      <th>FITT_DP3</th>
+      <th>FITT_STATE</th>
+      <th>FITT_SUBTYPE</th>
+      <th>FITT_VBTYPE1</th>
+      <th>FITT_VBTYPE2</th>
+      <th>FITT_VBTYPE3</th>
+      <th>FITT_ZETA1</th>
+      <th>FITT_ZETA2</th>
+      <th>FITT_ZETA3</th>
+      <th>FSTF_NAME</th>
+      <th>H</th>
+      <th>HMAX_INST</th>
+      <th>HMIN_INST</th>
+      <th>IAKTIV</th>
+      <th>LFAKTAKT</th>
+      <th>LFKT</th>
+      <th>M</th>
+      <th>P</th>
+      <th>PDAMPF</th>
+      <th>PH</th>
+      <th>PHMINMAXDIF</th>
+      <th>PH_EIN</th>
+      <th>PH_MIN</th>
+      <th>PMAX_INST</th>
+      <th>PMIN_INST</th>
+      <th>PVAR</th>
+      <th>Q2</th>
+      <th>QM</th>
+      <th>QMABS</th>
+      <th>QVAR</th>
+      <th>RHO</th>
+      <th>T</th>
+      <th>TE</th>
+      <th>TMAX_INST</th>
+      <th>TMIN_INST</th>
+      <th>TTR</th>
+      <th>VOLD</th>
+      <th>WALTER</th>
+      <th>ZHKNR</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>4627226928120134070</td>
+      <td>NODE02</td>
+      <td>QKON</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>-1</td>
+      <td>5035918757120503777</td>
+      <td>4966523102239983321</td>
+      <td>-1</td>
+      <td>4744960050823542042</td>
+      <td>-1</td>
+      <td>Upstream of valve</td>
+      <td>2</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>40</td>
+      <td>0</td>
+      <td>1</td>
+      <td>False</td>
+      <td>Vorlauf</td>
+      <td>0</td>
+      <td>False</td>
+      <td>4627226928120134070</td>
+      <td>4627226928120134070</td>
+      <td>False</td>
+      <td>False</td>
+      <td>1</td>
+      <td>0</td>
+      <td>4627226928120134070</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>POINT Z (40 0 0)</td>
+      <td>17.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>16.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>4.2074</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>0.001729</td>
+      <td>NaN</td>
+      <td>-3.333333e+32</td>
+      <td>-333333333.0</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>-333333333.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>NaN</td>
+      <td>3.239119</td>
+      <td>3.239119</td>
+      <td>3.239119</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>NaN</td>
+      <td>0.000000</td>
+      <td>4.239119</td>
+      <td>0.0066</td>
+      <td>3.239119</td>
+      <td>0.0</td>
+      <td>3.239119</td>
+      <td>0.0</td>
+      <td>4.239119</td>
+      <td>4.239119</td>
+      <td>NaN</td>
+      <td>-3.333333e+32</td>
+      <td>0.00000</td>
+      <td>0.00000</td>
+      <td>NaN</td>
+      <td>1000.5</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000494</td>
+      <td>0.0</td>
+      <td>-3.333333e+32</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4853856122080314724</td>
+      <td>NODE03</td>
+      <td>QKON</td>
+      <td>0</td>
+      <td>-4</td>
+      <td>1</td>
+      <td>-1</td>
+      <td>5035918757120503777</td>
+      <td>4966523102239983321</td>
+      <td>-1</td>
+      <td>4744960050823542042</td>
+      <td>-1</td>
+      <td>Downstream of valve</td>
+      <td>3</td>
+      <td>1</td>
+      <td>1</td>
+      <td>-4</td>
+      <td>80</td>
+      <td>0</td>
+      <td>1</td>
+      <td>False</td>
+      <td>Vorlauf</td>
+      <td>0</td>
+      <td>False</td>
+      <td>4853856122080314724</td>
+      <td>4853856122080314724</td>
+      <td>False</td>
+      <td>False</td>
+      <td>1</td>
+      <td>0</td>
+      <td>4853856122080314724</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>POINT Z (80 0 0)</td>
+      <td>21.0</td>
+      <td>0.0</td>
+      <td>4.0</td>
+      <td>16.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>4.2074</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>0.001729</td>
+      <td>NaN</td>
+      <td>-3.333333e+32</td>
+      <td>-333333333.0</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>-333333333.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>NaN</td>
+      <td>3.008708</td>
+      <td>3.008708</td>
+      <td>3.008708</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>NaN</td>
+      <td>-1.111111</td>
+      <td>4.008708</td>
+      <td>0.0066</td>
+      <td>3.008708</td>
+      <td>0.0</td>
+      <td>3.008708</td>
+      <td>0.0</td>
+      <td>4.008708</td>
+      <td>4.008708</td>
+      <td>NaN</td>
+      <td>-3.333333e+32</td>
+      <td>-4.00000</td>
+      <td>4.00000</td>
+      <td>NaN</td>
+      <td>1000.5</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000494</td>
+      <td>0.0</td>
+      <td>-3.333333e+32</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>5631143277892559364</td>
+      <td>NODE04</td>
+      <td>PKON</td>
+      <td>0</td>
+      <td>-10</td>
+      <td>1</td>
+      <td>-1</td>
+      <td>5035918757120503777</td>
+      <td>4966523102239983321</td>
+      <td>-1</td>
+      <td>4744960050823542042</td>
+      <td>-1</td>
+      <td>Template Element for single Node Creation</td>
+      <td>3S5612430692880892331</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>120</td>
+      <td>0</td>
+      <td>1</td>
+      <td>False</td>
+      <td>Vorlauf</td>
+      <td>0</td>
+      <td>False</td>
+      <td>5631143277892559364</td>
+      <td>5631143277892559364</td>
+      <td>False</td>
+      <td>False</td>
+      <td>1</td>
+      <td>0</td>
+      <td>5631143277892559364</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>POINT Z (120 0 0)</td>
+      <td>20.0</td>
+      <td>0.0</td>
+      <td>4.0</td>
+      <td>16.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>4.2074</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>0.001729</td>
+      <td>NaN</td>
+      <td>-3.333333e+32</td>
+      <td>-333333333.0</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>-333333333.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>NaN</td>
+      <td>2.000000</td>
+      <td>2.000000</td>
+      <td>2.000000</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>NaN</td>
+      <td>-3.416775</td>
+      <td>3.000000</td>
+      <td>0.0066</td>
+      <td>2.000000</td>
+      <td>0.0</td>
+      <td>2.000000</td>
+      <td>0.0</td>
+      <td>3.000000</td>
+      <td>3.000000</td>
+      <td>NaN</td>
+      <td>-3.333333e+32</td>
+      <td>-12.30039</td>
+      <td>12.30039</td>
+      <td>NaN</td>
+      <td>1000.5</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.001148</td>
+      <td>0.0</td>
+      <td>-3.333333e+32</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>5698868843196465579</td>
+      <td>NODE01</td>
+      <td>PKON</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>-1</td>
+      <td>5035918757120503777</td>
+      <td>4966523102239983321</td>
+      <td>-1</td>
+      <td>4744960050823542042</td>
+      <td>-1</td>
+      <td>Upstream of valve</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>False</td>
+      <td>Vorlauf</td>
+      <td>0</td>
+      <td>False</td>
+      <td>5698868843196465579</td>
+      <td>5698868843196465579</td>
+      <td>False</td>
+      <td>False</td>
+      <td>1</td>
+      <td>0</td>
+      <td>5698868843196465579</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>5</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>POINT Z (0 0 0)</td>
+      <td>24.0</td>
+      <td>0.0</td>
+      <td>8.0</td>
+      <td>16.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>4.2074</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>0.001729</td>
+      <td>NaN</td>
+      <td>-3.333333e+32</td>
+      <td>-333333333.0</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>-333333333.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>-3.333333e+32</td>
+      <td>NaN</td>
+      <td>5.000000</td>
+      <td>5.000000</td>
+      <td>5.000000</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>NaN</td>
+      <td>4.527887</td>
+      <td>6.000000</td>
+      <td>0.0066</td>
+      <td>5.000000</td>
+      <td>0.0</td>
+      <td>5.000000</td>
+      <td>0.0</td>
+      <td>6.000000</td>
+      <td>6.000000</td>
+      <td>NaN</td>
+      <td>-3.333333e+32</td>
+      <td>16.30039</td>
+      <td>16.30039</td>
+      <td>NaN</td>
+      <td>1000.5</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>-3.333333e+32</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</section>
+<section id="Pressure-Comparison">
+<h1>Pressure Comparison<a class="headerlink" href="#Pressure-Comparison" title="Link to this heading"></a></h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def plot_geometry_pressure(df, valve_percentage, geom_col=&quot;geometry&quot;, p_col=&quot;P&quot;):
+    &quot;&quot;&quot;
+    Scatter plot of geometry points colored by P.
+    Adds numeric pressure labels and ONE centered text box.
+    &quot;&quot;&quot;
+
+    xs = [pt.x for pt in df[geom_col]]
+    ys = [pt.y for pt in df[geom_col]]
+    P = df[p_col]
+
+    plt.figure(figsize=(6, 5))
+    sc = plt.scatter(xs, ys, c=P, cmap=&quot;viridis&quot;, s=50)
+
+    for x, y, p in zip(xs, ys, P):
+        plt.annotate(
+            f&quot;{p:.2f}&quot;,
+            xy=(x, y),
+            xytext=(5, 5),               # Offset: 5 px right, 5 px up
+            textcoords=&quot;offset points&quot;,
+            fontsize=8,
+            ha=&quot;left&quot;,
+            va=&quot;bottom&quot;
+        )
+
+    # colorbar = legend
+    cbar = plt.colorbar(sc)
+    cbar.set_label(p_col)
+
+    plt.xlabel(&quot;x&quot;)
+    plt.ylabel(&quot;y&quot;)
+    plt.axis(&#39;off&#39;)
+    plt.title(f&quot;Node Pressure Visualization — Valve {valve_percentage}%&quot;)
+
+    # very rudimentary just for tutorial
+    plt.text(
+        0.5, 0.5,
+        f&quot;- Pipe -               - Valve -               - Pipe - &quot;,
+        transform=plt.gca().transAxes,   # use axes coordinates
+        fontsize=12,
+        color=&quot;black&quot;,
+        ha=&quot;center&quot;,
+        va=&quot;center&quot;,
+    )
+
+    plt.tight_layout()
+    plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plot_geometry_pressure(df=df_nodes_1, valve_percentage=&quot;100&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/tutorials_SIR3S_Model_Mantle_Tutorial055_Assets_ToolkitTutorial055_39_0.png" src="../../../_images/tutorials_SIR3S_Model_Mantle_Tutorial055_Assets_ToolkitTutorial055_39_0.png" />
+</div>
+</div>
+<p>Note that due to the simplicitiy of the model we consider, we will actually have some net outflow on the right most node.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plot_geometry_pressure(df=df_nodes_2, valve_percentage=&quot;0&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/tutorials_SIR3S_Model_Mantle_Tutorial055_Assets_ToolkitTutorial055_41_0.png" src="../../../_images/tutorials_SIR3S_Model_Mantle_Tutorial055_Assets_ToolkitTutorial055_41_0.png" />
+</div>
+</div>
+<p>Now the left and right part are completley decoupled as the valve is shut.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plot_geometry_pressure(df=df_nodes_3, valve_percentage=&quot;55&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/tutorials_SIR3S_Model_Mantle_Tutorial055_Assets_ToolkitTutorial055_43_0.png" src="../../../_images/tutorials_SIR3S_Model_Mantle_Tutorial055_Assets_ToolkitTutorial055_43_0.png" />
+</div>
+</div>
+<p>We can observe a large pressure drop across the valve than at 100 % opening.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.CloseModel(False)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+True
+</pre></div></div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025 - 2026 3S Consult GmbH.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
