@@ -486,6 +486,7 @@ Default: False.</p></li>
 <li><p><strong>element_type_col</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, adds a column indicating the element type.
 Useful when merging dataframes later.
 Default: False.</p></li>
+<li><p><strong>static_table_type_to_merge_with</strong> – WORK IN PROGRESS: Only works for nominal diameter tables (Nennweitentabellen): elementType=self.ObjectTypes.Pipe, static_table_type_to_merge_with=self.ObjectTypes.PipeTable. Adds properties from row of nominal diameter tables to pipe, that is referencing that row.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -604,10 +605,13 @@ and a dictionary of individual nominal diameter DataFrames.</p>
 <dd class="field-odd"><p><strong>element_type</strong> (<em>Enum</em>) – Static table element type whose row data should be extracted (eg. table_type=s3s.ObjectTypes.PipeTable).</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A tuple containing:
-- df_v: vertically concatenated DataFrame of all rows from all tables (needed for other functions)
-- dfs: dictionary mapping each table tk to its DataFrame
-- tks_of_static_table_type: list of table tks of the given type</p>
+<dd class="field-even"><p><p>A tuple containing:</p>
+<ul class="simple">
+<li><p>df_v: vertically concatenated DataFrame of all rows from all tables (needed for other functions)</p></li>
+<li><p>dfs: dictionary mapping each table tk to its DataFrame</p></li>
+<li><p>tks_of_static_table_type: list of table tks of the given type</p></li>
+</ul>
+</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Tuple[pd.DataFrame, Dict[Any, pd.DataFrame], List[Any]]</p>

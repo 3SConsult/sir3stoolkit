@@ -173,6 +173,7 @@
 <span class="sd">                                Useful when merging dataframes later.</span>
 <span class="sd">                                Default: False.</span>
 <span class="sd">        :type element_type_col: bool, optional</span>
+<span class="sd">        :param static_table_type_to_merge_with: WORK IN PROGRESS: Only works for nominal diameter tables (Nennweitentabellen): elementType=self.ObjectTypes.Pipe, static_table_type_to_merge_with=self.ObjectTypes.PipeTable. Adds properties from row of nominal diameter tables to pipe, that is referencing that row.</span>
 
 <span class="sd">        :return: DataFrame (or GeoDataFrame) with one row per device (tk) and columns for the requested model data properties,  </span>
 <span class="sd">                geometry and end nodes.  </span>
@@ -279,13 +280,17 @@
 
         <span class="c1"># --- Post Processing: merge static table ---</span>
         <span class="k">if</span> <span class="n">static_table_type_to_merge_with</span><span class="p">:</span>
-            <span class="n">df_v</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_dataframes_from_static_table_type</span><span class="p">(</span><span class="n">table_type</span><span class="o">=</span><span class="n">static_table_type_to_merge_with</span><span class="p">)</span>
-            <span class="n">join_key</span> <span class="o">=</span> <span class="s2">&quot;tk_merge&quot;</span>
-            <span class="n">df_v</span> <span class="o">=</span> <span class="n">df_v</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span>
-                <span class="n">col</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">static_table_type_to_merge_with</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s2">&quot;</span>
-                <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df_v</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">col</span> <span class="o">!=</span> <span class="n">join_key</span>
-            <span class="p">})</span>
-            <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df_v</span><span class="p">,</span> <span class="n">left_on</span><span class="o">=</span><span class="s2">&quot;FkdtroRowd&quot;</span><span class="p">,</span> <span class="n">right_on</span><span class="o">=</span><span class="n">join_key</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">element_type</span><span class="o">.</span><span class="n">name</span> <span class="o">!=</span> <span class="s2">&quot;Pipe&quot;</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[model_data] static_table_type_to_merge_with param can currently only be used for element_type=self.ObjectTypes.Pipe. Nothing is done.&quot;</span><span class="p">)</span>
+                <span class="k">pass</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">df_v</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_dataframes_from_nominal_diameter_tables</span><span class="p">(</span><span class="n">table_type</span><span class="o">=</span><span class="n">static_table_type_to_merge_with</span><span class="p">)</span>
+                <span class="n">join_key</span> <span class="o">=</span> <span class="s2">&quot;tk_merge&quot;</span>
+                <span class="n">df_v</span> <span class="o">=</span> <span class="n">df_v</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span>
+                    <span class="n">col</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">static_table_type_to_merge_with</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df_v</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">col</span> <span class="o">!=</span> <span class="n">join_key</span>
+                <span class="p">})</span>
+                <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df_v</span><span class="p">,</span> <span class="n">left_on</span><span class="o">=</span><span class="s2">&quot;FkdtroRowd&quot;</span><span class="p">,</span> <span class="n">right_on</span><span class="o">=</span><span class="n">join_key</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">)</span>
 
         <span class="c1"># --- Post Processing: data types ---</span>
         <span class="n">re_int</span>       <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^[+-]?\d+$&quot;</span><span class="p">)</span>        <span class="c1"># 13</span>
@@ -1379,9 +1384,13 @@
 <span class="sd">        :type element_type: Enum</span>
 
 <span class="sd">        :return: A tuple containing:</span>
+
 <span class="sd">                - df_v: vertically concatenated DataFrame of all rows from all tables (needed for other functions)</span>
+
 <span class="sd">                - dfs: dictionary mapping each table tk to its DataFrame</span>
+
 <span class="sd">                - tks_of_static_table_type: list of table tks of the given type</span>
+
 <span class="sd">        :rtype: Tuple[pd.DataFrame, Dict[Any, pd.DataFrame], List[Any]]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
