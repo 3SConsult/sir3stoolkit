@@ -67,6 +67,15 @@ Below the release history with all changes is given in detail.
 SIR 3S: 90-15-00-24-Upd2
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
+Version 90.15.17
+""""""""""""""""
+
+Changes
+~~~~~~~
+
+- dataframes.py:
+   - new function: get_dataframes_from_nominal_diameter_tables()
+
 Version 90.15.16
 """"""""""""""""
 

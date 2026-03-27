@@ -1,0 +1,964 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tutorial 56: Nominal Diameter Tables &mdash; sir3stoolkit  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=9c3e77be" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/nbsphinx-code-cells.css?v=2aa19091" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=f281be69"></script>
+      <script>let toggleHintShow = 'Click to show';</script>
+      <script>let toggleHintHide = 'Click to hide';</script>
+      <script>let toggleOpenOnPrint = 'true';</script>
+      <script src="../../../_static/togglebutton.js?v=1ae7504c"></script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            sir3stoolkit
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../releases.html">Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developers.html">For Developers</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">sir3stoolkit</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Tutorial 56: Nominal Diameter Tables</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/tutorials/SIR3S_Model_Mantle/Tutorial056_Assets/ToolkitTutorial056.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="Tutorial-56:-Nominal-Diameter-Tables">
+<h1>Tutorial 56: Nominal Diameter Tables<a class="headerlink" href="#Tutorial-56:-Nominal-Diameter-Tables" title="Link to this heading"></a></h1>
+<section id="SIR-3S-Toolkit">
+<h2>SIR 3S Toolkit<a class="headerlink" href="#SIR-3S-Toolkit" title="Link to this heading"></a></h2>
+<section id="Regular-Import/Init">
+<h3>Regular Import/Init<a class="headerlink" href="#Regular-Import/Init" title="Link to this heading"></a></h3>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r&quot;C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2&quot; #change to local path
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sir3stoolkit.core import wrapper
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>wrapper
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;module &#39;sir3stoolkit.core.wrapper&#39; from &#39;C:\\Users\\aUsername\\3S\\sir3stoolkit\\src\\sir3stoolkit\\core\\wrapper.py&#39;&gt;
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>wrapper.Initialize_Toolkit(SIR3S_SIRGRAF_DIR)
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Additional-Import/Init-for-Dataframes-class">
+<h3>Additional Import/Init for Dataframes class<a class="headerlink" href="#Additional-Import/Init-for-Dataframes-class" title="Link to this heading"></a></h3>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sir3stoolkit.mantle.dataframes import SIR3S_Model_Dataframes
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s = SIR3S_Model_Dataframes()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Initialization complete
+</pre></div></div>
+</div>
+</section>
+</section>
+<section id="Additional">
+<h2>Additional<a class="headerlink" href="#Additional" title="Link to this heading"></a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
+from shapely.geometry import Point
+import re
+import folium
+from folium.plugins import HeatMap
+import numpy as np
+import geopandas as gpd
+from shapely import wkt
+import matplotlib.pyplot as plt
+import contextily as cx
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+<section id="Open-Model">
+<h1>Open Model<a class="headerlink" href="#Open-Model" title="Link to this heading"></a></h1>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.OpenModel(dbName=r&quot;../Tutorial051_Assets/Toolkit_Tutorial51_Model.db3&quot;,
+              providerType=s3s.ProviderTypes.SQLite,
+              Mid=&quot;M-1-0-1&quot;,
+              saveCurrentlyOpenModel=False,
+              namedInstance=&quot;&quot;,
+              userID=&quot;&quot;,
+              password=&quot;&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Model is open for further operation
+</pre></div></div>
+</div>
+</section>
+<section id="View-Nominal-Diameter-Tables">
+<h1>View Nominal Diameter Tables<a class="headerlink" href="#View-Nominal-Diameter-Tables" title="Link to this heading"></a></h1>
+<p>We can use the function <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.get_dataframes_from_nominal_diameter_tables">get_dataframes_from_nominal_diameter_tables()</a> to obtain a dictionary of all nominal diameter tables.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>_, dfs, tks = s3s.get_dataframes_from_nominal_diameter_tables(table_type=s3s.ObjectTypes.PipeTable)
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for id, tk in enumerate(tks):
+    print(f&quot;{id}: {tk}: {s3s.GetValue(tk, &#39;Name&#39;)[0]}&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+0: 4929824488020291605: STDROHR
+1: 4862079620528720750: FLEXWELL-F
+2: 5157457566256524875: STDROHR_2
+3: 4927972999088213410: KMR
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetPropertiesofElementType(s3s.ObjectTypes.PipeTable_Row)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;Name&#39;,
+ &#39;Fk&#39;,
+ &#39;Dn&#39;,
+ &#39;Di&#39;,
+ &#39;Da&#39;,
+ &#39;S&#39;,
+ &#39;Wsteig&#39;,
+ &#39;Wtiefe&#39;,
+ &#39;Kt&#39;,
+ &#39;Pn&#39;,
+ &#39;Ausfallzeit&#39;,
+ &#39;Reparatur&#39;,
+ &#39;Rehabilitation&#39;,
+ &#39;Tk&#39;,
+ &#39;Pk&#39;,
+ &#39;InVariant&#39;]
+</pre></div></div>
+</div>
+<section id="STDROHR">
+<h2>STDROHR<a class="headerlink" href="#STDROHR" title="Link to this heading"></a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dfs[tks[0]].head(3)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>tk_merge</th>
+      <th>Name</th>
+      <th>Fk</th>
+      <th>Dn</th>
+      <th>Di</th>
+      <th>Da</th>
+      <th>S</th>
+      <th>Wsteig</th>
+      <th>Wtiefe</th>
+      <th>Kt</th>
+      <th>Pn</th>
+      <th>Ausfallzeit</th>
+      <th>Reparatur</th>
+      <th>Rehabilitation</th>
+      <th>Tk</th>
+      <th>Pk</th>
+      <th>InVariant</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>5515865002497708428</td>
+      <td>DN 3</td>
+      <td>4929824488020291605</td>
+      <td>3</td>
+      <td>3</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>5515865002497708428</td>
+      <td>5515865002497708428</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>5623248152587240406</td>
+      <td>DN 4</td>
+      <td>4929824488020291605</td>
+      <td>4</td>
+      <td>4</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>5623248152587240406</td>
+      <td>5623248152587240406</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>5195383577550917235</td>
+      <td>DN 5</td>
+      <td>4929824488020291605</td>
+      <td>5</td>
+      <td>5</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>5195383577550917235</td>
+      <td>5195383577550917235</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</section>
+<section id="KMR">
+<h2>KMR<a class="headerlink" href="#KMR" title="Link to this heading"></a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dfs[tks[3]].head(3)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>tk_merge</th>
+      <th>Name</th>
+      <th>Fk</th>
+      <th>Dn</th>
+      <th>Di</th>
+      <th>Da</th>
+      <th>S</th>
+      <th>Wsteig</th>
+      <th>Wtiefe</th>
+      <th>Kt</th>
+      <th>Pn</th>
+      <th>Ausfallzeit</th>
+      <th>Reparatur</th>
+      <th>Rehabilitation</th>
+      <th>Tk</th>
+      <th>Pk</th>
+      <th>InVariant</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>5636244102636904922</td>
+      <td>DN 25</td>
+      <td>4927972999088213410</td>
+      <td>25</td>
+      <td>22,3</td>
+      <td>26,9</td>
+      <td>2,3</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0,19</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>100</td>
+      <td>5636244102636904922</td>
+      <td>5636244102636904922</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4845758090437917162</td>
+      <td>DN 32</td>
+      <td>4927972999088213410</td>
+      <td>32</td>
+      <td>28,5</td>
+      <td>33,7</td>
+      <td>2,6</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0,195</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>200</td>
+      <td>4845758090437917162</td>
+      <td>4845758090437917162</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>5728256818453294508</td>
+      <td>DN 50</td>
+      <td>4927972999088213410</td>
+      <td>50</td>
+      <td>54,5</td>
+      <td>60,3</td>
+      <td>2,9</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0,225</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>300</td>
+      <td>5728256818453294508</td>
+      <td>5728256818453294508</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</section>
+</section>
+<section id="df-pipes">
+<h1>df pipes<a class="headerlink" href="#df-pipes" title="Link to this heading"></a></h1>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes = s3s.generate_element_model_data_dataframe(element_type=s3s.ObjectTypes.Pipe, static_table_type_to_merge_with=s3s.ObjectTypes.PipeTable)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+[2026-03-27 12:05:57,156] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.Pipe
+[2026-03-27 12:05:57,158] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2026-03-27 12:05:57,175] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] No properties given → using ALL model_data properties for ObjectTypes.Pipe.
+[2026-03-27 12:05:57,175] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 46 model_data properties.
+[2026-03-27 12:05:57,176] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving model_data properties [&#39;Name&#39;, &#39;FkdtroRowd&#39;, &#39;Fkltgr&#39;, &#39;Fkstrasse&#39;, &#39;L&#39;, &#39;Lzu&#39;, &#39;Rau&#39;, &#39;Jlambs&#39;, &#39;Lambda0&#39;, &#39;Zein&#39;, &#39;Zaus&#39;, &#39;Zuml&#39;, &#39;Asoll&#39;, &#39;Indschall&#39;, &#39;Baujahr&#39;, &#39;Hal&#39;, &#39;Fkcont&#39;, &#39;Fk2lrohr&#39;, &#39;Beschreibung&#39;, &#39;Idreferenz&#39;, &#39;Iplanung&#39;, &#39;Kvr&#39;, &#39;LineWidthMM&#39;, &#39;DottedLine&#39;, &#39;DN&#39;, &#39;Di&#39;, &#39;KvrKlartext&#39;, &#39;HasClosedNSCHs&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;, &#39;Xkor&#39;, &#39;Ykor&#39;, &#39;GeometriesDiffer&#39;, &#39;bz.Fk&#39;, &#39;bz.Qsvb&#39;, &#39;bz.Irtrenn&#39;, &#39;bz.Leckstatus&#39;, &#39;bz.Leckstart&#39;, &#39;bz.Leckend&#39;, &#39;bz.Leckort&#39;, &#39;bz.Leckmenge&#39;, &#39;bz.Imptnz&#39;, &#39;bz.Zvlimptnz&#39;, &#39;bz.Kantenzv&#39;, &#39;bz.ITrennWithNSCH&#39;]...
+[2026-03-27 12:05:58,980] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (524, 64)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes.head(3)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>tk</th>
+      <th>Name</th>
+      <th>FkdtroRowd</th>
+      <th>Fkltgr</th>
+      <th>Fkstrasse</th>
+      <th>L</th>
+      <th>Lzu</th>
+      <th>Rau</th>
+      <th>Jlambs</th>
+      <th>Lambda0</th>
+      <th>Zein</th>
+      <th>Zaus</th>
+      <th>Zuml</th>
+      <th>Asoll</th>
+      <th>Indschall</th>
+      <th>Baujahr</th>
+      <th>Hal</th>
+      <th>Fkcont</th>
+      <th>Fk2lrohr</th>
+      <th>Beschreibung</th>
+      <th>Idreferenz</th>
+      <th>Iplanung</th>
+      <th>Kvr</th>
+      <th>LineWidthMM</th>
+      <th>DottedLine</th>
+      <th>DN</th>
+      <th>Di</th>
+      <th>KvrKlartext</th>
+      <th>HasClosedNSCHs</th>
+      <th>Tk</th>
+      <th>Pk</th>
+      <th>InVariant</th>
+      <th>Xkor</th>
+      <th>Ykor</th>
+      <th>GeometriesDiffer</th>
+      <th>bz.Fk</th>
+      <th>bz.Qsvb</th>
+      <th>bz.Irtrenn</th>
+      <th>bz.Leckstatus</th>
+      <th>bz.Leckstart</th>
+      <th>bz.Leckend</th>
+      <th>bz.Leckort</th>
+      <th>bz.Leckmenge</th>
+      <th>bz.Imptnz</th>
+      <th>bz.Zvlimptnz</th>
+      <th>bz.Kantenzv</th>
+      <th>bz.ITrennWithNSCH</th>
+      <th>tk_merge</th>
+      <th>PipeTable: Name</th>
+      <th>PipeTable: Fk</th>
+      <th>PipeTable: Dn</th>
+      <th>PipeTable: Di</th>
+      <th>PipeTable: Da</th>
+      <th>PipeTable: S</th>
+      <th>PipeTable: Wsteig</th>
+      <th>PipeTable: Wtiefe</th>
+      <th>PipeTable: Kt</th>
+      <th>PipeTable: Pn</th>
+      <th>PipeTable: Ausfallzeit</th>
+      <th>PipeTable: Reparatur</th>
+      <th>PipeTable: Rehabilitation</th>
+      <th>PipeTable: Tk</th>
+      <th>PipeTable: Pk</th>
+      <th>PipeTable: InVariant</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>5442010239090746007</td>
+      <td>Rohr V-K03S V-K13S</td>
+      <td>4684070986837856878</td>
+      <td>4779752876656844188</td>
+      <td>5644881417512616095</td>
+      <td>36.42935</td>
+      <td>0</td>
+      <td>0.05</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1000</td>
+      <td>0</td>
+      <td></td>
+      <td>0</td>
+      <td>5029128874972463118</td>
+      <td>4819753480904838964</td>
+      <td>OSM: Knoten 264607345 -&gt; Knoten 476971289; Län...</td>
+      <td>24386111</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0.005</td>
+      <td>0</td>
+      <td>150</td>
+      <td>160.3</td>
+      <td>Vorlauf</td>
+      <td></td>
+      <td>5442010239090746007</td>
+      <td>5442010239090746007</td>
+      <td>False</td>
+      <td>713620.267807</td>
+      <td>5.578828e+06</td>
+      <td>False</td>
+      <td>5442010239090746007</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>4684070986837856878</td>
+      <td>DN 150</td>
+      <td>4927972999088213410</td>
+      <td>150</td>
+      <td>160.3</td>
+      <td>168.3</td>
+      <td>4.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0.450</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>900</td>
+      <td>4684070986837856878</td>
+      <td>4684070986837856878</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4917786378639043296</td>
+      <td>Rohr V-K13S V-K23S</td>
+      <td>5103141232976878720</td>
+      <td>4779752876656844188</td>
+      <td>5644881417512616095</td>
+      <td>57.21781</td>
+      <td>0</td>
+      <td>0.05</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1000</td>
+      <td>0</td>
+      <td></td>
+      <td>0</td>
+      <td>5029128874972463118</td>
+      <td>4777543161401667328</td>
+      <td>OSM: Knoten 476971289 -&gt; Knoten 476971283; Län...</td>
+      <td>24386111</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0.005</td>
+      <td>0</td>
+      <td>125</td>
+      <td>131.7</td>
+      <td>Vorlauf</td>
+      <td></td>
+      <td>4917786378639043296</td>
+      <td>4917786378639043296</td>
+      <td>False</td>
+      <td>713602.294600</td>
+      <td>5.578860e+06</td>
+      <td>False</td>
+      <td>4917786378639043296</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>5103141232976878720</td>
+      <td>DN 125</td>
+      <td>4927972999088213410</td>
+      <td>125</td>
+      <td>131.7</td>
+      <td>139.7</td>
+      <td>4.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0.375</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>800</td>
+      <td>5103141232976878720</td>
+      <td>5103141232976878720</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4762482310382009633</td>
+      <td>Rohr V-K23S V-K33S</td>
+      <td>5103141232976878720</td>
+      <td>4779752876656844188</td>
+      <td>5644881417512616095</td>
+      <td>40.99482</td>
+      <td>0</td>
+      <td>0.05</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1000</td>
+      <td>0</td>
+      <td></td>
+      <td>0</td>
+      <td>5029128874972463118</td>
+      <td>4893758407691905968</td>
+      <td>OSM: Knoten 476971283 -&gt; Knoten 264607348; Län...</td>
+      <td>24386111</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0.005</td>
+      <td>0</td>
+      <td>125</td>
+      <td>131.7</td>
+      <td>Vorlauf</td>
+      <td></td>
+      <td>4762482310382009633</td>
+      <td>4762482310382009633</td>
+      <td>False</td>
+      <td>713574.061627</td>
+      <td>5.578910e+06</td>
+      <td>False</td>
+      <td>4762482310382009633</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>5103141232976878720</td>
+      <td>DN 125</td>
+      <td>4927972999088213410</td>
+      <td>125</td>
+      <td>131.7</td>
+      <td>139.7</td>
+      <td>4.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0.375</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>800</td>
+      <td>5103141232976878720</td>
+      <td>5103141232976878720</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes[[&quot;tk&quot;, &quot;Name&quot;, &quot;PipeTable: Kt&quot;]].head(3)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>tk</th>
+      <th>Name</th>
+      <th>PipeTable: Kt</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>5442010239090746007</td>
+      <td>Rohr V-K03S V-K13S</td>
+      <td>0.450</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4917786378639043296</td>
+      <td>Rohr V-K13S V-K23S</td>
+      <td>0.375</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4762482310382009633</td>
+      <td>Rohr V-K23S V-K33S</td>
+      <td>0.375</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>object_types = [item for item in dir(s3s.ObjectTypes) if not (item.startswith(&#39;__&#39;) and item.endswith(&#39;__&#39;)) and &quot;Table&quot; in item and not &quot;Row&quot; in item]
+list = [&quot;VarPressureTable&quot;, &quot;VarFlowTable&quot;, &quot;ValveLiftTable&quot;, &quot;PumpSpeedTable&quot;, &quot;MeasuredVariableTable&quot;, &quot;LoadFactorTable&quot;, &quot;ThermalOutputTable&quot;, &quot;TemperatureTable&quot;]
+object_types2 = set(object_types) - set(list)
+object_types2
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;CharacteristicLossTable&#39;,
+ &#39;CompressorTable&#39;,
+ &#39;ControlPointTable&#39;,
+ &#39;CrossSectionTable&#39;,
+ &#39;DamageRatesTable&#39;,
+ &#39;DriveEfficiencyTable&#39;,
+ &#39;DrivePowerTable&#39;,
+ &#39;EfficiencyConverterTable&#39;,
+ &#39;EnergyRecoveryTable&#39;,
+ &#39;FunctionTable&#39;,
+ &#39;NonReturnValvesTable&#39;,
+ &#39;PipeTable&#39;,
+ &#39;PumpCharTable&#39;,
+ &#39;RegulatorsTable&#39;,
+ &#39;ReturnTemperaturTable&#39;,
+ &#39;ThermophysPropTable&#39;,
+ &#39;VentOpenCloseTable&#39;,
+ &#39;WeatherDataTable&#39;}
+</pre></div></div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025 - 2026 3S Consult GmbH.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
