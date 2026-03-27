@@ -54,7 +54,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         geometry: Optional[bool] = False,
         end_nodes: Optional[bool] = False,
         element_type_col: Optional[bool] = False,
-        static_table_type_to_merge_with: Optional[Enum] = None
+        resolve_references: Optional[bool] = False
     ) -> pd.DataFrame | gpd.GeoDataFrame:
 
         """
@@ -83,8 +83,10 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
                                 Useful when merging dataframes later.
                                 Default: False.
         :type element_type_col: bool, optional
-        :param static_table_type_to_merge_with: WORK IN PROGRESS: Only works for nominal diameter tables (Nennweitentabellen): elementType=self.ObjectTypes.Pipe, static_table_type_to_merge_with=self.ObjectTypes.PipeTable. Adds properties from row of nominal diameter tables to pipe, that is referencing that row.
-
+        :param resolve_references: Determine whether references to tables such as Nominal Diameter Tables (Nennweitentabelle) should be resolved or left just as a reference. WORK IN PROGRESS. Works just for Nominal Diameter Tables for Pipes.
+                        Default:  False
+        :type resolve_references: bool, optional
+        
         :return: DataFrame (or GeoDataFrame) with one row per device (tk) and columns for the requested model data properties,  
                 geometry and end nodes.  
                 Columns: ["tk", <model_data_props>]
@@ -188,19 +190,16 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         # --- Dataframe creation ---
         df = pd.DataFrame(rows)
 
-        # --- Post Processing: merge static table ---
-        if static_table_type_to_merge_with:
-            if element_type.name != "Pipe":
-                logger.warning(f"[model_data] static_table_type_to_merge_with param can currently only be used for element_type=self.ObjectTypes.Pipe. Nothing is done.")
-                pass
-            else:
-                df_v, _, _ = self.get_dataframes_from_nominal_diameter_tables(table_type=static_table_type_to_merge_with)
-                join_key = "tk_merge"
-                df_v = df_v.rename(columns={
-                    col: f"{static_table_type_to_merge_with.name}: {col}"
-                    for col in df_v.columns if col != join_key
-                })
-                df = df.merge(df_v, left_on="FkdtroRowd", right_on=join_key, how="left")
+        # --- WORK IN PROGRESS: Post Processing: resolve refernces to tables ---
+        if element_type.name == "Pipe" and resolve_references:
+            df_v, _, _ = self.get_dataframes_from_nominal_diameter_tables()
+            join_key = "tk_merge"
+            df_v = df_v.rename(columns={
+                col: f"PipeTable: {col}"
+                for col in df_v.columns if col != join_key
+            })
+            df = df.merge(df_v, left_on="FkdtroRowd", right_on=join_key, how="left")
+            df = df.drop(columns=["tk_merge"])
 
         # --- Post Processing: data types ---
         re_int       = re.compile(r"^[+-]?\d+$")        # 13
@@ -480,6 +479,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
                                                                 ,geometry=True
                                                                 ,end_nodes=self.__is_get_endnodes_applicable(element_type)
                                                                 ,element_type_col=False
+                                                                ,resolve_references=True
             )
             if df_model_data.empty:
                 logger.error(f"[generate_element_dataframe] Obtained model dataframe is empty.")
@@ -1256,8 +1256,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
     ## Dataframe Operations: Time/Static Tables
 
     def get_dataframes_from_nominal_diameter_tables(
-        self,
-        table_type: Enum
+        self
         ) -> pd.DataFrame:
         """
         Retrieve and assemble row-wise property data for all nominal diameter tables, returning both a vertically concatenated DataFrame
@@ -1272,24 +1271,27 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
 
                 - dfs: dictionary mapping each table tk to its DataFrame
 
-                - tks_of_static_table_type: list of table tks of the given type
+                - tks_of_nominal_diameter_table: list of table tks of the given type
 
         :rtype: Tuple[pd.DataFrame, Dict[Any, pd.DataFrame], List[Any]]
         """
 
         # --- Obtain all rows from all table of given type ---
-        tks_of_static_table_type = self.GetTksofElementType(table_type)
-        properties_rows=self.GetPropertiesofElementType(self.ObjectTypes[f"{table_type.name}_Row"])
+        tks_of_nominal_diameter_table = self.GetTksofElementType(self.ObjectTypes.PipeTable)
+        properties_rows=self.GetPropertiesofElementType(self.ObjectTypes.PipeTable_Row)
         dfs = {}
-        for table_tk in tks_of_static_table_type:
+        for table_tk in tks_of_nominal_diameter_table:
             rows = self.GetTableRows(tablePkTk=table_tk)
             row_tks = list(rows[0])
+            table_name = self.GetValue(Tk=table_tk, propertyName="Name")[0]
             data = {
                 tk: {prop: self.GetValue(tk, prop)[0] for prop in properties_rows}
                 for tk in row_tks
             }
             df = pd.DataFrame.from_dict(data, orient='index')
-            df = df.reset_index(names="tk_merge") # needed for generate_element_model_data_dataframe()
+            df.insert(0, "Table Name", table_name)
+            df = df.reset_index(names="tk_merge") 
+
             dfs[table_tk] = df
 
         # --- Obtain data and Build df ---
@@ -1298,11 +1300,9 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
             df_v = pd.concat(dfs, axis=0, ignore_index=True, join="outer")
             df_v = df_v.sort_index(ascending=True)
         else:
-            df_v = dfs[tks_of_static_table_type[0]]
+            df_v = dfs[tks_of_nominal_diameter_table[0]]
 
-        df = pd.DataFrame.from_dict(data, orient='index')
-
-        return (df_v, dfs, tks_of_static_table_type)
+        return (df_v, dfs, tks_of_nominal_diameter_table)
 
     def insert_dataframe_into_time_table(
         self,
@@ -1427,10 +1427,13 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
 
                 - df_h: 
                     The joint DataFrame. If multiple tables are found, this is a column-wise concatenation (``axis=1``, ``join='outer'``) of all per-TK DataFrames with the index sorted ascending. If only one table exists, it is returned directly.
+                
                 - dfs: 
                     A dictionary mapping each TK to its corresponding DataFrame (key: TK, value: DataFrame).
+                
                 - tks_of_time_table_type: 
                     The list of TKs for the requested time table type, in the order returned by ``GetTksofElementType``.
+        
         :rtype: tuple[pd.DataFrame, dict[Any, pd.DataFrame], list[Any]]
         """
         logger.info(f"[get dataframes from time table type] ...")

@@ -33,6 +33,8 @@ Below an overview over all Toolkit Versions for SIR 3S 90-15 Quebec is given. It
 +----------------+---------------------------+-------------+--------------+
 | Toolkit Version| SIR 3S Version            | dll changed | Release Date |
 +================+===========================+=============+==============+
+| 90.15.17       | 90-15-00-24-Upd2          | No          | 2026-03-27   |
++----------------+---------------------------+-------------+--------------+
 | 90.15.16       | 90-15-00-24-Upd2          | No          | 2026-03-15   |
 +----------------+---------------------------+-------------+--------------+
 | 90.15.15       | 90-15-00-23-Upd2          | Yes         | 2026-03-03   |
@@ -75,7 +77,8 @@ Changes
 
 - dataframes.py:
    - new function: get_dataframes_from_nominal_diameter_tables()
-
+   - generate_element_model_data_dataframe() new param: resolve_references: Determine whether references to tables such as Nominal Diameter Tables (Nennweitentabelle) should be resolved or left just as a reference. WORK IN PROGRESS. Works just for Nominal Diameter Tables for Pipes.
+                     
 Version 90.15.16
 """"""""""""""""
 
