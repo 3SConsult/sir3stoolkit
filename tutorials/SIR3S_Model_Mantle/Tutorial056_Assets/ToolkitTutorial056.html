@@ -190,7 +190,7 @@ import contextily as cx
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.OpenModel(dbName=r&quot;../Tutorial051_Assets/Toolkit_Tutorial51_Model.db3&quot;,
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.OpenModel(dbName=r&quot;Toolkit_Tutorial56_Model.db3&quot;,
               providerType=s3s.ProviderTypes.SQLite,
               Mid=&quot;M-1-0-1&quot;,
               saveCurrentlyOpenModel=False,
@@ -213,15 +213,15 @@ Model is open for further operation
 <h1>View Nominal Diameter Tables<a class="headerlink" href="#View-Nominal-Diameter-Tables" title="Link to this heading"></a></h1>
 <p>We can use the function <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.get_dataframes_from_nominal_diameter_tables">get_dataframes_from_nominal_diameter_tables()</a> to obtain a dictionary of all nominal diameter tables.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>_, dfs, tks = s3s.get_dataframes_from_nominal_diameter_tables(table_type=s3s.ObjectTypes.PipeTable)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>_, dfs, tks = s3s.get_dataframes_from_nominal_diameter_tables()
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for id, tk in enumerate(tks):
@@ -240,42 +240,11 @@ Model is open for further operation
 3: 4927972999088213410: KMR
 </pre></div></div>
 </div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetPropertiesofElementType(s3s.ObjectTypes.PipeTable_Row)
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-[&#39;Name&#39;,
- &#39;Fk&#39;,
- &#39;Dn&#39;,
- &#39;Di&#39;,
- &#39;Da&#39;,
- &#39;S&#39;,
- &#39;Wsteig&#39;,
- &#39;Wtiefe&#39;,
- &#39;Kt&#39;,
- &#39;Pn&#39;,
- &#39;Ausfallzeit&#39;,
- &#39;Reparatur&#39;,
- &#39;Rehabilitation&#39;,
- &#39;Tk&#39;,
- &#39;Pk&#39;,
- &#39;InVariant&#39;]
-</pre></div></div>
-</div>
+<p>Now we can view the individual nominal diameter tables.</p>
 <section id="STDROHR">
 <h2>STDROHR<a class="headerlink" href="#STDROHR" title="Link to this heading"></a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dfs[tks[0]].head(3)
@@ -283,7 +252,7 @@ Model is open for further operation
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -306,6 +275,7 @@ Model is open for further operation
     <tr style="text-align: right;">
       <th></th>
       <th>tk_merge</th>
+      <th>Table Name</th>
       <th>Name</th>
       <th>Fk</th>
       <th>Dn</th>
@@ -328,6 +298,7 @@ Model is open for further operation
     <tr>
       <th>0</th>
       <td>5515865002497708428</td>
+      <td>STDROHR</td>
       <td>DN 3</td>
       <td>4929824488020291605</td>
       <td>3</td>
@@ -348,6 +319,7 @@ Model is open for further operation
     <tr>
       <th>1</th>
       <td>5623248152587240406</td>
+      <td>STDROHR</td>
       <td>DN 4</td>
       <td>4929824488020291605</td>
       <td>4</td>
@@ -368,6 +340,7 @@ Model is open for further operation
     <tr>
       <th>2</th>
       <td>5195383577550917235</td>
+      <td>STDROHR</td>
       <td>DN 5</td>
       <td>4929824488020291605</td>
       <td>5</td>
@@ -393,7 +366,7 @@ Model is open for further operation
 <section id="KMR">
 <h2>KMR<a class="headerlink" href="#KMR" title="Link to this heading"></a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dfs[tks[3]].head(3)
@@ -401,7 +374,7 @@ Model is open for further operation
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -424,6 +397,7 @@ Model is open for further operation
     <tr style="text-align: right;">
       <th></th>
       <th>tk_merge</th>
+      <th>Table Name</th>
       <th>Name</th>
       <th>Fk</th>
       <th>Dn</th>
@@ -446,6 +420,7 @@ Model is open for further operation
     <tr>
       <th>0</th>
       <td>5636244102636904922</td>
+      <td>KMR</td>
       <td>DN 25</td>
       <td>4927972999088213410</td>
       <td>25</td>
@@ -466,6 +441,7 @@ Model is open for further operation
     <tr>
       <th>1</th>
       <td>4845758090437917162</td>
+      <td>KMR</td>
       <td>DN 32</td>
       <td>4927972999088213410</td>
       <td>32</td>
@@ -486,6 +462,7 @@ Model is open for further operation
     <tr>
       <th>2</th>
       <td>5728256818453294508</td>
+      <td>KMR</td>
       <td>DN 50</td>
       <td>4927972999088213410</td>
       <td>50</td>
@@ -511,11 +488,12 @@ Model is open for further operation
 </section>
 <section id="df-pipes">
 <h1>df pipes<a class="headerlink" href="#df-pipes" title="Link to this heading"></a></h1>
+<p>When creating a element dataframe of pipes, the nominal diameter table values will automatically be added with the prefix “PipeTable:”.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes = s3s.generate_element_model_data_dataframe(element_type=s3s.ObjectTypes.Pipe, static_table_type_to_merge_with=s3s.ObjectTypes.PipeTable)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes = s3s.generate_element_dataframe(element_type=s3s.ObjectTypes.Pipe)
 </pre></div>
 </div>
 </div>
@@ -524,16 +502,30 @@ Model is open for further operation
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2026-03-27 12:05:57,156] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.Pipe
-[2026-03-27 12:05:57,158] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
-[2026-03-27 12:05:57,175] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] No properties given → using ALL model_data properties for ObjectTypes.Pipe.
-[2026-03-27 12:05:57,175] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 46 model_data properties.
-[2026-03-27 12:05:57,176] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving model_data properties [&#39;Name&#39;, &#39;FkdtroRowd&#39;, &#39;Fkltgr&#39;, &#39;Fkstrasse&#39;, &#39;L&#39;, &#39;Lzu&#39;, &#39;Rau&#39;, &#39;Jlambs&#39;, &#39;Lambda0&#39;, &#39;Zein&#39;, &#39;Zaus&#39;, &#39;Zuml&#39;, &#39;Asoll&#39;, &#39;Indschall&#39;, &#39;Baujahr&#39;, &#39;Hal&#39;, &#39;Fkcont&#39;, &#39;Fk2lrohr&#39;, &#39;Beschreibung&#39;, &#39;Idreferenz&#39;, &#39;Iplanung&#39;, &#39;Kvr&#39;, &#39;LineWidthMM&#39;, &#39;DottedLine&#39;, &#39;DN&#39;, &#39;Di&#39;, &#39;KvrKlartext&#39;, &#39;HasClosedNSCHs&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;, &#39;Xkor&#39;, &#39;Ykor&#39;, &#39;GeometriesDiffer&#39;, &#39;bz.Fk&#39;, &#39;bz.Qsvb&#39;, &#39;bz.Irtrenn&#39;, &#39;bz.Leckstatus&#39;, &#39;bz.Leckstart&#39;, &#39;bz.Leckend&#39;, &#39;bz.Leckort&#39;, &#39;bz.Leckmenge&#39;, &#39;bz.Imptnz&#39;, &#39;bz.Zvlimptnz&#39;, &#39;bz.Kantenzv&#39;, &#39;bz.ITrennWithNSCH&#39;]...
-[2026-03-27 12:05:58,980] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (524, 64)
+[2026-03-27 18:30:38,411] INFO in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df for element type: ObjectTypes.Pipe ...
+[2026-03-27 18:30:38,414] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_model_data for element type: ObjectTypes.Pipe ...
+[2026-03-27 18:30:39,221] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.Pipe
+[2026-03-27 18:30:39,232] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2026-03-27 18:30:39,308] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] No properties given → using ALL model_data properties for ObjectTypes.Pipe.
+[2026-03-27 18:30:39,310] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 46 model_data properties.
+[2026-03-27 18:30:39,313] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving model_data properties [&#39;Name&#39;, &#39;FkdtroRowd&#39;, &#39;Fkltgr&#39;, &#39;Fkstrasse&#39;, &#39;L&#39;, &#39;Lzu&#39;, &#39;Rau&#39;, &#39;Jlambs&#39;, &#39;Lambda0&#39;, &#39;Zein&#39;, &#39;Zaus&#39;, &#39;Zuml&#39;, &#39;Asoll&#39;, &#39;Indschall&#39;, &#39;Baujahr&#39;, &#39;Hal&#39;, &#39;Fkcont&#39;, &#39;Fk2lrohr&#39;, &#39;Beschreibung&#39;, &#39;Idreferenz&#39;, &#39;Iplanung&#39;, &#39;Kvr&#39;, &#39;LineWidthMM&#39;, &#39;DottedLine&#39;, &#39;DN&#39;, &#39;Di&#39;, &#39;KvrKlartext&#39;, &#39;HasClosedNSCHs&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;, &#39;Xkor&#39;, &#39;Ykor&#39;, &#39;GeometriesDiffer&#39;, &#39;bz.Fk&#39;, &#39;bz.Qsvb&#39;, &#39;bz.Irtrenn&#39;, &#39;bz.Leckstatus&#39;, &#39;bz.Leckstart&#39;, &#39;bz.Leckend&#39;, &#39;bz.Leckort&#39;, &#39;bz.Leckmenge&#39;, &#39;bz.Imptnz&#39;, &#39;bz.Zvlimptnz&#39;, &#39;bz.Kantenzv&#39;, &#39;bz.ITrennWithNSCH&#39;], geometry, end nodes...
+[2026-03-27 18:30:45,561] INFO in sir3stoolkit.mantle.dataframes: [model_data] 2 non-empty end node columns were created.
+[2026-03-27 18:30:46,019] INFO in sir3stoolkit.mantle.dataframes: [model_data] Transforming DataFrame to GeoDataFrame successful with EPSG: 25832
+[2026-03-27 18:30:46,020] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (524, 67)
+[2026-03-27 18:30:46,141] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Generating df_results for element type: ObjectTypes.Pipe; at timestamp: 2023-02-13 00:00:00.000 +01:00 ...
+[2026-03-27 18:30:46,141] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Pipe
+[2026-03-27 18:30:46,271] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Only static timestamp 2023-02-13 00:00:00.000 +01:00 is used
+[2026-03-27 18:30:46,272] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 1 valid timestamp(s) will be used.
+[2026-03-27 18:30:46,276] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
+[2026-03-27 18:30:46,281] INFO in sir3stoolkit.mantle.dataframes: [results] Using 82 result properties.
+[2026-03-27 18:30:46,326] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
+[2026-03-27 18:30:56,801] INFO in sir3stoolkit.mantle.dataframes: [results] 26724 fully NaN columns dropped.
+[2026-03-27 18:31:00,716] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (1, 16244)
+[2026-03-27 18:31:00,723] DEBUG in sir3stoolkit.mantle.dataframes: [generate_element_dataframe] Merging df_model_data with df_results for element type: ObjectTypes.Pipe ...
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes.head(3)
@@ -541,7 +533,7 @@ Model is open for further operation
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -610,7 +602,10 @@ Model is open for further operation
       <th>bz.Zvlimptnz</th>
       <th>bz.Kantenzv</th>
       <th>bz.ITrennWithNSCH</th>
-      <th>tk_merge</th>
+      <th>geometry</th>
+      <th>fkKI</th>
+      <th>fkKK</th>
+      <th>PipeTable: Table Name</th>
       <th>PipeTable: Name</th>
       <th>PipeTable: Fk</th>
       <th>PipeTable: Dn</th>
@@ -627,17 +622,66 @@ Model is open for further operation
       <th>PipeTable: Tk</th>
       <th>PipeTable: Pk</th>
       <th>PipeTable: InVariant</th>
+      <th>A</th>
+      <th>DTTR</th>
+      <th>DWVERL</th>
+      <th>DWVERLABS</th>
+      <th>IAKTIV</th>
+      <th>IRTRENN</th>
+      <th>JV</th>
+      <th>MVEC_start</th>
+      <th>MVEC_end</th>
+      <th>MVEC_sequence</th>
+      <th>PDAMPF</th>
+      <th>PHR</th>
+      <th>PMIN</th>
+      <th>PVEC_start</th>
+      <th>PVEC_end</th>
+      <th>PVEC_sequence</th>
+      <th>PVECMAX_INST_start</th>
+      <th>PVECMAX_INST_end</th>
+      <th>PVECMAX_INST_sequence</th>
+      <th>PVECMIN_INST_start</th>
+      <th>PVECMIN_INST_end</th>
+      <th>PVECMIN_INST_sequence</th>
+      <th>QMAV</th>
+      <th>QMI</th>
+      <th>QMK</th>
+      <th>RHOI</th>
+      <th>RHOK</th>
+      <th>RHOVEC_start</th>
+      <th>RHOVEC_end</th>
+      <th>RHOVEC_sequence</th>
+      <th>SVEC_start</th>
+      <th>SVEC_end</th>
+      <th>SVEC_sequence</th>
+      <th>TI</th>
+      <th>TK</th>
+      <th>TTRVEC_start</th>
+      <th>TTRVEC_end</th>
+      <th>TTRVEC_sequence</th>
+      <th>TVEC_start</th>
+      <th>TVEC_end</th>
+      <th>TVEC_sequence</th>
+      <th>VAV</th>
+      <th>VI</th>
+      <th>VK</th>
+      <th>VOLDA</th>
+      <th>WVL</th>
+      <th>ZVEC_start</th>
+      <th>ZVEC_end</th>
+      <th>ZVEC_sequence</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>5442010239090746007</td>
-      <td>Rohr V-K03S V-K13S</td>
-      <td>4684070986837856878</td>
+      <td>4614463970292122863</td>
+      <td>Rohr R-K4383S R-K4183S</td>
+      <td>4689226368751411179</td>
       <td>4779752876656844188</td>
-      <td>5644881417512616095</td>
-      <td>36.42935</td>
+      <td>5431845028903382031</td>
+      <td>7.780674</td>
       <td>0</td>
       <td>0.05</td>
       <td>1</td>
@@ -650,24 +694,24 @@ Model is open for further operation
       <td></td>
       <td>0</td>
       <td>5029128874972463118</td>
-      <td>4819753480904838964</td>
-      <td>OSM: Knoten 264607345 -&gt; Knoten 476971289; Län...</td>
-      <td>24386111</td>
-      <td>0</td>
-      <td>1</td>
+      <td>4713734746689397424</td>
+      <td>OSM: Knoten 450994211 -&gt; Knoten 476971188; Län...</td>
+      <td>166815824</td>
+      <td>5</td>
+      <td>2</td>
       <td>0.005</td>
       <td>0</td>
-      <td>150</td>
-      <td>160.3</td>
-      <td>Vorlauf</td>
+      <td>999</td>
+      <td>994.0</td>
+      <td>Rücklauf</td>
       <td></td>
-      <td>5442010239090746007</td>
-      <td>5442010239090746007</td>
+      <td>4614463970292122863</td>
+      <td>4614463970292122863</td>
       <td>False</td>
-      <td>713620.267807</td>
-      <td>5.578828e+06</td>
+      <td>714262.482930</td>
+      <td>5.578857e+06</td>
       <td>False</td>
-      <td>5442010239090746007</td>
+      <td>4614463970292122863</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -679,32 +723,84 @@ Model is open for further operation
       <td>0</td>
       <td>0</td>
       <td>0</td>
-      <td>4684070986837856878</td>
-      <td>DN 150</td>
+      <td>LINESTRING (714262.483 5578857.42, 714269.543 ...</td>
+      <td>4730066059089961857</td>
+      <td>4917189080965035120</td>
+      <td>KMR</td>
+      <td>DN 999</td>
       <td>4927972999088213410</td>
-      <td>150</td>
-      <td>160.3</td>
-      <td>168.3</td>
-      <td>4.0</td>
+      <td>999</td>
+      <td>994.0</td>
+      <td>1014.0</td>
+      <td>10.0</td>
       <td>0</td>
       <td>0</td>
-      <td>0.450</td>
+      <td>1.212</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
-      <td>900</td>
-      <td>4684070986837856878</td>
-      <td>4684070986837856878</td>
+      <td>1950</td>
+      <td>4689226368751411179</td>
+      <td>4689226368751411179</td>
       <td>False</td>
+      <td>0.0</td>
+      <td>7.780674</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>5.748007e-10</td>
+      <td>5.748007e-10</td>
+      <td>(5.748007e-10, 5.748007e-10)</td>
+      <td>0.0123</td>
+      <td>0.0</td>
+      <td>1.615057</td>
+      <td>1.615055</td>
+      <td>1.68863</td>
+      <td>(1.615055, 1.68863)</td>
+      <td>1.615055</td>
+      <td>1.68863</td>
+      <td>(1.615055, 1.68863)</td>
+      <td>1.615055</td>
+      <td>1.68863</td>
+      <td>(1.615055, 1.68863)</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1000.3</td>
+      <td>1000.3</td>
+      <td>1000.3000</td>
+      <td>1000.3000</td>
+      <td>(1000.3, 1000.3)</td>
+      <td>0.0</td>
+      <td>7.780674</td>
+      <td>(0.0, 7.780674)</td>
+      <td>9.999994</td>
+      <td>9.999994</td>
+      <td>166.698300</td>
+      <td>174.479000</td>
+      <td>(166.6983, 174.479)</td>
+      <td>10.0000</td>
+      <td>10.000</td>
+      <td>(10.0, 10.0)</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>545.09</td>
+      <td>544.34</td>
+      <td>(545.09, 544.34)</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>4917786378639043296</td>
-      <td>Rohr V-K13S V-K23S</td>
-      <td>5103141232976878720</td>
+      <td>4615723899944629797</td>
+      <td>Rohr V-K203S V-K213S</td>
+      <td>4689226368751411179</td>
       <td>4779752876656844188</td>
-      <td>5644881417512616095</td>
-      <td>57.21781</td>
+      <td>5728726059620036726</td>
+      <td>64.287240</td>
       <td>0</td>
       <td>0.05</td>
       <td>1</td>
@@ -717,24 +813,24 @@ Model is open for further operation
       <td></td>
       <td>0</td>
       <td>5029128874972463118</td>
-      <td>4777543161401667328</td>
-      <td>OSM: Knoten 476971289 -&gt; Knoten 476971283; Län...</td>
-      <td>24386111</td>
-      <td>0</td>
+      <td>4938076287810941486</td>
+      <td>OSM: Knoten 390310977 -&gt; Knoten 1368674233; Lä...</td>
+      <td>24633100</td>
+      <td>5</td>
       <td>1</td>
       <td>0.005</td>
       <td>0</td>
-      <td>125</td>
-      <td>131.7</td>
+      <td>999</td>
+      <td>994.0</td>
       <td>Vorlauf</td>
       <td></td>
-      <td>4917786378639043296</td>
-      <td>4917786378639043296</td>
+      <td>4615723899944629797</td>
+      <td>4615723899944629797</td>
       <td>False</td>
-      <td>713602.294600</td>
-      <td>5.578860e+06</td>
+      <td>713738.296567</td>
+      <td>5.579220e+06</td>
       <td>False</td>
-      <td>4917786378639043296</td>
+      <td>4615723899944629797</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -746,32 +842,84 @@ Model is open for further operation
       <td>0</td>
       <td>0</td>
       <td>0</td>
-      <td>5103141232976878720</td>
-      <td>DN 125</td>
+      <td>LINESTRING (713738.297 5579219.902, 713793.23 ...</td>
+      <td>5129584372458662150</td>
+      <td>5332825919690090061</td>
+      <td>KMR</td>
+      <td>DN 999</td>
       <td>4927972999088213410</td>
-      <td>125</td>
-      <td>131.7</td>
-      <td>139.7</td>
-      <td>4.0</td>
+      <td>999</td>
+      <td>994.0</td>
+      <td>1014.0</td>
+      <td>10.0</td>
       <td>0</td>
       <td>0</td>
-      <td>0.375</td>
+      <td>1.212</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
-      <td>800</td>
-      <td>5103141232976878720</td>
-      <td>5103141232976878720</td>
+      <td>1950</td>
+      <td>4689226368751411179</td>
+      <td>4689226368751411179</td>
       <td>False</td>
+      <td>0.0</td>
+      <td>64.28724</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>-2.983143e-10</td>
+      <td>-2.983143e-10</td>
+      <td>(-2.983143e-10, -2.983143e-10, -2.983143e-10, ...</td>
+      <td>0.0123</td>
+      <td>0.0</td>
+      <td>3.304769</td>
+      <td>3.304770</td>
+      <td>3.59023</td>
+      <td>(3.30477, 3.34555, 3.38633, 3.42711, 3.46789, ...</td>
+      <td>3.304770</td>
+      <td>3.59023</td>
+      <td>(3.30477, 3.34555, 3.38633, 3.42711, 3.46789, ...</td>
+      <td>3.304770</td>
+      <td>3.59023</td>
+      <td>(3.30477, 3.34555, 3.38633, 3.42711, 3.46789, ...</td>
+      <td>-0.0</td>
+      <td>-0.0</td>
+      <td>-0.0</td>
+      <td>1000.3</td>
+      <td>1000.3</td>
+      <td>1000.3000</td>
+      <td>1000.3000</td>
+      <td>(1000.3, 1000.3, 1000.3, 1000.3, 1000.3, 1000....</td>
+      <td>0.0</td>
+      <td>64.287240</td>
+      <td>(0.0, 9.183891, 18.36778, 27.55167, 36.73557, ...</td>
+      <td>9.999994</td>
+      <td>9.999994</td>
+      <td>107.366900</td>
+      <td>43.079700</td>
+      <td>(107.3669, 98.18304, 88.99916, 79.81527, 70.63...</td>
+      <td>10.0000</td>
+      <td>10.000</td>
+      <td>(10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0)</td>
+      <td>-0.0</td>
+      <td>-0.0</td>
+      <td>-0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>565.84</td>
+      <td>562.93</td>
+      <td>(565.84, 565.4243, 565.0086, 564.5929, 564.177...</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>4762482310382009633</td>
-      <td>Rohr V-K23S V-K33S</td>
-      <td>5103141232976878720</td>
+      <td>4621030304810285220</td>
+      <td>Rohr R-K2573S R-K2583S</td>
+      <td>5516336706687055417</td>
       <td>4779752876656844188</td>
       <td>5644881417512616095</td>
-      <td>40.99482</td>
+      <td>3.956838</td>
       <td>0</td>
       <td>0.05</td>
       <td>1</td>
@@ -784,24 +932,24 @@ Model is open for further operation
       <td></td>
       <td>0</td>
       <td>5029128874972463118</td>
-      <td>4893758407691905968</td>
-      <td>OSM: Knoten 476971283 -&gt; Knoten 264607348; Län...</td>
+      <td>5625716875961234775</td>
+      <td>OSM: Knoten 476971211 -&gt; Knoten 264607350; Län...</td>
       <td>24386111</td>
       <td>0</td>
-      <td>1</td>
+      <td>2</td>
       <td>0.005</td>
       <td>0</td>
-      <td>125</td>
-      <td>131.7</td>
-      <td>Vorlauf</td>
+      <td>100</td>
+      <td>107.1</td>
+      <td>Rücklauf</td>
       <td></td>
-      <td>4762482310382009633</td>
-      <td>4762482310382009633</td>
+      <td>4621030304810285220</td>
+      <td>4621030304810285220</td>
       <td>False</td>
-      <td>713574.061627</td>
-      <td>5.578910e+06</td>
+      <td>713650.613400</td>
+      <td>5.578990e+06</td>
       <td>False</td>
-      <td>4762482310382009633</td>
+      <td>4621030304810285220</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -813,38 +961,91 @@ Model is open for further operation
       <td>0</td>
       <td>0</td>
       <td>0</td>
-      <td>5103141232976878720</td>
-      <td>DN 125</td>
+      <td>LINESTRING (713650.613 5578990.488, 713649.498...</td>
+      <td>5070795580168283912</td>
+      <td>5725848577942138606</td>
+      <td>KMR</td>
+      <td>DN 100</td>
       <td>4927972999088213410</td>
-      <td>125</td>
-      <td>131.7</td>
-      <td>139.7</td>
-      <td>4.0</td>
+      <td>100</td>
+      <td>107.1</td>
+      <td>114.3</td>
+      <td>3.6</td>
       <td>0</td>
       <td>0</td>
-      <td>0.375</td>
+      <td>0.325</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
-      <td>800</td>
-      <td>5103141232976878720</td>
-      <td>5103141232976878720</td>
+      <td>600</td>
+      <td>5516336706687055417</td>
+      <td>5516336706687055417</td>
       <td>False</td>
+      <td>0.0</td>
+      <td>0.002291</td>
+      <td>16.2622</td>
+      <td>0.064347</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.211137</td>
+      <td>-4.251046e+00</td>
+      <td>-4.251046e+00</td>
+      <td>(-4.251046, -4.251046)</td>
+      <td>0.198023</td>
+      <td>0.000835</td>
+      <td>2.198662</td>
+      <td>2.210370</td>
+      <td>2.19866</td>
+      <td>(2.21037, 2.19866)</td>
+      <td>2.210370</td>
+      <td>2.19866</td>
+      <td>(2.21037, 2.19866)</td>
+      <td>2.210370</td>
+      <td>2.19866</td>
+      <td>(2.21037, 2.19866)</td>
+      <td>-15.30376</td>
+      <td>-15.30376</td>
+      <td>-15.30376</td>
+      <td>983.7663</td>
+      <td>983.7645</td>
+      <td>983.7663</td>
+      <td>983.7645</td>
+      <td>(983.7663, 983.7645)</td>
+      <td>0.0</td>
+      <td>3.956838</td>
+      <td>(0.0, 3.956838)</td>
+      <td>59.86739</td>
+      <td>59.871</td>
+      <td>0.055451</td>
+      <td>0.053159</td>
+      <td>(0.05545081, 0.05315936)</td>
+      <td>59.8674</td>
+      <td>59.871</td>
+      <td>(59.8674, 59.871)</td>
+      <td>-0.479662</td>
+      <td>-0.479662</td>
+      <td>-0.479662</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>563.01</td>
+      <td>563.14</td>
+      <td>(563.01, 563.14)</td>
     </tr>
   </tbody>
 </table>
 </div></div>
 </div>
+<p>We can access for example the heat loss of pipes, that is saved in the nominal diameter table.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes[[&quot;tk&quot;, &quot;Name&quot;, &quot;PipeTable: Kt&quot;]].head(3)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes[[&quot;tk&quot;, &quot;Name&quot;, &quot;PipeTable: Table Name&quot;, &quot;PipeTable: Kt&quot;]].head(3)
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -868,27 +1069,31 @@ Model is open for further operation
       <th></th>
       <th>tk</th>
       <th>Name</th>
+      <th>PipeTable: Table Name</th>
       <th>PipeTable: Kt</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>5442010239090746007</td>
-      <td>Rohr V-K03S V-K13S</td>
-      <td>0.450</td>
+      <td>4614463970292122863</td>
+      <td>Rohr R-K4383S R-K4183S</td>
+      <td>KMR</td>
+      <td>1.212</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>4917786378639043296</td>
-      <td>Rohr V-K13S V-K23S</td>
-      <td>0.375</td>
+      <td>4615723899944629797</td>
+      <td>Rohr V-K203S V-K213S</td>
+      <td>KMR</td>
+      <td>1.212</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>4762482310382009633</td>
-      <td>Rohr V-K23S V-K33S</td>
-      <td>0.375</td>
+      <td>4621030304810285220</td>
+      <td>Rohr R-K2573S R-K2583S</td>
+      <td>KMR</td>
+      <td>0.325</td>
     </tr>
   </tbody>
 </table>
