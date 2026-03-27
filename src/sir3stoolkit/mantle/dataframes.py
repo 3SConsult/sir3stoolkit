@@ -83,6 +83,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
                                 Useful when merging dataframes later.
                                 Default: False.
         :type element_type_col: bool, optional
+        :param static_table_type_to_merge_with: WORK IN PROGRESS: Only works for nominal diameter tables (Nennweitentabellen): elementType=self.ObjectTypes.Pipe, static_table_type_to_merge_with=self.ObjectTypes.PipeTable. Adds properties from row of nominal diameter tables to pipe, that is referencing that row.
 
         :return: DataFrame (or GeoDataFrame) with one row per device (tk) and columns for the requested model data properties,  
                 geometry and end nodes.  
@@ -189,13 +190,17 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
 
         # --- Post Processing: merge static table ---
         if static_table_type_to_merge_with:
-            df_v, _, _ = self.get_dataframes_from_static_table_type(table_type=static_table_type_to_merge_with)
-            join_key = "tk_merge"
-            df_v = df_v.rename(columns={
-                col: f"{static_table_type_to_merge_with.name}: {col}"
-                for col in df_v.columns if col != join_key
-            })
-            df = df.merge(df_v, left_on="FkdtroRowd", right_on=join_key, how="left")
+            if element_type.name != "Pipe":
+                logger.warning(f"[model_data] static_table_type_to_merge_with param can currently only be used for element_type=self.ObjectTypes.Pipe. Nothing is done.")
+                pass
+            else:
+                df_v, _, _ = self.get_dataframes_from_nominal_diameter_tables(table_type=static_table_type_to_merge_with)
+                join_key = "tk_merge"
+                df_v = df_v.rename(columns={
+                    col: f"{static_table_type_to_merge_with.name}: {col}"
+                    for col in df_v.columns if col != join_key
+                })
+                df = df.merge(df_v, left_on="FkdtroRowd", right_on=join_key, how="left")
 
         # --- Post Processing: data types ---
         re_int       = re.compile(r"^[+-]?\d+$")        # 13
@@ -1262,9 +1267,13 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         :type element_type: Enum
 
         :return: A tuple containing:
+
                 - df_v: vertically concatenated DataFrame of all rows from all tables (needed for other functions)
+
                 - dfs: dictionary mapping each table tk to its DataFrame
+
                 - tks_of_static_table_type: list of table tks of the given type
+
         :rtype: Tuple[pd.DataFrame, Dict[Any, pd.DataFrame], List[Any]]
         """
 
