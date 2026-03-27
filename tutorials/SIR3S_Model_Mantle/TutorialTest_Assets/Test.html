@@ -209,22 +209,44 @@ Model is open for further operation
 </pre></div></div>
 </div>
 </section>
-<section id="View-Pipe-Tables">
-<h1>View Pipe Tables<a class="headerlink" href="#View-Pipe-Tables" title="Link to this heading"></a></h1>
+<section id="test">
+<h1>test<a class="headerlink" href="#test" title="Link to this heading"></a></h1>
+<section id="Berechnung">
+<h2>Berechnung<a class="headerlink" href="#Berechnung" title="Link to this heading"></a></h2>
 <div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>tk_table_ALLG = s3s.GetTksofElementType(s3s.ObjectTypes_TableNames.ALLG)[0]
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_v, dfs, tks = s3s.get_dataframes_from_static_table_type(table_type=s3s.ObjectTypes.PipeTable)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(s3s.GetPropertiesofElementType(s3s.ObjectTypes_TableNames.ALLG))
 </pre></div>
 </div>
 </div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;Name&#39;, &#39;Idqm&#39;, &#39;Idph&#39;, &#39;Netztyp&#39;, &#39;Forc&#39;, &#39;Pfadol1&#39;, &#39;Pk&#39;, &#39;InVariant&#39;, &#39;bz.Fk&#39;, &#39;bz.Cdat&#39;, &#39;bz.Cuhr&#39;, &#39;bz.Czon&#39;, &#39;bz.Iart&#39;, &#39;bz.ArtTh&#39;, &#39;bz.Thfakt&#39;, &#39;bz.Itrenn&#39;, &#39;bz.ThStat&#39;, &#39;bz.ThInst&#39;, &#39;bz.Jwarn&#39;, &#39;bz.Lfqsv&#39;, &#39;bz.Schwellqsig&#39;, &#39;bz.Knuvtyp&#39;, &#39;bz.ValidAggr&#39;, &#39;bz.CalcNetwork&#39;, &#39;bz.Idra&#39;, &#39;bz.CheckRes&#39;, &#39;bz.CheckMod&#39;]
+</pre></div></div>
+</div>
+<section id="Rechenlauftyp">
+<h3>Rechenlauftyp<a class="headerlink" href="#Rechenlauftyp" title="Link to this heading"></a></h3>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for id, tk in enumerate(tks):
-    print(f&quot;{id}: {tk}: {s3s.GetValue(tk, &#39;Name&#39;)[0]}&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.SetValue(Tk=tk_table_ALLG, propertyName=&quot;bz.Iart&quot;, Value=&quot;-1&quot;) # Daten prüfen
+s3s.SetValue(Tk=tk_table_ALLG, propertyName=&quot;bz.Iart&quot;, Value=&quot;0&quot;) # stationär
+s3s.SetValue(Tk=tk_table_ALLG, propertyName=&quot;bz.Iart&quot;, Value=&quot;1&quot;) # Lastfallschleife
+s3s.SetValue(Tk=tk_table_ALLG, propertyName=&quot;bz.Iart&quot;, Value=&quot;2&quot;) # stationär+instationär
 </pre></div>
 </div>
 </div>
@@ -233,702 +255,1725 @@ Model is open for further operation
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-0: 4929824488020291605: STDROHR
-1: 4862079620528720750: FLEXWELL-F
-2: 5157457566256524875: STDROHR_2
-3: 4927972999088213410: KMR
+Value is set
+Value is set
+Value is set
+Value is set
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetPropertiesofElementType(s3s.ObjectTypes.PipeTable_Row)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.CloseModel(saveChangesBeforeClosing=True)
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+True
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>1/0
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-intense-fg ansi-bold">---------------------------------------------------------------------------</span>
+<span class="ansi-red-intense-fg ansi-bold">ZeroDivisionError</span>                         Traceback (most recent call last)
+Cell <span class="ansi-green-intense-fg ansi-bold">In[13], line 1</span>
+<span class="ansi-green-intense-fg ansi-bold">----&gt; 1</span> <span style="color: rgb(98,98,98)">1</span><span style="color: rgb(98,98,98)">/</span><span style="color: rgb(98,98,98)">0</span>
+
+<span class="ansi-red-intense-fg ansi-bold">ZeroDivisionError</span>: division by zero
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import sqlite3
+from typing import Dict, List, Tuple
+
+def diff_sqlite_db3(db1_path: str, db2_path: str) -&gt; Dict[str, Dict[str, List[Tuple]]]:
+    &quot;&quot;&quot;
+    Compare two SQLite databases and return differences.
+
+    Returns a dictionary of structure:
+    {
+        &quot;table_name&quot;: {
+            &quot;only_in_db1&quot;: [... rows ...],
+            &quot;only_in_db2&quot;: [... rows ...],
+            &quot;changed_rows&quot;: [... (db1_row, db2_row) ...]
+        },
+        ...
+    }
+    &quot;&quot;&quot;
+
+    conn1 = sqlite3.connect(db1_path)
+    conn2 = sqlite3.connect(db2_path)
+
+    cursor1 = conn1.cursor()
+    cursor2 = conn2.cursor()
+
+    # Get list of tables (assumes no internal sqlite tables)
+    cursor1.execute(&quot;SELECT name FROM sqlite_master WHERE type=&#39;table&#39;&quot;)
+    tables = [r[0] for r in cursor1.fetchall()]
+
+    diff_result = {}
+
+    for table in tables:
+        # Fetch all rows from both DBs
+        cursor1.execute(f&quot;SELECT * FROM {table}&quot;)
+        cursor2.execute(f&quot;SELECT * FROM {table}&quot;)
+
+        rows1 = cursor1.fetchall()
+        rows2 = cursor2.fetchall()
+
+        # Convert lists to sets for diffing
+        set1 = set(rows1)
+        set2 = set(rows2)
+
+        only_in_db1 = list(set1 - set2)
+        only_in_db2 = list(set2 - set1)
+
+        # Find rows that exist in both but differ in values.
+        # Only possible if there is a primary key. We try to detect the first column as key.
+        changed_rows = []
+        if rows1 and rows2:
+            # Get column names
+            cursor1.execute(f&quot;PRAGMA table_info({table})&quot;)
+            columns_info = cursor1.fetchall()
+            col_names = [c[1] for c in columns_info]
+
+            # assume first column is primary key (common in most DBs)
+            key_col = col_names[0]
+
+            # build dicts keyed by first column
+            map1 = {row[0]: row for row in rows1}
+            map2 = {row[0]: row for row in rows2}
+
+            for key in map1:
+                if key in map2 and map1[key] != map2[key]:
+                    changed_rows.append((map1[key], map2[key]))
+
+        diff_result[table] = {
+            &quot;only_in_db1&quot;: only_in_db1,
+            &quot;only_in_db2&quot;: only_in_db2,
+            &quot;changed_rows&quot;: changed_rows,
+        }
+
+    conn1.close()
+    conn2.close()
+
+    return diff_result
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>db_file_1 = r&quot;C:\Users\aUsername\3S\SQLiteTabSync\Toolkit_Tutorial51_Model.db3&quot;
+db_file_2 = r&quot;C:\Users\aUsername\3S\SQLiteTabSync\Toolkit_Tutorial51_Model_edited.db3&quot;
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>diffs = diff_sqlite_db3(db_file_1, db_file_2)
+
+for table, result in diffs.items():
+    print(f&quot;\n=== Table: {table} ===&quot;)
+    print(&quot;Only in DB1:&quot;, result[&quot;only_in_db1&quot;])
+    print(&quot;Only in DB2:&quot;, result[&quot;only_in_db2&quot;])
+    print(&quot;Changed rows:&quot;, result[&quot;changed_rows&quot;])
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+=== Table: AB_DEF ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: AGSN ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: ALLG ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: ALLG_BZ ===
+Only in DB1: [(&#39;5762316468466095445&#39;, &#39;5303199883422352888&#39;, &#39;5597593673700177669&#39;, &#39;13.02.2023&#39;, &#39;00:00:00&#39;, 3, 11, 1, 1, 1, 0, 30, 1.0, 5.0, None, None, None, 0, 7, 7, &#39;&#39;)]
+Only in DB2: [(&#39;5762316468466095445&#39;, &#39;5303199883422352888&#39;, &#39;5597593673700177669&#39;, &#39;13.02.2023&#39;, &#39;00:00:00&#39;, 0, 11, 1, 1, 1, 0, 30, 1.0, 5.0, None, None, None, 0, 7, 7, &#39;&#39;)]
+Changed rows: [((&#39;5762316468466095445&#39;, &#39;5303199883422352888&#39;, &#39;5597593673700177669&#39;, &#39;13.02.2023&#39;, &#39;00:00:00&#39;, 3, 11, 1, 1, 1, 0, 30, 1.0, 5.0, None, None, None, 0, 7, 7, &#39;&#39;), (&#39;5762316468466095445&#39;, &#39;5303199883422352888&#39;, &#39;5597593673700177669&#39;, &#39;13.02.2023&#39;, &#39;00:00:00&#39;, 0, 11, 1, 1, 1, 0, 30, 1.0, 5.0, None, None, None, 0, 7, 7, &#39;&#39;))]
+
+=== Table: ANTP ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: ANTP_ROWS ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: ARRW ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: ATMO ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: AVOS ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: AVOS_ROWS ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: BENUTZER ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: BEVE ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: BEVE_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: BEWI ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: BEWI_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: BREF ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: BZAG ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: BZAG_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: CIRC ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: CONT ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: CRGL ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: DATENEBENE ===
+Only in DB1: [(&#39;5306805303452857793&#39;, &#39;-1&#39;, &#39;BASIS&#39;, &#39;B1&#39;, &#39;3S\\aUsername@3S-W11-JABLO&#39;, &#39;2022-10-12 11:52:19&#39;, &#39;2026-03-27 12:47:49&#39;, &#39;&#39;, 0, &#39;Sir3S-90-14&#39;, &#39;B1&#39;), (&#39;5303199883422352888&#39;, &#39;5525309167386767014&#39;, &#39;BZ&#39;, &#39;BZ1&#39;, &#39;3S\\aUsername@3S-W11-JABLO&#39;, &#39;2022-10-12 11:52:19&#39;, &#39;2026-03-27 12:47:49&#39;, &#39;&#39;, 0, &#39;Sir3S-90-15&#39;, &#39;BZ1&#39;), (&#39;5525309167386767014&#39;, &#39;5306805303452857793&#39;, &#39;VARIANTE&#39;, &#39;V0&#39;, &#39;3S\\aUsername@3S-W11-JABLO&#39;, &#39;2022-10-12 11:52:19&#39;, &#39;2026-03-27 12:47:49&#39;, &#39;&#39;, 0, &#39;Sir3S-90-14&#39;, &#39;V0&#39;)]
+Only in DB2: [(&#39;5306805303452857793&#39;, &#39;-1&#39;, &#39;BASIS&#39;, &#39;B1&#39;, &#39;3S\\aUsername@3S-W11-JABLO&#39;, &#39;2022-10-12 11:52:19&#39;, &#39;2026-03-27 16:19:33&#39;, &#39;&#39;, 0, &#39;Sir3S-90-14&#39;, &#39;B1&#39;), (&#39;5525309167386767014&#39;, &#39;5306805303452857793&#39;, &#39;VARIANTE&#39;, &#39;V0&#39;, &#39;3S\\aUsername@3S-W11-JABLO&#39;, &#39;2022-10-12 11:52:19&#39;, &#39;2026-03-27 16:19:33&#39;, &#39;&#39;, 0, &#39;Sir3S-90-14&#39;, &#39;V0&#39;), (&#39;5303199883422352888&#39;, &#39;5525309167386767014&#39;, &#39;BZ&#39;, &#39;BZ1&#39;, &#39;3S\\aUsername@3S-W11-JABLO&#39;, &#39;2022-10-12 11:52:19&#39;, &#39;2026-03-27 16:19:33&#39;, &#39;&#39;, 3, &#39;Sir3S-90-15&#39;, &#39;BZ1&#39;)]
+Changed rows: [((&#39;5306805303452857793&#39;, &#39;-1&#39;, &#39;BASIS&#39;, &#39;B1&#39;, &#39;3S\\aUsername@3S-W11-JABLO&#39;, &#39;2022-10-12 11:52:19&#39;, &#39;2026-03-27 12:47:49&#39;, &#39;&#39;, 0, &#39;Sir3S-90-14&#39;, &#39;B1&#39;), (&#39;5306805303452857793&#39;, &#39;-1&#39;, &#39;BASIS&#39;, &#39;B1&#39;, &#39;3S\\aUsername@3S-W11-JABLO&#39;, &#39;2022-10-12 11:52:19&#39;, &#39;2026-03-27 16:19:33&#39;, &#39;&#39;, 0, &#39;Sir3S-90-14&#39;, &#39;B1&#39;)), ((&#39;5525309167386767014&#39;, &#39;5306805303452857793&#39;, &#39;VARIANTE&#39;, &#39;V0&#39;, &#39;3S\\aUsername@3S-W11-JABLO&#39;, &#39;2022-10-12 11:52:19&#39;, &#39;2026-03-27 12:47:49&#39;, &#39;&#39;, 0, &#39;Sir3S-90-14&#39;, &#39;V0&#39;), (&#39;5525309167386767014&#39;, &#39;5306805303452857793&#39;, &#39;VARIANTE&#39;, &#39;V0&#39;, &#39;3S\\aUsername@3S-W11-JABLO&#39;, &#39;2022-10-12 11:52:19&#39;, &#39;2026-03-27 16:19:33&#39;, &#39;&#39;, 0, &#39;Sir3S-90-14&#39;, &#39;V0&#39;)), ((&#39;5303199883422352888&#39;, &#39;5525309167386767014&#39;, &#39;BZ&#39;, &#39;BZ1&#39;, &#39;3S\\aUsername@3S-W11-JABLO&#39;, &#39;2022-10-12 11:52:19&#39;, &#39;2026-03-27 12:47:49&#39;, &#39;&#39;, 0, &#39;Sir3S-90-15&#39;, &#39;BZ1&#39;), (&#39;5303199883422352888&#39;, &#39;5525309167386767014&#39;, &#39;BZ&#39;, &#39;BZ1&#39;, &#39;3S\\aUsername@3S-W11-JABLO&#39;, &#39;2022-10-12 11:52:19&#39;, &#39;2026-03-27 16:19:33&#39;, &#39;&#39;, 3, &#39;Sir3S-90-15&#39;, &#39;BZ1&#39;))]
+
+=== Table: DPGR ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: DPGR_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: DPGR_DPKT ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: DPKT ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: DPKT_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: DPRG ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: DPRG_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: DRNP ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: DTRO ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: DTRO_ROWD ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: EBES ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: EBES_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: ELEMENTQUERY ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: ETAM ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: ETAM_ROWS ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: ETAR ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: ETAR_ROWS ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: ETAU ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: ETAU_ROWS ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: FKNL ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: FKNL_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: FQPS ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: FQPS_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: FSTF ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: FWBZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: FWEA ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: FWEA_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: FWES ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: FWES_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: FWVB ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: FWVB_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: FWWU ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: FWWU_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: GEOMETRY_COLUMNS ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: GKMP ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: GMIX ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: GRAV ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: GTXT ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: GVWK ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: GVWK_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: HAUS ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: HYDR ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: HYDR_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: KLAP ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: KLAP_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: KNOT ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: KNOT_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: KOMK ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: KOMK_ROWS ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: KOMP ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: KOMP_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: LAYR ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: LFAL ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: LFAL_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: LFKT ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: LFKT_ROWT ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: LTGR ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: MAPG ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: MAPG_ROWS ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: MODELL ===
+Only in DB1: [(&#39;4848839598324457800&#39;, 21, &#39;M-1-0-1&#39;, &#39;&#39;, &#39;3S\\aUsername@3S-W11-JABLO&#39;, &#39;2022-10-12 11:52:19&#39;, &#39;2026-03-27 12:47:49&#39;, &#39;5306805303452857793&#39;, &#39;5525309167386767014&#39;, &#39;5303199883422352888&#39;, 1, 0, &#39;&#39;, &#39;&#39;, &#39;&#39;, &#39;&#39;, &#39;&#39;, b&#39;\n&#39;)]
+Only in DB2: [(&#39;4848839598324457800&#39;, 21, &#39;M-1-0-1&#39;, &#39;&#39;, &#39;3S\\aUsername@3S-W11-JABLO&#39;, &#39;2022-10-12 11:52:19&#39;, &#39;2026-03-27 16:19:33&#39;, &#39;5306805303452857793&#39;, &#39;5525309167386767014&#39;, &#39;5303199883422352888&#39;, 1, 1, &#39;&#39;, &#39;&#39;, &#39;&#39;, &#39;&#39;, &#39;&#39;, b&#39;\n&#39;)]
+Changed rows: [((&#39;4848839598324457800&#39;, 21, &#39;M-1-0-1&#39;, &#39;&#39;, &#39;3S\\aUsername@3S-W11-JABLO&#39;, &#39;2022-10-12 11:52:19&#39;, &#39;2026-03-27 12:47:49&#39;, &#39;5306805303452857793&#39;, &#39;5525309167386767014&#39;, &#39;5303199883422352888&#39;, 1, 0, &#39;&#39;, &#39;&#39;, &#39;&#39;, &#39;&#39;, &#39;&#39;, b&#39;\n&#39;), (&#39;4848839598324457800&#39;, 21, &#39;M-1-0-1&#39;, &#39;&#39;, &#39;3S\\aUsername@3S-W11-JABLO&#39;, &#39;2022-10-12 11:52:19&#39;, &#39;2026-03-27 16:19:33&#39;, &#39;5306805303452857793&#39;, &#39;5525309167386767014&#39;, &#39;5303199883422352888&#39;, 1, 1, &#39;&#39;, &#39;&#39;, &#39;&#39;, &#39;&#39;, &#39;&#39;, b&#39;\n&#39;))]
+
+=== Table: MREG ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: MREG_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: NRCV ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: NSCH ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: NSCH_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: OBEH ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: OBEH_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: OVAL ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: PARI ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: PARI_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: PARV ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: PARZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: PARZ_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: PGPR ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: PGRP ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: PGRP_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: PGRP_PUMP ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: PGRP_PUMP_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: PHI1 ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: PHI1_ROWT ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: PHI2 ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: PHI2_ROWS ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: PHIV ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: PHIV_ROWS ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: PHTR ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: PHTR_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: PLYG ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: POLY ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: PREG ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: PREG_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: PROZESSE ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: PUMD ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: PUMD_ROWT ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: PUMK ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: PUMK_ROWS ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: PUMP ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: PUMP_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: PVAR ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: PVAR_ROWT ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: PZON ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: PZVR ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: PZVR_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: QVAR ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: QVAR_ROWT ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: RADD ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: RADD_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: RART ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: RART_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: RCON ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: RCPL ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: RCPL_ROWT ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: RDIV ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: RDIV_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: RECT ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: REGP ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: REGV ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: REGV_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: RFKT ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: RFKT_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: RHYS ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: RHYS_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: RINT ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: RINT_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: RLSR ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: RLSR_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: RLVG ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: RLVG_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: RMES ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: RMES_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: RMES_DPTS ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: RMES_DPTS_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: RMMA ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: RMMA_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: RMUL ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: RMUL_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: ROHR ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: ROHR_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: ROHR_VRTX ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: RPFL ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: RPID ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: RPID_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: RPLAN ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: RPLAN_ROWS ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: RPT1 ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: RPT1_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: RRCT ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: RSLW ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: RSLW_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: RSTE ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: RSTE_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: RSTN ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: RSTN_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: RTOT ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: RTOT_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: RUES ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: RUES_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: SIRGRAF ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: SIVE ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: SIVE_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: SOKO ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: SPLZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: SRAT ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: SRAT_ROWS ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: STOF ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: STOF_ROWS ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: STRASSE ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: STRO ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: STRO_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: SWVT ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: SWVT_ROWT ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: SYSTEMKONFIG ===
+Only in DB1: [(&#39;4923180497274645143&#39;, 1, &#39;.\\WDToolkit_Tutorial51_Model&#39;, &#39;Modell Wurzelverzeichnis&#39;), (&#39;5095451524854683885&#39;, 3, &#39;4848839598324457800&#39;, &#39;PK des zuletzt geöffneten Modells&#39;)]
+Only in DB2: [(&#39;4996401643951334399&#39;, 3, &#39;4848839598324457800&#39;, &#39;PK des zuletzt geöffneten Modells&#39;), (&#39;4923180497274645143&#39;, 1, &#39;.\\WDToolkit_Tutorial51_Model_edited&#39;, &#39;Modell Wurzelverzeichnis&#39;)]
+Changed rows: [((&#39;4923180497274645143&#39;, 1, &#39;.\\WDToolkit_Tutorial51_Model&#39;, &#39;Modell Wurzelverzeichnis&#39;), (&#39;4923180497274645143&#39;, 1, &#39;.\\WDToolkit_Tutorial51_Model_edited&#39;, &#39;Modell Wurzelverzeichnis&#39;))]
+
+=== Table: TEVT ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: TEVT_ROWT ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: TFKT ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: TFKT_ROWS ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: TIMD ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: TRFT ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: TRFT_ROWS ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: TRVA ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: UTMP ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: VARA_ROWS ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: VENT ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: VENT_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: VERB ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: VKNO ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: VRCT ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: WBLZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: WEVT ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: WEVT_ROWT ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: WIND ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: WIND_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: WTTR ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: WTTR_ROWT ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: ZEP1 ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: ZEP1_ROWS ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: ZEP2 ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: ZEP2_ROWS ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: VARA ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: ARRW_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: CIRC_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: CONT_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: GTXT_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: HAUS_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: HIDDEN_ACTIVITIES ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: NRCV_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: OVAL_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: PLYG_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: POLY_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: RECT_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: RPFL_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: RRCT_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: USCH ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: UTMP_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+
+=== Table: VERB_BZ ===
+Only in DB1: []
+Only in DB2: []
+Changed rows: []
+</pre></div></div>
+</div>
+</section>
+</section>
+</section>
+<section id="ENUMS">
+<h1>ENUMS<a class="headerlink" href="#ENUMS" title="Link to this heading"></a></h1>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dir(s3s.ObjectTypes_TableNames)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;AGSN&#39;,
+ &#39;ALLG&#39;,
+ &#39;ANTP&#39;,
+ &#39;ANTP_ROWS&#39;,
+ &#39;ARRW&#39;,
+ &#39;ATMO&#39;,
+ &#39;AVOS&#39;,
+ &#39;AVOS_ROWS&#39;,
+ &#39;BEVE&#39;,
+ &#39;BEWI&#39;,
+ &#39;BREF&#39;,
+ &#39;CIRC&#39;,
+ &#39;CONT&#39;,
+ &#39;CRGL&#39;,
+ &#39;DPGR&#39;,
+ &#39;DPGR_DPKT&#39;,
+ &#39;DPKT&#39;,
+ &#39;DPRG&#39;,
+ &#39;DTRO&#39;,
+ &#39;DTRO_ROWD&#39;,
+ &#39;EBES&#39;,
+ &#39;ELEMENTQUERY&#39;,
+ &#39;ETAM&#39;,
+ &#39;ETAM_ROWS&#39;,
+ &#39;ETAR&#39;,
+ &#39;ETAR_ROWS&#39;,
+ &#39;ETAU&#39;,
+ &#39;ETAU_ROWS&#39;,
+ &#39;FKNL&#39;,
+ &#39;FQPS&#39;,
+ &#39;FQPS_BZ&#39;,
+ &#39;FSTF&#39;,
+ &#39;FWBZ&#39;,
+ &#39;FWEA&#39;,
+ &#39;FWES&#39;,
+ &#39;FWVB&#39;,
+ &#39;FWWU&#39;,
+ &#39;GKMP&#39;,
+ &#39;GMIX&#39;,
+ &#39;GRAV&#39;,
+ &#39;GTXT&#39;,
+ &#39;GVWK&#39;,
+ &#39;HAUS&#39;,
+ &#39;HYDR&#39;,
+ &#39;KLAP&#39;,
+ &#39;KNOT&#39;,
+ &#39;KOMK&#39;,
+ &#39;KOMK_ROWS&#39;,
+ &#39;KOMP&#39;,
+ &#39;LAYR&#39;,
+ &#39;LFKT&#39;,
+ &#39;LFKT_ROWT&#39;,
+ &#39;LTGR&#39;,
+ &#39;MREG&#39;,
+ &#39;NRCV&#39;,
+ &#39;NSCH&#39;,
+ &#39;OBEH&#39;,
+ &#39;OVAL&#39;,
+ &#39;PARI&#39;,
+ &#39;PARZ&#39;,
+ &#39;PGRP&#39;,
+ &#39;PGRP_PUMP&#39;,
+ &#39;PHI1&#39;,
+ &#39;PHI1_ROWT&#39;,
+ &#39;PHI2&#39;,
+ &#39;PHI2_ROWS&#39;,
+ &#39;PHIV&#39;,
+ &#39;PHIV_ROWS&#39;,
+ &#39;PHTR&#39;,
+ &#39;PLYG&#39;,
+ &#39;POLY&#39;,
+ &#39;PREG&#39;,
+ &#39;PUMD&#39;,
+ &#39;PUMD_ROWT&#39;,
+ &#39;PUMK&#39;,
+ &#39;PUMK_ROWS&#39;,
+ &#39;PUMP&#39;,
+ &#39;PVAR&#39;,
+ &#39;PVAR_ROWT&#39;,
+ &#39;PZON&#39;,
+ &#39;QVAR&#39;,
+ &#39;QVAR_ROWT&#39;,
+ &#39;RADD&#39;,
+ &#39;RART&#39;,
+ &#39;RCPL&#39;,
+ &#39;RCPL_ROWT&#39;,
+ &#39;RDIV&#39;,
+ &#39;RECT&#39;,
+ &#39;REGP&#39;,
+ &#39;REGV&#39;,
+ &#39;RFKT&#39;,
+ &#39;RHYS&#39;,
+ &#39;RINT&#39;,
+ &#39;RLSR&#39;,
+ &#39;RLVG&#39;,
+ &#39;RMES&#39;,
+ &#39;RMES_DPTS&#39;,
+ &#39;RMMA&#39;,
+ &#39;RMUL&#39;,
+ &#39;ROHR&#39;,
+ &#39;ROHR_VRTX&#39;,
+ &#39;RPFL&#39;,
+ &#39;RPID&#39;,
+ &#39;RPT1&#39;,
+ &#39;RRCT&#39;,
+ &#39;RSLW&#39;,
+ &#39;RSTE&#39;,
+ &#39;RSTN&#39;,
+ &#39;RTOT&#39;,
+ &#39;RUES&#39;,
+ &#39;SIVE&#39;,
+ &#39;SOKO&#39;,
+ &#39;SPLZ&#39;,
+ &#39;SRAT&#39;,
+ &#39;SRAT_ROWS&#39;,
+ &#39;STOF&#39;,
+ &#39;STOF_ROWS&#39;,
+ &#39;STRASSE&#39;,
+ &#39;STRO&#39;,
+ &#39;SWVT&#39;,
+ &#39;SWVT_ROWT&#39;,
+ &#39;TEVT&#39;,
+ &#39;TEVT_ROWT&#39;,
+ &#39;TFKT&#39;,
+ &#39;TFKT_ROWS&#39;,
+ &#39;TRFT&#39;,
+ &#39;TRFT_ROWS&#39;,
+ &#39;TRVA&#39;,
+ &#39;USCH&#39;,
+ &#39;UTMP&#39;,
+ &#39;VARA&#39;,
+ &#39;VARA_ROWS&#39;,
+ &#39;VENT&#39;,
+ &#39;VERB&#39;,
+ &#39;VKNO&#39;,
+ &#39;VRCT&#39;,
+ &#39;WBLZ&#39;,
+ &#39;WEVT&#39;,
+ &#39;WEVT_ROWT&#39;,
+ &#39;WIND&#39;,
+ &#39;WTTR&#39;,
+ &#39;WTTR_ROWT&#39;,
+ &#39;ZEP1&#39;,
+ &#39;ZEP1_ROWS&#39;,
+ &#39;ZEP2&#39;,
+ &#39;ZEP2_ROWS&#39;,
+ &#39;__class__&#39;,
+ &#39;__contains__&#39;,
+ &#39;__doc__&#39;,
+ &#39;__getitem__&#39;,
+ &#39;__init_subclass__&#39;,
+ &#39;__iter__&#39;,
+ &#39;__len__&#39;,
+ &#39;__members__&#39;,
+ &#39;__module__&#39;,
+ &#39;__name__&#39;,
+ &#39;__qualname__&#39;]
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetPropertiesofElementType(s3s.ObjectTypes_TableNames.PARI)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 [&#39;Name&#39;,
- &#39;Fk&#39;,
- &#39;Dn&#39;,
- &#39;Di&#39;,
- &#39;Da&#39;,
- &#39;S&#39;,
- &#39;Wsteig&#39;,
- &#39;Wtiefe&#39;,
- &#39;Kt&#39;,
- &#39;Pn&#39;,
- &#39;Ausfallzeit&#39;,
- &#39;Reparatur&#39;,
- &#39;Rehabilitation&#39;,
- &#39;Tk&#39;,
+ &#39;Nglopt&#39;,
  &#39;Pk&#39;,
- &#39;InVariant&#39;]
+ &#39;InVariant&#39;,
+ &#39;bz.Fk&#39;,
+ &#39;bz.Epsp&#39;,
+ &#39;bz.Epsqm&#39;,
+ &#39;bz.Epst&#39;,
+ &#39;bz.Epspreg&#39;,
+ &#39;bz.Epsqmreg&#39;,
+ &#39;bz.Epstrsp&#39;,
+ &#39;bz.Ntrspiter&#39;,
+ &#39;bz.Nziter&#39;,
+ &#39;bz.Ntiter&#39;]
 </pre></div></div>
 </div>
-<section id="STDROHR">
-<h2>STDROHR<a class="headerlink" href="#STDROHR" title="Link to this heading"></a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dfs[tks[0]].head(3)
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
-</pre></div>
-</div>
-<div class="output_area rendered_html docutils container">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>tk_merge</th>
-      <th>Name</th>
-      <th>Fk</th>
-      <th>Dn</th>
-      <th>Di</th>
-      <th>Da</th>
-      <th>S</th>
-      <th>Wsteig</th>
-      <th>Wtiefe</th>
-      <th>Kt</th>
-      <th>Pn</th>
-      <th>Ausfallzeit</th>
-      <th>Reparatur</th>
-      <th>Rehabilitation</th>
-      <th>Tk</th>
-      <th>Pk</th>
-      <th>InVariant</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>5515865002497708428</td>
-      <td>DN 3</td>
-      <td>4929824488020291605</td>
-      <td>3</td>
-      <td>3</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>5515865002497708428</td>
-      <td>5515865002497708428</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>5623248152587240406</td>
-      <td>DN 4</td>
-      <td>4929824488020291605</td>
-      <td>4</td>
-      <td>4</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>5623248152587240406</td>
-      <td>5623248152587240406</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>5195383577550917235</td>
-      <td>DN 5</td>
-      <td>4929824488020291605</td>
-      <td>5</td>
-      <td>5</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>5195383577550917235</td>
-      <td>5195383577550917235</td>
-      <td>False</td>
-    </tr>
-  </tbody>
-</table>
-</div></div>
-</div>
-</section>
-<section id="KMR">
-<h2>KMR<a class="headerlink" href="#KMR" title="Link to this heading"></a></h2>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dfs[tks[3]].head(3)
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
-</pre></div>
-</div>
-<div class="output_area rendered_html docutils container">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>tk_merge</th>
-      <th>Name</th>
-      <th>Fk</th>
-      <th>Dn</th>
-      <th>Di</th>
-      <th>Da</th>
-      <th>S</th>
-      <th>Wsteig</th>
-      <th>Wtiefe</th>
-      <th>Kt</th>
-      <th>Pn</th>
-      <th>Ausfallzeit</th>
-      <th>Reparatur</th>
-      <th>Rehabilitation</th>
-      <th>Tk</th>
-      <th>Pk</th>
-      <th>InVariant</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>5636244102636904922</td>
-      <td>DN 25</td>
-      <td>4927972999088213410</td>
-      <td>25</td>
-      <td>22,3</td>
-      <td>26,9</td>
-      <td>2,3</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0,19</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>100</td>
-      <td>5636244102636904922</td>
-      <td>5636244102636904922</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>4845758090437917162</td>
-      <td>DN 32</td>
-      <td>4927972999088213410</td>
-      <td>32</td>
-      <td>28,5</td>
-      <td>33,7</td>
-      <td>2,6</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0,195</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>200</td>
-      <td>4845758090437917162</td>
-      <td>4845758090437917162</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>5728256818453294508</td>
-      <td>DN 50</td>
-      <td>4927972999088213410</td>
-      <td>50</td>
-      <td>54,5</td>
-      <td>60,3</td>
-      <td>2,9</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0,225</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>300</td>
-      <td>5728256818453294508</td>
-      <td>5728256818453294508</td>
-      <td>False</td>
-    </tr>
-  </tbody>
-</table>
-</div></div>
-</div>
-</section>
-</section>
-<section id="df-pipes">
-<h1>df pipes<a class="headerlink" href="#df-pipes" title="Link to this heading"></a></h1>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes = s3s.generate_element_model_data_dataframe(element_type=s3s.ObjectTypes.Pipe, static_table_type_to_merge_with=s3s.ObjectTypes.PipeTable)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetTksofElementType(s3s.ObjectTypes_TableNames.PARI)
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="output_area stderr docutils container">
+<div class="output_area docutils container">
 <div class="highlight"><pre>
-[2026-03-27 12:05:57,156] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.Pipe
-[2026-03-27 12:05:57,158] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieved 524 element(s) of element type ObjectTypes.Pipe.
-[2026-03-27 12:05:57,175] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] No properties given → using ALL model_data properties for ObjectTypes.Pipe.
-[2026-03-27 12:05:57,175] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 46 model_data properties.
-[2026-03-27 12:05:57,176] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving model_data properties [&#39;Name&#39;, &#39;FkdtroRowd&#39;, &#39;Fkltgr&#39;, &#39;Fkstrasse&#39;, &#39;L&#39;, &#39;Lzu&#39;, &#39;Rau&#39;, &#39;Jlambs&#39;, &#39;Lambda0&#39;, &#39;Zein&#39;, &#39;Zaus&#39;, &#39;Zuml&#39;, &#39;Asoll&#39;, &#39;Indschall&#39;, &#39;Baujahr&#39;, &#39;Hal&#39;, &#39;Fkcont&#39;, &#39;Fk2lrohr&#39;, &#39;Beschreibung&#39;, &#39;Idreferenz&#39;, &#39;Iplanung&#39;, &#39;Kvr&#39;, &#39;LineWidthMM&#39;, &#39;DottedLine&#39;, &#39;DN&#39;, &#39;Di&#39;, &#39;KvrKlartext&#39;, &#39;HasClosedNSCHs&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;, &#39;Xkor&#39;, &#39;Ykor&#39;, &#39;GeometriesDiffer&#39;, &#39;bz.Fk&#39;, &#39;bz.Qsvb&#39;, &#39;bz.Irtrenn&#39;, &#39;bz.Leckstatus&#39;, &#39;bz.Leckstart&#39;, &#39;bz.Leckend&#39;, &#39;bz.Leckort&#39;, &#39;bz.Leckmenge&#39;, &#39;bz.Imptnz&#39;, &#39;bz.Zvlimptnz&#39;, &#39;bz.Kantenzv&#39;, &#39;bz.ITrennWithNSCH&#39;]...
-[2026-03-27 12:05:58,980] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (524, 64)
+[&#39;5711960102265934458&#39;]
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes.head(3)
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
-</pre></div>
-</div>
-<div class="output_area rendered_html docutils container">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>tk</th>
-      <th>Name</th>
-      <th>FkdtroRowd</th>
-      <th>Fkltgr</th>
-      <th>Fkstrasse</th>
-      <th>L</th>
-      <th>Lzu</th>
-      <th>Rau</th>
-      <th>Jlambs</th>
-      <th>Lambda0</th>
-      <th>Zein</th>
-      <th>Zaus</th>
-      <th>Zuml</th>
-      <th>Asoll</th>
-      <th>Indschall</th>
-      <th>Baujahr</th>
-      <th>Hal</th>
-      <th>Fkcont</th>
-      <th>Fk2lrohr</th>
-      <th>Beschreibung</th>
-      <th>Idreferenz</th>
-      <th>Iplanung</th>
-      <th>Kvr</th>
-      <th>LineWidthMM</th>
-      <th>DottedLine</th>
-      <th>DN</th>
-      <th>Di</th>
-      <th>KvrKlartext</th>
-      <th>HasClosedNSCHs</th>
-      <th>Tk</th>
-      <th>Pk</th>
-      <th>InVariant</th>
-      <th>Xkor</th>
-      <th>Ykor</th>
-      <th>GeometriesDiffer</th>
-      <th>bz.Fk</th>
-      <th>bz.Qsvb</th>
-      <th>bz.Irtrenn</th>
-      <th>bz.Leckstatus</th>
-      <th>bz.Leckstart</th>
-      <th>bz.Leckend</th>
-      <th>bz.Leckort</th>
-      <th>bz.Leckmenge</th>
-      <th>bz.Imptnz</th>
-      <th>bz.Zvlimptnz</th>
-      <th>bz.Kantenzv</th>
-      <th>bz.ITrennWithNSCH</th>
-      <th>tk_merge</th>
-      <th>PipeTable: Name</th>
-      <th>PipeTable: Fk</th>
-      <th>PipeTable: Dn</th>
-      <th>PipeTable: Di</th>
-      <th>PipeTable: Da</th>
-      <th>PipeTable: S</th>
-      <th>PipeTable: Wsteig</th>
-      <th>PipeTable: Wtiefe</th>
-      <th>PipeTable: Kt</th>
-      <th>PipeTable: Pn</th>
-      <th>PipeTable: Ausfallzeit</th>
-      <th>PipeTable: Reparatur</th>
-      <th>PipeTable: Rehabilitation</th>
-      <th>PipeTable: Tk</th>
-      <th>PipeTable: Pk</th>
-      <th>PipeTable: InVariant</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>5442010239090746007</td>
-      <td>Rohr V-K03S V-K13S</td>
-      <td>4684070986837856878</td>
-      <td>4779752876656844188</td>
-      <td>5644881417512616095</td>
-      <td>36.42935</td>
-      <td>0</td>
-      <td>0.05</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1000</td>
-      <td>0</td>
-      <td></td>
-      <td>0</td>
-      <td>5029128874972463118</td>
-      <td>4819753480904838964</td>
-      <td>OSM: Knoten 264607345 -&gt; Knoten 476971289; Län...</td>
-      <td>24386111</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0.005</td>
-      <td>0</td>
-      <td>150</td>
-      <td>160.3</td>
-      <td>Vorlauf</td>
-      <td></td>
-      <td>5442010239090746007</td>
-      <td>5442010239090746007</td>
-      <td>False</td>
-      <td>713620.267807</td>
-      <td>5.578828e+06</td>
-      <td>False</td>
-      <td>5442010239090746007</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>4684070986837856878</td>
-      <td>DN 150</td>
-      <td>4927972999088213410</td>
-      <td>150</td>
-      <td>160.3</td>
-      <td>168.3</td>
-      <td>4.0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0.450</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>900</td>
-      <td>4684070986837856878</td>
-      <td>4684070986837856878</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>4917786378639043296</td>
-      <td>Rohr V-K13S V-K23S</td>
-      <td>5103141232976878720</td>
-      <td>4779752876656844188</td>
-      <td>5644881417512616095</td>
-      <td>57.21781</td>
-      <td>0</td>
-      <td>0.05</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1000</td>
-      <td>0</td>
-      <td></td>
-      <td>0</td>
-      <td>5029128874972463118</td>
-      <td>4777543161401667328</td>
-      <td>OSM: Knoten 476971289 -&gt; Knoten 476971283; Län...</td>
-      <td>24386111</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0.005</td>
-      <td>0</td>
-      <td>125</td>
-      <td>131.7</td>
-      <td>Vorlauf</td>
-      <td></td>
-      <td>4917786378639043296</td>
-      <td>4917786378639043296</td>
-      <td>False</td>
-      <td>713602.294600</td>
-      <td>5.578860e+06</td>
-      <td>False</td>
-      <td>4917786378639043296</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>5103141232976878720</td>
-      <td>DN 125</td>
-      <td>4927972999088213410</td>
-      <td>125</td>
-      <td>131.7</td>
-      <td>139.7</td>
-      <td>4.0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0.375</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>800</td>
-      <td>5103141232976878720</td>
-      <td>5103141232976878720</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>4762482310382009633</td>
-      <td>Rohr V-K23S V-K33S</td>
-      <td>5103141232976878720</td>
-      <td>4779752876656844188</td>
-      <td>5644881417512616095</td>
-      <td>40.99482</td>
-      <td>0</td>
-      <td>0.05</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1000</td>
-      <td>0</td>
-      <td></td>
-      <td>0</td>
-      <td>5029128874972463118</td>
-      <td>4893758407691905968</td>
-      <td>OSM: Knoten 476971283 -&gt; Knoten 264607348; Län...</td>
-      <td>24386111</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0.005</td>
-      <td>0</td>
-      <td>125</td>
-      <td>131.7</td>
-      <td>Vorlauf</td>
-      <td></td>
-      <td>4762482310382009633</td>
-      <td>4762482310382009633</td>
-      <td>False</td>
-      <td>713574.061627</td>
-      <td>5.578910e+06</td>
-      <td>False</td>
-      <td>4762482310382009633</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>5103141232976878720</td>
-      <td>DN 125</td>
-      <td>4927972999088213410</td>
-      <td>125</td>
-      <td>131.7</td>
-      <td>139.7</td>
-      <td>4.0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0.375</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>800</td>
-      <td>5103141232976878720</td>
-      <td>5103141232976878720</td>
-      <td>False</td>
-    </tr>
-  </tbody>
-</table>
-</div></div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes[[&quot;tk&quot;, &quot;Name&quot;, &quot;PipeTable: Kt&quot;]].head(3)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetValue(&quot;5711960102265934458&quot;, &quot;Name&quot;)
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
-</pre></div>
-</div>
-<div class="output_area rendered_html docutils container">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>tk</th>
-      <th>Name</th>
-      <th>PipeTable: Kt</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>5442010239090746007</td>
-      <td>Rohr V-K03S V-K13S</td>
-      <td>0.450</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>4917786378639043296</td>
-      <td>Rohr V-K13S V-K23S</td>
-      <td>0.375</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>4762482310382009633</td>
-      <td>Rohr V-K23S V-K33S</td>
-      <td>0.375</td>
-    </tr>
-  </tbody>
-</table>
-</div></div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>object_types = [item for item in dir(s3s.ObjectTypes) if not (item.startswith(&#39;__&#39;) and item.endswith(&#39;__&#39;)) and &quot;Table&quot; in item and not &quot;Row&quot; in item]
-list = [&quot;VarPressureTable&quot;, &quot;VarFlowTable&quot;, &quot;ValveLiftTable&quot;, &quot;PumpSpeedTable&quot;, &quot;MeasuredVariableTable&quot;, &quot;LoadFactorTable&quot;, &quot;ThermalOutputTable&quot;, &quot;TemperatureTable&quot;]
-object_types2 = set(object_types) - set(list)
-object_types2
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-{&#39;CharacteristicLossTable&#39;,
- &#39;CompressorTable&#39;,
- &#39;ControlPointTable&#39;,
- &#39;CrossSectionTable&#39;,
- &#39;DamageRatesTable&#39;,
- &#39;DriveEfficiencyTable&#39;,
- &#39;DrivePowerTable&#39;,
- &#39;EfficiencyConverterTable&#39;,
- &#39;EnergyRecoveryTable&#39;,
- &#39;FunctionTable&#39;,
- &#39;NonReturnValvesTable&#39;,
- &#39;PipeTable&#39;,
- &#39;PumpCharTable&#39;,
- &#39;RegulatorsTable&#39;,
- &#39;ReturnTemperaturTable&#39;,
- &#39;ThermophysPropTable&#39;,
- &#39;VentOpenCloseTable&#39;,
- &#39;WeatherDataTable&#39;}
+(&#39;PARI pk=5711960102265934458&#39;, &#39;string&#39;)
 </pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetTableRows()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-intense-fg ansi-bold">---------------------------------------------------------------------------</span>
+<span class="ansi-red-intense-fg ansi-bold">TypeError</span>                                 Traceback (most recent call last)
+Cell <span class="ansi-green-intense-fg ansi-bold">In[17], line 1</span>
+<span class="ansi-green-intense-fg ansi-bold">----&gt; 1</span> s3s<span style="color: rgb(98,98,98)">.</span>GetTableRows()
+
+<span class="ansi-red-intense-fg ansi-bold">TypeError</span>: SIR3S_Model.GetTableRows() missing 1 required positional argument: &#39;tablePkTk&#39;
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.to_dotnet_enum(s3s.ObjectTypes_TableNames)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-intense-fg ansi-bold">---------------------------------------------------------------------------</span>
+<span class="ansi-red-intense-fg ansi-bold">TypeError</span>                                 Traceback (most recent call last)
+Cell <span class="ansi-green-intense-fg ansi-bold">In[26], line 1</span>
+<span class="ansi-green-intense-fg ansi-bold">----&gt; 1</span> s3s<span style="color: rgb(98,98,98)">.</span>to_dotnet_enum(s3s<span style="color: rgb(98,98,98)">.</span>ObjectTypes_TableNames)
+
+File <span class="ansi-green-intense-fg ansi-bold">~\3S\sir3stoolkit\src\sir3stoolkit\core\wrapper.py:170</span>, in <span class="ansi-cyan-fg">SIR3S_Model.to_dotnet_enum</span><span class="ansi-blue-intense-fg ansi-bold">(self, py_enum_member)</span>
+<span class="ansi-green-fg">    168</span> <span style="color: rgb(95,135,135)"># Check if it&#39;s an Enum member</span>
+<span class="ansi-green-fg">    169</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> <span class="ansi-bold" style="color: rgb(175,0,255)">not</span> <span style="color: rgb(0,135,0)">isinstance</span>(py_enum_member, enum<span style="color: rgb(98,98,98)">.</span>Enum):
+<span class="ansi-green-intense-fg ansi-bold">--&gt; 170</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">raise</span> <span class="ansi-bold" style="color: rgb(215,95,95)">TypeError</span>(<span style="color: rgb(175,0,0)">f</span><span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">Expected Enum member, got </span><span class="ansi-bold" style="color: rgb(175,95,135)">{</span>enum_type<span class="ansi-bold" style="color: rgb(175,95,135)">}</span><span style="color: rgb(175,0,0)">&#34;</span>)
+<span class="ansi-green-fg">    172</span> <span style="color: rgb(95,135,135)"># Use the integer value of Python enum member to create .NET enum</span>
+<span class="ansi-green-fg">    173</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> enum_type <span class="ansi-bold" style="color: rgb(175,0,255)">in</span> (<span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>ObjectTypes, <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>ObjectTypes_TableNames):
+
+<span class="ansi-red-intense-fg ansi-bold">TypeError</span>: Expected Enum member, got &lt;class &#39;sir3stoolkit.core.wrapper.DotNetEnumMeta&#39;&gt;
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(s3s.ProviderTypes)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;enum &#39;ProviderTypes&#39;&gt;
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>1/0
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-intense-fg ansi-bold">---------------------------------------------------------------------------</span>
+<span class="ansi-red-intense-fg ansi-bold">ZeroDivisionError</span>                         Traceback (most recent call last)
+Cell <span class="ansi-green-intense-fg ansi-bold">In[10], line 1</span>
+<span class="ansi-green-intense-fg ansi-bold">----&gt; 1</span> <span style="color: rgb(98,98,98)">1</span><span style="color: rgb(98,98,98)">/</span><span style="color: rgb(98,98,98)">0</span>
+
+<span class="ansi-red-intense-fg ansi-bold">ZeroDivisionError</span>: division by zero
+</pre></div></div>
+</div>
+</section>
+<section id="id2">
+<h1>Test<a class="headerlink" href="#id2" title="Link to this heading"></a></h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import sys
+import clr as net
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r&quot;C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2&quot; #change to local path
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><br/><span></span>sys.path.append(SIR3S_SIRGRAF_DIR)
+
+net.AddReference(r&quot;System&quot;)
+
+net.AddReference(SIR3S_SIRGRAF_DIR+r&quot;\Sir3S_Repository.Utilities&quot;)
+
+# THE COMPILED DLL FOR Sir3S_Toolkit SHOULD ALSO BE COPIED TO SIR3S_SIRGRAF_DIR
+net.AddReference(SIR3S_SIRGRAF_DIR+r&quot;\Sir3S_Toolkit&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;System.Reflection.RuntimeAssembly object at 0x000002A3DFCF0DC0&gt;
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import Sir3S_Repository.Utilities as Util
+import Sir3S_Toolkit.Model as Sir3SToolkit
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
 </div>
 </section>
 
