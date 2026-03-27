@@ -148,10 +148,10 @@ View: `Notebook <tutorials/SIR3S_Model_Mantle/Tutorial053_Assets/ToolkitTutorial
 
 .. _Ttu054:
 
-Tutorial 54: Measured Variable Tables
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Tutorial 54: Time Tables
+^^^^^^^^^^^^^^^^^^^^^^^^
 
-This example demonstrates how view, create, delete and edit measured variable tables (Sollwerttabellen) with pandas dataframes as python representation. The functions presented work for any kind of time table.
+This example demonstrates how view, create, delete and edit measured variable tables (Sollwerttabellen) with pandas dataframes as python representation. The shown operations work for other time table types (["VarPressureTable", "VarFlowTable", "ValveLiftTable", "PumpSpeedTable", "MeasuredVariableTable", "LoadFactorTable", "ThermalOutputTable", "TemperatureTable"].) as well.
 
 View: `Notebook <tutorials/SIR3S_Model_Mantle/Tutorial054_Assets/ToolkitTutorial054.html>`_  | Download: :download:`Notebook <tutorials/SIR3S_Model_Mantle/Tutorial054_Assets/ToolkitTutorial054.ipynb>`.
 
@@ -163,6 +163,15 @@ Tutorial 55:  Compare Calculations
 The Tutorial demonstrates how to execute calculations for the same model in adjusted valve states and view the individual results.
 
 View: `Notebook <tutorials/SIR3S_Model_Mantle/Tutorial055_Assets/ToolkitTutorial055.html>`_  | Download: :download:`Notebook <tutorials/SIR3S_Model_Mantle/Tutorial055_Assets/ToolkitTutorial055.ipynb>`.
+
+.. _Ttu056:
+
+Tutorial 56:  Nominal Diamter Tables
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The Tutorial demonstrates how to view nominal diameter tables (Nennweitentabellen) and include their data in df_pipes.
+
+View: `Notebook <tutorials/SIR3S_Model_Mantle/Tutorial056_Assets/ToolkitTutorial056.html>`_  | Download: :download:`Notebook <tutorials/SIR3S_Model_Mantle/Tutorial056_Assets/ToolkitTutorial056.ipynb>`.
 
 .. _Ttu061:
 
