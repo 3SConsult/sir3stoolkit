@@ -72,6 +72,8 @@ SIR 3S: 90-15-00-24-Upd2
 Version 90.15.17
 """"""""""""""""
 
+Developed and tested using SIR 3S Version: 90-15-00-24-Upd2
+
 Changes
 ~~~~~~~
 
@@ -81,6 +83,8 @@ Changes
                      
 Version 90.15.16
 """"""""""""""""
+
+Developed and tested using SIR 3S Version: 90-15-00-24-Upd2
 
 Bug Fixes
 ~~~~~~~~~
