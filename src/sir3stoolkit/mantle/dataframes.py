@@ -53,7 +53,8 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         properties: Optional[List[str]] = None,
         geometry: Optional[bool] = False,
         end_nodes: Optional[bool] = False,
-        element_type_col: Optional[bool] = False
+        element_type_col: Optional[bool] = False,
+        static_table_type_to_merge_with: Optional[Enum] = None
     ) -> pd.DataFrame | gpd.GeoDataFrame:
 
         """
@@ -185,6 +186,16 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
 
         # --- Dataframe creation ---
         df = pd.DataFrame(rows)
+
+        # --- Post Processing: merge static table ---
+        if static_table_type_to_merge_with:
+            df_v, _, _ = self.get_dataframes_from_static_table_type(table_type=static_table_type_to_merge_with)
+            join_key = "tk_merge"
+            df_v = df_v.rename(columns={
+                col: f"{static_table_type_to_merge_with.name}: {col}"
+                for col in df_v.columns if col != join_key
+            })
+            df = df.merge(df_v, left_on="FkdtroRowd", right_on=join_key, how="left")
 
         # --- Post Processing: data types ---
         re_int       = re.compile(r"^[+-]?\d+$")        # 13
@@ -510,8 +521,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         except Exception as e:
             logger.error(f"[generate_element_dataframe] Error Generating df for element type: {element_type}: {e}")
             return pd.DataFrame()
-            
-
+        
     def add_interior_points_as_multiindex(self, df_results):
         """
         Expand vector properties from tab-separated strings into multiple interior-point
@@ -1238,7 +1248,53 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
 
         return dfPipes
 
-    ## Dataframe Operations: Time Table
+    ## Dataframe Operations: Time/Static Tables
+
+    def get_dataframes_from_nominal_diameter_tables(
+        self,
+        table_type: Enum
+        ) -> pd.DataFrame:
+        """
+        Retrieve and assemble row-wise property data for all nominal diameter tables, returning both a vertically concatenated DataFrame
+        and a dictionary of individual nominal diameter DataFrames.
+
+        :param element_type: Static table element type whose row data should be extracted (eg. table_type=s3s.ObjectTypes.PipeTable).
+        :type element_type: Enum
+
+        :return: A tuple containing:
+                - df_v: vertically concatenated DataFrame of all rows from all tables (needed for other functions)
+                - dfs: dictionary mapping each table tk to its DataFrame
+                - tks_of_static_table_type: list of table tks of the given type
+        :rtype: Tuple[pd.DataFrame, Dict[Any, pd.DataFrame], List[Any]]
+        """
+
+        # --- Obtain all rows from all table of given type ---
+        tks_of_static_table_type = self.GetTksofElementType(table_type)
+        properties_rows=self.GetPropertiesofElementType(self.ObjectTypes[f"{table_type.name}_Row"])
+        dfs = {}
+        for table_tk in tks_of_static_table_type:
+            rows = self.GetTableRows(tablePkTk=table_tk)
+            row_tks = list(rows[0])
+            data = {
+                tk: {prop: self.GetValue(tk, prop)[0] for prop in properties_rows}
+                for tk in row_tks
+            }
+            df = pd.DataFrame.from_dict(data, orient='index')
+            df = df.reset_index(names="tk_merge") # needed for generate_element_model_data_dataframe()
+            dfs[table_tk] = df
+
+        # --- Obtain data and Build df ---
+        
+        if len(dfs) > 1:
+            df_v = pd.concat(dfs, axis=0, ignore_index=True, join="outer")
+            df_v = df_v.sort_index(ascending=True)
+        else:
+            df_v = dfs[tks_of_static_table_type[0]]
+
+        df = pd.DataFrame.from_dict(data, orient='index')
+
+        return (df_v, dfs, tks_of_static_table_type)
+
     def insert_dataframe_into_time_table(
         self,
         time_table_tk: str,
@@ -1356,17 +1412,16 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         
         :param self:
         :param time_table_type: The time table type to extract. Must be one of:
-                                ["VarPressureTable", "VarFlowTable", "ValveLiftTable",
-                                "PumpSpeedTable", "MeasuredVariableTable", "LoadFactorTable"].
+                                ["VarPressureTable", "VarFlowTable", "ValveLiftTable", "PumpSpeedTable", "MeasuredVariableTable", "LoadFactorTable", "ThermalOutputTable", "TemperatureTable"].
         :type time_table_type: str
         :return: A tuple containing:
-                - df_h: The joint DataFrame. If multiple tables are found, this is a column-wise
-                        concatenation (``axis=1``, ``join='outer'``) of all per-TK DataFrames with
-                        the index sorted ascending. If only one table exists, it is returned directly.
-                - dfs: A dictionary mapping each TK to its corresponding DataFrame
-                        (key: TK, value: DataFrame).
-                - tks_of_time_table_type: The list of TKs for the requested time table type, in the
-                        order returned by ``GetTksofElementType``.
+
+                - df_h: 
+                    The joint DataFrame. If multiple tables are found, this is a column-wise concatenation (``axis=1``, ``join='outer'``) of all per-TK DataFrames with the index sorted ascending. If only one table exists, it is returned directly.
+                - dfs: 
+                    A dictionary mapping each TK to its corresponding DataFrame (key: TK, value: DataFrame).
+                - tks_of_time_table_type: 
+                    The list of TKs for the requested time table type, in the order returned by ``GetTksofElementType``.
         :rtype: tuple[pd.DataFrame, dict[Any, pd.DataFrame], list[Any]]
         """
         logger.info(f"[get dataframes from time table type] ...")
