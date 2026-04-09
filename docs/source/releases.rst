@@ -69,6 +69,21 @@ Below the release history with all changes is given in detail.
 SIR 3S: 90-15-00-24-Upd2
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
+Version 90.15.18 (TO BE RELEASED)
+"""""""""""""""""""""""""""""""""
+
+Developed and tested using SIR 3S Version: 90-15-00-24-Upd2
+
+Changes
+~~~~~~~
+
+- plotting.py:
+   - plot_node/pipe_layer() functions now work with both 2d and 3d geometry, the z-coord is stripped if present
+   - plot_pipe_layer(): all identical DN values now handled correctley 
+
+- dataframes.py:
+   insert_dataframe_into_time_table(): time and day col are checked before import to prevent unexpected behaviour
+
 Version 90.15.17
 """"""""""""""""
 

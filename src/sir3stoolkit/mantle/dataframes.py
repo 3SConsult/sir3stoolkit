@@ -1374,6 +1374,27 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         used_reference_time_stamp_as_datetime = datetime.strptime(used_reference_time_stamp, "%Y-%m-%d %H:%M:%S.%f")
 
         df = dataframe[[date_col, time_col, value_col]].copy()
+
+        # Strict format check for date_col to avoid silent coercion later.
+        parsed_date_col = pd.to_datetime(df[date_col].astype(str), format="%Y-%m-%d", errors="coerce")
+        if parsed_date_col.isna().any():
+            invalid_values = df.loc[parsed_date_col.isna(), date_col].astype(str).head(5).tolist()
+            logger.error(
+                f"[insert dataframe into time table] Invalid values in date column {date_col}. "
+                f"Expected format is %Y-%m-%d (e.g. 2026-01-01). Samples: {invalid_values}"
+            )
+            return -1
+
+        # Strict format check for time_col to avoid silent coercion later.
+        parsed_time_col = pd.to_datetime(df[time_col].astype(str), format="%H:%M:%S.%f", errors="coerce")
+        if parsed_time_col.isna().any():
+            invalid_values = df.loc[parsed_time_col.isna(), time_col].astype(str).head(5).tolist()
+            logger.error(
+                f"[insert dataframe into time table] Invalid values in time column {time_col}. "
+                f"Expected format is %H:%M:%S.%f (e.g. 00:00:20.000000). Samples: {invalid_values}"
+            )
+            return -1
+
         logger.info("[insert dataframe into time table] Successfully validated input data.")
 
         # --- Wipe table ---

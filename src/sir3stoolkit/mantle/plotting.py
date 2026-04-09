@@ -21,6 +21,7 @@ import matplotlib.patches as mpatches
 import matplotlib.dates as mdates
 import matplotlib.ticker as mticker
 from collections import OrderedDict
+from shapely.geometry import Point, LineString, MultiLineString
 
 
 import re
@@ -72,7 +73,7 @@ class SIR3S_Model_Plotting(SIR3S_Model):
         ax : matplotlib.axes.Axes, optional
             Axis to plot into. If None, uses current axes (plt.gca()).
         gdf : pandas.DataFrame or geopandas.GeoDataFrame
-            Input with a 'geometry' column of shapely LineString/MultiLineString.
+            Input with a 'geometry' column of shapely LineString/MultiLineString (z-coord is stripped if present).
         width_scaling_col : str, optional
             Column used to scale line widths (numeric). If None, uses `attribute`
             if provided; otherwise constant width.
@@ -126,10 +127,11 @@ class SIR3S_Model_Plotting(SIR3S_Model):
                 return None
             vmin_w = float(width_vmin) if width_vmin is not None else float(np.nanmin(a_w))
             vmax_w = float(width_vmax) if width_vmax is not None else float(np.nanmax(a_w))
-            if not np.isfinite(vmin_w) or not np.isfinite(vmax_w) or vmin_w == vmax_w:
-                vmax_w = vmin_w + 1e-12
-            norm_w = plt.Normalize(vmin=vmin_w, vmax=vmax_w)
-            widths_full = norm_w(a_w) * float(line_width_factor)
+            if vmin_w == vmax_w:
+                widths_full = np.full_like(a_w, float(line_width_factor) * 0.5)
+            else:
+                norm_w = plt.Normalize(vmin=vmin_w, vmax=vmax_w)
+                widths_full = norm_w(a_w) * float(line_width_factor)
         else:
             widths_full = None  # will use constant width later
 
@@ -161,14 +163,33 @@ class SIR3S_Model_Plotting(SIR3S_Model):
         for i, geom in enumerate(df['geometry']):
             if geom is None:
                 continue
+
             gt = getattr(geom, 'geom_type', None)
             col = colors_full[i] if colors_full is not None else mcolors.to_rgba(colors[0])
-            w = widths_full[i] if widths_full is not None else float(line_width_factor) * 0.5
+            w   = widths_full[i] if widths_full is not None else float(line_width_factor) * 0.5
+
+        for i, geom in enumerate(df['geometry']):
+            if geom is None:
+                continue
+
+            geom2 = self.__to_2d_geom(geom)  # clean 3D → 2D
+            gt = geom2.geom_type
+
+            col = colors_full[i] if colors_full is not None else mcolors.to_rgba(colors[0])
+            w   = widths_full[i] if widths_full is not None else float(line_width_factor) * 0.5
+
             if gt == 'LineString':
-                segs.append(np.asarray(geom.coords)); cols.append(col); lw.append(w); count += 1
+                segs.append(np.asarray(geom2.coords))
+                cols.append(col)
+                lw.append(w)
+                count += 1
+
             elif gt == 'MultiLineString':
-                for part in getattr(geom, 'geoms', []):
-                    segs.append(np.asarray(part.coords)); cols.append(col); lw.append(w); count += 1
+                for part in geom2.geoms:
+                    segs.append(np.asarray(part.coords))
+                    cols.append(col)
+                    lw.append(w)
+                    count += 1
 
         if not segs:
             logger.warning("[plot] Pipes: no line geometries found.")
@@ -211,7 +232,7 @@ class SIR3S_Model_Plotting(SIR3S_Model):
         ax : matplotlib.axes.Axes, optional
             Axis to plot into. If None, uses current axes (plt.gca()).
         gdf : pandas.DataFrame or geopandas.GeoDataFrame
-            Input with a 'geometry' column of shapely geometries.
+            Input with a 'geometry' column of shapely geometries (z-coord is stripped if present).
         size_scaling_col : str, optional
             Column used to scale marker sizes (numeric). If None, uses `attribute`
             if provided; otherwise constant size.
@@ -256,13 +277,14 @@ class SIR3S_Model_Plotting(SIR3S_Model):
         if df.empty:
             logger.warning("[plot] Nodes: filtered dataframe is empty.")
             return None
+        
+        geoms = df['geometry'].apply(self.__to_2d_geom)
 
-        geoms = df['geometry']
-        is_point = geoms.apply(lambda g: getattr(g, 'geom_type', None) == 'Point')
+        is_point = geoms.apply(lambda g: getattr(g, "geom_type", None) == "Point")
         if not is_point.any():
             logger.warning("[plot] Nodes: no Point geometries found.")
             return None
-
+        
         # --- SIZE SCALING ---
         size_col = size_scaling_col or attribute
         if size_col is not None:
@@ -740,3 +762,32 @@ class SIR3S_Model_Plotting(SIR3S_Model):
         fig.tight_layout()
         _log_info(f"Plotted {len(all_lines)} lines for {n_props} properties.")
         return fig, axes, used_properties
+
+
+
+    def __to_2d_geom(self, geom):
+        """
+        Drop Z/M and return a 2D Shapely geometry.
+        Works for Point, LineString, MultiLineString.
+        """
+        if geom is None:
+            return None
+
+        gt = geom.geom_type
+
+        # Point
+        if gt == "Point":
+            return Point(geom.x, geom.y)
+
+        # LineString
+        if gt == "LineString":
+            return LineString([(c[0], c[1]) for c in geom.coords])
+
+        # MultiLineString
+        if gt == "MultiLineString":
+            return MultiLineString([
+                LineString([(c[0], c[1]) for c in part.coords])
+                for part in geom.geoms
+            ])
+
+        return geom  
