@@ -231,23 +231,28 @@ Open the ``pre-commit`` file in a text editor and replace its contents with the 
 
 ::
 
-      #!/bin/sh
+         #!/bin/sh
 
-      echo "🔒 Running anonymization script..."
-      "C:/Users/<your_username>/AppData/Local/anaconda3/python.exe" "docs/source/anonymize_notebooks.py"
+         staged_notebooks="$(git diff --cached --name-only --diff-filter=ACMR -- '*.ipynb')"
 
-      if [ $? -ne 0 ]; then
-      echo "❌ Anonymization failed. Commit aborted."
-      exit 1
-      fi
+         echo "🔒 Running anonymization script..."
+         "C:/Users/<your_username>/AppData/Local/anaconda3/python.exe" "docs/source/anonymize_notebooks.py"
 
-      # Re-stage any modified notebooks
-      git ls-files -m | grep '\.ipynb$' | while read -r file; do
-      git add "$file"
-      done
+         if [ $? -ne 0 ]; then
+            echo "❌ Anonymization failed. Commit aborted."
+            exit 1
+         fi
+
+         # Re-stage only notebooks that were already staged before running this hook
+         echo "$staged_notebooks" | grep '\.ipynb$' | while read -r file; do
+            [ -z "$file" ] && continue
+            git add "$file"
+         done
 
 
 Replace ``<your_username>`` with your actual Windows username or adjust the Python path to match your local installation.
+
+Only notebooks that were staged before ``git commit`` are re-staged by this hook. Unstaged notebook changes stay unstaged.
 
 Step 3: Create the Names File
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
