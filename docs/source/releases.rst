@@ -33,6 +33,8 @@ Below an overview over all Toolkit Versions for SIR 3S 90-15 Quebec is given. It
 +----------------+---------------------------+-------------+--------------+
 | Toolkit Version| SIR 3S Version            | dll changed | Release Date |
 +================+===========================+=============+==============+
+| 90.15.18       | 90-15-00-24-Upd2          | No          | 2026-04-10   |
++----------------+---------------------------+-------------+--------------+
 | 90.15.17       | 90-15-00-24-Upd2          | No          | 2026-03-27   |
 +----------------+---------------------------+-------------+--------------+
 | 90.15.16       | 90-15-00-24-Upd2          | No          | 2026-03-15   |
@@ -69,8 +71,8 @@ Below the release history with all changes is given in detail.
 SIR 3S: 90-15-00-24-Upd2
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-Version 90.15.18 (TO BE RELEASED)
-"""""""""""""""""""""""""""""""""
+Version 90.15.18
+""""""""""""""""
 
 Developed and tested using SIR 3S Version: 90-15-00-24-Upd2
 
@@ -82,7 +84,11 @@ Changes
    - plot_pipe_layer(): all identical DN values now handled correctley 
 
 - dataframes.py:
-   insert_dataframe_into_time_table(): time and day col are checked before import to prevent unexpected behaviour
+   - insert_dataframe_into_time_table(): time and day col are checked before import to prevent unexpected behaviour
+   - generate_edge_dataframe():
+      - additional properties can be requested with new param properties
+      - edge-type dataframes are concatenated with aligned union of columns, so missing properties per type stay empty (NaN) instead of failing concat
+      - for column "L": if an edge type does not provide "L", it is created with value 0
 
 Version 90.15.17
 """"""""""""""""

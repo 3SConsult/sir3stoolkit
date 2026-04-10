@@ -113,7 +113,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         if tks:
             tks=self.__resolve_given_tks(element_type=element_type, tks=tks, filter_container_tks=None)
             if len(tks) < 1:
-                return pd.DataFrame
+                return pd.DataFrame()
         else:
             tks=available_tks
             logger.info(f"[model_data] Retrieved {len(available_tks)} element(s) of element type {element_type}.")
@@ -327,7 +327,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         # --- Resolve tks ---
         tks=self.__resolve_given_tks(element_type=element_type, tks=tks, filter_container_tks=None)
         if len(tks) < 1:
-            return pd.DataFrame
+            return pd.DataFrame()
         
         # --- Resolve given properties ---
         try:
@@ -801,22 +801,44 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         return dfs
     
     def generate_edge_dataframe(
-        self      
+        self,
+        properties: Optional[List[str]] = [],      
+        timestamps: Optional[List[Union[str, int]]] = [0]
     ) -> pd.DataFrame:
 
         """
-        Generates dataframes containing all edges in a SIR 3S model.
+        Generate one combined dataframe for all supported edge element types.
 
-        :return: dataframes containing all edges in a SIR 3S model
-        :rtype: DataFrame
+        The function retrieves requested model data and result data for each supported
+        edge type, merges both per type, and concatenates all edge-type dataframes into
+        one unified dataframe.
 
-        :description: edge_types = [
-            'Pipe', 'Valve', 'SafetyValve', 'PressureRegulator', 'DifferentialRegulator',
-            'FlapValve', 'PhaseSeparation', 'FlowControlUnit', 'ControlValve', 'Pump',
-            'DistrictHeatingConsumer', 'DistrictHeatingFeeder', 'Compressor', 'HeaterCooler',
-            'HeatExchanger', 'HeatFeederConsumerStation', 'RART_ControlMode'
-            ] are included.
-            
+        Supported edge element types are:
+        'Pipe', 'Valve', 'SafetyValve', 'PressureRegulator', 'DifferentialRegulator',
+        'FlapValve', 'PhaseSeparation', 'FlowControlUnit', 'ControlValve', 'Pump',
+        'DistrictHeatingConsumer', 'DistrictHeatingFeeder', 'Compressor', 'HeaterCooler',
+        'HeatExchanger', 'HeatFeederConsumerStation', 'RART_ControlMode'.
+
+        :param properties: Properties requested across all edge types. Each property is
+                           validated per element type and split into model-data vs. result
+                           properties. Unknown properties are ignored for that type.
+                           Default: []. Meaning only tk, Fkcont, geometry, fkKI, fkKK, element_type, L will be given as values in df.
+        :type properties: list[str], optional
+        :param timestamps: Timestamps to use when retrieving result properties.
+                           Supports timestamp strings and/or indices, depending on the
+                           underlying timestamp resolver.
+                           Default: [0].
+        :type timestamps: list[Union[str, int]], optional
+
+        :return: A dataframe containing all retrieved edges across supported types.
+                 Column sets are aligned across edge types before concatenation, so
+                 properties not available for some types remain empty (NaN).
+                 If no edge rows are available, an empty dataframe is returned.
+        :rtype: pd.DataFrame
+
+        :notes:
+            - Column 'Fkcont' is always requested from model data.
+            - If model-data column 'L' is missing for an edge type, it is created with 0.
         """
 
         edge_types = [
@@ -829,21 +851,52 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         try:
             enum_members = self.__get_object_type_enums(edge_types, self.ObjectTypes)
             dfs = []
+            enume_members_used = 0
             for em in enum_members:
                 tks = self.GetTksofElementType(ElementType=em)
                 if tks:
-                    df = self.generate_element_model_data_dataframe(
-                        element_type=em,
-                        properties=["Fkcont"],
-                        geometry=True,
-                        end_nodes=True,
-                        element_type_col=True
-                    )
-                    dfs.append(df)
-            df_edges = pd.concat(dfs, ignore_index=True)
-            logger.info(f"[edge dataframe] Retrieved {len(df_edges)} edges from {len(enum_members)} element types.")
+                    logger.info(f"[edge dataframe] Generating dataframe for {em} ...")
+                    enume_members_used += 1
+                    model_data_matches, result_matches, uncategorized = self.__sort_properties_into_model_data_and_results(element_type=em, properties=properties)
+                    model_data_properties = list(model_data_matches)
+                    if "Fkcont" not in model_data_properties:
+                        model_data_properties.append("Fkcont")
+                    result_properties = result_matches
+                    if tks:
+                        df_model = self.generate_element_model_data_dataframe(
+                            element_type=em,
+                            properties=model_data_properties,
+                            geometry=True,
+                            end_nodes=True,
+                            element_type_col=True
+                        )
+                        # Create length column for edge types without valid L
+                        if "L" not in df_model.columns:
+                            df_model["L"] = 0
+
+                        df_results = self.generate_element_results_dataframe(
+                            element_type=em,
+                            properties=result_properties,
+                            timestamps=timestamps
+                        )
+
+                        df = self.merge_model_data_and_results(df_model, df_results)
+                        df = self.add_interior_points_to_start_end_sequence(df)
+                        dfs.append(df)
+                        logger.info(f"[edge dataframe] Generated dataframe for {em}.")
+            if not dfs:
+                logger.warning("[edge dataframe] No edge dataframes were created. Returning empty dataframe.")
+                return pd.DataFrame()
+
+            # Align column sets across edge types so missing properties stay empty (NaN)
+            all_columns = sorted(set().union(*(df.columns for df in dfs)))
+            dfs_aligned = [df.reindex(columns=all_columns) for df in dfs]
+
+            df_edges = pd.concat(dfs_aligned, ignore_index=True, sort=False)
+            logger.info(f"[edge dataframe] Retrieved {len(df_edges)} edges from {enume_members_used} element types.")
         except Exception as e:
             logger.error(f"[edge dataframe] Failed to retrieve edges: {e}")
+            return pd.DataFrame()
 
         return df_edges
         
@@ -851,6 +904,19 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         return [getattr(enum_class, name) for name in names if hasattr(enum_class, name)]
 
     ## Dataframe Creation: Helpers
+
+    def merge_model_data_and_results(self, df_model_data, df_results):
+        try:
+            df_results.columns = df_results.columns.droplevel([1, 2])
+            df_results = df_results.T.unstack(level=0).T
+            df_results = df_results.droplevel(0, axis=0)
+            df = df_model_data.merge(on="tk",
+                                           how="outer",
+                                           right=df_results)
+            return df
+        except Exception as e:
+            logger.error(f"[merge] Error merging model data and results: {e}")
+            return pd.DataFrame()
 
     def __sort_properties_into_model_data_and_results(
         self, 
@@ -873,8 +939,8 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
                 - result_matches
                 - uncategorized
         """
-        model_data_properties = self.GetPropertiesofElementType(element_type=element_type)
-        result_properties = self.GetResultProperties_from_elementType(elementType=element_type)
+        model_data_properties = self.GetPropertiesofElementType(ElementType=element_type)
+        result_properties = self.GetResultProperties_from_elementType(elementType=element_type, onlySelectedVectors=False)
 
         model_data_matches = [prop for prop in properties if prop in model_data_properties]
         result_matches = [prop for prop in properties if prop in result_properties]
