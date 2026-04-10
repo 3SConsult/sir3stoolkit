@@ -203,7 +203,7 @@
         <span class="k">if</span> <span class="n">tks</span><span class="p">:</span>
             <span class="n">tks</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__resolve_given_tks</span><span class="p">(</span><span class="n">element_type</span><span class="o">=</span><span class="n">element_type</span><span class="p">,</span> <span class="n">tks</span><span class="o">=</span><span class="n">tks</span><span class="p">,</span> <span class="n">filter_container_tks</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tks</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span>
+                <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">tks</span><span class="o">=</span><span class="n">available_tks</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[model_data] Retrieved </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">available_tks</span><span class="p">)</span><span class="si">}</span><span class="s2"> element(s) of element type </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
@@ -420,7 +420,7 @@
         <span class="c1"># --- Resolve tks ---</span>
         <span class="n">tks</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__resolve_given_tks</span><span class="p">(</span><span class="n">element_type</span><span class="o">=</span><span class="n">element_type</span><span class="p">,</span> <span class="n">tks</span><span class="o">=</span><span class="n">tks</span><span class="p">,</span> <span class="n">filter_container_tks</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tks</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span>
+            <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
         
         <span class="c1"># --- Resolve given properties ---</span>
         <span class="k">try</span><span class="p">:</span>
@@ -912,22 +912,44 @@
 <div class="viewcode-block" id="SIR3S_Model_Dataframes.generate_edge_dataframe">
 <a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.generate_edge_dataframe">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">generate_edge_dataframe</span><span class="p">(</span>
-        <span class="bp">self</span>      
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">properties</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[],</span>      
+        <span class="n">timestamps</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
 
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Generates dataframes containing all edges in a SIR 3S model.</span>
+<span class="sd">        Generate one combined dataframe for all supported edge element types.</span>
 
-<span class="sd">        :return: dataframes containing all edges in a SIR 3S model</span>
-<span class="sd">        :rtype: DataFrame</span>
+<span class="sd">        The function retrieves requested model data and result data for each supported</span>
+<span class="sd">        edge type, merges both per type, and concatenates all edge-type dataframes into</span>
+<span class="sd">        one unified dataframe.</span>
 
-<span class="sd">        :description: edge_types = [</span>
-<span class="sd">            &#39;Pipe&#39;, &#39;Valve&#39;, &#39;SafetyValve&#39;, &#39;PressureRegulator&#39;, &#39;DifferentialRegulator&#39;,</span>
-<span class="sd">            &#39;FlapValve&#39;, &#39;PhaseSeparation&#39;, &#39;FlowControlUnit&#39;, &#39;ControlValve&#39;, &#39;Pump&#39;,</span>
-<span class="sd">            &#39;DistrictHeatingConsumer&#39;, &#39;DistrictHeatingFeeder&#39;, &#39;Compressor&#39;, &#39;HeaterCooler&#39;,</span>
-<span class="sd">            &#39;HeatExchanger&#39;, &#39;HeatFeederConsumerStation&#39;, &#39;RART_ControlMode&#39;</span>
-<span class="sd">            ] are included.</span>
-<span class="sd">            </span>
+<span class="sd">        Supported edge element types are:</span>
+<span class="sd">        &#39;Pipe&#39;, &#39;Valve&#39;, &#39;SafetyValve&#39;, &#39;PressureRegulator&#39;, &#39;DifferentialRegulator&#39;,</span>
+<span class="sd">        &#39;FlapValve&#39;, &#39;PhaseSeparation&#39;, &#39;FlowControlUnit&#39;, &#39;ControlValve&#39;, &#39;Pump&#39;,</span>
+<span class="sd">        &#39;DistrictHeatingConsumer&#39;, &#39;DistrictHeatingFeeder&#39;, &#39;Compressor&#39;, &#39;HeaterCooler&#39;,</span>
+<span class="sd">        &#39;HeatExchanger&#39;, &#39;HeatFeederConsumerStation&#39;, &#39;RART_ControlMode&#39;.</span>
+
+<span class="sd">        :param properties: Properties requested across all edge types. Each property is</span>
+<span class="sd">                           validated per element type and split into model-data vs. result</span>
+<span class="sd">                           properties. Unknown properties are ignored for that type.</span>
+<span class="sd">                           Default: []. Meaning only tk, Fkcont, geometry, fkKI, fkKK, element_type, L will be given as values in df.</span>
+<span class="sd">        :type properties: list[str], optional</span>
+<span class="sd">        :param timestamps: Timestamps to use when retrieving result properties.</span>
+<span class="sd">                           Supports timestamp strings and/or indices, depending on the</span>
+<span class="sd">                           underlying timestamp resolver.</span>
+<span class="sd">                           Default: [0].</span>
+<span class="sd">        :type timestamps: list[Union[str, int]], optional</span>
+
+<span class="sd">        :return: A dataframe containing all retrieved edges across supported types.</span>
+<span class="sd">                 Column sets are aligned across edge types before concatenation, so</span>
+<span class="sd">                 properties not available for some types remain empty (NaN).</span>
+<span class="sd">                 If no edge rows are available, an empty dataframe is returned.</span>
+<span class="sd">        :rtype: pd.DataFrame</span>
+
+<span class="sd">        :notes:</span>
+<span class="sd">            - Column &#39;Fkcont&#39; is always requested from model data.</span>
+<span class="sd">            - If model-data column &#39;L&#39; is missing for an edge type, it is created with 0.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">edge_types</span> <span class="o">=</span> <span class="p">[</span>
@@ -940,21 +962,52 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="n">enum_members</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_object_type_enums</span><span class="p">(</span><span class="n">edge_types</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="p">)</span>
             <span class="n">dfs</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">enume_members_used</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="k">for</span> <span class="n">em</span> <span class="ow">in</span> <span class="n">enum_members</span><span class="p">:</span>
                 <span class="n">tks</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTksofElementType</span><span class="p">(</span><span class="n">ElementType</span><span class="o">=</span><span class="n">em</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">tks</span><span class="p">:</span>
-                    <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_element_model_data_dataframe</span><span class="p">(</span>
-                        <span class="n">element_type</span><span class="o">=</span><span class="n">em</span><span class="p">,</span>
-                        <span class="n">properties</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Fkcont&quot;</span><span class="p">],</span>
-                        <span class="n">geometry</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                        <span class="n">end_nodes</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                        <span class="n">element_type_col</span><span class="o">=</span><span class="kc">True</span>
-                    <span class="p">)</span>
-                    <span class="n">dfs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-            <span class="n">df_edges</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">dfs</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[edge dataframe] Retrieved </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df_edges</span><span class="p">)</span><span class="si">}</span><span class="s2"> edges from </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">enum_members</span><span class="p">)</span><span class="si">}</span><span class="s2"> element types.&quot;</span><span class="p">)</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[edge dataframe] Generating dataframe for </span><span class="si">{</span><span class="n">em</span><span class="si">}</span><span class="s2"> ...&quot;</span><span class="p">)</span>
+                    <span class="n">enume_members_used</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="n">model_data_matches</span><span class="p">,</span> <span class="n">result_matches</span><span class="p">,</span> <span class="n">uncategorized</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__sort_properties_into_model_data_and_results</span><span class="p">(</span><span class="n">element_type</span><span class="o">=</span><span class="n">em</span><span class="p">,</span> <span class="n">properties</span><span class="o">=</span><span class="n">properties</span><span class="p">)</span>
+                    <span class="n">model_data_properties</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">model_data_matches</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="s2">&quot;Fkcont&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">model_data_properties</span><span class="p">:</span>
+                        <span class="n">model_data_properties</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Fkcont&quot;</span><span class="p">)</span>
+                    <span class="n">result_properties</span> <span class="o">=</span> <span class="n">result_matches</span>
+                    <span class="k">if</span> <span class="n">tks</span><span class="p">:</span>
+                        <span class="n">df_model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_element_model_data_dataframe</span><span class="p">(</span>
+                            <span class="n">element_type</span><span class="o">=</span><span class="n">em</span><span class="p">,</span>
+                            <span class="n">properties</span><span class="o">=</span><span class="n">model_data_properties</span><span class="p">,</span>
+                            <span class="n">geometry</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                            <span class="n">end_nodes</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                            <span class="n">element_type_col</span><span class="o">=</span><span class="kc">True</span>
+                        <span class="p">)</span>
+                        <span class="c1"># Create length column for edge types without valid L</span>
+                        <span class="k">if</span> <span class="s2">&quot;L&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df_model</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+                            <span class="n">df_model</span><span class="p">[</span><span class="s2">&quot;L&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+                        <span class="n">df_results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_element_results_dataframe</span><span class="p">(</span>
+                            <span class="n">element_type</span><span class="o">=</span><span class="n">em</span><span class="p">,</span>
+                            <span class="n">properties</span><span class="o">=</span><span class="n">result_properties</span><span class="p">,</span>
+                            <span class="n">timestamps</span><span class="o">=</span><span class="n">timestamps</span>
+                        <span class="p">)</span>
+
+                        <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">merge_model_data_and_results</span><span class="p">(</span><span class="n">df_model</span><span class="p">,</span> <span class="n">df_results</span><span class="p">)</span>
+                        <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_interior_points_to_start_end_sequence</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+                        <span class="n">dfs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[edge dataframe] Generated dataframe for </span><span class="si">{</span><span class="n">em</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">dfs</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;[edge dataframe] No edge dataframes were created. Returning empty dataframe.&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+
+            <span class="c1"># Align column sets across edge types so missing properties stay empty (NaN)</span>
+            <span class="n">all_columns</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">()</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="k">for</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">dfs</span><span class="p">)))</span>
+            <span class="n">dfs_aligned</span> <span class="o">=</span> <span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">all_columns</span><span class="p">)</span> <span class="k">for</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">dfs</span><span class="p">]</span>
+
+            <span class="n">df_edges</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">dfs_aligned</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[edge dataframe] Retrieved </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df_edges</span><span class="p">)</span><span class="si">}</span><span class="s2"> edges from </span><span class="si">{</span><span class="n">enume_members_used</span><span class="si">}</span><span class="s2"> element types.&quot;</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[edge dataframe] Failed to retrieve edges: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
 
         <span class="k">return</span> <span class="n">df_edges</span></div>
 
@@ -963,6 +1016,22 @@
         <span class="k">return</span> <span class="p">[</span><span class="nb">getattr</span><span class="p">(</span><span class="n">enum_class</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">names</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">enum_class</span><span class="p">,</span> <span class="n">name</span><span class="p">)]</span>
 
     <span class="c1">## Dataframe Creation: Helpers</span>
+
+<div class="viewcode-block" id="SIR3S_Model_Dataframes.merge_model_data_and_results">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.merge_model_data_and_results">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">merge_model_data_and_results</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df_model_data</span><span class="p">,</span> <span class="n">df_results</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">df_results</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">df_results</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">droplevel</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+            <span class="n">df_results</span> <span class="o">=</span> <span class="n">df_results</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">unstack</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+            <span class="n">df_results</span> <span class="o">=</span> <span class="n">df_results</span><span class="o">.</span><span class="n">droplevel</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">df_model_data</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">on</span><span class="o">=</span><span class="s2">&quot;tk&quot;</span><span class="p">,</span>
+                                           <span class="n">how</span><span class="o">=</span><span class="s2">&quot;outer&quot;</span><span class="p">,</span>
+                                           <span class="n">right</span><span class="o">=</span><span class="n">df_results</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">df</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[merge] Error merging model data and results: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span></div>
+
 
     <span class="k">def</span><span class="w"> </span><span class="nf">__sort_properties_into_model_data_and_results</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> 
@@ -985,8 +1054,8 @@
 <span class="sd">                - result_matches</span>
 <span class="sd">                - uncategorized</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">model_data_properties</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetPropertiesofElementType</span><span class="p">(</span><span class="n">element_type</span><span class="o">=</span><span class="n">element_type</span><span class="p">)</span>
-        <span class="n">result_properties</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetResultProperties_from_elementType</span><span class="p">(</span><span class="n">elementType</span><span class="o">=</span><span class="n">element_type</span><span class="p">)</span>
+        <span class="n">model_data_properties</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetPropertiesofElementType</span><span class="p">(</span><span class="n">ElementType</span><span class="o">=</span><span class="n">element_type</span><span class="p">)</span>
+        <span class="n">result_properties</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetResultProperties_from_elementType</span><span class="p">(</span><span class="n">elementType</span><span class="o">=</span><span class="n">element_type</span><span class="p">,</span> <span class="n">onlySelectedVectors</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
         <span class="n">model_data_matches</span> <span class="o">=</span> <span class="p">[</span><span class="n">prop</span> <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">properties</span> <span class="k">if</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">model_data_properties</span><span class="p">]</span>
         <span class="n">result_matches</span> <span class="o">=</span> <span class="p">[</span><span class="n">prop</span> <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">properties</span> <span class="k">if</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">result_properties</span><span class="p">]</span>
