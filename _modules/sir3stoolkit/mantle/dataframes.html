@@ -1271,6 +1271,39 @@
 
     <span class="c1"># Dataframe Operations</span>
 
+<div class="viewcode-block" id="SIR3S_Model_Dataframes.delete_elements_in_dataframe">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.delete_elements_in_dataframe">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">delete_elements_in_dataframe</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">dataframe</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+        <span class="n">tk_col</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;tk&quot;</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Delete all elements in a model that are present in the given dataframe, based on their tk in the specified column.</span>
+
+<span class="sd">        :param dataframe: DataFrame containing the elements to delete. Must include a column with the element&#39;s tk.</span>
+<span class="sd">        :type dataframe: pd.DataFrame</span>
+<span class="sd">        :param tk_col: Name of the column in `dataframe` that contains the element&#39;s tk.</span>
+<span class="sd">        :type tk_col: str, optional</span>
+<span class="sd">        :return: List of all tks that were successfully deleted from the model. If no elements were deleted, an empty list is returned.</span>
+<span class="sd">        :rtype: List[str]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Determine tks to delete</span>
+        <span class="n">tks_to_delete</span> <span class="o">=</span> <span class="n">dataframe</span><span class="p">[</span><span class="n">tk_col</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+
+        <span class="c1"># Delete tks and collect successfully deleted tks</span>
+        <span class="n">tks_deleted</span> <span class="o">=</span><span class="p">[]</span>
+        <span class="k">for</span> <span class="n">tk</span> <span class="ow">in</span> <span class="n">tks_to_delete</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">DeleteElement</span><span class="p">(</span><span class="n">Tk</span><span class="o">=</span><span class="n">tk</span><span class="p">)</span>
+                <span class="n">tks_deleted</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tk</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[delete_elements_in_dataframe] Error deleting element with TK=</span><span class="si">{</span><span class="n">tk</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">tks_deleted</span></div>
+
+
+
     <span class="k">def</span><span class="w"> </span><span class="nf">__apply_model_data_property_updates</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">element_type</span><span class="p">:</span> <span class="n">Enum</span><span class="p">,</span>

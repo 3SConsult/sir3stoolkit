@@ -211,10 +211,1233 @@ Model is open for further operation
 </section>
 <section id="test">
 <h1>test<a class="headerlink" href="#test" title="Link to this heading"></a></h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>node_tks = s3s.GetTksofElementType(s3s.ObjectTypes.Node)
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df =s3s.generate_element_model_data_dataframe(s3s.ObjectTypes.Node)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+[2026-04-14 13:02:50,143] INFO in sir3stoolkit.mantle.dataframes: [model_data] Generating model_data dataframe for element type: ObjectTypes.Node
+[2026-04-14 13:02:50,147] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieved 517 element(s) of element type ObjectTypes.Node.
+[2026-04-14 13:02:50,165] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] No properties given → using ALL model_data properties for ObjectTypes.Node.
+[2026-04-14 13:02:50,166] INFO in sir3stoolkit.mantle.dataframes: [Resolving model_data Properties] Using 37 model_data properties.
+[2026-04-14 13:02:50,167] INFO in sir3stoolkit.mantle.dataframes: [model_data] Retrieving model_data properties [&#39;Name&#39;, &#39;Ktyp&#39;, &#39;Zkor&#39;, &#39;QmEin&#39;, &#39;Lfakt&#39;, &#39;Fkpzon&#39;, &#39;Fkfstf&#39;, &#39;Fkutmp&#39;, &#39;Fkfqps&#39;, &#39;Fkcont&#39;, &#39;Fk2lknot&#39;, &#39;Beschreibung&#39;, &#39;Idreferenz&#39;, &#39;Iplanung&#39;, &#39;Kvr&#39;, &#39;Qakt&#39;, &#39;Xkor&#39;, &#39;Ykor&#39;, &#39;NodeNamePosition&#39;, &#39;ShowNodeName&#39;, &#39;KvrKlartext&#39;, &#39;NumberOfVERB&#39;, &#39;HasBlockConnection&#39;, &#39;Tk&#39;, &#39;Pk&#39;, &#39;InVariant&#39;, &#39;GeometriesDiffer&#39;, &#39;SymbolFactor&#39;, &#39;bz.Drakonz&#39;, &#39;bz.Fk&#39;, &#39;bz.Fkpvar&#39;, &#39;bz.Fkqvar&#39;, &#39;bz.Fklfkt&#39;, &#39;bz.PhEin&#39;, &#39;bz.Tm&#39;, &#39;bz.Te&#39;, &#39;bz.PhMin&#39;]...
+[2026-04-14 13:02:51,557] INFO in sir3stoolkit.mantle.dataframes: [model_data] Done. Shape: (517, 38)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df.head()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>tk</th>
+      <th>Name</th>
+      <th>Ktyp</th>
+      <th>Zkor</th>
+      <th>QmEin</th>
+      <th>Lfakt</th>
+      <th>Fkpzon</th>
+      <th>Fkfstf</th>
+      <th>Fkutmp</th>
+      <th>Fkfqps</th>
+      <th>Fkcont</th>
+      <th>Fk2lknot</th>
+      <th>Beschreibung</th>
+      <th>Idreferenz</th>
+      <th>Iplanung</th>
+      <th>Kvr</th>
+      <th>Qakt</th>
+      <th>Xkor</th>
+      <th>Ykor</th>
+      <th>NodeNamePosition</th>
+      <th>ShowNodeName</th>
+      <th>KvrKlartext</th>
+      <th>NumberOfVERB</th>
+      <th>HasBlockConnection</th>
+      <th>Tk</th>
+      <th>Pk</th>
+      <th>InVariant</th>
+      <th>GeometriesDiffer</th>
+      <th>SymbolFactor</th>
+      <th>bz.Drakonz</th>
+      <th>bz.Fk</th>
+      <th>bz.Fkpvar</th>
+      <th>bz.Fkqvar</th>
+      <th>bz.Fklfkt</th>
+      <th>bz.PhEin</th>
+      <th>bz.Tm</th>
+      <th>bz.Te</th>
+      <th>bz.PhMin</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>5669301360686511351</td>
+      <td>V-K03S</td>
+      <td>QKON</td>
+      <td>554.04</td>
+      <td>0</td>
+      <td>1</td>
+      <td>5520728169779652386</td>
+      <td>4798673252636751115</td>
+      <td>5591325053703727727</td>
+      <td>-1</td>
+      <td>5029128874972463118</td>
+      <td>5761544923588724980</td>
+      <td>Abzw. Am Sonnenbühl</td>
+      <td>3S3768E2953006F125B34916F6A1681667</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>713620.267807</td>
+      <td>5.578828e+06</td>
+      <td>1</td>
+      <td>False</td>
+      <td>Vorlauf</td>
+      <td>0</td>
+      <td>False</td>
+      <td>5669301360686511351</td>
+      <td>5669301360686511351</td>
+      <td>False</td>
+      <td>False</td>
+      <td>0.2</td>
+      <td>0</td>
+      <td>5669301360686511351</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>5397948523091900401</td>
+      <td>V-K13S</td>
+      <td>QKON</td>
+      <td>556.16</td>
+      <td>0</td>
+      <td>1</td>
+      <td>5520728169779652386</td>
+      <td>4798673252636751115</td>
+      <td>5591325053703727727</td>
+      <td>-1</td>
+      <td>5029128874972463118</td>
+      <td>4749864932928780363</td>
+      <td>Anfangsknoten generiert von SirDB</td>
+      <td>3SC30ED954AA2F1D59B1F92FFEBCCB7B5B</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>713602.294600</td>
+      <td>5.578860e+06</td>
+      <td>1</td>
+      <td>False</td>
+      <td>Vorlauf</td>
+      <td>0</td>
+      <td>False</td>
+      <td>5397948523091900401</td>
+      <td>5397948523091900401</td>
+      <td>False</td>
+      <td>False</td>
+      <td>0.2</td>
+      <td>0</td>
+      <td>5397948523091900401</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>5239335112004772156</td>
+      <td>V-K23S</td>
+      <td>QKON</td>
+      <td>561.01</td>
+      <td>0</td>
+      <td>1</td>
+      <td>5520728169779652386</td>
+      <td>4798673252636751115</td>
+      <td>5591325053703727727</td>
+      <td>-1</td>
+      <td>5029128874972463118</td>
+      <td>4899862460906451371</td>
+      <td>Anfangsknoten generiert von SirDB</td>
+      <td>3SC30ED954AA2F1D59B1F92FFEBCCB7B5B</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>713574.061627</td>
+      <td>5.578910e+06</td>
+      <td>1</td>
+      <td>False</td>
+      <td>Vorlauf</td>
+      <td>0</td>
+      <td>False</td>
+      <td>5239335112004772156</td>
+      <td>5239335112004772156</td>
+      <td>False</td>
+      <td>False</td>
+      <td>0.2</td>
+      <td>0</td>
+      <td>5239335112004772156</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>5298886695042021307</td>
+      <td>V-K33S</td>
+      <td>QKON</td>
+      <td>563.06</td>
+      <td>0</td>
+      <td>1</td>
+      <td>5520728169779652386</td>
+      <td>4798673252636751115</td>
+      <td>5591325053703727727</td>
+      <td>-1</td>
+      <td>5029128874972463118</td>
+      <td>5023729173787877121</td>
+      <td>Anfangsknoten generiert von SirDB</td>
+      <td>3SC30ED954AA2F1D59B1F92FFEBCCB7B5B</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>713553.840071</td>
+      <td>5.578946e+06</td>
+      <td>1</td>
+      <td>False</td>
+      <td>Vorlauf</td>
+      <td>0</td>
+      <td>False</td>
+      <td>5298886695042021307</td>
+      <td>5298886695042021307</td>
+      <td>False</td>
+      <td>False</td>
+      <td>0.2</td>
+      <td>0</td>
+      <td>5298886695042021307</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4993257270457791438</td>
+      <td>V-K43S</td>
+      <td>QKON</td>
+      <td>563.26</td>
+      <td>0</td>
+      <td>1</td>
+      <td>5520728169779652386</td>
+      <td>4798673252636751115</td>
+      <td>5591325053703727727</td>
+      <td>-1</td>
+      <td>5029128874972463118</td>
+      <td>5290568056474938825</td>
+      <td>Anfangsknoten generiert von SirDB</td>
+      <td>3SC30ED954AA2F1D59B1F92FFEBCCB7B5B</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>713553.393935</td>
+      <td>5.578952e+06</td>
+      <td>1</td>
+      <td>False</td>
+      <td>Vorlauf</td>
+      <td>0</td>
+      <td>False</td>
+      <td>4993257270457791438</td>
+      <td>4993257270457791438</td>
+      <td>False</td>
+      <td>False</td>
+      <td>0.2</td>
+      <td>0</td>
+      <td>4993257270457791438</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[34]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df[&quot;Kvr&quot;].dtypes
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[34]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+dtype(&#39;int64&#39;)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df[df[&quot;Kvr&quot;] == 1].head()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>tk</th>
+      <th>Name</th>
+      <th>Ktyp</th>
+      <th>Zkor</th>
+      <th>QmEin</th>
+      <th>Lfakt</th>
+      <th>Fkpzon</th>
+      <th>Fkfstf</th>
+      <th>Fkutmp</th>
+      <th>Fkfqps</th>
+      <th>Fkcont</th>
+      <th>Fk2lknot</th>
+      <th>Beschreibung</th>
+      <th>Idreferenz</th>
+      <th>Iplanung</th>
+      <th>Kvr</th>
+      <th>Qakt</th>
+      <th>Xkor</th>
+      <th>Ykor</th>
+      <th>NodeNamePosition</th>
+      <th>ShowNodeName</th>
+      <th>KvrKlartext</th>
+      <th>NumberOfVERB</th>
+      <th>HasBlockConnection</th>
+      <th>Tk</th>
+      <th>Pk</th>
+      <th>InVariant</th>
+      <th>GeometriesDiffer</th>
+      <th>SymbolFactor</th>
+      <th>bz.Drakonz</th>
+      <th>bz.Fk</th>
+      <th>bz.Fkpvar</th>
+      <th>bz.Fkqvar</th>
+      <th>bz.Fklfkt</th>
+      <th>bz.PhEin</th>
+      <th>bz.Tm</th>
+      <th>bz.Te</th>
+      <th>bz.PhMin</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>5669301360686511351</td>
+      <td>V-K03S</td>
+      <td>QKON</td>
+      <td>554.04</td>
+      <td>0</td>
+      <td>1</td>
+      <td>5520728169779652386</td>
+      <td>4798673252636751115</td>
+      <td>5591325053703727727</td>
+      <td>-1</td>
+      <td>5029128874972463118</td>
+      <td>5761544923588724980</td>
+      <td>Abzw. Am Sonnenbühl</td>
+      <td>3S3768E2953006F125B34916F6A1681667</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>713620.267807</td>
+      <td>5.578828e+06</td>
+      <td>1</td>
+      <td>False</td>
+      <td>Vorlauf</td>
+      <td>0</td>
+      <td>False</td>
+      <td>5669301360686511351</td>
+      <td>5669301360686511351</td>
+      <td>False</td>
+      <td>False</td>
+      <td>0.2</td>
+      <td>0</td>
+      <td>5669301360686511351</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>5397948523091900401</td>
+      <td>V-K13S</td>
+      <td>QKON</td>
+      <td>556.16</td>
+      <td>0</td>
+      <td>1</td>
+      <td>5520728169779652386</td>
+      <td>4798673252636751115</td>
+      <td>5591325053703727727</td>
+      <td>-1</td>
+      <td>5029128874972463118</td>
+      <td>4749864932928780363</td>
+      <td>Anfangsknoten generiert von SirDB</td>
+      <td>3SC30ED954AA2F1D59B1F92FFEBCCB7B5B</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>713602.294600</td>
+      <td>5.578860e+06</td>
+      <td>1</td>
+      <td>False</td>
+      <td>Vorlauf</td>
+      <td>0</td>
+      <td>False</td>
+      <td>5397948523091900401</td>
+      <td>5397948523091900401</td>
+      <td>False</td>
+      <td>False</td>
+      <td>0.2</td>
+      <td>0</td>
+      <td>5397948523091900401</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>5239335112004772156</td>
+      <td>V-K23S</td>
+      <td>QKON</td>
+      <td>561.01</td>
+      <td>0</td>
+      <td>1</td>
+      <td>5520728169779652386</td>
+      <td>4798673252636751115</td>
+      <td>5591325053703727727</td>
+      <td>-1</td>
+      <td>5029128874972463118</td>
+      <td>4899862460906451371</td>
+      <td>Anfangsknoten generiert von SirDB</td>
+      <td>3SC30ED954AA2F1D59B1F92FFEBCCB7B5B</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>713574.061627</td>
+      <td>5.578910e+06</td>
+      <td>1</td>
+      <td>False</td>
+      <td>Vorlauf</td>
+      <td>0</td>
+      <td>False</td>
+      <td>5239335112004772156</td>
+      <td>5239335112004772156</td>
+      <td>False</td>
+      <td>False</td>
+      <td>0.2</td>
+      <td>0</td>
+      <td>5239335112004772156</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>5298886695042021307</td>
+      <td>V-K33S</td>
+      <td>QKON</td>
+      <td>563.06</td>
+      <td>0</td>
+      <td>1</td>
+      <td>5520728169779652386</td>
+      <td>4798673252636751115</td>
+      <td>5591325053703727727</td>
+      <td>-1</td>
+      <td>5029128874972463118</td>
+      <td>5023729173787877121</td>
+      <td>Anfangsknoten generiert von SirDB</td>
+      <td>3SC30ED954AA2F1D59B1F92FFEBCCB7B5B</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>713553.840071</td>
+      <td>5.578946e+06</td>
+      <td>1</td>
+      <td>False</td>
+      <td>Vorlauf</td>
+      <td>0</td>
+      <td>False</td>
+      <td>5298886695042021307</td>
+      <td>5298886695042021307</td>
+      <td>False</td>
+      <td>False</td>
+      <td>0.2</td>
+      <td>0</td>
+      <td>5298886695042021307</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4993257270457791438</td>
+      <td>V-K43S</td>
+      <td>QKON</td>
+      <td>563.26</td>
+      <td>0</td>
+      <td>1</td>
+      <td>5520728169779652386</td>
+      <td>4798673252636751115</td>
+      <td>5591325053703727727</td>
+      <td>-1</td>
+      <td>5029128874972463118</td>
+      <td>5290568056474938825</td>
+      <td>Anfangsknoten generiert von SirDB</td>
+      <td>3SC30ED954AA2F1D59B1F92FFEBCCB7B5B</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>713553.393935</td>
+      <td>5.578952e+06</td>
+      <td>1</td>
+      <td>False</td>
+      <td>Vorlauf</td>
+      <td>0</td>
+      <td>False</td>
+      <td>4993257270457791438</td>
+      <td>4993257270457791438</td>
+      <td>False</td>
+      <td>False</td>
+      <td>0.2</td>
+      <td>0</td>
+      <td>4993257270457791438</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>len(node_tks)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+517
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>filtered_node_tks = []
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for tk in node_tks:
+    print(s3s.GetValue(tk, &quot;Kvr&quot;)[0] )
+    if (s3s.GetValue(tk, &quot;Kvr&quot;)[0] == &quot;1&quot;):
+        filtered_node_tks.append(tk)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+1
+2
+2
+2
+2
+2
+1
+2
+1
+2
+1
+2
+1
+2
+2
+1
+1
+2
+1
+2
+2
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>len(filtered_node_tks)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+256
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetGeometryInformation(filtered_node_tks[0])
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&#39;POINT (713620.267807079 5578828.41875394)&#39;
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>1/0
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-intense-fg ansi-bold">---------------------------------------------------------------------------</span>
+<span class="ansi-red-intense-fg ansi-bold">ZeroDivisionError</span>                         Traceback (most recent call last)
+Cell <span class="ansi-green-intense-fg ansi-bold">In[9], line 1</span>
+<span class="ansi-green-intense-fg ansi-bold">----&gt; 1</span> <span style="color: rgb(98,98,98)">1</span><span style="color: rgb(98,98,98)">/</span><span style="color: rgb(98,98,98)">0</span>
+
+<span class="ansi-red-intense-fg ansi-bold">ZeroDivisionError</span>: division by zero
+</pre></div></div>
+</div>
 <section id="Berechnung">
 <h2>Berechnung<a class="headerlink" href="#Berechnung" title="Link to this heading"></a></h2>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>tk_table_ALLG = s3s.GetTksofElementType(s3s.ObjectTypes_TableNames.ALLG)[0]
@@ -222,7 +1445,7 @@ Model is open for further operation
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(s3s.GetPropertiesofElementType(s3s.ObjectTypes_TableNames.ALLG))
@@ -240,7 +1463,7 @@ Model is open for further operation
 <section id="Rechenlauftyp">
 <h3>Rechenlauftyp<a class="headerlink" href="#Rechenlauftyp" title="Link to this heading"></a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.SetValue(Tk=tk_table_ALLG, propertyName=&quot;bz.Iart&quot;, Value=&quot;-1&quot;) # Daten prüfen
@@ -262,7 +1485,7 @@ Value is set
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.CloseModel(saveChangesBeforeClosing=True)
@@ -270,8 +1493,7 @@ Value is set
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
@@ -279,7 +1501,7 @@ True
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>1/0
@@ -1590,6 +2812,14 @@ Only in DB1: []
 Only in DB2: []
 Changed rows: []
 </pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
 </div>
 </section>
 </section>

@@ -71,6 +71,14 @@ Below the release history with all changes is given in detail.
 SIR 3S: 90-15-00-24-Upd2
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
+Changes
+~~~~~~~
+
+Version 90.15.19 (TO BE RELEASED)
+"""""""""""""""""""""""""""""""""
+
+- dataframes.py: new function: delete_elements_in_dataframe(): deletes elements in SIR 3S model based on tk col in given dataframe
+
 Version 90.15.18
 """"""""""""""""
 
