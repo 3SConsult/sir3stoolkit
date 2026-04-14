@@ -1153,6 +1153,36 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
 
     # Dataframe Operations
 
+    def delete_elements_in_dataframe(
+        self,
+        dataframe: pd.DataFrame,
+        tk_col: str = "tk",
+    ) -> List[str]:
+        """
+        Delete all elements in a model that are present in the given dataframe, based on their tk in the specified column.
+
+        :param dataframe: DataFrame containing the elements to delete. Must include a column with the element's tk.
+        :type dataframe: pd.DataFrame
+        :param tk_col: Name of the column in `dataframe` that contains the element's tk.
+        :type tk_col: str, optional
+        :return: List of all tks that were successfully deleted from the model. If no elements were deleted, an empty list is returned.
+        :rtype: List[str]
+        """
+        # Determine tks to delete
+        tks_to_delete = dataframe[tk_col].dropna().unique().tolist()
+
+        # Delete tks and collect successfully deleted tks
+        tks_deleted =[]
+        for tk in tks_to_delete:
+            try:
+                self.DeleteElement(Tk=tk)
+                tks_deleted.append(tk)
+            except Exception as e:
+                logger.error(f"[delete_elements_in_dataframe] Error deleting element with TK={tk}: {e}")
+
+        return tks_deleted
+
+
     def __apply_model_data_property_updates(
         self,
         element_type: Enum,
