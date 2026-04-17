@@ -9,15 +9,19 @@ Created on Fri Nov 22 14:46:49 2024
 import clr as net
 from collections import namedtuple
 import enum
+import logging
 import numpy as np
 import os
+from pathlib import Path
 import sys
+from typing import Optional
 
 import System
 from System.Reflection import Assembly
 
 # Global variables
 SIR3S_SIRGRAF_DIR = None
+logger = logging.getLogger(__name__)
 
 
 # User defined types
@@ -90,26 +94,77 @@ def create_dotnet_enum(name: str, dotnet_enum: str, assembly_ext: str):
 #          to interact with Sir3S
 
 
-def Initialize_Toolkit(basePath: str):
-    """Initialize the SIR 3S Toolkit with the correct SirGraf path. The user must call this function before
-    creating any instances of the classes provided here.
+def _read_base_path_from_config(config_file: Path) -> Optional[str]:
+    try:
+        with config_file.open("r", encoding="utf-8") as f:
+            for raw_line in f:
+                line = raw_line.strip()
+                if line and not line.startswith("#"):
+                    logger.info(f"[Initialization] Using config file at '{config_file}'.")
+                    return line
+    except OSError as ex:
+        logger.warning(f"[Initialization] Failed to read config file '{config_file}': {ex}")
+
+    logger.warning(f"[Initialization] Config file '{config_file}' does not contain a usable path.")
+    return None
+
+
+def _resolve_base_path(basePath: Optional[str]) -> Optional[str]:
+    if basePath is not None and str(basePath).strip() != "":
+        resolved = str(basePath).strip()
+        logger.info(f"[Initialization] Using provided SirGraf path: {resolved}")
+        return resolved
+
+    package_root = Path(__file__).resolve().parents[1]
+    config_file = package_root / "config.txt"
+
+    if not config_file.exists():
+        logger.info(f"[Initialization] No config file found at '{config_file}'.")
+        return None
+
+    resolved = _read_base_path_from_config(config_file)
+    if resolved is not None:
+        logger.info(f"[Initialization] Using SirGraf path from config '{config_file}': {resolved}")
+    return resolved
+
+
+def Initialize_Toolkit(basePath: Optional[str] = None):
+    """Initialize the SIR 3S Toolkit with the SirGraf installation path.
+
+    This function must be called before creating any instances of the classes
+    provided by this package.
+
+    Path resolution order:
+    1. Use ``basePath`` when it is provided and not empty.
+    2. Otherwise, try ``config.txt`` in the package root directory
+       (``sir3stoolkit/config.txt``) and read the first non-empty,
+       non-comment line. Format: C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2
+
+    :param basePath: Optional full path to the SirGraf directory.
+    :type basePath: Optional[str]
+    :return: None
+    :rtype: None
     """
 
     global SIR3S_SIRGRAF_DIR
+    resolved_base_path = _resolve_base_path(basePath)
 
-    if ((basePath is None) or (basePath is System.String.Empty)):
+    if resolved_base_path is None:
+        logger.error(f"[Initialization] SirGraf directory is empty and no valid config.txt path could be resolved.")
         print("SirGraf directory is Empty or None")
+        return
 
     else:
-        SIR3S_SIRGRAF_DIR = basePath
+        SIR3S_SIRGRAF_DIR = resolved_base_path
+        logger.info(f"[Initialization] Initializing toolkit with SirGraf path: {SIR3S_SIRGRAF_DIR}")
         sys.path.append(SIR3S_SIRGRAF_DIR)
 
         net.AddReference(r"System")
 
-        net.AddReference(SIR3S_SIRGRAF_DIR+r"\Sir3S_Repository.Utilities")
+        net.AddReference(os.path.join(SIR3S_SIRGRAF_DIR, "Sir3S_Repository.Utilities"))
 
         # THE COMPILED DLL FOR Sir3S_Toolkit SHOULD ALSO BE COPIED TO SIR3S_SIRGRAF_DIR
-        net.AddReference(SIR3S_SIRGRAF_DIR+r"\Sir3S_Toolkit")
+        net.AddReference(os.path.join(SIR3S_SIRGRAF_DIR, "Sir3S_Toolkit"))
 
 
 class SIR3S_Model:
