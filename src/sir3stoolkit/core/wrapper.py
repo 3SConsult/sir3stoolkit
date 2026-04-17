@@ -19,10 +19,18 @@ from typing import Optional
 import System
 from System.Reflection import Assembly
 
+import logging
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+
+if not logger.hasHandlers():
+    handler = logging.StreamHandler()
+    formatter = logging.Formatter('[%(asctime)s] %(levelname)s in %(name)s: %(message)s')
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
+
 # Global variables
 SIR3S_SIRGRAF_DIR = None
-logger = logging.getLogger(__name__)
-
 
 # User defined types
 textProperties = namedtuple("textProperties",
@@ -100,7 +108,6 @@ def _read_base_path_from_config(config_file: Path) -> Optional[str]:
             for raw_line in f:
                 line = raw_line.strip()
                 if line and not line.startswith("#"):
-                    logger.info(f"[Initialization] Using config file at '{config_file}'.")
                     return line
     except OSError as ex:
         logger.warning(f"[Initialization] Failed to read config file '{config_file}': {ex}")
@@ -112,6 +119,8 @@ def _read_base_path_from_config(config_file: Path) -> Optional[str]:
 def _resolve_base_path(basePath: Optional[str]) -> Optional[str]:
     if basePath is not None and str(basePath).strip() != "":
         resolved = str(basePath).strip()
+        if not Path(resolved).is_dir():
+            raise FileNotFoundError(f"[Initialization] Provided SirGraf path does not exist or is not a directory: {resolved}")
         logger.info(f"[Initialization] Using provided SirGraf path: {resolved}")
         return resolved
 
@@ -124,6 +133,8 @@ def _resolve_base_path(basePath: Optional[str]) -> Optional[str]:
 
     resolved = _read_base_path_from_config(config_file)
     if resolved is not None:
+        if not Path(resolved).is_dir():
+            raise FileNotFoundError(f"[Initialization] SirGraf path from config does not exist or is not a directory: {resolved}")
         logger.info(f"[Initialization] Using SirGraf path from config '{config_file}': {resolved}")
     return resolved
 
@@ -142,6 +153,8 @@ def Initialize_Toolkit(basePath: Optional[str] = None):
 
     :param basePath: Optional full path to the SirGraf directory.
     :type basePath: Optional[str]
+    :raises RuntimeError: If neither ``basePath`` nor ``config.txt`` provide
+        a valid SirGraf path.
     :return: None
     :rtype: None
     """
@@ -150,9 +163,9 @@ def Initialize_Toolkit(basePath: Optional[str] = None):
     resolved_base_path = _resolve_base_path(basePath)
 
     if resolved_base_path is None:
-        logger.error(f"[Initialization] SirGraf directory is empty and no valid config.txt path could be resolved.")
-        print("SirGraf directory is Empty or None")
-        return
+        error_msg = "SirGraf directory is empty and no valid config.txt path could be resolved."
+        logger.error(f"[Initialization] {error_msg}")
+        raise RuntimeError(error_msg)
 
     else:
         SIR3S_SIRGRAF_DIR = resolved_base_path
