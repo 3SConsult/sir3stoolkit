@@ -348,6 +348,7 @@
                 <span class="p">)</span>
                 <span class="n">model_data_props</span> <span class="o">=</span> <span class="n">available_model_data_props</span> <span class="ow">or</span> <span class="p">[]</span>
                 <span class="n">result_props</span> <span class="o">=</span> <span class="n">available_result_props</span> <span class="ow">or</span> <span class="p">[]</span>
+                <span class="n">all_props_to_use</span> <span class="o">=</span> <span class="n">model_data_props</span> <span class="o">+</span> <span class="n">result_props</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">properties</span><span class="p">:</span>
                     <span class="k">if</span> <span class="n">prop</span> <span class="ow">in</span> <span class="p">(</span><span class="n">available_result_props</span> <span class="ow">or</span> <span class="p">[]):</span>
@@ -368,7 +369,7 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="n">tks</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTksofElementType</span><span class="p">(</span><span class="n">ElementType</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_object_type_enum</span><span class="p">(</span><span class="n">element_type</span><span class="p">))</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">tks</span><span class="p">:</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[graph] No elements exist for element type: </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[graph] No elements exist for element type: </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
                 <span class="k">return</span> <span class="n">G</span>
 
             <span class="n">df_model_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_element_model_data_dataframe</span><span class="p">(</span>

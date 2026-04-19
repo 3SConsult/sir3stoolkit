@@ -11,6 +11,20 @@ Welcome to the Developers page! This section provides resources and instructions
 
 - **PyPI Page:** `PyPI Page <https://pypi.org/project/sir3stoolkit/>`_.
 
+Editable Install Local Configuration
+------------------------------------
+
+When working with an editable install (``pip install -e .``), avoid editing the shared file ``src/sir3stoolkit/config.txt`` for your local SirGraf path. Instead, use the local override file ``src/sir3stoolkit/config.local.txt``.
+
+- ``config.local.txt`` is read before ``config.txt`` by ``Initialize_Toolkit()``.
+- ``config.local.txt`` is ignored by Git (see ``.gitignore``), so each developer can keep an individual local path without creating merge conflicts.
+
+Create ``src/sir3stoolkit/config.local.txt`` with one line containing your local SirGraf directory, for example:
+
+.. code-block:: text
+
+   C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2
+
 Setting Up Git on Your Computer
 -------------------------------
 

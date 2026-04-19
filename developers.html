@@ -59,6 +59,7 @@
 <li class="toctree-l1"><a class="reference internal" href="modules.html">API Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="releases.html">Releases</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">For Developers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#editable-install-local-configuration">Editable Install Local Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#setting-up-git-on-your-computer">Setting Up Git on Your Computer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#working-with-github">Working with GitHub</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#cloning-the-github-repository">Cloning the GitHub Repository</a></li>
@@ -115,6 +116,18 @@
 <li><p><strong>GitHub Repository:</strong> <a class="reference external" href="https://github.com/3SConsult/sir3stoolkit">GitHub Repository</a>.</p></li>
 <li><p><strong>PyPI Page:</strong> <a class="reference external" href="https://pypi.org/project/sir3stoolkit/">PyPI Page</a>.</p></li>
 </ul>
+<section id="editable-install-local-configuration">
+<h2>Editable Install Local Configuration<a class="headerlink" href="#editable-install-local-configuration" title="Link to this heading"></a></h2>
+<p>When working with an editable install (<code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-e</span> <span class="pre">.</span></code>), avoid editing the shared file <code class="docutils literal notranslate"><span class="pre">src/sir3stoolkit/config.txt</span></code> for your local SirGraf path. Instead, use the local override file <code class="docutils literal notranslate"><span class="pre">src/sir3stoolkit/config.local.txt</span></code>.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">config.local.txt</span></code> is read before <code class="docutils literal notranslate"><span class="pre">config.txt</span></code> by <code class="docutils literal notranslate"><span class="pre">Initialize_Toolkit()</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">config.local.txt</span></code> is ignored by Git (see <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code>), so each developer can keep an individual local path without creating merge conflicts.</p></li>
+</ul>
+<p>Create <code class="docutils literal notranslate"><span class="pre">src/sir3stoolkit/config.local.txt</span></code> with one line containing your local SirGraf directory, for example:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2
+</pre></div>
+</div>
+</section>
 <section id="setting-up-git-on-your-computer">
 <h2>Setting Up Git on Your Computer<a class="headerlink" href="#setting-up-git-on-your-computer" title="Link to this heading"></a></h2>
 <p>Follow these steps to install and configure Git:</p>
