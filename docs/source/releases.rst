@@ -15,7 +15,7 @@ There are two types of updates:
 
       pip install --upgrade sir3stoolkit==90.15.12 # for specific version
 
-2. **Core updates with DLL changes** - Requires manual replacement of ``Sir3S_Toolkit.dll`` in the SirGraf directory after pip upgrade (1). The newest version of the ``Sir3S_Toolkit.dll`` is shipped alongside the updated pure python code.    
+2. **Core updates with DLL changes** - Requires manual replacement of ``Sir3S_Toolkit.dll`` in the SirGraf directory after pip upgrade (1). The newest version of the ``Sir3S_Toolkit.dll`` is shipped alongside the updated pure python code. Also available at  `https://github.com/3SConsult/sir3stoolkit/tree/main/src/sir3stoolkit/lib  <https://github.com/3SConsult/sir3stoolkit/tree/main/src/sir3stoolkit/lib >`_.
 
 
 The release notes indicate whether a version includes changes to the C# side and therefore if (2) is necessary. 
@@ -77,6 +77,11 @@ Changes
 Version 90.15.19 (TO BE RELEASED)
 """""""""""""""""""""""""""""""""
 
+- wrapper.py:
+   - Initialize_Toolkit() path resolution updated:
+      - if basePath is provided, it is used first
+      - otherwise, if the host process binary is SirGraf.exe, its directory is used as SirGraf base path
+      - otherwise, config.txt in sir3stoolkit is used as fallback
 - dataframes.py: new function: delete_elements_in_dataframe(): deletes elements in SIR 3S model based on tk col in given dataframe
 
 Version 90.15.18
