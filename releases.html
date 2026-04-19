@@ -140,7 +140,7 @@
 </pre></div>
 </div>
 </li>
-<li><p><strong>Core updates with DLL changes</strong> - Requires manual replacement of <code class="docutils literal notranslate"><span class="pre">Sir3S_Toolkit.dll</span></code> in the SirGraf directory after pip upgrade (1). The newest version of the <code class="docutils literal notranslate"><span class="pre">Sir3S_Toolkit.dll</span></code> is shipped alongside the updated pure python code.</p></li>
+<li><p><strong>Core updates with DLL changes</strong> - Requires manual replacement of <code class="docutils literal notranslate"><span class="pre">Sir3S_Toolkit.dll</span></code> in the SirGraf directory after pip upgrade (1). The newest version of the <code class="docutils literal notranslate"><span class="pre">Sir3S_Toolkit.dll</span></code> is shipped alongside the updated pure python code. Also available at  <a href="#id16"><span class="problematic" id="id17">`https://github.com/3SConsult/sir3stoolkit/tree/main/src/sir3stoolkit/lib  &lt;https://github.com/3SConsult/sir3stoolkit/tree/main/src/sir3stoolkit/lib &gt;`_</span></a>.</p></li>
 </ol>
 <p>The release notes indicate whether a version includes changes to the C# side and therefore if (2) is necessary.</p>
 <section id="sir-3s-90-15-quebec">
@@ -248,6 +248,21 @@
 <section id="version-90-15-19-to-be-released">
 <h5>Version 90.15.19 (TO BE RELEASED)<a class="headerlink" href="#version-90-15-19-to-be-released" title="Link to this heading"></a></h5>
 <ul class="simple">
+<li><dl class="simple">
+<dt>wrapper.py:</dt><dd><ul>
+<li><dl class="simple">
+<dt>Initialize_Toolkit() path resolution updated:</dt><dd><ul>
+<li><p>if basePath is provided, it is used first</p></li>
+<li><p>otherwise, if the host process binary is SirGraf.exe, its directory is used as SirGraf base path</p></li>
+<li><p>otherwise, config.txt in sir3stoolkit is used as fallback</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
 <li><p>dataframes.py: new function: delete_elements_in_dataframe(): deletes elements in SIR 3S model based on tk col in given dataframe</p></li>
 </ul>
 </section>
