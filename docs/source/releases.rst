@@ -33,6 +33,8 @@ Below an overview over all Toolkit Versions for SIR 3S 90-15 Quebec is given. It
 +----------------+---------------------------+-------------+--------------+
 | Toolkit Version| SIR 3S Version            | dll changed | Release Date |
 +================+===========================+=============+==============+
+| 90.15.19       | 90-15-00-24-Upd2          | No          | 2026-04-19   |
++----------------+---------------------------+-------------+--------------+
 | 90.15.18       | 90-15-00-24-Upd2          | No          | 2026-04-10   |
 +----------------+---------------------------+-------------+--------------+
 | 90.15.17       | 90-15-00-24-Upd2          | No          | 2026-03-27   |
@@ -71,18 +73,21 @@ Below the release history with all changes is given in detail.
 SIR 3S: 90-15-00-24-Upd2
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
+Version 90.15.19
+""""""""""""""""
+
+Developed and tested using SIR 3S Version: 90-15-00-24-Upd2
+
 Changes
 ~~~~~~~
-
-Version 90.15.19 (TO BE RELEASED)
-"""""""""""""""""""""""""""""""""
 
 - wrapper.py:
    - Initialize_Toolkit() path resolution updated:
       - if basePath is provided, it is used first
       - otherwise, if the host process binary is SirGraf.exe, its directory is used as SirGraf base path
-      - otherwise, config.txt in sir3stoolkit is used as fallback
+      - otherwise, config.local.txt in sir3stoolkit is checked (only needed by devs) first and config.txt is used as fallback. 
 - dataframes.py: new function: delete_elements_in_dataframe(): deletes elements in SIR 3S model based on tk col in given dataframe
+- add_properties_to_graph(): fixed if no props are given
 
 Version 90.15.18
 """"""""""""""""

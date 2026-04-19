@@ -252,6 +252,7 @@ class SIR3S_Model_Alternative_Models(SIR3S_Model_Dataframes):
                 )
                 model_data_props = available_model_data_props or []
                 result_props = available_result_props or []
+                all_props_to_use = model_data_props + result_props
             else:
                 for prop in properties:
                     if prop in (available_result_props or []):
@@ -272,7 +273,7 @@ class SIR3S_Model_Alternative_Models(SIR3S_Model_Dataframes):
         try:
             tks = self.GetTksofElementType(ElementType=self.get_object_type_enum(element_type))
             if not tks:
-                logger.error(f"[graph] No elements exist for element type: {element_type}: {e}")
+                logger.error(f"[graph] No elements exist for element type: {element_type}")
                 return G
 
             df_model_data = self.generate_element_model_data_dataframe(

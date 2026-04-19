@@ -153,18 +153,26 @@ def _resolve_base_path(basePath: Optional[str]) -> Optional[str]:
         return resolved_from_host
 
     package_root = Path(__file__).resolve().parents[1]
-    config_file = package_root / "config.txt"
+    config_files = [
+        package_root / "config.local.txt",
+        package_root / "config.txt",
+    ]
 
-    if not config_file.exists():
-        logger.info(f"[Initialization] No config file found at '{config_file}'.")
-        return None
+    for config_file in config_files:
+        if not config_file.exists():
+            continue
 
-    resolved = _read_base_path_from_config(config_file)
-    if resolved is not None:
-        if not Path(resolved).is_dir():
-            raise FileNotFoundError(f"[Initialization] SirGraf path from config does not exist or is not a directory: {resolved}")
-        logger.info(f"[Initialization] Using SirGraf path from config '{config_file}': {resolved}")
-    return resolved
+        resolved = _read_base_path_from_config(config_file)
+        if resolved is not None:
+            if not Path(resolved).is_dir():
+                raise FileNotFoundError(f"[Initialization] SirGraf path from config does not exist or is not a directory: {resolved}")
+            logger.info(f"[Initialization] Using SirGraf path from config '{config_file}': {resolved}")
+            return resolved
+
+    logger.info(
+        f"[Initialization] No config files found at '{config_files[0]}' or '{config_files[1]}'."
+    )
+    return None
 
 # CAUTION: User should call this function before creating any instances of the classes provided through this library !!!
 #          Failed to do so will result in incorrect initialization of classes and object model that are key components
@@ -179,14 +187,15 @@ def Initialize_Toolkit(basePath: Optional[str] = None):
     Path resolution order:
     1. Use ``basePath`` when it is provided and not empty.
     2. Otherwise, if Toolkit is used in SIR Graf console, use its directory.
-    3. Otherwise, try ``config.txt`` in the package root directory
-       (``sir3stoolkit/config.txt``) and read the first non-empty,
-       non-comment line. Format: C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2
+    3. Otherwise, try ``config.local.txt`` in the package root directory
+       (``sir3stoolkit/config.local.txt``), then ``config.txt`` in the same
+       location, and read the first non-empty, non-comment line.
+       Format: C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2
 
     :param basePath: Optional full path to the SirGraf directory.
     :type basePath: Optional[str]
-    :raises RuntimeError: If ``basePath``, host app inspection, and
-        ``config.txt`` do not provide a valid SirGraf path.
+    :raises RuntimeError: If ``basePath``, host app inspection, and config
+        files do not provide a valid SirGraf path.
     :return: None
     :rtype: None
     """
@@ -195,7 +204,7 @@ def Initialize_Toolkit(basePath: Optional[str] = None):
     resolved_base_path = _resolve_base_path(basePath)
 
     if resolved_base_path is None:
-        error_msg = "SirGraf directory is empty and no valid path could be resolved from basePath, host app, or config.txt."
+        error_msg = "SirGraf directory is empty and no valid path could be resolved from basePath, host app, config.local.txt, or config.txt."
         logger.error(f"[Initialization] {error_msg}")
         raise RuntimeError(error_msg)
 
