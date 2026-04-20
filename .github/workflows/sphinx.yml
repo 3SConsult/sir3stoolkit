@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest  # Windows Runner statt Ubuntu
+    runs-on: ubuntu-latest
 
     steps:
       - name: Check out repository
@@ -23,11 +23,9 @@ jobs:
           pip install .[dev,sphinx,mantle]
 
       - name: Install Pandoc
-        run: choco install pandoc -y
-
-      - name: Set PYTHONPATH (Windows)
-        run:  |
-          echo "PYTHONPATH=${{ github.workspace }}\\src" >> $env:GITHUB_ENV
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pandoc
 
       - name: Generate rst files with sphinx-apidoc
         run: |
