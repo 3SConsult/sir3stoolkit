@@ -15,7 +15,7 @@ There are two types of updates:
 
       pip install --upgrade sir3stoolkit==90.15.12 # for specific version
 
-2. **Core updates with DLL changes** - Requires manual replacement of ``Sir3S_Toolkit.dll`` in the SirGraf directory after pip upgrade (1). The newest version of the ``Sir3S_Toolkit.dll`` is shipped alongside the updated pure python code. Also available at  `https://github.com/3SConsult/sir3stoolkit/tree/main/src/sir3stoolkit/lib  <https://github.com/3SConsult/sir3stoolkit/tree/main/src/sir3stoolkit/lib >`_.
+2. **Core updates with DLL changes** - Requires manual replacement of ``Sir3S_Toolkit.dll`` in the SirGraf directory after pip upgrade (1). The newest version of the ``Sir3S_Toolkit.dll`` is shipped alongside the updated pure python code. Also available at  `https://github.com/3SConsult/sir3stoolkit/tree/main/src/sir3stoolkit/lib <https://github.com/3SConsult/sir3stoolkit/tree/main/src/sir3stoolkit/lib >`_.
 
 
 The release notes indicate whether a version includes changes to the C# side and therefore if (2) is necessary. 
