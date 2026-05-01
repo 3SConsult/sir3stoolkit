@@ -1,17 +1,16 @@
-import pytest
 from enum import Enum
 import logging
+
 import pandas as pd
 from shapely.geometry import Point
 
-from sir3stoolkit.mantle import dataframes
 
 class DummyObjectTypes(Enum):
     Node = "Node"
     Pipe = "Pipe"
 
 
-def _configure_base_stubs(s3s_model_dataframes_instance):
+def _configure_model_dataframe_stubs(s3s_model_dataframes_instance):
     s3s_model_dataframes_instance.GetTksofElementType = lambda ElementType: ["N1", "N2"]
     s3s_model_dataframes_instance._SIR3S_Model_Dataframes__resolve_given_tks = (
         lambda element_type, tks, filter_container_tks: tks if tks else ["N1", "N2"]
@@ -38,7 +37,7 @@ def _configure_base_stubs(s3s_model_dataframes_instance):
 
 
 def test_generate_element_model_data_dataframe_defaults(s3s_model_dataframes_instance):
-    _configure_base_stubs(s3s_model_dataframes_instance)
+    _configure_model_dataframe_stubs(s3s_model_dataframes_instance)
 
     df = s3s_model_dataframes_instance.generate_element_model_data_dataframe(
         element_type=DummyObjectTypes.Node
@@ -50,34 +49,34 @@ def test_generate_element_model_data_dataframe_defaults(s3s_model_dataframes_ins
 
 
 def test_generate_element_model_data_dataframe_with_tks_filter(s3s_model_dataframes_instance):
-    _configure_base_stubs(s3s_model_dataframes_instance)
+    _configure_model_dataframe_stubs(s3s_model_dataframes_instance)
 
     df = s3s_model_dataframes_instance.generate_element_model_data_dataframe(
         element_type=DummyObjectTypes.Node,
-        tks=["N2"]
+        tks=["N2"],
     )
 
     assert list(df["tk"]) == ["N2"]
 
 
 def test_generate_element_model_data_dataframe_with_empty_properties(s3s_model_dataframes_instance):
-    _configure_base_stubs(s3s_model_dataframes_instance)
+    _configure_model_dataframe_stubs(s3s_model_dataframes_instance)
 
     df = s3s_model_dataframes_instance.generate_element_model_data_dataframe(
         element_type=DummyObjectTypes.Node,
-        properties=[]
+        properties=[],
     )
 
     assert list(df.columns) == ["tk"]
 
 
 def test_generate_element_model_data_dataframe_with_geometry(s3s_model_dataframes_instance):
-    _configure_base_stubs(s3s_model_dataframes_instance)
+    _configure_model_dataframe_stubs(s3s_model_dataframes_instance)
 
     df = s3s_model_dataframes_instance.generate_element_model_data_dataframe(
         element_type=DummyObjectTypes.Node,
         properties=[],
-        geometry=True
+        geometry=True,
     )
 
     assert "geometry" in df.columns
@@ -85,13 +84,13 @@ def test_generate_element_model_data_dataframe_with_geometry(s3s_model_dataframe
 
 
 def test_generate_element_model_data_dataframe_with_end_nodes_requested_for_node(s3s_model_dataframes_instance, caplog):
-    _configure_base_stubs(s3s_model_dataframes_instance)
+    _configure_model_dataframe_stubs(s3s_model_dataframes_instance)
 
     with caplog.at_level(logging.WARNING):
         df = s3s_model_dataframes_instance.generate_element_model_data_dataframe(
             element_type=DummyObjectTypes.Node,
             properties=[],
-            end_nodes=True
+            end_nodes=True,
         )
 
     assert "End nodes are not defined for element type" in caplog.text
@@ -102,12 +101,12 @@ def test_generate_element_model_data_dataframe_with_end_nodes_requested_for_node
 
 
 def test_generate_element_model_data_dataframe_with_end_nodes_for_pipe(s3s_model_dataframes_instance):
-    _configure_base_stubs(s3s_model_dataframes_instance)
+    _configure_model_dataframe_stubs(s3s_model_dataframes_instance)
 
     df = s3s_model_dataframes_instance.generate_element_model_data_dataframe(
         element_type=DummyObjectTypes.Pipe,
         properties=[],
-        end_nodes=True
+        end_nodes=True,
     )
 
     assert "fkKI" in df.columns
@@ -117,12 +116,12 @@ def test_generate_element_model_data_dataframe_with_end_nodes_for_pipe(s3s_model
 
 
 def test_generate_element_model_data_dataframe_with_element_type_column(s3s_model_dataframes_instance):
-    _configure_base_stubs(s3s_model_dataframes_instance)
+    _configure_model_dataframe_stubs(s3s_model_dataframes_instance)
 
     df = s3s_model_dataframes_instance.generate_element_model_data_dataframe(
         element_type=DummyObjectTypes.Node,
         properties=[],
-        element_type_col=True
+        element_type_col=True,
     )
 
     assert "element type" in df.columns
@@ -130,7 +129,7 @@ def test_generate_element_model_data_dataframe_with_element_type_column(s3s_mode
 
 
 def test_generate_element_model_data_dataframe_with_resolve_references(s3s_model_dataframes_instance):
-    _configure_base_stubs(s3s_model_dataframes_instance)
+    _configure_model_dataframe_stubs(s3s_model_dataframes_instance)
     s3s_model_dataframes_instance.get_dataframes_from_nominal_diameter_tables = (
         lambda: (pd.DataFrame([{"tk_merge": "row_1", "D": 80}, {"tk_merge": "row_2", "D": 100}]), None, None)
     )
@@ -138,7 +137,7 @@ def test_generate_element_model_data_dataframe_with_resolve_references(s3s_model
     df = s3s_model_dataframes_instance.generate_element_model_data_dataframe(
         element_type=DummyObjectTypes.Pipe,
         properties=["FkdtroRowd"],
-        resolve_references=True
+        resolve_references=True,
     )
 
     assert "PipeTable: D" in df.columns
