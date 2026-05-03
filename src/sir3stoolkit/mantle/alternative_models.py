@@ -15,15 +15,9 @@ from shapely.geometry.base import BaseGeometry
 import networkx as nx
 from typing import List, Optional, Union
 
-import logging
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
+from sir3stoolkit.logging_utils import get_logger
 
-if not logger.hasHandlers():
-    handler = logging.StreamHandler()
-    formatter = logging.Formatter('[%(asctime)s] %(levelname)s in %(name)s: %(message)s')
-    handler.setFormatter(formatter)
-    logger.addHandler(handler)
+logger = get_logger(__name__)
 
 from sir3stoolkit.mantle.dataframes import SIR3S_Model_Dataframes
 

@@ -9,7 +9,6 @@ Created on Fri Nov 22 14:46:49 2024
 import clr as net
 from collections import namedtuple
 import enum
-import logging
 import numpy as np
 import os
 from pathlib import Path
@@ -19,15 +18,24 @@ from typing import Optional
 import System
 from System.Reflection import Assembly
 
-import logging
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
+from sir3stoolkit.logging_utils import emit_message, get_logger, get_process_executable_path
 
-if not logger.hasHandlers():
-    handler = logging.StreamHandler()
-    formatter = logging.Formatter('[%(asctime)s] %(levelname)s in %(name)s: %(message)s')
-    handler.setFormatter(formatter)
-    logger.addHandler(handler)
+logger = get_logger(__name__)
+
+def _log_message(message, level: Optional[str] = None):
+    """Route output through module logging with optional explicit level."""
+    if level is None:
+        emit_message(logger, message)
+        return
+
+    normalized_level = str(level).strip().lower()
+    if normalized_level == "error":
+        logger.error(str(message))
+    elif normalized_level == "warning":
+        logger.warning(str(message))
+    else:
+        logger.info(str(message))
+
 
 # Global variables
 SIR3S_SIRGRAF_DIR = None
@@ -108,31 +116,29 @@ def _read_base_path_from_config(config_file: Path) -> Optional[str]:
                 if line and not line.startswith("#"):
                     return line
     except OSError as ex:
-        logger.warning(f"[Initialization] Failed to read config file '{config_file}': {ex}")
+        _log_message(f"[Initialization] Failed to read config file '{config_file}': {ex}", level="warning")
 
-    logger.warning(f"[Initialization] Config file '{config_file}' does not contain a usable path.")
+    _log_message(f"[Initialization] Config file '{config_file}' does not contain a usable path.", level="warning")
     return None
 
 
 def _read_base_path_from_host_app() -> Optional[str]:
     """Return host application directory when running inside SirGraf.exe."""
     try:
-        process = System.Diagnostics.Process.GetCurrentProcess()
-        main_module = process.MainModule
-        if main_module is None or not main_module.FileName:
+        app_binary_path = get_process_executable_path()
+        if app_binary_path is None:
             return None
 
-        app_binary_path = str(main_module.FileName)
         app_binary_name = Path(app_binary_path).name.lower()
         if app_binary_name != "sirgraf.exe":
-            logger.info(f"[Initialization] Host application is '{app_binary_name}', not 'SirGraf.exe'. Toolkit is attempted to be initialized inside a non-SirGraf process ...")
+            _log_message(f"[Initialization] Host application is '{app_binary_name}', not 'SirGraf.exe'. Toolkit is attempted to be initialized inside a non-SirGraf process ...", level="info")
             return None
 
         app_dir = str(Path(app_binary_path).parent)
-        logger.info(f"[Initialization] Using host application path from SirGraf.exe: {app_dir}")
+        _log_message(f"[Initialization] Using host application path from SirGraf.exe: {app_dir}", level="info")
         return app_dir
     except Exception as ex:
-        logger.warning(f"[Initialization] Failed to inspect host application binary: {ex}")
+        _log_message(f"[Initialization] Failed to inspect host application binary: {ex}", level="warning")
         return None
 
 
@@ -141,7 +147,7 @@ def _resolve_base_path(basePath: Optional[str]) -> Optional[str]:
         resolved = str(basePath).strip()
         if not Path(resolved).is_dir():
             raise FileNotFoundError(f"[Initialization] Provided SirGraf path does not exist or is not a directory: {resolved}")
-        logger.info(f"[Initialization] Using provided SirGraf path: {resolved}")
+        _log_message(f"[Initialization] Using provided SirGraf path: {resolved}", level="info")
         return resolved
 
     resolved_from_host = _read_base_path_from_host_app()
@@ -166,11 +172,12 @@ def _resolve_base_path(basePath: Optional[str]) -> Optional[str]:
         if resolved is not None:
             if not Path(resolved).is_dir():
                 raise FileNotFoundError(f"[Initialization] SirGraf path from config does not exist or is not a directory: {resolved}")
-            logger.info(f"[Initialization] Using SirGraf path from config '{config_file}': {resolved}")
+            _log_message(f"[Initialization] Using SirGraf path from config '{config_file}': {resolved}", level="info")
             return resolved
 
-    logger.info(
-        f"[Initialization] No config files found at '{config_files[0]}' or '{config_files[1]}'."
+    _log_message(
+        f"[Initialization] No config files found at '{config_files[0]}' or '{config_files[1]}'.",
+        level="info"
     )
     return None
 
@@ -205,12 +212,12 @@ def Initialize_Toolkit(basePath: Optional[str] = None):
 
     if resolved_base_path is None:
         error_msg = "SirGraf directory is empty and no valid path could be resolved from basePath, host app, config.local.txt, or config.txt."
-        logger.error(f"[Initialization] {error_msg}")
+        _log_message(f"[Initialization] {error_msg}", level="error")
         raise RuntimeError(error_msg)
 
     else:
         SIR3S_SIRGRAF_DIR = resolved_base_path
-        logger.info(f"[Initialization] Initializing toolkit with SirGraf path: {SIR3S_SIRGRAF_DIR}")
+        _log_message(f"[Initialization] Initializing toolkit with SirGraf path: {SIR3S_SIRGRAF_DIR}", level="info")
         sys.path.append(SIR3S_SIRGRAF_DIR)
 
         net.AddReference(r"System")
@@ -239,9 +246,9 @@ class SIR3S_Model:
         if (self.toolkit is None):
             self.toolkit = Sir3SToolkit.CSir3SToolkitFactory.CreateToolkit(None, SIR3S_SIRGRAF_DIR, r"90-15-00-01")
         if (self.toolkit is None):
-            print("Error in initializing the toolkit")
+            _log_message("Error in initializing the toolkit")
         else:
-            print("Initialization complete")
+            _log_message("Initialization complete")
 
         # Create all necessay Enums for user
         self.ObjectTypes = create_dotnet_enum("ObjectTypes", "Sir3SObjectTypes", "Sir3S_Repository.Interfaces.dll")
@@ -315,13 +322,13 @@ class SIR3S_Model:
         """
         isTransactionStarted, message = self.toolkit.StartTransaction(SessionName)
         if not isTransactionStarted:
-            print(message)
+            _log_message(message)
         else:
             if message == "":
                 if self.outputComments:
-                    print("Now you can make changes to the model")
+                    _log_message("Now you can make changes to the model")
             else:
-                print(message)
+                _log_message(message)
 
     def EndTransaction(self):
         """
@@ -338,13 +345,13 @@ class SIR3S_Model:
         """
         isTransactionEnded, message = self.toolkit.EndTransaction()
         if not isTransactionEnded:
-            print(message)
+            _log_message(message)
         else:
             if message == "":
                 if self.outputComments:
-                    print("Transaction has ended. Please open up a new transaction if you want to make further changes")
+                    _log_message("Transaction has ended. Please open up a new transaction if you want to make further changes")
             else:
-                print(message)
+                _log_message(message)
 
     def StartEditSession(self, SessionName: str):
         """
@@ -361,13 +368,13 @@ class SIR3S_Model:
         """
         isTransactionStarted, message = self.toolkit.StartEditSession(SessionName)
         if not isTransactionStarted:
-            print(message)
+            _log_message(message)
         else:
             if message == "":
                 if self.outputComments:
-                    print("Now you can make changes to the model")
+                    _log_message("Now you can make changes to the model")
             else:
-                print(message)
+                _log_message(message)
 
     def EndEditSession(self):
         """
@@ -381,13 +388,13 @@ class SIR3S_Model:
         """
         isTransactionEnded, message = self.toolkit.EndEditSession()
         if not isTransactionEnded:
-            print(message)
+            _log_message(message)
         else:
             if message == "":
                 if self.outputComments:
-                    print("Edit Session has ended. Please open up a new session if you want to make further changes")
+                    _log_message("Edit Session has ended. Please open up a new session if you want to make further changes")
             else:
-                print(message)
+                _log_message(message)
 
     def GetCurrentTimeStamp(self) -> str:
         """
@@ -427,7 +434,7 @@ class SIR3S_Model:
         """
         value, isFound, valueType, error = self.toolkit.GetValue(Tk, propertyName)
         if value is None:
-            print(f"Error: {error}")
+            _log_message(f"Error: {error}")
         return value, valueType
 
     def SetValue(self, Tk: str, propertyName: str, Value: str):
@@ -447,9 +454,9 @@ class SIR3S_Model:
         isValueSet, error = self.toolkit.SetValue(Tk, propertyName, Value)
         if (isValueSet):
             if self.outputComments:
-                print("Value is set")
+                _log_message("Value is set")
         else:
-            print(f"Error: {error}")
+            _log_message(f"Error: {error}")
 
     def OpenModelXml(self, Path: str, SaveCurrentModel: bool):
         """
@@ -467,9 +474,9 @@ class SIR3S_Model:
         result, error = self.toolkit.OpenModelXml(Path, SaveCurrentModel)
         if result:
             if self.outputComments:
-                print("Model is open for further operation")
+                _log_message("Model is open for further operation")
         else:
-            print("Error while opening the model," + error)
+            _log_message("Error while opening the model," + error)
 
     def OpenModel(self, dbName: str, providerType, Mid: str, saveCurrentlyOpenModel: bool, namedInstance: str,
                   userID: str, password: str):
@@ -501,9 +508,9 @@ class SIR3S_Model:
                                                namedInstance, userID, password)
         if result:
             if self.outputComments:
-                print("Model is open for further operation")
+                _log_message("Model is open for further operation")
         else:
-            print("Error while opening the model, " + error)
+            _log_message("Error while opening the model, " + error)
 
     def CloseModel(self, saveChangesBeforeClosing: bool) -> bool:
         """
@@ -518,7 +525,7 @@ class SIR3S_Model:
         """
         isClosed, error = self.toolkit.CloseModel(saveChangesBeforeClosing)
         if not isClosed:
-            print("Error while closing the model, " + error)
+            _log_message("Error while closing the model, " + error)
         return isClosed
 
     def ExecCalculation(self, waitForSirCalcToExit: bool):
@@ -533,10 +540,10 @@ class SIR3S_Model:
         """
         isExecuted, error = self.toolkit.ExecCalculation(waitForSirCalcToExit)
         if not isExecuted:
-            print(f"Could not start Model Calculation: {error}")
+            _log_message(f"Could not start Model Calculation: {error}")
         else:
             if self.outputComments:
-                print("Model Calculation is complete")
+                _log_message("Model Calculation is complete")
 
     def GetTimeStamps(self) -> tuple[list, str, str, str]:
         """
@@ -548,7 +555,7 @@ class SIR3S_Model:
         """
         timestamps, error, tsStat, tsMin, tsMax = self.toolkit.GetTimeStamps()
         if len(timestamps) == 0:
-            print(f"Error : {error}")
+            _log_message(f"Error : {error}")
         return list(timestamps), tsStat, tsMin, tsMax
 
     def GetTksofElementType(self, ElementType) -> list:
@@ -565,7 +572,7 @@ class SIR3S_Model:
         ElementType_net = self.to_dotnet_enum(ElementType)
         Tk_list = self.toolkit.GetAllElementKeys(ElementType_net)
         if list(Tk_list) is None:
-            print(f"Couldn't retrieve any Tk of element type {ElementType}")
+            _log_message(f"Couldn't retrieve any Tk of element type {ElementType}")
         return list(Tk_list)
 
     def GetNetworkType(self):
@@ -605,7 +612,7 @@ class SIR3S_Model:
         else:
             objType = self.to_python_enum(objType_net, self.ObjectTypes)
         if Tk == "-1":
-            print("Error: " + error)
+            _log_message("Error: " + error)
         return Tk, objType
 
     def GetElementInfo(self, Tk: str):
@@ -621,9 +628,9 @@ class SIR3S_Model:
         """
         info, error = self.toolkit.GetElementInfo(Tk)
         if info == "":
-            print(f"Error is : {error}")
+            _log_message(f"Error is : {error}")
         else:
-            print(f"Info: {info}")
+            _log_message(f"Info: {info}")
 
     def GetNumberOfElements(self, ElementType) -> int:
         """
@@ -652,7 +659,7 @@ class SIR3S_Model:
         ElementType_net = self.to_dotnet_enum(ElementType)
         Properties_list = self.toolkit.GetPropertyNames(ElementType_net)
         if list(Properties_list) is None:
-            print(f"Couldn't retrieve any Properties for the element type {ElementType}")
+            _log_message(f"Couldn't retrieve any Properties for the element type {ElementType}")
         return list(Properties_list)
 
     def GetObjectTypeof_Key(self, Key: str):
@@ -684,10 +691,10 @@ class SIR3S_Model:
         """
         isDeleted, info, error = self.toolkit.DeleteElement(Tk)
         if not isDeleted:
-            print(f"Error: {error}")
+            _log_message(f"Error: {error}")
         else:
             if self.outputComments:
-                print("Element deleted successfully")
+                _log_message("Element deleted successfully")
 
     def InsertElement(self, ElementType, IdRef: str) -> str:
         """
@@ -704,10 +711,10 @@ class SIR3S_Model:
         ElementType_net = self.to_dotnet_enum(ElementType)
         result, error = self.toolkit.InsertElement(ElementType_net, IdRef)
         if result == "-1":
-            print(f"Error : {error}")
+            _log_message(f"Error : {error}")
         else:
             if self.outputComments:
-                print(f"Element inserted successfully into the model with Tk: {result}")
+                _log_message(f"Element inserted successfully into the model with Tk: {result}")
         return result
 
     def NewModel(self, dbName: str, providerType, netType, modelDescription: str, namedInstance: str,
@@ -740,10 +747,10 @@ class SIR3S_Model:
         modelIdentifier, error = self.toolkit.NewModel(dbName, providerType_net, netType_net, modelDescription,
                                                        namedInstance, userID, password)
         if modelIdentifier == "-1":
-            print(f"Error : {error}")
+            _log_message(f"Error : {error}")
         else:
             if self.outputComments:
-                print(f"New model is created with the model identifier: {modelIdentifier}")
+                _log_message(f"New model is created with the model identifier: {modelIdentifier}")
 
     def ConnectConnectingElementWithNodes(self, Tk: str, keyOfNodeI: str, keyOfNodeK: str):
         """
@@ -762,10 +769,10 @@ class SIR3S_Model:
         """
         result, error = self.toolkit.ConnectConnectingElementWithNodes(Tk, keyOfNodeI, keyOfNodeK)
         if not result:
-            print("Error: " + error)
+            _log_message("Error: " + error)
         else:
             if self.outputComments:
-                print("Objects connected successfully")
+                _log_message("Objects connected successfully")
 
     def ConnectBypassElementWithNode(self, Tk: str, keyOfNodeI: str):
         """
@@ -782,10 +789,10 @@ class SIR3S_Model:
         """
         result, error = self.toolkit.ConnectBypassElementWithNode(Tk, keyOfNodeI)
         if not result:
-            print("Error: " + error)
+            _log_message("Error: " + error)
         else:
             if self.outputComments:
-                print("Object connected successfully")
+                _log_message("Object connected successfully")
 
     def SaveChanges(self):
         """
@@ -798,10 +805,10 @@ class SIR3S_Model:
         """
         isSaved, error = self.toolkit.SaveChanges()
         if not isSaved:
-            print(f"Error: {error}")
+            _log_message(f"Error: {error}")
         else:
             if self.outputComments:
-                print("Changes saved successfully")
+                _log_message("Changes saved successfully")
 
     def AddTableRow(self, tablePkTk: str):
         """
@@ -819,10 +826,10 @@ class SIR3S_Model:
         else:
              objectType = self.to_python_enum(objectType_net, self.ObjectTypes)
         if Tk == "-1":
-            print("Error: " + error)
+            _log_message("Error: " + error)
         else:
             if self.outputComments:
-                print(f"Row is added to the table with Tk: {Tk}")
+                _log_message(f"Row is added to the table with Tk: {Tk}")
         return Tk, objectType
 
     def GetTableRows(self, tablePkTk: str):
@@ -841,7 +848,7 @@ class SIR3S_Model:
         else:
             objectType = self.to_python_enum(objectType_net, self.ObjectTypes)
         if Tk_list is None:
-            print("Error: " + error)
+            _log_message("Error: " + error)
         return Tk_list, objectType
 
     def RefreshViews(self):
@@ -854,10 +861,10 @@ class SIR3S_Model:
         """
         result, error = self.toolkit.RefreshViews()
         if not result:
-            print("Error: " + error)
+            _log_message("Error: " + error)
         else:
             if self.outputComments:
-                print("Refresh successful")
+                _log_message("Refresh successful")
 
     def SetInsertPoint(self, elementKey: str, x: np.float64, y: np.float64):
         """
@@ -876,10 +883,10 @@ class SIR3S_Model:
         """
         result, error = self.toolkit.SetInsertPoint(elementKey, x, y)
         if not result:
-            print("Error: " + error)
+            _log_message("Error: " + error)
         else:
             if self.outputComments:
-                print("New point inserted")
+                _log_message("New point inserted")
 
     def SetElementColor_RGB(self, elementKey: str, red: int, green: int, blue: int, fillOrLineColor: bool):
         """
@@ -901,10 +908,10 @@ class SIR3S_Model:
         """
         result, error = self.toolkit.SetElementColor(elementKey, red, green, blue, fillOrLineColor)
         if not result:
-            print("Error: " + error)
+            _log_message("Error: " + error)
         else:
             if self.outputComments:
-                print("Color of the element is set")
+                _log_message("Color of the element is set")
 
     def SetElementColor(self, elementKey: str, color: int, fillOrLineColor: bool):
         """
@@ -922,10 +929,10 @@ class SIR3S_Model:
         """
         result, error = self.toolkit.SetElementColor(elementKey, color, fillOrLineColor)
         if not result:
-            print("Error: " + error)
+            _log_message("Error: " + error)
         else:
             if self.outputComments:
-                print("Color of the element is set")
+                _log_message("Color of the element is set")
 
     def AlignElement(self, elementKey: str):
         """
@@ -939,10 +946,10 @@ class SIR3S_Model:
         """
         result, error = self.toolkit.AlignElement(elementKey)
         if not result:
-            print("Error: " + error)
+            _log_message("Error: " + error)
         else:
             if self.outputComments:
-                print("Alignment successful")
+                _log_message("Alignment successful")
 
     def GetResultValue(self, elementKey: str, propertyName: str) -> tuple[str, str]:
         """
@@ -959,7 +966,7 @@ class SIR3S_Model:
         result = None
         result, found, valueType, error = self.toolkit.GetResultValue(elementKey, propertyName)
         if result is None:
-            print("Error: " + error)
+            _log_message("Error: " + error)
         return result, valueType
 
     def GetResultProperties_from_elementType(self, elementType, onlySelectedVectors: bool) -> list:
@@ -980,7 +987,7 @@ class SIR3S_Model:
         elementType_net = self.to_dotnet_enum(elementType)
         Result_list, error = self.toolkit.GetResultProperties(elementType_net, onlySelectedVectors)
         if Result_list is None:
-            print("Error: " + error)
+            _log_message("Error: " + error)
         return list(Result_list)
 
     def GetResultProperties_from_elementKey(self, elementKey: str) -> list:
@@ -997,7 +1004,7 @@ class SIR3S_Model:
         Result_list = None
         Result_list, error = self.toolkit.GetResultProperties(elementKey)
         if Result_list is None:
-            print("Error: " + error)
+            _log_message("Error: " + error)
         return list(Result_list)
 
     def GetMinResult(self, elementType, propertyName: str) -> tuple[str, str, str]:
@@ -1017,7 +1024,7 @@ class SIR3S_Model:
         elementType_net = self.to_dotnet_enum(elementType)
         MinResult, tkElement, valueType, error = self.toolkit.GetMinResult(elementType_net, propertyName)
         if MinResult is None:
-            print("Error: " + error)
+            _log_message("Error: " + error)
         return MinResult, tkElement, valueType
 
     def GetMaxResult(self, elementType, propertyName: str) -> tuple[str, str, str]:
@@ -1037,7 +1044,7 @@ class SIR3S_Model:
         elementType_net = self.to_dotnet_enum(elementType)
         MaxResult, tkElement, valueType, error = self.toolkit.GetMaxResult(elementType_net, propertyName)
         if MaxResult is None:
-            print("Error: " + error)
+            _log_message("Error: " + error)
         return MaxResult, tkElement, valueType
 
     def GetMinResult_for_timestamp(self, timestamp: str, elementType, propertyName: str) -> tuple[str, str, str]:
@@ -1060,7 +1067,7 @@ class SIR3S_Model:
         elementType_net = self.to_dotnet_enum(elementType)
         MinResult, tkElement, valueType, error = self.toolkit.GetMinResult(timestamp, elementType_net, propertyName)
         if MinResult is None:
-            print("Error: " + error)
+            _log_message("Error: " + error)
         return MinResult, tkElement, valueType
 
     def GetMaxResult_for_timestamp(self, timestamp: str, elementType, propertyName: str) -> tuple[str, str, str]:
@@ -1083,7 +1090,7 @@ class SIR3S_Model:
         elementType_net = self.to_dotnet_enum(elementType)
         MaxResult, tkElement, valueType, error = self.toolkit.GetMaxResult(timestamp, elementType_net, propertyName)
         if MaxResult is None:
-            print("Error: " + error)
+            _log_message("Error: " + error)
         return MaxResult, tkElement, valueType
 
     def AddNewNode(self, tkCont: str, name: str, typ: str, x: np.float64, y: np.float64, z: np.float32, qm_PH: np.float32,
@@ -1120,10 +1127,10 @@ class SIR3S_Model:
         """
         Tk_new, error = self.toolkit.AddNewNode(tkCont, name, typ, x, y, z, qm_PH, symbolFactor, description, idRef, kvr)
         if Tk_new == "-1":
-            print("Error: " + error)
+            _log_message("Error: " + error)
         else:
             if self.outputComments:
-                print("New node added")
+                _log_message("New node added")
         return Tk_new
 
     def AddNewPipe(self, tkCont: str, tkFrom: str, tkTo: str, L: np.float32, linestring: str, material: str, dn: str,
@@ -1163,10 +1170,10 @@ class SIR3S_Model:
         Tk_new, error = self.toolkit.AddNewPipe(tkCont, tkFrom, tkTo, L, linestring, material, dn, roughness,
                                                 idRef, description, kvr)
         if Tk_new == "-1":
-            print("Error: " + error)
+            _log_message("Error: " + error)
         else:
             if self.outputComments:
-                print("New pipe added")
+                _log_message("New pipe added")
         return Tk_new
 
     def AddNewConnectingElement(self, tkCont: str, tkFrom: str, tkTo: str, x: np.float64, y: np.float64,
@@ -1208,10 +1215,10 @@ class SIR3S_Model:
         Tk_new, error = self.toolkit.AddNewConnectingElement(tkCont, tkFrom, tkTo, x, y, z, elementType_net,
                                                              dn, symbolFactor, angleDegree, idRef, description)
         if Tk_new == "-1":
-            print("Error: " + error)
+            _log_message("Error: " + error)
         else:
             if self.outputComments:
-                print("New connecting element added")
+                _log_message("New connecting element added")
         return Tk_new
 
     def AddNewBypassElement(self, tkCont: str, tkFrom: str, x: np.float64, y: np.float64, z: np.float32,
@@ -1246,10 +1253,10 @@ class SIR3S_Model:
         Tk_new, error = self.toolkit.AddNewBypassElement(tkCont, tkFrom, x, y, z, symbolFactor, elementType_net,
                                                          idRef, description)
         if Tk_new == "-1":
-            print("Error: " + error)
+            _log_message("Error: " + error)
         else:
             if self.outputComments:
-                print("New Bypass element added")
+                _log_message("New Bypass element added")
         return Tk_new
 
     def GetTkFromIDReference(self, IdRef: str, object_type) -> str:
@@ -1268,7 +1275,7 @@ class SIR3S_Model:
         object_type_net = self.to_dotnet_enum(object_type)
         Tk, error = self.toolkit.GetTkFromIDReference(IdRef, object_type_net)
         if Tk == "-1":
-            print("Error: " + error)
+            _log_message("Error: " + error)
         return Tk
 
     def GetGeometryInformation(self, Tk: str) -> str:
@@ -1284,7 +1291,7 @@ class SIR3S_Model:
         """
         geomInfo, error = self.toolkit.GetGeometryInformation(Tk)
         if error != "":
-            print("Error: " + error)
+            _log_message("Error: " + error)
         return geomInfo
 
     def SetGeometryInformation(self, Tk: str, Wkt: str) -> bool:
@@ -1302,10 +1309,10 @@ class SIR3S_Model:
         """
         isSet, error = self.toolkit.SetGeometryInformation(Tk, Wkt)
         if not isSet:
-            print("Error: " + error)
+            _log_message("Error: " + error)
         else:
             if self.outputComments:
-                print("Geometry Information is set correctly")
+                _log_message("Geometry Information is set correctly")
         return isSet
 
     def AllowSirMessageBox(self, bAllow: bool):
@@ -1337,7 +1344,7 @@ class SIR3S_Model:
         """
         returnValue, fkKI, fkKK, fkKI2, fkKK2, error = self.toolkit.GetEndNodes(Tk)
         if not returnValue:
-            print("Error: " + error)
+            _log_message("Error: " + error)
         return fkKI, fkKK, fkKI2, fkKK2
 
     def SetLogFilePath(self, logFilePath: str) -> bool:
@@ -1352,7 +1359,7 @@ class SIR3S_Model:
         """
         isPathSet, error = self.toolkit.SetLogFilePath(logFilePath)
         if not isPathSet:
-            print("Error: " + error)
+            _log_message("Error: " + error)
         return isPathSet
 
     def GetLogFilePath(self) -> str:
@@ -1463,7 +1470,7 @@ class SIR3S_Model:
         """
         result, agsnString, error = self.toolkit.GetHydraulicProfileObjectString(tkAgsn)
         if not result: 
-             print("Error: " + error)
+             _log_message("Error: " + error)
         return result, agsnString
         
     def GetCourseOfHydraulicProfile(self, tkAgsn, uid) -> hydraulicProfile:
@@ -1483,7 +1490,7 @@ class SIR3S_Model:
          xOffsetRelativeToParent, length, tkArticulationNode, error) = self.toolkit.GetCourseOfHydraulicProfile(tkAgsn, uid)
         
         if not result:
-            print("Error: " + error)
+            _log_message("Error: " + error)
         return hydraulicProfile(childrenUID=childrenUID, nodesVL=nodesVL, linksVL=linksVL, xVL=xVL,
                                 nodesRL=nodesRL, linksRL=linksRL, xRL=xRL, nrOfBranches=nrOfBranches, xOffSet=xOffSet,
                                 xOffsetRelativeToParent=xOffsetRelativeToParent, length=length, tkArticulationNode=tkArticulationNode)
@@ -1509,9 +1516,9 @@ class SIR3S_View:
         if self.toolkit is None:
             self.toolkit = Sir3SToolkit.CSir3SToolkitFactory.CreateToolkit(None, SIR3S_SIRGRAF_DIR, r"90-15-00-01")
         if (self.toolkit is None):
-            print("Error in initializing the toolkit")
+            _log_message("Error in initializing the toolkit")
         else:
-            print("Initialization complete")
+            _log_message("Initialization complete")
 
         # Create all necessay Enums for user
         self.ObjectTypes = create_dotnet_enum("ObjectTypes", "Sir3SObjectTypes", "Sir3S_Repository.Interfaces.dll")
@@ -1586,13 +1593,13 @@ class SIR3S_View:
         """
         isTransactionStarted, message = self.toolkit.StartTransaction(SessionName)
         if not isTransactionStarted:
-            print(message)
+            _log_message(message)
         else:
             if message == "":
                 if self.outputComments:
-                    print("Now you can make changes to the model")
+                    _log_message("Now you can make changes to the model")
             else:
-                print(message)
+                _log_message(message)
 
     def EndTransaction(self):
         """
@@ -1605,13 +1612,13 @@ class SIR3S_View:
         """
         isTransactionEnded, message = self.toolkit.EndTransaction()
         if not isTransactionEnded:
-            print(message)
+            _log_message(message)
         else:
             if message == "":
                 if self.outputComments:
-                    print("Transaction has ended. Please open up a new transaction if you want to make further changes")
+                    _log_message("Transaction has ended. Please open up a new transaction if you want to make further changes")
             else:
-                print(message)
+                _log_message(message)
 
     def StartEditSession(self, SessionName: str):
         """
@@ -1625,13 +1632,13 @@ class SIR3S_View:
         """
         isTransactionStarted, message = self.toolkit.StartEditSession(SessionName)
         if not isTransactionStarted:
-            print(message)
+            _log_message(message)
         else:
             if message == "":
                 if self.outputComments:
-                    print("Now you can make changes to the model")
+                    _log_message("Now you can make changes to the model")
             else:
-                print(message)
+                _log_message(message)
 
     def EndEditSession(self):
         """
@@ -1644,13 +1651,13 @@ class SIR3S_View:
         """
         isTransactionEnded, message = self.toolkit.EndEditSession()
         if not isTransactionEnded:
-            print(message)
+            _log_message(message)
         else:
             if message == "":
                 if self.outputComments:
-                    print("Edit Session has ended. Please open up a new session if you want to make further changes")
+                    _log_message("Edit Session has ended. Please open up a new session if you want to make further changes")
             else:
-                print(message)
+                _log_message(message)
 
     def SaveChanges(self):
         """
@@ -1663,10 +1670,10 @@ class SIR3S_View:
         """
         isSaved, error = self.toolkit.SaveChanges()
         if not isSaved:
-            print(f"Error: {error}")
+            _log_message(f"Error: {error}")
         else:
             if self.outputComments:
-                print("Changes saved successfully")
+                _log_message("Changes saved successfully")
 
     def OpenModelXml(self, Path: str, SaveCurrentModel: bool):
         """
@@ -1684,9 +1691,9 @@ class SIR3S_View:
         result, error = self.toolkit.OpenModelXml(Path, SaveCurrentModel)
         if result:
             if self.outputComments:
-                print("Model is open for further operation")
+                _log_message("Model is open for further operation")
         else:
-            print("Error while opening the model," + error)
+            _log_message("Error while opening the model," + error)
 
     def OpenModel(self, dbName: str, providerType, Mid: str, saveCurrentlyOpenModel: bool, namedInstance: str,
                   userID: str, password: str):
@@ -1716,9 +1723,9 @@ class SIR3S_View:
                                                namedInstance, userID, password)
         if result:
             if self.outputComments:
-                print("Model is open for further operation")
+                _log_message("Model is open for further operation")
         else:
-            print("Error while opening the model, " + error)
+            _log_message("Error while opening the model, " + error)
 
     def CloseModel(self, saveChangesBeforeClosing: bool) -> bool:
         """
@@ -1733,7 +1740,7 @@ class SIR3S_View:
         """
         isClosed, error = self.toolkit.CloseModel(saveChangesBeforeClosing)
         if not isClosed:
-            print("Error while closing the model, " + error)
+            _log_message("Error while closing the model, " + error)
         return isClosed
 
     def GetMainContainer(self):
@@ -1748,7 +1755,7 @@ class SIR3S_View:
         Tk, objType_net, error = self.toolkit.GetMainContainer()
         objType = self.to_python_enum(objType_net, self.ObjectTypes)
         if Tk == "-1":
-            print("Error: " + error)
+            _log_message("Error: " + error)
         return Tk, objType
 
     def AddExternalPolyline(self, xArray: list, yArray: list, iColor: int, lineWidthMM: np.float64,
@@ -1776,10 +1783,10 @@ class SIR3S_View:
         Tk, error = self.toolkit.AddExternalPolyline(System.String.Empty, xArray, yArray, iColor, lineWidthMM,
                                                      dashedLine, containerTK)
         if Tk == "-1":
-            print("Error: " + error)
+            _log_message("Error: " + error)
         else:
             if self.outputComments:
-                print("External polyline added")
+                _log_message("External polyline added")
         return Tk
 
     def AddExternalPolyline_using_LineString(self, wktLineString: str, iColor: int, lineWidthMM: np.float64,
@@ -1806,10 +1813,10 @@ class SIR3S_View:
         Tk, error = self.toolkit.AddExternalPolyline(System.String.Empty, wktLineString, iColor, lineWidthMM,
                                                      dashedLine, containerTK)
         if Tk == "-1":
-            print("Error: " + error)
+            _log_message("Error: " + error)
         else:
             if self.outputComments:
-                print("External polyline added using Linestring")
+                _log_message("External polyline added using Linestring")
         return Tk
 
     def AddExternalPolylinePoint(self, Tk: str, x: np.float64, y: np.float64):
@@ -1829,10 +1836,10 @@ class SIR3S_View:
         """
         result, error = self.toolkit.AddExternalPolylinePoint(Tk, x, y, System.String.Empty)
         if not result:
-            print("Error: " + error)
+            _log_message("Error: " + error)
         else:
             if self.outputComments:
-                print("External poly line point added")
+                _log_message("External poly line point added")
 
     def SetExternalPolyLineWidthAndColor(self, Tk: str, lineWidthMM: np.float64, iColor: int):
         """
@@ -1851,10 +1858,10 @@ class SIR3S_View:
         """
         result, error = self.toolkit.SetExternalPolyLineWidthAndColor(Tk, lineWidthMM, iColor, System.String.Empty)
         if not result:
-            print("Error: " + error)
+            _log_message("Error: " + error)
         else:
             if self.outputComments:
-                print("External polyline width and color are set")
+                _log_message("External polyline width and color are set")
 
     def AddExternalPolygon(self, xArray: list, yArray: list, lineColor: int, fillColor: int, lineWidthMM: np.float64,
                            isFilled: bool, containerTK: str) -> str:
@@ -1883,10 +1890,10 @@ class SIR3S_View:
         Tk, error = self.toolkit.AddExternalPolygon(System.String.Empty, xArray, yArray, lineColor, fillColor,
                                                     lineWidthMM, isFilled, containerTK)
         if Tk == "-1":
-            print("Error: " + error)
+            _log_message("Error: " + error)
         else:
             if self.outputComments:
-                print("External polygon is added")
+                _log_message("External polygon is added")
         return Tk
 
     def AddExternalPolygon_using_LineString(self, wktLineString: str, lineColor: int, fillColor: int,
@@ -1916,10 +1923,10 @@ class SIR3S_View:
         Tk, error = self.toolkit.AddExternalPolygon(System.String.Empty, wktLineString, lineColor, fillColor, lineWidthMM,
                                                     isFilled, containerTK)
         if Tk == "-1":
-            print("Error: " + error)
+            _log_message("Error: " + error)
         else:
             if self.outputComments:
-                print("External polygon is added using Linestring")
+                _log_message("External polygon is added using Linestring")
         return Tk
 
     def AddExternalPolygonPoint(self, Tk: str, x: np.float64, y: np.float64):
@@ -1939,10 +1946,10 @@ class SIR3S_View:
         """
         result, error = self.toolkit.AddExternalPolygonPoint(Tk, x, y, System.String.Empty)
         if not result:
-            print("Error: " + error)
+            _log_message("Error: " + error)
         else:
             if self.outputComments:
-                print("External polygon point added")
+                _log_message("External polygon point added")
 
     def SetExternalPolygonProperties(self, Tk: str, lineWidthMM: np.float64, lineColor: int, fillColor: int, isFilled: bool):
         """
@@ -1966,10 +1973,10 @@ class SIR3S_View:
         result, error = self.toolkit.SetExternalPolygonProperties(Tk, lineWidthMM, lineColor, fillColor,
                                                                   isFilled, System.String.Empty)
         if not result:
-            print("Error: " + error)
+            _log_message("Error: " + error)
         else:
             if self.outputComments:
-                print("External polygon properties are set")
+                _log_message("External polygon properties are set")
 
     def AddExternalText(self, x: np.float64, y: np.float64, textColor: int, text: str, angleDegree: np.float32,
                         heightPt: np.float32, isBold: bool, isItalic: bool, isUnderline: bool, containerTK: str):
@@ -2003,10 +2010,10 @@ class SIR3S_View:
         Tk, error = self.toolkit.AddExternalText(System.String.Empty, x, y, textColor, text, angleDegree, heightPt, isBold,
                                                  isItalic, isUnderline, containerTK)
         if Tk == "-1":
-            print("Error: " + error)
+            _log_message("Error: " + error)
         else:
             if self.outputComments:
-                print("External text is added")
+                _log_message("External text is added")
         return Tk
 
     def SetExternalTextText(self, Tk: str, text: str):
@@ -2024,10 +2031,10 @@ class SIR3S_View:
         """
         result, error = self.toolkit.SetExternalTextText(Tk, text, System.String.Empty)
         if not result:
-            print("Error: " + error)
+            _log_message("Error: " + error)
         else:
             if self.outputComments:
-                print("External text is set")
+                _log_message("External text is set")
 
     def SetExternalTextProperties(self, Tk: str, x: np.float64, y: np.float64, textColor: int, text: str,
                                   angleDegree: np.float32, heightPt: np.float32, isBold: bool, isItalic: bool,
@@ -2063,10 +2070,10 @@ class SIR3S_View:
         result, error = self.toolkit.SetExternalTextProperties(Tk, x, y, System.String.Empty, textColor, text, angleDegree,
                                                                heightPt, isBold, isItalic, isUnderline)
         if not result:
-            print("Error: " + error)
+            _log_message("Error: " + error)
         else:
             if self.outputComments:
-                print("External text properties are set")
+                _log_message("External text properties are set")
 
     def AddExternalArrow(self, x: np.float64, y: np.float64, lineColor: int, fillColor: int, lineWidthMM: np.float64,
                          isFilled: bool, symbolFactor: np.float64, containerTK: str):
@@ -2097,10 +2104,10 @@ class SIR3S_View:
         Tk, error = self.toolkit.AddExternalArrow(System.String.Empty, x, y, lineColor, fillColor, lineWidthMM, isFilled,
                                                   symbolFactor, containerTK)
         if Tk == "-1":
-            print("Error : " + error)
+            _log_message("Error : " + error)
         else:
             if self.outputComments:
-                print("External arrow added")
+                _log_message("External arrow added")
         return Tk
 
     def SetExternalArrowProperties(self, Tk: str, x: np.float64, y: np.float64, lineColor: int, fillColor: int,
@@ -2132,10 +2139,10 @@ class SIR3S_View:
         result, error = self.toolkit.SetExternalArrowProperties(Tk, System.String.Empty, x, y, lineColor,
                                                                 fillColor, lineWidthMM, isFilled, symbolFactor)
         if not result:
-            print("Error: " + error)
+            _log_message("Error: " + error)
         else:
             if self.outputComments:
-                print("External arrow properties are set")
+                _log_message("External arrow properties are set")
 
     def AddExternalRectangle(self, left: np.float64, top: np.float64, right: np.float64, bottom: np.float64,
                              lineColor: int, fillColor: int, lineWidthMM: np.float64,
@@ -2171,10 +2178,10 @@ class SIR3S_View:
         Tk, error = self.toolkit.AddExternalRectangle(System.String.Empty, left, top, right, bottom, lineColor, fillColor,
                                                       lineWidthMM, isFilled, isRounded, containerTK)
         if Tk == "-1":
-            print("Error : " + error)
+            _log_message("Error : " + error)
         else:
             if self.outputComments:
-                print("External rectangle is added")
+                _log_message("External rectangle is added")
         return Tk
 
     def SetExternalRectangleProperties(self, Tk: str, left: np.float64, top: np.float64, right: np.float64,
@@ -2211,10 +2218,10 @@ class SIR3S_View:
         result, error = self.toolkit.SetExternalRectangleProperties(Tk, System.String.Empty, left, top, right, bottom,
                                                                     lineColor, fillColor, lineWidthMM, isFilled, isRounded)
         if not result:
-            print("Error: " + error)
+            _log_message("Error: " + error)
         else:
             if self.outputComments:
-                print("External rectangle properties are set")
+                _log_message("External rectangle properties are set")
 
     def AddExternalEllipse(self, left: np.float64, top: np.float64, right: np.float64, bottom: np.float64,
                            lineColor: int, fillColor: int, lineWidthMM: np.float64,
@@ -2248,10 +2255,10 @@ class SIR3S_View:
         Tk, error = self.toolkit.AddExternalEllipse(System.String.Empty, left, top, right, bottom, lineColor, fillColor,
                                                     lineWidthMM, isFilled, containerTK)
         if Tk == "-1":
-            print("Error : " + error)
+            _log_message("Error : " + error)
         else:
             if self.outputComments:
-                print("External ellipse is added")
+                _log_message("External ellipse is added")
         return Tk
 
     def SetExternalEllipseProperties(self, Tk: str, left: np.float64, top: np.float64, right: np.float64, bottom: np.float64,
@@ -2285,10 +2292,10 @@ class SIR3S_View:
         result, error = self.toolkit.SetExternalEllipseProperties(Tk, System.String.Empty, left, top, right, bottom,
                                                                   lineColor, fillColor, lineWidthMM, isFilled)
         if not result:
-            print("Error: " + error)
+            _log_message("Error: " + error)
         else:
             if self.outputComments:
-                print("External ellipse properties are set")
+                _log_message("External ellipse properties are set")
 
     def PrepareColoration(self):
         """
@@ -2301,10 +2308,10 @@ class SIR3S_View:
         """
         result, error = self.toolkit.PrepareColoration(System.String.Empty)
         if not result:
-            print("Error: " + error)
+            _log_message("Error: " + error)
         else:
             if self.outputComments:
-                print("Prepare coloration is done")
+                _log_message("Prepare coloration is done")
 
     def InitColorTable(self, iColors: list, maxColors: int) -> bool:
         """
@@ -2408,10 +2415,10 @@ class SIR3S_View:
         """
         result, error = self.toolkit.ColoratePipe(Tk, lengths, Colors, System.String.Empty, widthFactors)
         if not result:
-            print("Error: " + error)
+            _log_message("Error: " + error)
         else:
             if self.outputComments:
-                print("Colorating pipe is successful")
+                _log_message("Colorating pipe is successful")
 
     def ResetColoration(self):
         """
@@ -2423,10 +2430,10 @@ class SIR3S_View:
         """
         result, error = self.toolkit.ResetColoration(System.String.Empty)
         if not result:
-            print("Error: " + error)
+            _log_message("Error: " + error)
         else:
             if self.outputComments:
-                print("Coloration reset is successful")
+                _log_message("Coloration reset is successful")
 
     def DoColoration(self):
         """
@@ -2438,10 +2445,10 @@ class SIR3S_View:
         """
         result, error = self.toolkit.DoColoration(System.String.Empty)
         if not result:
-            print("Error: " + error)
+            _log_message("Error: " + error)
         else:
             if self.outputComments:
-                print("Coloration is done")
+                _log_message("Coloration is done")
 
     def MoveElementTo(self, Tk: str, newX: np.float64, newY: np.float64):
         """
@@ -2462,7 +2469,7 @@ class SIR3S_View:
         """
         result, error = self.toolkit.MoveElementTo(Tk, newX, newY)
         if not result:
-            print("Error: " + error)
+            _log_message("Error: " + error)
 
     def MoveElementBy(self, Tk: str, dX: np.float64, dY: np.float64):
         """
@@ -2483,7 +2490,7 @@ class SIR3S_View:
         """
         result, error = self.toolkit.MoveElementBy(Tk, dX, dY)
         if not result:
-            print("Error: " + error)
+            _log_message("Error: " + error)
 
     def AddNewText(self, tkCont: str, x: np.float64, y: np.float64, color: int, textContent: str,
                    angle_degree: np.float32, faceName: str, heightPt: np.float32, isBold: bool,
@@ -2525,7 +2532,7 @@ class SIR3S_View:
         Tk, error = self.toolkit.AddNewText(tkCont, x, y, color, textContent, angle_degree,
                                             faceName, heightPt, isBold, isItalic, isUnderlined, idRef, description)
         if Tk == "-1":
-            print("Error : " + error)
+            _log_message("Error : " + error)
         return Tk
 
     def GetTextProperties(self, Tk: str) -> textProperties:
@@ -2542,7 +2549,7 @@ class SIR3S_View:
         (result, error, x, y, color, textContent, angle_degree, faceName, heightPt, isBold, isItalic,
          isUnderline, idRef, description) = self.toolkit.GetTextProperties(Tk)
         if not result:
-            print("Error: " + error)
+            _log_message("Error: " + error)
         return textProperties(x=x, y=y, color=color, textContent=textContent, angle_degree=angle_degree, faceName=faceName,
                               heightPt=heightPt, isBold=isBold, isItalic=isItalic, isUnderline=isUnderline, idRef=idRef,
                               description=description)
@@ -2603,7 +2610,7 @@ class SIR3S_View:
                                                         isBold, isItalic, isUnderlined, description, forResult, tkObserved,
                                                         elemPropertyNameOrResult, prefix, unit, numDec, absValue)
         if Tk == "-1":
-            print("Error : " + error)
+            _log_message("Error : " + error)
         return Tk
 
     def AddNewDirectionalArrow(self, tkCont: str, x: np.float64, y: np.float64, lineColor: int, lineWidth: np.float64,
@@ -2646,7 +2653,7 @@ class SIR3S_View:
         Tk, error = self.toolkit.AddNewDirectionalArrow(tkCont, x, y, lineColor, lineWidth, fillColor, isFilled,
                                                         symbolFactor, description, tkObserved, elemResultProperty, EPS)
         if Tk == "-1":
-            print("Error : " + error)
+            _log_message("Error : " + error)
         return Tk
 
     def GetNumericalDisplayProperties(self, Tk: str) -> numericalDisplayProperties:
@@ -2664,7 +2671,7 @@ class SIR3S_View:
          tkObserved, elemPropertyNameOrResult,
          prefix, unit, numDec, absValue, error) = self.toolkit.GetNumericalDisplayProperties(Tk)
         if not result:
-            print("Error: " + error)
+            _log_message("Error: " + error)
         return numericalDisplayProperties(x=x, y=y, color=color, angle_degree=angle_degree, faceName=faceName,
                                           heightPt=heightPt, isBold=isBold, isItalic=isItalic, isUnderline=isUnderline,
                                           description=description, forResult=forResult, tkObserved=tkObserved,
@@ -2702,10 +2709,10 @@ class SIR3S_View:
         result, error = self.toolkit.SetFont(Tk, textContent, color, angle_degree, faceName, heightPt, isBold,
                                              isItalic, isUnderlined)
         if not result:
-            print("Error: " + error)
+            _log_message("Error: " + error)
         else:
             if self.outputComments:
-                print("Font is set")
+                _log_message("Font is set")
 
     def GetFont(self, Tk: str) -> fontInformation:
         """
@@ -2720,7 +2727,7 @@ class SIR3S_View:
         (result, textContent, color, angle_degree, faceName, heightPt, isBold,
          isItalic, isUnderline, error) = self.toolkit.GetFont(Tk)
         if not result:
-            print("Error: " + error)
+            _log_message("Error: " + error)
         return fontInformation(textContent=textContent, color=color, angle_degree=angle_degree,
                                faceName=faceName, heightPt=heightPt,
                                isBold=isBold, isItalic=isItalic, isUnderline=isUnderline)
@@ -2745,7 +2752,7 @@ class SIR3S_View:
         """
         Tk, error = self.toolkit.AddNewStreet(name, number, place, district, idref)
         if Tk == "-1":
-            print("Error : " + error)
+            _log_message("Error : " + error)
         return Tk
 
     def AddNewHouse(self, x: np.float64, y: np.float64, symbolFactor: np.float64, fkStreet: str,
@@ -2784,7 +2791,7 @@ class SIR3S_View:
         Tk, error = self.toolkit.AddNewHouse(x, y, symbolFactor, fkStreet, houseNumber, numberSuffix, postalCode,
                                              dsn, fkNode, fkDH_Customer, idRef)
         if Tk == "-1":
-            print("Error : " + error)
+            _log_message("Error : " + error)
         return Tk
 
     def AddNewCustomer(self, x: np.float64, y: np.float64,  z: np.float32, symbolFactor: np.float64,
@@ -2833,7 +2840,7 @@ class SIR3S_View:
         Tk, error = self.toolkit.AddNewCustomer(x, y, z, symbolFactor, fkHouse, consumption, counterId,
                                                 customerId, dimension, divisionType, customerGroup, idRef)
         if Tk == "-1":
-            print("Error : " + error)
+            _log_message("Error : " + error)
         return Tk
 
     def AddNewValveOnPipe(self, tkPipe: str, iSymbolType, position: np.float32, name: str, description: str,
@@ -2881,7 +2888,7 @@ class SIR3S_View:
         Tk, error = self.toolkit.AddNewValveOnPipe(tkPipe, iSymbolType_net, position, name, description, isPostureStatic_net,
                                                    fkSWVT, openClose, idRef)
         if Tk == "-1":
-            print("Error : " + error)
+            _log_message("Error : " + error)
         return Tk
 
     def AddNewHydrant(self, x: np.float64, y: np.float64, z: np.float64, iType, symbolFactor: np.float64, fkNode: str,
@@ -2935,7 +2942,7 @@ class SIR3S_View:
         Tk, error = self.toolkit.AddNewHydrant(x, y, z, iType_net, symbolFactor, fkNode, L, dn, roughness, ph_min,
                                                ph_soll, qm_soll_net, activity_net, idRef, name, description)
         if Tk == "-1":
-            print("Error : " + error)
+            _log_message("Error : " + error)
         return Tk
 
     def RemoveAllExternalVisualObjects(self):
@@ -2971,11 +2978,11 @@ class SIR3S_ModelRepair:
             self.modelrepair, self.toolkit  = model_instance.CreateModelRepair()
             self.model_instance = model_instance
         else:
-            print("Error: Toolkit instance necessary is null")
+            _log_message("Error: Toolkit instance necessary is null")
         if (self.modelrepair is None):
-            print("Error in initializing the model repair")
+            _log_message("Error in initializing the model repair")
         else:
-            print("Initialization complete")  
+            _log_message("Initialization complete")  
             
     def GetListOfRepairTool(self):
         """
@@ -2987,7 +2994,7 @@ class SIR3S_ModelRepair:
         """
         resultValue, listofTool = self.toolkit.GetListOfRepairTool(self.modelrepair)
         if not resultValue:
-            print("GetListOfRepairTool() has failed")
+            _log_message("GetListOfRepairTool() has failed")
         return listofTool
 
     def CheckRepairTool(self, toolName, tol, adjustnodes, nodeDegree):
@@ -3008,9 +3015,9 @@ class SIR3S_ModelRepair:
         """
         resultValue, imr = self.toolkit.CheckRepairTool(self.modelrepair, toolName, tol, adjustnodes, nodeDegree)
         if not resultValue:
-            print("CheckRepairTool() has failed")
+            _log_message("CheckRepairTool() has failed")
         else:
-            print("CheckRepairTool() has succeeded")
+            _log_message("CheckRepairTool() has succeeded")
         return imr
        
     def ExecuteRepairTool(self, imr, table):
@@ -3027,6 +3034,6 @@ class SIR3S_ModelRepair:
         """
         resultValue = self.toolkit.ExecuteRepairTool(imr, table)
         if not resultValue:
-            print("ExecuteRepairTool() has failed")
+            _log_message("ExecuteRepairTool() has failed")
         else:
-            print("ExecuteRepairTool() has succeeded")
+            _log_message("ExecuteRepairTool() has succeeded")

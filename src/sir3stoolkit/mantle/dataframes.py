@@ -25,15 +25,9 @@ import geopandas as gpd
 from shapely import wkt
 from datetime import datetime
 
-import logging
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
+from sir3stoolkit.logging_utils import get_logger
 
-if not logger.hasHandlers():
-    handler = logging.StreamHandler()
-    formatter = logging.Formatter('[%(asctime)s] %(levelname)s in %(name)s: %(message)s')
-    handler.setFormatter(formatter)
-    logger.addHandler(handler)
+logger = get_logger(__name__)
 
 from sir3stoolkit.core.wrapper import SIR3S_Model
 
@@ -1746,11 +1740,11 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
                 tks.append(node_tk)
 
         if len(tks) == 1:
-            print(f'Only the node with tk {tks[0]} has the name {name}')
+            logger.info(f'Only the node with tk {tks[0]} has the name {name}')
         else:
-            print(f'The nodes of the following tks have the same name ({name}):')
+            logger.info(f'The nodes of the following tks have the same name ({name}):')
             for tk in tks:
-                print(f'{tk}')
+                logger.info(f'{tk}')
 
         return tks
 

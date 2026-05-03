@@ -27,17 +27,9 @@ from shapely.geometry import Point, LineString, MultiLineString
 import re
 from typing import Dict, Tuple, Optional
 
-import logging
+from sir3stoolkit.logging_utils import get_logger
 
-import logging
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
-
-if not logger.hasHandlers():
-    handler = logging.StreamHandler()
-    formatter = logging.Formatter('[%(asctime)s] %(levelname)s in %(name)s: %(message)s')
-    handler.setFormatter(formatter)
-    logger.addHandler(handler)
+logger = get_logger(__name__)
 
 from sir3stoolkit.core.wrapper import SIR3S_Model
 

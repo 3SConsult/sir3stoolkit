@@ -12,15 +12,9 @@ import pandas as pd
 from datetime import datetime
 import numpy as np
 
-import logging
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
+from sir3stoolkit.logging_utils import get_logger
 
-if not logger.hasHandlers():
-    handler = logging.StreamHandler()
-    formatter = logging.Formatter('[%(asctime)s] %(levelname)s in %(name)s: %(message)s')
-    handler.setFormatter(formatter)
-    logger.addHandler(handler)
+logger = get_logger(__name__)
 
 from sir3stoolkit.core.wrapper import SIR3S_Model
 
