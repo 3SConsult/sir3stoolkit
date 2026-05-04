@@ -56,6 +56,10 @@ class SIR3S_Model_Plotting(SIR3S_Model):
         query: str | None = None,
         line_width_factor: float = 10.0,
         zorder: float | None = None,
+        show_value_labels: bool = False,
+        value_label_fmt: str = "{:.4f}",
+        value_label_fontsize: float = 8.0,
+        value_label_offset: tuple[float, float] = (2.0, 2.0),
     ):
         """
         Plot line geometries with separate width and color scaling.
@@ -91,6 +95,15 @@ class SIR3S_Model_Plotting(SIR3S_Model):
             Factor applied after width normalization, default 10.0.
         zorder : float, optional
             Z-order for drawing.
+        show_value_labels : bool, optional
+            If True and a color scaling column is active, draw the numeric color
+            value next to each element using its mapped color.
+        value_label_fmt : str, optional
+            Format string used for value labels, default "{:.4f}".
+        value_label_fontsize : float, optional
+            Font size for value labels, default 8.0.
+        value_label_offset : tuple[float, float], optional
+            Offset in points for value labels relative to their anchor position.
 
         Returns
         -------
@@ -131,6 +144,7 @@ class SIR3S_Model_Plotting(SIR3S_Model):
         color_col = color_mixing_col or attribute
         cmap = mcolors.LinearSegmentedColormap.from_list('cmap', list(colors), N=256)
         patches = None
+        a_c = None
         if color_col is not None:
             try:
                 a_c = df[color_col].astype(float).to_numpy()
@@ -183,6 +197,29 @@ class SIR3S_Model_Plotting(SIR3S_Model):
                     lw.append(w)
                     count += 1
 
+            if show_value_labels and color_col is not None and a_c is not None:
+                anchor = None
+                if gt == 'LineString':
+                    anchor = geom2.interpolate(0.5, normalized=True)
+                elif gt == 'MultiLineString' and len(geom2.geoms) > 0:
+                    longest = max(geom2.geoms, key=lambda part: part.length)
+                    anchor = longest.interpolate(0.5, normalized=True)
+
+                if anchor is not None:
+                    try:
+                        label = value_label_fmt.format(float(a_c[i]))
+                    except Exception:
+                        label = str(a_c[i])
+                    ax.annotate(
+                        label,
+                        (anchor.x, anchor.y),
+                        xytext=value_label_offset,
+                        textcoords='offset points',
+                        color=col,
+                        fontsize=value_label_fontsize,
+                        zorder=(zorder + 1) if zorder is not None else None,
+                    )
+
         if not segs:
             logger.warning("[plot] Pipes: no line geometries found.")
             return None
@@ -215,6 +252,10 @@ class SIR3S_Model_Plotting(SIR3S_Model):
         marker_style: str = 'o',
         marker_size_factor: float = 1000.0,
         zorder: float | None = None,
+        show_value_labels: bool = False,
+        value_label_fmt: str = "{:.4f}",
+        value_label_fontsize: float = 8.0,
+        value_label_offset: tuple[float, float] = (2.0, 2.0),
     ):
         """
         Plot point nodes with separate size and color scaling.
@@ -252,6 +293,15 @@ class SIR3S_Model_Plotting(SIR3S_Model):
             Factor applied after size normalization, default 1000.0.
         zorder : float, optional
             Z-order for drawing.
+        show_value_labels : bool, optional
+            If True and a color scaling column is active, draw the numeric color
+            value next to each point using its mapped color.
+        value_label_fmt : str, optional
+            Format string used for value labels, default "{:.4f}".
+        value_label_fontsize : float, optional
+            Font size for value labels, default 8.0.
+        value_label_offset : tuple[float, float], optional
+            Offset in points for value labels relative to each point.
 
         Returns
         -------
@@ -319,8 +369,25 @@ class SIR3S_Model_Plotting(SIR3S_Model):
             colors_arr = np.tile(mcolors.to_rgba(colors[0]), (is_point.sum(), 1))
 
         # --- PLOT ---
-        coords = np.array([(g.x, g.y) for g in geoms[is_point]])
+        point_geoms = geoms[is_point]
+        coords = np.array([(g.x, g.y) for g in point_geoms])
         ax.scatter(coords[:, 0], coords[:, 1], s=sizes, c=colors_arr, marker=marker_style, zorder=zorder)
+
+        if show_value_labels and color_col is not None:
+            for geom, val, col in zip(point_geoms, a_col, colors_arr):
+                try:
+                    label = value_label_fmt.format(float(val))
+                except Exception:
+                    label = str(val)
+                ax.annotate(
+                    label,
+                    (geom.x, geom.y),
+                    xytext=value_label_offset,
+                    textcoords='offset points',
+                    color=col,
+                    fontsize=value_label_fontsize,
+                    zorder=(zorder + 1) if zorder is not None else None,
+                )
 
         logger.info(f"[plot] Nodes: plotted {is_point.sum()} points.")
         return patches
