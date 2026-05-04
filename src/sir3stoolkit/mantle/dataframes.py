@@ -13,11 +13,11 @@ from pytoolconfig import dataclass
 import pandas as pd
 import re
 import numpy as np
+import logging
 import sys
 from dataclasses import dataclass, field
 from typing import List, Optional, Union
 from enum import Enum
-import io
 from typing import List, Tuple, Any
 from enum import Enum
 from collections import defaultdict
@@ -1122,28 +1122,34 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         return model_data_props
 
     def __is_get_endnodes_applicable(self, element_type):
-        buffer = io.StringIO()
-        sys_stdout = sys.stdout
-        sys.stdout = buffer  # Redirect stdout
+        element_type_net = self.to_dotnet_enum(element_type)
+        dummy, _insert_error = self.toolkit.InsertElement(
+            element_type_net,
+            "[Toolkit: __is_get_endnodes_applicable()]: to be deleted",
+        )
 
-        dummy = self.InsertElement(element_type, "to be deleted")
+        if dummy == "-1":
+            return True
 
         try:
-            
-            _ = self.GetEndNodes(dummy)
-        except Exception:
-            sys.stdout = sys_stdout  # Restore stdout
-
-        self.DeleteElement(dummy)
-
-        sys.stdout = sys_stdout  # Restore stdout
-        output = buffer.getvalue()
-        buffer.close()
-
-        if "doesnt apply to such Type of Elements" in output:
-            return False
-        
-        return True
+            return_value, _fkKI, _fkKK, _fkKI2, _fkKK2, error = self.toolkit.GetEndNodes(dummy)
+            error_text = str(error).lower() if error is not None else ""
+            if not return_value and (
+                "doesnt apply to such type of elements" in error_text
+                or "doesn't apply to such type of elements" in error_text
+            ):
+                return False
+            return True
+        except Exception as ex:
+            error_text = str(ex).lower()
+            if (
+                "doesnt apply to such type of elements" in error_text
+                or "doesn't apply to such type of elements" in error_text
+            ):
+                return False
+            return True
+        finally:
+            self.toolkit.DeleteElement(dummy)
 
     # Dataframe Operations
 
