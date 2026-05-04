@@ -23,20 +23,30 @@ class _HostAwarePrintFallbackHandler(logging.Handler):
             self.handleError(record)
 
 
+class _ToolkitRecordFilter(logging.Filter):
+    """Allow only toolkit log records on the root fallback handler."""
+
+    def filter(self, record: logging.LogRecord) -> bool:
+        return str(record.name).startswith("sir3stoolkit")
+
+
 def _emit_via_default_python_logging(record: logging.LogRecord) -> None:
     """Emit via root logger with a default stream handler when none is configured."""
     root_logger = logging.getLogger()
 
-    if not root_logger.handlers:
+    has_toolkit_fallback = any(
+        isinstance(handler, logging.StreamHandler)
+        and getattr(handler, "_sir3stoolkit_fallback", False)
+        for handler in root_logger.handlers
+    )
+    if not has_toolkit_fallback:
         handler = logging.StreamHandler()
+        handler._sir3stoolkit_fallback = True
+        handler.addFilter(_ToolkitRecordFilter())
         handler.setFormatter(
             logging.Formatter("[%(asctime)s] %(levelname)s in %(name)s: %(message)s")
         )
         root_logger.addHandler(handler)
-
-    # Keep root permissive so module logger levels govern effective verbosity.
-    if root_logger.level > logging.DEBUG:
-        root_logger.setLevel(logging.DEBUG)
 
     root_logger.handle(record)
 
