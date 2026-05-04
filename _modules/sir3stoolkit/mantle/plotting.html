@@ -146,6 +146,10 @@
         <span class="n">query</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">line_width_factor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">10.0</span><span class="p">,</span>
         <span class="n">zorder</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">show_value_labels</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">value_label_fmt</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{:.4f}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">value_label_fontsize</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">8.0</span><span class="p">,</span>
+        <span class="n">value_label_offset</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">),</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot line geometries with separate width and color scaling.</span>
@@ -181,6 +185,15 @@
 <span class="sd">            Factor applied after width normalization, default 10.0.</span>
 <span class="sd">        zorder : float, optional</span>
 <span class="sd">            Z-order for drawing.</span>
+<span class="sd">        show_value_labels : bool, optional</span>
+<span class="sd">            If True and a color scaling column is active, draw the numeric color</span>
+<span class="sd">            value next to each element using its mapped color.</span>
+<span class="sd">        value_label_fmt : str, optional</span>
+<span class="sd">            Format string used for value labels, default &quot;{:.4f}&quot;.</span>
+<span class="sd">        value_label_fontsize : float, optional</span>
+<span class="sd">            Font size for value labels, default 8.0.</span>
+<span class="sd">        value_label_offset : tuple[float, float], optional</span>
+<span class="sd">            Offset in points for value labels relative to their anchor position.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -221,6 +234,7 @@
         <span class="n">color_col</span> <span class="o">=</span> <span class="n">color_mixing_col</span> <span class="ow">or</span> <span class="n">attribute</span>
         <span class="n">cmap</span> <span class="o">=</span> <span class="n">mcolors</span><span class="o">.</span><span class="n">LinearSegmentedColormap</span><span class="o">.</span><span class="n">from_list</span><span class="p">(</span><span class="s1">&#39;cmap&#39;</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">colors</span><span class="p">),</span> <span class="n">N</span><span class="o">=</span><span class="mi">256</span><span class="p">)</span>
         <span class="n">patches</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">a_c</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="n">color_col</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">a_c</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">color_col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
@@ -273,6 +287,29 @@
                     <span class="n">lw</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
                     <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
 
+            <span class="k">if</span> <span class="n">show_value_labels</span> <span class="ow">and</span> <span class="n">color_col</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">a_c</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">anchor</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="k">if</span> <span class="n">gt</span> <span class="o">==</span> <span class="s1">&#39;LineString&#39;</span><span class="p">:</span>
+                    <span class="n">anchor</span> <span class="o">=</span> <span class="n">geom2</span><span class="o">.</span><span class="n">interpolate</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">normalized</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">gt</span> <span class="o">==</span> <span class="s1">&#39;MultiLineString&#39;</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">geom2</span><span class="o">.</span><span class="n">geoms</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">longest</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">geom2</span><span class="o">.</span><span class="n">geoms</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">part</span><span class="p">:</span> <span class="n">part</span><span class="o">.</span><span class="n">length</span><span class="p">)</span>
+                    <span class="n">anchor</span> <span class="o">=</span> <span class="n">longest</span><span class="o">.</span><span class="n">interpolate</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">normalized</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">anchor</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">label</span> <span class="o">=</span> <span class="n">value_label_fmt</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">a_c</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+                    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                        <span class="n">label</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">a_c</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+                    <span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span>
+                        <span class="n">label</span><span class="p">,</span>
+                        <span class="p">(</span><span class="n">anchor</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">anchor</span><span class="o">.</span><span class="n">y</span><span class="p">),</span>
+                        <span class="n">xytext</span><span class="o">=</span><span class="n">value_label_offset</span><span class="p">,</span>
+                        <span class="n">textcoords</span><span class="o">=</span><span class="s1">&#39;offset points&#39;</span><span class="p">,</span>
+                        <span class="n">color</span><span class="o">=</span><span class="n">col</span><span class="p">,</span>
+                        <span class="n">fontsize</span><span class="o">=</span><span class="n">value_label_fontsize</span><span class="p">,</span>
+                        <span class="n">zorder</span><span class="o">=</span><span class="p">(</span><span class="n">zorder</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="n">zorder</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                    <span class="p">)</span>
+
         <span class="k">if</span> <span class="ow">not</span> <span class="n">segs</span><span class="p">:</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;[plot] Pipes: no line geometries found.&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">None</span>
@@ -308,6 +345,10 @@
         <span class="n">marker_style</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span>
         <span class="n">marker_size_factor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1000.0</span><span class="p">,</span>
         <span class="n">zorder</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">show_value_labels</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">value_label_fmt</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{:.4f}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">value_label_fontsize</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">8.0</span><span class="p">,</span>
+        <span class="n">value_label_offset</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">),</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot point nodes with separate size and color scaling.</span>
@@ -345,6 +386,15 @@
 <span class="sd">            Factor applied after size normalization, default 1000.0.</span>
 <span class="sd">        zorder : float, optional</span>
 <span class="sd">            Z-order for drawing.</span>
+<span class="sd">        show_value_labels : bool, optional</span>
+<span class="sd">            If True and a color scaling column is active, draw the numeric color</span>
+<span class="sd">            value next to each point using its mapped color.</span>
+<span class="sd">        value_label_fmt : str, optional</span>
+<span class="sd">            Format string used for value labels, default &quot;{:.4f}&quot;.</span>
+<span class="sd">        value_label_fontsize : float, optional</span>
+<span class="sd">            Font size for value labels, default 8.0.</span>
+<span class="sd">        value_label_offset : tuple[float, float], optional</span>
+<span class="sd">            Offset in points for value labels relative to each point.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -412,8 +462,25 @@
             <span class="n">colors_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">mcolors</span><span class="o">.</span><span class="n">to_rgba</span><span class="p">(</span><span class="n">colors</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="p">(</span><span class="n">is_point</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="mi">1</span><span class="p">))</span>
 
         <span class="c1"># --- PLOT ---</span>
-        <span class="n">coords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([(</span><span class="n">g</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">g</span><span class="o">.</span><span class="n">y</span><span class="p">)</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">geoms</span><span class="p">[</span><span class="n">is_point</span><span class="p">]])</span>
+        <span class="n">point_geoms</span> <span class="o">=</span> <span class="n">geoms</span><span class="p">[</span><span class="n">is_point</span><span class="p">]</span>
+        <span class="n">coords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([(</span><span class="n">g</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">g</span><span class="o">.</span><span class="n">y</span><span class="p">)</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">point_geoms</span><span class="p">])</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">coords</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">coords</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="n">sizes</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">colors_arr</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="n">marker_style</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="n">zorder</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">show_value_labels</span> <span class="ow">and</span> <span class="n">color_col</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">geom</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">point_geoms</span><span class="p">,</span> <span class="n">a_col</span><span class="p">,</span> <span class="n">colors_arr</span><span class="p">):</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">label</span> <span class="o">=</span> <span class="n">value_label_fmt</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="p">))</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                    <span class="n">label</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span>
+                    <span class="n">label</span><span class="p">,</span>
+                    <span class="p">(</span><span class="n">geom</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">geom</span><span class="o">.</span><span class="n">y</span><span class="p">),</span>
+                    <span class="n">xytext</span><span class="o">=</span><span class="n">value_label_offset</span><span class="p">,</span>
+                    <span class="n">textcoords</span><span class="o">=</span><span class="s1">&#39;offset points&#39;</span><span class="p">,</span>
+                    <span class="n">color</span><span class="o">=</span><span class="n">col</span><span class="p">,</span>
+                    <span class="n">fontsize</span><span class="o">=</span><span class="n">value_label_fontsize</span><span class="p">,</span>
+                    <span class="n">zorder</span><span class="o">=</span><span class="p">(</span><span class="n">zorder</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="n">zorder</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="p">)</span>
 
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[plot] Nodes: plotted </span><span class="si">{</span><span class="n">is_point</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s2"> points.&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">patches</span></div>
