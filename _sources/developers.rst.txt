@@ -295,6 +295,54 @@ Troubleshooting
 - The hook must be named ``pre-commit`` with no file extension.
 
 
+Running Test Suites
+-------------------
+
+The repository uses ``pytest`` for automated tests.
+
+Before running tests, navigate to the repository root:
+
+.. code-block:: bash
+
+   cd "C:\Users\User\3S\sir3stoolkit"
+
+Run all default tests (unit/integration tests configured in ``test/``):
+
+.. code-block:: bash
+
+   pytest
+
+Run only the unit tests:
+
+.. code-block:: bash
+
+   pytest test/unit -q
+
+Run a specific test file:
+
+.. code-block:: bash
+
+   pytest test/unit/test_core_wrapper_init.py -q
+
+Notebook execution tests are implemented in
+``test/notebooks/test_run_tutorial_notebooks.py`` and are **opt-in**.
+By default, they are skipped to keep regular test runs fast and stable.
+
+To execute all tutorial notebooks (excluding ``Test.ipynb``):
+
+.. code-block:: bash
+
+   set SIR3S_RUN_NOTEBOOKS=1
+   pytest test/notebooks/test_run_tutorial_notebooks.py -q
+
+Or run the full suite including notebook tests:
+
+.. code-block:: bash
+
+   set SIR3S_RUN_NOTEBOOKS=1
+   pytest
+
+
 Generating the Documentation
 ----------------------------
 
