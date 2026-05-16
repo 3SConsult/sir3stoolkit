@@ -197,7 +197,7 @@ def Initialize_Toolkit(basePath: Optional[str] = None):
     3. Otherwise, try ``config.local.txt`` in the package root directory
        (``sir3stoolkit/config.local.txt``), then ``config.txt`` in the same
        location, and read the first non-empty, non-comment line.
-       Format: C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2
+       Format: C:/3S/SIR 3S/SirGraf-90-15-00-24_Quebec-Upd2
 
     :param basePath: Optional full path to the SirGraf directory.
     :type basePath: Optional[str]
@@ -246,9 +246,9 @@ class SIR3S_Model:
         if (self.toolkit is None):
             self.toolkit = Sir3SToolkit.CSir3SToolkitFactory.CreateToolkit(None, SIR3S_SIRGRAF_DIR, r"90-15-00-01")
         if (self.toolkit is None):
-            _log_message("Error in initializing the toolkit")
+            _log_message("[Model Class Initialization] Error in initializing the toolkit")
         else:
-            _log_message("Initialization complete")
+            _log_message("[Model Class Initialization] Initialization complete")
 
         # Create all necessay Enums for user
         self.ObjectTypes = create_dotnet_enum("ObjectTypes", "Sir3SObjectTypes", "Sir3S_Repository.Interfaces.dll")
@@ -1494,6 +1494,31 @@ class SIR3S_Model:
         return hydraulicProfile(childrenUID=childrenUID, nodesVL=nodesVL, linksVL=linksVL, xVL=xVL,
                                 nodesRL=nodesRL, linksRL=linksRL, xRL=xRL, nrOfBranches=nrOfBranches, xOffSet=xOffSet,
                                 xOffsetRelativeToParent=xOffsetRelativeToParent, length=length, tkArticulationNode=tkArticulationNode)
+
+    def ExecuteModelValidation(self):
+        """
+        This method executes the model validation.
+
+        :return: returns the results of the model validation
+        :rtype: tuple
+        :description: This is a wrapper method for ExecuteModelValidation() from toolkit
+        """
+
+        modelCheck, errDB = self.toolkit.ExecuteModelValidation( ) 
+
+        return modelCheck, errDB
+    
+    def ExecuteResultsCheck(self):
+        """
+        This method executes the model validation.
+
+        :return: returns the results of the model validation
+        :rtype: tuple
+        :description: This is a wrapper method for ExecuteModelValidation() from toolkit
+        """
+        resultscheck, datapointCheckResults, errDB = self.toolkit.ExecuteResultsCheck( ) 
+
+        return resultscheck, datapointCheckResults, errDB
 
 class SIR3S_View:
     """
