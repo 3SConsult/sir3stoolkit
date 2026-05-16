@@ -1499,26 +1499,32 @@ class SIR3S_Model:
         """
         This method executes the model validation.
 
-        :return: returns the results of the model validation
+        :return: returns the results of the model validation. Use json to unpack.
         :rtype: tuple
         :description: This is a wrapper method for ExecuteModelValidation() from toolkit
         """
 
         modelCheck, errDB = self.toolkit.ExecuteModelValidation( ) 
 
-        return modelCheck, errDB
+        if errDB:
+            _log_message("Error: " + errDB)
+
+        return modelCheck
     
     def ExecuteResultsCheck(self):
         """
-        This method executes the model validation.
+        This method executes check of results.
 
-        :return: returns the results of the model validation
+        :return: returns the result check and datapoint check results. Use json to unpack.
         :rtype: tuple
-        :description: This is a wrapper method for ExecuteModelValidation() from toolkit
+        :description: This is a wrapper method for ExecuteResultsCheck() from toolkit
         """
         resultscheck, datapointCheckResults, errDB = self.toolkit.ExecuteResultsCheck( ) 
 
-        return resultscheck, datapointCheckResults, errDB
+        if errDB:
+            _log_message("Error: " + errDB)
+
+        return resultscheck, datapointCheckResults
 
 class SIR3S_View:
     """
