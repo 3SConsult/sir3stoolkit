@@ -291,7 +291,7 @@
 <span class="sd">    3. Otherwise, try ``config.local.txt`` in the package root directory</span>
 <span class="sd">       (``sir3stoolkit/config.local.txt``), then ``config.txt`` in the same</span>
 <span class="sd">       location, and read the first non-empty, non-comment line.</span>
-<span class="sd">       Format: C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2</span>
+<span class="sd">       Format: C:/3S/SIR 3S/SirGraf-90-15-00-24_Quebec-Upd2</span>
 
 <span class="sd">    :param basePath: Optional full path to the SirGraf directory.</span>
 <span class="sd">    :type basePath: Optional[str]</span>
@@ -343,9 +343,9 @@
         <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span> <span class="o">=</span> <span class="n">Sir3SToolkit</span><span class="o">.</span><span class="n">CSir3SToolkitFactory</span><span class="o">.</span><span class="n">CreateToolkit</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">SIR3S_SIRGRAF_DIR</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;90-15-00-01&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
-            <span class="n">_log_message</span><span class="p">(</span><span class="s2">&quot;Error in initializing the toolkit&quot;</span><span class="p">)</span>
+            <span class="n">_log_message</span><span class="p">(</span><span class="s2">&quot;[Model Class Initialization] Error in initializing the toolkit&quot;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">_log_message</span><span class="p">(</span><span class="s2">&quot;Initialization complete&quot;</span><span class="p">)</span>
+            <span class="n">_log_message</span><span class="p">(</span><span class="s2">&quot;[Model Class Initialization] Initialization complete&quot;</span><span class="p">)</span>
 
         <span class="c1"># Create all necessay Enums for user</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span> <span class="o">=</span> <span class="n">create_dotnet_enum</span><span class="p">(</span><span class="s2">&quot;ObjectTypes&quot;</span><span class="p">,</span> <span class="s2">&quot;Sir3SObjectTypes&quot;</span><span class="p">,</span> <span class="s2">&quot;Sir3S_Repository.Interfaces.dll&quot;</span><span class="p">)</span>
@@ -1773,6 +1773,37 @@
         <span class="k">return</span> <span class="n">hydraulicProfile</span><span class="p">(</span><span class="n">childrenUID</span><span class="o">=</span><span class="n">childrenUID</span><span class="p">,</span> <span class="n">nodesVL</span><span class="o">=</span><span class="n">nodesVL</span><span class="p">,</span> <span class="n">linksVL</span><span class="o">=</span><span class="n">linksVL</span><span class="p">,</span> <span class="n">xVL</span><span class="o">=</span><span class="n">xVL</span><span class="p">,</span>
                                 <span class="n">nodesRL</span><span class="o">=</span><span class="n">nodesRL</span><span class="p">,</span> <span class="n">linksRL</span><span class="o">=</span><span class="n">linksRL</span><span class="p">,</span> <span class="n">xRL</span><span class="o">=</span><span class="n">xRL</span><span class="p">,</span> <span class="n">nrOfBranches</span><span class="o">=</span><span class="n">nrOfBranches</span><span class="p">,</span> <span class="n">xOffSet</span><span class="o">=</span><span class="n">xOffSet</span><span class="p">,</span>
                                 <span class="n">xOffsetRelativeToParent</span><span class="o">=</span><span class="n">xOffsetRelativeToParent</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="n">length</span><span class="p">,</span> <span class="n">tkArticulationNode</span><span class="o">=</span><span class="n">tkArticulationNode</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SIR3S_Model.ExecuteModelValidation">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.ExecuteModelValidation">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">ExecuteModelValidation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method executes the model validation.</span>
+
+<span class="sd">        :return: returns the results of the model validation</span>
+<span class="sd">        :rtype: tuple</span>
+<span class="sd">        :description: This is a wrapper method for ExecuteModelValidation() from toolkit</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">modelCheck</span><span class="p">,</span> <span class="n">errDB</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">ExecuteModelValidation</span><span class="p">(</span> <span class="p">)</span> 
+
+        <span class="k">return</span> <span class="n">modelCheck</span><span class="p">,</span> <span class="n">errDB</span></div>
+
+    
+<div class="viewcode-block" id="SIR3S_Model.ExecuteResultsCheck">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.ExecuteResultsCheck">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">ExecuteResultsCheck</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method executes the model validation.</span>
+
+<span class="sd">        :return: returns the results of the model validation</span>
+<span class="sd">        :rtype: tuple</span>
+<span class="sd">        :description: This is a wrapper method for ExecuteModelValidation() from toolkit</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resultscheck</span><span class="p">,</span> <span class="n">datapointCheckResults</span><span class="p">,</span> <span class="n">errDB</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">ExecuteResultsCheck</span><span class="p">(</span> <span class="p">)</span> 
+
+        <span class="k">return</span> <span class="n">resultscheck</span><span class="p">,</span> <span class="n">datapointCheckResults</span><span class="p">,</span> <span class="n">errDB</span></div>
 </div>
 
 
