@@ -302,7 +302,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
                 - Level 1: name (device name)  
                 - Level 2: end_nodes (tuple of connected node tks as string)  
                 - Level 3: property (result name)  
-                Data types: float for scalars, str for vectorized data.
+                Data types: float for scalars, str for vectorized data and literal strings.
         :rtype: pd.DataFrame
 
         :description:
@@ -369,18 +369,16 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
                         value = self.GetResultfortimestamp(timestamp=ts, Tk=tk, property=prop)[0]
                         if value == "":
                             data_dict[(tk, prop)][ts] = place_holder_value
-
                         elif prop in available_result_vector_props:
                             value = str(value)
                             data_dict[(tk, prop)][ts] = value
                         else:
                             try:
                                 value = float(value)
-                            except ValueError:
-                                logger.warning(f"[results] Non-numeric value for '{prop}' at '{ts}': {value}")
-                                value = float("nan")
-                            data_dict[(tk, prop)][ts] = value
-
+                                data_dict[(tk, prop)][ts] = value
+                            except (ValueError, TypeError):
+                                value = str(value)
+                                data_dict[(tk, prop)][ts] = value
                     except Exception as e:
                         logger.warning(f"[results] Failed to get result '{prop}' for tk '{tk}' at '{ts}': {e}")
 
@@ -466,7 +464,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         logger.info(f"[generate_element_dataframe] Generating df for element type: {element_type} ...")
         
         try:
-            logger.debug(f"[generate_element_dataframe] Generating df_model_data for element type: {element_type} ...")
+            logger.info(f"[generate_element_dataframe] Generating df_model_data for element type: {element_type} ...")
             df_model_data = self.generate_element_model_data_dataframe(element_type=element_type
                                                                 ,tks=tks
                                                                 ,properties=None
@@ -495,7 +493,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
             else:
                 used_timestamp = self.GetTimeStamps()[1] # static
 
-            logger.debug(f"[generate_element_dataframe] Generating df_results for element type: {element_type}; at timestamp: {used_timestamp} ...")
+            logger.info(f"[generate_element_dataframe] Generating df_results for element type: {element_type}; at timestamp: {used_timestamp} ...")
             df_results = self.generate_element_results_dataframe(element_type=element_type
                                                                         ,tks=tks
                                                                         ,properties=result_values_to_obtain
@@ -505,7 +503,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
             if df_results.empty:
                 logger.error(f"[generate_element_dataframe] Obtained results dataframe is empty.")
                 return pd.DataFrame()
-            logger.debug(f"[generate_element_dataframe] Merging df_model_data with df_results for element type: {element_type} ...")
+            logger.info(f"[generate_element_dataframe] Merging df_model_data with df_results for element type: {element_type} ...")
             df_results.columns = df_results.columns.droplevel([1, 2])
             df_results = df_results.T.unstack(level=0).T
             df_results = df_results.droplevel(0, axis=0)
@@ -1257,7 +1255,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         for tk in self.GetTksofElementType(ElementType=element_type):
             for prop in model_data_props_new:
                 msg=self.SetValue(prop, updates_df.iloc[tk, model_data_props_new_with_suffix])
-                logger.debug
+                logger.info
 
     def __AddNodesAndPipes(self, dfXL):
         """
@@ -1296,14 +1294,14 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
                 if pd.notna(baujahr):
                     self.SetValue(tk_pipe, "Baujahr", str(baujahr))
             except Exception as e:
-                logger.debug(f"BAUJAHR of Pipe {tk_pipe} not assigned: {e}")
+                logger.info(f"BAUJAHR of Pipe {tk_pipe} not assigned: {e}")
 
             try:
                 hal = dfXL.at[i, 'HAL']
                 if pd.notna(hal):
                     self.SetValue(tk_pipe, "Hal", str(hal))
             except Exception as e:
-                logger.debug(f"HAL of Pipe {tk_pipe} not assigned: {e}")
+                logger.info(f"HAL of Pipe {tk_pipe} not assigned: {e}")
 
             # 2LROHR does not work
             try:
@@ -1314,7 +1312,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
                         partner_pipe_tk = match.iloc[0]['tk']
                         self.SetValue(tk_pipe, "Fk2lrohr", partner_pipe_tk)
             except Exception as e:
-                logger.debug(f"2LROHR of Pipe {tk_pipe} not assigned: {e}")
+                logger.info(f"2LROHR of Pipe {tk_pipe} not assigned: {e}")
 
         return dfXL
 
@@ -1324,7 +1322,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         The dataframe needs minimum of cols: geometry (LINESTRING), MATERIAL (str), DN (int), KVR (int)
         """
         func_name = sys._getframe().f_code.co_name
-        logger.debug(f"{func_name}: Start.")
+        logger.info(f"{func_name}: Start.")
 
         climbing_index = 0
         for idx in range(len(dfPipes)):
@@ -1682,7 +1680,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
     # Miscellaneous
     def __Get_Node_Tks_From_Pipe(self, pipe_tk):
         func_name = sys._getframe().f_code.co_name
-        logger.debug(f"{func_name}: Start.")
+        logger.info(f"{func_name}: Start.")
 
         from_node_name = self.GetValue(pipe_tk, 'FromNode.Name')[0]
         to_node_name = self.GetValue(pipe_tk, 'ToNode.Name')[0]
@@ -1701,7 +1699,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
 
     def __Get_Pipe_Tk_From_Nodes(self, fkKI, fkKK, Order=True):
         func_name = sys._getframe().f_code.co_name
-        logger.debug(f"{func_name}: Start.")
+        logger.info(f"{func_name}: Start.")
 
         from_node_name = self.GetValue(fkKI, 'Name')[0]
         to_node_name = self.GetValue(fkKK, 'Name')[0]
@@ -1727,7 +1725,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
 
     def __VL_or_RL(self, KVR):
         func_name = sys._getframe().f_code.co_name
-        logger.debug(f"{func_name}: Start.")
+        logger.info(f"{func_name}: Start.")
         if KVR == 1:
             return 'VL'
         elif KVR == 2:
@@ -1737,7 +1735,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
 
     def __Check_Node_Name_Duplicates(self, name):
         func_name = sys._getframe().f_code.co_name
-        logger.debug(f"{func_name}: Start.")
+        logger.info(f"{func_name}: Start.")
 
         tks = []
         for node_tk in self.GetTksofElementType(ElementType=self.ObjectTypes.Node):

@@ -301,7 +301,7 @@ class SIR3S_Model_Alternative_Models(SIR3S_Model_Dataframes):
             
             df["tk"] = df["tk"].astype('int64')
 
-            logger.debug(f"{df.columns}")
+            logger.info(f"{df.columns}")
 
             if df is None or df.empty:
                 logger.info(f"[graph] Empty model_data DataFrame for element_type='{element_type}'. Nothing to add.")
