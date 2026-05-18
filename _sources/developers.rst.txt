@@ -328,19 +328,11 @@ Notebook execution tests are implemented in
 ``test/notebooks/test_run_tutorial_notebooks.py`` and are **opt-in**.
 By default, they are skipped to keep regular test runs fast and stable.
 
-To execute all tutorial notebooks (excluding ``Test.ipynb``):
+To run the full suite including notebook tests:
 
 .. code-block:: bash
 
-   set SIR3S_RUN_NOTEBOOKS=1
-   pytest test/notebooks/test_run_tutorial_notebooks.py -q
-
-Or run the full suite including notebook tests:
-
-.. code-block:: bash
-
-   set SIR3S_RUN_NOTEBOOKS=1
-   pytest
+   $env:SIR3S_RUN_NOTEBOOKS="1"; pytest -vv -rA # -s for notebook output # powershell
 
 
 Generating the Documentation
