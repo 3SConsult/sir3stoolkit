@@ -72,6 +72,29 @@ Below the release history with all changes is given in detail.
 SIR 3S: 90-15-00-24-Upd2
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
+Version 90.15.20
+""""""""""""""""
+
+Developed and tested using SIR 3S Version: 90-15-00-24-Upd2
+
+Changes
+~~~~~~~
+
+- plotting.py: plot_pipe_layer(), plot_node_layer() new params: value lables
+- new centralized logging module: logging_utils.py: 
+   - all module loggers are now created via ``get_logger(__name__)`` for consistent setup
+   - if external handlers exist, they handle all output (no duplicate fallback output)
+   - if no external handlers exist and toolkit runs inside SirGraf host process, logs are emitted via host-aware fallback print
+   - if no external handlers exist outside host process, logs are emitted via standard Python logging fallback
+   - wrapper and mantle modules were aligned to use this shared behavior
+- config.txt/wrapper.py Sir Calc path formatting changed to prevent issues in Syntax Check of SIR 3S Python console
+- dataframes.py: generate_element_results_dataframe(): str result values are now included in output df, instead of being detected as non-numeric and left out
+
+C# Changes
+~~~~~~~~~~
+
+
+
 Version 90.15.19
 """"""""""""""""
 

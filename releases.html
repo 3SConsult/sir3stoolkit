@@ -62,6 +62,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#sir-3s-90-15-quebec">SIR 3S: 90-15 Quebec</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#sir-3s-90-15-00-24-upd2">SIR 3S: 90-15-00-24-Upd2</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#version-90-15-20">Version 90.15.20</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#version-90-15-19">Version 90.15.19</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#version-90-15-18">Version 90.15.18</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#version-90-15-17">Version 90.15.17</a></li>
@@ -251,11 +252,37 @@
 </section>
 <section id="sir-3s-90-15-00-24-upd2">
 <h3>SIR 3S: 90-15-00-24-Upd2<a class="headerlink" href="#sir-3s-90-15-00-24-upd2" title="Link to this heading"></a></h3>
-<section id="version-90-15-19">
-<h4>Version 90.15.19<a class="headerlink" href="#version-90-15-19" title="Link to this heading"></a></h4>
+<section id="version-90-15-20">
+<h4>Version 90.15.20<a class="headerlink" href="#version-90-15-20" title="Link to this heading"></a></h4>
 <p>Developed and tested using SIR 3S Version: 90-15-00-24-Upd2</p>
 <section id="changes">
 <h5>Changes<a class="headerlink" href="#changes" title="Link to this heading"></a></h5>
+<ul class="simple">
+<li><p>plotting.py: plot_pipe_layer(), plot_node_layer() new params: value lables</p></li>
+<li><dl class="simple">
+<dt>new centralized logging module: logging_utils.py:</dt><dd><ul>
+<li><p>all module loggers are now created via <code class="docutils literal notranslate"><span class="pre">get_logger(__name__)</span></code> for consistent setup</p></li>
+<li><p>if external handlers exist, they handle all output (no duplicate fallback output)</p></li>
+<li><p>if no external handlers exist and toolkit runs inside SirGraf host process, logs are emitted via host-aware fallback print</p></li>
+<li><p>if no external handlers exist outside host process, logs are emitted via standard Python logging fallback</p></li>
+<li><p>wrapper and mantle modules were aligned to use this shared behavior</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>config.txt/wrapper.py Sir Calc path formatting changed to prevent issues in Syntax Check of SIR 3S Python console</p></li>
+<li><p>dataframes.py: generate_element_results_dataframe(): str result values are now included in output df, instead of being detected as non-numeric and left out</p></li>
+</ul>
+</section>
+<section id="c-changes">
+<h5>C# Changes<a class="headerlink" href="#c-changes" title="Link to this heading"></a></h5>
+</section>
+</section>
+<section id="version-90-15-19">
+<h4>Version 90.15.19<a class="headerlink" href="#version-90-15-19" title="Link to this heading"></a></h4>
+<p>Developed and tested using SIR 3S Version: 90-15-00-24-Upd2</p>
+<section id="id2">
+<h5>Changes<a class="headerlink" href="#id2" title="Link to this heading"></a></h5>
 <ul class="simple">
 <li><dl class="simple">
 <dt>wrapper.py:</dt><dd><ul>
@@ -280,8 +307,8 @@
 <section id="version-90-15-18">
 <h4>Version 90.15.18<a class="headerlink" href="#version-90-15-18" title="Link to this heading"></a></h4>
 <p>Developed and tested using SIR 3S Version: 90-15-00-24-Upd2</p>
-<section id="id2">
-<h5>Changes<a class="headerlink" href="#id2" title="Link to this heading"></a></h5>
+<section id="id3">
+<h5>Changes<a class="headerlink" href="#id3" title="Link to this heading"></a></h5>
 <ul class="simple">
 <li><dl class="simple">
 <dt>plotting.py:</dt><dd><ul>
@@ -313,8 +340,8 @@
 <section id="version-90-15-17">
 <h4>Version 90.15.17<a class="headerlink" href="#version-90-15-17" title="Link to this heading"></a></h4>
 <p>Developed and tested using SIR 3S Version: 90-15-00-24-Upd2</p>
-<section id="id3">
-<h5>Changes<a class="headerlink" href="#id3" title="Link to this heading"></a></h5>
+<section id="id4">
+<h5>Changes<a class="headerlink" href="#id4" title="Link to this heading"></a></h5>
 <ul class="simple">
 <li><dl class="simple">
 <dt>dataframes.py:</dt><dd><ul>
@@ -344,14 +371,14 @@
 <section id="version-90-15-15">
 <h4>Version 90.15.15<a class="headerlink" href="#version-90-15-15" title="Link to this heading"></a></h4>
 <p>Developed and tested using SIR 3S Version: 90-15-00-23-Upd2</p>
-<section id="c-changes">
-<h5>C# Changes<a class="headerlink" href="#c-changes" title="Link to this heading"></a></h5>
+<section id="id5">
+<h5>C# Changes<a class="headerlink" href="#id5" title="Link to this heading"></a></h5>
 <ul class="simple">
 <li><p>Deleting objects: References to the object are reset/handled.</p></li>
 </ul>
 </section>
-<section id="id4">
-<h5>Bug Fixes<a class="headerlink" href="#id4" title="Link to this heading"></a></h5>
+<section id="id6">
+<h5>Bug Fixes<a class="headerlink" href="#id6" title="Link to this heading"></a></h5>
 <ul class="simple">
 <li><dl class="simple">
 <dt>insert_dataframe_into_time_table():</dt><dd><ul>
@@ -371,8 +398,8 @@
 <section id="version-90-15-14">
 <h4>Version 90.15.14<a class="headerlink" href="#version-90-15-14" title="Link to this heading"></a></h4>
 <p>Developed and tested using SIR 3S Version: 90-15-00-22-Upd2</p>
-<section id="id5">
-<h5>Changes<a class="headerlink" href="#id5" title="Link to this heading"></a></h5>
+<section id="id7">
+<h5>Changes<a class="headerlink" href="#id7" title="Link to this heading"></a></h5>
 <ul class="simple">
 <li><dl class="simple">
 <dt>dataframes.py:</dt><dd><ul>
@@ -404,14 +431,14 @@
 </section>
 <section id="version-90-15-13">
 <h4>Version 90.15.13<a class="headerlink" href="#version-90-15-13" title="Link to this heading"></a></h4>
-<section id="id6">
-<h5>Changes<a class="headerlink" href="#id6" title="Link to this heading"></a></h5>
+<section id="id8">
+<h5>Changes<a class="headerlink" href="#id8" title="Link to this heading"></a></h5>
 <ul class="simple">
 <li><p>All time table related functions moved from advanced_operations.py (SIR3S_Model_Advanced_Operations) to dataframes.py (SIR3S_Model_Dataframes)</p></li>
 </ul>
 </section>
-<section id="id7">
-<h5>Bug Fixes<a class="headerlink" href="#id7" title="Link to this heading"></a></h5>
+<section id="id9">
+<h5>Bug Fixes<a class="headerlink" href="#id9" title="Link to this heading"></a></h5>
 <ul class="simple">
 <li><p>dataframes.py: logger(f”{e}””) without except fixed</p></li>
 </ul>
@@ -420,14 +447,14 @@
 <section id="version-90-15-12">
 <h4>Version 90.15.12<a class="headerlink" href="#version-90-15-12" title="Link to this heading"></a></h4>
 <p>Developed and tested using SIR 3S Version: 90-15-00-22-Upd2</p>
-<section id="id8">
-<h5>C# Changes<a class="headerlink" href="#id8" title="Link to this heading"></a></h5>
+<section id="id10">
+<h5>C# Changes<a class="headerlink" href="#id10" title="Link to this heading"></a></h5>
 <ul class="simple">
 <li><p>Fixed Calculation Bug: Could not start Model Calculation: SirCalc Path ‘C:3S ConsultSIR3S-90-15-00-19-QuebecSirCalc-90-15-02-20_QuebecSirCalc.exe’ not found</p></li>
 </ul>
 </section>
-<section id="id9">
-<h5>Bug Fixes<a class="headerlink" href="#id9" title="Link to this heading"></a></h5>
+<section id="id11">
+<h5>Bug Fixes<a class="headerlink" href="#id11" title="Link to this heading"></a></h5>
 <ul class="simple">
 <li><p>insert_dataframe_into_time_table(): internal_ref_time = self.GetTimeStamps()[0][0]</p></li>
 <li><p>dataframes.py: generate_element_dataframe() minor safe guard added</p></li>
@@ -528,8 +555,8 @@
 <section id="version-90-15-7">
 <h4>Version 90.15.7<a class="headerlink" href="#version-90-15-7" title="Link to this heading"></a></h4>
 <p>Developed and tested using SIR 3S Version: 90-15-00-20-Upd1</p>
-<section id="id10">
-<h5>Changes<a class="headerlink" href="#id10" title="Link to this heading"></a></h5>
+<section id="id12">
+<h5>Changes<a class="headerlink" href="#id12" title="Link to this heading"></a></h5>
 <ul class="simple">
 <li><dl class="simple">
 <dt>dataframes.py:</dt><dd><ul>
@@ -549,8 +576,8 @@
 <section id="version-90-15-6">
 <h4>Version 90.15.6<a class="headerlink" href="#version-90-15-6" title="Link to this heading"></a></h4>
 <p>Developed and tested using SIR 3S Version: 90-15-00-20-Upd1</p>
-<section id="id11">
-<h5>C# Changes<a class="headerlink" href="#id11" title="Link to this heading"></a></h5>
+<section id="id13">
+<h5>C# Changes<a class="headerlink" href="#id13" title="Link to this heading"></a></h5>
 <ul class="simple">
 <li><p>Hydraulic Profile related functions added</p></li>
 </ul>
@@ -577,8 +604,8 @@
 </li>
 </ul>
 </section>
-<section id="id12">
-<h5>Changes<a class="headerlink" href="#id12" title="Link to this heading"></a></h5>
+<section id="id14">
+<h5>Changes<a class="headerlink" href="#id14" title="Link to this heading"></a></h5>
 <ul class="simple">
 <li><dl class="simple">
 <dt>mantle sub classes renaming:</dt><dd><ul>
@@ -598,14 +625,14 @@
 <section id="version-90-15-5">
 <h4>Version 90.15.5<a class="headerlink" href="#version-90-15-5" title="Link to this heading"></a></h4>
 <p>Developed and tested using SIR 3S Version: 90-15-00-19</p>
-<section id="id13">
-<h5>C# Changes<a class="headerlink" href="#id13" title="Link to this heading"></a></h5>
+<section id="id15">
+<h5>C# Changes<a class="headerlink" href="#id15" title="Link to this heading"></a></h5>
 <ul class="simple">
 <li><p>Model Repair Class added</p></li>
 </ul>
 </section>
-<section id="id14">
-<h5>Bug Fixes<a class="headerlink" href="#id14" title="Link to this heading"></a></h5>
+<section id="id16">
+<h5>Bug Fixes<a class="headerlink" href="#id16" title="Link to this heading"></a></h5>
 <ul class="simple">
 <li><dl class="simple">
 <dt>dataframes.py:</dt><dd><ul>
@@ -617,8 +644,8 @@
 </li>
 </ul>
 </section>
-<section id="id15">
-<h5>Improvements<a class="headerlink" href="#id15" title="Link to this heading"></a></h5>
+<section id="id17">
+<h5>Improvements<a class="headerlink" href="#id17" title="Link to this heading"></a></h5>
 <ul class="simple">
 <li><dl class="simple">
 <dt>alternative_models.py:</dt><dd><ul>
