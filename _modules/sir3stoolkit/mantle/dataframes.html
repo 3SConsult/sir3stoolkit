@@ -906,7 +906,7 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">generate_edge_dataframe</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">properties</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[],</span>      
-        <span class="n">timestamp</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">timestamp</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
 
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -927,11 +927,11 @@
 <span class="sd">        :param properties: Properties requested across all edge types. Each property is</span>
 <span class="sd">                           validated per element type and split into model-data vs. result</span>
 <span class="sd">                           properties. Unknown properties are ignored for that type.</span>
-<span class="sd">                           Default: []. Meaning only tk, Fkcont, geometry, fkKI, fkKK, element_type, L will be given as default cols in df_edges.</span>
+<span class="sd">                           Default: []. Meaning only tk, Fkcont, geometry, fkKI, fkKK, element_type, L (L=0, if missing) will be given as default cols in df_edges.</span>
 <span class="sd">        :type properties: list[str], optional</span>
 <span class="sd">        :param timestamp: Timestamp to use when retrieving result properties.</span>
-<span class="sd">                           Supports timestamp string (eg. timestamp=&#39;2023-02-13 08:00:00.000 +01:00&#39;) or int index (eg. timestamp=8. corresponding to simulation timestamps s3s.GetTimeStamps()[0])</span>
-<span class="sd">                           Default: 0. Stationary</span>
+<span class="sd">                           Supports timestamp string (eg. timestamp=&#39;2023-02-13 08:00:00.000 +01:00&#39;) or int index (eg. timestamp=8. corresponding to simulation timestamps self.GetTimeStamps()[0])</span>
+<span class="sd">                           Default: self.GetTimeStamps()[1].(Stationary)</span>
 <span class="sd">        :type timestamp: Union[str, int], optional</span>
 
 <span class="sd">        :return: A dataframe containing all retrieved edges across supported types.</span>
@@ -939,10 +939,6 @@
 <span class="sd">                 properties not available for some types remain empty (NaN).</span>
 <span class="sd">                 If no edge rows are available, an empty dataframe is returned.</span>
 <span class="sd">        :rtype: pd.DataFrame</span>
-
-<span class="sd">        :notes:</span>
-<span class="sd">            - Column &#39;Fkcont&#39; is always requested from model data.</span>
-<span class="sd">            - If model-data column &#39;L&#39; is missing for an edge type, it is created with 0.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">edge_types</span> <span class="o">=</span> <span class="p">[</span>
@@ -952,6 +948,8 @@
         <span class="p">]</span>
 
         <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">timestamp</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">timestamp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTimeStamps</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span> <span class="c1"># stationary</span>
             <span class="n">enum_members</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_object_type_enums</span><span class="p">(</span><span class="n">edge_types</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="p">)</span>
             <span class="n">dfs</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="n">enume_members_used</span> <span class="o">=</span> <span class="mi">0</span>
@@ -1484,7 +1482,7 @@
 <span class="sd">        Retrieve and assemble row-wise property data for all nominal diameter tables, returning both a vertically concatenated DataFrame</span>
 <span class="sd">        and a dictionary of individual nominal diameter DataFrames.</span>
 
-<span class="sd">        :param element_type: Static table element type whose row data should be extracted (eg. table_type=s3s.ObjectTypes.PipeTable).</span>
+<span class="sd">        :param element_type: Static table element type whose row data should be extracted (eg. table_type=self.ObjectTypes.PipeTable).</span>
 <span class="sd">        :type element_type: Enum</span>
 
 <span class="sd">        :return: A tuple containing:</span>
@@ -1781,7 +1779,7 @@
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         
         <span class="k">if</span> <span class="n">time_table_tk</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTksofElementType</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="o">.</span><span class="n">VarPressureTable</span><span class="p">):</span>
-            <span class="n">value_name</span> <span class="o">=</span> <span class="s1">&#39;Ph&#39;</span>                                                                    <span class="c1"># needed to retrieve numeric value from row: s3s.GetPropertiesofElementType(s3s.ObjectTypes.VarPressureTable) </span>
+            <span class="n">value_name</span> <span class="o">=</span> <span class="s1">&#39;Ph&#39;</span>                                                                    <span class="c1"># needed to retrieve numeric value from row: self.GetPropertiesofElementType(self.ObjectTypes.VarPressureTable) </span>
             <span class="n">_value_col_name</span> <span class="o">=</span> <span class="s1">&#39;Druck p [bar]&#39;</span>                                                     <span class="c1"># needed to name column in output df: look up in SIR Graf</span>
         <span class="k">elif</span> <span class="n">time_table_tk</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTksofElementType</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="o">.</span><span class="n">VarFlowTable</span><span class="p">):</span>
             <span class="n">value_name</span> <span class="o">=</span> <span class="s1">&#39;Qm&#39;</span>
