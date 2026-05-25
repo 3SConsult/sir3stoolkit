@@ -729,7 +729,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         self
     ) -> List[pd.DataFrame]:
         """
-        Generates dataframes for longitudinal sections.
+        Generates dataframes for longitudinal sections. Stationary timestamp is used for result values.
         
         :param self: Instance of SIR_Model_Dataframes class
         :return: List of dataframes of the form [section_1_VL, section_1_RL, section_2_VL, section_2_RL, ..., section_lfdnr_VL, section_lfdnr_RL, ...]
@@ -795,7 +795,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
     def generate_edge_dataframe(
         self,
         properties: Optional[List[str]] = [],      
-        timestamps: Optional[List[Union[str, int]]] = [0]
+        timestamp: Optional[Union[str, int]] = 0
     ) -> pd.DataFrame:
 
         """
@@ -808,19 +808,20 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         Supported edge element types are:
         'Pipe', 'Valve', 'SafetyValve', 'PressureRegulator', 'DifferentialRegulator',
         'FlapValve', 'PhaseSeparation', 'FlowControlUnit', 'ControlValve', 'Pump',
-        'DistrictHeatingConsumer', 'DistrictHeatingFeeder', 'Compressor', 'HeaterCooler',
-        'HeatExchanger', 'HeatFeederConsumerStation', 'RART_ControlMode'.
+        'DistrictHeatingConsumer', 'DistrictHeatingFeeder', 'Compressor', 'HeaterCooler', 'HeatFeederConsumerStation'.
+
+        Not supported:
+        'HeatExchanger'
 
         :param properties: Properties requested across all edge types. Each property is
                            validated per element type and split into model-data vs. result
                            properties. Unknown properties are ignored for that type.
-                           Default: []. Meaning only tk, Fkcont, geometry, fkKI, fkKK, element_type, L will be given as values in df.
+                           Default: []. Meaning only tk, Fkcont, geometry, fkKI, fkKK, element_type, L will be given as default cols in df_edges.
         :type properties: list[str], optional
-        :param timestamps: Timestamps to use when retrieving result properties.
-                           Supports timestamp strings and/or indices, depending on the
-                           underlying timestamp resolver.
-                           Default: [0].
-        :type timestamps: list[Union[str, int]], optional
+        :param timestamp: Timestamp to use when retrieving result properties.
+                           Supports timestamp string (eg. timestamp='2023-02-13 08:00:00.000 +01:00') or int index (eg. timestamp=8. corresponding to simulation timestamps s3s.GetTimeStamps()[0])
+                           Default: 0. Stationary
+        :type timestamp: Union[str, int], optional
 
         :return: A dataframe containing all retrieved edges across supported types.
                  Column sets are aligned across edge types before concatenation, so
@@ -836,8 +837,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         edge_types = [
             'Pipe', 'Valve', 'SafetyValve', 'PressureRegulator', 'DifferentialRegulator',
             'FlapValve', 'PhaseSeparation', 'FlowControlUnit', 'ControlValve', 'Pump',
-            'DistrictHeatingConsumer', 'DistrictHeatingFeeder', 'Compressor', 'HeaterCooler',
-            'HeatExchanger', 'HeatFeederConsumerStation', 'RART_ControlMode'
+            'DistrictHeatingConsumer', 'DistrictHeatingFeeder', 'Compressor', 'HeaterCooler', 'HeatFeederConsumerStation'
         ]
 
         try:
@@ -869,7 +869,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
                         df_results = self.generate_element_results_dataframe(
                             element_type=em,
                             properties=result_properties,
-                            timestamps=timestamps
+                            timestamps=[timestamp]
                         )
 
                         df = self.merge_model_data_and_results(df_model, df_results)
@@ -899,6 +899,10 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
 
     def merge_model_data_and_results(self, df_model_data, df_results):
         try:
+            if not df_results.empty and df_results.index.nunique() > 1:
+                logger.error( "[merge] Aborting merge: df_results contains multiple timestamps.Please provide a single timestamp.")
+                return pd.DataFrame()
+
             df_results.columns = df_results.columns.droplevel([1, 2])
             df_results = df_results.T.unstack(level=0).T
             df_results = df_results.droplevel(0, axis=0)
@@ -1072,7 +1076,8 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
 
             if len(valid_timestamps) == 1 and tsStat == valid_timestamps[0]:
                 logger.info(f"[Resolving Timestamps] Only static timestamp {tsStat} is used")
-            logger.info(f"[Resolving Timestamps] {len(valid_timestamps)} valid timestamp(s) will be used.")
+            else:
+                logger.info(f"[Resolving Timestamps] Using {len(valid_timestamps)} timestamps: {valid_timestamps}")
             return valid_timestamps
         except Exception as e:
             logger.error(f"Error validating timestamps: {e}")
