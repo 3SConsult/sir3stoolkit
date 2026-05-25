@@ -795,7 +795,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
     def generate_edge_dataframe(
         self,
         properties: Optional[List[str]] = [],      
-        timestamp: Optional[Union[str, int]] = 0
+        timestamp: Optional[Union[str, int]] = None
     ) -> pd.DataFrame:
 
         """
@@ -816,11 +816,11 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         :param properties: Properties requested across all edge types. Each property is
                            validated per element type and split into model-data vs. result
                            properties. Unknown properties are ignored for that type.
-                           Default: []. Meaning only tk, Fkcont, geometry, fkKI, fkKK, element_type, L will be given as default cols in df_edges.
+                           Default: []. Meaning only tk, Fkcont, geometry, fkKI, fkKK, element_type, L (L=0, if missing) will be given as default cols in df_edges.
         :type properties: list[str], optional
         :param timestamp: Timestamp to use when retrieving result properties.
-                           Supports timestamp string (eg. timestamp='2023-02-13 08:00:00.000 +01:00') or int index (eg. timestamp=8. corresponding to simulation timestamps s3s.GetTimeStamps()[0])
-                           Default: 0. Stationary
+                           Supports timestamp string (eg. timestamp='2023-02-13 08:00:00.000 +01:00') or int index (eg. timestamp=8. corresponding to simulation timestamps self.GetTimeStamps()[0])
+                           Default: self.GetTimeStamps()[1].(Stationary)
         :type timestamp: Union[str, int], optional
 
         :return: A dataframe containing all retrieved edges across supported types.
@@ -828,10 +828,6 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
                  properties not available for some types remain empty (NaN).
                  If no edge rows are available, an empty dataframe is returned.
         :rtype: pd.DataFrame
-
-        :notes:
-            - Column 'Fkcont' is always requested from model data.
-            - If model-data column 'L' is missing for an edge type, it is created with 0.
         """
 
         edge_types = [
@@ -841,6 +837,8 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         ]
 
         try:
+            if timestamp is None:
+                timestamp = self.GetTimeStamps()[1] # stationary
             enum_members = self.__get_object_type_enums(edge_types, self.ObjectTypes)
             dfs = []
             enume_members_used = 0
@@ -1361,7 +1359,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         Retrieve and assemble row-wise property data for all nominal diameter tables, returning both a vertically concatenated DataFrame
         and a dictionary of individual nominal diameter DataFrames.
 
-        :param element_type: Static table element type whose row data should be extracted (eg. table_type=s3s.ObjectTypes.PipeTable).
+        :param element_type: Static table element type whose row data should be extracted (eg. table_type=self.ObjectTypes.PipeTable).
         :type element_type: Enum
 
         :return: A tuple containing:
@@ -1648,7 +1646,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
     ) -> str:
         
         if time_table_tk in self.GetTksofElementType(self.ObjectTypes.VarPressureTable):
-            value_name = 'Ph'                                                                    # needed to retrieve numeric value from row: s3s.GetPropertiesofElementType(s3s.ObjectTypes.VarPressureTable) 
+            value_name = 'Ph'                                                                    # needed to retrieve numeric value from row: self.GetPropertiesofElementType(self.ObjectTypes.VarPressureTable) 
             _value_col_name = 'Druck p [bar]'                                                     # needed to name column in output df: look up in SIR Graf
         elif time_table_tk in self.GetTksofElementType(self.ObjectTypes.VarFlowTable):
             value_name = 'Qm'
