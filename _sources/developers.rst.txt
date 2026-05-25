@@ -23,7 +23,7 @@ Create ``src/sir3stoolkit/config.local.txt`` with one line containing your local
 
 .. code-block:: text
 
-   C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2
+   C:/3S/SIR 3S/SirGraf-90-15-00-24_Quebec-Upd2
 
 Setting Up Git on Your Computer
 -------------------------------
