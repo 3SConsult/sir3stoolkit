@@ -1532,12 +1532,17 @@
         <span class="n">time_table_tk</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">dataframe</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
         <span class="n">reference_time_stamp</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">overwrite</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">date_col</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;TAG&quot;</span><span class="p">,</span>
         <span class="n">time_col</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;UHRZEIT&quot;</span><span class="p">,</span>
         <span class="n">value_col</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;WERT&quot;</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Sets (overwrites) time-value pairs for time table based on provided dataframe. All previous entries are deleted.</span>
+<span class="sd">        Sets (overwrites) time-value pairs for a time table based on the provided dataframe.</span>
+<span class="sd">        Existing rows are matched by simulation-time value in seconds (derived from date/time and reference_time_stamp).</span>
+<span class="sd">        As long as timestamps match, existing rows are kept and only values are updated.</span>
+<span class="sd">        From the first differing timestamp onward, old rows are replaced row-by-row.</span>
+<span class="sd">        If there are no existing rows, they will now be set initially.</span>
 
 <span class="sd">        :param self:</span>
 <span class="sd">        :param time_table_tk: Tk of time table ([&quot;VarPressureTable&quot;, &quot;VarFlowTable&quot;, &quot;ValveLiftTable&quot;, &quot;PumpSpeedTable&quot;, &quot;MeasuredVariableTable&quot;, &quot;LoadFactorTable&quot;, &quot;ThermalOutputTable&quot;, &quot;TemperatureTable&quot;]) to set time-value pairs for. Does not work with weather data table.</span>
@@ -1546,12 +1551,17 @@
 <span class="sd">        :type dataframe: pd.Dataframe</span>
 <span class="sd">        :param reference_time_stamp: &quot;0-timestamp&quot; - the difference to this timestamp will be calculated for each timestamp in the dataframe and used in the time table, default=self.GetTimeStamps()[0][0] - first simulation timestamp, values like &quot;%Y-%m-%d %H:%M:%S.%f&quot;</span>
 <span class="sd">        :type reference_time_stamp: str</span>
+<span class="sd">        :param overwrite: If True, existing rows are overwritten from the first processed row onward. If False, rows are first matched by simulation-time (seconds) and only overwritten from the first differing timestamp onward.</span>
+<span class="sd">        :type overwrite: bool</span>
 <span class="sd">        :param date_col: Name of date col in dataframe, default = &quot;TAG&quot;, values like &quot;2026-01-01&quot;, &quot;%Y-%m-%d&quot;</span>
 <span class="sd">        :type date_col: str</span>
 <span class="sd">        :param time_col: Name of time col in dataframe, default = &quot;UHRZEIT&quot;, values like &quot;00:00:20.000000&quot;, &quot;%H:%M:%S.%f&quot;</span>
 <span class="sd">        :type time_col: str</span>
 <span class="sd">        :param value_col: Name of value col in dataframe, default = &quot;WERT&quot;, values like 83 or 1.2</span>
 <span class="sd">        :type value_col: str</span>
+
+<span class="sd">        :return: None. Time table rows in the model are created/updated/deleted in-place.</span>
+<span class="sd">        :rtype: None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># --- Input data validation ---</span>
@@ -1620,12 +1630,6 @@
 
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;[insert dataframe into time table] Successfully validated input data.&quot;</span><span class="p">)</span>
 
-        <span class="c1"># --- Wipe table ---</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;[insert dataframe into time table] Deleting previous table rows ...&quot;</span><span class="p">)</span>
-        <span class="n">row_tks</span> <span class="o">=</span> <span class="nb">list</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">GetTableRows</span><span class="p">(</span><span class="n">tablePkTk</span><span class="o">=</span><span class="n">time_table_tk</span><span class="p">))[</span><span class="mi">0</span><span class="p">])</span>
-        <span class="k">for</span> <span class="n">row_tk</span> <span class="ow">in</span> <span class="n">row_tks</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">DeleteElement</span><span class="p">(</span><span class="n">row_tk</span><span class="p">)</span>
-
         <span class="c1"># --- From timestamp to simulation time ---</span>
         <span class="n">ts_series</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span>
             <span class="n">df</span><span class="p">[</span><span class="n">date_col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">df</span><span class="p">[</span><span class="n">time_col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">),</span>
@@ -1633,24 +1637,51 @@
             <span class="n">errors</span><span class="o">=</span><span class="s2">&quot;coerce&quot;</span>     
         <span class="p">)</span>
 
-        <span class="n">delta_sec</span> <span class="o">=</span> <span class="p">(</span><span class="n">ts_series</span> <span class="o">-</span> <span class="n">used_reference_time_stamp_as_datetime</span><span class="p">)</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span>
-        <span class="n">df</span><span class="p">[</span><span class="s2">&quot;delta_time_col&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">delta_sec</span>
+        <span class="n">delta_time_col_new_float</span> <span class="o">=</span> <span class="p">(</span><span class="n">ts_series</span> <span class="o">-</span> <span class="n">used_reference_time_stamp_as_datetime</span><span class="p">)</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span>
         
-        <span class="n">df</span><span class="p">[</span><span class="s2">&quot;delta_time_col_str&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;delta_time_col&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span>
+        <span class="n">df</span><span class="p">[</span><span class="s2">&quot;delta_time_col_new_str&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">delta_time_col_new_float</span><span class="o">.</span><span class="n">map</span><span class="p">(</span>
             <span class="k">lambda</span> <span class="n">v</span><span class="p">:</span> <span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">v</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="s2">&quot;,&quot;</span><span class="p">))</span> <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">notna</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
         <span class="p">)</span>
 
         <span class="n">property_name</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_time_table_col_name_from_tk</span><span class="p">(</span><span class="n">time_table_tk</span><span class="o">=</span><span class="n">time_table_tk</span><span class="p">)</span>
 
+        <span class="c1"># --- Get old version of time table ---</span>
+        <span class="n">df_table_old</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_dataframe_from_time_table</span><span class="p">(</span><span class="n">time_table_tk</span><span class="o">=</span><span class="n">time_table_tk</span><span class="p">,</span> <span class="n">value_col_name</span><span class="o">=</span><span class="s2">&quot;WERT&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="s2">&quot;tk&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df_table_old</span><span class="o">.</span><span class="n">columns</span> <span class="ow">or</span> <span class="s2">&quot;WERT&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df_table_old</span><span class="o">.</span><span class="n">columns</span> <span class="ow">or</span> <span class="p">(</span><span class="n">df_table_old</span><span class="p">[</span><span class="s2">&quot;tk&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">all</span><span class="p">()</span> <span class="ow">and</span> <span class="n">df_table_old</span><span class="p">[</span><span class="s2">&quot;WERT&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">all</span><span class="p">())):</span>
+            <span class="n">df_table_old_exists</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">df_table_old_exists</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">tks_rows_old</span> <span class="o">=</span> <span class="n">df_table_old</span><span class="p">[</span><span class="s2">&quot;tk&quot;</span><span class="p">]</span>
+            <span class="n">delta_time_col_old_float</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">df_table_old</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+            <span class="n">delta_time_col_old_str</span> <span class="o">=</span> <span class="n">delta_time_col_old_float</span><span class="o">.</span><span class="n">map</span><span class="p">(</span>
+                <span class="k">lambda</span> <span class="n">v</span><span class="p">:</span> <span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">v</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="s2">&quot;,&quot;</span><span class="p">))</span> <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">notna</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+            <span class="p">)</span>
+
         <span class="c1"># --- Inserting value pairs into model ---</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;[insert dataframe into time table] Inserting value pairs ...&quot;</span><span class="p">)</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">for</span> <span class="nb">id</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
-                <span class="n">t</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;delta_time_col_str&quot;</span><span class="p">]</span>
+                <span class="n">t</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;delta_time_col_new_str&quot;</span><span class="p">]</span>
                 <span class="n">v</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="n">value_col</span><span class="p">]</span>
-                <span class="n">tk_new_row</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AddTableRow</span><span class="p">(</span><span class="n">tablePkTk</span><span class="o">=</span><span class="n">time_table_tk</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">SetValue</span><span class="p">(</span><span class="n">Tk</span><span class="o">=</span><span class="n">tk_new_row</span><span class="p">,</span> <span class="n">propertyName</span><span class="o">=</span><span class="s2">&quot;Zeit&quot;</span><span class="p">,</span> <span class="n">Value</span><span class="o">=</span><span class="n">t</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">SetValue</span><span class="p">(</span><span class="n">Tk</span><span class="o">=</span><span class="n">tk_new_row</span><span class="p">,</span> <span class="n">propertyName</span><span class="o">=</span><span class="n">property_name</span><span class="p">,</span> <span class="n">Value</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
+                <span class="k">if</span> <span class="n">df_table_old_exists</span> <span class="ow">and</span> <span class="nb">id</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">tks_rows_old</span><span class="p">):</span>
+                    <span class="n">old_t</span> <span class="o">=</span> <span class="n">delta_time_col_old_str</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="nb">id</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="n">overwrite</span> <span class="ow">or</span> <span class="p">(</span><span class="n">old_t</span> <span class="o">!=</span> <span class="n">t</span><span class="p">):</span>
+                        <span class="n">tk_row_to_delete</span> <span class="o">=</span> <span class="n">tks_rows_old</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="nb">id</span><span class="p">]</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">DeleteElement</span><span class="p">(</span><span class="n">tk_row_to_delete</span><span class="p">)</span>
+                        <span class="n">tk_row</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AddTableRow</span><span class="p">(</span><span class="n">tablePkTk</span><span class="o">=</span><span class="n">time_table_tk</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">SetValue</span><span class="p">(</span><span class="n">Tk</span><span class="o">=</span><span class="n">tk_row</span><span class="p">,</span> <span class="n">propertyName</span><span class="o">=</span><span class="s2">&quot;Zeit&quot;</span><span class="p">,</span> <span class="n">Value</span><span class="o">=</span><span class="n">t</span><span class="p">)</span>
+                        <span class="n">overwrite</span> <span class="o">=</span> <span class="kc">True</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[insert dataframe into time table] Overwriting row at time delta </span><span class="si">{</span><span class="n">t</span><span class="si">}</span><span class="s2"> and all subsequent rows.&quot;</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">tk_row</span> <span class="o">=</span> <span class="n">tks_rows_old</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="nb">id</span><span class="p">]</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[insert dataframe into time table] Keeping row at time delta </span><span class="si">{</span><span class="n">t</span><span class="si">}</span><span class="s2">. Updating value ...&quot;</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">tk_row</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AddTableRow</span><span class="p">(</span><span class="n">tablePkTk</span><span class="o">=</span><span class="n">time_table_tk</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">SetValue</span><span class="p">(</span><span class="n">Tk</span><span class="o">=</span><span class="n">tk_row</span><span class="p">,</span> <span class="n">propertyName</span><span class="o">=</span><span class="s2">&quot;Zeit&quot;</span><span class="p">,</span> <span class="n">Value</span><span class="o">=</span><span class="n">t</span><span class="p">)</span>
+                    <span class="n">overwrite</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[insert dataframe into time table] Overwriting row at time delta </span><span class="si">{</span><span class="n">t</span><span class="si">}</span><span class="s2"> and all subsequent rows.&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">SetValue</span><span class="p">(</span><span class="n">Tk</span><span class="o">=</span><span class="n">tk_row</span><span class="p">,</span> <span class="n">propertyName</span><span class="o">=</span><span class="n">property_name</span><span class="p">,</span> <span class="n">Value</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[insert dataframe into time table] Error inserting value pairs into model: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         
@@ -1703,10 +1734,14 @@
         <span class="c1"># --- Create Joint df ---</span>
 
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dfs</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">df_h</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">dfs</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">join</span><span class="o">=</span><span class="s1">&#39;outer&#39;</span><span class="p">)</span>
+            <span class="n">df_h</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
+                <span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;tk&quot;</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">dfs</span><span class="o">.</span><span class="n">values</span><span class="p">()],</span>
+                <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                <span class="n">join</span><span class="o">=</span><span class="s1">&#39;outer&#39;</span>
+            <span class="p">)</span>
             <span class="n">df_h</span> <span class="o">=</span> <span class="n">df_h</span><span class="o">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">df_h</span> <span class="o">=</span> <span class="n">dfs</span><span class="p">[</span><span class="n">tks_of_time_table_type</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+            <span class="n">df_h</span> <span class="o">=</span> <span class="n">dfs</span><span class="p">[</span><span class="n">tks_of_time_table_type</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;tk&quot;</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
 
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[get dataframes from time table type] Successful&quot;</span><span class="p">)</span>
 
@@ -1719,8 +1754,7 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">get_dataframe_from_time_table</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">time_table_tk</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">value_col_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">time_col</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Zeit [s]&quot;</span>
+        <span class="n">value_col_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Obtain time variable table (tables = [&quot;VarPressureTable&quot;, &quot;VarFlowTable&quot;, &quot;ValveLiftTable&quot;, &quot;PumpSpeedTable&quot;, &quot;MeasuredVariableTable&quot;, &quot;LoadFactorTable&quot;, &quot;ThermalOutputTable&quot;, &quot;TemperatureTable&quot;]) in format of a pandas dataframe with time and value column.</span>
@@ -1730,8 +1764,9 @@
 <span class="sd">        :type time_table_tk: str</span>
 <span class="sd">        :param value_col: Name given to the value column</span>
 <span class="sd">        :type value_col: str</span>
-<span class="sd">        :param time_col: Name given to the time column, Default = &quot;Zeit&quot;</span>
-<span class="sd">        :type time_col: str</span>
+
+<span class="sd">        :return: DataFrame with time index (Zeit [s]) and columns value_col and tk.</span>
+<span class="sd">        :rtype: pd.DataFrame</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># --- Validate input tk and find time table type ---</span>
@@ -1754,20 +1789,28 @@
         <span class="n">rows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTableRows</span><span class="p">(</span><span class="n">tablePkTk</span><span class="o">=</span><span class="n">time_table_tk</span><span class="p">)</span>
         <span class="n">row_tks</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">rows</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> 
 
-        <span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">rows</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">tk</span> <span class="ow">in</span> <span class="n">row_tks</span><span class="p">:</span>
             <span class="n">time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetValue</span><span class="p">(</span><span class="n">tk</span><span class="p">,</span> <span class="s2">&quot;Zeit&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
             <span class="n">time</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">,</span> <span class="s2">&quot;.&quot;</span><span class="p">))</span>
             <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetValue</span><span class="p">(</span><span class="n">tk</span><span class="p">,</span> <span class="n">value_name</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
             <span class="n">value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">,</span> <span class="s2">&quot;.&quot;</span><span class="p">))</span>
-            <span class="n">data</span><span class="p">[</span><span class="n">time</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;Zeit [s]&quot;</span><span class="p">:</span> <span class="n">time</span><span class="p">,</span> <span class="s2">&quot;tk&quot;</span><span class="p">:</span> <span class="n">tk</span><span class="p">,</span> <span class="n">value_col_name_to_use</span><span class="p">:</span> <span class="n">value</span><span class="p">})</span>
 
-        <span class="k">if</span> <span class="n">data</span> <span class="o">==</span> <span class="p">{}:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">rows</span><span class="p">:</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;[get dataframe from time table] time table is empty.&quot;</span><span class="p">)</span>
-            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">[[</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">]],</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="mf">0.0</span><span class="p">],</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">value_name</span><span class="p">])</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">[[</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">]],</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Zeit [s]&quot;</span><span class="p">,</span> <span class="s2">&quot;tk&quot;</span><span class="p">,</span> <span class="n">value_name</span><span class="p">])</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;Zeit [s]&quot;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">value_col_name_to_use</span><span class="p">])</span>
-            <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">time_col</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Zeit [s]&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">duplicated</span><span class="p">()</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+                <span class="n">duplicate_mask</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Zeit [s]&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">duplicated</span><span class="p">(</span><span class="n">keep</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+                <span class="n">duplicate_rows</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">duplicate_mask</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;Zeit [s]&quot;</span><span class="p">,</span> <span class="s2">&quot;tk&quot;</span><span class="p">,</span> <span class="n">value_col_name_to_use</span><span class="p">]]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;Zeit [s]&quot;</span><span class="p">)</span>
+                <span class="n">duplicate_count</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Zeit [s]&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">duplicated</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[get dataframe from time table] Found </span><span class="si">{</span><span class="n">duplicate_count</span><span class="si">}</span><span class="s2"> duplicate time index value(s). Keeping the last row per timestamp for stable concatenation.&quot;</span><span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[get dataframe from time table] Duplicate rows:</span><span class="se">\n</span><span class="si">{</span><span class="n">duplicate_rows</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Zeit [s]&quot;</span><span class="p">],</span> <span class="n">keep</span><span class="o">=</span><span class="s2">&quot;last&quot;</span><span class="p">)</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;Zeit [s]&quot;</span><span class="p">)</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;[get dataframe from time table] Successfully built dataframe.&quot;</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">df</span></div>
