@@ -92,7 +92,8 @@ Changes
    - generate_element_results_dataframe(): str result values are now included in output df, instead of being detected as non-numeric and left out
    - _resolve_given_timestamps(): logging now outputs all timestamps used for result retrieval, not just the number of valid timestamps
    - generate_edge_dataframe(): now takes a single timestamp instead of timestamps list. As this function can only process a single timestamp for result values, having a list of them as param is highly confusing.
-
+   - insert_dataframe_into_time_table(): As long as timestamps match, existing rows are kept and only values are updated. From the first differing timestamp onward, old rows are replaced row-by-row. new param: overwrite (=True for old behavior)
+   - get_dataframe_from_time_table(): new col tk in return df
 C# Changes
 ~~~~~~~~~~
 
