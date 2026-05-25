@@ -32,6 +32,8 @@ Below an overview over all Toolkit Versions for SIR 3S 90-15 Quebec is given. It
 +----------------+---------------------------+-------------+--------------+
 | Toolkit Version| SIR 3S Version            | dll changed | Release Date |
 +================+===========================+=============+==============+
+| 90.15.20       | 90-15-00-24-Upd2          | Yes         | 2026-05-25   |
++----------------+---------------------------+-------------+--------------+
 | 90.15.19       | 90-15-00-24-Upd2          | No          | 2026-04-19   |
 +----------------+---------------------------+-------------+--------------+
 | 90.15.18       | 90-15-00-24-Upd2          | No          | 2026-04-10   |
@@ -94,8 +96,11 @@ Changes
    - generate_edge_dataframe(): now takes a single timestamp instead of timestamps list. As this function can only process a single timestamp for result values, having a list of them as param is highly confusing.
    - insert_dataframe_into_time_table(): As long as timestamps match, existing rows are kept and only values are updated. From the first differing timestamp onward, old rows are replaced row-by-row. new param: overwrite (=True for old behavior)
    - get_dataframe_from_time_table(): new col tk in return df
+
 C# Changes
 ~~~~~~~~~~
+
+- Model Validation functions: not yet fully wrapped in python
 
 Version 90.15.19
 """"""""""""""""
