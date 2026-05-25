@@ -88,12 +88,13 @@ Changes
    - if no external handlers exist outside host process, logs are emitted via standard Python logging fallback
    - wrapper and mantle modules were aligned to use this shared behavior
 - config.txt/wrapper.py Sir Calc path formatting changed to prevent issues in Syntax Check of SIR 3S Python console
-- dataframes.py: generate_element_results_dataframe(): str result values are now included in output df, instead of being detected as non-numeric and left out
+- dataframes.py: 
+   - generate_element_results_dataframe(): str result values are now included in output df, instead of being detected as non-numeric and left out
+   - _resolve_given_timestamps(): logging now outputs all timestamps used for result retrieval, not just the number of valid timestamps
+   - generate_edge_dataframe(): now takes a single timestamp instead of timestamps list. As this function can only process a single timestamp for result values, having a list of them as param is highly confusing.
 
 C# Changes
 ~~~~~~~~~~
-
-
 
 Version 90.15.19
 """"""""""""""""

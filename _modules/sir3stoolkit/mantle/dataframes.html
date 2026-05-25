@@ -837,7 +837,7 @@
         <span class="bp">self</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Generates dataframes for longitudinal sections.</span>
+<span class="sd">        Generates dataframes for longitudinal sections. Stationary timestamp is used for result values.</span>
 <span class="sd">        </span>
 <span class="sd">        :param self: Instance of SIR_Model_Dataframes class</span>
 <span class="sd">        :return: List of dataframes of the form [section_1_VL, section_1_RL, section_2_VL, section_2_RL, ..., section_lfdnr_VL, section_lfdnr_RL, ...]</span>
@@ -906,7 +906,7 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">generate_edge_dataframe</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">properties</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[],</span>      
-        <span class="n">timestamps</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">timestamp</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
 
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -919,19 +919,20 @@
 <span class="sd">        Supported edge element types are:</span>
 <span class="sd">        &#39;Pipe&#39;, &#39;Valve&#39;, &#39;SafetyValve&#39;, &#39;PressureRegulator&#39;, &#39;DifferentialRegulator&#39;,</span>
 <span class="sd">        &#39;FlapValve&#39;, &#39;PhaseSeparation&#39;, &#39;FlowControlUnit&#39;, &#39;ControlValve&#39;, &#39;Pump&#39;,</span>
-<span class="sd">        &#39;DistrictHeatingConsumer&#39;, &#39;DistrictHeatingFeeder&#39;, &#39;Compressor&#39;, &#39;HeaterCooler&#39;,</span>
-<span class="sd">        &#39;HeatExchanger&#39;, &#39;HeatFeederConsumerStation&#39;, &#39;RART_ControlMode&#39;.</span>
+<span class="sd">        &#39;DistrictHeatingConsumer&#39;, &#39;DistrictHeatingFeeder&#39;, &#39;Compressor&#39;, &#39;HeaterCooler&#39;, &#39;HeatFeederConsumerStation&#39;.</span>
+
+<span class="sd">        Not supported:</span>
+<span class="sd">        &#39;HeatExchanger&#39;</span>
 
 <span class="sd">        :param properties: Properties requested across all edge types. Each property is</span>
 <span class="sd">                           validated per element type and split into model-data vs. result</span>
 <span class="sd">                           properties. Unknown properties are ignored for that type.</span>
-<span class="sd">                           Default: []. Meaning only tk, Fkcont, geometry, fkKI, fkKK, element_type, L will be given as values in df.</span>
+<span class="sd">                           Default: []. Meaning only tk, Fkcont, geometry, fkKI, fkKK, element_type, L will be given as default cols in df_edges.</span>
 <span class="sd">        :type properties: list[str], optional</span>
-<span class="sd">        :param timestamps: Timestamps to use when retrieving result properties.</span>
-<span class="sd">                           Supports timestamp strings and/or indices, depending on the</span>
-<span class="sd">                           underlying timestamp resolver.</span>
-<span class="sd">                           Default: [0].</span>
-<span class="sd">        :type timestamps: list[Union[str, int]], optional</span>
+<span class="sd">        :param timestamp: Timestamp to use when retrieving result properties.</span>
+<span class="sd">                           Supports timestamp string (eg. timestamp=&#39;2023-02-13 08:00:00.000 +01:00&#39;) or int index (eg. timestamp=8. corresponding to simulation timestamps s3s.GetTimeStamps()[0])</span>
+<span class="sd">                           Default: 0. Stationary</span>
+<span class="sd">        :type timestamp: Union[str, int], optional</span>
 
 <span class="sd">        :return: A dataframe containing all retrieved edges across supported types.</span>
 <span class="sd">                 Column sets are aligned across edge types before concatenation, so</span>
@@ -947,8 +948,7 @@
         <span class="n">edge_types</span> <span class="o">=</span> <span class="p">[</span>
             <span class="s1">&#39;Pipe&#39;</span><span class="p">,</span> <span class="s1">&#39;Valve&#39;</span><span class="p">,</span> <span class="s1">&#39;SafetyValve&#39;</span><span class="p">,</span> <span class="s1">&#39;PressureRegulator&#39;</span><span class="p">,</span> <span class="s1">&#39;DifferentialRegulator&#39;</span><span class="p">,</span>
             <span class="s1">&#39;FlapValve&#39;</span><span class="p">,</span> <span class="s1">&#39;PhaseSeparation&#39;</span><span class="p">,</span> <span class="s1">&#39;FlowControlUnit&#39;</span><span class="p">,</span> <span class="s1">&#39;ControlValve&#39;</span><span class="p">,</span> <span class="s1">&#39;Pump&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;DistrictHeatingConsumer&#39;</span><span class="p">,</span> <span class="s1">&#39;DistrictHeatingFeeder&#39;</span><span class="p">,</span> <span class="s1">&#39;Compressor&#39;</span><span class="p">,</span> <span class="s1">&#39;HeaterCooler&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;HeatExchanger&#39;</span><span class="p">,</span> <span class="s1">&#39;HeatFeederConsumerStation&#39;</span><span class="p">,</span> <span class="s1">&#39;RART_ControlMode&#39;</span>
+            <span class="s1">&#39;DistrictHeatingConsumer&#39;</span><span class="p">,</span> <span class="s1">&#39;DistrictHeatingFeeder&#39;</span><span class="p">,</span> <span class="s1">&#39;Compressor&#39;</span><span class="p">,</span> <span class="s1">&#39;HeaterCooler&#39;</span><span class="p">,</span> <span class="s1">&#39;HeatFeederConsumerStation&#39;</span>
         <span class="p">]</span>
 
         <span class="k">try</span><span class="p">:</span>
@@ -980,7 +980,7 @@
                         <span class="n">df_results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_element_results_dataframe</span><span class="p">(</span>
                             <span class="n">element_type</span><span class="o">=</span><span class="n">em</span><span class="p">,</span>
                             <span class="n">properties</span><span class="o">=</span><span class="n">result_properties</span><span class="p">,</span>
-                            <span class="n">timestamps</span><span class="o">=</span><span class="n">timestamps</span>
+                            <span class="n">timestamps</span><span class="o">=</span><span class="p">[</span><span class="n">timestamp</span><span class="p">]</span>
                         <span class="p">)</span>
 
                         <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">merge_model_data_and_results</span><span class="p">(</span><span class="n">df_model</span><span class="p">,</span> <span class="n">df_results</span><span class="p">)</span>
@@ -1013,6 +1013,10 @@
 <a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.merge_model_data_and_results">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">merge_model_data_and_results</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df_model_data</span><span class="p">,</span> <span class="n">df_results</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">df_results</span><span class="o">.</span><span class="n">empty</span> <span class="ow">and</span> <span class="n">df_results</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span> <span class="s2">&quot;[merge] Aborting merge: df_results contains multiple timestamps.Please provide a single timestamp.&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+
             <span class="n">df_results</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">df_results</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">droplevel</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
             <span class="n">df_results</span> <span class="o">=</span> <span class="n">df_results</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">unstack</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
             <span class="n">df_results</span> <span class="o">=</span> <span class="n">df_results</span><span class="o">.</span><span class="n">droplevel</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
@@ -1190,7 +1194,8 @@
 
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">valid_timestamps</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">tsStat</span> <span class="o">==</span> <span class="n">valid_timestamps</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
                 <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[Resolving Timestamps] Only static timestamp </span><span class="si">{</span><span class="n">tsStat</span><span class="si">}</span><span class="s2"> is used&quot;</span><span class="p">)</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[Resolving Timestamps] </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">valid_timestamps</span><span class="p">)</span><span class="si">}</span><span class="s2"> valid timestamp(s) will be used.&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[Resolving Timestamps] Using </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">valid_timestamps</span><span class="p">)</span><span class="si">}</span><span class="s2"> timestamps: </span><span class="si">{</span><span class="n">valid_timestamps</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">valid_timestamps</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error validating timestamps: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>

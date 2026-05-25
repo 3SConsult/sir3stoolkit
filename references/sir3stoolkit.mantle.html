@@ -429,7 +429,7 @@ placed under interior point -1 to maintain consistent indexing.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.generate_edge_dataframe">
-<span class="sig-name descname"><span class="pre">generate_edge_dataframe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">properties</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timestamps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[0]</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/mantle/dataframes.html#SIR3S_Model_Dataframes.generate_edge_dataframe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.generate_edge_dataframe" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">generate_edge_dataframe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">properties</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timestamp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/mantle/dataframes.html#SIR3S_Model_Dataframes.generate_edge_dataframe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.generate_edge_dataframe" title="Link to this definition"></a></dt>
 <dd><p>Generate one combined dataframe for all supported edge element types.</p>
 <p>The function retrieves requested model data and result data for each supported
 edge type, merges both per type, and concatenates all edge-type dataframes into
@@ -437,19 +437,19 @@ one unified dataframe.</p>
 <p>Supported edge element types are:
 ‘Pipe’, ‘Valve’, ‘SafetyValve’, ‘PressureRegulator’, ‘DifferentialRegulator’,
 ‘FlapValve’, ‘PhaseSeparation’, ‘FlowControlUnit’, ‘ControlValve’, ‘Pump’,
-‘DistrictHeatingConsumer’, ‘DistrictHeatingFeeder’, ‘Compressor’, ‘HeaterCooler’,
-‘HeatExchanger’, ‘HeatFeederConsumerStation’, ‘RART_ControlMode’.</p>
+‘DistrictHeatingConsumer’, ‘DistrictHeatingFeeder’, ‘Compressor’, ‘HeaterCooler’, ‘HeatFeederConsumerStation’.</p>
+<p>Not supported:
+‘HeatExchanger’</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>properties</strong> (<em>list</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Properties requested across all edge types. Each property is
 validated per element type and split into model-data vs. result
 properties. Unknown properties are ignored for that type.
-Default: []. Meaning only tk, Fkcont, geometry, fkKI, fkKK, element_type, L will be given as values in df.</p></li>
-<li><p><strong>timestamps</strong> (<em>list</em><em>[</em><em>Union</em><em>[</em><em>str</em><em>, </em><em>int</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – Timestamps to use when retrieving result properties.
-Supports timestamp strings and/or indices, depending on the
-underlying timestamp resolver.
-Default: [0].</p></li>
+Default: []. Meaning only tk, Fkcont, geometry, fkKI, fkKK, element_type, L will be given as default cols in df_edges.</p></li>
+<li><p><strong>timestamp</strong> (<em>Union</em><em>[</em><em>str</em><em>, </em><em>int</em><em>]</em><em>, </em><em>optional</em>) – Timestamp to use when retrieving result properties.
+Supports timestamp string (eg. timestamp=’2023-02-13 08:00:00.000 +01:00’) or int index (eg. timestamp=8. corresponding to simulation timestamps s3s.GetTimeStamps()[0])
+Default: 0. Stationary</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -603,7 +603,7 @@ Supports both timestamp strings and index-based selection. Produces a MultiIndex
 <dl class="py method">
 <dt class="sig sig-object py" id="sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.generate_longitudinal_section_dataframes">
 <span class="sig-name descname"><span class="pre">generate_longitudinal_section_dataframes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">DataFrame</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/mantle/dataframes.html#SIR3S_Model_Dataframes.generate_longitudinal_section_dataframes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.generate_longitudinal_section_dataframes" title="Link to this definition"></a></dt>
-<dd><p>Generates dataframes for longitudinal sections.</p>
+<dd><p>Generates dataframes for longitudinal sections. Stationary timestamp is used for result values.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>self</strong> – Instance of SIR_Model_Dataframes class</p>
