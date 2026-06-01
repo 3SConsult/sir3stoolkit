@@ -1406,17 +1406,18 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         time_table_tk: str,
         dataframe: pd.DataFrame,
         reference_time_stamp = None,
-        overwrite: bool = False,
+        overwrite: bool = True,
+        keep: bool = True,
         date_col: str = "TAG",
         time_col: str = "UHRZEIT",
         value_col: str = "WERT",
-    ) -> None:
+    ) -> pd.DataFrame:
         """
-        Sets (overwrites) time-value pairs for a time table based on the provided dataframe.
+        Imports time-value pairs for a time table based on the provided dataframe into a SIR 3S model.
         Existing rows are matched by simulation-time value in seconds (derived from date/time and reference_time_stamp).
+        If source time series has duplicates, the one with lowest numerical value is used.
         As long as timestamps match, existing rows are kept and only values are updated.
-        From the first differing timestamp onward, old rows are replaced row-by-row.
-        If there are no existing rows, they will now be set initially.
+        How previously existing rows in the target time table are handled is determined by the params overwrite and keep.
 
         :param self:
         :param time_table_tk: Tk of time table (["VarPressureTable", "VarFlowTable", "ValveLiftTable", "PumpSpeedTable", "MeasuredVariableTable", "LoadFactorTable", "ThermalOutputTable", "TemperatureTable"]) to set time-value pairs for. Does not work with weather data table.
@@ -1425,8 +1426,10 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         :type dataframe: pd.Dataframe
         :param reference_time_stamp: "0-timestamp" - the difference to this timestamp will be calculated for each timestamp in the dataframe and used in the time table, default=self.GetTimeStamps()[0][0] - first simulation timestamp, values like "%Y-%m-%d %H:%M:%S.%f"
         :type reference_time_stamp: str
-        :param overwrite: If True, existing rows are overwritten from the first processed row onward. If False, rows are first matched by simulation-time (seconds) and only overwritten from the first differing timestamp onward.
+        :param overwrite: If True, existing matching time deltas are updated in-place; if False, matching entries are deleted and reinserted.
         :type overwrite: bool
+        :param keep: If True, old target time deltas without source counterpart are kept; if False, they are deleted.
+        :type keep: bool
         :param date_col: Name of date col in dataframe, default = "TAG", values like "2026-01-01", "%Y-%m-%d"
         :type date_col: str
         :param time_col: Name of time col in dataframe, default = "UHRZEIT", values like "00:00:20.000000", "%H:%M:%S.%f"
@@ -1434,8 +1437,8 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         :param value_col: Name of value col in dataframe, default = "WERT", values like 83 or 1.2
         :type value_col: str
 
-        :return: None. Time table rows in the model are created/updated/deleted in-place.
-        :rtype: None
+        :return: Dataframe with time-value pairs inserted into the time table with operation flag (overwritten/inserted/kept) column
+        :rtype: pd.DataFrame
         """
 
         # --- Input data validation ---
@@ -1448,22 +1451,22 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
 
         if time_table_tk not in available_time_table_tks:
             logger.error(f"[insert dataframe into time table] Time table with tk {time_table_tk} does not exist.")
-            return -1
+            return pd.DataFrame()
         
         if dataframe.empty:
             logger.error(f"[insert dataframe into time table] Dataframe is empty.")
-            return -1
+            return pd.DataFrame()
         
         available_dataframe_columns = dataframe.columns
         if date_col not in available_dataframe_columns:
             logger.error(f"[insert dataframe into time table] Date col {date_col} not in dataframe columns.")
-            return -1
+            return pd.DataFrame()
         if time_col not in available_dataframe_columns:
             logger.error(f"[insert dataframe into time table] Time col {time_col} not in dataframe columns.")
-            return -1
+            return pd.DataFrame()
         if value_col not in available_dataframe_columns:
             logger.error(f"[insert dataframe into time table] Value col {value_col} not in dataframe columns.")
-            return -1
+            return pd.DataFrame()
 
         try:
             internal_ref_time = self.GetTimeStamps()[0][0]
@@ -1477,12 +1480,15 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
             used_reference_time_stamp = s.split()[0] + " " + s.split()[1]
         else:
             logger.error(f"[insert dataframe into time table] No valid simulation timestamp in model, nor reference time stamp given.")
-            return -1
+            return pd.DataFrame()
         used_reference_time_stamp_as_datetime = datetime.strptime(used_reference_time_stamp, "%Y-%m-%d %H:%M:%S.%f")
 
         df = dataframe[[date_col, time_col, value_col]].copy()
+        if df.empty:
+            logger.error("[insert dataframe into time table] Working dataframe is empty after selecting parametrized column names.")
+            return pd.DataFrame()
 
-        # Strict format check for date_col to avoid silent coercion later.
+        # --- Strict format check for date_col to avoid silent coercion later ---
         parsed_date_col = pd.to_datetime(df[date_col].astype(str), format="%Y-%m-%d", errors="coerce")
         if parsed_date_col.isna().any():
             invalid_values = df.loc[parsed_date_col.isna(), date_col].astype(str).head(5).tolist()
@@ -1490,9 +1496,9 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
                 f"[insert dataframe into time table] Invalid values in date column {date_col}. "
                 f"Expected format is %Y-%m-%d (e.g. 2026-01-01). Samples: {invalid_values}"
             )
-            return -1
+            return pd.DataFrame()
 
-        # Strict format check for time_col to avoid silent coercion later.
+        # --- Strict format check for time_col to avoid silent coercion later ---
         parsed_time_col = pd.to_datetime(df[time_col].astype(str), format="%H:%M:%S.%f", errors="coerce")
         if parsed_time_col.isna().any():
             invalid_values = df.loc[parsed_time_col.isna(), time_col].astype(str).head(5).tolist()
@@ -1500,66 +1506,140 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
                 f"[insert dataframe into time table] Invalid values in time column {time_col}. "
                 f"Expected format is %H:%M:%S.%f (e.g. 00:00:20.000000). Samples: {invalid_values}"
             )
-            return -1
+            return pd.DataFrame()
 
         logger.info("[insert dataframe into time table] Successfully validated input data.")
 
-        # --- From timestamp to simulation time ---
         ts_series = pd.to_datetime(
             df[date_col].astype(str) + " " + df[time_col].astype(str),
             format="%Y-%m-%d %H:%M:%S.%f",
-            errors="coerce"     
+            errors="coerce"
         )
 
-        delta_time_col_new_float = (ts_series - used_reference_time_stamp_as_datetime).dt.total_seconds()
-        
-        df["delta_time_col_new_str"] = delta_time_col_new_float.map(
-            lambda v: (f"{v:.6f}".replace(".", ",")) if pd.notna(v) else ""
-        )
+        # --- Keep the row with the lower numeric value_col for duplicate timestamps ---
+        value_numeric = pd.to_numeric(df[value_col])
 
-        property_name, _ = self._get_time_table_col_name_from_tk(time_table_tk=time_table_tk)
-
-        # --- Get old version of time table ---
-        df_table_old = self.get_dataframe_from_time_table(time_table_tk=time_table_tk, value_col_name="WERT")
-        if ("tk" not in df_table_old.columns or "WERT" not in df_table_old.columns or (df_table_old["tk"].isna().all() and df_table_old["WERT"].isna().all())):
-            df_table_old_exists = False
-        else:
-            df_table_old_exists = True
-            tks_rows_old = df_table_old["tk"]
-            delta_time_col_old_float = pd.Series(df_table_old.index)
-            delta_time_col_old_str = delta_time_col_old_float.map(
-                lambda v: (f"{v:.6f}".replace(".", ",")) if pd.notna(v) else ""
+        if ts_series.duplicated().any():
+            logger.warning(
+                "[insert dataframe into time table] Duplicate timestamps found. "
+                f"Keeping row with lower numerical value in column {value_col} per timestamp. Check your input df for duplicate timestamps."
             )
 
-        # --- Inserting value pairs into model ---
-        logger.info("[insert dataframe into time table] Inserting value pairs ...")
-        df = df.reset_index(drop=True)
-        try:
-            for id, row in df.iterrows():
-                t = row["delta_time_col_new_str"]
-                v = row[value_col]
-                if df_table_old_exists and id < len(tks_rows_old):
-                    old_t = delta_time_col_old_str.iloc[id]
-                    if overwrite or (old_t != t):
-                        tk_row_to_delete = tks_rows_old.iloc[id]
-                        self.DeleteElement(tk_row_to_delete)
-                        tk_row = self.AddTableRow(tablePkTk=time_table_tk)[0]
-                        self.SetValue(Tk=tk_row, propertyName="Zeit", Value=t)
-                        overwrite = True
-                        logger.info(f"[insert dataframe into time table] Overwriting row at time delta {t} and all subsequent rows.")
-                    else:
-                        tk_row = tks_rows_old.iloc[id]
-                        logger.info(f"[insert dataframe into time table] Keeping row at time delta {t}. Updating value ...")
-                else:
-                    tk_row = self.AddTableRow(tablePkTk=time_table_tk)[0]
-                    self.SetValue(Tk=tk_row, propertyName="Zeit", Value=t)
-                    overwrite = True
-                    logger.info(f"[insert dataframe into time table] Overwriting row at time delta {t} and all subsequent rows.")
-                self.SetValue(Tk=tk_row, propertyName=property_name, Value=str(v))
-        except Exception as e:
-            logger.error(f"[insert dataframe into time table] Error inserting value pairs into model: {e}")
+            keep_index = (
+                pd.DataFrame({"timestamp": ts_series, "value_numeric": value_numeric}, index=df.index)
+                .sort_values(by=["timestamp", "value_numeric"], na_position="last", kind="mergesort")
+                .drop_duplicates(subset=["timestamp"], keep="first")
+                .index
+            )
+            df = df.loc[keep_index]
+
+        ts_series = pd.to_datetime(
+            df[date_col].astype(str) + " " + df[time_col].astype(str),
+            format="%Y-%m-%d %H:%M:%S.%f",
+            errors="coerce"
+        )
+        sort_index = ts_series.sort_values(kind="mergesort").index
+        df = df.loc[sort_index].reset_index(drop=True)
+        ts_series = ts_series.loc[sort_index].reset_index(drop=True)
         
-        logger.info("[insert dataframe into time table] Successfully inserted value pairs")
+        # --- Timeseries for new version of time table ---
+        delta_time_col_new_float = (ts_series - used_reference_time_stamp_as_datetime).dt.total_seconds()
+        delta_time_to_value_new = pd.Series(df[value_col].values, index=delta_time_col_new_float).to_dict()
+        property_name, _ = self._get_time_table_col_name_from_tk(time_table_tk=time_table_tk)
+
+        # --- Timeseries for old version of time table ---
+        df_table_old = self.get_dataframe_from_time_table(time_table_tk=time_table_tk, value_col_name="WERT")
+        if ("tk" not in df_table_old.columns or "WERT" not in df_table_old.columns or (df_table_old["tk"].isna().all() and df_table_old["WERT"].isna().all())):
+            delta_time_col_old_float = pd.Series(dtype="float64")
+            delta_time_to_value_and_tk_old = {}
+            if keep:
+                logger.warning(f"[insert dataframe into time table] No existing rows in time table with tk {time_table_tk} to keep. Function will behave as if Keep=False")
+                keep = False
+        else:
+            tks_rows_old = df_table_old["tk"]
+            values_rows_old = df_table_old["WERT"]
+            delta_time_col_old_float = pd.Series(df_table_old.index)
+            delta_time_to_value_and_tk_old = {
+                dt: (val, tk)
+                for dt, val, tk in zip(delta_time_col_old_float, values_rows_old, tks_rows_old)
+            }
+
+        # --- Construct sets of time deltas to keep, insert, overwrite, delete ---
+        old_delta_times = pd.Index(delta_time_col_old_float)
+        new_delta_times = pd.Index(delta_time_col_new_float)
+
+        delta_time_same = old_delta_times.intersection(new_delta_times).sort_values()
+        delta_time_only_old = old_delta_times.difference(new_delta_times).sort_values()
+        delta_time_only_new = new_delta_times.difference(old_delta_times).sort_values()
+
+        delta_time_to_keep = pd.Series(dtype="float64")
+        delta_time_to_insert = pd.Series(dtype="float64")
+        delta_time_to_overwrite = pd.Series(dtype="float64")
+        delta_time_to_delete = pd.Series(dtype="float64")
+
+        if overwrite:
+            if keep:
+                delta_time_to_keep = delta_time_only_old
+                delta_time_to_insert = delta_time_only_new
+                delta_time_to_overwrite = delta_time_same
+                delta_time_to_delete = pd.Index([], dtype="float64")
+            else: # !keep
+                delta_time_to_keep = pd.Index([], dtype="float64")
+                delta_time_to_insert = delta_time_only_new
+                delta_time_to_overwrite = delta_time_same
+                delta_time_to_delete = delta_time_only_old
+        else: # !overwrite
+            if keep:
+                delta_time_to_keep = delta_time_only_old
+                delta_time_to_insert = delta_time_same.union(delta_time_only_new)
+                delta_time_to_overwrite = pd.Index([], dtype="float64") 
+                delta_time_to_delete = delta_time_same
+            else: # !keep
+                delta_time_to_keep = pd.Index([], dtype="float64") 
+                delta_time_to_insert = delta_time_same.union(delta_time_only_new)
+                delta_time_to_overwrite = pd.Index([], dtype="float64") 
+                delta_time_to_delete = delta_time_same.union(delta_time_only_old)
+
+        delta_time_to_operation_flag = {}
+
+        # --- Delete rows ---
+        for dt in delta_time_to_delete:
+            tk_row_to_delete = delta_time_to_value_and_tk_old[dt][1]
+            self.DeleteElement(tk_row_to_delete)
+            logger.info(f"[insert dataframe into time table] Deleting row at time delta {dt} with value {delta_time_to_value_and_tk_old[dt][0]} and tk {delta_time_to_value_and_tk_old[dt][1]} ...")
+            delta_time_to_operation_flag[dt] = "deleted"
+
+        # --- Insert rows ---
+        for dt in delta_time_to_insert:
+            v = delta_time_to_value_new[dt]
+            tk_row = self.AddTableRow(tablePkTk=time_table_tk)[0]
+            self.SetValue(Tk=tk_row, propertyName="Zeit", Value=(f"{dt:.6f}".replace(".", ",")))
+            self.SetValue(Tk=tk_row, propertyName=property_name, Value=str(v))
+            logger.info(f"[insert dataframe into time table] Inserting row at time delta {dt} with value {v} at tk {tk_row} ...")
+            delta_time_to_operation_flag[dt] = "inserted"
+        
+        # --- Overwrite rows ---
+        for dt in delta_time_to_overwrite:
+            v = delta_time_to_value_new[dt]
+            tk_row = delta_time_to_value_and_tk_old[dt][1]
+            self.SetValue(Tk=tk_row, propertyName=property_name, Value=str(v))
+            logger.info(f"[insert dataframe into time table] Overwriting row at time delta {dt} with new value {v} at tk {tk_row} ...")
+            delta_time_to_operation_flag[dt] = "overwritten"
+
+        # --- Keep rows ---
+        for dt in delta_time_to_keep:
+            v = delta_time_to_value_and_tk_old[dt][0]
+            tk_row = delta_time_to_value_and_tk_old[dt][1]
+            logger.info(f"[insert dataframe into time table] Keeping row at time delta {dt} with value {v} at tk {tk_row} ...")
+            delta_time_to_operation_flag[dt] = "kept"
+
+        df = self.get_dataframe_from_time_table(
+            time_table_tk=time_table_tk,
+            value_col_name=value_col,
+            flag_mapping=delta_time_to_operation_flag
+        )
+
+        return df
 
     def get_dataframes_from_time_table_type(
         self,
@@ -1622,16 +1702,19 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
     def get_dataframe_from_time_table(
         self,
         time_table_tk: str,
-        value_col_name: str = None
-    ) -> None:
+        value_col_name: str = None,
+        flag_mapping: dict = None
+    ) -> pd.DataFrame:
         """
         Obtain time variable table (tables = ["VarPressureTable", "VarFlowTable", "ValveLiftTable", "PumpSpeedTable", "MeasuredVariableTable", "LoadFactorTable", "ThermalOutputTable", "TemperatureTable"]) in format of a pandas dataframe with time and value column.
         
         :param self: 
         :param time_table_tk: Tk of time table to get time-value pairs from.
         :type time_table_tk: str
-        :param value_col: Name given to the value column
-        :type value_col: str
+        :param value_col_name: Name given to the value column.
+        :type value_col_name: str
+        :param flag_mapping: Optional mapping of delta_time. If provided, an additional column operation_flag is added to the returned dataframe. Not necessary for usual use.
+        :type flag_mapping: dict
 
         :return: DataFrame with time index (Zeit [s]) and columns value_col and tk.
         :rtype: pd.DataFrame
@@ -1680,6 +1763,11 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
                 df = df.drop_duplicates(subset=["Zeit [s]"], keep="last")
             df = df.set_index("Zeit [s]")
             logger.info("[get dataframe from time table] Successfully built dataframe.")
+
+        if flag_mapping is not None:
+            df["operation_flag"] = df.index.map(flag_mapping).fillna("unmapped")
+
+        
 
         return df
 
