@@ -32,6 +32,8 @@ Below an overview over all Toolkit Versions for SIR 3S 90-15 Quebec is given. It
 +----------------+---------------------------+-------------+--------------+
 | Toolkit Version| SIR 3S Version            | dll changed | Release Date |
 +================+===========================+=============+==============+
+| 90.15.21       | 90-15-00-24-Upd2          | No          | 2026-06-01   |
++----------------+---------------------------+-------------+--------------+
 | 90.15.20       | 90-15-00-24-Upd2          | Yes         | 2026-05-25   |
 +----------------+---------------------------+-------------+--------------+
 | 90.15.19       | 90-15-00-24-Upd2          | No          | 2026-04-19   |
@@ -73,6 +75,25 @@ Below the release history with all changes is given in detail.
 
 SIR 3S: 90-15-00-24-Upd2
 ^^^^^^^^^^^^^^^^^^^^^^^^
+
+Version 90.15.21
+""""""""""""""""
+
+Developed and tested using SIR 3S Version: 90-15-00-24-Upd2
+
+Changes
+~~~~~~~
+
+- dataframes.py:
+   - insert_dataframe_into_time_table():
+      - new param keep added to control whether old target time deltas without source counterpart are retained (keep=True) or deleted (keep=False)
+      - overwrite/keep behavior now follows a consistent action matrix for matching, old-only, and new-only deltas (keep, insert, overwrite, delete)
+      - duplicate input timestamps are resolved deterministically by keeping the row with the lower numeric value in value_col
+      - additional validation and logging added for empty input dataframes and invalid/missing date/time/value columns
+      - function now returns the updated dataframe from get_dataframe_from_time_table() including operation flags
+   - get_dataframe_from_time_table():
+      - new optional param flag_mapping added
+      - when flag_mapping is provided, return dataframe includes new column operation_flag (mapped by time delta, fallback: "unmapped")
 
 Version 90.15.20
 """"""""""""""""
