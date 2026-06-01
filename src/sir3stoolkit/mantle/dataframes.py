@@ -1416,7 +1416,6 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         Imports time-value pairs for a time table based on the provided dataframe into a SIR 3S model.
         Existing rows are matched by simulation-time value in seconds (derived from date/time and reference_time_stamp).
         If source time series has duplicates, the one with lowest numerical value is used.
-        As long as timestamps match, existing rows are kept and only values are updated.
         How previously existing rows in the target time table are handled is determined by the params overwrite and keep.
 
         :param self:
