@@ -94,9 +94,18 @@ View: `Notebook <tutorials/SIR3S_Model/Tutorial007_Assets/ToolkitTutorial007.htm
 Tutorial 8: Miscellaneous
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This Tutorial demonstrates miscellaneous functions of the SIR3S_Model() class that cannot be assigned to one of the previous Tutorial topics.
+This Tutorial demonstrates miscellaneous functions of the SIR3S_Model() class that cannot be assigned to one of the previous Tutorial topics. Including: GetHydraulicProfileObjectString(), GetCourseOfHydraulicProfile(), SetLogFilePath(), EnableOrDisableOutputComments(), AllowSirMessageBox()
 
 View: `Notebook <tutorials/SIR3S_Model/Tutorial008_Assets/ToolkitTutorial008.html>`_ | Download: `ZIP archive <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorial008_Assets.zip>`_.
+
+.. _Ttu009:
+
+Tutorial 9: Miscellaneous
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This Tutorial demonstrates how to perform a model validation, checking a model for irregularities in modeling such as missing references of connecting elements to nodes.
+
+View: `Notebook <tutorials/SIR3S_Model/Tutorial009_Assets/ToolkitTutorial009.html>`_ | Download: `ZIP archive <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorial009_Assets.zip>`_.
 
 .. _Ttu50-99:
 
