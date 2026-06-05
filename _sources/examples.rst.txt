@@ -100,8 +100,8 @@ View: `Notebook <tutorials/SIR3S_Model/Tutorial008_Assets/ToolkitTutorial008.htm
 
 .. _Ttu009:
 
-Tutorial 9: Miscellaneous
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+Tutorial 9: Model Validation
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This Tutorial demonstrates how to perform a model validation, checking a model for irregularities in modeling such as missing references of connecting elements to nodes.
 
