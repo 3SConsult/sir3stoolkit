@@ -408,6 +408,35 @@ placed under interior point -1 to maintain consistent indexing.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.convert_rows_to_single_tuple_row">
+<span class="sig-name descname"><span class="pre">convert_rows_to_single_tuple_row</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">DataFrame</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/mantle/dataframes.html#SIR3S_Model_Dataframes.convert_rows_to_single_tuple_row"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.convert_rows_to_single_tuple_row" title="Link to this definition"></a></dt>
+<dd><p>Collapse a multi-row dataframe into a single-row dataframe where each
+column cell contains a tuple with all row values in index order.</p>
+<p>A dictionary mapping each dataframe index value to its tuple position
+is stored in an additional column.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>df</strong> (<em>pd.DataFrame</em>) – Input dataframe with one or multiple rows.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Single-row dataframe with tuple values per original column and
+one mapping column containing <code class="docutils literal notranslate"><span class="pre">{index_value:</span> <span class="pre">tuple_position}</span></code>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[pd.DataFrame, dict]</p>
+</dd>
+<dt class="field-even">Description<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
+</dl>
+<p>This method is intended for result-style dataframes where rows usually
+represent timestamps. The row order of <code class="docutils literal notranslate"><span class="pre">df</span></code> is preserved when building
+tuples. Works with regular columns and MultiIndex columns (as produced by
+<code class="docutils literal notranslate"><span class="pre">generate_element_results_dataframe</span></code>). The mapping dictionary allows
+tracing tuple positions back to the original index values. This method
+expects a unique dataframe index.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.delete_elements_in_dataframe">
 <span class="sig-name descname"><span class="pre">delete_elements_in_dataframe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataframe</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tk_col</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'tk'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/mantle/dataframes.html#SIR3S_Model_Dataframes.delete_elements_in_dataframe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.delete_elements_in_dataframe" title="Link to this definition"></a></dt>
 <dd><p>Delete all elements in a model that are present in the given dataframe, based on their tk in the specified column.</p>
@@ -429,11 +458,11 @@ placed under interior point -1 to maintain consistent indexing.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.generate_edge_dataframe">
-<span class="sig-name descname"><span class="pre">generate_edge_dataframe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">properties</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timestamp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/mantle/dataframes.html#SIR3S_Model_Dataframes.generate_edge_dataframe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.generate_edge_dataframe" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">generate_edge_dataframe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">properties</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timestamps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">DataFrame</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/mantle/dataframes.html#SIR3S_Model_Dataframes.generate_edge_dataframe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.generate_edge_dataframe" title="Link to this definition"></a></dt>
 <dd><p>Generate one combined dataframe for all supported edge element types.</p>
 <p>The function retrieves requested model data and result data for each supported
 edge type, merges both per type, and concatenates all edge-type dataframes into
-one unified dataframe.</p>
+one unified dataframe. Result values are written in the df as tuple of floats (or tuple (time) of tuple (interior point) of floats for pipe interior points) with each entry corresponding to a simulations timestamp.</p>
 <p>Supported edge element types are:
 ‘Pipe’, ‘Valve’, ‘SafetyValve’, ‘PressureRegulator’, ‘DifferentialRegulator’,
 ‘FlapValve’, ‘PhaseSeparation’, ‘FlowControlUnit’, ‘ControlValve’, ‘Pump’,
@@ -447,9 +476,10 @@ one unified dataframe.</p>
 validated per element type and split into model-data vs. result
 properties. Unknown properties are ignored for that type.
 Default: []. Meaning only tk, Fkcont, geometry, fkKI, fkKK, element_type, L (L=0, if missing) will be given as default cols in df_edges.</p></li>
-<li><p><strong>timestamp</strong> (<em>Union</em><em>[</em><em>str</em><em>, </em><em>int</em><em>]</em><em>, </em><em>optional</em>) – Timestamp to use when retrieving result properties.
-Supports timestamp string (eg. timestamp=’2023-02-13 08:00:00.000 +01:00’) or int index (eg. timestamp=8. corresponding to simulation timestamps self.GetTimeStamps()[0])
+<li><p><strong>timestamps</strong> (<em>Union</em><em>[</em><em>List</em><em>[</em><em>str</em><em>]</em><em>, </em><em>List</em><em>[</em><em>int</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – Timestamps to use when retrieving result properties.
+Supports timestamp string (eg. timestamps=[‘2023-02-13 08:00:00.000 +01:00’, ‘2023-02-13 09:00:00.000 +01:00’]) or int index (eg. timestamps=[8, 9]. corresponding to simulation timestamps self.GetTimeStamps()[0])
 Default: self.GetTimeStamps()[1].(Stationary)</p></li>
+<li><p><strong>tks</strong> (<em>List</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – TKs of elements to exclusively make up the dataframe.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -466,37 +496,28 @@ If no edge rows are available, an empty dataframe is returned.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.generate_element_dataframe">
-<span class="sig-name descname"><span class="pre">generate_element_dataframe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">element_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timestamp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">GeoDataFrame</span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/mantle/dataframes.html#SIR3S_Model_Dataframes.generate_element_dataframe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.generate_element_dataframe" title="Link to this definition"></a></dt>
-<dd><p>Generates a dataframe containing all instances for a given element type in the open
-SIR 3S model. All model_data and result values
-(self.GetResultProperties_from_elementType(onlySelectedVectors=False))
-for the static timestamp are included.</p>
-<p>Result values are returned as floats unless they are vectorized (relevant only for
-pipes), in which case they are returned as strings. The tks of end nodes are included
-(fkKI, fkKK). Geometry information is also included.</p>
+<span class="sig-name descname"><span class="pre">generate_element_dataframe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">element_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timestamps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">GeoDataFrame</span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/mantle/dataframes.html#SIR3S_Model_Dataframes.generate_element_dataframe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.generate_element_dataframe" title="Link to this definition"></a></dt>
+<dd><p>Generates a comprehensive DataFrame containing model_data and static result values for all requested elements of the given type. Result values are written in the df as tuple of floats (or tuple (time) of tuple (interior point) of floats for pipe interior points) with each entry corresponding to a simulations timestamp.
+Geometry and end-node tks are always included. All model_data and result values (self.GetResultProperties_from_elementType(onlySelectedVectors=False)) for are included.
+The tks of end nodes are included (fkKI, fkKK). Geometry information is also included.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>element_type</strong> (<em>Enum</em>) – The element type (e.g., self.ObjectTypes.Node, self.ObjectTypes.Pipe).</p></li>
 <li><p><strong>tks</strong> (<em>list</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – List of tks to include in the dataframe.
 Default: None.</p></li>
-<li><p><strong>timestamp</strong> (<em>str</em><em>, </em><em>optional</em>) – Timestamp used for obtaining result values.
+<li><p><strong>timestamps</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>List</em><em>[</em><em>str</em><em>]</em><em>, </em><em>List</em><em>[</em><em>int</em><em>]</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – Timestamps used for obtaining result values.
 Default: Static.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>DataFrame containing one row per element instance, including model_data, end
-nodes, geometry, and available static result values.</p>
+nodes, geometry, and available static result values. Dict mapping timestamps to tuple indices for result values is also returned.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>pd.DataFrame</p>
+<dd class="field-odd"><p>(pd.DataFrame, dict)</p>
 </dd>
-<dt class="field-even">Description<span class="colon">:</span></dt>
-<dd class="field-even"><p></p></dd>
 </dl>
-<p>Builds a comprehensive DataFrame containing model_data and static result values for
-all requested elements of the given type. Vectorized pipe results are included
-as strings, and scalar results as floats. Geometry and end-node tks are always included.</p>
 </dd></dl>
 
 <dl class="py method">
