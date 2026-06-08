@@ -486,10 +486,11 @@ Default: self.GetTimeStamps()[1].(Stationary)</p></li>
 <dd class="field-even"><p>A dataframe containing all retrieved edges across supported types.
 Column sets are aligned across edge types before concatenation, so
 properties not available for some types remain empty (NaN).
-If no edge rows are available, an empty dataframe is returned.</p>
+If no edge rows are available, an empty dataframe is returned.
+Dict mapping timestamps to tuple indices for result values is also returned.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>pd.DataFrame</p>
+<dd class="field-odd"><p>tuple[pd.DataFrame, dict[str, int]]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -515,7 +516,7 @@ Default: Static.</p></li>
 nodes, geometry, and available static result values. Dict mapping timestamps to tuple indices for result values is also returned.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>(pd.DataFrame, dict)</p>
+<dd class="field-odd"><p>tuple[pd.DataFrame, dict[str, int]]</p>
 </dd>
 </dl>
 </dd></dl>
