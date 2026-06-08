@@ -498,7 +498,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         :type timestamps: Optional[Union[List[str], List[int]]], optional
         :return: DataFrame containing one row per element instance, including model_data, end
                 nodes, geometry, and available static result values. Dict mapping timestamps to tuple indices for result values is also returned.
-        :rtype: (pd.DataFrame, dict)
+        :rtype: tuple[pd.DataFrame, dict[str, int]]
         """
 
         logger.info(f"[generate_element_dataframe] Generating df for element type: {element_type} ...")
@@ -880,8 +880,9 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         :return: A dataframe containing all retrieved edges across supported types.
                  Column sets are aligned across edge types before concatenation, so
                  properties not available for some types remain empty (NaN).
-                 If no edge rows are available, an empty dataframe is returned.
-        :rtype: pd.DataFrame
+                 If no edge rows are available, an empty dataframe is returned. 
+                 Dict mapping timestamps to tuple indices for result values is also returned.
+        :rtype: tuple[pd.DataFrame, dict[str, int]]
         """
 
         edge_types = [
