@@ -32,6 +32,8 @@ Below an overview over all Toolkit Versions for SIR 3S 90-15 Quebec is given. It
 +----------------+---------------------------+-------------+--------------+
 | Toolkit Version| SIR 3S Version            | dll changed | Release Date |
 +================+===========================+=============+==============+
+| 90.15.22       | 90-15-00-24-Upd2          | No          | 2026-06-08   |
++----------------+---------------------------+-------------+--------------+
 | 90.15.21       | 90-15-00-24-Upd2          | No          | 2026-06-01   |
 +----------------+---------------------------+-------------+--------------+
 | 90.15.20       | 90-15-00-24-Upd2          | Yes         | 2026-05-25   |
@@ -75,6 +77,19 @@ Below the release history with all changes is given in detail.
 
 SIR 3S: 90-15-00-24-Upd2
 ^^^^^^^^^^^^^^^^^^^^^^^^
+
+Version 90.15.22
+""""""""""""""""
+
+Developed and tested using SIR 3S Version: 90-15-00-24-Upd2
+
+Changes
+~~~~~~~
+
+- dataframes.py: 
+   - generate_element_dataframe() and generate_edge_dataframe() now return df with result values as Tuple, with each entry corresponding to a simluation timestamp. 
+   - Additionally they return a mapping from timestamps to tuple idx. With new param timestamps for generate_edge_dataframe(), and timestamp changed to timestamps (list) as param for generate_element_dataframe().
+   - generate_edge_dataframe() has new param tks for filtering 
 
 Version 90.15.21
 """"""""""""""""

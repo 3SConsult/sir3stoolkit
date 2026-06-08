@@ -424,41 +424,81 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         logger.info(f"[results] Done. Shape: {df.shape}")
         return df
 
+    def convert_rows_to_single_tuple_row(
+        self,
+        df: pd.DataFrame
+    ) -> Tuple[pd.DataFrame, dict]:
+
+        """
+        Collapse a multi-row dataframe into a single-row dataframe where each
+        column cell contains a tuple with all row values in index order.
+
+        A dictionary mapping each dataframe index value to its tuple position
+        is stored in an additional column.
+
+        :param df: Input dataframe with one or multiple rows.
+        :type df: pd.DataFrame
+        :return: Single-row dataframe with tuple values per original column and
+            one mapping column containing ``{index_value: tuple_position}``.
+        :rtype: Tuple[pd.DataFrame, dict]
+
+        :description:
+        This method is intended for result-style dataframes where rows usually
+        represent timestamps. The row order of ``df`` is preserved when building
+        tuples. Works with regular columns and MultiIndex columns (as produced by
+        ``generate_element_results_dataframe``). The mapping dictionary allows
+        tracing tuple positions back to the original index values. This method
+        expects a unique dataframe index.
+        """
+
+        logger.info("[rows_to_tuple_row] Collapsing dataframe rows into tuple row...")
+
+        if df is None or df.empty:
+            logger.info("[rows_to_tuple_row] Input dataframe is empty. Returning empty dataframe.")
+            return pd.DataFrame(), {}
+
+        if not df.index.is_unique:
+            logger.error("[rows_to_tuple_row] Dataframe index is not unique. Please provide a dataframe with unique index values.")
+            return pd.DataFrame(), {}
+        
+        tuple_row = {col: tuple(df[col].tolist()) for col in df.columns}
+
+        out = pd.DataFrame([tuple_row])
+        out.columns = df.columns
+
+        timestamp_to_tuple_index = {
+            str(idx): pos
+            for pos, idx in enumerate(df.index.tolist())
+        }
+
+        logger.info(f"[rows_to_tuple_row] Done. Shape: {out.shape}")
+        return out, timestamp_to_tuple_index
+
     ## Dataframe Creation: Explicit Dataframe Creation
 
     def generate_element_dataframe(
         self,
         element_type: str,
         tks: Optional[list[str]] = None,
-        timestamp: Optional[Union[str, int]] = None,
+        timestamps: Optional[Union[List[str], List[int]]] = None,
     ) -> pd.DataFrame | gpd.GeoDataFrame:
 
         """
-        Generates a dataframe containing all instances for a given element type in the open
-        SIR 3S model. All model_data and result values
-        (self.GetResultProperties_from_elementType(onlySelectedVectors=False))
-        for the static timestamp are included.
-
-        Result values are returned as floats unless they are vectorized (relevant only for
-        pipes), in which case they are returned as strings. The tks of end nodes are included
-        (fkKI, fkKK). Geometry information is also included.
+        Generates a comprehensive DataFrame containing model_data and static result values for all requested elements of the given type. Result values are written in the df as tuple of floats (or tuple (time) of tuple (interior point) of floats for pipe interior points) with each entry corresponding to a simulations timestamp. 
+        Geometry and end-node tks are always included. All model_data and result values (self.GetResultProperties_from_elementType(onlySelectedVectors=False)) for are included.
+        The tks of end nodes are included (fkKI, fkKK). Geometry information is also included.
 
         :param element_type: The element type (e.g., self.ObjectTypes.Node, self.ObjectTypes.Pipe).
         :type element_type: Enum
         :param tks: List of tks to include in the dataframe.
                     Default: None.
         :type tks: list[str], optional
-        :param timestamp: Timestamp used for obtaining result values.
+        :param timestamps: Timestamps used for obtaining result values.
                     Default: Static.
-        :type timestamp: str, optional
+        :type timestamps: Optional[Union[List[str], List[int]]], optional
         :return: DataFrame containing one row per element instance, including model_data, end
-                nodes, geometry, and available static result values.
-        :rtype: pd.DataFrame
-
-        :description:
-        Builds a comprehensive DataFrame containing model_data and static result values for
-        all requested elements of the given type. Vectorized pipe results are included
-        as strings, and scalar results as floats. Geometry and end-node tks are always included.
+                nodes, geometry, and available static result values. Dict mapping timestamps to tuple indices for result values is also returned.
+        :rtype: (pd.DataFrame, dict)
         """
 
         logger.info(f"[generate_element_dataframe] Generating df for element type: {element_type} ...")
@@ -475,49 +515,36 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
             )
             if df_model_data.empty:
                 logger.error(f"[generate_element_dataframe] Obtained model dataframe is empty.")
-                return pd.DataFrame()
+                return pd.DataFrame(), dict()
             
-            # Timestamps
-            result_values_to_obtain = self.GetResultProperties_from_elementType(element_type, False)
-            
-            if timestamp:
-                available_timestamps = self.GetTimeStamps()[0]
-                if isinstance(timestamp, str):
-                    if timestamp in available_timestamps:
-                        used_timestamp = timestamp
-                    else:
-                        logger.error(f"[generate_element_dataframe] Timestamp {timestamp} not in available simulation timestamps (self.GetTimeStamps()[0]).")
-                        return pd.DataFrame()
-                elif isinstance(timestamp, int):
-                    used_timestamp = available_timestamps[timestamp]
-            else:
-                used_timestamp = self.GetTimeStamps()[1] # static
+            if timestamps is None:
+                timestamps = [self.GetTimeStamps()[1]]
 
-            logger.info(f"[generate_element_dataframe] Generating df_results for element type: {element_type}; at timestamp: {used_timestamp} ...")
+            result_values_to_obtain = self.GetResultProperties_from_elementType(element_type, False)
+
+            logger.info(f"[generate_element_dataframe] Generating df_results for element type: {element_type} ...")
             df_results = self.generate_element_results_dataframe(element_type=element_type
                                                                         ,tks=tks
                                                                         ,properties=result_values_to_obtain
-                                                                        ,timestamps=[used_timestamp]
+                                                                        ,timestamps=timestamps
                                                                         
             )
             if df_results.empty:
                 logger.error(f"[generate_element_dataframe] Obtained results dataframe is empty.")
-                return pd.DataFrame()
-            logger.info(f"[generate_element_dataframe] Merging df_model_data with df_results for element type: {element_type} ...")
-            df_results.columns = df_results.columns.droplevel([1, 2])
-            df_results = df_results.T.unstack(level=0).T
-            df_results = df_results.droplevel(0, axis=0)
-            df = df_model_data.merge(on="tk",
-                                how="outer",
-                                right=df_results)
-
-            df = self.add_interior_points_to_start_end_sequence(df)
+                return pd.DataFrame(), dict()
             
-            return df
+            df_results = self.add_interior_points_to_start_end_sequence(df_results)
+
+            df_results, timestamp_to_tuple_index = self.convert_rows_to_single_tuple_row(df_results)
+
+            logger.info(f"[generate_element_dataframe] Merging df_model_data with df_results for element type: {element_type} ...")
+            df_merged = self.merge_model_data_and_results(df_model_data=df_model_data, df_results=df_results)
+
+            return df_merged, timestamp_to_tuple_index
         
         except Exception as e:
             logger.error(f"[generate_element_dataframe] Error Generating df for element type: {element_type}: {e}")
-            return pd.DataFrame()
+            return pd.DataFrame(), dict()
         
     def add_interior_points_as_multiindex(self, df_results):
         """
@@ -544,6 +571,9 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
             values along a new index level. Scalar properties remain unchanged and are
             placed under interior point -1 to maintain consistent indexing.
         """
+
+        if df_results is None or df_results.empty or len(df_results.columns) == 0:
+            return df_results.copy() if isinstance(df_results, pd.DataFrame) else pd.DataFrame()
 
         last_level = df_results.columns.get_level_values(-1)
         vec_props = {p for p in last_level.unique() if "VEC" in str(p)}
@@ -597,6 +627,9 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
                 )
                 pieces.append(df1)
 
+        if not pieces:
+            return df_results.copy()
+
         out = pd.concat(pieces, axis=1)
         out = out.dropna(axis=1, how="all")
         return out
@@ -615,6 +648,9 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         :return: DataFrame with expanded scalar VEC columns
         :rtype: pd.DataFrame
         """
+
+        if df_results is None or df_results.empty or len(df_results.columns) == 0:
+            return df_results.copy() if isinstance(df_results, pd.DataFrame) else pd.DataFrame()
 
         last_level = df_results.columns.get_level_values(-1)
         vec_props = {p for p in last_level.unique() if "VEC" in str(p)}
@@ -670,7 +706,16 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
 
             else:
                 # Keep scalar property untouched
-                pieces.append(col.to_frame())
+                df_scalar = col.to_frame()
+                if is_multi:
+                    df_scalar.columns = pd.MultiIndex.from_tuples(
+                        [key],
+                        names=df_results.columns.names
+                    )
+                pieces.append(df_scalar)
+
+        if not pieces:
+            return df_results.copy()
 
         out = pd.concat(pieces, axis=1)
         return out
@@ -762,8 +807,11 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
                 x_VL = list(hydraulicProfile.xVL)
                 x_VL = x_VL[1:]
                 links_VL_tk_to_x_sum = dict(zip(links_VL, x_VL))
-                df_pipes_VL = self.generate_element_dataframe(element_type=self.ObjectTypes.Pipe
+                df_pipes_VL, _ = self.generate_element_dataframe(element_type=self.ObjectTypes.Pipe
                                                             ,tks=links_VL)
+                if df_pipes_VL is None or df_pipes_VL.empty:
+                    logger.warning(f"No VL pipe dataframe generated for Hydraulic Profile with Lfdnr: {lfdnr}. Skipping profile.")
+                    continue
                 df_pipes_VL["l_sum"] = df_pipes_VL["tk"].map(links_VL_tk_to_x_sum)
                 df_pipes_VL["AGSN_Lfdnr"] = lfdnr
                 df_pipes_VL["AGSN_Name"] = name
@@ -776,8 +824,11 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
                 x_RL = list(hydraulicProfile.xRL)
                 x_RL = x_RL[1:]
                 links_RL_tk_to_x_sum = dict(zip(links_RL, x_RL))
-                df_pipes_RL = self.generate_element_dataframe(element_type=self.ObjectTypes.Pipe
+                df_pipes_RL, _ = self.generate_element_dataframe(element_type=self.ObjectTypes.Pipe
                                                             ,tks=links_RL)
+                if df_pipes_RL is None or df_pipes_RL.empty:
+                    logger.warning(f"No RL pipe dataframe generated for Hydraulic Profile with Lfdnr: {lfdnr}. Skipping profile.")
+                    continue
                 df_pipes_RL["l_sum"] = df_pipes_RL["tk"].map(links_RL_tk_to_x_sum)
                 df_pipes_RL["AGSN_Lfdnr"] = lfdnr
                 df_pipes_RL["AGSN_Name"] = name
@@ -787,7 +838,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
                 dfs_pipes_tuple = (df_pipes_VL, df_pipes_RL)
                 dfs.append(dfs_pipes_tuple)
             except Exception as e:
-                logging.error(f"Error retrieving Hydraulic Profile with Lfdnr: {lfdnr}.")
+                logger.error(f"Error retrieving Hydraulic Profile with Lfdnr: {lfdnr}: {e}")
                 return []
 
         return dfs
@@ -795,15 +846,16 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
     def generate_edge_dataframe(
         self,
         properties: Optional[List[str]] = [],      
-        timestamp: Optional[Union[str, int]] = None
-    ) -> pd.DataFrame:
+        timestamps: Optional[Union[List[str], List[int]]] = None,
+        tks: Optional[List[str]] = None
+    ) -> Tuple[pd.DataFrame, dict]:
 
         """
         Generate one combined dataframe for all supported edge element types.
 
         The function retrieves requested model data and result data for each supported
         edge type, merges both per type, and concatenates all edge-type dataframes into
-        one unified dataframe.
+        one unified dataframe. Result values are written in the df as tuple of floats (or tuple (time) of tuple (interior point) of floats for pipe interior points) with each entry corresponding to a simulations timestamp. 
 
         Supported edge element types are:
         'Pipe', 'Valve', 'SafetyValve', 'PressureRegulator', 'DifferentialRegulator',
@@ -818,10 +870,12 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
                            properties. Unknown properties are ignored for that type.
                            Default: []. Meaning only tk, Fkcont, geometry, fkKI, fkKK, element_type, L (L=0, if missing) will be given as default cols in df_edges.
         :type properties: list[str], optional
-        :param timestamp: Timestamp to use when retrieving result properties.
-                           Supports timestamp string (eg. timestamp='2023-02-13 08:00:00.000 +01:00') or int index (eg. timestamp=8. corresponding to simulation timestamps self.GetTimeStamps()[0])
+        :param timestamps: Timestamps to use when retrieving result properties.
+                           Supports timestamp string (eg. timestamps=['2023-02-13 08:00:00.000 +01:00', '2023-02-13 09:00:00.000 +01:00']) or int index (eg. timestamps=[8, 9]. corresponding to simulation timestamps self.GetTimeStamps()[0])
                            Default: self.GetTimeStamps()[1].(Stationary)
-        :type timestamp: Union[str, int], optional
+        :type timestamps: Union[List[str], List[int]], optional
+        :param tks: TKs of elements to exclusively make up the dataframe. 
+        :type tks: List[str], optional
 
         :return: A dataframe containing all retrieved edges across supported types.
                  Column sets are aligned across edge types before concatenation, so
@@ -837,14 +891,33 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         ]
 
         try:
-            if timestamp is None:
-                timestamp = self.GetTimeStamps()[1] # stationary
+            logger.info(f"[edge dataframe] Generating edge dataframe ...")
+            if timestamps is None:
+                ts = self.GetTimeStamps()[1]
+                timestamps = [ts] # stationary
             enum_members = self.__get_object_type_enums(edge_types, self.ObjectTypes)
             dfs = []
             enume_members_used = 0
+            timestamp_to_tuple_index = {}
+            tks_filter_active = False
+            remaining_tks = []
+            if tks:
+                tks_filter_active = True
+                logger.info(f"[edge dataframe] TK filtering active. Requested tks: {tks}")
+                remaining_tks = list(tks)
             for em in enum_members:
-                tks = self.GetTksofElementType(ElementType=em)
-                if tks:
+                tks_available = self.GetTksofElementType(ElementType=em)
+                if tks_available:
+                    if tks_filter_active:
+                        set_tks = set(remaining_tks)
+                        set_tks_available = set(tks_available)
+                        tks_to_use = list(set_tks & set_tks_available)
+                        remaining_tks = list(set_tks - set_tks_available)
+                        if not tks_to_use:
+                            continue
+                    else:
+                        tks_to_use = None
+
                     logger.info(f"[edge dataframe] Generating dataframe for {em} ...")
                     enume_members_used += 1
                     model_data_matches, result_matches, uncategorized = self.__sort_properties_into_model_data_and_results(element_type=em, properties=properties)
@@ -852,31 +925,39 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
                     if "Fkcont" not in model_data_properties:
                         model_data_properties.append("Fkcont")
                     result_properties = result_matches
-                    if tks:
-                        df_model = self.generate_element_model_data_dataframe(
-                            element_type=em,
-                            properties=model_data_properties,
-                            geometry=True,
-                            end_nodes=True,
-                            element_type_col=True
-                        )
-                        # Create length column for edge types without valid L
-                        if "L" not in df_model.columns:
-                            df_model["L"] = 0
+                    
+                    df_model = self.generate_element_model_data_dataframe(
+                        element_type=em,
+                        properties=model_data_properties,
+                        geometry=True,
+                        end_nodes=True,
+                        element_type_col=True,
+                        tks=tks_to_use
+                    )
+                    if "L" not in df_model.columns:
+                        df_model["L"] = 0
 
-                        df_results = self.generate_element_results_dataframe(
-                            element_type=em,
-                            properties=result_properties,
-                            timestamps=[timestamp]
-                        )
-
-                        df = self.merge_model_data_and_results(df_model, df_results)
-                        df = self.add_interior_points_to_start_end_sequence(df)
-                        dfs.append(df)
-                        logger.info(f"[edge dataframe] Generated dataframe for {em}.")
+                    df_results = self.generate_element_results_dataframe(
+                        element_type=em,
+                        properties=result_properties,
+                        timestamps=timestamps,
+                        tks=tks_to_use
+                    )
+                    df_results = self.add_interior_points_to_start_end_sequence(df_results)
+                    df_results, timestamp_to_tuple_index_new = self.convert_rows_to_single_tuple_row(df_results)
+                    if timestamp_to_tuple_index_new:
+                        timestamp_to_tuple_index = timestamp_to_tuple_index_new
+                    df = self.merge_model_data_and_results(df_model, df_results)
+                    
+                    dfs.append(df)
+                    logger.info(f"[edge dataframe] Generated dataframe for {em}.")
             if not dfs:
                 logger.warning("[edge dataframe] No edge dataframes were created. Returning empty dataframe.")
-                return pd.DataFrame()
+                return pd.DataFrame(), dict()
+
+            if tks_filter_active:
+                if len(remaining_tks) > 0:
+                    logger.warning(f"[edge dataframe] The following tks were requested but not found in any edge element type and thus not included in the dataframe: {remaining_tks}")
 
             # Align column sets across edge types so missing properties stay empty (NaN)
             all_columns = sorted(set().union(*(df.columns for df in dfs)))
@@ -886,9 +967,9 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
             logger.info(f"[edge dataframe] Retrieved {len(df_edges)} edges from {enume_members_used} element types.")
         except Exception as e:
             logger.error(f"[edge dataframe] Failed to retrieve edges: {e}")
-            return pd.DataFrame()
+            return pd.DataFrame(), dict()
 
-        return df_edges
+        return df_edges, timestamp_to_tuple_index
         
     def __get_object_type_enums(self, names, enum_class):
         return [getattr(enum_class, name) for name in names if hasattr(enum_class, name)]
@@ -897,6 +978,9 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
 
     def merge_model_data_and_results(self, df_model_data, df_results):
         try:
+            if df_results is None or df_results.empty or len(df_results.columns) == 0:
+                return df_model_data.copy()
+
             if not df_results.empty and df_results.index.nunique() > 1:
                 logger.error( "[merge] Aborting merge: df_results contains multiple timestamps.Please provide a single timestamp.")
                 return pd.DataFrame()

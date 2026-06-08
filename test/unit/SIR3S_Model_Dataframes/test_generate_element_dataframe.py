@@ -13,6 +13,7 @@ def _configure_element_dataframe_stubs(s3s_model_dataframes_instance):
         "model": [],
         "results": [],
         "add_vectors": [],
+        "convert": [],
     }
 
     model_df = pd.DataFrame(
@@ -60,15 +61,25 @@ def _configure_element_dataframe_stubs(s3s_model_dataframes_instance):
                 "timestamps": timestamps,
             }
         )
+        if timestamps == ["NOT_A_TIMESTAMP"]:
+            return pd.DataFrame()
         return results_df.copy()
 
     def fake_add_vectors(df):
         calls["add_vectors"].append(True)
         return df
 
+    def fake_convert_rows(df):
+        calls["convert"].append(True)
+        tuple_row = {col: (df.iloc[0][col],) for col in df.columns}
+        out = pd.DataFrame([tuple_row])
+        out.columns = df.columns
+        return out, {"STATIC_TS": 0}
+
     s3s_model_dataframes_instance.generate_element_model_data_dataframe = fake_generate_model_data
     s3s_model_dataframes_instance.generate_element_results_dataframe = fake_generate_results
     s3s_model_dataframes_instance.add_interior_points_to_start_end_sequence = fake_add_vectors
+    s3s_model_dataframes_instance.convert_rows_to_single_tuple_row = fake_convert_rows
     s3s_model_dataframes_instance.GetResultProperties_from_elementType = lambda element_type, onlySelectedVectors=False: ["DTTR", "MVEC"]
     s3s_model_dataframes_instance.GetTimeStamps = lambda: (["TS1", "TS2"], "STATIC_TS", "TS1", "TS2")
     s3s_model_dataframes_instance._SIR3S_Model_Dataframes__is_get_endnodes_applicable = lambda element_type: True
@@ -79,12 +90,13 @@ def _configure_element_dataframe_stubs(s3s_model_dataframes_instance):
 def test_generate_element_dataframe_uses_static_timestamp_by_default(s3s_model_dataframes_instance):
     calls = _configure_element_dataframe_stubs(s3s_model_dataframes_instance)
 
-    df = s3s_model_dataframes_instance.generate_element_dataframe(element_type=DummyObjectTypes.Pipe, tks=None)
+    df, timestamp_to_tuple_index = s3s_model_dataframes_instance.generate_element_dataframe(element_type=DummyObjectTypes.Pipe, tks=None)
 
     assert not df.empty
     assert list(df["tk"]) == ["P1", "P2"]
     assert "DTTR" in df.columns
     assert calls["results"][0]["timestamps"] == ["STATIC_TS"]
+    assert timestamp_to_tuple_index == {"STATIC_TS": 0}
 
 
 def test_generate_element_dataframe_uses_given_timestamp_index(s3s_model_dataframes_instance):
@@ -93,10 +105,10 @@ def test_generate_element_dataframe_uses_given_timestamp_index(s3s_model_datafra
     s3s_model_dataframes_instance.generate_element_dataframe(
         element_type=DummyObjectTypes.Pipe,
         tks=None,
-        timestamp=1,
+        timestamps=[1],
     )
 
-    assert calls["results"][0]["timestamps"] == ["TS2"]
+    assert calls["results"][0]["timestamps"] == [1]
 
 
 def test_generate_element_dataframe_uses_given_timestamp_string(s3s_model_dataframes_instance):
@@ -105,7 +117,7 @@ def test_generate_element_dataframe_uses_given_timestamp_string(s3s_model_datafr
     s3s_model_dataframes_instance.generate_element_dataframe(
         element_type=DummyObjectTypes.Pipe,
         tks=None,
-        timestamp="TS1",
+        timestamps=["TS1"],
     )
 
     assert calls["results"][0]["timestamps"] == ["TS1"]
@@ -114,13 +126,14 @@ def test_generate_element_dataframe_uses_given_timestamp_string(s3s_model_datafr
 def test_generate_element_dataframe_returns_empty_for_invalid_timestamp_string(s3s_model_dataframes_instance):
     _configure_element_dataframe_stubs(s3s_model_dataframes_instance)
 
-    df = s3s_model_dataframes_instance.generate_element_dataframe(
+    df, timestamp_to_tuple_index = s3s_model_dataframes_instance.generate_element_dataframe(
         element_type=DummyObjectTypes.Pipe,
         tks=None,
-        timestamp="NOT_A_TIMESTAMP",
+        timestamps=["NOT_A_TIMESTAMP"],
     )
 
     assert df.empty
+    assert timestamp_to_tuple_index == {}
 
 
 def test_generate_element_dataframe_passes_tks_to_subcalls(s3s_model_dataframes_instance):
@@ -139,15 +152,17 @@ def test_generate_element_dataframe_returns_empty_when_model_dataframe_is_empty(
     _configure_element_dataframe_stubs(s3s_model_dataframes_instance)
     s3s_model_dataframes_instance.generate_element_model_data_dataframe = lambda **kwargs: pd.DataFrame()
 
-    df = s3s_model_dataframes_instance.generate_element_dataframe(element_type=DummyObjectTypes.Pipe)
+    df, timestamp_to_tuple_index = s3s_model_dataframes_instance.generate_element_dataframe(element_type=DummyObjectTypes.Pipe)
 
     assert df.empty
+    assert timestamp_to_tuple_index == {}
 
 
 def test_generate_element_dataframe_returns_empty_when_results_dataframe_is_empty(s3s_model_dataframes_instance):
     _configure_element_dataframe_stubs(s3s_model_dataframes_instance)
     s3s_model_dataframes_instance.generate_element_results_dataframe = lambda **kwargs: pd.DataFrame()
 
-    df = s3s_model_dataframes_instance.generate_element_dataframe(element_type=DummyObjectTypes.Pipe)
+    df, timestamp_to_tuple_index = s3s_model_dataframes_instance.generate_element_dataframe(element_type=DummyObjectTypes.Pipe)
 
     assert df.empty
+    assert timestamp_to_tuple_index == {}

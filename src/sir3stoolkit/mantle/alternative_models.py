@@ -151,7 +151,7 @@ class SIR3S_Model_Alternative_Models(SIR3S_Model_Dataframes):
 
         # --- Edges ---
         try:
-            df_edges=self.generate_edge_dataframe()
+            df_edges, _ = self.generate_edge_dataframe()
             df_edges['tk'] = df_edges['tk'].astype('int64')
         except Exception as e:
             logger.error(f"[graph] Failed to retrieve edges: {e}")

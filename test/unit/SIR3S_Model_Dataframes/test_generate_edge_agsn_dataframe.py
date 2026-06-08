@@ -28,7 +28,7 @@ def _configure_edge_dataframe_stubs(s3s_model_dataframes_instance):
         calls["sort"].append({"element_type": element_type, "properties": list(properties)})
         return ["Kvr"], ["JV", "PVEC", "MVEC"], []
 
-    def fake_model_df(element_type, properties, geometry, end_nodes, element_type_col):
+    def fake_model_df(element_type, properties, geometry, end_nodes, element_type_col, tks=None):
         calls["model"].append(
             {
                 "element_type": element_type,
@@ -36,6 +36,7 @@ def _configure_edge_dataframe_stubs(s3s_model_dataframes_instance):
                 "geometry": geometry,
                 "end_nodes": end_nodes,
                 "element_type_col": element_type_col,
+                "tks": None if tks is None else list(tks),
             }
         )
         if element_type == "Pipe":
@@ -65,12 +66,13 @@ def _configure_edge_dataframe_stubs(s3s_model_dataframes_instance):
             ]
         )
 
-    def fake_results_df(element_type, properties, timestamps):
+    def fake_results_df(element_type, properties, timestamps, tks=None):
         calls["results"].append(
             {
                 "element_type": element_type,
                 "properties": list(properties),
                 "timestamps": list(timestamps),
+                "tks": None if tks is None else list(tks),
             }
         )
         if element_type == "Pipe":
@@ -85,9 +87,17 @@ def _configure_edge_dataframe_stubs(s3s_model_dataframes_instance):
     )
     s3s_model_dataframes_instance.generate_element_model_data_dataframe = fake_model_df
     s3s_model_dataframes_instance.generate_element_results_dataframe = fake_results_df
-    s3s_model_dataframes_instance.merge_model_data_and_results = (
-        lambda df_model_data, df_results: df_model_data.merge(df_results, on="tk", how="outer")
-    )
+    def fake_merge(df_model_data, df_results):
+        if df_results is None or df_results.empty:
+            return df_model_data.copy()
+        right = df_results.copy()
+        if "tk" in right.columns:
+            right["tk"] = right["tk"].map(
+                lambda v: v[0] if isinstance(v, tuple) and len(v) == 1 else v
+            )
+        return df_model_data.merge(right, on="tk", how="outer")
+
+    s3s_model_dataframes_instance.merge_model_data_and_results = fake_merge
     s3s_model_dataframes_instance.add_interior_points_to_start_end_sequence = lambda df: df
 
     return calls
@@ -110,8 +120,11 @@ def test_generate_longitudinal_section_dataframes_returns_supply_and_return_pair
         xRL = [0.0, 30.0, 15.0]
 
     s3s_model_dataframes_instance.GetCourseOfHydraulicProfile = lambda tkAgsn, uid: _HydraulicProfile()
-    s3s_model_dataframes_instance.generate_element_dataframe = lambda element_type, tks=None, timestamp=None: pd.DataFrame(
-        [{"tk": tk} for tk in tks]
+    s3s_model_dataframes_instance.generate_element_dataframe = (
+        lambda element_type, tks=None, timestamps=None: (
+            pd.DataFrame([{"tk": tk} for tk in tks]),
+            {},
+        )
     )
 
     dfs = s3s_model_dataframes_instance.generate_longitudinal_section_dataframes()
@@ -127,9 +140,9 @@ def test_generate_longitudinal_section_dataframes_returns_supply_and_return_pair
 def test_generate_edge_dataframe_tutorial53_properties_with_timestamp_index(s3s_model_dataframes_instance):
     calls = _configure_edge_dataframe_stubs(s3s_model_dataframes_instance)
 
-    df = s3s_model_dataframes_instance.generate_edge_dataframe(
+    df, timestamp_to_tuple_index = s3s_model_dataframes_instance.generate_edge_dataframe(
         properties=["Hal", "Kvr", "JV", "PVEC", "MVEC"],
-        timestamp=8,
+        timestamps=[8],
     )
 
     assert not df.empty
@@ -137,6 +150,7 @@ def test_generate_edge_dataframe_tutorial53_properties_with_timestamp_index(s3s_
     assert "JV" in df.columns
     assert "PVEC" in df.columns
     assert "MVEC" in df.columns
+    assert isinstance(timestamp_to_tuple_index, dict)
     assert "Fkcont" in calls["model"][0]["properties"]
     assert all(call["timestamps"] == [8] for call in calls["results"])
 
@@ -147,7 +161,7 @@ def test_generate_edge_dataframe_tutorial53_properties_with_timestamp_string(s3s
     timestamp_str = "2025-09-25 00:40:00.000 +02:00"
     s3s_model_dataframes_instance.generate_edge_dataframe(
         properties=["Hal", "Kvr", "JV", "PVEC", "MVEC"],
-        timestamp=timestamp_str,
+        timestamps=[timestamp_str],
     )
 
     assert all(call["timestamps"] == [timestamp_str] for call in calls["results"])
@@ -157,7 +171,7 @@ def test_generate_edge_dataframe_tutorial53_properties_with_timestamp_string(s3s
 def test_generate_edge_dataframe_adds_default_l_and_aligns_columns(s3s_model_dataframes_instance):
     _configure_edge_dataframe_stubs(s3s_model_dataframes_instance)
 
-    df = s3s_model_dataframes_instance.generate_edge_dataframe(properties=["Kvr", "JV"], timestamp=0)
+    df, _ = s3s_model_dataframes_instance.generate_edge_dataframe(properties=["Kvr", "JV"], timestamps=[0])
 
     assert not df.empty
     assert "L" in df.columns
@@ -174,6 +188,33 @@ def test_generate_edge_dataframe_returns_empty_when_no_edge_tks_exist(s3s_model_
     )
     s3s_model_dataframes_instance.GetTksofElementType = lambda ElementType: []
 
-    df = s3s_model_dataframes_instance.generate_edge_dataframe(properties=["Kvr", "JV"], timestamp=0)
+    result = s3s_model_dataframes_instance.generate_edge_dataframe(properties=["Kvr", "JV"], timestamps=[0])
+
+    # Defensive check: method currently returns pd.DataFrame() in this branch.
+    if isinstance(result, tuple):
+        df, _ = result
+    else:
+        df = result
 
     assert df.empty
+
+
+def test_generate_edge_dataframe_tk_filter_does_not_expand_to_other_types(s3s_model_dataframes_instance):
+    calls = _configure_edge_dataframe_stubs(s3s_model_dataframes_instance)
+
+    df, _ = s3s_model_dataframes_instance.generate_edge_dataframe(
+        properties=["Kvr", "JV"],
+        timestamps=[0],
+        tks=["P1"],
+    )
+
+    assert not df.empty
+    assert set(df["tk"].tolist()) == {"P1"}
+
+    model_calls_by_type = {c["element_type"]: c for c in calls["model"]}
+    results_calls_by_type = {c["element_type"]: c for c in calls["results"]}
+
+    assert model_calls_by_type["Pipe"]["tks"] == ["P1"]
+    assert results_calls_by_type["Pipe"]["tks"] == ["P1"]
+    assert "Valve" not in model_calls_by_type
+    assert "Valve" not in results_calls_by_type

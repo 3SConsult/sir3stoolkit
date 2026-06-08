@@ -20,16 +20,19 @@ def test_sir3s_to_nx_graph_builds_nodes_and_edges(s3s_model_alternative_models_i
         ]
     )
 
-    s3s_model_alternative_models_instance.generate_edge_dataframe = lambda: pd.DataFrame(
-        [
-            {
-                "tk": "10",
-                "fkKI": 1,
-                "fkKK": 2,
-                "element type": "Pipe",
-                "geometry": "LINESTRING (0 0, 1 1)",
-            }
-        ]
+    s3s_model_alternative_models_instance.generate_edge_dataframe = lambda: (
+        pd.DataFrame(
+            [
+                {
+                    "tk": "10",
+                    "fkKI": 1,
+                    "fkKK": 2,
+                    "element type": "Pipe",
+                    "geometry": "LINESTRING (0 0, 1 1)",
+                }
+            ]
+        ),
+        {},
     )
 
     graph = s3s_model_alternative_models_instance.SIR_3S_to_nx_graph()
