@@ -17,6 +17,18 @@ There are two types of updates:
 
 2. **Core updates with DLL changes** - Requires manual replacement of ``Sir3S_Toolkit.dll`` in the SirGraf directory after pip upgrade (1). The newest version of the ``Sir3S_Toolkit.dll`` is shipped alongside the updated pure python code. Also available at `https://github.com/3SConsult/sir3stoolkit/tree/main/src/sir3stoolkit/lib <https://github.com/3SConsult/sir3stoolkit/tree/main/src/sir3stoolkit/lib>`_.
 
+   Recommended update steps on Windows for GitHub download:
+
+   a) If the DLL was downloaded from GitHub, remove Windows Mark-of-the-Web before copying:
+
+   .. code-block:: powershell
+
+      Unblock-File "C:\path\to\Sir3S_Toolkit.dll"
+
+   b) Replace ``Sir3S_Toolkit.dll`` in the SirGraf directory.
+
+   Note: If this step is skipped for internet-downloaded files, .NET may raise a ``FileLoadException``/``NotSupportedException`` when loading the assembly.
+
 The release notes indicate whether a version includes changes to the C# side and therefore if (2) is necessary. 
 
 SIR 3S: 90-15 Quebec
