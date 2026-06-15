@@ -147,7 +147,19 @@
 </pre></div>
 </div>
 </li>
-<li><p><strong>Core updates with DLL changes</strong> - Requires manual replacement of <code class="docutils literal notranslate"><span class="pre">Sir3S_Toolkit.dll</span></code> in the SirGraf directory after pip upgrade (1). The newest version of the <code class="docutils literal notranslate"><span class="pre">Sir3S_Toolkit.dll</span></code> is shipped alongside the updated pure python code. Also available at <a class="reference external" href="https://github.com/3SConsult/sir3stoolkit/tree/main/src/sir3stoolkit/lib">https://github.com/3SConsult/sir3stoolkit/tree/main/src/sir3stoolkit/lib</a>.</p></li>
+<li><p><strong>Core updates with DLL changes</strong> - Requires manual replacement of <code class="docutils literal notranslate"><span class="pre">Sir3S_Toolkit.dll</span></code> in the SirGraf directory after pip upgrade (1). The newest version of the <code class="docutils literal notranslate"><span class="pre">Sir3S_Toolkit.dll</span></code> is shipped alongside the updated pure python code. Also available at <a class="reference external" href="https://github.com/3SConsult/sir3stoolkit/tree/main/src/sir3stoolkit/lib">https://github.com/3SConsult/sir3stoolkit/tree/main/src/sir3stoolkit/lib</a>.</p>
+<p>Recommended update steps on Windows for GitHub download:</p>
+<ol class="loweralpha simple">
+<li><p>If the DLL was downloaded from GitHub, remove Windows Mark-of-the-Web before copying:</p></li>
+</ol>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="nb">Unblock-File</span> <span class="s2">&quot;C:\path\to\Sir3S_Toolkit.dll&quot;</span>
+</pre></div>
+</div>
+<ol class="loweralpha simple" start="2">
+<li><p>Replace <code class="docutils literal notranslate"><span class="pre">Sir3S_Toolkit.dll</span></code> in the SirGraf directory.</p></li>
+</ol>
+<p>Note: If this step is skipped for internet-downloaded files, .NET may raise a <code class="docutils literal notranslate"><span class="pre">FileLoadException</span></code>/<code class="docutils literal notranslate"><span class="pre">NotSupportedException</span></code> when loading the assembly.</p>
+</li>
 </ol>
 <p>The release notes indicate whether a version includes changes to the C# side and therefore if (2) is necessary.</p>
 <section id="sir-3s-90-15-quebec">
