@@ -32,6 +32,8 @@ Below an overview over all Toolkit Versions for SIR 3S 90-15 Quebec is given. It
 +----------------+---------------------------+-------------+--------------+
 | Toolkit Version| SIR 3S Version            | dll changed | Release Date |
 +================+===========================+=============+==============+
+| 90.15.23       | 90-15-00-24-Upd2          | Yes         | 2026-06-15   |
++----------------+---------------------------+-------------+--------------+
 | 90.15.22       | 90-15-00-24-Upd2          | No          | 2026-06-08   |
 +----------------+---------------------------+-------------+--------------+
 | 90.15.21       | 90-15-00-24-Upd2          | No          | 2026-06-01   |
@@ -77,6 +79,16 @@ Below the release history with all changes is given in detail.
 
 SIR 3S: 90-15-00-24-Upd2
 ^^^^^^^^^^^^^^^^^^^^^^^^
+
+Version 90.15.23
+""""""""""""""""
+
+Developed and tested using SIR 3S Version: 90-15-00-24-Upd2
+
+C# Changes
+~~~~~~~~~~
+
+- fixed https://github.com/3SConsult/sir3stoolkit/issues/11
 
 Version 90.15.22
 """"""""""""""""

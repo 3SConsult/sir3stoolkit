@@ -235,8 +235,5 @@ Utilities
    :members:
    :undoc-members:
    :show-inheritance:
-
-Object Types and Properties
----------------------------
-
+   
 .. include:: element_props_list/object_types_props_results_snippet_best_coverage.rst
