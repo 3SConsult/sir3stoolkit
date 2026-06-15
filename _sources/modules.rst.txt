@@ -239,4 +239,4 @@ Utilities
 Object Types and Properties
 ---------------------------
 
-.. include:: object_types_props_results_snippet.rst
+.. include:: element_props_list/object_types_props_results_snippet_best_coverage.rst
