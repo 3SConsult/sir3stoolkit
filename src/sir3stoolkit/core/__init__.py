@@ -2,5 +2,6 @@
 
 from . import wrapper
 
-__all__ = ['wrapper',
+__all__ = ['wrapper', 
+           'graph',
            ]
