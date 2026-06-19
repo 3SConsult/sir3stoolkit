@@ -530,7 +530,7 @@ class SIR3S_Model:
 
     def ExecCalculation(self, waitForSirCalcToExit: bool):
         """
-        Executes the model calculation. WARNING: Only use for stationary calculations. Can otherwise overwrite timestamp results with stationary result.
+        Executes the model calculation.
 
         :param waitForSirCalcToExit: Do you want to wait for SirCalc engine to exit before proceeding?
         :type waitForSirCalcToExit: bool
