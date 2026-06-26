@@ -1,12 +1,14 @@
 Object Types, Properties, and Result Value Types
 -----------------------------------------------
 
-.. note::
-   This section was generated from a live model by creating temporary elements where possible.
-   For object types that cannot be inserted directly, no value-type inference is shown.
+.. note:: Network Type: Gas
+   The below sections lists all table names from self.ObjectTypes_TableNames, along with their properties, result properties, and respective object type from self.ObjectTypes (needed for toolkit operations like self.InsertElement(), self.GetPropertiesOfElementType()). The value types of the properties are also listed.
+   Every property both model data and result will be returned as a python str. For result properties, this report intentionally lists names only.
 
-AGSN_HydraulicProfile
-^^^^^^^^^^^^^^^^^^^^^
+AGSN
+^^^^
+Object Type: ``AGSN_HydraulicProfile``
+
 
 Properties
 """"""""""
@@ -40,8 +42,10 @@ Result Properties
 
 No result properties found.
 
-AirVessel
-^^^^^^^^^
+WIND
+^^^^
+Object Type: ``AirVessel``
+
 
 Properties
 """"""""""
@@ -52,67 +56,67 @@ Properties
    * - Name
      - Value Type
    * - ``Name``
-     - ````
+     - ``Unknown``
    * - ``Beschreibung``
-     - ````
+     - ``Unknown``
    * - ``Indatab``
-     - ````
+     - ``Unknown``
    * - ``A``
-     - ````
+     - ``Unknown``
    * - ``Hb``
-     - ````
+     - ``Unknown``
    * - ``Vg0``
-     - ````
+     - ``Unknown``
    * - ``Pg0``
-     - ````
+     - ``Unknown``
    * - ``Tgas``
-     - ````
+     - ``Unknown``
    * - ``Fkatab``
-     - ````
+     - ``Unknown``
    * - ``Dn``
-     - ````
+     - ``Unknown``
    * - ``Zetapos``
-     - ````
+     - ``Unknown``
    * - ``Zetaneg``
-     - ````
+     - ``Unknown``
    * - ``Rgas``
-     - ````
+     - ``Unknown``
    * - ``Rpoly``
-     - ````
+     - ``Unknown``
    * - ``Ibla``
-     - ````
+     - ``Unknown``
    * - ``Knotk``
-     - ````
+     - ``Unknown``
    * - ``Zkor``
-     - ````
+     - ``Unknown``
    * - ``Fkfstf``
-     - ````
+     - ``Unknown``
    * - ``Fkcont``
-     - ````
+     - ``Unknown``
    * - ``Idreferenz``
-     - ````
+     - ``Unknown``
    * - ``Iplanung``
-     - ````
+     - ``Unknown``
    * - ``Tk``
-     - ````
+     - ``Unknown``
    * - ``Pk``
-     - ````
+     - ``Unknown``
    * - ``InVariant``
-     - ````
+     - ``Unknown``
    * - ``GeometriesDiffer``
-     - ````
+     - ``Unknown``
    * - ``SymbolGraf``
-     - ````
+     - ``Unknown``
    * - ``SymbolFactor``
-     - ````
+     - ``Unknown``
    * - ``Xkor``
-     - ````
+     - ``Unknown``
    * - ``Ykor``
-     - ````
+     - ``Unknown``
    * - ``Angle``
-     - ````
+     - ``Unknown``
    * - ``bz.Fk``
-     - ````
+     - ``Unknown``
 
 Result Properties
 """""""""""""""""
@@ -121,38 +125,25 @@ Result Properties
    :header-rows: 1
 
    * - Name
-     - Value Type
    * - ``HLUFT``
-     - ````
    * - ``IAKTIV``
-     - ````
    * - ``M``
-     - ````
    * - ``MAINELEMENT``
-     - ````
    * - ``PLUFT``
-     - ````
    * - ``QM``
-     - ````
    * - ``RHO``
-     - ````
    * - ``T``
-     - ````
    * - ``V``
-     - ````
    * - ``VOL``
-     - ````
    * - ``VOLDA``
-     - ````
    * - ``VOLGAS``
-     - ````
    * - ``WALTER``
-     - ````
    * - ``WST``
-     - ````
 
-Arrow
-^^^^^
+ARRW
+^^^^
+Object Type: ``Arrow``
+
 
 Properties
 """"""""""
@@ -194,8 +185,10 @@ Result Properties
 
 No result properties found.
 
-Atmosphere
-^^^^^^^^^^
+ATMO
+^^^^
+Object Type: ``Atmosphere``
+
 
 Properties
 """"""""""
@@ -227,8 +220,10 @@ Result Properties
 
 No result properties found.
 
-BlockConnectionNode
-^^^^^^^^^^^^^^^^^^^
+VKNO
+^^^^
+Object Type: ``BlockConnectionNode``
+
 
 Properties
 """"""""""
@@ -266,8 +261,10 @@ Result Properties
 
 No result properties found.
 
-CalcPari
-^^^^^^^^
+PARI
+^^^^
+Object Type: ``CalcPari``
+
 
 Properties
 """"""""""
@@ -311,8 +308,10 @@ Result Properties
 
 No result properties found.
 
-CharacteristicLossTable
-^^^^^^^^^^^^^^^^^^^^^^^
+ZEP2
+^^^^
+Object Type: ``CharacteristicLossTable``
+
 
 Properties
 """"""""""
@@ -346,8 +345,10 @@ Result Properties
 
 No result properties found.
 
-CharacteristicLossTable_Row
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ZEP2_ROWS
+^^^^^^^^^
+Object Type: ``CharacteristicLossTable_Row``
+
 
 Properties
 """"""""""
@@ -381,8 +382,10 @@ Result Properties
 
 No result properties found.
 
-Circle
-^^^^^^
+CIRC
+^^^^
+Object Type: ``Circle``
+
 
 Properties
 """"""""""
@@ -426,8 +429,10 @@ Result Properties
 
 No result properties found.
 
-Compressor
-^^^^^^^^^^
+KOMP
+^^^^
+Object Type: ``Compressor``
+
 
 Properties
 """"""""""
@@ -438,71 +443,71 @@ Properties
    * - Name
      - Value Type
    * - ``Name``
-     - ````
+     - ``string``
    * - ``Beschreibung``
-     - ````
+     - ``string``
    * - ``Fkkomk``
-     - ````
+     - ``string``
    * - ``Inda``
-     - ````
+     - ``int32``
    * - ``Etam``
-     - ````
+     - ``single``
    * - ``Tfahraus``
-     - ````
+     - ``single``
    * - ``Tfahrein``
-     - ````
+     - ``single``
    * - ``Dndt``
-     - ````
+     - ``single``
    * - ``Dqndt``
-     - ````
+     - ``single``
    * - ``Dpdt``
-     - ````
+     - ``single``
    * - ``Ipverh``
-     - ````
+     - ``int32``
    * - ``Pverhqn``
-     - ````
+     - ``single``
    * - ``Pverhdp``
-     - ````
+     - ``single``
    * - ``Etat``
-     - ````
+     - ``single``
    * - ``Ibrenng``
-     - ````
+     - ``int32``
    * - ``Iprst``
-     - ````
+     - ``int32``
    * - ``Fkantp``
-     - ````
+     - ``string``
    * - ``Fkcont``
-     - ````
+     - ``string``
    * - ``Idreferenz``
-     - ````
+     - ``string``
    * - ``Iplanung``
-     - ````
+     - ``int32``
    * - ``Tk``
-     - ````
+     - ``string``
    * - ``Pk``
-     - ````
+     - ``string``
    * - ``InVariant``
-     - ````
+     - ``boolean``
    * - ``Xkor``
-     - ````
+     - ``double``
    * - ``Ykor``
-     - ````
+     - ``double``
    * - ``ShowDescription``
-     - ````
+     - ``boolean``
    * - ``PositionOfDescription``
-     - ````
+     - ``int32``
    * - ``Angle``
-     - ````
+     - ``double``
    * - ``SymbolFactor``
-     - ````
+     - ``double``
    * - ``GeometriesDiffer``
-     - ````
+     - ``boolean``
    * - ``bz.Fk``
-     - ````
+     - ``string``
    * - ``bz.Inds``
-     - ````
+     - ``int32``
    * - ``bz.Sw``
-     - ````
+     - ``single``
 
 Result Properties
 """""""""""""""""
@@ -511,54 +516,33 @@ Result Properties
    :header-rows: 1
 
    * - Name
-     - Value Type
    * - ``DP``
-     - ````
    * - ``DT``
-     - ````
    * - ``EINAUS``
-     - ````
    * - ``ETAP``
-     - ````
    * - ``IAKTIV``
-     - ````
    * - ``IND``
-     - ````
    * - ``INDANT``
-     - ````
    * - ``M``
-     - ````
    * - ``MAINELEMENT``
-     - ````
    * - ``N``
-     - ````
    * - ``P``
-     - ````
    * - ``PE``
-     - ````
    * - ``PI``
-     - ````
    * - ``PK``
-     - ````
    * - ``PMAX``
-     - ````
    * - ``PRATIO``
-     - ````
    * - ``QN``
-     - ````
    * - ``QNBG``
-     - ````
    * - ``QNGES``
-     - ````
    * - ``TI``
-     - ````
    * - ``TK``
-     - ````
    * - ``YP``
-     - ````
 
-CompressorTable
-^^^^^^^^^^^^^^^
+KOMK
+^^^^
+Object Type: ``CompressorTable``
+
 
 Properties
 """"""""""
@@ -602,8 +586,10 @@ Result Properties
 
 No result properties found.
 
-CompressorTable_Row
-^^^^^^^^^^^^^^^^^^^
+KOMK_ROWS
+^^^^^^^^^
+Object Type: ``CompressorTable_Row``
+
 
 Properties
 """"""""""
@@ -637,8 +623,10 @@ Result Properties
 
 No result properties found.
 
-ControlEngineeringNexus
-^^^^^^^^^^^^^^^^^^^^^^^
+CRGL
+^^^^
+Object Type: ``ControlEngineeringNexus``
+
 
 Properties
 """"""""""
@@ -668,8 +656,10 @@ Result Properties
 
 No result properties found.
 
-ControlMode
-^^^^^^^^^^^
+RART
+^^^^
+Object Type: ``ControlMode``
+
 
 Properties
 """"""""""
@@ -723,18 +713,15 @@ Result Properties
    :header-rows: 1
 
    * - Name
-     - Value Type
    * - ``MAINELEMENT``
-     - ````
    * - ``RCPL``
-     - ````
    * - ``SWVT``
-     - ````
    * - ``W``
-     - ````
 
-ControlPointTable
-^^^^^^^^^^^^^^^^^
+RCPL
+^^^^
+Object Type: ``ControlPointTable``
+
 
 Properties
 """"""""""
@@ -766,20 +753,16 @@ Result Properties
    :header-rows: 1
 
    * - Name
-     - Value Type
    * - ``KNOT``
-     - ````
    * - ``MAINELEMENT``
-     - ````
    * - ``W``
-     - ````
    * - ``X``
-     - ````
    * - ``XD``
-     - ````
 
-ControlPointTable_Row
-^^^^^^^^^^^^^^^^^^^^^
+RCPL_ROWT
+^^^^^^^^^
+Object Type: ``ControlPointTable_Row``
+
 
 Properties
 """"""""""
@@ -813,18 +796,15 @@ Result Properties
    :header-rows: 1
 
    * - Name
-     - Value Type
    * - ``MAINELEMENT``
-     - ````
    * - ``W``
-     - ``single``
    * - ``X``
-     - ````
    * - ``XD``
-     - ````
 
-ControlValve
-^^^^^^^^^^^^
+REGV
+^^^^
+Object Type: ``ControlValve``
+
 
 Properties
 """"""""""
@@ -884,54 +864,33 @@ Result Properties
    :header-rows: 1
 
    * - Name
-     - Value Type
    * - ``DH``
-     - ````
    * - ``DP``
-     - ````
    * - ``DPH``
-     - ````
    * - ``DSI``
-     - ````
    * - ``DSK``
-     - ````
    * - ``FS``
-     - ````
    * - ``HR``
-     - ````
    * - ``IAKTIV``
-     - ````
    * - ``INDSTD``
-     - ````
    * - ``KV``
-     - ````
    * - ``M``
-     - ````
    * - ``MAINELEMENT``
-     - ````
    * - ``PHI``
-     - ````
    * - ``PR``
-     - ````
    * - ``Q2``
-     - ````
    * - ``QM``
-     - ````
    * - ``RART``
-     - ````
    * - ``RHO``
-     - ````
    * - ``V``
-     - ````
    * - ``W``
-     - ````
    * - ``X``
-     - ````
    * - ``ZETA``
-     - ````
 
-ControlVariableConverter
-^^^^^^^^^^^^^^^^^^^^^^^^
+RSTN
+^^^^
+Object Type: ``ControlVariableConverter``
+
 
 Properties
 """"""""""
@@ -1053,34 +1012,23 @@ Result Properties
    :header-rows: 1
 
    * - Name
-     - Value Type
    * - ``LFKT``
-     - ````
    * - ``MAINELEMENT``
-     - ````
    * - ``PHI1``
-     - ````
    * - ``PUMD``
-     - ````
    * - ``PVAR``
-     - ````
    * - ``QVAR``
-     - ````
    * - ``SWVT``
-     - ````
    * - ``TEVT``
-     - ````
    * - ``TRGCOUNT``
-     - ````
    * - ``WEVT``
-     - ````
    * - ``XE1``
-     - ````
    * - ``XE2``
-     - ````
 
-ControlVariableConverterRSTE
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RSTE
+^^^^
+Object Type: ``ControlVariableConverterRSTE``
+
 
 Properties
 """"""""""
@@ -1224,34 +1172,23 @@ Result Properties
    :header-rows: 1
 
    * - Name
-     - Value Type
    * - ``DYDT1``
-     - ````
    * - ``DYDT2``
-     - ````
    * - ``DYDT3``
-     - ````
    * - ``DYDT4``
-     - ````
    * - ``DYDT5``
-     - ````
    * - ``MAINELEMENT``
-     - ````
    * - ``XE1``
-     - ````
    * - ``YS1``
-     - ````
    * - ``YS2``
-     - ````
    * - ``YS3``
-     - ````
    * - ``YS4``
-     - ````
    * - ``YS5``
-     - ````
 
-CrossSectionTable
-^^^^^^^^^^^^^^^^^
+AVOS
+^^^^
+Object Type: ``CrossSectionTable``
+
 
 Properties
 """"""""""
@@ -1281,8 +1218,10 @@ Result Properties
 
 No result properties found.
 
-CrossSectionTable_Row
-^^^^^^^^^^^^^^^^^^^^^
+AVOS_ROWS
+^^^^^^^^^
+Object Type: ``CrossSectionTable_Row``
+
 
 Properties
 """"""""""
@@ -1310,8 +1249,10 @@ Result Properties
 
 No result properties found.
 
-DPGR_DPKT_DatapointDpgrConnection
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+DPGR_DPKT
+^^^^^^^^^
+Object Type: ``DPGR_DPKT_DatapointDpgrConnection``
+
 
 Properties
 """"""""""
@@ -1339,8 +1280,10 @@ Result Properties
 
 No result properties found.
 
-DPGR_DataPointGroup
-^^^^^^^^^^^^^^^^^^^
+DPGR
+^^^^
+Object Type: ``DPGR_DataPointGroup``
+
 
 Properties
 """"""""""
@@ -1384,8 +1327,10 @@ Result Properties
 
 No result properties found.
 
-DPKT_Datapoint
-^^^^^^^^^^^^^^
+DPKT
+^^^^
+Object Type: ``DPKT_Datapoint``
+
 
 Properties
 """"""""""
@@ -1487,8 +1432,10 @@ Result Properties
 
 No result properties found.
 
-DamageRatesTable
-^^^^^^^^^^^^^^^^
+SRAT
+^^^^
+Object Type: ``DamageRatesTable``
+
 
 Properties
 """"""""""
@@ -1518,8 +1465,10 @@ Result Properties
 
 No result properties found.
 
-DamageRatesTable_Row
-^^^^^^^^^^^^^^^^^^^^
+SRAT_ROWS
+^^^^^^^^^
+Object Type: ``DamageRatesTable_Row``
+
 
 Properties
 """"""""""
@@ -1549,8 +1498,10 @@ Result Properties
 
 No result properties found.
 
-DeadTimeElement
-^^^^^^^^^^^^^^^
+RTOT
+^^^^
+Object Type: ``DeadTimeElement``
+
 
 Properties
 """"""""""
@@ -1598,16 +1549,14 @@ Result Properties
    :header-rows: 1
 
    * - Name
-     - Value Type
    * - ``MAINELEMENT``
-     - ````
    * - ``XA``
-     - ````
    * - ``XE``
-     - ````
 
-Demand
-^^^^^^
+VERB
+^^^^
+Object Type: ``Demand``
+
 
 Properties
 """"""""""
@@ -1725,8 +1674,10 @@ Result Properties
 
 No result properties found.
 
-DifferentialRegulator
-^^^^^^^^^^^^^^^^^^^^^
+DPRG
+^^^^
+Object Type: ``DifferentialRegulator``
+
 
 Properties
 """"""""""
@@ -1737,55 +1688,55 @@ Properties
    * - Name
      - Value Type
    * - ``Name``
-     - ````
+     - ``Unknown``
    * - ``Beschreibung``
-     - ````
+     - ``Unknown``
    * - ``Dn``
-     - ````
+     - ``Unknown``
    * - ``Typ``
-     - ````
+     - ``Unknown``
    * - ``Fkkref1``
-     - ````
+     - ``Unknown``
    * - ``Fkkref2``
-     - ````
+     - ``Unknown``
    * - ``Fkzep1``
-     - ````
+     - ``Unknown``
    * - ``Ts``
-     - ````
+     - ``Unknown``
    * - ``Fkcont``
-     - ````
+     - ``Unknown``
    * - ``Idreferenz``
-     - ````
+     - ``Unknown``
    * - ``Iplanung``
-     - ````
+     - ``Unknown``
    * - ``Tk``
-     - ````
+     - ``Unknown``
    * - ``Pk``
-     - ````
+     - ``Unknown``
    * - ``InVariant``
-     - ````
+     - ``Unknown``
    * - ``Xkor``
-     - ````
+     - ``Unknown``
    * - ``Ykor``
-     - ````
+     - ``Unknown``
    * - ``ShowDescription``
-     - ````
+     - ``Unknown``
    * - ``PositionOfDescription``
-     - ````
+     - ``Unknown``
    * - ``Angle``
-     - ````
+     - ``Unknown``
    * - ``SymbolFactor``
-     - ````
+     - ``Unknown``
    * - ``GeometriesDiffer``
-     - ````
+     - ``Unknown``
    * - ``bz.Fk``
-     - ````
+     - ``Unknown``
    * - ``bz.Fkswvt``
-     - ````
+     - ``Unknown``
    * - ``bz.Dphsoll``
-     - ````
+     - ``Unknown``
    * - ``bz.Indsoll``
-     - ````
+     - ``Unknown``
 
 Result Properties
 """""""""""""""""
@@ -1794,50 +1745,31 @@ Result Properties
    :header-rows: 1
 
    * - Name
-     - Value Type
    * - ``DH``
-     - ````
    * - ``DP``
-     - ````
    * - ``DPH``
-     - ````
    * - ``DPHSOLL``
-     - ````
    * - ``DPSOLL``
-     - ````
    * - ``DSI``
-     - ````
    * - ``DSK``
-     - ````
    * - ``FS``
-     - ````
    * - ``HR``
-     - ````
    * - ``IAKTIV``
-     - ````
    * - ``KV``
-     - ````
    * - ``M``
-     - ````
    * - ``MAINELEMENT``
-     - ````
    * - ``PHI``
-     - ````
    * - ``PR``
-     - ````
    * - ``QM``
-     - ````
    * - ``RHO``
-     - ````
    * - ``SWVT``
-     - ````
    * - ``V``
-     - ````
    * - ``ZETA``
-     - ````
 
-DirectionalArrow
-^^^^^^^^^^^^^^^^
+RPFL
+^^^^
+Object Type: ``DirectionalArrow``
+
 
 Properties
 """"""""""
@@ -1889,8 +1821,10 @@ Result Properties
 
 No result properties found.
 
-DistrictHeatingConsumer
-^^^^^^^^^^^^^^^^^^^^^^^
+FWVB
+^^^^
+Object Type: ``DistrictHeatingConsumer``
+
 
 Properties
 """"""""""
@@ -1901,115 +1835,115 @@ Properties
    * - Name
      - Value Type
    * - ``Name``
-     - ````
+     - ``Unknown``
    * - ``Beschreibung``
-     - ````
+     - ``Unknown``
    * - ``Ind0``
-     - ````
+     - ``Unknown``
    * - ``W0``
-     - ````
+     - ``Unknown``
    * - ``Qm0``
-     - ````
+     - ``Unknown``
    * - ``Tvl0``
-     - ````
+     - ``Unknown``
    * - ``Trs0``
-     - ````
+     - ``Unknown``
    * - ``Lfk``
-     - ````
+     - ``Unknown``
    * - ``Rho0``
-     - ````
+     - ``Unknown``
    * - ``Dtmin``
-     - ````
+     - ``Unknown``
    * - ``Indtr``
-     - ````
+     - ``Unknown``
    * - ``Trsk``
-     - ````
+     - ``Unknown``
    * - ``Fktrft``
-     - ````
+     - ``Unknown``
    * - ``A``
-     - ````
+     - ``Unknown``
    * - ``B``
-     - ````
+     - ``Unknown``
    * - ``C``
-     - ````
+     - ``Unknown``
    * - ``Vtyp``
-     - ````
+     - ``Unknown``
    * - ``V0``
-     - ````
+     - ``Unknown``
    * - ``P1soll``
-     - ````
+     - ``Unknown``
    * - ``Dpvlmin``
-     - ````
+     - ``Unknown``
    * - ``Fkzep1vl``
-     - ````
+     - ``Unknown``
    * - ``Tsvl``
-     - ````
+     - ``Unknown``
    * - ``Zevk``
-     - ````
+     - ``Unknown``
    * - ``Dphaus``
-     - ````
+     - ``Unknown``
    * - ``Dprlmin``
-     - ````
+     - ``Unknown``
    * - ``Fkzep1rl``
-     - ````
+     - ``Unknown``
    * - ``Tsrl``
-     - ````
+     - ``Unknown``
    * - ``Imbg``
-     - ````
+     - ``Unknown``
    * - ``Irfv``
-     - ````
+     - ``Unknown``
    * - ``Fkcont``
-     - ````
+     - ``Unknown``
    * - ``Idreferenz``
-     - ````
+     - ``Unknown``
    * - ``Iplanung``
-     - ````
+     - ``Unknown``
    * - ``CPM``
-     - ````
+     - ``Unknown``
    * - ``NumberOfVERB``
-     - ````
+     - ``Unknown``
    * - ``IndtrKlartext``
-     - ````
+     - ``Unknown``
    * - ``M0Estimated``
-     - ````
+     - ``Unknown``
    * - ``W0Estimated``
-     - ````
+     - ``Unknown``
    * - ``Tk``
-     - ````
+     - ``Unknown``
    * - ``Pk``
-     - ````
+     - ``Unknown``
    * - ``InVariant``
-     - ````
+     - ``Unknown``
    * - ``Xkor``
-     - ````
+     - ``Unknown``
    * - ``Ykor``
-     - ````
+     - ``Unknown``
    * - ``ShowDescription``
-     - ````
+     - ``Unknown``
    * - ``PositionOfDescription``
-     - ````
+     - ``Unknown``
    * - ``Angle``
-     - ````
+     - ``Unknown``
    * - ``SymbolFactor``
-     - ````
+     - ``Unknown``
    * - ``GeometriesDiffer``
-     - ````
+     - ``Unknown``
    * - ``bz.Fk``
-     - ````
+     - ``Unknown``
    * - ``bz.Indlast``
-     - ````
+     - ``Unknown``
    * - ``bz.Indlfkt2``
-     - ````
+     - ``Unknown``
    * - ``bz.Fklfkt``
-     - ````
+     - ``Unknown``
    * - ``bz.Fklfkt2``
-     - ````
+     - ``Unknown``
    * - ``bz.Fkqvar``
-     - ````
+     - ``Unknown``
    * - ``bz.Fktevt``
-     - ````
+     - ``Unknown``
    * - ``bz.IndlastKlartext``
-     - ````
+     - ``Unknown``
 
 Result Properties
 """""""""""""""""
@@ -2018,82 +1952,47 @@ Result Properties
    :header-rows: 1
 
    * - Name
-     - Value Type
    * - ``DH``
-     - ````
    * - ``DP``
-     - ````
    * - ``DPH``
-     - ````
    * - ``IAKTIV``
-     - ````
    * - ``INDUV``
-     - ````
    * - ``LFH``
-     - ````
    * - ``LFKT``
-     - ````
    * - ``LFT``
-     - ````
    * - ``M``
-     - ````
    * - ``MAINELEMENT``
-     - ````
    * - ``MHYUV``
-     - ````
    * - ``MSOLL``
-     - ````
    * - ``MTHUV``
-     - ````
    * - ``P1``
-     - ````
    * - ``P2``
-     - ````
    * - ``P3``
-     - ````
    * - ``PH1``
-     - ````
    * - ``PH2``
-     - ````
    * - ``PH3``
-     - ````
    * - ``PHIRL``
-     - ````
    * - ``PHIVL``
-     - ````
    * - ``QM``
-     - ````
    * - ``QM13``
-     - ````
    * - ``QM31``
-     - ````
    * - ``QMI``
-     - ````
    * - ``QMK``
-     - ````
    * - ``QVAR``
-     - ````
    * - ``RHOI``
-     - ````
    * - ``RHOK``
-     - ````
    * - ``TI``
-     - ````
    * - ``TK``
-     - ````
    * - ``TVMIN``
-     - ````
    * - ``W``
-     - ````
    * - ``WHYUV``
-     - ````
    * - ``WSOLL``
-     - ````
    * - ``WTHUV``
-     - ````
 
-DistrictHeatingFeeder
-^^^^^^^^^^^^^^^^^^^^^
+FWES
+^^^^
+Object Type: ``DistrictHeatingFeeder``
+
 
 Properties
 """"""""""
@@ -2104,61 +2003,61 @@ Properties
    * - Name
      - Value Type
    * - ``Name``
-     - ````
+     - ``Unknown``
    * - ``Beschreibung``
-     - ````
+     - ``Unknown``
    * - ``Dn``
-     - ````
+     - ``Unknown``
    * - ``Zeta``
-     - ````
+     - ``Unknown``
    * - ``Taus``
-     - ````
+     - ``Unknown``
    * - ``Irueck``
-     - ````
+     - ``Unknown``
    * - ``Fkcont``
-     - ````
+     - ``Unknown``
    * - ``Idreferenz``
-     - ````
+     - ``Unknown``
    * - ``Iplanung``
-     - ````
+     - ``Unknown``
    * - ``Tk``
-     - ````
+     - ``Unknown``
    * - ``Pk``
-     - ````
+     - ``Unknown``
    * - ``InVariant``
-     - ````
+     - ``Unknown``
    * - ``Xkor``
-     - ````
+     - ``Unknown``
    * - ``Ykor``
-     - ````
+     - ``Unknown``
    * - ``ShowDescription``
-     - ````
+     - ``Unknown``
    * - ``PositionOfDescription``
-     - ````
+     - ``Unknown``
    * - ``Angle``
-     - ````
+     - ``Unknown``
    * - ``SymbolFactor``
-     - ````
+     - ``Unknown``
    * - ``GeometriesDiffer``
-     - ````
+     - ``Unknown``
    * - ``bz.Fk``
-     - ````
+     - ``Unknown``
    * - ``bz.Ihytyp``
-     - ````
+     - ``Unknown``
    * - ``bz.Ithtyp``
-     - ````
+     - ``Unknown``
    * - ``bz.Tkon``
-     - ````
+     - ``Unknown``
    * - ``bz.Fktevt``
-     - ````
+     - ``Unknown``
    * - ``bz.Wkon``
-     - ````
+     - ``Unknown``
    * - ``bz.Fkwevt``
-     - ````
+     - ``Unknown``
    * - ``bz.IhytypKlartext``
-     - ````
+     - ``Unknown``
    * - ``bz.IthtypKlartext``
-     - ````
+     - ``Unknown``
 
 Result Properties
 """""""""""""""""
@@ -2167,50 +2066,31 @@ Result Properties
    :header-rows: 1
 
    * - Name
-     - Value Type
    * - ``DH``
-     - ````
    * - ``DP``
-     - ````
    * - ``DPH``
-     - ````
    * - ``IAKTIV``
-     - ````
    * - ``IHYTYP``
-     - ````
    * - ``ITHTYP``
-     - ````
    * - ``M``
-     - ````
    * - ``MAINELEMENT``
-     - ````
    * - ``QM``
-     - ````
    * - ``RHOI``
-     - ````
    * - ``RHOK``
-     - ````
    * - ``TEVT``
-     - ````
    * - ``TI``
-     - ````
    * - ``TK``
-     - ````
    * - ``TKON``
-     - ````
    * - ``V``
-     - ````
    * - ``W``
-     - ````
    * - ``W0``
-     - ````
    * - ``WEVT``
-     - ````
    * - ``WSOLL``
-     - ````
 
-Divider
-^^^^^^^
+RDIV
+^^^^
+Object Type: ``Divider``
+
 
 Properties
 """"""""""
@@ -2262,18 +2142,15 @@ Result Properties
    :header-rows: 1
 
    * - Name
-     - Value Type
    * - ``MAINELEMENT``
-     - ````
    * - ``XA``
-     - ````
    * - ``XE1``
-     - ````
    * - ``XE2``
-     - ````
 
-DriveEfficiencyTable
-^^^^^^^^^^^^^^^^^^^^
+ETAM
+^^^^
+Object Type: ``DriveEfficiencyTable``
+
 
 Properties
 """"""""""
@@ -2303,8 +2180,10 @@ Result Properties
 
 No result properties found.
 
-DriveEfficiencyTable_Row
-^^^^^^^^^^^^^^^^^^^^^^^^
+ETAM_ROWS
+^^^^^^^^^
+Object Type: ``DriveEfficiencyTable_Row``
+
 
 Properties
 """"""""""
@@ -2332,8 +2211,10 @@ Result Properties
 
 No result properties found.
 
-DrivePowerTable
-^^^^^^^^^^^^^^^
+ANTP
+^^^^
+Object Type: ``DrivePowerTable``
+
 
 Properties
 """"""""""
@@ -2363,8 +2244,10 @@ Result Properties
 
 No result properties found.
 
-DrivePowerTable_Row
-^^^^^^^^^^^^^^^^^^^
+ANTP_ROWS
+^^^^^^^^^
+Object Type: ``DrivePowerTable_Row``
+
 
 Properties
 """"""""""
@@ -2392,8 +2275,10 @@ Result Properties
 
 No result properties found.
 
-EBES_FeederGroups
-^^^^^^^^^^^^^^^^^
+EBES
+^^^^
+Object Type: ``EBES_FeederGroups``
+
 
 Properties
 """"""""""
@@ -2431,8 +2316,10 @@ Result Properties
 
 No result properties found.
 
-EfficiencyConverterTable
-^^^^^^^^^^^^^^^^^^^^^^^^
+ETAU
+^^^^
+Object Type: ``EfficiencyConverterTable``
+
 
 Properties
 """"""""""
@@ -2462,8 +2349,10 @@ Result Properties
 
 No result properties found.
 
-EfficiencyConverterTable_Row
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ETAU_ROWS
+^^^^^^^^^
+Object Type: ``EfficiencyConverterTable_Row``
+
 
 Properties
 """"""""""
@@ -2491,8 +2380,10 @@ Result Properties
 
 No result properties found.
 
-ElementQuery
+ELEMENTQUERY
 ^^^^^^^^^^^^
+Object Type: ``ElementQuery``
+
 
 Properties
 """"""""""
@@ -2522,8 +2413,10 @@ Result Properties
 
 No result properties found.
 
-EnergyRecoveryTable
-^^^^^^^^^^^^^^^^^^^
+ETAR
+^^^^
+Object Type: ``EnergyRecoveryTable``
+
 
 Properties
 """"""""""
@@ -2553,8 +2446,10 @@ Result Properties
 
 No result properties found.
 
-EnergyRecoveryTable_Row
-^^^^^^^^^^^^^^^^^^^^^^^
+ETAR_ROWS
+^^^^^^^^^
+Object Type: ``EnergyRecoveryTable_Row``
+
 
 Properties
 """"""""""
@@ -2582,8 +2477,10 @@ Result Properties
 
 No result properties found.
 
-EnvironmentTemp
-^^^^^^^^^^^^^^^
+UTMP
+^^^^
+Object Type: ``EnvironmentTemp``
+
 
 Properties
 """"""""""
@@ -2619,8 +2516,10 @@ Result Properties
 
 No result properties found.
 
-FWBZ_DistrictHeatingReferenceValues
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FWBZ
+^^^^
+Object Type: ``FWBZ_DistrictHeatingReferenceValues``
+
 
 Properties
 """"""""""
@@ -2660,8 +2559,10 @@ Result Properties
 
 No result properties found.
 
-FlapValve
-^^^^^^^^^
+KLAP
+^^^^
+Object Type: ``FlapValve``
+
 
 Properties
 """"""""""
@@ -2672,49 +2573,49 @@ Properties
    * - Name
      - Value Type
    * - ``Name``
-     - ````
+     - ``Unknown``
    * - ``Beschreibung``
-     - ````
+     - ``Unknown``
    * - ``Dn``
-     - ````
+     - ``Unknown``
    * - ``Fkphiv``
-     - ````
+     - ``Unknown``
    * - ``Fkzep2``
-     - ````
+     - ``Unknown``
    * - ``Ts``
-     - ````
+     - ``Unknown``
    * - ``Phie``
-     - ````
+     - ``Unknown``
    * - ``Te``
-     - ````
+     - ``Unknown``
    * - ``Fkcont``
-     - ````
+     - ``Unknown``
    * - ``Idreferenz``
-     - ````
+     - ``Unknown``
    * - ``Iplanung``
-     - ````
+     - ``Unknown``
    * - ``Tk``
-     - ````
+     - ``Unknown``
    * - ``Pk``
-     - ````
+     - ``Unknown``
    * - ``InVariant``
-     - ````
+     - ``Unknown``
    * - ``Xkor``
-     - ````
+     - ``Unknown``
    * - ``Ykor``
-     - ````
+     - ``Unknown``
    * - ``ShowDescription``
-     - ````
+     - ``Unknown``
    * - ``PositionOfDescription``
-     - ````
+     - ``Unknown``
    * - ``Angle``
-     - ````
+     - ``Unknown``
    * - ``SymbolFactor``
-     - ````
+     - ``Unknown``
    * - ``GeometriesDiffer``
-     - ````
+     - ``Unknown``
    * - ``bz.Fk``
-     - ````
+     - ``Unknown``
 
 Result Properties
 """""""""""""""""
@@ -2723,44 +2624,28 @@ Result Properties
    :header-rows: 1
 
    * - Name
-     - Value Type
    * - ``DH``
-     - ````
    * - ``DP``
-     - ````
    * - ``DSI``
-     - ````
    * - ``DSK``
-     - ````
    * - ``FS``
-     - ````
    * - ``HR``
-     - ````
    * - ``IAKTIV``
-     - ````
    * - ``KV``
-     - ````
    * - ``M``
-     - ````
    * - ``MAINELEMENT``
-     - ````
    * - ``PHI``
-     - ````
    * - ``PHR``
-     - ````
    * - ``PR``
-     - ````
    * - ``QM``
-     - ````
    * - ``RHO``
-     - ````
    * - ``V``
-     - ````
    * - ``ZETA``
-     - ````
 
-FlowControlUnit
-^^^^^^^^^^^^^^^
+MREG
+^^^^
+Object Type: ``FlowControlUnit``
+
 
 Properties
 """"""""""
@@ -2771,57 +2656,57 @@ Properties
    * - Name
      - Value Type
    * - ``Name``
-     - ````
+     - ``Unknown``
    * - ``Beschreibung``
-     - ````
+     - ``Unknown``
    * - ``Dn``
-     - ````
+     - ``Unknown``
    * - ``Fkzep1``
-     - ````
+     - ``Unknown``
    * - ``Tsig``
-     - ````
+     - ``Unknown``
    * - ``Dqdt``
-     - ````
+     - ``Unknown``
    * - ``Tvoll``
-     - ````
+     - ``Unknown``
    * - ``Fkcont``
-     - ````
+     - ``Unknown``
    * - ``Idreferenz``
-     - ````
+     - ``Unknown``
    * - ``Iplanung``
-     - ````
+     - ``Unknown``
    * - ``Tk``
-     - ````
+     - ``Unknown``
    * - ``Pk``
-     - ````
+     - ``Unknown``
    * - ``InVariant``
-     - ````
+     - ``Unknown``
    * - ``Xkor``
-     - ````
+     - ``Unknown``
    * - ``Ykor``
-     - ````
+     - ``Unknown``
    * - ``ShowDescription``
-     - ````
+     - ``Unknown``
    * - ``PositionOfDescription``
-     - ````
+     - ``Unknown``
    * - ``Angle``
-     - ````
+     - ``Unknown``
    * - ``SymbolFactor``
-     - ````
+     - ``Unknown``
    * - ``GeometriesDiffer``
-     - ````
+     - ``Unknown``
    * - ``bz.Fk``
-     - ````
+     - ``Unknown``
    * - ``bz.Indsoll``
-     - ````
+     - ``Unknown``
    * - ``bz.Qmsoll``
-     - ````
+     - ``Unknown``
    * - ``bz.Fkswvtqm``
-     - ````
+     - ``Unknown``
    * - ``bz.Phisoll``
-     - ````
+     - ``Unknown``
    * - ``bz.Fkswvtphi``
-     - ````
+     - ``Unknown``
 
 Result Properties
 """""""""""""""""
@@ -2830,56 +2715,34 @@ Result Properties
    :header-rows: 1
 
    * - Name
-     - Value Type
    * - ``DH``
-     - ````
    * - ``DP``
-     - ````
    * - ``DPH``
-     - ````
    * - ``DSI``
-     - ````
    * - ``DSK``
-     - ````
    * - ``FS``
-     - ````
    * - ``HR``
-     - ````
    * - ``IAKTIV``
-     - ````
    * - ``IND``
-     - ````
    * - ``KV``
-     - ````
    * - ``M``
-     - ````
    * - ``MAINELEMENT``
-     - ````
    * - ``PHI``
-     - ````
    * - ``PHISOLL``
-     - ````
    * - ``PR``
-     - ````
    * - ``Q``
-     - ````
    * - ``QM``
-     - ````
    * - ``QMSOLL``
-     - ````
    * - ``RHO``
-     - ````
    * - ``SWVTPHI``
-     - ````
    * - ``SWVTQM``
-     - ````
    * - ``V``
-     - ````
    * - ``ZETA``
-     - ````
 
-FluidQualityParamSet
-^^^^^^^^^^^^^^^^^^^^
+FQPS
+^^^^
+Object Type: ``FluidQualityParamSet``
+
 
 Properties
 """"""""""
@@ -2977,34 +2840,23 @@ Result Properties
    :header-rows: 1
 
    * - Name
-     - Value Type
    * - ``MAINELEMENT``
-     - ````
    * - ``SWVTCHLORID``
-     - ````
    * - ``SWVTEISENFILT``
-     - ````
    * - ``SWVTEISENGES``
-     - ````
    * - ``SWVTHI``
-     - ````
    * - ``SWVTHS``
-     - ````
    * - ``SWVTLEITFAEH``
-     - ````
    * - ``SWVTMN``
-     - ````
    * - ``SWVTPHWERT``
-     - ````
    * - ``SWVTRHON``
-     - ````
    * - ``SWVTSULFAT``
-     - ````
    * - ``SWVTTEMP``
-     - ````
 
-FluidQualityParamSet_OS
-^^^^^^^^^^^^^^^^^^^^^^^
+FQPS_BZ
+^^^^^^^
+Object Type: ``FluidQualityParamSet_OS``
+
 
 Properties
 """"""""""
@@ -3050,8 +2902,10 @@ Result Properties
 
 No result properties found.
 
-FluidThermalPropertyGroup
-^^^^^^^^^^^^^^^^^^^^^^^^^
+FSTF
+^^^^
+Object Type: ``FluidThermalPropertyGroup``
+
 
 Properties
 """"""""""
@@ -3111,8 +2965,10 @@ Result Properties
 
 No result properties found.
 
-FreeDuct
-^^^^^^^^
+FKNL
+^^^^
+Object Type: ``FreeDuct``
+
 
 Properties
 """"""""""
@@ -3180,22 +3036,17 @@ Result Properties
    :header-rows: 1
 
    * - Name
-     - Value Type
    * - ``MAINELEMENT``
-     - ````
    * - ``OA``
-     - ````
    * - ``OW``
-     - ````
    * - ``UA``
-     - ````
    * - ``UW``
-     - ````
    * - ``WERT``
-     - ````
 
-FunctionGenerator
-^^^^^^^^^^^^^^^^^
+RFKT
+^^^^
+Object Type: ``FunctionGenerator``
+
 
 Properties
 """"""""""
@@ -3247,18 +3098,15 @@ Result Properties
    :header-rows: 1
 
    * - Name
-     - Value Type
    * - ``LFKT``
-     - ````
    * - ``MAINELEMENT``
-     - ````
    * - ``XA``
-     - ````
    * - ``XE``
-     - ````
 
-FunctionTable
-^^^^^^^^^^^^^
+TFKT
+^^^^
+Object Type: ``FunctionTable``
+
 
 Properties
 """"""""""
@@ -3288,8 +3136,10 @@ Result Properties
 
 No result properties found.
 
-FunctionTable_Row
-^^^^^^^^^^^^^^^^^
+TFKT_ROWS
+^^^^^^^^^
+Object Type: ``FunctionTable_Row``
+
 
 Properties
 """"""""""
@@ -3317,8 +3167,10 @@ Result Properties
 
 No result properties found.
 
-GasComponent
-^^^^^^^^^^^^
+GKMP
+^^^^
+Object Type: ``GasComponent``
+
 
 Properties
 """"""""""
@@ -3386,8 +3238,10 @@ Result Properties
 
 No result properties found.
 
-GasMixture
-^^^^^^^^^^
+GMIX
+^^^^
+Object Type: ``GasMixture``
+
 
 Properties
 """"""""""
@@ -3505,8 +3359,10 @@ Result Properties
 
 No result properties found.
 
-GeneralSection
-^^^^^^^^^^^^^^
+ALLG
+^^^^
+Object Type: ``GeneralSection``
+
 
 Properties
 """"""""""
@@ -3578,96 +3434,54 @@ Result Properties
    :header-rows: 1
 
    * - Name
-     - Value Type
    * - ``CPUTIME``
-     - ````
    * - ``CVERSO``
-     - ````
    * - ``EXSTAT``
-     - ````
    * - ``FWVB_DPHMIN``
-     - ````
    * - ``FWVB_TVLMIN``
-     - ````
    * - ``INTERAKTRG``
-     - ````
    * - ``INTERAKTTH``
-     - ````
    * - ``ITERHY``
-     - ````
    * - ``ITERTH``
-     - ````
    * - ``JWARN``
-     - ````
    * - ``KNOT_PHMAX``
-     - ````
    * - ``KNOT_PHMAX_R``
-     - ````
    * - ``KNOT_PHMAX_U``
-     - ````
    * - ``KNOT_PHMAX_V``
-     - ````
    * - ``KNOT_PHMIN``
-     - ````
    * - ``KNOT_PHMIN_R``
-     - ````
    * - ``KNOT_PHMIN_U``
-     - ````
    * - ``KNOT_PHMIN_V``
-     - ````
    * - ``LFQSV``
-     - ````
    * - ``LINEPACKGEOM``
-     - ````
    * - ``LINEPACKGES``
-     - ````
    * - ``LINEPACKRATE``
-     - ````
    * - ``MAINELEMENT``
-     - ````
    * - ``MFVHYUV``
-     - ````
    * - ``MFVTHUV``
-     - ````
    * - ``MKNUV``
-     - ````
    * - ``NETZABN``
-     - ````
    * - ``NETZABNEXITS``
-     - ````
    * - ``NETZBEZ``
-     - ````
    * - ``NFEHL``
-     - ````
    * - ``NFVHYUV``
-     - ````
    * - ``NFVTHUV``
-     - ````
    * - ``NKNUV``
-     - ````
    * - ``NMELD``
-     - ````
    * - ``NPGREST``
-     - ````
    * - ``NWARN``
-     - ````
    * - ``PAV``
-     - ````
    * - ``RHOAV``
-     - ````
    * - ``SNAPSHOTTYPE``
-     - ````
    * - ``TAV``
-     - ````
    * - ``TIMESTAMP``
-     - ````
    * - ``TVMINMAX``
-     - ````
    * - ``USRTIME``
-     - ````
 
-Gravitation
-^^^^^^^^^^^
+GRAV
+^^^^
+Object Type: ``Gravitation``
+
 
 Properties
 """"""""""
@@ -3697,8 +3511,10 @@ Result Properties
 
 No result properties found.
 
-HeatExchanger
-^^^^^^^^^^^^^
+FWWU
+^^^^
+Object Type: ``HeatExchanger``
+
 
 Properties
 """"""""""
@@ -3709,91 +3525,91 @@ Properties
    * - Name
      - Value Type
    * - ``Name``
-     - ````
+     - ``Unknown``
    * - ``Beschreibung``
-     - ````
+     - ``Unknown``
    * - ``W0``
-     - ````
+     - ``Unknown``
    * - ``T1ein0``
-     - ````
+     - ``Unknown``
    * - ``T1aus0``
-     - ````
+     - ``Unknown``
    * - ``T2ein0``
-     - ````
+     - ``Unknown``
    * - ``T2aus0``
-     - ````
+     - ``Unknown``
    * - ``Dn``
-     - ````
+     - ``Unknown``
    * - ``Dp10min``
-     - ````
+     - ``Unknown``
    * - ``Inddprl``
-     - ````
+     - ``Unknown``
    * - ``Fkzep1rl``
-     - ````
+     - ``Unknown``
    * - ``Tsrl``
-     - ````
+     - ``Unknown``
    * - ``Dp20``
-     - ````
+     - ``Unknown``
    * - ``Re0``
-     - ````
+     - ``Unknown``
    * - ``Expert``
-     - ````
+     - ``Unknown``
    * - ``A``
-     - ````
+     - ``Unknown``
    * - ``K``
-     - ````
+     - ``Unknown``
    * - ``Alpha1``
-     - ````
+     - ``Unknown``
    * - ``Alpha2``
-     - ````
+     - ``Unknown``
    * - ``L1``
-     - ````
+     - ``Unknown``
    * - ``L2``
-     - ````
+     - ``Unknown``
    * - ``Indwue``
-     - ````
+     - ``Unknown``
    * - ``Kstrant``
-     - ````
+     - ``Unknown``
    * - ``Fkfwvb``
-     - ````
+     - ``Unknown``
    * - ``Fkfwes``
-     - ````
+     - ``Unknown``
    * - ``Fkcont``
-     - ````
+     - ``Unknown``
    * - ``Idreferenz``
-     - ````
+     - ``Unknown``
    * - ``Iplanung``
-     - ````
+     - ``Unknown``
    * - ``Tk``
-     - ````
+     - ``Unknown``
    * - ``Pk``
-     - ````
+     - ``Unknown``
    * - ``InVariant``
-     - ````
+     - ``Unknown``
    * - ``Xkor``
-     - ````
+     - ``Unknown``
    * - ``Ykor``
-     - ````
+     - ``Unknown``
    * - ``ShowDescription``
-     - ````
+     - ``Unknown``
    * - ``PositionOfDescription``
-     - ````
+     - ``Unknown``
    * - ``Angle``
-     - ````
+     - ``Unknown``
    * - ``SymbolFactor``
-     - ````
+     - ``Unknown``
    * - ``GeometriesDiffer``
-     - ````
+     - ``Unknown``
    * - ``bz.Fk``
-     - ````
+     - ``Unknown``
    * - ``bz.Einaus``
-     - ````
+     - ``Unknown``
    * - ``bz.Ithtyp``
-     - ````
+     - ``Unknown``
    * - ``bz.T2aus``
-     - ````
+     - ``Unknown``
    * - ``bz.Fktevt``
-     - ````
+     - ``Unknown``
 
 Result Properties
 """""""""""""""""
@@ -3802,62 +3618,37 @@ Result Properties
    :header-rows: 1
 
    * - Name
-     - Value Type
    * - ``AKTIV``
-     - ````
    * - ``C1``
-     - ````
    * - ``C2``
-     - ````
    * - ``EPS1``
-     - ````
    * - ``EPS2``
-     - ````
    * - ``IAKTIV``
-     - ````
    * - ``INDUV``
-     - ````
    * - ``KA``
-     - ````
    * - ``MAINELEMENT``
-     - ````
    * - ``NTU1``
-     - ````
    * - ``NTU2``
-     - ````
    * - ``NU1``
-     - ````
    * - ``NU2``
-     - ````
    * - ``PR1``
-     - ````
    * - ``PR2``
-     - ````
    * - ``Q``
-     - ````
    * - ``RE1``
-     - ````
    * - ``RE2``
-     - ````
    * - ``T1AUS``
-     - ````
    * - ``T1EIN``
-     - ````
    * - ``T2AUS``
-     - ````
    * - ``T2EIN``
-     - ````
    * - ``THETA``
-     - ````
    * - ``TMLOG``
-     - ````
    * - ``W1``
-     - ````
    * - ``W2``
-     - ````
 
-HeatFeederConsumerStation
-^^^^^^^^^^^^^^^^^^^^^^^^^
+FWEA
+^^^^
+Object Type: ``HeatFeederConsumerStation``
+
 
 Properties
 """"""""""
@@ -3868,231 +3659,231 @@ Properties
    * - Name
      - Value Type
    * - ``Name``
-     - ````
+     - ``Unknown``
    * - ``Beschreibung``
-     - ````
+     - ``Unknown``
    * - ``Fkfwes``
-     - ````
+     - ``Unknown``
    * - ``Fkfwvb``
-     - ````
+     - ``Unknown``
    * - ``Fkpreg``
-     - ````
+     - ``Unknown``
    * - ``Fkpump``
-     - ````
+     - ``Unknown``
    * - ``Fkklap``
-     - ````
+     - ``Unknown``
    * - ``Indusing``
-     - ````
+     - ``Unknown``
    * - ``Dn``
-     - ````
+     - ``Unknown``
    * - ``Dpvb0min``
-     - ````
+     - ``Unknown``
    * - ``Dpes0``
-     - ````
+     - ``Unknown``
    * - ``PuQmref``
-     - ````
+     - ``Unknown``
    * - ``PuNref``
-     - ````
+     - ``Unknown``
    * - ``PuHref``
-     - ````
+     - ``Unknown``
    * - ``PuPref``
-     - ````
+     - ``Unknown``
    * - ``Volsp``
-     - ````
+     - ``Unknown``
    * - ``HMantel``
-     - ````
+     - ``Unknown``
    * - ``HWsOkDif``
-     - ````
+     - ``Unknown``
    * - ``HDif``
-     - ````
+     - ``Unknown``
    * - ``HBUkDif``
-     - ````
+     - ``Unknown``
    * - ``RInnen``
-     - ````
+     - ``Unknown``
    * - ``RDif``
-     - ````
+     - ``Unknown``
    * - ``HWsMax``
-     - ````
+     - ``Unknown``
    * - ``Dhbasis``
-     - ````
+     - ``Unknown``
    * - ``UMantel``
-     - ````
+     - ``Unknown``
    * - ``UBoden``
-     - ````
+     - ``Unknown``
    * - ``Tob``
-     - ````
+     - ``Unknown``
    * - ``Tu``
-     - ````
+     - ``Unknown``
    * - ``Tdr``
-     - ````
+     - ``Unknown``
    * - ``TrefMin``
-     - ````
+     - ``Unknown``
    * - ``TtolEs``
-     - ````
+     - ``Unknown``
    * - ``TtolVb``
-     - ````
+     - ``Unknown``
    * - ``W0Sp``
-     - ````
+     - ``Unknown``
    * - ``W0Es``
-     - ````
+     - ``Unknown``
    * - ``Tsp0``
-     - ````
+     - ``Unknown``
    * - ``Trl0``
-     - ````
+     - ``Unknown``
    * - ``W0Vb``
-     - ````
+     - ``Unknown``
    * - ``Tvl0``
-     - ````
+     - ``Unknown``
    * - ``Trs0``
-     - ````
+     - ``Unknown``
    * - ``Indtr``
-     - ````
+     - ``Unknown``
    * - ``Fktrft``
-     - ````
+     - ``Unknown``
    * - ``Fksoko``
-     - ````
+     - ``Unknown``
    * - ``Indtrack``
-     - ````
+     - ``Unknown``
    * - ``Medium``
-     - ````
+     - ``Unknown``
    * - ``Qfs``
-     - ````
+     - ``Unknown``
    * - ``Tgrenz``
-     - ````
+     - ``Unknown``
    * - ``Deta0bLost``
-     - ````
+     - ``Unknown``
    * - ``Abrutto``
-     - ````
+     - ``Unknown``
    * - ``Wcorr``
-     - ````
+     - ``Unknown``
    * - ``Indrohr``
-     - ````
+     - ``Unknown``
    * - ``Vrv``
-     - ````
+     - ``Unknown``
    * - ``Indrumg``
-     - ````
+     - ``Unknown``
    * - ``L``
-     - ````
+     - ``Unknown``
    * - ``Di``
-     - ````
+     - ``Unknown``
    * - ``Kr``
-     - ````
+     - ``Unknown``
    * - ``Rd``
-     - ````
+     - ``Unknown``
    * - ``Lambdad``
-     - ````
+     - ``Unknown``
    * - ``Lambdae``
-     - ````
+     - ``Unknown``
    * - ``He``
-     - ````
+     - ``Unknown``
    * - ``KrKt``
-     - ````
+     - ``Unknown``
    * - ``Tru``
-     - ````
+     - ``Unknown``
    * - ``Indwt``
-     - ````
+     - ``Unknown``
    * - ``Dtwt``
-     - ````
+     - ``Unknown``
    * - ``Indtset``
-     - ````
+     - ``Unknown``
    * - ``Gtmaxtset``
-     - ````
+     - ``Unknown``
    * - ``Dtsett``
-     - ````
+     - ``Unknown``
    * - ``PrDn``
-     - ````
+     - ``Unknown``
    * - ``Fkzep1Pr``
-     - ````
+     - ``Unknown``
    * - ``Fkcont``
-     - ````
+     - ``Unknown``
    * - ``Idreferenz``
-     - ````
+     - ``Unknown``
    * - ``Iplanung``
-     - ````
+     - ``Unknown``
    * - ``NodeNameI``
-     - ````
+     - ``Unknown``
    * - ``NodeNameK``
-     - ````
+     - ``Unknown``
    * - ``StorageType``
-     - ````
+     - ``Unknown``
    * - ``Tk``
-     - ````
+     - ``Unknown``
    * - ``Pk``
-     - ````
+     - ``Unknown``
    * - ``InVariant``
-     - ````
+     - ``Unknown``
    * - ``Xkor``
-     - ````
+     - ``Unknown``
    * - ``Ykor``
-     - ````
+     - ``Unknown``
    * - ``ShowDescription``
-     - ````
+     - ``Unknown``
    * - ``PositionOfDescription``
-     - ````
+     - ``Unknown``
    * - ``Angle``
-     - ````
+     - ``Unknown``
    * - ``SymbolFactor``
-     - ````
+     - ``Unknown``
    * - ``GeometriesDiffer``
-     - ````
+     - ``Unknown``
    * - ``bz.Fk``
-     - ````
+     - ``Unknown``
    * - ``bz.Einaus``
-     - ````
+     - ``Unknown``
    * - ``bz.IndsSp``
-     - ````
+     - ``Unknown``
    * - ``bz.ModeSp``
-     - ````
+     - ``Unknown``
    * - ``bz.Ithtyp``
-     - ````
+     - ``Unknown``
    * - ``bz.Indlast``
-     - ````
+     - ``Unknown``
    * - ``bz.Neigung``
-     - ````
+     - ``Unknown``
    * - ``bz.Azimut``
-     - ````
+     - ``Unknown``
    * - ``bz.Fkwttr``
-     - ````
+     - ``Unknown``
    * - ``bz.FktevtEs``
-     - ````
+     - ``Unknown``
    * - ``bz.FktevtRs``
-     - ````
+     - ``Unknown``
    * - ``bz.FkwevtSp``
-     - ````
+     - ``Unknown``
    * - ``bz.FkqvarSp``
-     - ````
+     - ``Unknown``
    * - ``bz.FkwevtEs``
-     - ````
+     - ``Unknown``
    * - ``bz.FkwevtVb``
-     - ````
+     - ``Unknown``
    * - ``bz.Fklfkt``
-     - ````
+     - ``Unknown``
    * - ``bz.Pvlmax``
-     - ````
+     - ``Unknown``
    * - ``bz.Ppumax``
-     - ````
+     - ``Unknown``
    * - ``bz.Indstagn``
-     - ````
+     - ``Unknown``
    * - ``bz.TzuMax``
-     - ````
+     - ``Unknown``
    * - ``bz.TzuMin``
-     - ````
+     - ``Unknown``
    * - ``bz.TspMin``
-     - ````
+     - ``Unknown``
    * - ``bz.TrsMax``
-     - ````
+     - ``Unknown``
    * - ``bz.W0SpMin``
-     - ````
+     - ``Unknown``
    * - ``bz.Qsprel0``
-     - ````
+     - ``Unknown``
    * - ``bz.HWsStart``
-     - ````
+     - ``Unknown``
    * - ``bz.TobStart``
-     - ````
+     - ``Unknown``
    * - ``bz.TuStart``
-     - ````
+     - ``Unknown``
    * - ``bz.TtolEval``
-     - ````
+     - ``Unknown``
 
 Result Properties
 """""""""""""""""
@@ -4101,104 +3892,58 @@ Result Properties
    :header-rows: 1
 
    * - Name
-     - Value Type
    * - ``DH_KALT``
-     - ````
    * - ``DH_MIX``
-     - ````
    * - ``DH_WARM``
-     - ````
    * - ``DPH_ES``
-     - ````
    * - ``DPH_VB``
-     - ````
    * - ``DTLEER``
-     - ````
    * - ``ETA_PU``
-     - ````
    * - ``GGLOB``
-     - ````
    * - ``GKOLL``
-     - ````
    * - ``H_MIX``
-     - ````
    * - ``H_PU``
-     - ````
    * - ``H_WS``
-     - ````
    * - ``IAKTIV``
-     - ````
    * - ``MAINELEMENT``
-     - ````
    * - ``MMAXBL``
-     - ````
    * - ``MMAXEL``
-     - ````
    * - ``MMIN``
-     - ````
    * - ``N_PU``
-     - ````
    * - ``P_PU``
-     - ````
    * - ``Q_PU``
-     - ````
    * - ``QM``
-     - ````
    * - ``QM_ES``
-     - ````
    * - ``QM_PR``
-     - ````
    * - ``QM_VB``
-     - ````
    * - ``QSP``
-     - ````
    * - ``QSPREL``
-     - ````
    * - ``QV_BODEN``
-     - ````
    * - ``QV_DR``
-     - ````
    * - ``QV_MANTEL``
-     - ````
    * - ``QV_TOTAL``
-     - ````
    * - ``T_KALT``
-     - ````
    * - ``T_MIX``
-     - ````
    * - ``T_WARM``
-     - ````
    * - ``TDIFFO``
-     - ````
    * - ``TDIFFU``
-     - ````
    * - ``TRL``
-     - ````
    * - ``TRS``
-     - ````
    * - ``TSP``
-     - ````
    * - ``TVEC``
-     - ````
    * - ``TVL``
-     - ````
    * - ``W``
-     - ````
    * - ``W_ES``
-     - ````
    * - ``W_FS``
-     - ````
    * - ``W_PR``
-     - ````
    * - ``W_RO``
-     - ````
    * - ``W_VB``
-     - ````
    * - ``WKOLL``
-     - ````
 
-HeaterCooler
-^^^^^^^^^^^^
+GVWK
+^^^^
+Object Type: ``HeaterCooler``
+
 
 Properties
 """"""""""
@@ -4209,45 +3954,45 @@ Properties
    * - Name
      - Value Type
    * - ``Name``
-     - ````
+     - ``string``
    * - ``Beschreibung``
-     - ````
+     - ``string``
    * - ``Eta``
-     - ````
+     - ``single``
    * - ``Dpnum``
-     - ````
+     - ``single``
    * - ``Fkcont``
-     - ````
+     - ``string``
    * - ``Idreferenz``
-     - ````
+     - ``string``
    * - ``Iplanung``
-     - ````
+     - ``int32``
    * - ``Tk``
-     - ````
+     - ``string``
    * - ``Pk``
-     - ````
+     - ``string``
    * - ``InVariant``
-     - ````
+     - ``boolean``
    * - ``Xkor``
-     - ````
+     - ``double``
    * - ``Ykor``
-     - ````
+     - ``double``
    * - ``ShowDescription``
-     - ````
+     - ``boolean``
    * - ``PositionOfDescription``
-     - ````
+     - ``int32``
    * - ``Angle``
-     - ````
+     - ``double``
    * - ``SymbolFactor``
-     - ````
+     - ``double``
    * - ``GeometriesDiffer``
-     - ````
+     - ``boolean``
    * - ``bz.Fk``
-     - ````
+     - ``string``
    * - ``bz.Inds``
-     - ````
+     - ``int32``
    * - ``bz.Sw``
-     - ````
+     - ``single``
 
 Result Properties
 """""""""""""""""
@@ -4256,32 +4001,22 @@ Result Properties
    :header-rows: 1
 
    * - Name
-     - Value Type
    * - ``EINAUS``
-     - ````
    * - ``IAKTIV``
-     - ````
    * - ``M``
-     - ````
    * - ``MAINELEMENT``
-     - ````
    * - ``P``
-     - ````
    * - ``PE``
-     - ````
    * - ``PI``
-     - ````
    * - ``PK``
-     - ````
    * - ``QN``
-     - ````
    * - ``TI``
-     - ````
    * - ``TK``
-     - ````
 
-Histeresis
-^^^^^^^^^^
+RHYS
+^^^^
+Object Type: ``Histeresis``
+
 
 Properties
 """"""""""
@@ -4335,20 +4070,16 @@ Result Properties
    :header-rows: 1
 
    * - Name
-     - Value Type
    * - ``MAINELEMENT``
-     - ````
    * - ``XA``
-     - ````
    * - ``XE``
-     - ````
    * - ``XO``
-     - ``single``
    * - ``XU``
-     - ``single``
 
-House
-^^^^^
+HAUS
+^^^^
+Object Type: ``House``
+
 
 Properties
 """"""""""
@@ -4406,8 +4137,10 @@ Result Properties
 
 No result properties found.
 
-Hydrant
-^^^^^^^
+HYDR
+^^^^
+Object Type: ``Hydrant``
+
 
 Properties
 """"""""""
@@ -4418,61 +4151,61 @@ Properties
    * - Name
      - Value Type
    * - ``Name``
-     - ````
+     - ``Unknown``
    * - ``Beschreibung``
-     - ````
+     - ``Unknown``
    * - ``Typ``
-     - ````
+     - ``Unknown``
    * - ``Zkor``
-     - ````
+     - ``Unknown``
    * - ``Zeta``
-     - ````
+     - ``Unknown``
    * - ``Dn``
-     - ````
+     - ``Unknown``
    * - ``FkdtroRowd``
-     - ````
+     - ``Unknown``
    * - ``L``
-     - ````
+     - ``Unknown``
    * - ``Rau``
-     - ````
+     - ``Unknown``
    * - ``Fkrohr``
-     - ````
+     - ``Unknown``
    * - ``Poskm``
-     - ````
+     - ``Unknown``
    * - ``Fkknot``
-     - ````
+     - ``Unknown``
    * - ``Idreferenz``
-     - ````
+     - ``Unknown``
    * - ``Xkor``
-     - ````
+     - ``Unknown``
    * - ``Ykor``
-     - ````
+     - ``Unknown``
    * - ``Tk``
-     - ````
+     - ``Unknown``
    * - ``Pk``
-     - ````
+     - ``Unknown``
    * - ``InVariant``
-     - ````
+     - ``Unknown``
    * - ``GeometriesDiffer``
-     - ````
+     - ``Unknown``
    * - ``Angle``
-     - ````
+     - ``Unknown``
    * - ``SymbolFactor``
-     - ````
+     - ``Unknown``
    * - ``bz.Fk``
-     - ````
+     - ``Unknown``
    * - ``bz.Phsoll``
-     - ````
+     - ``Unknown``
    * - ``bz.Qmsoll``
-     - ````
+     - ``Unknown``
    * - ``bz.Indi``
-     - ````
+     - ``Unknown``
    * - ``bz.Iaktiv``
-     - ````
+     - ``Unknown``
    * - ``bz.Fkswvt``
-     - ````
+     - ``Unknown``
    * - ``bz.PhMin``
-     - ````
+     - ``Unknown``
 
 Result Properties
 """""""""""""""""
@@ -4481,34 +4214,23 @@ Result Properties
    :header-rows: 1
 
    * - Name
-     - Value Type
    * - ``BCTYP``
-     - ````
    * - ``IAKTIV``
-     - ````
    * - ``MAINELEMENT``
-     - ````
    * - ``PH_EINB``
-     - ````
    * - ``PH_ENTN``
-     - ````
    * - ``PH_MIN``
-     - ````
    * - ``PHR``
-     - ````
    * - ``PHR_ROHR``
-     - ````
    * - ``PHSOLL``
-     - ````
    * - ``QM``
-     - ````
    * - ``QSOLL``
-     - ````
    * - ``UV``
-     - ````
 
-Integrator
-^^^^^^^^^^
+RINT
+^^^^
+Object Type: ``Integrator``
+
 
 Properties
 """"""""""
@@ -4558,16 +4280,14 @@ Result Properties
    :header-rows: 1
 
    * - Name
-     - Value Type
    * - ``MAINELEMENT``
-     - ````
    * - ``XA``
-     - ````
    * - ``XE``
-     - ````
 
-LAYR_Layer
-^^^^^^^^^^
+LAYR
+^^^^
+Object Type: ``LAYR_Layer``
+
 
 Properties
 """"""""""
@@ -4601,8 +4321,10 @@ Result Properties
 
 No result properties found.
 
-LoadFactorTable
-^^^^^^^^^^^^^^^
+LFKT
+^^^^
+Object Type: ``LoadFactorTable``
+
 
 Properties
 """"""""""
@@ -4634,28 +4356,20 @@ Result Properties
    :header-rows: 1
 
    * - Name
-     - Value Type
    * - ``FWVB_DPHMIN``
-     - ````
    * - ``FWVB_TVLMIN``
-     - ````
    * - ``LF``
-     - ````
    * - ``MAINELEMENT``
-     - ````
    * - ``MFVHYUV``
-     - ````
    * - ``MFVTHUV``
-     - ````
    * - ``NFVHYUV``
-     - ````
    * - ``NFVTHUV``
-     - ````
    * - ``TVMINMAX``
-     - ````
 
-LoadFactorTable_Row
-^^^^^^^^^^^^^^^^^^^
+LFKT_ROWT
+^^^^^^^^^
+Object Type: ``LoadFactorTable_Row``
+
 
 Properties
 """"""""""
@@ -4685,8 +4399,10 @@ Result Properties
 
 No result properties found.
 
-LogicalComparison
-^^^^^^^^^^^^^^^^^
+RLVG
+^^^^
+Object Type: ``LogicalComparison``
+
 
 Properties
 """"""""""
@@ -4736,18 +4452,15 @@ Result Properties
    :header-rows: 1
 
    * - Name
-     - Value Type
    * - ``MAINELEMENT``
-     - ````
    * - ``XA``
-     - ````
    * - ``XE1``
-     - ````
    * - ``XE2``
-     - ````
 
-LogicalStorage
-^^^^^^^^^^^^^^
+RLSR
+^^^^
+Object Type: ``LogicalStorage``
+
 
 Properties
 """"""""""
@@ -4795,18 +4508,15 @@ Result Properties
    :header-rows: 1
 
    * - Name
-     - Value Type
    * - ``MAINELEMENT``
-     - ````
    * - ``XA``
-     - ````
    * - ``XE1``
-     - ````
    * - ``XE2``
-     - ````
 
-MeasuredVariableTable
-^^^^^^^^^^^^^^^^^^^^^
+SWVT
+^^^^
+Object Type: ``MeasuredVariableTable``
+
 
 Properties
 """"""""""
@@ -4838,14 +4548,13 @@ Result Properties
    :header-rows: 1
 
    * - Name
-     - Value Type
    * - ``MAINELEMENT``
-     - ````
    * - ``W``
-     - ````
 
-MeasuredVariableTable_Row
-^^^^^^^^^^^^^^^^^^^^^^^^^
+SWVT_ROWT
+^^^^^^^^^
+Object Type: ``MeasuredVariableTable_Row``
+
 
 Properties
 """"""""""
@@ -4875,8 +4584,10 @@ Result Properties
 
 No result properties found.
 
-MinMaxSelection
-^^^^^^^^^^^^^^^
+RMMA
+^^^^
+Object Type: ``MinMaxSelection``
+
 
 Properties
 """"""""""
@@ -4926,18 +4637,15 @@ Result Properties
    :header-rows: 1
 
    * - Name
-     - Value Type
    * - ``MAINELEMENT``
-     - ````
    * - ``XA``
-     - ````
    * - ``XE1``
-     - ````
    * - ``XE2``
-     - ````
 
-Multiplier
-^^^^^^^^^^
+RMUL
+^^^^
+Object Type: ``Multiplier``
+
 
 Properties
 """"""""""
@@ -4989,20 +4697,16 @@ Result Properties
    :header-rows: 1
 
    * - Name
-     - Value Type
    * - ``MAINELEMENT``
-     - ````
    * - ``MULT``
-     - ````
    * - ``XA``
-     - ````
    * - ``XE1``
-     - ````
    * - ``XE2``
-     - ````
 
-NetValve
-^^^^^^^^
+NSCH
+^^^^
+Object Type: ``NetValve``
+
 
 Properties
 """"""""""
@@ -5054,14 +4758,13 @@ Result Properties
    :header-rows: 1
 
    * - Name
-     - Value Type
    * - ``MAINELEMENT``
-     - ````
    * - ``STELLUNG``
-     - ````
 
-Node
+KNOT
 ^^^^
+Object Type: ``Node``
+
 
 Properties
 """"""""""
@@ -5153,156 +4856,84 @@ Result Properties
    :header-rows: 1
 
    * - Name
-     - Value Type
    * - ``BCIND``
-     - ````
    * - ``BCIND_CALC``
-     - ````
    * - ``BCIND_FLOW``
-     - ````
    * - ``BCIND_MODEL``
-     - ````
    * - ``BCIND_SOURCE``
-     - ````
    * - ``BCIND_TYPE``
-     - ````
    * - ``CHLORID``
-     - ````
    * - ``CP``
-     - ````
    * - ``DP``
-     - ````
    * - ``DPH``
-     - ````
    * - ``DYNVISKO``
-     - ````
    * - ``EH``
-     - ````
    * - ``EISENFILT``
-     - ````
    * - ``EISENGES``
-     - ````
    * - ``ESQUELLSP``
-     - ````
    * - ``FITT_ANGLE``
-     - ````
    * - ``FITT_BASTYPE``
-     - ````
    * - ``FITT_DP1``
-     - ````
    * - ``FITT_DP2``
-     - ````
    * - ``FITT_DP3``
-     - ````
    * - ``FITT_STATE``
-     - ````
    * - ``FITT_SUBTYPE``
-     - ````
    * - ``FITT_VBTYPE1``
-     - ````
    * - ``FITT_VBTYPE2``
-     - ````
    * - ``FITT_VBTYPE3``
-     - ````
    * - ``FITT_ZETA1``
-     - ````
    * - ``FITT_ZETA2``
-     - ````
    * - ``FITT_ZETA3``
-     - ````
    * - ``FSTF_NAME``
-     - ````
    * - ``GMIX_NAME``
-     - ````
    * - ``H``
-     - ````
    * - ``HI``
-     - ````
    * - ``HMAX_INST``
-     - ````
    * - ``HMIN_INST``
-     - ````
    * - ``HS``
-     - ````
    * - ``IAKTIV``
-     - ````
    * - ``INDUV``
-     - ````
    * - ``K``
-     - ````
    * - ``KP``
-     - ````
    * - ``KT``
-     - ````
    * - ``LEITFAEH``
-     - ````
    * - ``LFAKTAKT``
-     - ````
    * - ``LFKT``
-     - ````
    * - ``M``
-     - ````
    * - ``MAINELEMENT``
-     - ````
    * - ``MN``
-     - ````
    * - ``P``
-     - ````
    * - ``PDAMPF``
-     - ````
    * - ``PH``
-     - ````
    * - ``PH_EIN``
-     - ````
    * - ``PH_MIN``
-     - ````
    * - ``PHMINMAXDIF``
-     - ````
    * - ``PHWERT``
-     - ````
    * - ``PMAX_INST``
-     - ````
    * - ``PMIN_INST``
-     - ````
    * - ``PVAR``
-     - ````
    * - ``Q2``
-     - ````
    * - ``QM``
-     - ````
    * - ``QMABS``
-     - ````
    * - ``QVAR``
-     - ````
    * - ``RHO``
-     - ````
    * - ``RHON``
-     - ````
    * - ``RHONQUAL``
-     - ````
    * - ``SULFAT``
-     - ````
    * - ``T``
-     - ````
    * - ``TE``
-     - ````
    * - ``TEMP``
-     - ````
    * - ``TMAX_INST``
-     - ````
    * - ``TMIN_INST``
-     - ````
    * - ``TTR``
-     - ````
    * - ``VOLD``
-     - ````
    * - ``WALTER``
-     - ````
    * - ``ZHKNR``
-     - ````
 
-NonReturnValvesTable
-^^^^^^^^^^^^^^^^^^^^
+PHIV
+^^^^
+Object Type: ``NonReturnValvesTable``
+
 
 Properties
 """"""""""
@@ -5330,8 +4961,10 @@ Result Properties
 
 No result properties found.
 
-NonReturnValvesTable_Row
-^^^^^^^^^^^^^^^^^^^^^^^^
+PHIV_ROWS
+^^^^^^^^^
+Object Type: ``NonReturnValvesTable_Row``
+
 
 Properties
 """"""""""
@@ -5359,8 +4992,10 @@ Result Properties
 
 No result properties found.
 
-NumericalDisplay
-^^^^^^^^^^^^^^^^
+NRCV
+^^^^
+Object Type: ``NumericalDisplay``
+
 
 Properties
 """"""""""
@@ -5440,8 +5075,10 @@ Result Properties
 
 No result properties found.
 
-ObjectContainerSymbol
-^^^^^^^^^^^^^^^^^^^^^
+CONT
+^^^^
+Object Type: ``ObjectContainerSymbol``
+
 
 Properties
 """"""""""
@@ -5497,8 +5134,10 @@ Result Properties
 
 No result properties found.
 
-OpenContainer
-^^^^^^^^^^^^^
+OBEH
+^^^^
+Object Type: ``OpenContainer``
+
 
 Properties
 """"""""""
@@ -5509,67 +5148,67 @@ Properties
    * - Name
      - Value Type
    * - ``Name``
-     - ````
+     - ``Unknown``
    * - ``Beschreibung``
-     - ````
+     - ``Unknown``
    * - ``Indatab``
-     - ````
+     - ``Unknown``
    * - ``A``
-     - ````
+     - ``Unknown``
    * - ``Hb``
-     - ````
+     - ``Unknown``
    * - ``Fkatab``
-     - ````
+     - ``Unknown``
    * - ``Dn``
-     - ````
+     - ``Unknown``
    * - ``Zetapos``
-     - ````
+     - ``Unknown``
    * - ``Zetaneg``
-     - ````
+     - ``Unknown``
    * - ``Knotk``
-     - ````
+     - ``Unknown``
    * - ``Zkor``
-     - ````
+     - ``Unknown``
    * - ``Fkfstf``
-     - ````
+     - ``Unknown``
    * - ``Fkknotfilling``
-     - ````
+     - ``Unknown``
    * - ``Filling``
-     - ````
+     - ``Unknown``
    * - ``Fkcont``
-     - ````
+     - ``Unknown``
    * - ``Idreferenz``
-     - ````
+     - ``Unknown``
    * - ``Iplanung``
-     - ````
+     - ``Unknown``
    * - ``Tk``
-     - ````
+     - ``Unknown``
    * - ``Pk``
-     - ````
+     - ``Unknown``
    * - ``InVariant``
-     - ````
+     - ``Unknown``
    * - ``GeometriesDiffer``
-     - ````
+     - ``Unknown``
    * - ``SymbolGraf``
-     - ````
+     - ``Unknown``
    * - ``SymbolFactor``
-     - ````
+     - ``Unknown``
    * - ``Xkor``
-     - ````
+     - ``Unknown``
    * - ``Ykor``
-     - ````
+     - ``Unknown``
    * - ``Angle``
-     - ````
+     - ``Unknown``
    * - ``bz.Fk``
-     - ````
+     - ``Unknown``
    * - ``bz.Wsp``
-     - ````
+     - ``Unknown``
    * - ``bz.Walter0``
-     - ````
+     - ``Unknown``
    * - ``bz.Tm0``
-     - ````
+     - ``Unknown``
    * - ``bz.WspNN``
-     - ````
+     - ``Unknown``
 
 Result Properties
 """""""""""""""""
@@ -5578,42 +5217,27 @@ Result Properties
    :header-rows: 1
 
    * - Name
-     - Value Type
    * - ``DWST_DT``
-     - ````
    * - ``IAKTIV``
-     - ````
    * - ``M``
-     - ````
    * - ``MAINELEMENT``
-     - ````
    * - ``MEXT``
-     - ````
    * - ``QM``
-     - ````
    * - ``QMEXT``
-     - ````
    * - ``RHO``
-     - ````
    * - ``T``
-     - ````
    * - ``T0``
-     - ````
    * - ``V``
-     - ````
    * - ``VOL``
-     - ````
    * - ``WALTER``
-     - ````
    * - ``WALTER0``
-     - ````
    * - ``WST``
-     - ````
    * - ``WST0``
-     - ````
 
-Oval
+OVAL
 ^^^^
+Object Type: ``Oval``
+
 
 Properties
 """"""""""
@@ -5651,8 +5275,10 @@ Result Properties
 
 No result properties found.
 
-PARZ_TransientCalculationParameters
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PARZ
+^^^^
+Object Type: ``PARZ_TransientCalculationParameters``
+
 
 Properties
 """"""""""
@@ -5690,8 +5316,10 @@ Result Properties
 
 No result properties found.
 
-PhaseSeparation
-^^^^^^^^^^^^^^^
+PHTR
+^^^^
+Object Type: ``PhaseSeparation``
+
 
 Properties
 """"""""""
@@ -5702,41 +5330,41 @@ Properties
    * - Name
      - Value Type
    * - ``Name``
-     - ````
+     - ``Unknown``
    * - ``Beschreibung``
-     - ````
+     - ``Unknown``
    * - ``Dn``
-     - ````
+     - ``Unknown``
    * - ``Zeta``
-     - ````
+     - ``Unknown``
    * - ``Fkcont``
-     - ````
+     - ``Unknown``
    * - ``Idreferenz``
-     - ````
+     - ``Unknown``
    * - ``Iplanung``
-     - ````
+     - ``Unknown``
    * - ``Tk``
-     - ````
+     - ``Unknown``
    * - ``Pk``
-     - ````
+     - ``Unknown``
    * - ``InVariant``
-     - ````
+     - ``Unknown``
    * - ``Xkor``
-     - ````
+     - ``Unknown``
    * - ``Ykor``
-     - ````
+     - ``Unknown``
    * - ``ShowDescription``
-     - ````
+     - ``Unknown``
    * - ``PositionOfDescription``
-     - ````
+     - ``Unknown``
    * - ``Angle``
-     - ````
+     - ``Unknown``
    * - ``SymbolFactor``
-     - ````
+     - ``Unknown``
    * - ``GeometriesDiffer``
-     - ````
+     - ``Unknown``
    * - ``bz.Fk``
-     - ````
+     - ``Unknown``
 
 Result Properties
 """""""""""""""""
@@ -5745,32 +5373,22 @@ Result Properties
    :header-rows: 1
 
    * - Name
-     - Value Type
    * - ``DH``
-     - ````
    * - ``DP``
-     - ````
    * - ``IAKTIV``
-     - ````
    * - ``MAINELEMENT``
-     - ````
    * - ``MI``
-     - ````
    * - ``MK``
-     - ````
    * - ``Q``
-     - ````
    * - ``QM``
-     - ````
    * - ``RHOI``
-     - ````
    * - ``RHOK``
-     - ````
    * - ``V``
-     - ````
 
-PidController
-^^^^^^^^^^^^^
+RPID
+^^^^
+Object Type: ``PidController``
+
 
 Properties
 """"""""""
@@ -5834,26 +5452,19 @@ Result Properties
    :header-rows: 1
 
    * - Name
-     - Value Type
    * - ``DYDT``
-     - ````
    * - ``DYDTD``
-     - ````
    * - ``DYDTI``
-     - ````
    * - ``DYDTP``
-     - ````
    * - ``MAINELEMENT``
-     - ````
    * - ``XA``
-     - ````
    * - ``XE1``
-     - ````
    * - ``XE2``
-     - ````
 
-Pipe
+ROHR
 ^^^^
+Object Type: ``Pipe``
+
 
 Properties
 """"""""""
@@ -5963,174 +5574,93 @@ Result Properties
    :header-rows: 1
 
    * - Name
-     - Value Type
    * - ``A``
-     - ````
    * - ``ACALC``
-     - ````
    * - ``CPI``
-     - ````
    * - ``CPK``
-     - ````
    * - ``DH``
-     - ````
    * - ``DP``
-     - ````
    * - ``DRAGRED``
-     - ````
    * - ``DRAKONZ``
-     - ````
    * - ``DSI``
-     - ````
    * - ``DSK``
-     - ````
    * - ``DTTR``
-     - ````
    * - ``DWVERL``
-     - ````
    * - ``DWVERLABS``
-     - ````
    * - ``ETAAV``
-     - ````
    * - ``FS``
-     - ````
    * - ``HR``
-     - ````
    * - ``HVEC``
-     - ````
    * - ``IAKTIV``
-     - ````
    * - ``IRTRENN``
-     - ````
    * - ``JV``
-     - ````
    * - ``JV2``
-     - ````
    * - ``LAMBDA``
-     - ````
    * - ``LECKEINAUS``
-     - ````
    * - ``LECKMENGE``
-     - ````
    * - ``LECKORT``
-     - ````
    * - ``LINEPACK``
-     - ````
    * - ``LINEPACKGEOM``
-     - ````
    * - ``LINEPACKRATE``
-     - ````
    * - ``MAINELEMENT``
-     - ````
    * - ``MAV``
-     - ````
    * - ``MI``
-     - ````
    * - ``MK``
-     - ````
    * - ``MKOND``
-     - ````
    * - ``MMAX_INST``
-     - ````
    * - ``MMIN_INST``
-     - ````
    * - ``MVEC``
-     - ````
    * - ``MVECMAX_INST``
-     - ````
    * - ``MVECMIN_INST``
-     - ````
    * - ``PAV``
-     - ````
    * - ``PDAMPF``
-     - ````
    * - ``PHR``
-     - ````
    * - ``PHVEC``
-     - ````
    * - ``PMAX``
-     - ````
    * - ``PMIN``
-     - ````
    * - ``PR``
-     - ````
    * - ``PVEC``
-     - ````
    * - ``PVECMAX_INST``
-     - ````
    * - ``PVECMIN_INST``
-     - ````
    * - ``QI2``
-     - ````
    * - ``QK2``
-     - ````
    * - ``QMAV``
-     - ````
    * - ``QMI``
-     - ````
    * - ``QMK``
-     - ````
    * - ``QMMAX_INST``
-     - ````
    * - ``QMMIN_INST``
-     - ````
    * - ``QMVEC``
-     - ````
    * - ``QSVB``
-     - ````
    * - ``RHOAV``
-     - ````
    * - ``RHOI``
-     - ````
    * - ``RHOK``
-     - ````
    * - ``RHOVEC``
-     - ````
    * - ``SVEC``
-     - ````
    * - ``TAV``
-     - ````
    * - ``TI``
-     - ````
    * - ``TK``
-     - ``string``
    * - ``TTRVEC``
-     - ````
    * - ``TVEC``
-     - ````
    * - ``TVECMAX_INST``
-     - ````
    * - ``TVECMIN_INST``
-     - ````
    * - ``VAV``
-     - ````
    * - ``VI``
-     - ````
    * - ``VK``
-     - ````
    * - ``VMAX_INST``
-     - ````
    * - ``VMIN_INST``
-     - ````
    * - ``VOLDA``
-     - ````
    * - ``WALTERI``
-     - ````
    * - ``WALTERK``
-     - ````
    * - ``WVL``
-     - ````
    * - ``ZAUS``
-     - ``single``
    * - ``ZEIN``
-     - ``single``
    * - ``ZHKNR``
-     - ````
    * - ``ZVEC``
-     - ````
 
-PipeGroup
-^^^^^^^^^
+LTGR
+^^^^
+Object Type: ``PipeGroup``
+
 
 Properties
 """"""""""
@@ -6162,8 +5692,10 @@ Result Properties
 
 No result properties found.
 
-PipeTable
-^^^^^^^^^
+DTRO
+^^^^
+Object Type: ``PipeTable``
+
 
 Properties
 """"""""""
@@ -6197,8 +5729,10 @@ Result Properties
 
 No result properties found.
 
-PipeTable_Row
-^^^^^^^^^^^^^
+DTRO_ROWD
+^^^^^^^^^
+Object Type: ``PipeTable_Row``
+
 
 Properties
 """"""""""
@@ -6246,8 +5780,10 @@ Result Properties
 
 No result properties found.
 
-PipeVertex
-^^^^^^^^^^
+ROHR_VRTX
+^^^^^^^^^
+Object Type: ``PipeVertex``
+
 
 Properties
 """"""""""
@@ -6281,36 +5817,24 @@ Result Properties
    :header-rows: 1
 
    * - Name
-     - Value Type
    * - ``H``
-     - ````
    * - ``M``
-     - ````
    * - ``MAINELEMENT``
-     - ````
    * - ``MMAX_INST``
-     - ````
    * - ``MMIN_INST``
-     - ````
    * - ``P``
-     - ````
    * - ``PH``
-     - ````
    * - ``PMAX_INST``
-     - ````
    * - ``PMIN_INST``
-     - ````
    * - ``RHO``
-     - ````
    * - ``T``
-     - ````
    * - ``TMAX_INST``
-     - ````
    * - ``TMIN_INST``
-     - ````
 
-Polygon
-^^^^^^^
+PLYG
+^^^^
+Object Type: ``Polygon``
+
 
 Properties
 """"""""""
@@ -6354,8 +5878,10 @@ Result Properties
 
 No result properties found.
 
-Polyline
-^^^^^^^^
+POLY
+^^^^
+Object Type: ``Polyline``
+
 
 Properties
 """"""""""
@@ -6393,8 +5919,10 @@ Result Properties
 
 No result properties found.
 
-PressureRegulator
-^^^^^^^^^^^^^^^^^
+PREG
+^^^^
+Object Type: ``PressureRegulator``
+
 
 Properties
 """"""""""
@@ -6405,53 +5933,53 @@ Properties
    * - Name
      - Value Type
    * - ``Name``
-     - ````
+     - ``Unknown``
    * - ``Beschreibung``
-     - ````
+     - ``Unknown``
    * - ``Dn``
-     - ````
+     - ``Unknown``
    * - ``Typ``
-     - ````
+     - ``Unknown``
    * - ``Indprg``
-     - ````
+     - ``Unknown``
    * - ``Fkzep1``
-     - ````
+     - ``Unknown``
    * - ``Ts``
-     - ````
+     - ``Unknown``
    * - ``Fkcont``
-     - ````
+     - ``Unknown``
    * - ``Idreferenz``
-     - ````
+     - ``Unknown``
    * - ``Iplanung``
-     - ````
+     - ``Unknown``
    * - ``Tk``
-     - ````
+     - ``Unknown``
    * - ``Pk``
-     - ````
+     - ``Unknown``
    * - ``InVariant``
-     - ````
+     - ``Unknown``
    * - ``Xkor``
-     - ````
+     - ``Unknown``
    * - ``Ykor``
-     - ````
+     - ``Unknown``
    * - ``ShowDescription``
-     - ````
+     - ``Unknown``
    * - ``PositionOfDescription``
-     - ````
+     - ``Unknown``
    * - ``Angle``
-     - ````
+     - ``Unknown``
    * - ``SymbolFactor``
-     - ````
+     - ``Unknown``
    * - ``GeometriesDiffer``
-     - ````
+     - ``Unknown``
    * - ``bz.Fk``
-     - ````
+     - ``Unknown``
    * - ``bz.Indsoll``
-     - ````
+     - ``Unknown``
    * - ``bz.Phsoll``
-     - ````
+     - ``Unknown``
    * - ``bz.Fkswvt``
-     - ````
+     - ``Unknown``
 
 Result Properties
 """""""""""""""""
@@ -6460,52 +5988,32 @@ Result Properties
    :header-rows: 1
 
    * - Name
-     - Value Type
    * - ``DH``
-     - ````
    * - ``DP``
-     - ````
    * - ``DPH``
-     - ````
    * - ``DSI``
-     - ````
    * - ``DSK``
-     - ````
    * - ``FS``
-     - ````
    * - ``HR``
-     - ````
    * - ``IAKTIV``
-     - ````
    * - ``KV``
-     - ````
    * - ``M``
-     - ````
    * - ``MAINELEMENT``
-     - ````
    * - ``PH``
-     - ````
    * - ``PHI``
-     - ````
    * - ``PHSOLL``
-     - ````
    * - ``PR``
-     - ````
    * - ``PSOLL``
-     - ````
    * - ``QM``
-     - ````
    * - ``RHO``
-     - ````
    * - ``SWVT``
-     - ````
    * - ``V``
-     - ````
    * - ``ZETA``
-     - ````
 
-PressureZone
-^^^^^^^^^^^^
+PZON
+^^^^
+Object Type: ``PressureZone``
+
 
 Properties
 """"""""""
@@ -6549,8 +6057,10 @@ Result Properties
 
 No result properties found.
 
-Pt1Controller
-^^^^^^^^^^^^^
+RPT1
+^^^^
+Object Type: ``Pt1Controller``
+
 
 Properties
 """"""""""
@@ -6600,16 +6110,14 @@ Result Properties
    :header-rows: 1
 
    * - Name
-     - Value Type
    * - ``MAINELEMENT``
-     - ````
    * - ``XA``
-     - ````
    * - ``XE``
-     - ````
 
-Pump
+PUMP
 ^^^^
+Object Type: ``Pump``
+
 
 Properties
 """"""""""
@@ -6620,249 +6128,249 @@ Properties
    * - Name
      - Value Type
    * - ``Name``
-     - ````
+     - ``Unknown``
    * - ``Beschreibung``
-     - ````
+     - ``Unknown``
    * - ``Fkpumk``
-     - ````
+     - ``Unknown``
    * - ``Fkpumkturb``
-     - ````
+     - ``Unknown``
    * - ``Qmref``
-     - ````
+     - ``Unknown``
    * - ``Nref``
-     - ````
+     - ``Unknown``
    * - ``Href``
-     - ````
+     - ``Unknown``
    * - ``Pref``
-     - ````
+     - ``Unknown``
    * - ``Qmrefturb``
-     - ````
+     - ``Unknown``
    * - ``Nrefturb``
-     - ````
+     - ``Unknown``
    * - ``Hrefturb``
-     - ````
+     - ``Unknown``
    * - ``Prefturb``
-     - ````
+     - ``Unknown``
    * - ``Nmin``
-     - ````
+     - ``Unknown``
    * - ``Nmax``
-     - ````
+     - ``Unknown``
    * - ``Q0min``
-     - ````
+     - ``Unknown``
    * - ``Q0max``
-     - ````
+     - ``Unknown``
    * - ``Fkkref1``
-     - ````
+     - ``Unknown``
    * - ``Fkkref2``
-     - ````
+     - ``Unknown``
    * - ``Jwirk``
-     - ````
+     - ``Unknown``
    * - ``Traeg``
-     - ````
+     - ``Unknown``
    * - ``Jrlsp``
-     - ````
+     - ``Unknown``
    * - ``Dndtma``
-     - ````
+     - ``Unknown``
    * - ``Indl``
-     - ````
+     - ``Unknown``
    * - ``Fketam``
-     - ````
+     - ``Unknown``
    * - ``Fketau``
-     - ````
+     - ``Unknown``
    * - ``Fketar``
-     - ````
+     - ``Unknown``
    * - ``Nemot``
-     - ````
+     - ``Unknown``
    * - ``Etamot``
-     - ````
+     - ``Unknown``
    * - ``Schlupf``
-     - ````
+     - ``Unknown``
    * - ``Bkfak``
-     - ````
+     - ``Unknown``
    * - ``Tsig``
-     - ````
+     - ``Unknown``
    * - ``Dndt``
-     - ````
+     - ``Unknown``
    * - ``Ntrudel``
-     - ````
+     - ``Unknown``
    * - ``Dngross``
-     - ````
+     - ``Unknown``
    * - ``Dnklein``
-     - ````
+     - ``Unknown``
    * - ``Dt0aus``
-     - ````
+     - ``Unknown``
    * - ``Indasf``
-     - ````
+     - ``Unknown``
    * - ``Wscasf``
-     - ````
+     - ``Unknown``
    * - ``Fkkiasf``
-     - ````
+     - ``Unknown``
    * - ``Totasf``
-     - ````
+     - ``Unknown``
    * - ``Wirasf``
-     - ````
+     - ``Unknown``
    * - ``Indaps``
-     - ````
+     - ``Unknown``
    * - ``Psa``
-     - ````
+     - ``Unknown``
    * - ``Fkkiaps``
-     - ````
+     - ``Unknown``
    * - ``Totaps``
-     - ````
+     - ``Unknown``
    * - ``Indapd``
-     - ````
+     - ``Unknown``
    * - ``Papd``
-     - ````
+     - ``Unknown``
    * - ``Fkkiapd``
-     - ````
+     - ``Unknown``
    * - ``Totapd``
-     - ````
+     - ``Unknown``
    * - ``Fkcont``
-     - ````
+     - ``Unknown``
    * - ``Dt0sch``
-     - ````
+     - ``Unknown``
    * - ``Indds``
-     - ````
+     - ``Unknown``
    * - ``Pdsein``
-     - ````
+     - ``Unknown``
    * - ``Fkkrsspd``
-     - ````
+     - ``Unknown``
    * - ``Kpds``
-     - ````
+     - ``Unknown``
    * - ``Kids``
-     - ````
+     - ``Unknown``
    * - ``Kdds``
-     - ````
+     - ``Unknown``
    * - ``Indss``
-     - ````
+     - ``Unknown``
    * - ``Pssein``
-     - ````
+     - ``Unknown``
    * - ``Fkkrssps``
-     - ````
+     - ``Unknown``
    * - ``Kpss``
-     - ````
+     - ``Unknown``
    * - ``Kiss``
-     - ````
+     - ``Unknown``
    * - ``Kdss``
-     - ````
+     - ``Unknown``
    * - ``Indstf``
-     - ````
+     - ``Unknown``
    * - ``Wscstf``
-     - ````
+     - ``Unknown``
    * - ``Fkkr1stf``
-     - ````
+     - ``Unknown``
    * - ``Wirstf``
-     - ````
+     - ``Unknown``
    * - ``Kpstf``
-     - ````
+     - ``Unknown``
    * - ``Kistf``
-     - ````
+     - ``Unknown``
    * - ``Kdstf``
-     - ````
+     - ``Unknown``
    * - ``Indstd``
-     - ````
+     - ``Unknown``
    * - ``Ifgsw``
-     - ````
+     - ``Unknown``
    * - ``Wsostd``
-     - ````
+     - ``Unknown``
    * - ``Fkkr3std``
-     - ````
+     - ``Unknown``
    * - ``Fkkr4std``
-     - ````
+     - ``Unknown``
    * - ``Wirstd``
-     - ````
+     - ``Unknown``
    * - ``Kpstd``
-     - ````
+     - ``Unknown``
    * - ``Kistd``
-     - ````
+     - ``Unknown``
    * - ``Kdstd``
-     - ````
+     - ``Unknown``
    * - ``Dt0std``
-     - ````
+     - ``Unknown``
    * - ``Idreferenz``
-     - ````
+     - ``Unknown``
    * - ``Iplanung``
-     - ````
+     - ``Unknown``
    * - ``PerformanceMapParameters``
-     - ````
+     - ``Unknown``
    * - ``BKFaktTubine``
-     - ````
+     - ``Unknown``
    * - ``EtaRef``
-     - ````
+     - ``Unknown``
    * - ``EtaRefTurb``
-     - ````
+     - ``Unknown``
    * - ``IndLTurb``
-     - ````
+     - ``Unknown``
    * - ``NMaxTurb``
-     - ````
+     - ``Unknown``
    * - ``NMinTurb``
-     - ````
+     - ``Unknown``
    * - ``Q0MaxTurb``
-     - ````
+     - ``Unknown``
    * - ``Q0MinTurb``
-     - ````
+     - ``Unknown``
    * - ``PukfString``
-     - ````
+     - ``Unknown``
    * - ``Tk``
-     - ````
+     - ``Unknown``
    * - ``Pk``
-     - ````
+     - ``Unknown``
    * - ``InVariant``
-     - ````
+     - ``Unknown``
    * - ``Xkor``
-     - ````
+     - ``Unknown``
    * - ``Ykor``
-     - ````
+     - ``Unknown``
    * - ``ShowDescription``
-     - ````
+     - ``Unknown``
    * - ``PositionOfDescription``
-     - ````
+     - ``Unknown``
    * - ``Angle``
-     - ````
+     - ``Unknown``
    * - ``SymbolFactor``
-     - ````
+     - ``Unknown``
    * - ``GeometriesDiffer``
-     - ````
+     - ``Unknown``
    * - ``bz.Fk``
-     - ````
+     - ``Unknown``
    * - ``bz.Inds``
-     - ````
+     - ``Unknown``
    * - ``bz.Indturb``
-     - ````
+     - ``Unknown``
    * - ``bz.Ispu``
-     - ````
+     - ``Unknown``
    * - ``bz.Isputurb``
-     - ````
+     - ``Unknown``
    * - ``bz.Qmsoll``
-     - ````
+     - ``Unknown``
    * - ``bz.Nsoll``
-     - ````
+     - ``Unknown``
    * - ``bz.Qmsollturb``
-     - ````
+     - ``Unknown``
    * - ``bz.Nsollturb``
-     - ````
+     - ``Unknown``
    * - ``bz.Phsoll``
-     - ````
+     - ``Unknown``
    * - ``bz.Fkrcpl``
-     - ````
+     - ``Unknown``
    * - ``bz.Inda``
-     - ````
+     - ``Unknown``
    * - ``bz.Tipu``
-     - ````
+     - ``Unknown``
    * - ``bz.Fkpumd``
-     - ````
+     - ``Unknown``
    * - ``bz.Fkswvt``
-     - ````
+     - ``Unknown``
    * - ``bz.IndATurb``
-     - ````
+     - ``Unknown``
    * - ``bz.IndSTurb``
-     - ````
+     - ``Unknown``
    * - ``bz.IndsKlartext``
-     - ````
+     - ``Unknown``
    * - ``bz.IndaKlartext``
-     - ````
+     - ``Unknown``
    * - ``bz.IspuKlartext``
-     - ````
+     - ``Unknown``
 
 Result Properties
 """""""""""""""""
@@ -6871,80 +6379,46 @@ Result Properties
    :header-rows: 1
 
    * - Name
-     - Value Type
    * - ``BK``
-     - ````
    * - ``DH``
-     - ````
    * - ``DP``
-     - ````
    * - ``DPH``
-     - ````
    * - ``EINAUS``
-     - ````
    * - ``ETA``
-     - ````
    * - ``ETAW``
-     - ````
    * - ``IAKTIV``
-     - ````
    * - ``IND``
-     - ````
    * - ``M``
-     - ````
    * - ``MAINELEMENT``
-     - ````
    * - ``MOM``
-     - ````
    * - ``N``
-     - ````
    * - ``NMINMAXDIF``
-     - ````
    * - ``NPSH``
-     - ````
    * - ``NPSHDIF``
-     - ````
    * - ``NPSHMIN``
-     - ````
    * - ``NSOLLTURB``
-     - ````
    * - ``PA``
-     - ````
    * - ``PE``
-     - ````
    * - ``PE_RUECK``
-     - ````
    * - ``PHSOLL``
-     - ````
    * - ``PP``
-     - ````
    * - ``PUMD``
-     - ````
    * - ``QM``
-     - ````
    * - ``QMSOLL``
-     - ````
    * - ``QMSOLLTURB``
-     - ````
    * - ``QN0``
-     - ````
    * - ``RCPU_IND``
-     - ````
    * - ``RCPU_W``
-     - ````
    * - ``RCPU_X``
-     - ````
    * - ``RCPU_XD``
-     - ````
    * - ``RHO``
-     - ````
    * - ``STOERUNG``
-     - ````
    * - ``SWVT``
-     - ````
 
-PumpCharTable
-^^^^^^^^^^^^^
+PUMK
+^^^^
+Object Type: ``PumpCharTable``
+
 
 Properties
 """"""""""
@@ -6980,8 +6454,10 @@ Result Properties
 
 No result properties found.
 
-PumpCharTable_Row
-^^^^^^^^^^^^^^^^^
+PUMK_ROWS
+^^^^^^^^^
+Object Type: ``PumpCharTable_Row``
+
 
 Properties
 """"""""""
@@ -7015,8 +6491,10 @@ Result Properties
 
 No result properties found.
 
-PumpGroup
-^^^^^^^^^
+PGRP
+^^^^
+Object Type: ``PumpGroup``
+
 
 Properties
 """"""""""
@@ -7027,63 +6505,63 @@ Properties
    * - Name
      - Value Type
    * - ``Name``
-     - ````
+     - ``Unknown``
    * - ``Beschreibung``
-     - ````
+     - ``Unknown``
    * - ``Ibyp``
-     - ````
+     - ``Unknown``
    * - ``ActAsa``
-     - ````
+     - ``Unknown``
    * - ``AusAsa``
-     - ````
+     - ``Unknown``
    * - ``Fkkibyp``
-     - ````
+     - ``Unknown``
    * - ``Fkkkbyp``
-     - ````
+     - ``Unknown``
    * - ``Ischalt``
-     - ````
+     - ``Unknown``
    * - ``Qmaus``
-     - ````
+     - ``Unknown``
    * - ``Dphaus``
-     - ````
+     - ``Unknown``
    * - ``Indrst``
-     - ````
+     - ``Unknown``
    * - ``Nmax``
-     - ````
+     - ``Unknown``
    * - ``Pdmax``
-     - ````
+     - ``Unknown``
    * - ``Fkkdmax``
-     - ````
+     - ``Unknown``
    * - ``Psmin``
-     - ````
+     - ``Unknown``
    * - ``Fkksmin``
-     - ````
+     - ``Unknown``
    * - ``Fkcont``
-     - ````
+     - ``Unknown``
    * - ``Idreferenz``
-     - ````
+     - ``Unknown``
    * - ``Iplanung``
-     - ````
+     - ``Unknown``
    * - ``Tk``
-     - ````
+     - ``Unknown``
    * - ``Pk``
-     - ````
+     - ``Unknown``
    * - ``InVariant``
-     - ````
+     - ``Unknown``
    * - ``Xkor``
-     - ````
+     - ``Unknown``
    * - ``Ykor``
-     - ````
+     - ``Unknown``
    * - ``BoundingRectangle``
-     - ````
+     - ``Unknown``
    * - ``bz.Fk``
-     - ````
+     - ``Unknown``
    * - ``bz.Iaktiv``
-     - ````
+     - ``Unknown``
    * - ``bz.Indpg``
-     - ````
+     - ``Unknown``
    * - ``bz.Fkrart``
-     - ````
+     - ``Unknown``
 
 Result Properties
 """""""""""""""""
@@ -7092,48 +6570,30 @@ Result Properties
    :header-rows: 1
 
    * - Name
-     - Value Type
    * - ``BK``
-     - ````
    * - ``DH``
-     - ````
    * - ``DP``
-     - ````
    * - ``DPH``
-     - ````
    * - ``ETA``
-     - ````
    * - ``IAKTIV``
-     - ````
    * - ``INDPG``
-     - ````
    * - ``INDSTD``
-     - ````
    * - ``IZSTPG``
-     - ````
    * - ``M``
-     - ````
    * - ``MAINELEMENT``
-     - ````
    * - ``NPUMPIST``
-     - ````
    * - ``NPUMPSOLL``
-     - ````
    * - ``PE``
-     - ````
    * - ``QM``
-     - ````
    * - ``RART``
-     - ````
    * - ``RHO``
-     - ````
    * - ``W``
-     - ````
    * - ``X``
-     - ````
 
-PumpOfPumpGroup
-^^^^^^^^^^^^^^^
+PGRP_PUMP
+^^^^^^^^^
+Object Type: ``PumpOfPumpGroup``
+
 
 Properties
 """"""""""
@@ -7169,14 +6629,13 @@ Result Properties
    :header-rows: 1
 
    * - Name
-     - Value Type
    * - ``IAKTIV``
-     - ````
    * - ``MAINELEMENT``
-     - ````
 
-PumpSpeedTable
-^^^^^^^^^^^^^^
+PUMD
+^^^^
+Object Type: ``PumpSpeedTable``
+
 
 Properties
 """"""""""
@@ -7208,14 +6667,13 @@ Result Properties
    :header-rows: 1
 
    * - Name
-     - Value Type
    * - ``MAINELEMENT``
-     - ````
    * - ``N``
-     - ````
 
-PumpSpeedTable_Row
-^^^^^^^^^^^^^^^^^^
+PUMD_ROWT
+^^^^^^^^^
+Object Type: ``PumpSpeedTable_Row``
+
 
 Properties
 """"""""""
@@ -7245,8 +6703,10 @@ Result Properties
 
 No result properties found.
 
-RART_ControlMode
-^^^^^^^^^^^^^^^^
+ERROR_NO_MAPPING__RART_ControlMode
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Object Type: ``RART_ControlMode``
+
 
 Properties
 """"""""""
@@ -7258,8 +6718,10 @@ Result Properties
 
 No result properties found.
 
-REGP_ControlParameters
-^^^^^^^^^^^^^^^^^^^^^^
+REGP
+^^^^
+Object Type: ``REGP_ControlParameters``
+
 
 Properties
 """"""""""
@@ -7287,8 +6749,10 @@ Result Properties
 
 No result properties found.
 
-RMES_DPTS_RmesInternalDataPoint
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RMES_DPTS
+^^^^^^^^^
+Object Type: ``RMES_DPTS_RmesInternalDataPoint``
+
 
 Properties
 """"""""""
@@ -7332,8 +6796,10 @@ Result Properties
 
 No result properties found.
 
-Rectangle
-^^^^^^^^^
+RECT
+^^^^
+Object Type: ``Rectangle``
+
 
 Properties
 """"""""""
@@ -7377,8 +6843,10 @@ Result Properties
 
 No result properties found.
 
-RegulatorsTable
-^^^^^^^^^^^^^^^
+ZEP1
+^^^^
+Object Type: ``RegulatorsTable``
+
 
 Properties
 """"""""""
@@ -7412,8 +6880,10 @@ Result Properties
 
 No result properties found.
 
-RegulatorsTable_Row
-^^^^^^^^^^^^^^^^^^^
+ZEP1_ROWS
+^^^^^^^^^
+Object Type: ``RegulatorsTable_Row``
+
 
 Properties
 """"""""""
@@ -7443,8 +6913,10 @@ Result Properties
 
 No result properties found.
 
-ReturnTemperaturTable
-^^^^^^^^^^^^^^^^^^^^^
+TRFT
+^^^^
+Object Type: ``ReturnTemperaturTable``
+
 
 Properties
 """"""""""
@@ -7474,8 +6946,10 @@ Result Properties
 
 No result properties found.
 
-ReturnTemperaturTable_Row
-^^^^^^^^^^^^^^^^^^^^^^^^^
+TRFT_ROWS
+^^^^^^^^^
+Object Type: ``ReturnTemperaturTable_Row``
+
 
 Properties
 """"""""""
@@ -7503,8 +6977,10 @@ Result Properties
 
 No result properties found.
 
-RoundRectangle
-^^^^^^^^^^^^^^
+RRCT
+^^^^
+Object Type: ``RoundRectangle``
+
 
 Properties
 """"""""""
@@ -7548,8 +7024,10 @@ Result Properties
 
 No result properties found.
 
-SIRGRAF
-^^^^^^^
+ERROR_NO_MAPPING__SIRGRAF
+^^^^^^^^^^^^^^^^^^^^^^^^^
+Object Type: ``SIRGRAF``
+
 
 Properties
 """"""""""
@@ -7653,8 +7131,10 @@ Result Properties
 
 No result properties found.
 
-SPLZ_TimeSeries
-^^^^^^^^^^^^^^^
+SPLZ
+^^^^
+Object Type: ``SPLZ_TimeSeries``
+
 
 Properties
 """"""""""
@@ -7680,8 +7160,10 @@ Result Properties
 
 No result properties found.
 
-SafetyValve
-^^^^^^^^^^^
+SIVE
+^^^^
+Object Type: ``SafetyValve``
+
 
 Properties
 """"""""""
@@ -7692,51 +7174,51 @@ Properties
    * - Name
      - Value Type
    * - ``Name``
-     - ````
+     - ``Unknown``
    * - ``Beschreibung``
-     - ````
+     - ``Unknown``
    * - ``Dn``
-     - ````
+     - ``Unknown``
    * - ``Typ``
-     - ````
+     - ``Unknown``
    * - ``Fkkref``
-     - ````
+     - ``Unknown``
    * - ``Fkzep2``
-     - ````
+     - ``Unknown``
    * - ``Fkphi2``
-     - ````
+     - ``Unknown``
    * - ``Fkcont``
-     - ````
+     - ``Unknown``
    * - ``Idreferenz``
-     - ````
+     - ``Unknown``
    * - ``Iplanung``
-     - ````
+     - ``Unknown``
    * - ``Tk``
-     - ````
+     - ``Unknown``
    * - ``Pk``
-     - ````
+     - ``Unknown``
    * - ``InVariant``
-     - ````
+     - ``Unknown``
    * - ``Xkor``
-     - ````
+     - ``Unknown``
    * - ``Ykor``
-     - ````
+     - ``Unknown``
    * - ``ShowDescription``
-     - ````
+     - ``Unknown``
    * - ``PositionOfDescription``
-     - ````
+     - ``Unknown``
    * - ``Angle``
-     - ````
+     - ``Unknown``
    * - ``SymbolFactor``
-     - ````
+     - ``Unknown``
    * - ``GeometriesDiffer``
-     - ````
+     - ``Unknown``
    * - ``bz.Fk``
-     - ````
+     - ``Unknown``
    * - ``bz.Phis``
-     - ````
+     - ``Unknown``
    * - ``bz.Psch``
-     - ````
+     - ``Unknown``
 
 Result Properties
 """""""""""""""""
@@ -7745,44 +7227,28 @@ Result Properties
    :header-rows: 1
 
    * - Name
-     - Value Type
    * - ``DH``
-     - ````
    * - ``DP``
-     - ````
    * - ``DPH``
-     - ````
    * - ``DSI``
-     - ````
    * - ``DSK``
-     - ````
    * - ``FS``
-     - ````
    * - ``HR``
-     - ````
    * - ``IAKTIV``
-     - ````
    * - ``M``
-     - ````
    * - ``MAINELEMENT``
-     - ````
    * - ``PHI``
-     - ````
    * - ``PHSCH``
-     - ````
    * - ``PR``
-     - ````
    * - ``QM``
-     - ````
    * - ``RHO``
-     - ````
    * - ``V``
-     - ````
    * - ``ZETA``
-     - ````
 
-SetpointDevice
-^^^^^^^^^^^^^^
+RSLW
+^^^^
+Object Type: ``SetpointDevice``
+
 
 Properties
 """"""""""
@@ -7844,32 +7310,22 @@ Result Properties
    :header-rows: 1
 
    * - Name
-     - Value Type
    * - ``LFKT``
-     - ````
    * - ``MAINELEMENT``
-     - ````
    * - ``SLWKON``
-     - ````
    * - ``SWVT``
-     - ````
    * - ``W``
-     - ````
    * - ``WAKT``
-     - ````
    * - ``WE``
-     - ````
    * - ``WEAKT``
-     - ````
    * - ``WERCK``
-     - ````
    * - ``WRCK``
-     - ````
    * - ``XA``
-     - ````
 
-SolarCollector
-^^^^^^^^^^^^^^
+SOKO
+^^^^
+Object Type: ``SolarCollector``
+
 
 Properties
 """"""""""
@@ -7965,8 +7421,10 @@ Result Properties
 
 No result properties found.
 
-StandPipe
-^^^^^^^^^
+STRO
+^^^^
+Object Type: ``StandPipe``
+
 
 Properties
 """"""""""
@@ -7977,59 +7435,59 @@ Properties
    * - Name
      - Value Type
    * - ``Name``
-     - ````
+     - ``Unknown``
    * - ``Beschreibung``
-     - ````
+     - ``Unknown``
    * - ``Indatab``
-     - ````
+     - ``Unknown``
    * - ``A``
-     - ````
+     - ``Unknown``
    * - ``Hb``
-     - ````
+     - ``Unknown``
    * - ``U``
-     - ````
+     - ``Unknown``
    * - ``Mue``
-     - ````
+     - ``Unknown``
    * - ``Fkatab``
-     - ````
+     - ``Unknown``
    * - ``Dn``
-     - ````
+     - ``Unknown``
    * - ``Zetapos``
-     - ````
+     - ``Unknown``
    * - ``Zetaneg``
-     - ````
+     - ``Unknown``
    * - ``Knotk``
-     - ````
+     - ``Unknown``
    * - ``Zkor``
-     - ````
+     - ``Unknown``
    * - ``Fkfstf``
-     - ````
+     - ``Unknown``
    * - ``Fkcont``
-     - ````
+     - ``Unknown``
    * - ``Idreferenz``
-     - ````
+     - ``Unknown``
    * - ``Iplanung``
-     - ````
+     - ``Unknown``
    * - ``Tk``
-     - ````
+     - ``Unknown``
    * - ``Pk``
-     - ````
+     - ``Unknown``
    * - ``InVariant``
-     - ````
+     - ``Unknown``
    * - ``GeometriesDiffer``
-     - ````
+     - ``Unknown``
    * - ``SymbolGraf``
-     - ````
+     - ``Unknown``
    * - ``SymbolFactor``
-     - ````
+     - ``Unknown``
    * - ``Xkor``
-     - ````
+     - ``Unknown``
    * - ``Ykor``
-     - ````
+     - ``Unknown``
    * - ``Angle``
-     - ````
+     - ``Unknown``
    * - ``bz.Fk``
-     - ````
+     - ``Unknown``
 
 Result Properties
 """""""""""""""""
@@ -8038,34 +7496,23 @@ Result Properties
    :header-rows: 1
 
    * - Name
-     - Value Type
    * - ``IAKTIV``
-     - ````
    * - ``M``
-     - ````
    * - ``MAINELEMENT``
-     - ````
    * - ``MUEB``
-     - ````
    * - ``QM``
-     - ````
    * - ``QMUEB``
-     - ````
    * - ``RHO``
-     - ````
    * - ``T``
-     - ````
    * - ``V``
-     - ````
    * - ``VOL``
-     - ````
    * - ``WALTER``
-     - ````
    * - ``WST``
-     - ````
 
-Street
-^^^^^^
+STRASSE
+^^^^^^^
+Object Type: ``Street``
+
 
 Properties
 """"""""""
@@ -8099,8 +7546,10 @@ Result Properties
 
 No result properties found.
 
-SummingPoint
-^^^^^^^^^^^^
+RADD
+^^^^
+Object Type: ``SummingPoint``
+
 
 Properties
 """"""""""
@@ -8150,18 +7599,15 @@ Result Properties
    :header-rows: 1
 
    * - Name
-     - Value Type
    * - ``MAINELEMENT``
-     - ````
    * - ``XA``
-     - ````
    * - ``XE1``
-     - ````
    * - ``XE2``
-     - ````
 
-SwitchInBlock
-^^^^^^^^^^^^^
+BREF
+^^^^
+Object Type: ``SwitchInBlock``
+
 
 Properties
 """"""""""
@@ -8201,8 +7647,10 @@ Result Properties
 
 No result properties found.
 
-TemperatureTable
-^^^^^^^^^^^^^^^^
+TEVT
+^^^^
+Object Type: ``TemperatureTable``
+
 
 Properties
 """"""""""
@@ -8234,14 +7682,13 @@ Result Properties
    :header-rows: 1
 
    * - Name
-     - Value Type
    * - ``MAINELEMENT``
-     - ````
    * - ``T``
-     - ````
 
-TemperatureTable_Row
-^^^^^^^^^^^^^^^^^^^^
+TEVT_ROWT
+^^^^^^^^^
+Object Type: ``TemperatureTable_Row``
+
 
 Properties
 """"""""""
@@ -8271,8 +7718,10 @@ Result Properties
 
 No result properties found.
 
-Text
+GTXT
 ^^^^
+Object Type: ``Text``
+
 
 Properties
 """"""""""
@@ -8318,8 +7767,10 @@ Result Properties
 
 No result properties found.
 
-ThermalOutputTable
-^^^^^^^^^^^^^^^^^^
+WEVT
+^^^^
+Object Type: ``ThermalOutputTable``
+
 
 Properties
 """"""""""
@@ -8351,14 +7802,13 @@ Result Properties
    :header-rows: 1
 
    * - Name
-     - Value Type
    * - ``MAINELEMENT``
-     - ````
    * - ``W``
-     - ````
 
-ThermalOutputTable_Row
-^^^^^^^^^^^^^^^^^^^^^^
+WEVT_ROWT
+^^^^^^^^^
+Object Type: ``ThermalOutputTable_Row``
+
 
 Properties
 """"""""""
@@ -8388,8 +7838,10 @@ Result Properties
 
 No result properties found.
 
-ThermophysPropTable
-^^^^^^^^^^^^^^^^^^^
+STOF
+^^^^
+Object Type: ``ThermophysPropTable``
+
 
 Properties
 """"""""""
@@ -8419,8 +7871,10 @@ Result Properties
 
 No result properties found.
 
-ThermophysPropTable_Row
-^^^^^^^^^^^^^^^^^^^^^^^
+STOF_ROWS
+^^^^^^^^^
+Object Type: ``ThermophysPropTable_Row``
+
 
 Properties
 """"""""""
@@ -8456,8 +7910,10 @@ Result Properties
 
 No result properties found.
 
-TransitionSymbol
-^^^^^^^^^^^^^^^^
+RUES
+^^^^
+Object Type: ``TransitionSymbol``
+
 
 Properties
 """"""""""
@@ -8505,8 +7961,10 @@ Result Properties
 
 No result properties found.
 
-Transmitter
-^^^^^^^^^^^
+RMES
+^^^^
+Object Type: ``Transmitter``
+
 
 Properties
 """"""""""
@@ -8572,18 +8030,15 @@ Result Properties
    :header-rows: 1
 
    * - Name
-     - Value Type
    * - ``MAINELEMENT``
-     - ````
    * - ``XA``
-     - ````
    * - ``XM``
-     - ````
    * - ``XU``
-     - ````
 
-TransportVariable
-^^^^^^^^^^^^^^^^^
+TRVA
+^^^^
+Object Type: ``TransportVariable``
+
 
 Properties
 """"""""""
@@ -8633,8 +8088,10 @@ Result Properties
 
 No result properties found.
 
-USCH_UserDefinedProperties
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+USCH
+^^^^
+Object Type: ``USCH_UserDefinedProperties``
+
 
 Properties
 """"""""""
@@ -8664,8 +8121,10 @@ Result Properties
 
 No result properties found.
 
-Unknown
-^^^^^^^
+ERROR_NO_MAPPING__Unknown
+^^^^^^^^^^^^^^^^^^^^^^^^^
+Object Type: ``Unknown``
+
 
 Properties
 """"""""""
@@ -8677,8 +8136,10 @@ Result Properties
 
 No result properties found.
 
-VARA_ColorScale
-^^^^^^^^^^^^^^^
+VARA
+^^^^
+Object Type: ``VARA_ColorScale``
+
 
 Properties
 """"""""""
@@ -8706,8 +8167,10 @@ Result Properties
 
 No result properties found.
 
-VARA_ROWS_WidthOrScale
-^^^^^^^^^^^^^^^^^^^^^^
+VARA_ROWS
+^^^^^^^^^
+Object Type: ``VARA_ROWS_WidthOrScale``
+
 
 Properties
 """"""""""
@@ -8775,8 +8238,10 @@ Result Properties
 
 No result properties found.
 
-VRCT_ViewRectangle
-^^^^^^^^^^^^^^^^^^
+VRCT
+^^^^
+Object Type: ``VRCT_ViewRectangle``
+
 
 Properties
 """"""""""
@@ -8808,8 +8273,10 @@ Result Properties
 
 No result properties found.
 
-Valve
-^^^^^
+VENT
+^^^^
+Object Type: ``Valve``
+
 
 Properties
 """"""""""
@@ -8905,64 +8372,38 @@ Result Properties
    :header-rows: 1
 
    * - Name
-     - Value Type
    * - ``AUF``
-     - ````
    * - ``AUFZU``
-     - ````
    * - ``DH``
-     - ````
    * - ``DP``
-     - ````
    * - ``DSI``
-     - ````
    * - ``DSK``
-     - ````
    * - ``FREIGABE``
-     - ````
    * - ``FS``
-     - ````
    * - ``HR``
-     - ````
    * - ``IAKTIV``
-     - ````
    * - ``KV``
-     - ````
    * - ``LAEUFT``
-     - ````
    * - ``M``
-     - ````
    * - ``MAINELEMENT``
-     - ````
    * - ``OEFFNET``
-     - ````
    * - ``PHI``
-     - ````
    * - ``PHI1``
-     - ````
    * - ``PHR``
-     - ````
    * - ``PR``
-     - ````
    * - ``Q2``
-     - ````
    * - ``QM``
-     - ````
    * - ``RHO``
-     - ````
    * - ``SCHLIESST``
-     - ````
    * - ``STOERUNG``
-     - ````
    * - ``V``
-     - ````
    * - ``ZETA``
-     - ````
    * - ``ZU``
-     - ````
 
-ValveLiftTable
-^^^^^^^^^^^^^^
+PHI1
+^^^^
+Object Type: ``ValveLiftTable``
+
 
 Properties
 """"""""""
@@ -8994,14 +8435,13 @@ Result Properties
    :header-rows: 1
 
    * - Name
-     - Value Type
    * - ``MAINELEMENT``
-     - ````
    * - ``PHI``
-     - ````
 
-ValveLiftTable_Row
-^^^^^^^^^^^^^^^^^^
+PHI1_ROWT
+^^^^^^^^^
+Object Type: ``ValveLiftTable_Row``
+
 
 Properties
 """"""""""
@@ -9031,8 +8471,10 @@ Result Properties
 
 No result properties found.
 
-VarFlowTable
-^^^^^^^^^^^^
+QVAR
+^^^^
+Object Type: ``VarFlowTable``
+
 
 Properties
 """"""""""
@@ -9064,28 +8506,20 @@ Result Properties
    :header-rows: 1
 
    * - Name
-     - Value Type
    * - ``FWVB_DPHMIN``
-     - ````
    * - ``FWVB_TVLMIN``
-     - ````
    * - ``MAINELEMENT``
-     - ````
    * - ``MFVHYUV``
-     - ````
    * - ``MFVTHUV``
-     - ````
    * - ``NFVHYUV``
-     - ````
    * - ``NFVTHUV``
-     - ````
    * - ``QM``
-     - ````
    * - ``TVMINMAX``
-     - ````
 
-VarFlowTable_Row
-^^^^^^^^^^^^^^^^
+QVAR_ROWT
+^^^^^^^^^
+Object Type: ``VarFlowTable_Row``
+
 
 Properties
 """"""""""
@@ -9115,8 +8549,10 @@ Result Properties
 
 No result properties found.
 
-VarPressureTable
-^^^^^^^^^^^^^^^^
+PVAR
+^^^^
+Object Type: ``VarPressureTable``
+
 
 Properties
 """"""""""
@@ -9148,14 +8584,13 @@ Result Properties
    :header-rows: 1
 
    * - Name
-     - Value Type
    * - ``MAINELEMENT``
-     - ````
    * - ``PH``
-     - ````
 
-VarPressureTable_Row
-^^^^^^^^^^^^^^^^^^^^
+PVAR_ROWT
+^^^^^^^^^
+Object Type: ``VarPressureTable_Row``
+
 
 Properties
 """"""""""
@@ -9185,8 +8620,10 @@ Result Properties
 
 No result properties found.
 
-VentOpenCloseTable
-^^^^^^^^^^^^^^^^^^
+PHI2
+^^^^
+Object Type: ``VentOpenCloseTable``
+
 
 Properties
 """"""""""
@@ -9216,8 +8653,10 @@ Result Properties
 
 No result properties found.
 
-VentOpenCloseTable_Row
-^^^^^^^^^^^^^^^^^^^^^^
+PHI2_ROWS
+^^^^^^^^^
+Object Type: ``VentOpenCloseTable_Row``
+
 
 Properties
 """"""""""
@@ -9247,8 +8686,10 @@ Result Properties
 
 No result properties found.
 
-VentValve
-^^^^^^^^^
+BEVE
+^^^^
+Object Type: ``VentValve``
+
 
 Properties
 """"""""""
@@ -9259,65 +8700,65 @@ Properties
    * - Name
      - Value Type
    * - ``Name``
-     - ````
+     - ``Unknown``
    * - ``Beschreibung``
-     - ````
+     - ``Unknown``
    * - ``Dgr``
-     - ````
+     - ``Unknown``
    * - ``Dkl``
-     - ````
+     - ``Unknown``
    * - ``Alpha``
-     - ````
+     - ``Unknown``
    * - ``Vgrest``
-     - ````
+     - ``Unknown``
    * - ``Qlbmax``
-     - ````
+     - ``Unknown``
    * - ``Qlekl``
-     - ````
+     - ``Unknown``
    * - ``Rgbeve``
-     - ````
+     - ``Unknown``
    * - ``Trohr``
-     - ````
+     - ``Unknown``
    * - ``Poeff``
-     - ````
+     - ``Unknown``
    * - ``Ibedef``
-     - ````
+     - ``Unknown``
    * - ``Ibetyp``
-     - ````
+     - ``Unknown``
    * - ``Knotk``
-     - ````
+     - ``Unknown``
    * - ``Zkor``
-     - ````
+     - ``Unknown``
    * - ``Fkfstf``
-     - ````
+     - ``Unknown``
    * - ``Iekl``
-     - ````
+     - ``Unknown``
    * - ``Fkcont``
-     - ````
+     - ``Unknown``
    * - ``Idreferenz``
-     - ````
+     - ``Unknown``
    * - ``Iplanung``
-     - ````
+     - ``Unknown``
    * - ``Tk``
-     - ````
+     - ``Unknown``
    * - ``Pk``
-     - ````
+     - ``Unknown``
    * - ``InVariant``
-     - ````
+     - ``Unknown``
    * - ``GeometriesDiffer``
-     - ````
+     - ``Unknown``
    * - ``SymbolGraf``
-     - ````
+     - ``Unknown``
    * - ``SymbolFactor``
-     - ````
+     - ``Unknown``
    * - ``Xkor``
-     - ````
+     - ``Unknown``
    * - ``Ykor``
-     - ````
+     - ``Unknown``
    * - ``Angle``
-     - ````
+     - ``Unknown``
    * - ``bz.Fk``
-     - ````
+     - ``Unknown``
 
 Result Properties
 """""""""""""""""
@@ -9326,38 +8767,25 @@ Result Properties
    :header-rows: 1
 
    * - Name
-     - Value Type
    * - ``IAKTIV``
-     - ````
    * - ``IND``
-     - ````
    * - ``M``
-     - ````
    * - ``MAINELEMENT``
-     - ````
    * - ``MLUFT``
-     - ````
    * - ``PHI``
-     - ````
    * - ``PLUFT``
-     - ````
    * - ``QLUFT``
-     - ````
    * - ``QM``
-     - ````
    * - ``QMLUFT``
-     - ````
    * - ``RHO``
-     - ````
    * - ``TLUFT``
-     - ````
    * - ``VLUFT``
-     - ````
    * - ``VOLLUFT``
-     - ````
 
-VentilatedPressureAirVessel
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+BEWI
+^^^^
+Object Type: ``VentilatedPressureAirVessel``
+
 
 Properties
 """"""""""
@@ -9368,65 +8796,65 @@ Properties
    * - Name
      - Value Type
    * - ``Name``
-     - ````
+     - ``Unknown``
    * - ``Beschreibung``
-     - ````
+     - ``Unknown``
    * - ``Indatab``
-     - ````
+     - ``Unknown``
    * - ``A``
-     - ````
+     - ``Unknown``
    * - ``Lta``
-     - ````
+     - ``Unknown``
    * - ``Hb``
-     - ````
+     - ``Unknown``
    * - ``Pg0``
-     - ````
+     - ``Unknown``
    * - ``Tgas``
-     - ````
+     - ``Unknown``
    * - ``Fkatab``
-     - ````
+     - ``Unknown``
    * - ``Dn``
-     - ````
+     - ``Unknown``
    * - ``Zetapos``
-     - ````
+     - ``Unknown``
    * - ``Zetaneg``
-     - ````
+     - ``Unknown``
    * - ``Rgas``
-     - ````
+     - ``Unknown``
    * - ``Rpoly``
-     - ````
+     - ``Unknown``
    * - ``Knotk``
-     - ````
+     - ``Unknown``
    * - ``Zkor``
-     - ````
+     - ``Unknown``
    * - ``Fkfstf``
-     - ````
+     - ``Unknown``
    * - ``Fkcont``
-     - ````
+     - ``Unknown``
    * - ``Idreferenz``
-     - ````
+     - ``Unknown``
    * - ``Iplanung``
-     - ````
+     - ``Unknown``
    * - ``Tk``
-     - ````
+     - ``Unknown``
    * - ``Pk``
-     - ````
+     - ``Unknown``
    * - ``InVariant``
-     - ````
+     - ``Unknown``
    * - ``GeometriesDiffer``
-     - ````
+     - ``Unknown``
    * - ``SymbolGraf``
-     - ````
+     - ``Unknown``
    * - ``SymbolFactor``
-     - ````
+     - ``Unknown``
    * - ``Xkor``
-     - ````
+     - ``Unknown``
    * - ``Ykor``
-     - ````
+     - ``Unknown``
    * - ``Angle``
-     - ````
+     - ``Unknown``
    * - ``bz.Fk``
-     - ````
+     - ``Unknown``
 
 Result Properties
 """""""""""""""""
@@ -9435,42 +8863,27 @@ Result Properties
    :header-rows: 1
 
    * - Name
-     - Value Type
    * - ``HLUFT``
-     - ````
    * - ``IAKTIV``
-     - ````
    * - ``IND``
-     - ````
    * - ``M``
-     - ````
    * - ``MAINELEMENT``
-     - ````
    * - ``PLUFT``
-     - ````
    * - ``QM``
-     - ````
    * - ``RHO``
-     - ````
    * - ``T``
-     - ````
    * - ``TLUFT``
-     - ````
    * - ``V``
-     - ````
    * - ``VOL``
-     - ````
    * - ``VOLLUFT``
-     - ````
    * - ``VOLLUFT1``
-     - ````
    * - ``WALTER``
-     - ````
    * - ``WST``
-     - ````
 
-WBLZ_ThermalBalance
-^^^^^^^^^^^^^^^^^^^
+WBLZ
+^^^^
+Object Type: ``WBLZ_ThermalBalance``
+
 
 Properties
 """"""""""
@@ -9508,32 +8921,22 @@ Result Properties
    :header-rows: 1
 
    * - Name
-     - Value Type
    * - ``MAINELEMENT``
-     - ````
    * - ``WES``
-     - ````
    * - ``WRAND``
-     - ````
    * - ``WSPEI``
-     - ````
    * - ``WSPEI_SP``
-     - ````
    * - ``WVB``
-     - ````
    * - ``WVB_0``
-     - ````
    * - ``WVB_W``
-     - ````
    * - ``WVB_XD``
-     - ````
    * - ``WVERL``
-     - ````
    * - ``WWU``
-     - ````
 
-WeatherDataTable
-^^^^^^^^^^^^^^^^
+WTTR
+^^^^
+Object Type: ``WeatherDataTable``
+
 
 Properties
 """"""""""
@@ -9573,20 +8976,16 @@ Result Properties
    :header-rows: 1
 
    * - Name
-     - Value Type
    * - ``GDIFF``
-     - ````
    * - ``GGLOB``
-     - ````
    * - ``MAINELEMENT``
-     - ````
    * - ``TEMP``
-     - ````
    * - ``WIND``
-     - ````
 
-WeatherDataTable_Row
-^^^^^^^^^^^^^^^^^^^^
+WTTR_ROWT
+^^^^^^^^^
+Object Type: ``WeatherDataTable_Row``
+
 
 Properties
 """"""""""
