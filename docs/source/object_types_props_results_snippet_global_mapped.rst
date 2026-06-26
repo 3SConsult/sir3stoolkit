@@ -1,7 +1,7 @@
 Object Types, Properties, and Result Value Types
 ---------------------------------------------
 
-.. note:: Aggregated global view across configured network types.
+.. note::
    The below sections lists all table names from self.ObjectTypes_TableNames, along with their properties, result properties, and respective object type from self.ObjectTypes (needed for toolkit operations like self.InsertElement(), self.GetPropertiesOfElementType()).
 
 AGSN
