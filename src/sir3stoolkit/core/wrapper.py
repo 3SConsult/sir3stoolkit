@@ -1526,6 +1526,27 @@ class SIR3S_Model:
 
         return resultscheck, datapointCheckResults
 
+    def GetReferencesToElement(self, elementKey: str):
+        """
+        This method gets all Elements that are referencing the provided Element Key (pk/tk)
+
+        :param elementKey: Pk/Tk of the element
+        :type elementKey: str
+        :return: returns two lists, references and referencesKeys. 
+        :rtype: tuple
+        :description: This is a wrapper method for GetReferencesToElement() from toolkit
+        """
+        ref_length, references, referencesKeys, error = self.toolkit.GetReferencesToElement(elementKey)
+        
+        if error:
+            _log_message("Error: " + error)
+        
+        if ref_length == 0:
+            _log_message("Referencing element list is empty", level="warning")
+            
+        return list(references), list(referencesKeys)
+        
+
 class SIR3S_View:
     """
     Class definition of SIR3S_View() wrapper to access functionalities provided by SIR3S software
