@@ -1810,8 +1810,32 @@
             <span class="n">_log_message</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">errDB</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">resultscheck</span><span class="p">,</span> <span class="n">datapointCheckResults</span></div>
+
+
+<div class="viewcode-block" id="SIR3S_Model.GetReferencesToElement">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetReferencesToElement">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">GetReferencesToElement</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">elementKey</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method gets all Elements that are referencing the provided Element Key (pk/tk)</span>
+
+<span class="sd">        :param elementKey: Pk/Tk of the element</span>
+<span class="sd">        :type elementKey: str</span>
+<span class="sd">        :return: returns two lists, references and referencesKeys. </span>
+<span class="sd">        :rtype: tuple</span>
+<span class="sd">        :description: This is a wrapper method for GetReferencesToElement() from toolkit</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ref_length</span><span class="p">,</span> <span class="n">references</span><span class="p">,</span> <span class="n">referencesKeys</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">GetReferencesToElement</span><span class="p">(</span><span class="n">elementKey</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">error</span><span class="p">:</span>
+            <span class="n">_log_message</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">ref_length</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">_log_message</span><span class="p">(</span><span class="s2">&quot;Referencing element list is empty&quot;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="s2">&quot;warning&quot;</span><span class="p">)</span>
+            
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">references</span><span class="p">),</span> <span class="nb">list</span><span class="p">(</span><span class="n">referencesKeys</span><span class="p">)</span></div>
 </div>
 
+        
 
 <div class="viewcode-block" id="SIR3S_View">
 <a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_View">[docs]</a>
