@@ -32,6 +32,8 @@ Below an overview over all Toolkit Versions for SIR 3S 90-15 Quebec is given. It
 +----------------+---------------------------+-------------+--------------+
 | Toolkit Version| SIR 3S Version            | dll changed | Release Date |
 +================+===========================+=============+==============+
+| 90.15.24       | 90-15-00-24-Upd2          | Yes         | 2026-07-02   |
++----------------+---------------------------+-------------+--------------+
 | 90.15.23       | 90-15-00-24-Upd2          | Yes         | 2026-06-15   |
 +----------------+---------------------------+-------------+--------------+
 | 90.15.22       | 90-15-00-24-Upd2          | No          | 2026-06-08   |
@@ -79,6 +81,16 @@ Below the release history with all changes is given in detail.
 
 SIR 3S: 90-15-00-24-Upd2
 ^^^^^^^^^^^^^^^^^^^^^^^^
+
+Version 90.15.24
+""""""""""""""""
+
+Developed and tested using SIR 3S Version: 90-15-00-24-Upd2
+
+C# Changes
+~~~~~~~~~~
+
+- New Function: GetReferencesToElement(): This method gets all Elements that are referencing the provided Element Key (pk/tk)
 
 Version 90.15.23
 """"""""""""""""
