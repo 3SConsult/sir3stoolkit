@@ -381,7 +381,7 @@ The new documentation can be found at `https://3sconsult.github.io/sir3stoolkit/
 Release a New Version to PyPI
 -----------------------------
 
-1. **Run tests:** Before releasing a new version, ensure that all tests pass. Run the test suite using ``pytest`` as described in `:ref: _running-tests-label`.
+1. **Run tests:** Before releasing a new version, ensure that all tests pass. Run the test suite using ``pytest`` as described in :ref:`running-tests-label`.
 
 2. **Determine new version number:** The Toolkit version numbers are formatted as 90.XX.YY with XX being the SIR 3S version number (15 for Quebec), which rarely changes, and YY being the Toolkit version number. The Toolkit version number YY is incremented with every new release of the Toolkit. For example, if the current version is 90.15.23, the next version would be 90.15.24.
 
@@ -391,4 +391,4 @@ Release a New Version to PyPI
 
 5. **Update Version Number:** In `sir3stoolkit/pyproject.toml` update the version number
 
-6. **Commit to GitHub**: With the version number in `sir3stoolkit/pyproject.toml` changed, the commit will trigger an automatic workflow, that will release the new version to PyPI. For convinience use the version number as commit message.
+6. **Commit to GitHub**: With the version number in `sir3stoolkit/pyproject.toml` changed, the commit will trigger an automatic workflow, that will release the new version to PyPI. For convenience use the version number as commit message.
