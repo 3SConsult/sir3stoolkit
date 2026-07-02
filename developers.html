@@ -80,6 +80,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#running-test-suites">Running Test Suites</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#generating-the-documentation">Generating the Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#release-a-new-version-to-pypi">Release a New Version to PyPI</a></li>
 </ul>
 </li>
 </ul>
@@ -368,7 +369,7 @@ done
 </section>
 </section>
 <section id="running-test-suites">
-<h2>Running Test Suites<a class="headerlink" href="#running-test-suites" title="Link to this heading"></a></h2>
+<span id="running-tests-label"></span><h2>Running Test Suites<a class="headerlink" href="#running-test-suites" title="Link to this heading"></a></h2>
 <p>The repository uses <code class="docutils literal notranslate"><span class="pre">pytest</span></code> for automated tests.</p>
 <p>Before running tests, navigate to the repository root:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span><span class="s2">&quot;C:\Users\User\3S\sir3stoolkit&quot;</span>
@@ -429,6 +430,17 @@ By default, they are skipped to keep regular test runs fast and stable.</p>
 <li><p><strong>Commit the changes.</strong> Commit all files from sir3stoolkit to GitHub (<a class="reference internal" href="#commit-changes-label"><span class="std std-ref">Commit Your Changes to the GitHub Repository</span></a>).</p></li>
 </ol>
 <p>The new documentation can be found at <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/index.html">https://3sconsult.github.io/sir3stoolkit/index.html</a></p>
+</section>
+<section id="release-a-new-version-to-pypi">
+<h2>Release a New Version to PyPI<a class="headerlink" href="#release-a-new-version-to-pypi" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p><strong>Run tests:</strong> Before releasing a new version, ensure that all tests pass. Run the test suite using <code class="docutils literal notranslate"><span class="pre">pytest</span></code> as described in <cite>:ref: _running-tests-label</cite>.</p></li>
+<li><p><strong>Determine new version number:</strong> The Toolkit version numbers are formatted as 90.XX.YY with XX being the SIR 3S version number (15 for Quebec), which rarely changes, and YY being the Toolkit version number. The Toolkit version number YY is incremented with every new release of the Toolkit. For example, if the current version is 90.15.23, the next version would be 90.15.24.</p></li>
+<li><p><strong>Add Changed dll:</strong> If changes were made to the <cite>Sir3S_Toolkit.dll</cite>, add a new folder named the new version number in <cite>sir3stoolkit/src/sir3stoolkit/lib</cite> and insert the new dll.</p></li>
+<li><p><strong>Document Changes:</strong> In <cite>sir3stoolkit/docs/source/releases.rst</cite> add a new row to the release table with the new version number, corresponding SIR 3S version number, release date, and whether the <cite>Sir3S_Toolkit.dll</cite> was changed. Also below under the corresponding SIR 3S version number insert a new section and describe the changes made in detail.</p></li>
+<li><p><strong>Update Version Number:</strong> In <cite>sir3stoolkit/pyproject.toml</cite> update the version number</p></li>
+<li><p><strong>Commit to GitHub</strong>: With the version number in <cite>sir3stoolkit/pyproject.toml</cite> changed, the commit will trigger an automatic workflow, that will release the new version to PyPI. For convinience use the version number as commit message.</p></li>
+</ol>
 </section>
 </section>
 
