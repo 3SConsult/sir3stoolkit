@@ -42,9 +42,9 @@ Result Properties
 
 No result properties found.
 
-WIND
+ALLG
 ^^^^
-Object Type: ``AirVessel``
+Object Type: ``GeneralSection``
 
 
 Properties
@@ -55,68 +55,60 @@ Properties
 
    * - Name
      - Value Types
-   * - ``A``
-     - ``single``
-   * - ``Angle``
-     - ``double``
-   * - ``Beschreibung``
-     - ``string``
-   * - ``Dn``
-     - ``single``
-   * - ``Fkatab``
-     - ``string``
-   * - ``Fkcont``
-     - ``string``
-   * - ``Fkfstf``
-     - ``string``
-   * - ``GeometriesDiffer``
-     - ``boolean``
-   * - ``Hb``
-     - ``single``
-   * - ``Ibla``
+   * - ``Forc``
      - ``int32``
-   * - ``Idreferenz``
-     - ``string``
+   * - ``Idph``
+     - ``int32``
+   * - ``Idqm``
+     - ``int32``
    * - ``InVariant``
      - ``boolean``
-   * - ``Indatab``
-     - ``int32``
-   * - ``Iplanung``
-     - ``int32``
-   * - ``Knotk``
-     - ``string``
    * - ``Name``
      - ``string``
-   * - ``Pg0``
-     - ``single``
+   * - ``Netztyp``
+     - ``int32``
+   * - ``Pfadol1``
+     - ``string``
    * - ``Pk``
      - ``string``
-   * - ``Rgas``
-     - ``single``
-   * - ``Rpoly``
-     - ``single``
-   * - ``SymbolFactor``
-     - ``double``
-   * - ``SymbolGraf``
-     - ``symbol1c_graf``
-   * - ``Tgas``
-     - ``single``
-   * - ``Tk``
+   * - ``bz.ArtTh``
+     - ``int32``
+   * - ``bz.CalcNetwork``
+     - ``int32``
+   * - ``bz.Cdat``
      - ``string``
-   * - ``Vg0``
-     - ``single``
-   * - ``Xkor``
-     - ``double``
-   * - ``Ykor``
-     - ``double``
-   * - ``Zetaneg``
-     - ``single``
-   * - ``Zetapos``
-     - ``single``
-   * - ``Zkor``
-     - ``single``
+   * - ``bz.CheckMod``
+     - ``int32``
+   * - ``bz.CheckRes``
+     - ``int32``
+   * - ``bz.Cuhr``
+     - ``string``
+   * - ``bz.Czon``
+     - ``string``
    * - ``bz.Fk``
      - ``string``
+   * - ``bz.Iart``
+     - ``int32``
+   * - ``bz.Idra``
+     - ``int32``
+   * - ``bz.Itrenn``
+     - ``int32``
+   * - ``bz.Jwarn``
+     - ``int32``
+   * - ``bz.Knuvtyp``
+     - ``int32``
+   * - ``bz.Lfqsv``
+     - ``single``
+   * - ``bz.Schwellqsig``
+     - ``single``
+   * - ``bz.ThInst``
+     - ``int32``
+   * - ``bz.ThStat``
+     - ``int32``
+   * - ``bz.Thfakt``
+     - ``int32``
+   * - ``bz.ValidAggr``
+     - ``int32``
 
 Result Properties
 """""""""""""""""
@@ -125,20 +117,113 @@ Result Properties
    :header-rows: 1
 
    * - Name
-   * - ``HLUFT``
-   * - ``IAKTIV``
-   * - ``M``
+   * - ``CPUTIME``
+   * - ``CVERSO``
+   * - ``EXSTAT``
+   * - ``FWVB_DPHMIN``
+   * - ``FWVB_TVLMIN``
+   * - ``INTERAKTRG``
+   * - ``INTERAKTTH``
+   * - ``ITERHY``
+   * - ``ITERTH``
+   * - ``JWARN``
+   * - ``KNOT_PHMAX``
+   * - ``KNOT_PHMAX_R``
+   * - ``KNOT_PHMAX_U``
+   * - ``KNOT_PHMAX_V``
+   * - ``KNOT_PHMIN``
+   * - ``KNOT_PHMIN_R``
+   * - ``KNOT_PHMIN_U``
+   * - ``KNOT_PHMIN_V``
+   * - ``LFQSV``
+   * - ``LINEPACKGEOM``
+   * - ``LINEPACKGES``
+   * - ``LINEPACKRATE``
    * - ``MAINELEMENT``
-   * - ``PLUFT``
-   * - ``QM``
-   * - ``RHO``
-   * - ``T``
-   * - ``V``
-   * - ``VOL``
-   * - ``VOLDA``
-   * - ``VOLGAS``
-   * - ``WALTER``
-   * - ``WST``
+   * - ``MFVHYUV``
+   * - ``MFVTHUV``
+   * - ``MKNUV``
+   * - ``NETZABN``
+   * - ``NETZABNEXITS``
+   * - ``NETZBEZ``
+   * - ``NFEHL``
+   * - ``NFVHYUV``
+   * - ``NFVTHUV``
+   * - ``NKNUV``
+   * - ``NMELD``
+   * - ``NPGREST``
+   * - ``NWARN``
+   * - ``PAV``
+   * - ``RHOAV``
+   * - ``SNAPSHOTTYPE``
+   * - ``TAV``
+   * - ``TIMESTAMP``
+   * - ``TVMINMAX``
+   * - ``USRTIME``
+
+ANTP
+^^^^
+Object Type: ``DrivePowerTable``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Beschreibung``
+     - ``string``
+   * - ``Idreferenz``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Name``
+     - ``string``
+   * - ``Pk``
+     - ``string``
+   * - ``Tk``
+     - ``string``
+   * - ``Zeitoption``
+     - ``int32``
+
+Result Properties
+"""""""""""""""""
+
+No result properties found.
+
+ANTP_ROWS
+^^^^^^^^^
+Object Type: ``DrivePowerTable_Row``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Fk``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Name``
+     - ``string``
+   * - ``Pamax``
+     - ``single``
+   * - ``Pk``
+     - ``string``
+   * - ``Tumg``
+     - ``single``
+
+Result Properties
+"""""""""""""""""
+
+No result properties found.
 
 ARRW
 ^^^^
@@ -220,971 +305,6 @@ Result Properties
 
 No result properties found.
 
-VKNO
-^^^^
-Object Type: ``BlockConnectionNode``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Displaymode``
-     - ``int32``
-   * - ``Fkcont``
-     - ``string``
-   * - ``Fkknot``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Name``
-     - ``string``
-   * - ``Pk``
-     - ``string``
-   * - ``Pointinsertx``
-     - ``double``
-   * - ``Pointinserty``
-     - ``double``
-   * - ``Posname``
-     - ``int32``
-   * - ``Showname``
-     - ``int32``
-   * - ``Symbolfact``
-     - ``single``
-
-Result Properties
-"""""""""""""""""
-
-No result properties found.
-
-PARI
-^^^^
-Object Type: ``CalcPari``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Name``
-     - ``string``
-   * - ``Nglopt``
-     - ``int32``
-   * - ``Pk``
-     - ``string``
-   * - ``bz.Epsp``
-     - ``single``
-   * - ``bz.Epspreg``
-     - ``single``
-   * - ``bz.Epsqm``
-     - ``single``
-   * - ``bz.Epsqmreg``
-     - ``single``
-   * - ``bz.Epst``
-     - ``single``
-   * - ``bz.Epstrsp``
-     - ``single``
-   * - ``bz.Fk``
-     - ``string``
-   * - ``bz.Ntiter``
-     - ``int32``
-   * - ``bz.Ntrspiter``
-     - ``int32``
-   * - ``bz.Nziter``
-     - ``int32``
-
-Result Properties
-"""""""""""""""""
-
-No result properties found.
-
-ZEP2
-^^^^
-Object Type: ``CharacteristicLossTable``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Beschreibung``
-     - ``string``
-   * - ``Idreferenz``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Kvbzg``
-     - ``single``
-   * - ``Name``
-     - ``string``
-   * - ``Pk``
-     - ``string``
-   * - ``Tk``
-     - ``string``
-   * - ``Typ``
-     - ``int32``
-   * - ``Zeitoption``
-     - ``int32``
-
-Result Properties
-"""""""""""""""""
-
-No result properties found.
-
-ZEP2_ROWS
-^^^^^^^^^
-Object Type: ``CharacteristicLossTable_Row``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Fk``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Kvrelneg``
-     - ``single``
-   * - ``Kvrelpos``
-     - ``single``
-   * - ``Name``
-     - ``string``
-   * - ``Phi``
-     - ``single``
-   * - ``Pk``
-     - ``string``
-   * - ``Zetaneg``
-     - ``single``
-   * - ``Zetapos``
-     - ``single``
-
-Result Properties
-"""""""""""""""""
-
-No result properties found.
-
-CIRC
-^^^^
-Object Type: ``Circle``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Beschreibung``
-     - ``string``
-   * - ``FillColor``
-     - ``color``
-   * - ``Fkcont``
-     - ``string``
-   * - ``GeometriesDiffer``
-     - ``boolean``
-   * - ``Idreferenz``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``LineColor``
-     - ``color``
-   * - ``LineWidthMM``
-     - ``double``
-   * - ``Name``
-     - ``string``
-   * - ``Pk``
-     - ``string``
-   * - ``Tk``
-     - ``string``
-   * - ``Xkor``
-     - ``double``
-   * - ``Ykor``
-     - ``double``
-   * - ``bz.Fk``
-     - ``string``
-
-Result Properties
-"""""""""""""""""
-
-No result properties found.
-
-KOMP
-^^^^
-Object Type: ``Compressor``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Angle``
-     - ``double``
-   * - ``Beschreibung``
-     - ``string``
-   * - ``Dndt``
-     - ``single``
-   * - ``Dpdt``
-     - ``single``
-   * - ``Dqndt``
-     - ``single``
-   * - ``Etam``
-     - ``single``
-   * - ``Etat``
-     - ``single``
-   * - ``Fkantp``
-     - ``string``
-   * - ``Fkcont``
-     - ``string``
-   * - ``Fkkomk``
-     - ``string``
-   * - ``GeometriesDiffer``
-     - ``boolean``
-   * - ``Ibrenng``
-     - ``int32``
-   * - ``Idreferenz``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Inda``
-     - ``int32``
-   * - ``Iplanung``
-     - ``int32``
-   * - ``Iprst``
-     - ``int32``
-   * - ``Ipverh``
-     - ``int32``
-   * - ``Name``
-     - ``string``
-   * - ``Pk``
-     - ``string``
-   * - ``PositionOfDescription``
-     - ``int32``
-   * - ``Pverhdp``
-     - ``single``
-   * - ``Pverhqn``
-     - ``single``
-   * - ``ShowDescription``
-     - ``boolean``
-   * - ``SymbolFactor``
-     - ``double``
-   * - ``Tfahraus``
-     - ``single``
-   * - ``Tfahrein``
-     - ``single``
-   * - ``Tk``
-     - ``string``
-   * - ``Xkor``
-     - ``double``
-   * - ``Ykor``
-     - ``double``
-   * - ``bz.Fk``
-     - ``string``
-   * - ``bz.Inds``
-     - ``int32``
-   * - ``bz.Sw``
-     - ``single``
-
-Result Properties
-"""""""""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-   * - ``DP``
-   * - ``DT``
-   * - ``EINAUS``
-   * - ``ETAP``
-   * - ``IAKTIV``
-   * - ``IND``
-   * - ``INDANT``
-   * - ``M``
-   * - ``MAINELEMENT``
-   * - ``N``
-   * - ``P``
-   * - ``PE``
-   * - ``PI``
-   * - ``PK``
-   * - ``PMAX``
-   * - ``PRATIO``
-   * - ``QN``
-   * - ``QNBG``
-   * - ``QNGES``
-   * - ``TI``
-   * - ``TK``
-   * - ``YP``
-
-KOMK
-^^^^
-Object Type: ``CompressorTable``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Beschreibung``
-     - ``string``
-   * - ``Etaps``
-     - ``single``
-   * - ``Fkfstf``
-     - ``string``
-   * - ``Idreferenz``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Name``
-     - ``string``
-   * - ``Nmax``
-     - ``single``
-   * - ``Nmin``
-     - ``single``
-   * - ``Pansaug``
-     - ``single``
-   * - ``Pk``
-     - ``string``
-   * - ``Tansaug``
-     - ``single``
-   * - ``Tk``
-     - ``string``
-   * - ``Typ``
-     - ``int32``
-   * - ``Zeitoption``
-     - ``int32``
-
-Result Properties
-"""""""""""""""""
-
-No result properties found.
-
-KOMK_ROWS
-^^^^^^^^^
-Object Type: ``CompressorTable_Row``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Etap``
-     - ``single``
-   * - ``Fk``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``N``
-     - ``single``
-   * - ``Name``
-     - ``string``
-   * - ``P``
-     - ``single``
-   * - ``Pk``
-     - ``string``
-   * - ``Q``
-     - ``single``
-   * - ``Yp``
-     - ``single``
-
-Result Properties
-"""""""""""""""""
-
-No result properties found.
-
-CRGL
-^^^^
-Object Type: ``ControlEngineeringNexus``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Fkcont``
-     - ``string``
-   * - ``Idxke``
-     - ``int32``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``LineWidthMM``
-     - ``double``
-   * - ``Name``
-     - ``string``
-   * - ``Pk``
-     - ``string``
-   * - ``Tk``
-     - ``string``
-
-Result Properties
-"""""""""""""""""
-
-No result properties found.
-
-RART
-^^^^
-Object Type: ``ControlMode``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Beschreibung``
-     - ``string``
-   * - ``Dwdt``
-     - ``single``
-   * - ``Fkkref1``
-     - ``string``
-   * - ``Fkkref2``
-     - ``string``
-   * - ``Idreferenz``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Indstd``
-     - ``int32``
-   * - ``Lfdnr``
-     - ``int32``
-   * - ``Name``
-     - ``string``
-   * - ``Pk``
-     - ``string``
-   * - ``Tk``
-     - ``string``
-   * - ``Tsig``
-     - ``single``
-   * - ``TypeDescription``
-     - ``string``
-   * - ``Xdein``
-     - ``single``
-   * - ``bz.Fk``
-     - ``string``
-   * - ``bz.Fkrcpl``
-     - ``string``
-   * - ``bz.Fkswvt``
-     - ``string``
-   * - ``bz.Wsostd``
-     - ``single``
-
-Result Properties
-"""""""""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-   * - ``MAINELEMENT``
-   * - ``RCPL``
-   * - ``SWVT``
-   * - ``W``
-
-RCPL
-^^^^
-Object Type: ``ControlPointTable``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Aktiv``
-     - ``int32``
-   * - ``Beschreibung``
-     - ``string``
-   * - ``Idreferenz``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Name``
-     - ``string``
-   * - ``Pk``
-     - ``string``
-   * - ``Typ``
-     - ``int32``
-
-Result Properties
-"""""""""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-   * - ``KNOT``
-   * - ``MAINELEMENT``
-   * - ``W``
-   * - ``X``
-   * - ``XD``
-
-RCPL_ROWT
-^^^^^^^^^
-Object Type: ``ControlPointTable_Row``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Aktiv``
-     - ``int32``
-   * - ``Fk``
-     - ``string``
-   * - ``Fkkref1``
-     - ``string``
-   * - ``Fkkref2``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Name``
-     - ``string``
-   * - ``Pk``
-     - ``string``
-   * - ``W``
-     - ``single``
-
-Result Properties
-"""""""""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-   * - ``MAINELEMENT``
-   * - ``W``
-   * - ``X``
-   * - ``XD``
-
-REGV
-^^^^
-Object Type: ``ControlValve``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Angle``
-     - ``double``
-   * - ``Beschreibung``
-     - ``string``
-   * - ``Dn``
-     - ``single``
-   * - ``Fkcont``
-     - ``string``
-   * - ``Fkzep1``
-     - ``string``
-   * - ``GeometriesDiffer``
-     - ``boolean``
-   * - ``Idreferenz``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Iplanung``
-     - ``int32``
-   * - ``Name``
-     - ``string``
-   * - ``OnlStrgString``
-     - ``string``
-   * - ``Pk``
-     - ``string``
-   * - ``PositionOfDescription``
-     - ``int32``
-   * - ``ShowDescription``
-     - ``boolean``
-   * - ``SymbolFactor``
-     - ``double``
-   * - ``Thub``
-     - ``single``
-   * - ``Tk``
-     - ``string``
-   * - ``Xkor``
-     - ``double``
-   * - ``Ykor``
-     - ``double``
-   * - ``bz.Fk``
-     - ``string``
-   * - ``bz.Fkrart``
-     - ``string``
-
-Result Properties
-"""""""""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-   * - ``DH``
-   * - ``DP``
-   * - ``DPH``
-   * - ``DSI``
-   * - ``DSK``
-   * - ``FS``
-   * - ``HR``
-   * - ``IAKTIV``
-   * - ``INDSTD``
-   * - ``KV``
-   * - ``M``
-   * - ``MAINELEMENT``
-   * - ``PHI``
-   * - ``PR``
-   * - ``Q2``
-   * - ``QM``
-   * - ``RART``
-   * - ``RHO``
-   * - ``V``
-   * - ``W``
-   * - ``X``
-   * - ``ZETA``
-
-RSTN
-^^^^
-Object Type: ``ControlVariableConverter``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``AnalogInputE1``
-     - ``string``
-   * - ``Angle``
-     - ``double``
-   * - ``Beschreibung``
-     - ``string``
-   * - ``Dsdt``
-     - ``single``
-   * - ``Fkcont``
-     - ``string``
-   * - ``Fkdprg``
-     - ``string``
-   * - ``Fkfwes``
-     - ``string``
-   * - ``Fkfwwu``
-     - ``string``
-   * - ``Fkgvwk``
-     - ``string``
-   * - ``Fkknot``
-     - ``string``
-   * - ``Fkkomp``
-     - ``string``
-   * - ``Fkmreg``
-     - ``string``
-   * - ``Fkobeh``
-     - ``string``
-   * - ``Fkpgrp``
-     - ``string``
-   * - ``Fkpreg``
-     - ``string``
-   * - ``Fkpump``
-     - ``string``
-   * - ``Fkpumppg``
-     - ``string``
-   * - ``Fkrart``
-     - ``string``
-   * - ``Fkrartpg``
-     - ``string``
-   * - ``Fkregv``
-     - ``string``
-   * - ``Fkrohr``
-     - ``string``
-   * - ``Fkvent``
-     - ``string``
-   * - ``Idreferenz``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Indyno``
-     - ``int32``
-   * - ``Ityp``
-     - ``int32``
-   * - ``Ka``
-     - ``string``
-   * - ``LogicalInputE2``
-     - ``string``
-   * - ``Name``
-     - ``string``
-   * - ``Pk``
-     - ``string``
-   * - ``RglSymbolTyp``
-     - ``rglsymboltype``
-   * - ``SymbolFactor``
-     - ``double``
-   * - ``Tk``
-     - ``string``
-   * - ``Typ``
-     - ``string``
-   * - ``Xkor``
-     - ``double``
-   * - ``Ykor``
-     - ``double``
-   * - ``Ymax``
-     - ``single``
-   * - ``Ymin``
-     - ``single``
-   * - ``Ys1``
-     - ``single``
-   * - ``Ys2``
-     - ``single``
-   * - ``bz.Fk``
-     - ``string``
-   * - ``bz.Fklfkt``
-     - ``string``
-   * - ``bz.Fkphi1``
-     - ``string``
-   * - ``bz.Fkpumd``
-     - ``string``
-   * - ``bz.Fkpvar``
-     - ``string``
-   * - ``bz.Fkqvar``
-     - ``string``
-   * - ``bz.Fkrcpl``
-     - ``string``
-   * - ``bz.FkrcplRowt``
-     - ``string``
-   * - ``bz.Fkswvt``
-     - ``string``
-   * - ``bz.Fktevt``
-     - ``string``
-   * - ``bz.Fkwevt``
-     - ``string``
-   * - ``bz.Iaktiv``
-     - ``int32``
-
-Result Properties
-"""""""""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-   * - ``LFKT``
-   * - ``MAINELEMENT``
-   * - ``PHI1``
-   * - ``PUMD``
-   * - ``PVAR``
-   * - ``QVAR``
-   * - ``SWVT``
-   * - ``TEVT``
-   * - ``TRGCOUNT``
-   * - ``WEVT``
-   * - ``XE1``
-   * - ``XE2``
-
-RSTE
-^^^^
-Object Type: ``ControlVariableConverterRSTE``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Angle``
-     - ``double``
-   * - ``Beschreibung``
-     - ``string``
-   * - ``Dsdt1``
-     - ``single``
-   * - ``Dsdt2``
-     - ``single``
-   * - ``Dsdt3``
-     - ``single``
-   * - ``Dsdt4``
-     - ``single``
-   * - ``Dsdt5``
-     - ``single``
-   * - ``Fkcont``
-     - ``string``
-   * - ``Fkvbel1``
-     - ``string``
-   * - ``Fkvbel2``
-     - ``string``
-   * - ``Fkvbel3``
-     - ``string``
-   * - ``Fkvbel4``
-     - ``string``
-   * - ``Fkvbel5``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Indyno1``
-     - ``int32``
-   * - ``Indyno2``
-     - ``int32``
-   * - ``Indyno3``
-     - ``int32``
-   * - ``Indyno4``
-     - ``int32``
-   * - ``Indyno5``
-     - ``int32``
-   * - ``Ka``
-     - ``string``
-   * - ``Kmes1i``
-     - ``string``
-   * - ``Kmes1k``
-     - ``string``
-   * - ``Kmes2i``
-     - ``string``
-   * - ``Kmes2k``
-     - ``string``
-   * - ``Kmes3i``
-     - ``string``
-   * - ``Kmes3k``
-     - ``string``
-   * - ``Kmes4i``
-     - ``string``
-   * - ``Kmes4k``
-     - ``string``
-   * - ``Kmes5i``
-     - ``string``
-   * - ``Kmes5k``
-     - ``string``
-   * - ``Name``
-     - ``string``
-   * - ``Pk``
-     - ``string``
-   * - ``RglSymbolTyp``
-     - ``rglsymboltype``
-   * - ``SymbolFactor``
-     - ``double``
-   * - ``Tk``
-     - ``string``
-   * - ``Typ1``
-     - ``string``
-   * - ``Typ2``
-     - ``string``
-   * - ``Typ3``
-     - ``string``
-   * - ``Typ4``
-     - ``string``
-   * - ``Typ5``
-     - ``string``
-   * - ``Xkor``
-     - ``double``
-   * - ``Ykor``
-     - ``double``
-   * - ``Ymax1``
-     - ``single``
-   * - ``Ymax2``
-     - ``single``
-   * - ``Ymax3``
-     - ``single``
-   * - ``Ymax4``
-     - ``single``
-   * - ``Ymax5``
-     - ``single``
-   * - ``Ymin1``
-     - ``single``
-   * - ``Ymin2``
-     - ``single``
-   * - ``Ymin3``
-     - ``single``
-   * - ``Ymin4``
-     - ``single``
-   * - ``Ymin5``
-     - ``single``
-   * - ``Ys11``
-     - ``single``
-   * - ``Ys12``
-     - ``single``
-   * - ``Ys13``
-     - ``single``
-   * - ``Ys14``
-     - ``single``
-   * - ``Ys15``
-     - ``single``
-   * - ``Ys21``
-     - ``single``
-   * - ``Ys22``
-     - ``single``
-   * - ``Ys23``
-     - ``single``
-   * - ``Ys24``
-     - ``single``
-   * - ``Ys25``
-     - ``single``
-   * - ``bz.Fk``
-     - ``string``
-
-Result Properties
-"""""""""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-   * - ``DYDT1``
-   * - ``DYDT2``
-   * - ``DYDT3``
-   * - ``DYDT4``
-   * - ``DYDT5``
-   * - ``MAINELEMENT``
-   * - ``XE1``
-   * - ``YS1``
-   * - ``YS2``
-   * - ``YS3``
-   * - ``YS4``
-   * - ``YS5``
-
 AVOS
 ^^^^
 Object Type: ``CrossSectionTable``
@@ -1249,9 +369,9 @@ Result Properties
 
 No result properties found.
 
-DPGR_DPKT
-^^^^^^^^^
-Object Type: ``DPGR_DPKT_DatapointDpgrConnection``
+BEVE
+^^^^
+Object Type: ``VentValve``
 
 
 Properties
@@ -1262,12 +382,357 @@ Properties
 
    * - Name
      - Value Types
-   * - ``Fkdpgr``
+   * - ``Alpha``
+     - ``single``
+   * - ``Angle``
+     - ``double``
+   * - ``Beschreibung``
      - ``string``
-   * - ``Fkdpkt``
+   * - ``Dgr``
+     - ``single``
+   * - ``Dkl``
+     - ``single``
+   * - ``Fkcont``
+     - ``string``
+   * - ``Fkfstf``
+     - ``string``
+   * - ``GeometriesDiffer``
+     - ``boolean``
+   * - ``Ibedef``
+     - ``int32``
+   * - ``Ibetyp``
+     - ``int32``
+   * - ``Idreferenz``
+     - ``string``
+   * - ``Iekl``
+     - ``int32``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Iplanung``
+     - ``int32``
+   * - ``Knotk``
+     - ``string``
+   * - ``Name``
+     - ``string``
+   * - ``Pk``
+     - ``string``
+   * - ``Poeff``
+     - ``single``
+   * - ``Qlbmax``
+     - ``single``
+   * - ``Qlekl``
+     - ``single``
+   * - ``Rgbeve``
+     - ``single``
+   * - ``SymbolFactor``
+     - ``double``
+   * - ``SymbolGraf``
+     - ``symbol1c_graf``
+   * - ``Tk``
+     - ``string``
+   * - ``Trohr``
+     - ``single``
+   * - ``Vgrest``
+     - ``single``
+   * - ``Xkor``
+     - ``double``
+   * - ``Ykor``
+     - ``double``
+   * - ``Zkor``
+     - ``single``
+   * - ``bz.Fk``
+     - ``string``
+
+Result Properties
+"""""""""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+   * - ``IAKTIV``
+   * - ``IND``
+   * - ``M``
+   * - ``MAINELEMENT``
+   * - ``MLUFT``
+   * - ``PHI``
+   * - ``PLUFT``
+   * - ``QLUFT``
+   * - ``QM``
+   * - ``QMLUFT``
+   * - ``RHO``
+   * - ``TLUFT``
+   * - ``VLUFT``
+   * - ``VOLLUFT``
+
+BEWI
+^^^^
+Object Type: ``VentilatedPressureAirVessel``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``A``
+     - ``single``
+   * - ``Angle``
+     - ``double``
+   * - ``Beschreibung``
+     - ``string``
+   * - ``Dn``
+     - ``single``
+   * - ``Fkatab``
+     - ``string``
+   * - ``Fkcont``
+     - ``string``
+   * - ``Fkfstf``
+     - ``string``
+   * - ``GeometriesDiffer``
+     - ``boolean``
+   * - ``Hb``
+     - ``single``
+   * - ``Idreferenz``
      - ``string``
    * - ``InVariant``
      - ``boolean``
+   * - ``Indatab``
+     - ``int32``
+   * - ``Iplanung``
+     - ``int32``
+   * - ``Knotk``
+     - ``string``
+   * - ``Lta``
+     - ``single``
+   * - ``Name``
+     - ``string``
+   * - ``Pg0``
+     - ``single``
+   * - ``Pk``
+     - ``string``
+   * - ``Rgas``
+     - ``single``
+   * - ``Rpoly``
+     - ``single``
+   * - ``SymbolFactor``
+     - ``double``
+   * - ``SymbolGraf``
+     - ``symbol1c_graf``
+   * - ``Tgas``
+     - ``single``
+   * - ``Tk``
+     - ``string``
+   * - ``Xkor``
+     - ``double``
+   * - ``Ykor``
+     - ``double``
+   * - ``Zetaneg``
+     - ``single``
+   * - ``Zetapos``
+     - ``single``
+   * - ``Zkor``
+     - ``single``
+   * - ``bz.Fk``
+     - ``string``
+
+Result Properties
+"""""""""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+   * - ``HLUFT``
+   * - ``IAKTIV``
+   * - ``IND``
+   * - ``M``
+   * - ``MAINELEMENT``
+   * - ``PLUFT``
+   * - ``QM``
+   * - ``RHO``
+   * - ``T``
+   * - ``TLUFT``
+   * - ``V``
+   * - ``VOL``
+   * - ``VOLLUFT``
+   * - ``VOLLUFT1``
+   * - ``WALTER``
+   * - ``WST``
+
+BREF
+^^^^
+Object Type: ``SwitchInBlock``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Beschreibung``
+     - ``string``
+   * - ``BoundingRectangle``
+     - ``irectangle``
+   * - ``ElementFont``
+     - ``c3sfont``
+   * - ``Fkblock``
+     - ``string``
+   * - ``Fkcont``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Name``
+     - ``string``
+   * - ``Pk``
+     - ``string``
+   * - ``TextColor``
+     - ``color``
+   * - ``Tk``
+     - ``string``
+   * - ``Xkor``
+     - ``double``
+   * - ``Ykor``
+     - ``double``
+
+Result Properties
+"""""""""""""""""
+
+No result properties found.
+
+CIRC
+^^^^
+Object Type: ``Circle``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Beschreibung``
+     - ``string``
+   * - ``FillColor``
+     - ``color``
+   * - ``Fkcont``
+     - ``string``
+   * - ``GeometriesDiffer``
+     - ``boolean``
+   * - ``Idreferenz``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``LineColor``
+     - ``color``
+   * - ``LineWidthMM``
+     - ``double``
+   * - ``Name``
+     - ``string``
+   * - ``Pk``
+     - ``string``
+   * - ``Tk``
+     - ``string``
+   * - ``Xkor``
+     - ``double``
+   * - ``Ykor``
+     - ``double``
+   * - ``bz.Fk``
+     - ``string``
+
+Result Properties
+"""""""""""""""""
+
+No result properties found.
+
+CONT
+^^^^
+Object Type: ``ObjectContainerSymbol``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``BoundingRectangle``
+     - ``irectangle``
+   * - ``GeometriesDiffer``
+     - ``boolean``
+   * - ``Id``
+     - ``int32``
+   * - ``Idparent``
+     - ``int32``
+   * - ``Idreferenz``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Lfdnr``
+     - ``int32``
+   * - ``MaximalNodeWidth``
+     - ``double``
+   * - ``MaximalPipeWidth``
+     - ``double``
+   * - ``MaximalVbelNselWidth``
+     - ``double``
+   * - ``MeterPerPixel``
+     - ``double``
+   * - ``Name``
+     - ``string``
+   * - ``PickingTolerance``
+     - ``double``
+   * - ``Pk``
+     - ``string``
+   * - ``SymbolFont``
+     - ``c3sfont``
+   * - ``SymbolType``
+     - ``ccontsymboltype``
+   * - ``Tk``
+     - ``string``
+   * - ``Xkor``
+     - ``double``
+   * - ``Ykor``
+     - ``double``
+   * - ``bz.Fk``
+     - ``string``
+
+Result Properties
+"""""""""""""""""
+
+No result properties found.
+
+CRGL
+^^^^
+Object Type: ``ControlEngineeringNexus``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Fkcont``
+     - ``string``
+   * - ``Idxke``
+     - ``int32``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``LineWidthMM``
+     - ``double``
    * - ``Name``
      - ``string``
    * - ``Pk``
@@ -1321,6 +786,37 @@ Properties
      - ``string``
    * - ``bz.LocalUse``
      - ``int32``
+
+Result Properties
+"""""""""""""""""
+
+No result properties found.
+
+DPGR_DPKT
+^^^^^^^^^
+Object Type: ``DPGR_DPKT_DatapointDpgrConnection``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Fkdpgr``
+     - ``string``
+   * - ``Fkdpkt``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Name``
+     - ``string``
+   * - ``Pk``
+     - ``string``
+   * - ``Tk``
+     - ``string``
 
 Result Properties
 """""""""""""""""
@@ -1432,248 +928,6 @@ Result Properties
 
 No result properties found.
 
-SRAT
-^^^^
-Object Type: ``DamageRatesTable``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Beschreibung``
-     - ``string``
-   * - ``Idreferenz``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Name``
-     - ``string``
-   * - ``Pk``
-     - ``string``
-   * - ``Tk``
-     - ``string``
-   * - ``Zeitoption``
-     - ``int32``
-
-Result Properties
-"""""""""""""""""
-
-No result properties found.
-
-SRAT_ROWS
-^^^^^^^^^
-Object Type: ``DamageRatesTable_Row``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Erate``
-     - ``single``
-   * - ``Fk``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Name``
-     - ``string``
-   * - ``Pk``
-     - ``string``
-   * - ``Ralter``
-     - ``int32``
-   * - ``Srate``
-     - ``single``
-
-Result Properties
-"""""""""""""""""
-
-No result properties found.
-
-RTOT
-^^^^
-Object Type: ``DeadTimeElement``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Angle``
-     - ``double``
-   * - ``Beschreibung``
-     - ``string``
-   * - ``E1``
-     - ``string``
-   * - ``Fkcont``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Ka``
-     - ``string``
-   * - ``Name``
-     - ``string``
-   * - ``Pk``
-     - ``string``
-   * - ``RglSymbolTyp``
-     - ``rglsymboltype``
-   * - ``SymbolFactor``
-     - ``double``
-   * - ``Tk``
-     - ``string``
-   * - ``Ttot``
-     - ``single``
-   * - ``Xkor``
-     - ``double``
-   * - ``Ykor``
-     - ``double``
-   * - ``bz.Fk``
-     - ``string``
-
-Result Properties
-"""""""""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-   * - ``MAINELEMENT``
-   * - ``XA``
-   * - ``XE``
-
-VERB
-^^^^
-Object Type: ``Demand``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``AenderungArt``
-     - ``int32``
-   * - ``AenderungDatum``
-     - ``string``
-   * - ``AenderungInfo``
-     - ``string``
-   * - ``Betriebsstatus``
-     - ``int32``
-   * - ``Betriebsstunden``
-     - ``single``
-   * - ``Dimension``
-     - ``string``
-   * - ``ErzeugungArt``
-     - ``int32``
-   * - ``ErzeugungInfo``
-     - ``string``
-   * - ``Fkhaus``
-     - ``string``
-   * - ``GeometriesDiffer``
-     - ``boolean``
-   * - ``Graphics``
-     - ``hausverbgraf``
-   * - ``Hausanlagenbauart``
-     - ``string``
-   * - ``Hausanlagentyp``
-     - ``string``
-   * - ``Hausnr``
-     - ``int32``
-   * - ``HausnrZus``
-     - ``string``
-   * - ``Heizleistung``
-     - ``single``
-   * - ``Idreferenz``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Jahresarbeit``
-     - ``single``
-   * - ``Kuehlleistung``
-     - ``single``
-   * - ``KundenId``
-     - ``string``
-   * - ``Kundengruppe``
-     - ``string``
-   * - ``LaengeHal``
-     - ``single``
-   * - ``LaengeHauseinfuehrung``
-     - ``single``
-   * - ``MengenbegrHwd``
-     - ``single``
-   * - ``Name``
-     - ``string``
-   * - ``Pk``
-     - ``string``
-   * - ``Plz``
-     - ``int32``
-   * - ``Prl``
-     - ``single``
-   * - ``Pvl``
-     - ``single``
-   * - ``Qhm``
-     - ``single``
-   * - ``QhmaxFd``
-     - ``single``
-   * - ``QhmaxFh``
-     - ``single``
-   * - ``Rau``
-     - ``single``
-   * - ``Sonstige``
-     - ``single``
-   * - ``Spartentyp``
-     - ``string``
-   * - ``Tariftyp``
-     - ``string``
-   * - ``Tk``
-     - ``string``
-   * - ``Trs0``
-     - ``single``
-   * - ``Tvl0``
-     - ``single``
-   * - ``Verbrauch``
-     - ``double``
-   * - ``VerbrauchDatum``
-     - ``string``
-   * - ``ViewX``
-     - ``double``
-   * - ``ViewY``
-     - ``double``
-   * - ``Warmwasserleistung``
-     - ``single``
-   * - ``Xkor``
-     - ``double``
-   * - ``Ykor``
-     - ``double``
-   * - ``ZaehlerId``
-     - ``string``
-   * - ``Zeta``
-     - ``single``
-   * - ``Zkor``
-     - ``single``
-   * - ``bz.Fk``
-     - ``string``
-
-Result Properties
-"""""""""""""""""
-
-No result properties found.
-
 DPRG
 ^^^^
 Object Type: ``DifferentialRegulator``
@@ -1766,9 +1020,9 @@ Result Properties
    * - ``V``
    * - ``ZETA``
 
-RPFL
+DTRO
 ^^^^
-Object Type: ``DirectionalArrow``
+Object Type: ``PipeTable``
 
 
 Properties
@@ -1779,41 +1033,148 @@ Properties
 
    * - Name
      - Value Types
-   * - ``Angle``
-     - ``double``
    * - ``Beschreibung``
      - ``string``
-   * - ``FillColor``
-     - ``color``
-   * - ``Fkcont``
+   * - ``E``
+     - ``single``
+   * - ``Idreferenz``
      - ``string``
-   * - ``FkdpgrDpkt``
-     - ``string``
-   * - ``GeometriesDiffer``
-     - ``boolean``
    * - ``InVariant``
      - ``boolean``
-   * - ``Inddir``
-     - ``int32``
-   * - ``LineColor``
-     - ``color``
-   * - ``LineWidthMM``
-     - ``double``
    * - ``Name``
      - ``string``
    * - ``Pk``
      - ``string``
-   * - ``SymbolFactor``
-     - ``double``
    * - ``Tk``
      - ``string``
-   * - ``Xkor``
-     - ``double``
-   * - ``Ykor``
-     - ``double``
-   * - ``bz.Eps``
+   * - ``Typ``
+     - ``string``
+   * - ``Zeitoption``
+     - ``int32``
+
+Result Properties
+"""""""""""""""""
+
+No result properties found.
+
+DTRO_ROWD
+^^^^^^^^^
+Object Type: ``PipeTable_Row``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Ausfallzeit``
      - ``single``
+   * - ``Da``
+     - ``single``
+   * - ``Di``
+     - ``single``
+   * - ``Dn``
+     - ``string``
+   * - ``Fk``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Kt``
+     - ``single``
+   * - ``Name``
+     - ``string``
+   * - ``Pk``
+     - ``string``
+   * - ``Pn``
+     - ``single``
+   * - ``Rehabilitation``
+     - ``single``
+   * - ``Reparatur``
+     - ``single``
+   * - ``S``
+     - ``single``
+   * - ``Tk``
+     - ``string``
+   * - ``Wsteig``
+     - ``single``
+   * - ``Wtiefe``
+     - ``single``
+
+Result Properties
+"""""""""""""""""
+
+No result properties found.
+
+EBES
+^^^^
+Object Type: ``EBES_FeederGroups``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Idreferenz``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Lfdnr``
+     - ``int32``
+   * - ``Name``
+     - ``string``
+   * - ``ObjsString``
+     - ``string``
+   * - ``Pk``
+     - ``string``
+   * - ``Tk``
+     - ``string``
+   * - ``bz.Aktiv``
+     - ``int32``
+   * - ``bz.Aktivqs``
+     - ``int32``
    * - ``bz.Fk``
+     - ``string``
+   * - ``bz.Versagensw``
+     - ``single``
+
+Result Properties
+"""""""""""""""""
+
+No result properties found.
+
+ELEMENTQUERY
+^^^^^^^^^^^^
+Object Type: ``ElementQuery``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Aktiv``
+     - ``int32``
+   * - ``Elementtype``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Lfdnr``
+     - ``int32``
+   * - ``Name``
+     - ``string``
+   * - ``Pk``
+     - ``string``
+   * - ``QueryStringAsString``
      - ``string``
 
 Result Properties
@@ -1821,9 +1182,24 @@ Result Properties
 
 No result properties found.
 
-FWVB
-^^^^
-Object Type: ``DistrictHeatingConsumer``
+ERROR_NO_MAPPING__RART_ControlMode
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Object Type: ``RART_ControlMode``
+
+
+Properties
+""""""""""
+
+No properties found.
+
+Result Properties
+"""""""""""""""""
+
+No result properties found.
+
+ERROR_NO_MAPPING__SIRGRAF
+^^^^^^^^^^^^^^^^^^^^^^^^^
+Object Type: ``SIRGRAF``
 
 
 Properties
@@ -1834,318 +1210,114 @@ Properties
 
    * - Name
      - Value Types
-   * - ``A``
-     - ``single``
-   * - ``Angle``
-     - ``double``
-   * - ``B``
-     - ``single``
-   * - ``Beschreibung``
+   * - ``BlockBkgndColor``
+     - ``int32``
+   * - ``CacheDirectory``
      - ``string``
-   * - ``C``
-     - ``single``
-   * - ``CPM``
-     - ``double``
-   * - ``Dphaus``
-     - ``single``
-   * - ``Dprlmin``
-     - ``single``
-   * - ``Dpvlmin``
-     - ``single``
-   * - ``Dtmin``
-     - ``single``
-   * - ``Fkcont``
-     - ``string``
-   * - ``Fktrft``
-     - ``string``
-   * - ``Fkzep1rl``
-     - ``string``
-   * - ``Fkzep1vl``
-     - ``string``
-   * - ``GeometriesDiffer``
-     - ``boolean``
-   * - ``Idreferenz``
-     - ``string``
-   * - ``Imbg``
+   * - ``CacheInUserProfile``
+     - ``int32``
+   * - ``DrawTileOutlines``
+     - ``int32``
+   * - ``HighlightElement``
+     - ``int32``
+   * - ``ImageQuality``
      - ``int32``
    * - ``InVariant``
      - ``boolean``
-   * - ``Ind0``
+   * - ``LegFix``
      - ``int32``
-   * - ``Indtr``
+   * - ``LegHeight``
+     - ``single``
+   * - ``LegMaxEntries``
      - ``int32``
-   * - ``IndtrKlartext``
+   * - ``LegXkor``
+     - ``double``
+   * - ``LegYkor``
+     - ``double``
+   * - ``ListConfigString``
      - ``string``
-   * - ``Iplanung``
+   * - ``MaxLineSize``
      - ``int32``
-   * - ``Irfv``
+   * - ``MaxNodeSize``
      - ``int32``
-   * - ``Lfk``
-     - ``single``
-   * - ``M0Estimated``
-     - ``single``
+   * - ``MaxVbelSize``
+     - ``int32``
    * - ``Name``
      - ``string``
-   * - ``NumberOfVERB``
+   * - ``Nbnr``
      - ``int32``
-   * - ``P1soll``
-     - ``single``
+   * - ``Nknr``
+     - ``int32``
+   * - ``OsmPasswd``
+     - ``string``
+   * - ``OsmTimeout``
+     - ``int32``
+   * - ``OsmUser``
+     - ``string``
+   * - ``PickingRadius``
+     - ``int32``
+   * - ``Pickingmode``
+     - ``int32``
    * - ``Pk``
      - ``string``
-   * - ``PositionOfDescription``
+   * - ``ProxyAuthMethod``
      - ``int32``
-   * - ``Qm0``
-     - ``single``
-   * - ``Rho0``
-     - ``single``
-   * - ``ShowDescription``
-     - ``boolean``
-   * - ``SymbolFactor``
-     - ``double``
-   * - ``Tk``
+   * - ``ProxyPasswd``
      - ``string``
-   * - ``Trs0``
-     - ``single``
-   * - ``Trsk``
-     - ``single``
-   * - ``Tsrl``
-     - ``single``
-   * - ``Tsvl``
-     - ``single``
-   * - ``Tvl0``
-     - ``single``
-   * - ``V0``
-     - ``single``
-   * - ``Vtyp``
+   * - ``ProxyServer``
+     - ``string``
+   * - ``ProxyUser``
+     - ``string``
+   * - ``Sccnln``
      - ``int32``
-   * - ``W0``
-     - ``single``
-   * - ``W0Estimated``
-     - ``single``
-   * - ``Xkor``
-     - ``double``
-   * - ``Ykor``
-     - ``double``
-   * - ``Zevk``
-     - ``single``
-   * - ``bz.Fk``
-     - ``string``
-   * - ``bz.Fklfkt``
-     - ``string``
-   * - ``bz.Fklfkt2``
-     - ``string``
-   * - ``bz.Fkqvar``
-     - ``string``
-   * - ``bz.Fktevt``
-     - ``string``
-   * - ``bz.Indlast``
+   * - ``Scelt``
      - ``int32``
-   * - ``bz.IndlastKlartext``
+   * - ``Scknot``
+     - ``int32``
+   * - ``Scrohr``
+     - ``int32``
+   * - ``Sfvbels``
+     - ``double``
+   * - ``Srid``
+     - ``int32``
+   * - ``Srid2``
+     - ``int32``
+   * - ``SridString``
      - ``string``
-   * - ``bz.Indlfkt2``
+   * - ``StructuredViewsString``
+     - ``string``
+   * - ``Sylw``
+     - ``single``
+   * - ``TileDownloadServer``
+     - ``string``
+   * - ``Tooltip``
+     - ``int32``
+   * - ``Uimode``
+     - ``int32``
+   * - ``Upkc``
+     - ``int32``
+   * - ``UseHttpProxy``
      - ``int32``
 
 Result Properties
 """""""""""""""""
 
-.. list-table::
-   :header-rows: 1
+No result properties found.
 
-   * - Name
-   * - ``DH``
-   * - ``DP``
-   * - ``DPH``
-   * - ``IAKTIV``
-   * - ``INDUV``
-   * - ``LFH``
-   * - ``LFKT``
-   * - ``LFT``
-   * - ``M``
-   * - ``MAINELEMENT``
-   * - ``MHYUV``
-   * - ``MSOLL``
-   * - ``MTHUV``
-   * - ``P1``
-   * - ``P2``
-   * - ``P3``
-   * - ``PH1``
-   * - ``PH2``
-   * - ``PH3``
-   * - ``PHIRL``
-   * - ``PHIVL``
-   * - ``QM``
-   * - ``QM13``
-   * - ``QM31``
-   * - ``QMI``
-   * - ``QMK``
-   * - ``QVAR``
-   * - ``RHOI``
-   * - ``RHOK``
-   * - ``TI``
-   * - ``TK``
-   * - ``TVMIN``
-   * - ``W``
-   * - ``WHYUV``
-   * - ``WSOLL``
-   * - ``WTHUV``
-
-FWES
-^^^^
-Object Type: ``DistrictHeatingFeeder``
+ERROR_NO_MAPPING__Unknown
+^^^^^^^^^^^^^^^^^^^^^^^^^
+Object Type: ``Unknown``
 
 
 Properties
 """"""""""
 
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Angle``
-     - ``double``
-   * - ``Beschreibung``
-     - ``string``
-   * - ``Dn``
-     - ``single``
-   * - ``Fkcont``
-     - ``string``
-   * - ``GeometriesDiffer``
-     - ``boolean``
-   * - ``Idreferenz``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Iplanung``
-     - ``int32``
-   * - ``Irueck``
-     - ``int32``
-   * - ``Name``
-     - ``string``
-   * - ``Pk``
-     - ``string``
-   * - ``PositionOfDescription``
-     - ``int32``
-   * - ``ShowDescription``
-     - ``boolean``
-   * - ``SymbolFactor``
-     - ``double``
-   * - ``Taus``
-     - ``single``
-   * - ``Tk``
-     - ``string``
-   * - ``Xkor``
-     - ``double``
-   * - ``Ykor``
-     - ``double``
-   * - ``Zeta``
-     - ``single``
-   * - ``bz.Fk``
-     - ``string``
-   * - ``bz.Fktevt``
-     - ``string``
-   * - ``bz.Fkwevt``
-     - ``string``
-   * - ``bz.Ihytyp``
-     - ``int32``
-   * - ``bz.IhytypKlartext``
-     - ``string``
-   * - ``bz.Ithtyp``
-     - ``int32``
-   * - ``bz.IthtypKlartext``
-     - ``string``
-   * - ``bz.Tkon``
-     - ``single``
-   * - ``bz.Wkon``
-     - ``single``
+No properties found.
 
 Result Properties
 """""""""""""""""
 
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-   * - ``DH``
-   * - ``DP``
-   * - ``DPH``
-   * - ``IAKTIV``
-   * - ``IHYTYP``
-   * - ``ITHTYP``
-   * - ``M``
-   * - ``MAINELEMENT``
-   * - ``QM``
-   * - ``RHOI``
-   * - ``RHOK``
-   * - ``TEVT``
-   * - ``TI``
-   * - ``TK``
-   * - ``TKON``
-   * - ``V``
-   * - ``W``
-   * - ``W0``
-   * - ``WEVT``
-   * - ``WSOLL``
-
-RDIV
-^^^^
-Object Type: ``Divider``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Angle``
-     - ``double``
-   * - ``Beschreibung``
-     - ``string``
-   * - ``E1``
-     - ``string``
-   * - ``E2``
-     - ``string``
-   * - ``Fkcont``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Inddiv``
-     - ``int32``
-   * - ``Ka``
-     - ``string``
-   * - ``Mindiv``
-     - ``single``
-   * - ``Name``
-     - ``string``
-   * - ``Pk``
-     - ``string``
-   * - ``RglSymbolTyp``
-     - ``rglsymboltype``
-   * - ``SymbolFactor``
-     - ``double``
-   * - ``Tk``
-     - ``string``
-   * - ``Xkor``
-     - ``double``
-   * - ``Ykor``
-     - ``double``
-   * - ``bz.Fk``
-     - ``string``
-
-Result Properties
-"""""""""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-   * - ``MAINELEMENT``
-   * - ``XA``
-   * - ``XE1``
-   * - ``XE2``
+No result properties found.
 
 ETAM
 ^^^^
@@ -2204,208 +1376,6 @@ Properties
    * - ``Nzun0``
      - ``single``
    * - ``Pk``
-     - ``string``
-
-Result Properties
-"""""""""""""""""
-
-No result properties found.
-
-ANTP
-^^^^
-Object Type: ``DrivePowerTable``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Beschreibung``
-     - ``string``
-   * - ``Idreferenz``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Name``
-     - ``string``
-   * - ``Pk``
-     - ``string``
-   * - ``Tk``
-     - ``string``
-   * - ``Zeitoption``
-     - ``int32``
-
-Result Properties
-"""""""""""""""""
-
-No result properties found.
-
-ANTP_ROWS
-^^^^^^^^^
-Object Type: ``DrivePowerTable_Row``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Fk``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Name``
-     - ``string``
-   * - ``Pamax``
-     - ``single``
-   * - ``Pk``
-     - ``string``
-   * - ``Tumg``
-     - ``single``
-
-Result Properties
-"""""""""""""""""
-
-No result properties found.
-
-EBES
-^^^^
-Object Type: ``EBES_FeederGroups``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Idreferenz``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Lfdnr``
-     - ``int32``
-   * - ``Name``
-     - ``string``
-   * - ``ObjsString``
-     - ``string``
-   * - ``Pk``
-     - ``string``
-   * - ``Tk``
-     - ``string``
-   * - ``bz.Aktiv``
-     - ``int32``
-   * - ``bz.Aktivqs``
-     - ``int32``
-   * - ``bz.Fk``
-     - ``string``
-   * - ``bz.Versagensw``
-     - ``single``
-
-Result Properties
-"""""""""""""""""
-
-No result properties found.
-
-ETAU
-^^^^
-Object Type: ``EfficiencyConverterTable``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Beschreibung``
-     - ``string``
-   * - ``Idreferenz``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Name``
-     - ``string``
-   * - ``Pk``
-     - ``string``
-   * - ``Tk``
-     - ``string``
-   * - ``Zeitoption``
-     - ``int32``
-
-Result Properties
-"""""""""""""""""
-
-No result properties found.
-
-ETAU_ROWS
-^^^^^^^^^
-Object Type: ``EfficiencyConverterTable_Row``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Etafu``
-     - ``single``
-   * - ``Fk``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Name``
-     - ``string``
-   * - ``Nzun0``
-     - ``single``
-   * - ``Pk``
-     - ``string``
-
-Result Properties
-"""""""""""""""""
-
-No result properties found.
-
-ELEMENTQUERY
-^^^^^^^^^^^^
-Object Type: ``ElementQuery``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Aktiv``
-     - ``int32``
-   * - ``Elementtype``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Lfdnr``
-     - ``int32``
-   * - ``Name``
-     - ``string``
-   * - ``Pk``
-     - ``string``
-   * - ``QueryStringAsString``
      - ``string``
 
 Result Properties
@@ -2477,9 +1447,9 @@ Result Properties
 
 No result properties found.
 
-UTMP
+ETAU
 ^^^^
-Object Type: ``EnvironmentTemp``
+Object Type: ``EfficiencyConverterTable``
 
 
 Properties
@@ -2490,6 +1460,8 @@ Properties
 
    * - Name
      - Value Types
+   * - ``Beschreibung``
+     - ``string``
    * - ``Idreferenz``
      - ``string``
    * - ``InVariant``
@@ -2500,25 +1472,17 @@ Properties
      - ``string``
    * - ``Tk``
      - ``string``
-   * - ``bz.Fk``
-     - ``string``
-   * - ``bz.Fktevt``
-     - ``string``
-   * - ``bz.Fkwttr``
-     - ``string``
-   * - ``bz.Indi``
+   * - ``Zeitoption``
      - ``int32``
-   * - ``bz.Tu``
-     - ``single``
 
 Result Properties
 """""""""""""""""
 
 No result properties found.
 
-FWBZ
-^^^^
-Object Type: ``FWBZ_DistrictHeatingReferenceValues``
+ETAU_ROWS
+^^^^^^^^^
+Object Type: ``EfficiencyConverterTable_Row``
 
 
 Properties
@@ -2529,39 +1493,27 @@ Properties
 
    * - Name
      - Value Types
-   * - ``Ahausg``
+   * - ``Etafu``
      - ``single``
-   * - ``Arohr``
-     - ``single``
-   * - ``Flfwvb``
-     - ``single``
-   * - ``Hgebzg``
-     - ``single``
-   * - ``Ikotyp``
-     - ``int32``
+   * - ``Fk``
+     - ``string``
    * - ``InVariant``
      - ``boolean``
-   * - ``Lambdabzg``
-     - ``single``
    * - ``Name``
      - ``string``
+   * - ``Nzun0``
+     - ``single``
    * - ``Pk``
      - ``string``
-   * - ``Rhobzg``
-     - ``single``
-   * - ``Vhausg``
-     - ``single``
-   * - ``Zerohr``
-     - ``single``
 
 Result Properties
 """""""""""""""""
 
 No result properties found.
 
-KLAP
+FKNL
 ^^^^
-Object Type: ``FlapValve``
+Object Type: ``FreeDuct``
 
 
 Properties
@@ -2572,140 +1524,55 @@ Properties
 
    * - Name
      - Value Types
-   * - ``Angle``
-     - ``double``
    * - ``Beschreibung``
      - ``string``
-   * - ``Dn``
-     - ``single``
+   * - ``BoundingRectangle``
+     - ``irectangle``
+   * - ``Cdim``
+     - ``string``
+   * - ``ElementFont``
+     - ``c3sfont``
    * - ``Fkcont``
-     - ``string``
-   * - ``Fkphiv``
-     - ``string``
-   * - ``Fkzep2``
-     - ``string``
-   * - ``GeometriesDiffer``
-     - ``boolean``
-   * - ``Idreferenz``
      - ``string``
    * - ``InVariant``
      - ``boolean``
-   * - ``Iplanung``
-     - ``int32``
    * - ``Name``
      - ``string``
-   * - ``Phie``
+   * - ``Oalm``
+     - ``single``
+   * - ``Owarn``
      - ``single``
    * - ``Pk``
      - ``string``
-   * - ``PositionOfDescription``
+   * - ``Showname``
      - ``int32``
-   * - ``ShowDescription``
-     - ``boolean``
-   * - ``SymbolFactor``
-     - ``double``
-   * - ``Te``
+   * - ``Showrect``
+     - ``int32``
+   * - ``T``
      - ``single``
    * - ``Tk``
      - ``string``
-   * - ``Ts``
+   * - ``Ualm``
+     - ``single``
+   * - ``Uwarn``
      - ``single``
    * - ``Xkor``
      - ``double``
    * - ``Ykor``
      - ``double``
+   * - ``bz.Afakt``
+     - ``single``
+   * - ``bz.Dt``
+     - ``single``
+   * - ``bz.Dy``
+     - ``single``
    * - ``bz.Fk``
      - ``string``
-
-Result Properties
-"""""""""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-   * - ``DH``
-   * - ``DP``
-   * - ``DSI``
-   * - ``DSK``
-   * - ``FS``
-   * - ``HR``
-   * - ``IAKTIV``
-   * - ``KV``
-   * - ``M``
-   * - ``MAINELEMENT``
-   * - ``PHI``
-   * - ``PHR``
-   * - ``PR``
-   * - ``QM``
-   * - ``RHO``
-   * - ``V``
-   * - ``ZETA``
-
-MREG
-^^^^
-Object Type: ``FlowControlUnit``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Angle``
-     - ``double``
-   * - ``Beschreibung``
+   * - ``bz.Fkwtab``
      - ``string``
-   * - ``Dn``
-     - ``single``
-   * - ``Dqdt``
-     - ``single``
-   * - ``Fkcont``
-     - ``string``
-   * - ``Fkzep1``
-     - ``string``
-   * - ``GeometriesDiffer``
-     - ``boolean``
-   * - ``Idreferenz``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Iplanung``
+   * - ``bz.Ityp``
      - ``int32``
-   * - ``Name``
-     - ``string``
-   * - ``Pk``
-     - ``string``
-   * - ``PositionOfDescription``
-     - ``int32``
-   * - ``ShowDescription``
-     - ``boolean``
-   * - ``SymbolFactor``
-     - ``double``
-   * - ``Tk``
-     - ``string``
-   * - ``Tsig``
-     - ``single``
-   * - ``Tvoll``
-     - ``single``
-   * - ``Xkor``
-     - ``double``
-   * - ``Ykor``
-     - ``double``
-   * - ``bz.Fk``
-     - ``string``
-   * - ``bz.Fkswvtphi``
-     - ``string``
-   * - ``bz.Fkswvtqm``
-     - ``string``
-   * - ``bz.Indsoll``
-     - ``int32``
-   * - ``bz.Phisoll``
-     - ``single``
-   * - ``bz.Qmsoll``
+   * - ``bz.Wert``
      - ``single``
 
 Result Properties
@@ -2715,29 +1582,12 @@ Result Properties
    :header-rows: 1
 
    * - Name
-   * - ``DH``
-   * - ``DP``
-   * - ``DPH``
-   * - ``DSI``
-   * - ``DSK``
-   * - ``FS``
-   * - ``HR``
-   * - ``IAKTIV``
-   * - ``IND``
-   * - ``KV``
-   * - ``M``
    * - ``MAINELEMENT``
-   * - ``PHI``
-   * - ``PHISOLL``
-   * - ``PR``
-   * - ``Q``
-   * - ``QM``
-   * - ``QMSOLL``
-   * - ``RHO``
-   * - ``SWVTPHI``
-   * - ``SWVTQM``
-   * - ``V``
-   * - ``ZETA``
+   * - ``OA``
+   * - ``OW``
+   * - ``UA``
+   * - ``UW``
+   * - ``WERT``
 
 FQPS
 ^^^^
@@ -2965,9 +1815,9 @@ Result Properties
 
 No result properties found.
 
-FKNL
+FWBZ
 ^^^^
-Object Type: ``FreeDuct``
+Object Type: ``FWBZ_DistrictHeatingReferenceValues``
 
 
 Properties
@@ -2978,672 +1828,35 @@ Properties
 
    * - Name
      - Value Types
-   * - ``Beschreibung``
-     - ``string``
-   * - ``BoundingRectangle``
-     - ``irectangle``
-   * - ``Cdim``
-     - ``string``
-   * - ``ElementFont``
-     - ``c3sfont``
-   * - ``Fkcont``
-     - ``string``
+   * - ``Ahausg``
+     - ``single``
+   * - ``Arohr``
+     - ``single``
+   * - ``Flfwvb``
+     - ``single``
+   * - ``Hgebzg``
+     - ``single``
+   * - ``Ikotyp``
+     - ``int32``
    * - ``InVariant``
      - ``boolean``
-   * - ``Name``
-     - ``string``
-   * - ``Oalm``
+   * - ``Lambdabzg``
      - ``single``
-   * - ``Owarn``
-     - ``single``
-   * - ``Pk``
-     - ``string``
-   * - ``Showname``
-     - ``int32``
-   * - ``Showrect``
-     - ``int32``
-   * - ``T``
-     - ``single``
-   * - ``Tk``
-     - ``string``
-   * - ``Ualm``
-     - ``single``
-   * - ``Uwarn``
-     - ``single``
-   * - ``Xkor``
-     - ``double``
-   * - ``Ykor``
-     - ``double``
-   * - ``bz.Afakt``
-     - ``single``
-   * - ``bz.Dt``
-     - ``single``
-   * - ``bz.Dy``
-     - ``single``
-   * - ``bz.Fk``
-     - ``string``
-   * - ``bz.Fkwtab``
-     - ``string``
-   * - ``bz.Ityp``
-     - ``int32``
-   * - ``bz.Wert``
-     - ``single``
-
-Result Properties
-"""""""""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-   * - ``MAINELEMENT``
-   * - ``OA``
-   * - ``OW``
-   * - ``UA``
-   * - ``UW``
-   * - ``WERT``
-
-RFKT
-^^^^
-Object Type: ``FunctionGenerator``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Angle``
-     - ``double``
-   * - ``Beschreibung``
-     - ``string``
-   * - ``E1``
-     - ``string``
-   * - ``Fkcont``
-     - ``string``
-   * - ``Fktfkt``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Indfkt``
-     - ``int32``
-   * - ``Ka``
-     - ``string``
    * - ``Name``
      - ``string``
    * - ``Pk``
      - ``string``
-   * - ``RglSymbolTyp``
-     - ``rglsymboltype``
-   * - ``SymbolFactor``
-     - ``double``
-   * - ``Tk``
-     - ``string``
-   * - ``Xkor``
-     - ``double``
-   * - ``Ykor``
-     - ``double``
-   * - ``bz.Fk``
-     - ``string``
-   * - ``bz.Fklfkt``
-     - ``string``
-
-Result Properties
-"""""""""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-   * - ``LFKT``
-   * - ``MAINELEMENT``
-   * - ``XA``
-   * - ``XE``
-
-TFKT
-^^^^
-Object Type: ``FunctionTable``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Beschreibung``
-     - ``string``
-   * - ``Idreferenz``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Name``
-     - ``string``
-   * - ``Pk``
-     - ``string``
-   * - ``Tk``
-     - ``string``
-   * - ``Zeitoption``
-     - ``int32``
-
-Result Properties
-"""""""""""""""""
-
-No result properties found.
-
-TFKT_ROWS
-^^^^^^^^^
-Object Type: ``FunctionTable_Row``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Fk``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Name``
-     - ``string``
-   * - ``Pk``
-     - ``string``
-   * - ``X``
+   * - ``Rhobzg``
      - ``single``
-   * - ``Y``
+   * - ``Vhausg``
+     - ``single``
+   * - ``Zerohr``
      - ``single``
 
 Result Properties
 """""""""""""""""
 
 No result properties found.
-
-GKMP
-^^^^
-Object Type: ``GasComponent``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``BwrA``
-     - ``single``
-   * - ``BwrA0``
-     - ``single``
-   * - ``BwrAlpha``
-     - ``single``
-   * - ``BwrB``
-     - ``single``
-   * - ``BwrB0``
-     - ``single``
-   * - ``BwrC``
-     - ``single``
-   * - ``BwrC0``
-     - ``single``
-   * - ``BwrGamma``
-     - ``single``
-   * - ``CpicoefA``
-     - ``single``
-   * - ``CpicoefB``
-     - ``single``
-   * - ``CpicoefC``
-     - ``single``
-   * - ``CpicoefD``
-     - ``single``
-   * - ``CpicoefE``
-     - ``single``
-   * - ``Formula``
-     - ``string``
-   * - ``Hi``
-     - ``single``
-   * - ``Hs``
-     - ``single``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Lfdnr``
-     - ``int32``
-   * - ``Molarmass``
-     - ``single``
-   * - ``Name``
-     - ``string``
-   * - ``Pc``
-     - ``single``
-   * - ``Pk``
-     - ``string``
-   * - ``Tb``
-     - ``single``
-   * - ``Tc``
-     - ``single``
-   * - ``Tk``
-     - ``string``
-   * - ``Zisocoef``
-     - ``single``
-
-Result Properties
-"""""""""""""""""
-
-No result properties found.
-
-GMIX
-^^^^
-Object Type: ``GasMixture``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Beschreibung``
-     - ``string``
-   * - ``Fkgkmp1``
-     - ``string``
-   * - ``Fkgkmp10``
-     - ``string``
-   * - ``Fkgkmp11``
-     - ``string``
-   * - ``Fkgkmp12``
-     - ``string``
-   * - ``Fkgkmp13``
-     - ``string``
-   * - ``Fkgkmp14``
-     - ``string``
-   * - ``Fkgkmp15``
-     - ``string``
-   * - ``Fkgkmp16``
-     - ``string``
-   * - ``Fkgkmp17``
-     - ``string``
-   * - ``Fkgkmp18``
-     - ``string``
-   * - ``Fkgkmp19``
-     - ``string``
-   * - ``Fkgkmp2``
-     - ``string``
-   * - ``Fkgkmp20``
-     - ``string``
-   * - ``Fkgkmp21``
-     - ``string``
-   * - ``Fkgkmp22``
-     - ``string``
-   * - ``Fkgkmp3``
-     - ``string``
-   * - ``Fkgkmp4``
-     - ``string``
-   * - ``Fkgkmp5``
-     - ``string``
-   * - ``Fkgkmp6``
-     - ``string``
-   * - ``Fkgkmp7``
-     - ``string``
-   * - ``Fkgkmp8``
-     - ``string``
-   * - ``Fkgkmp9``
-     - ``string``
-   * - ``Idreferenz``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Lfdnr``
-     - ``int32``
-   * - ``Molfrac1``
-     - ``single``
-   * - ``Molfrac10``
-     - ``single``
-   * - ``Molfrac11``
-     - ``single``
-   * - ``Molfrac12``
-     - ``single``
-   * - ``Molfrac13``
-     - ``single``
-   * - ``Molfrac14``
-     - ``single``
-   * - ``Molfrac15``
-     - ``single``
-   * - ``Molfrac16``
-     - ``single``
-   * - ``Molfrac17``
-     - ``single``
-   * - ``Molfrac18``
-     - ``single``
-   * - ``Molfrac19``
-     - ``single``
-   * - ``Molfrac2``
-     - ``single``
-   * - ``Molfrac20``
-     - ``single``
-   * - ``Molfrac21``
-     - ``single``
-   * - ``Molfrac22``
-     - ``single``
-   * - ``Molfrac3``
-     - ``single``
-   * - ``Molfrac4``
-     - ``single``
-   * - ``Molfrac5``
-     - ``single``
-   * - ``Molfrac6``
-     - ``single``
-   * - ``Molfrac7``
-     - ``single``
-   * - ``Molfrac8``
-     - ``single``
-   * - ``Molfrac9``
-     - ``single``
-   * - ``Name``
-     - ``string``
-   * - ``Pk``
-     - ``string``
-   * - ``Tk``
-     - ``string``
-
-Result Properties
-"""""""""""""""""
-
-No result properties found.
-
-ALLG
-^^^^
-Object Type: ``GeneralSection``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Forc``
-     - ``int32``
-   * - ``Idph``
-     - ``int32``
-   * - ``Idqm``
-     - ``int32``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Name``
-     - ``string``
-   * - ``Netztyp``
-     - ``int32``
-   * - ``Pfadol1``
-     - ``string``
-   * - ``Pk``
-     - ``string``
-   * - ``bz.ArtTh``
-     - ``int32``
-   * - ``bz.CalcNetwork``
-     - ``int32``
-   * - ``bz.Cdat``
-     - ``string``
-   * - ``bz.CheckMod``
-     - ``int32``
-   * - ``bz.CheckRes``
-     - ``int32``
-   * - ``bz.Cuhr``
-     - ``string``
-   * - ``bz.Czon``
-     - ``string``
-   * - ``bz.Fk``
-     - ``string``
-   * - ``bz.Iart``
-     - ``int32``
-   * - ``bz.Idra``
-     - ``int32``
-   * - ``bz.Itrenn``
-     - ``int32``
-   * - ``bz.Jwarn``
-     - ``int32``
-   * - ``bz.Knuvtyp``
-     - ``int32``
-   * - ``bz.Lfqsv``
-     - ``single``
-   * - ``bz.Schwellqsig``
-     - ``single``
-   * - ``bz.ThInst``
-     - ``int32``
-   * - ``bz.ThStat``
-     - ``int32``
-   * - ``bz.Thfakt``
-     - ``int32``
-   * - ``bz.ValidAggr``
-     - ``int32``
-
-Result Properties
-"""""""""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-   * - ``CPUTIME``
-   * - ``CVERSO``
-   * - ``EXSTAT``
-   * - ``FWVB_DPHMIN``
-   * - ``FWVB_TVLMIN``
-   * - ``INTERAKTRG``
-   * - ``INTERAKTTH``
-   * - ``ITERHY``
-   * - ``ITERTH``
-   * - ``JWARN``
-   * - ``KNOT_PHMAX``
-   * - ``KNOT_PHMAX_R``
-   * - ``KNOT_PHMAX_U``
-   * - ``KNOT_PHMAX_V``
-   * - ``KNOT_PHMIN``
-   * - ``KNOT_PHMIN_R``
-   * - ``KNOT_PHMIN_U``
-   * - ``KNOT_PHMIN_V``
-   * - ``LFQSV``
-   * - ``LINEPACKGEOM``
-   * - ``LINEPACKGES``
-   * - ``LINEPACKRATE``
-   * - ``MAINELEMENT``
-   * - ``MFVHYUV``
-   * - ``MFVTHUV``
-   * - ``MKNUV``
-   * - ``NETZABN``
-   * - ``NETZABNEXITS``
-   * - ``NETZBEZ``
-   * - ``NFEHL``
-   * - ``NFVHYUV``
-   * - ``NFVTHUV``
-   * - ``NKNUV``
-   * - ``NMELD``
-   * - ``NPGREST``
-   * - ``NWARN``
-   * - ``PAV``
-   * - ``RHOAV``
-   * - ``SNAPSHOTTYPE``
-   * - ``TAV``
-   * - ``TIMESTAMP``
-   * - ``TVMINMAX``
-   * - ``USRTIME``
-
-GRAV
-^^^^
-Object Type: ``Gravitation``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Beschx``
-     - ``single``
-   * - ``Beschy``
-     - ``single``
-   * - ``Beschz``
-     - ``single``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Jgrav``
-     - ``int32``
-   * - ``Name``
-     - ``string``
-   * - ``Pk``
-     - ``string``
-
-Result Properties
-"""""""""""""""""
-
-No result properties found.
-
-FWWU
-^^^^
-Object Type: ``HeatExchanger``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``A``
-     - ``single``
-   * - ``Alpha1``
-     - ``single``
-   * - ``Alpha2``
-     - ``single``
-   * - ``Angle``
-     - ``double``
-   * - ``Beschreibung``
-     - ``string``
-   * - ``Dn``
-     - ``single``
-   * - ``Dp10min``
-     - ``single``
-   * - ``Dp20``
-     - ``single``
-   * - ``Expert``
-     - ``int32``
-   * - ``Fkcont``
-     - ``string``
-   * - ``Fkfwes``
-     - ``string``
-   * - ``Fkfwvb``
-     - ``string``
-   * - ``Fkzep1rl``
-     - ``single``
-   * - ``GeometriesDiffer``
-     - ``boolean``
-   * - ``Idreferenz``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Inddprl``
-     - ``int32``
-   * - ``Indwue``
-     - ``int32``
-   * - ``Iplanung``
-     - ``int32``
-   * - ``K``
-     - ``single``
-   * - ``Kstrant``
-     - ``single``
-   * - ``L1``
-     - ``single``
-   * - ``L2``
-     - ``single``
-   * - ``Name``
-     - ``string``
-   * - ``Pk``
-     - ``string``
-   * - ``PositionOfDescription``
-     - ``int32``
-   * - ``Re0``
-     - ``single``
-   * - ``ShowDescription``
-     - ``boolean``
-   * - ``SymbolFactor``
-     - ``double``
-   * - ``T1aus0``
-     - ``single``
-   * - ``T1ein0``
-     - ``single``
-   * - ``T2aus0``
-     - ``single``
-   * - ``T2ein0``
-     - ``single``
-   * - ``Tk``
-     - ``string``
-   * - ``Tsrl``
-     - ``single``
-   * - ``W0``
-     - ``single``
-   * - ``Xkor``
-     - ``double``
-   * - ``Ykor``
-     - ``double``
-   * - ``bz.Einaus``
-     - ``int32``
-   * - ``bz.Fk``
-     - ``string``
-   * - ``bz.Fktevt``
-     - ``string``
-   * - ``bz.Ithtyp``
-     - ``int32``
-   * - ``bz.T2aus``
-     - ``single``
-
-Result Properties
-"""""""""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-   * - ``AKTIV``
-   * - ``C1``
-   * - ``C2``
-   * - ``EPS1``
-   * - ``EPS2``
-   * - ``IAKTIV``
-   * - ``INDUV``
-   * - ``KA``
-   * - ``MAINELEMENT``
-   * - ``NTU1``
-   * - ``NTU2``
-   * - ``NU1``
-   * - ``NU2``
-   * - ``PR1``
-   * - ``PR2``
-   * - ``Q``
-   * - ``RE1``
-   * - ``RE2``
-   * - ``T1AUS``
-   * - ``T1EIN``
-   * - ``T2AUS``
-   * - ``T2EIN``
-   * - ``THETA``
-   * - ``TMLOG``
-   * - ``W1``
-   * - ``W2``
 
 FWEA
 ^^^^
@@ -3940,6 +2153,680 @@ Result Properties
    * - ``W_RO``
    * - ``W_VB``
 
+FWES
+^^^^
+Object Type: ``DistrictHeatingFeeder``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Angle``
+     - ``double``
+   * - ``Beschreibung``
+     - ``string``
+   * - ``Dn``
+     - ``single``
+   * - ``Fkcont``
+     - ``string``
+   * - ``GeometriesDiffer``
+     - ``boolean``
+   * - ``Idreferenz``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Iplanung``
+     - ``int32``
+   * - ``Irueck``
+     - ``int32``
+   * - ``Name``
+     - ``string``
+   * - ``Pk``
+     - ``string``
+   * - ``PositionOfDescription``
+     - ``int32``
+   * - ``ShowDescription``
+     - ``boolean``
+   * - ``SymbolFactor``
+     - ``double``
+   * - ``Taus``
+     - ``single``
+   * - ``Tk``
+     - ``string``
+   * - ``Xkor``
+     - ``double``
+   * - ``Ykor``
+     - ``double``
+   * - ``Zeta``
+     - ``single``
+   * - ``bz.Fk``
+     - ``string``
+   * - ``bz.Fktevt``
+     - ``string``
+   * - ``bz.Fkwevt``
+     - ``string``
+   * - ``bz.Ihytyp``
+     - ``int32``
+   * - ``bz.IhytypKlartext``
+     - ``string``
+   * - ``bz.Ithtyp``
+     - ``int32``
+   * - ``bz.IthtypKlartext``
+     - ``string``
+   * - ``bz.Tkon``
+     - ``single``
+   * - ``bz.Wkon``
+     - ``single``
+
+Result Properties
+"""""""""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+   * - ``DH``
+   * - ``DP``
+   * - ``DPH``
+   * - ``IAKTIV``
+   * - ``IHYTYP``
+   * - ``ITHTYP``
+   * - ``M``
+   * - ``MAINELEMENT``
+   * - ``QM``
+   * - ``RHOI``
+   * - ``RHOK``
+   * - ``TEVT``
+   * - ``TI``
+   * - ``TK``
+   * - ``TKON``
+   * - ``V``
+   * - ``W``
+   * - ``W0``
+   * - ``WEVT``
+   * - ``WSOLL``
+
+FWVB
+^^^^
+Object Type: ``DistrictHeatingConsumer``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``A``
+     - ``single``
+   * - ``Angle``
+     - ``double``
+   * - ``B``
+     - ``single``
+   * - ``Beschreibung``
+     - ``string``
+   * - ``C``
+     - ``single``
+   * - ``CPM``
+     - ``double``
+   * - ``Dphaus``
+     - ``single``
+   * - ``Dprlmin``
+     - ``single``
+   * - ``Dpvlmin``
+     - ``single``
+   * - ``Dtmin``
+     - ``single``
+   * - ``Fkcont``
+     - ``string``
+   * - ``Fktrft``
+     - ``string``
+   * - ``Fkzep1rl``
+     - ``string``
+   * - ``Fkzep1vl``
+     - ``string``
+   * - ``GeometriesDiffer``
+     - ``boolean``
+   * - ``Idreferenz``
+     - ``string``
+   * - ``Imbg``
+     - ``int32``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Ind0``
+     - ``int32``
+   * - ``Indtr``
+     - ``int32``
+   * - ``IndtrKlartext``
+     - ``string``
+   * - ``Iplanung``
+     - ``int32``
+   * - ``Irfv``
+     - ``int32``
+   * - ``Lfk``
+     - ``single``
+   * - ``M0Estimated``
+     - ``single``
+   * - ``Name``
+     - ``string``
+   * - ``NumberOfVERB``
+     - ``int32``
+   * - ``P1soll``
+     - ``single``
+   * - ``Pk``
+     - ``string``
+   * - ``PositionOfDescription``
+     - ``int32``
+   * - ``Qm0``
+     - ``single``
+   * - ``Rho0``
+     - ``single``
+   * - ``ShowDescription``
+     - ``boolean``
+   * - ``SymbolFactor``
+     - ``double``
+   * - ``Tk``
+     - ``string``
+   * - ``Trs0``
+     - ``single``
+   * - ``Trsk``
+     - ``single``
+   * - ``Tsrl``
+     - ``single``
+   * - ``Tsvl``
+     - ``single``
+   * - ``Tvl0``
+     - ``single``
+   * - ``V0``
+     - ``single``
+   * - ``Vtyp``
+     - ``int32``
+   * - ``W0``
+     - ``single``
+   * - ``W0Estimated``
+     - ``single``
+   * - ``Xkor``
+     - ``double``
+   * - ``Ykor``
+     - ``double``
+   * - ``Zevk``
+     - ``single``
+   * - ``bz.Fk``
+     - ``string``
+   * - ``bz.Fklfkt``
+     - ``string``
+   * - ``bz.Fklfkt2``
+     - ``string``
+   * - ``bz.Fkqvar``
+     - ``string``
+   * - ``bz.Fktevt``
+     - ``string``
+   * - ``bz.Indlast``
+     - ``int32``
+   * - ``bz.IndlastKlartext``
+     - ``string``
+   * - ``bz.Indlfkt2``
+     - ``int32``
+
+Result Properties
+"""""""""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+   * - ``DH``
+   * - ``DP``
+   * - ``DPH``
+   * - ``IAKTIV``
+   * - ``INDUV``
+   * - ``LFH``
+   * - ``LFKT``
+   * - ``LFT``
+   * - ``M``
+   * - ``MAINELEMENT``
+   * - ``MHYUV``
+   * - ``MSOLL``
+   * - ``MTHUV``
+   * - ``P1``
+   * - ``P2``
+   * - ``P3``
+   * - ``PH1``
+   * - ``PH2``
+   * - ``PH3``
+   * - ``PHIRL``
+   * - ``PHIVL``
+   * - ``QM``
+   * - ``QM13``
+   * - ``QM31``
+   * - ``QMI``
+   * - ``QMK``
+   * - ``QVAR``
+   * - ``RHOI``
+   * - ``RHOK``
+   * - ``TI``
+   * - ``TK``
+   * - ``TVMIN``
+   * - ``W``
+   * - ``WHYUV``
+   * - ``WSOLL``
+   * - ``WTHUV``
+
+FWWU
+^^^^
+Object Type: ``HeatExchanger``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``A``
+     - ``single``
+   * - ``Alpha1``
+     - ``single``
+   * - ``Alpha2``
+     - ``single``
+   * - ``Angle``
+     - ``double``
+   * - ``Beschreibung``
+     - ``string``
+   * - ``Dn``
+     - ``single``
+   * - ``Dp10min``
+     - ``single``
+   * - ``Dp20``
+     - ``single``
+   * - ``Expert``
+     - ``int32``
+   * - ``Fkcont``
+     - ``string``
+   * - ``Fkfwes``
+     - ``string``
+   * - ``Fkfwvb``
+     - ``string``
+   * - ``Fkzep1rl``
+     - ``single``
+   * - ``GeometriesDiffer``
+     - ``boolean``
+   * - ``Idreferenz``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Inddprl``
+     - ``int32``
+   * - ``Indwue``
+     - ``int32``
+   * - ``Iplanung``
+     - ``int32``
+   * - ``K``
+     - ``single``
+   * - ``Kstrant``
+     - ``single``
+   * - ``L1``
+     - ``single``
+   * - ``L2``
+     - ``single``
+   * - ``Name``
+     - ``string``
+   * - ``Pk``
+     - ``string``
+   * - ``PositionOfDescription``
+     - ``int32``
+   * - ``Re0``
+     - ``single``
+   * - ``ShowDescription``
+     - ``boolean``
+   * - ``SymbolFactor``
+     - ``double``
+   * - ``T1aus0``
+     - ``single``
+   * - ``T1ein0``
+     - ``single``
+   * - ``T2aus0``
+     - ``single``
+   * - ``T2ein0``
+     - ``single``
+   * - ``Tk``
+     - ``string``
+   * - ``Tsrl``
+     - ``single``
+   * - ``W0``
+     - ``single``
+   * - ``Xkor``
+     - ``double``
+   * - ``Ykor``
+     - ``double``
+   * - ``bz.Einaus``
+     - ``int32``
+   * - ``bz.Fk``
+     - ``string``
+   * - ``bz.Fktevt``
+     - ``string``
+   * - ``bz.Ithtyp``
+     - ``int32``
+   * - ``bz.T2aus``
+     - ``single``
+
+Result Properties
+"""""""""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+   * - ``AKTIV``
+   * - ``C1``
+   * - ``C2``
+   * - ``EPS1``
+   * - ``EPS2``
+   * - ``IAKTIV``
+   * - ``INDUV``
+   * - ``KA``
+   * - ``MAINELEMENT``
+   * - ``NTU1``
+   * - ``NTU2``
+   * - ``NU1``
+   * - ``NU2``
+   * - ``PR1``
+   * - ``PR2``
+   * - ``Q``
+   * - ``RE1``
+   * - ``RE2``
+   * - ``T1AUS``
+   * - ``T1EIN``
+   * - ``T2AUS``
+   * - ``T2EIN``
+   * - ``THETA``
+   * - ``TMLOG``
+   * - ``W1``
+   * - ``W2``
+
+GKMP
+^^^^
+Object Type: ``GasComponent``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``BwrA``
+     - ``single``
+   * - ``BwrA0``
+     - ``single``
+   * - ``BwrAlpha``
+     - ``single``
+   * - ``BwrB``
+     - ``single``
+   * - ``BwrB0``
+     - ``single``
+   * - ``BwrC``
+     - ``single``
+   * - ``BwrC0``
+     - ``single``
+   * - ``BwrGamma``
+     - ``single``
+   * - ``CpicoefA``
+     - ``single``
+   * - ``CpicoefB``
+     - ``single``
+   * - ``CpicoefC``
+     - ``single``
+   * - ``CpicoefD``
+     - ``single``
+   * - ``CpicoefE``
+     - ``single``
+   * - ``Formula``
+     - ``string``
+   * - ``Hi``
+     - ``single``
+   * - ``Hs``
+     - ``single``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Lfdnr``
+     - ``int32``
+   * - ``Molarmass``
+     - ``single``
+   * - ``Name``
+     - ``string``
+   * - ``Pc``
+     - ``single``
+   * - ``Pk``
+     - ``string``
+   * - ``Tb``
+     - ``single``
+   * - ``Tc``
+     - ``single``
+   * - ``Tk``
+     - ``string``
+   * - ``Zisocoef``
+     - ``single``
+
+Result Properties
+"""""""""""""""""
+
+No result properties found.
+
+GMIX
+^^^^
+Object Type: ``GasMixture``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Beschreibung``
+     - ``string``
+   * - ``Fkgkmp1``
+     - ``string``
+   * - ``Fkgkmp10``
+     - ``string``
+   * - ``Fkgkmp11``
+     - ``string``
+   * - ``Fkgkmp12``
+     - ``string``
+   * - ``Fkgkmp13``
+     - ``string``
+   * - ``Fkgkmp14``
+     - ``string``
+   * - ``Fkgkmp15``
+     - ``string``
+   * - ``Fkgkmp16``
+     - ``string``
+   * - ``Fkgkmp17``
+     - ``string``
+   * - ``Fkgkmp18``
+     - ``string``
+   * - ``Fkgkmp19``
+     - ``string``
+   * - ``Fkgkmp2``
+     - ``string``
+   * - ``Fkgkmp20``
+     - ``string``
+   * - ``Fkgkmp21``
+     - ``string``
+   * - ``Fkgkmp22``
+     - ``string``
+   * - ``Fkgkmp3``
+     - ``string``
+   * - ``Fkgkmp4``
+     - ``string``
+   * - ``Fkgkmp5``
+     - ``string``
+   * - ``Fkgkmp6``
+     - ``string``
+   * - ``Fkgkmp7``
+     - ``string``
+   * - ``Fkgkmp8``
+     - ``string``
+   * - ``Fkgkmp9``
+     - ``string``
+   * - ``Idreferenz``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Lfdnr``
+     - ``int32``
+   * - ``Molfrac1``
+     - ``single``
+   * - ``Molfrac10``
+     - ``single``
+   * - ``Molfrac11``
+     - ``single``
+   * - ``Molfrac12``
+     - ``single``
+   * - ``Molfrac13``
+     - ``single``
+   * - ``Molfrac14``
+     - ``single``
+   * - ``Molfrac15``
+     - ``single``
+   * - ``Molfrac16``
+     - ``single``
+   * - ``Molfrac17``
+     - ``single``
+   * - ``Molfrac18``
+     - ``single``
+   * - ``Molfrac19``
+     - ``single``
+   * - ``Molfrac2``
+     - ``single``
+   * - ``Molfrac20``
+     - ``single``
+   * - ``Molfrac21``
+     - ``single``
+   * - ``Molfrac22``
+     - ``single``
+   * - ``Molfrac3``
+     - ``single``
+   * - ``Molfrac4``
+     - ``single``
+   * - ``Molfrac5``
+     - ``single``
+   * - ``Molfrac6``
+     - ``single``
+   * - ``Molfrac7``
+     - ``single``
+   * - ``Molfrac8``
+     - ``single``
+   * - ``Molfrac9``
+     - ``single``
+   * - ``Name``
+     - ``string``
+   * - ``Pk``
+     - ``string``
+   * - ``Tk``
+     - ``string``
+
+Result Properties
+"""""""""""""""""
+
+No result properties found.
+
+GRAV
+^^^^
+Object Type: ``Gravitation``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Beschx``
+     - ``single``
+   * - ``Beschy``
+     - ``single``
+   * - ``Beschz``
+     - ``single``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Jgrav``
+     - ``int32``
+   * - ``Name``
+     - ``string``
+   * - ``Pk``
+     - ``string``
+
+Result Properties
+"""""""""""""""""
+
+No result properties found.
+
+GTXT
+^^^^
+Object Type: ``Text``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Angle``
+     - ``double``
+   * - ``Beschreibung``
+     - ``string``
+   * - ``ElementColor``
+     - ``color``
+   * - ``ElementFont``
+     - ``c3sfont``
+   * - ``Fkcont``
+     - ``string``
+   * - ``GeometriesDiffer``
+     - ``boolean``
+   * - ``Graftext``
+     - ``string``
+   * - ``Idreferenz``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Name``
+     - ``string``
+   * - ``Pk``
+     - ``string``
+   * - ``Tk``
+     - ``string``
+   * - ``Xkor``
+     - ``double``
+   * - ``Ykor``
+     - ``double``
+   * - ``bz.Fk``
+     - ``string``
+
+Result Properties
+"""""""""""""""""
+
+No result properties found.
+
 GVWK
 ^^^^
 Object Type: ``HeaterCooler``
@@ -4012,69 +2899,6 @@ Result Properties
    * - ``QN``
    * - ``TI``
    * - ``TK``
-
-RHYS
-^^^^
-Object Type: ``Histeresis``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Angle``
-     - ``double``
-   * - ``Beschreibung``
-     - ``string``
-   * - ``E1``
-     - ``string``
-   * - ``Fkcont``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Indhys``
-     - ``int32``
-   * - ``Ka``
-     - ``string``
-   * - ``Name``
-     - ``string``
-   * - ``Pk``
-     - ``string``
-   * - ``RglSymbolTyp``
-     - ``rglsymboltype``
-   * - ``SymbolFactor``
-     - ``double``
-   * - ``Tk``
-     - ``string``
-   * - ``Xkor``
-     - ``double``
-   * - ``Xo``
-     - ``single``
-   * - ``Xstart``
-     - ``single``
-   * - ``Xu``
-     - ``single``
-   * - ``Ykor``
-     - ``double``
-   * - ``bz.Fk``
-     - ``string``
-
-Result Properties
-"""""""""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-   * - ``MAINELEMENT``
-   * - ``XA``
-   * - ``XE``
-   * - ``XO``
-   * - ``XU``
 
 HAUS
 ^^^^
@@ -4227,9 +3051,9 @@ Result Properties
    * - ``QSOLL``
    * - ``UV``
 
-RINT
+KLAP
 ^^^^
-Object Type: ``Integrator``
+Object Type: ``FlapValve``
 
 
 Properties
@@ -4244,481 +3068,13 @@ Properties
      - ``double``
    * - ``Beschreibung``
      - ``string``
-   * - ``E1``
-     - ``string``
+   * - ``Dn``
+     - ``single``
    * - ``Fkcont``
      - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Ka``
+   * - ``Fkphiv``
      - ``string``
-   * - ``Name``
-     - ``string``
-   * - ``Ogr``
-     - ``single``
-   * - ``Pk``
-     - ``string``
-   * - ``RglSymbolTyp``
-     - ``rglsymboltype``
-   * - ``SymbolFactor``
-     - ``double``
-   * - ``Tk``
-     - ``string``
-   * - ``Ugr``
-     - ``single``
-   * - ``Xkor``
-     - ``double``
-   * - ``Ykor``
-     - ``double``
-   * - ``bz.Fk``
-     - ``string``
-
-Result Properties
-"""""""""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-   * - ``MAINELEMENT``
-   * - ``XA``
-   * - ``XE``
-
-LAYR
-^^^^
-Object Type: ``LAYR_Layer``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Idreferenz``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Lfdnr``
-     - ``int32``
-   * - ``Name``
-     - ``string``
-   * - ``ObjsString``
-     - ``string``
-   * - ``Pk``
-     - ``string``
-   * - ``Setzen``
-     - ``int32``
-   * - ``Tk``
-     - ``string``
-   * - ``Zeigen``
-     - ``int32``
-
-Result Properties
-"""""""""""""""""
-
-No result properties found.
-
-LFKT
-^^^^
-Object Type: ``LoadFactorTable``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Beschreibung``
-     - ``string``
-   * - ``Idreferenz``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Intpol``
-     - ``int32``
-   * - ``Name``
-     - ``string``
-   * - ``Pk``
-     - ``string``
-   * - ``Zeitoption``
-     - ``int32``
-
-Result Properties
-"""""""""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-   * - ``FWVB_DPHMIN``
-   * - ``FWVB_TVLMIN``
-   * - ``LF``
-   * - ``MAINELEMENT``
-   * - ``MFVHYUV``
-   * - ``MFVTHUV``
-   * - ``NFVHYUV``
-   * - ``NFVTHUV``
-   * - ``TVMINMAX``
-
-LFKT_ROWT
-^^^^^^^^^
-Object Type: ``LoadFactorTable_Row``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Fk``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Lf``
-     - ``single``
-   * - ``Name``
-     - ``string``
-   * - ``Pk``
-     - ``string``
-   * - ``Zeit``
-     - ``single``
-   * - ``Zeitstempel``
-     - ``string``
-
-Result Properties
-"""""""""""""""""
-
-No result properties found.
-
-RLVG
-^^^^
-Object Type: ``LogicalComparison``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Angle``
-     - ``double``
-   * - ``Beschreibung``
-     - ``string``
-   * - ``E1``
-     - ``string``
-   * - ``E2``
-     - ``string``
-   * - ``Fkcont``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Indtyp``
-     - ``int32``
-   * - ``Ka``
-     - ``string``
-   * - ``Name``
-     - ``string``
-   * - ``Pk``
-     - ``string``
-   * - ``RglSymbolTyp``
-     - ``rglsymboltype``
-   * - ``SymbolFactor``
-     - ``double``
-   * - ``Tk``
-     - ``string``
-   * - ``Xkor``
-     - ``double``
-   * - ``Ykor``
-     - ``double``
-   * - ``bz.Fk``
-     - ``string``
-
-Result Properties
-"""""""""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-   * - ``MAINELEMENT``
-   * - ``XA``
-   * - ``XE1``
-   * - ``XE2``
-
-RLSR
-^^^^
-Object Type: ``LogicalStorage``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Angle``
-     - ``double``
-   * - ``Beschreibung``
-     - ``string``
-   * - ``E1``
-     - ``string``
-   * - ``E2``
-     - ``string``
-   * - ``Fkcont``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Ka``
-     - ``string``
-   * - ``Name``
-     - ``string``
-   * - ``Pk``
-     - ``string``
-   * - ``RglSymbolTyp``
-     - ``rglsymboltype``
-   * - ``SymbolFactor``
-     - ``double``
-   * - ``Tk``
-     - ``string``
-   * - ``Xkor``
-     - ``double``
-   * - ``Ykor``
-     - ``double``
-   * - ``bz.Fk``
-     - ``string``
-
-Result Properties
-"""""""""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-   * - ``MAINELEMENT``
-   * - ``XA``
-   * - ``XE1``
-   * - ``XE2``
-
-SWVT
-^^^^
-Object Type: ``MeasuredVariableTable``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Beschreibung``
-     - ``string``
-   * - ``Idreferenz``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Intpol``
-     - ``int32``
-   * - ``Name``
-     - ``string``
-   * - ``Pk``
-     - ``string``
-   * - ``Zeitoption``
-     - ``int32``
-
-Result Properties
-"""""""""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-   * - ``MAINELEMENT``
-   * - ``W``
-
-SWVT_ROWT
-^^^^^^^^^
-Object Type: ``MeasuredVariableTable_Row``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Fk``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Name``
-     - ``string``
-   * - ``Pk``
-     - ``string``
-   * - ``W``
-     - ``single``
-   * - ``Zeit``
-     - ``single``
-   * - ``Zeitstempel``
-     - ``string``
-
-Result Properties
-"""""""""""""""""
-
-No result properties found.
-
-RMMA
-^^^^
-Object Type: ``MinMaxSelection``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Angle``
-     - ``double``
-   * - ``Beschreibung``
-     - ``string``
-   * - ``E1``
-     - ``string``
-   * - ``E2``
-     - ``string``
-   * - ``Fkcont``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Indmma``
-     - ``int32``
-   * - ``Ka``
-     - ``string``
-   * - ``Name``
-     - ``string``
-   * - ``Pk``
-     - ``string``
-   * - ``RglSymbolTyp``
-     - ``rglsymboltype``
-   * - ``SymbolFactor``
-     - ``double``
-   * - ``Tk``
-     - ``string``
-   * - ``Xkor``
-     - ``double``
-   * - ``Ykor``
-     - ``double``
-   * - ``bz.Fk``
-     - ``string``
-
-Result Properties
-"""""""""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-   * - ``MAINELEMENT``
-   * - ``XA``
-   * - ``XE1``
-   * - ``XE2``
-
-RMUL
-^^^^
-Object Type: ``Multiplier``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Angle``
-     - ``double``
-   * - ``Beschreibung``
-     - ``string``
-   * - ``E1``
-     - ``string``
-   * - ``E2``
-     - ``string``
-   * - ``Fkcont``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Indmul``
-     - ``int32``
-   * - ``Ka``
-     - ``string``
-   * - ``Konst``
-     - ``single``
-   * - ``Name``
-     - ``string``
-   * - ``Pk``
-     - ``string``
-   * - ``RglSymbolTyp``
-     - ``rglsymboltype``
-   * - ``SymbolFactor``
-     - ``double``
-   * - ``Tk``
-     - ``string``
-   * - ``Xkor``
-     - ``double``
-   * - ``Ykor``
-     - ``double``
-   * - ``bz.Fk``
-     - ``string``
-
-Result Properties
-"""""""""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-   * - ``MAINELEMENT``
-   * - ``MULT``
-   * - ``XA``
-   * - ``XE1``
-   * - ``XE2``
-
-NSCH
-^^^^
-Object Type: ``NetValve``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Beschreibung``
-     - ``string``
-   * - ``Fkrohr``
+   * - ``Fkzep2``
      - ``string``
    * - ``GeometriesDiffer``
      - ``boolean``
@@ -4726,30 +3082,32 @@ Properties
      - ``string``
    * - ``InVariant``
      - ``boolean``
+   * - ``Iplanung``
+     - ``int32``
    * - ``Name``
      - ``string``
+   * - ``Phie``
+     - ``single``
    * - ``Pk``
      - ``string``
-   * - ``Poskm``
-     - ``single``
+   * - ``PositionOfDescription``
+     - ``int32``
+   * - ``ShowDescription``
+     - ``boolean``
    * - ``SymbolFactor``
      - ``double``
+   * - ``Te``
+     - ``single``
    * - ``Tk``
      - ``string``
-   * - ``Typ``
-     - ``int32``
+   * - ``Ts``
+     - ``single``
    * - ``Xkor``
      - ``double``
    * - ``Ykor``
      - ``double``
    * - ``bz.Fk``
      - ``string``
-   * - ``bz.Fkswvt``
-     - ``string``
-   * - ``bz.Indi``
-     - ``int32``
-   * - ``bz.Stellung``
-     - ``int32``
 
 Result Properties
 """""""""""""""""
@@ -4758,8 +3116,23 @@ Result Properties
    :header-rows: 1
 
    * - Name
+   * - ``DH``
+   * - ``DP``
+   * - ``DSI``
+   * - ``DSK``
+   * - ``FS``
+   * - ``HR``
+   * - ``IAKTIV``
+   * - ``KV``
+   * - ``M``
    * - ``MAINELEMENT``
-   * - ``STELLUNG``
+   * - ``PHI``
+   * - ``PHR``
+   * - ``PR``
+   * - ``QM``
+   * - ``RHO``
+   * - ``V``
+   * - ``ZETA``
 
 KNOT
 ^^^^
@@ -4930,9 +3303,240 @@ Result Properties
    * - ``WALTER``
    * - ``ZHKNR``
 
-PHIV
+KOMK
 ^^^^
-Object Type: ``NonReturnValvesTable``
+Object Type: ``CompressorTable``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Beschreibung``
+     - ``string``
+   * - ``Etaps``
+     - ``single``
+   * - ``Fkfstf``
+     - ``string``
+   * - ``Idreferenz``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Name``
+     - ``string``
+   * - ``Nmax``
+     - ``single``
+   * - ``Nmin``
+     - ``single``
+   * - ``Pansaug``
+     - ``single``
+   * - ``Pk``
+     - ``string``
+   * - ``Tansaug``
+     - ``single``
+   * - ``Tk``
+     - ``string``
+   * - ``Typ``
+     - ``int32``
+   * - ``Zeitoption``
+     - ``int32``
+
+Result Properties
+"""""""""""""""""
+
+No result properties found.
+
+KOMK_ROWS
+^^^^^^^^^
+Object Type: ``CompressorTable_Row``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Etap``
+     - ``single``
+   * - ``Fk``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``N``
+     - ``single``
+   * - ``Name``
+     - ``string``
+   * - ``P``
+     - ``single``
+   * - ``Pk``
+     - ``string``
+   * - ``Q``
+     - ``single``
+   * - ``Yp``
+     - ``single``
+
+Result Properties
+"""""""""""""""""
+
+No result properties found.
+
+KOMP
+^^^^
+Object Type: ``Compressor``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Angle``
+     - ``double``
+   * - ``Beschreibung``
+     - ``string``
+   * - ``Dndt``
+     - ``single``
+   * - ``Dpdt``
+     - ``single``
+   * - ``Dqndt``
+     - ``single``
+   * - ``Etam``
+     - ``single``
+   * - ``Etat``
+     - ``single``
+   * - ``Fkantp``
+     - ``string``
+   * - ``Fkcont``
+     - ``string``
+   * - ``Fkkomk``
+     - ``string``
+   * - ``GeometriesDiffer``
+     - ``boolean``
+   * - ``Ibrenng``
+     - ``int32``
+   * - ``Idreferenz``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Inda``
+     - ``int32``
+   * - ``Iplanung``
+     - ``int32``
+   * - ``Iprst``
+     - ``int32``
+   * - ``Ipverh``
+     - ``int32``
+   * - ``Name``
+     - ``string``
+   * - ``Pk``
+     - ``string``
+   * - ``PositionOfDescription``
+     - ``int32``
+   * - ``Pverhdp``
+     - ``single``
+   * - ``Pverhqn``
+     - ``single``
+   * - ``ShowDescription``
+     - ``boolean``
+   * - ``SymbolFactor``
+     - ``double``
+   * - ``Tfahraus``
+     - ``single``
+   * - ``Tfahrein``
+     - ``single``
+   * - ``Tk``
+     - ``string``
+   * - ``Xkor``
+     - ``double``
+   * - ``Ykor``
+     - ``double``
+   * - ``bz.Fk``
+     - ``string``
+   * - ``bz.Inds``
+     - ``int32``
+   * - ``bz.Sw``
+     - ``single``
+
+Result Properties
+"""""""""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+   * - ``DP``
+   * - ``DT``
+   * - ``EINAUS``
+   * - ``ETAP``
+   * - ``IAKTIV``
+   * - ``IND``
+   * - ``INDANT``
+   * - ``M``
+   * - ``MAINELEMENT``
+   * - ``N``
+   * - ``P``
+   * - ``PE``
+   * - ``PI``
+   * - ``PK``
+   * - ``PMAX``
+   * - ``PRATIO``
+   * - ``QN``
+   * - ``QNBG``
+   * - ``QNGES``
+   * - ``TI``
+   * - ``TK``
+   * - ``YP``
+
+LAYR
+^^^^
+Object Type: ``LAYR_Layer``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Idreferenz``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Lfdnr``
+     - ``int32``
+   * - ``Name``
+     - ``string``
+   * - ``ObjsString``
+     - ``string``
+   * - ``Pk``
+     - ``string``
+   * - ``Setzen``
+     - ``int32``
+   * - ``Tk``
+     - ``string``
+   * - ``Zeigen``
+     - ``int32``
+
+Result Properties
+"""""""""""""""""
+
+No result properties found.
+
+LFKT
+^^^^
+Object Type: ``LoadFactorTable``
 
 
 Properties
@@ -4949,21 +3553,35 @@ Properties
      - ``string``
    * - ``InVariant``
      - ``boolean``
+   * - ``Intpol``
+     - ``int32``
    * - ``Name``
      - ``string``
    * - ``Pk``
      - ``string``
-   * - ``Tk``
-     - ``string``
+   * - ``Zeitoption``
+     - ``int32``
 
 Result Properties
 """""""""""""""""
 
-No result properties found.
+.. list-table::
+   :header-rows: 1
 
-PHIV_ROWS
+   * - Name
+   * - ``FWVB_DPHMIN``
+   * - ``FWVB_TVLMIN``
+   * - ``LF``
+   * - ``MAINELEMENT``
+   * - ``MFVHYUV``
+   * - ``MFVTHUV``
+   * - ``NFVHYUV``
+   * - ``NFVTHUV``
+   * - ``TVMINMAX``
+
+LFKT_ROWT
 ^^^^^^^^^
-Object Type: ``NonReturnValvesTable_Row``
+Object Type: ``LoadFactorTable_Row``
 
 
 Properties
@@ -4978,19 +3596,153 @@ Properties
      - ``string``
    * - ``InVariant``
      - ``boolean``
+   * - ``Lf``
+     - ``single``
    * - ``Name``
      - ``string``
-   * - ``Phi``
-     - ``single``
    * - ``Pk``
      - ``string``
-   * - ``V``
+   * - ``Zeit``
      - ``single``
+   * - ``Zeitstempel``
+     - ``string``
 
 Result Properties
 """""""""""""""""
 
 No result properties found.
+
+LTGR
+^^^^
+Object Type: ``PipeGroup``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Beschreibung``
+     - ``string``
+   * - ``Fksrat``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Name``
+     - ``string``
+   * - ``Pk``
+     - ``string``
+   * - ``Sichtbarkeit``
+     - ``int32``
+   * - ``Tk``
+     - ``string``
+   * - ``Verlegeart``
+     - ``int32``
+
+Result Properties
+"""""""""""""""""
+
+No result properties found.
+
+MREG
+^^^^
+Object Type: ``FlowControlUnit``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Angle``
+     - ``double``
+   * - ``Beschreibung``
+     - ``string``
+   * - ``Dn``
+     - ``single``
+   * - ``Dqdt``
+     - ``single``
+   * - ``Fkcont``
+     - ``string``
+   * - ``Fkzep1``
+     - ``string``
+   * - ``GeometriesDiffer``
+     - ``boolean``
+   * - ``Idreferenz``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Iplanung``
+     - ``int32``
+   * - ``Name``
+     - ``string``
+   * - ``Pk``
+     - ``string``
+   * - ``PositionOfDescription``
+     - ``int32``
+   * - ``ShowDescription``
+     - ``boolean``
+   * - ``SymbolFactor``
+     - ``double``
+   * - ``Tk``
+     - ``string``
+   * - ``Tsig``
+     - ``single``
+   * - ``Tvoll``
+     - ``single``
+   * - ``Xkor``
+     - ``double``
+   * - ``Ykor``
+     - ``double``
+   * - ``bz.Fk``
+     - ``string``
+   * - ``bz.Fkswvtphi``
+     - ``string``
+   * - ``bz.Fkswvtqm``
+     - ``string``
+   * - ``bz.Indsoll``
+     - ``int32``
+   * - ``bz.Phisoll``
+     - ``single``
+   * - ``bz.Qmsoll``
+     - ``single``
+
+Result Properties
+"""""""""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+   * - ``DH``
+   * - ``DP``
+   * - ``DPH``
+   * - ``DSI``
+   * - ``DSK``
+   * - ``FS``
+   * - ``HR``
+   * - ``IAKTIV``
+   * - ``IND``
+   * - ``KV``
+   * - ``M``
+   * - ``MAINELEMENT``
+   * - ``PHI``
+   * - ``PHISOLL``
+   * - ``PR``
+   * - ``Q``
+   * - ``QM``
+   * - ``QMSOLL``
+   * - ``RHO``
+   * - ``SWVTPHI``
+   * - ``SWVTQM``
+   * - ``V``
+   * - ``ZETA``
 
 NRCV
 ^^^^
@@ -5075,9 +3827,9 @@ Result Properties
 
 No result properties found.
 
-CONT
+NSCH
 ^^^^
-Object Type: ``ObjectContainerSymbol``
+Object Type: ``NetValve``
 
 
 Properties
@@ -5088,51 +3840,50 @@ Properties
 
    * - Name
      - Value Types
-   * - ``BoundingRectangle``
-     - ``irectangle``
+   * - ``Beschreibung``
+     - ``string``
+   * - ``Fkrohr``
+     - ``string``
    * - ``GeometriesDiffer``
      - ``boolean``
-   * - ``Id``
-     - ``int32``
-   * - ``Idparent``
-     - ``int32``
    * - ``Idreferenz``
      - ``string``
    * - ``InVariant``
      - ``boolean``
-   * - ``Lfdnr``
-     - ``int32``
-   * - ``MaximalNodeWidth``
-     - ``double``
-   * - ``MaximalPipeWidth``
-     - ``double``
-   * - ``MaximalVbelNselWidth``
-     - ``double``
-   * - ``MeterPerPixel``
-     - ``double``
    * - ``Name``
      - ``string``
-   * - ``PickingTolerance``
-     - ``double``
    * - ``Pk``
      - ``string``
-   * - ``SymbolFont``
-     - ``c3sfont``
-   * - ``SymbolType``
-     - ``ccontsymboltype``
+   * - ``Poskm``
+     - ``single``
+   * - ``SymbolFactor``
+     - ``double``
    * - ``Tk``
      - ``string``
+   * - ``Typ``
+     - ``int32``
    * - ``Xkor``
      - ``double``
    * - ``Ykor``
      - ``double``
    * - ``bz.Fk``
      - ``string``
+   * - ``bz.Fkswvt``
+     - ``string``
+   * - ``bz.Indi``
+     - ``int32``
+   * - ``bz.Stellung``
+     - ``int32``
 
 Result Properties
 """""""""""""""""
 
-No result properties found.
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+   * - ``MAINELEMENT``
+   * - ``STELLUNG``
 
 OBEH
 ^^^^
@@ -5275,6 +4026,53 @@ Result Properties
 
 No result properties found.
 
+PARI
+^^^^
+Object Type: ``CalcPari``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Name``
+     - ``string``
+   * - ``Nglopt``
+     - ``int32``
+   * - ``Pk``
+     - ``string``
+   * - ``bz.Epsp``
+     - ``single``
+   * - ``bz.Epspreg``
+     - ``single``
+   * - ``bz.Epsqm``
+     - ``single``
+   * - ``bz.Epsqmreg``
+     - ``single``
+   * - ``bz.Epst``
+     - ``single``
+   * - ``bz.Epstrsp``
+     - ``single``
+   * - ``bz.Fk``
+     - ``string``
+   * - ``bz.Ntiter``
+     - ``int32``
+   * - ``bz.Ntrspiter``
+     - ``int32``
+   * - ``bz.Nziter``
+     - ``int32``
+
+Result Properties
+"""""""""""""""""
+
+No result properties found.
+
 PARZ
 ^^^^
 Object Type: ``PARZ_TransientCalculationParameters``
@@ -5309,6 +4107,346 @@ Properties
    * - ``bz.Fk``
      - ``string``
    * - ``bz.Tmax``
+     - ``single``
+
+Result Properties
+"""""""""""""""""
+
+No result properties found.
+
+PGRP
+^^^^
+Object Type: ``PumpGroup``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``ActAsa``
+     - ``int32``
+   * - ``AusAsa``
+     - ``int32``
+   * - ``Beschreibung``
+     - ``string``
+   * - ``BoundingRectangle``
+     - ``irectangle``
+   * - ``Dphaus``
+     - ``single``
+   * - ``Fkcont``
+     - ``string``
+   * - ``Fkkdmax``
+     - ``string``
+   * - ``Fkkibyp``
+     - ``string``
+   * - ``Fkkkbyp``
+     - ``string``
+   * - ``Fkksmin``
+     - ``string``
+   * - ``Ibyp``
+     - ``int32``
+   * - ``Idreferenz``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Indrst``
+     - ``int32``
+   * - ``Iplanung``
+     - ``int32``
+   * - ``Ischalt``
+     - ``int32``
+   * - ``Name``
+     - ``string``
+   * - ``Nmax``
+     - ``single``
+   * - ``Pdmax``
+     - ``single``
+   * - ``Pk``
+     - ``string``
+   * - ``Psmin``
+     - ``single``
+   * - ``Qmaus``
+     - ``single``
+   * - ``Tk``
+     - ``string``
+   * - ``Xkor``
+     - ``double``
+   * - ``Ykor``
+     - ``double``
+   * - ``bz.Fk``
+     - ``string``
+   * - ``bz.Fkrart``
+     - ``string``
+   * - ``bz.Iaktiv``
+     - ``int32``
+   * - ``bz.Indpg``
+     - ``int32``
+
+Result Properties
+"""""""""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+   * - ``BK``
+   * - ``DH``
+   * - ``DP``
+   * - ``DPH``
+   * - ``ETA``
+   * - ``IAKTIV``
+   * - ``INDPG``
+   * - ``INDSTD``
+   * - ``IZSTPG``
+   * - ``M``
+   * - ``MAINELEMENT``
+   * - ``NPUMPIST``
+   * - ``NPUMPSOLL``
+   * - ``PE``
+   * - ``QM``
+   * - ``RART``
+   * - ``RHO``
+   * - ``W``
+   * - ``X``
+
+PGRP_PUMP
+^^^^^^^^^
+Object Type: ``PumpOfPumpGroup``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Fkpgrp``
+     - ``string``
+   * - ``Fkpump``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Iplanung``
+     - ``int32``
+   * - ``Lfdnr``
+     - ``int32``
+   * - ``Name``
+     - ``string``
+   * - ``Pk``
+     - ``string``
+   * - ``bz.Fk``
+     - ``string``
+   * - ``bz.Iaktiv``
+     - ``int32``
+
+Result Properties
+"""""""""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+   * - ``IAKTIV``
+   * - ``MAINELEMENT``
+
+PHI1
+^^^^
+Object Type: ``ValveLiftTable``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Beschreibung``
+     - ``string``
+   * - ``Idreferenz``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Intpol``
+     - ``int32``
+   * - ``Name``
+     - ``string``
+   * - ``Pk``
+     - ``string``
+   * - ``Zeitoption``
+     - ``int32``
+
+Result Properties
+"""""""""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+   * - ``MAINELEMENT``
+   * - ``PHI``
+
+PHI1_ROWT
+^^^^^^^^^
+Object Type: ``ValveLiftTable_Row``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Fk``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Name``
+     - ``string``
+   * - ``Phi``
+     - ``single``
+   * - ``Pk``
+     - ``string``
+   * - ``Zeit``
+     - ``single``
+   * - ``Zeitstempel``
+     - ``string``
+
+Result Properties
+"""""""""""""""""
+
+No result properties found.
+
+PHI2
+^^^^
+Object Type: ``VentOpenCloseTable``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Beschreibung``
+     - ``string``
+   * - ``Idreferenz``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Name``
+     - ``string``
+   * - ``Pk``
+     - ``string``
+   * - ``Tk``
+     - ``string``
+   * - ``Zeitoption``
+     - ``int32``
+
+Result Properties
+"""""""""""""""""
+
+No result properties found.
+
+PHI2_ROWS
+^^^^^^^^^
+Object Type: ``VentOpenCloseTable_Row``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Fk``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Name``
+     - ``string``
+   * - ``Phio``
+     - ``single``
+   * - ``Phis``
+     - ``single``
+   * - ``Pk``
+     - ``string``
+   * - ``Zeit``
+     - ``single``
+
+Result Properties
+"""""""""""""""""
+
+No result properties found.
+
+PHIV
+^^^^
+Object Type: ``NonReturnValvesTable``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Beschreibung``
+     - ``string``
+   * - ``Idreferenz``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Name``
+     - ``string``
+   * - ``Pk``
+     - ``string``
+   * - ``Tk``
+     - ``string``
+
+Result Properties
+"""""""""""""""""
+
+No result properties found.
+
+PHIV_ROWS
+^^^^^^^^^
+Object Type: ``NonReturnValvesTable_Row``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Fk``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Name``
+     - ``string``
+   * - ``Phi``
+     - ``single``
+   * - ``Pk``
+     - ``string``
+   * - ``V``
      - ``single``
 
 Result Properties
@@ -5384,452 +4522,6 @@ Result Properties
    * - ``RHOI``
    * - ``RHOK``
    * - ``V``
-
-RPID
-^^^^
-Object Type: ``PidController``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Angle``
-     - ``double``
-   * - ``Beschreibung``
-     - ``string``
-   * - ``E1``
-     - ``string``
-   * - ``E2``
-     - ``string``
-   * - ``Fkcont``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Inddif``
-     - ``int32``
-   * - ``Indein``
-     - ``int32``
-   * - ``Indint``
-     - ``int32``
-   * - ``Ka``
-     - ``string``
-   * - ``Kd``
-     - ``single``
-   * - ``Kp``
-     - ``single``
-   * - ``Name``
-     - ``string``
-   * - ``Pk``
-     - ``string``
-   * - ``RglSymbolTyp``
-     - ``rglsymboltype``
-   * - ``SymbolFactor``
-     - ``double``
-   * - ``Td``
-     - ``single``
-   * - ``Tk``
-     - ``string``
-   * - ``Wirk``
-     - ``int32``
-   * - ``Xdzul``
-     - ``single``
-   * - ``Xkor``
-     - ``double``
-   * - ``Ykor``
-     - ``double``
-   * - ``bz.Fk``
-     - ``string``
-
-Result Properties
-"""""""""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-   * - ``DYDT``
-   * - ``DYDTD``
-   * - ``DYDTI``
-   * - ``DYDTP``
-   * - ``MAINELEMENT``
-   * - ``XA``
-   * - ``XE1``
-   * - ``XE2``
-
-ROHR
-^^^^
-Object Type: ``Pipe``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Asoll``
-     - ``single``
-   * - ``Baujahr``
-     - ``string``
-   * - ``Beschreibung``
-     - ``string``
-   * - ``DN``
-     - ``string``
-   * - ``Di``
-     - ``single``
-   * - ``DottedLine``
-     - ``int32``
-   * - ``Fk2lrohr``
-     - ``string``
-   * - ``Fkcont``
-     - ``string``
-   * - ``FkdtroRowd``
-     - ``string``
-   * - ``Fkltgr``
-     - ``string``
-   * - ``Fkstrasse``
-     - ``string``
-   * - ``GeometriesDiffer``
-     - ``boolean``
-   * - ``Hal``
-     - ``int32``
-   * - ``HasClosedNSCHs``
-     - ``nullable`1``
-   * - ``Idreferenz``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Indschall``
-     - ``int32``
-   * - ``Iplanung``
-     - ``int32``
-   * - ``Jlambs``
-     - ``int32``
-   * - ``Kvr``
-     - ``int32``
-   * - ``KvrKlartext``
-     - ``string``
-   * - ``L``
-     - ``single``
-   * - ``Lambda0``
-     - ``single``
-   * - ``LineWidthMM``
-     - ``double``
-   * - ``Lzu``
-     - ``single``
-   * - ``Name``
-     - ``string``
-   * - ``Pk``
-     - ``string``
-   * - ``Rau``
-     - ``single``
-   * - ``Tk``
-     - ``string``
-   * - ``Xkor``
-     - ``double``
-   * - ``Ykor``
-     - ``double``
-   * - ``Zaus``
-     - ``single``
-   * - ``Zein``
-     - ``single``
-   * - ``Zuml``
-     - ``single``
-   * - ``bz.Fk``
-     - ``string``
-   * - ``bz.ITrennWithNSCH``
-     - ``int32``
-   * - ``bz.Imptnz``
-     - ``single``
-   * - ``bz.Irtrenn``
-     - ``int32``
-   * - ``bz.Kantenzv``
-     - ``double``
-   * - ``bz.Leckend``
-     - ``single``
-   * - ``bz.Leckmenge``
-     - ``single``
-   * - ``bz.Leckort``
-     - ``single``
-   * - ``bz.Leckstart``
-     - ``single``
-   * - ``bz.Leckstatus``
-     - ``int32``
-   * - ``bz.Qsvb``
-     - ``single``
-   * - ``bz.Zvlimptnz``
-     - ``double``
-
-Result Properties
-"""""""""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-   * - ``A``
-   * - ``ACALC``
-   * - ``CPI``
-   * - ``CPK``
-   * - ``DH``
-   * - ``DP``
-   * - ``DRAGRED``
-   * - ``DRAKONZ``
-   * - ``DSI``
-   * - ``DSK``
-   * - ``DTTR``
-   * - ``DWVERL``
-   * - ``DWVERLABS``
-   * - ``ETAAV``
-   * - ``FS``
-   * - ``HR``
-   * - ``HVEC``
-   * - ``IAKTIV``
-   * - ``IRTRENN``
-   * - ``JV``
-   * - ``JV2``
-   * - ``LAMBDA``
-   * - ``LECKEINAUS``
-   * - ``LECKMENGE``
-   * - ``LECKORT``
-   * - ``LINEPACK``
-   * - ``LINEPACKGEOM``
-   * - ``LINEPACKRATE``
-   * - ``MAINELEMENT``
-   * - ``MAV``
-   * - ``MI``
-   * - ``MK``
-   * - ``MKOND``
-   * - ``MMAX_INST``
-   * - ``MMIN_INST``
-   * - ``MVEC``
-   * - ``MVECMAX_INST``
-   * - ``MVECMIN_INST``
-   * - ``PAV``
-   * - ``PDAMPF``
-   * - ``PHR``
-   * - ``PHVEC``
-   * - ``PMAX``
-   * - ``PMIN``
-   * - ``PR``
-   * - ``PVEC``
-   * - ``PVECMAX_INST``
-   * - ``PVECMIN_INST``
-   * - ``QI2``
-   * - ``QK2``
-   * - ``QMAV``
-   * - ``QMI``
-   * - ``QMK``
-   * - ``QMMAX_INST``
-   * - ``QMMIN_INST``
-   * - ``QMVEC``
-   * - ``QSVB``
-   * - ``RHOAV``
-   * - ``RHOI``
-   * - ``RHOK``
-   * - ``RHOVEC``
-   * - ``SVEC``
-   * - ``TAV``
-   * - ``TI``
-   * - ``TK``
-   * - ``TTRVEC``
-   * - ``TVEC``
-   * - ``TVECMAX_INST``
-   * - ``TVECMIN_INST``
-   * - ``VAV``
-   * - ``VI``
-   * - ``VK``
-   * - ``VMAX_INST``
-   * - ``VMIN_INST``
-   * - ``VOLDA``
-   * - ``WALTERI``
-   * - ``WALTERK``
-   * - ``WVL``
-   * - ``ZAUS``
-   * - ``ZEIN``
-   * - ``ZHKNR``
-   * - ``ZVEC``
-
-LTGR
-^^^^
-Object Type: ``PipeGroup``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Beschreibung``
-     - ``string``
-   * - ``Fksrat``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Name``
-     - ``string``
-   * - ``Pk``
-     - ``string``
-   * - ``Sichtbarkeit``
-     - ``int32``
-   * - ``Tk``
-     - ``string``
-   * - ``Verlegeart``
-     - ``int32``
-
-Result Properties
-"""""""""""""""""
-
-No result properties found.
-
-DTRO
-^^^^
-Object Type: ``PipeTable``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Beschreibung``
-     - ``string``
-   * - ``E``
-     - ``single``
-   * - ``Idreferenz``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Name``
-     - ``string``
-   * - ``Pk``
-     - ``string``
-   * - ``Tk``
-     - ``string``
-   * - ``Typ``
-     - ``string``
-   * - ``Zeitoption``
-     - ``int32``
-
-Result Properties
-"""""""""""""""""
-
-No result properties found.
-
-DTRO_ROWD
-^^^^^^^^^
-Object Type: ``PipeTable_Row``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Ausfallzeit``
-     - ``single``
-   * - ``Da``
-     - ``single``
-   * - ``Di``
-     - ``single``
-   * - ``Dn``
-     - ``string``
-   * - ``Fk``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Kt``
-     - ``single``
-   * - ``Name``
-     - ``string``
-   * - ``Pk``
-     - ``string``
-   * - ``Pn``
-     - ``single``
-   * - ``Rehabilitation``
-     - ``single``
-   * - ``Reparatur``
-     - ``single``
-   * - ``S``
-     - ``single``
-   * - ``Tk``
-     - ``string``
-   * - ``Wsteig``
-     - ``single``
-   * - ``Wtiefe``
-     - ``single``
-
-Result Properties
-"""""""""""""""""
-
-No result properties found.
-
-ROHR_VRTX
-^^^^^^^^^
-Object Type: ``PipeVertex``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Fk``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Lfdnr``
-     - ``int32``
-   * - ``Name``
-     - ``string``
-   * - ``Pk``
-     - ``string``
-   * - ``Xkor``
-     - ``double``
-   * - ``Ykor``
-     - ``double``
-   * - ``Zkor``
-     - ``single``
-
-Result Properties
-"""""""""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-   * - ``H``
-   * - ``M``
-   * - ``MAINELEMENT``
-   * - ``MMAX_INST``
-   * - ``MMIN_INST``
-   * - ``P``
-   * - ``PH``
-   * - ``PMAX_INST``
-   * - ``PMIN_INST``
-   * - ``RHO``
-   * - ``T``
-   * - ``TMAX_INST``
-   * - ``TMIN_INST``
 
 PLYG
 ^^^^
@@ -6010,9 +4702,9 @@ Result Properties
    * - ``V``
    * - ``ZETA``
 
-PZON
+PUMD
 ^^^^
-Object Type: ``PressureZone``
+Object Type: ``PumpSpeedTable``
 
 
 Properties
@@ -6023,85 +4715,20 @@ Properties
 
    * - Name
      - Value Types
-   * - ``Idimbh``
-     - ``int32``
-   * - ``Idimra``
-     - ``int32``
+   * - ``Beschreibung``
+     - ``string``
    * - ``Idreferenz``
      - ``string``
    * - ``InVariant``
      - ``boolean``
-   * - ``Klpmin``
-     - ``single``
-   * - ``Lfdnr``
-     - ``int32``
-   * - ``Modus``
+   * - ``Intpol``
      - ``int32``
    * - ``Name``
      - ``string``
    * - ``Pk``
      - ``string``
-   * - ``Pkmaxbh``
-     - ``single``
-   * - ``Pkmaxra``
-     - ``single``
-   * - ``Pkminbh``
-     - ``single``
-   * - ``Pkminra``
-     - ``single``
-   * - ``Tk``
-     - ``string``
-
-Result Properties
-"""""""""""""""""
-
-No result properties found.
-
-RPT1
-^^^^
-Object Type: ``Pt1Controller``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Angle``
-     - ``double``
-   * - ``Beschreibung``
-     - ``string``
-   * - ``E1``
-     - ``string``
-   * - ``Fkcont``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Ka``
-     - ``string``
-   * - ``Kp``
-     - ``single``
-   * - ``Name``
-     - ``string``
-   * - ``Pk``
-     - ``string``
-   * - ``RglSymbolTyp``
-     - ``rglsymboltype``
-   * - ``SymbolFactor``
-     - ``double``
-   * - ``T1``
-     - ``single``
-   * - ``Tk``
-     - ``string``
-   * - ``Xkor``
-     - ``double``
-   * - ``Ykor``
-     - ``double``
-   * - ``bz.Fk``
-     - ``string``
+   * - ``Zeitoption``
+     - ``int32``
 
 Result Properties
 """""""""""""""""
@@ -6111,8 +4738,116 @@ Result Properties
 
    * - Name
    * - ``MAINELEMENT``
-   * - ``XA``
-   * - ``XE``
+   * - ``N``
+
+PUMD_ROWT
+^^^^^^^^^
+Object Type: ``PumpSpeedTable_Row``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Fk``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``N``
+     - ``single``
+   * - ``Name``
+     - ``string``
+   * - ``Pk``
+     - ``string``
+   * - ``Zeit``
+     - ``single``
+   * - ``Zeitstempel``
+     - ``string``
+
+Result Properties
+"""""""""""""""""
+
+No result properties found.
+
+PUMK
+^^^^
+Object Type: ``PumpCharTable``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Beschreibung``
+     - ``string``
+   * - ``Idreferenz``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``N``
+     - ``single``
+   * - ``Name``
+     - ``string``
+   * - ``Pk``
+     - ``string``
+   * - ``Rhobzg``
+     - ``single``
+   * - ``Tk``
+     - ``string``
+   * - ``Typ``
+     - ``int32``
+   * - ``Zeitoption``
+     - ``int32``
+
+Result Properties
+"""""""""""""""""
+
+No result properties found.
+
+PUMK_ROWS
+^^^^^^^^^
+Object Type: ``PumpCharTable_Row``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Eta``
+     - ``single``
+   * - ``Fk``
+     - ``string``
+   * - ``H``
+     - ``single``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Name``
+     - ``string``
+   * - ``Npsh``
+     - ``single``
+   * - ``P``
+     - ``single``
+   * - ``Pk``
+     - ``string``
+   * - ``Q``
+     - ``single``
+
+Result Properties
+"""""""""""""""""
+
+No result properties found.
 
 PUMP
 ^^^^
@@ -6415,226 +5150,9 @@ Result Properties
    * - ``STOERUNG``
    * - ``SWVT``
 
-PUMK
+PVAR
 ^^^^
-Object Type: ``PumpCharTable``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Beschreibung``
-     - ``string``
-   * - ``Idreferenz``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``N``
-     - ``single``
-   * - ``Name``
-     - ``string``
-   * - ``Pk``
-     - ``string``
-   * - ``Rhobzg``
-     - ``single``
-   * - ``Tk``
-     - ``string``
-   * - ``Typ``
-     - ``int32``
-   * - ``Zeitoption``
-     - ``int32``
-
-Result Properties
-"""""""""""""""""
-
-No result properties found.
-
-PUMK_ROWS
-^^^^^^^^^
-Object Type: ``PumpCharTable_Row``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Eta``
-     - ``single``
-   * - ``Fk``
-     - ``string``
-   * - ``H``
-     - ``single``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Name``
-     - ``string``
-   * - ``Npsh``
-     - ``single``
-   * - ``P``
-     - ``single``
-   * - ``Pk``
-     - ``string``
-   * - ``Q``
-     - ``single``
-
-Result Properties
-"""""""""""""""""
-
-No result properties found.
-
-PGRP
-^^^^
-Object Type: ``PumpGroup``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``ActAsa``
-     - ``int32``
-   * - ``AusAsa``
-     - ``int32``
-   * - ``Beschreibung``
-     - ``string``
-   * - ``BoundingRectangle``
-     - ``irectangle``
-   * - ``Dphaus``
-     - ``single``
-   * - ``Fkcont``
-     - ``string``
-   * - ``Fkkdmax``
-     - ``string``
-   * - ``Fkkibyp``
-     - ``string``
-   * - ``Fkkkbyp``
-     - ``string``
-   * - ``Fkksmin``
-     - ``string``
-   * - ``Ibyp``
-     - ``int32``
-   * - ``Idreferenz``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Indrst``
-     - ``int32``
-   * - ``Iplanung``
-     - ``int32``
-   * - ``Ischalt``
-     - ``int32``
-   * - ``Name``
-     - ``string``
-   * - ``Nmax``
-     - ``single``
-   * - ``Pdmax``
-     - ``single``
-   * - ``Pk``
-     - ``string``
-   * - ``Psmin``
-     - ``single``
-   * - ``Qmaus``
-     - ``single``
-   * - ``Tk``
-     - ``string``
-   * - ``Xkor``
-     - ``double``
-   * - ``Ykor``
-     - ``double``
-   * - ``bz.Fk``
-     - ``string``
-   * - ``bz.Fkrart``
-     - ``string``
-   * - ``bz.Iaktiv``
-     - ``int32``
-   * - ``bz.Indpg``
-     - ``int32``
-
-Result Properties
-"""""""""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-   * - ``BK``
-   * - ``DH``
-   * - ``DP``
-   * - ``DPH``
-   * - ``ETA``
-   * - ``IAKTIV``
-   * - ``INDPG``
-   * - ``INDSTD``
-   * - ``IZSTPG``
-   * - ``M``
-   * - ``MAINELEMENT``
-   * - ``NPUMPIST``
-   * - ``NPUMPSOLL``
-   * - ``PE``
-   * - ``QM``
-   * - ``RART``
-   * - ``RHO``
-   * - ``W``
-   * - ``X``
-
-PGRP_PUMP
-^^^^^^^^^
-Object Type: ``PumpOfPumpGroup``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Fkpgrp``
-     - ``string``
-   * - ``Fkpump``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Iplanung``
-     - ``int32``
-   * - ``Lfdnr``
-     - ``int32``
-   * - ``Name``
-     - ``string``
-   * - ``Pk``
-     - ``string``
-   * - ``bz.Fk``
-     - ``string``
-   * - ``bz.Iaktiv``
-     - ``int32``
-
-Result Properties
-"""""""""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-   * - ``IAKTIV``
-   * - ``MAINELEMENT``
-
-PUMD
-^^^^
-Object Type: ``PumpSpeedTable``
+Object Type: ``VarPressureTable``
 
 
 Properties
@@ -6668,11 +5186,11 @@ Result Properties
 
    * - Name
    * - ``MAINELEMENT``
-   * - ``N``
+   * - ``PH``
 
-PUMD_ROWT
+PVAR_ROWT
 ^^^^^^^^^
-Object Type: ``PumpSpeedTable_Row``
+Object Type: ``VarPressureTable_Row``
 
 
 Properties
@@ -6687,10 +5205,10 @@ Properties
      - ``string``
    * - ``InVariant``
      - ``boolean``
-   * - ``N``
-     - ``single``
    * - ``Name``
      - ``string``
+   * - ``Ph``
+     - ``single``
    * - ``Pk``
      - ``string``
    * - ``Zeit``
@@ -6703,24 +5221,9 @@ Result Properties
 
 No result properties found.
 
-ERROR_NO_MAPPING__RART_ControlMode
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Object Type: ``RART_ControlMode``
-
-
-Properties
-""""""""""
-
-No properties found.
-
-Result Properties
-"""""""""""""""""
-
-No result properties found.
-
-REGP
+PZON
 ^^^^
-Object Type: ``REGP_ControlParameters``
+Object Type: ``PressureZone``
 
 
 Properties
@@ -6731,27 +5234,43 @@ Properties
 
    * - Name
      - Value Types
-   * - ``Dt0reg``
-     - ``single``
-   * - ``FlagsUser``
+   * - ``Idimbh``
      - ``int32``
+   * - ``Idimra``
+     - ``int32``
+   * - ``Idreferenz``
+     - ``string``
    * - ``InVariant``
      - ``boolean``
-   * - ``Indreg``
+   * - ``Klpmin``
+     - ``single``
+   * - ``Lfdnr``
+     - ``int32``
+   * - ``Modus``
      - ``int32``
    * - ``Name``
      - ``string``
    * - ``Pk``
      - ``string``
+   * - ``Pkmaxbh``
+     - ``single``
+   * - ``Pkmaxra``
+     - ``single``
+   * - ``Pkminbh``
+     - ``single``
+   * - ``Pkminra``
+     - ``single``
+   * - ``Tk``
+     - ``string``
 
 Result Properties
 """""""""""""""""
 
 No result properties found.
 
-RMES_DPTS
-^^^^^^^^^
-Object Type: ``RMES_DPTS_RmesInternalDataPoint``
+QVAR
+^^^^
+Object Type: ``VarFlowTable``
 
 
 Properties
@@ -6762,39 +5281,333 @@ Properties
 
    * - Name
      - Value Types
-   * - ``Addend``
-     - ``single``
-   * - ``AttributeDescription``
+   * - ``Beschreibung``
      - ``string``
-   * - ``Factor``
-     - ``single``
-   * - ``Fkrmes``
+   * - ``Idreferenz``
      - ``string``
    * - ``InVariant``
      - ``boolean``
-   * - ``Indfunc``
+   * - ``Intpol``
+     - ``int32``
+   * - ``Name``
+     - ``string``
+   * - ``Pk``
+     - ``string``
+   * - ``Zeitoption``
+     - ``int32``
+
+Result Properties
+"""""""""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+   * - ``FWVB_DPHMIN``
+   * - ``FWVB_TVLMIN``
+   * - ``MAINELEMENT``
+   * - ``MFVHYUV``
+   * - ``MFVTHUV``
+   * - ``NFVHYUV``
+   * - ``NFVTHUV``
+   * - ``QM``
+   * - ``TVMINMAX``
+
+QVAR_ROWT
+^^^^^^^^^
+Object Type: ``VarFlowTable_Row``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Fk``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Name``
+     - ``string``
+   * - ``Pk``
+     - ``string``
+   * - ``Qm``
+     - ``single``
+   * - ``Zeit``
+     - ``single``
+   * - ``Zeitstempel``
+     - ``string``
+
+Result Properties
+"""""""""""""""""
+
+No result properties found.
+
+RADD
+^^^^
+Object Type: ``SummingPoint``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Angle``
+     - ``double``
+   * - ``Beschreibung``
+     - ``string``
+   * - ``E1``
+     - ``string``
+   * - ``E2``
+     - ``string``
+   * - ``Fkcont``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Indadd``
+     - ``int32``
+   * - ``Ka``
+     - ``string``
+   * - ``Name``
+     - ``string``
+   * - ``Pk``
+     - ``string``
+   * - ``RglSymbolTyp``
+     - ``rglsymboltype``
+   * - ``SymbolFactor``
+     - ``double``
+   * - ``Tk``
+     - ``string``
+   * - ``Xkor``
+     - ``double``
+   * - ``Ykor``
+     - ``double``
+   * - ``bz.Fk``
+     - ``string``
+
+Result Properties
+"""""""""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+   * - ``MAINELEMENT``
+   * - ``XA``
+   * - ``XE1``
+   * - ``XE2``
+
+RART
+^^^^
+Object Type: ``ControlMode``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Beschreibung``
+     - ``string``
+   * - ``Dwdt``
+     - ``single``
+   * - ``Fkkref1``
+     - ``string``
+   * - ``Fkkref2``
+     - ``string``
+   * - ``Idreferenz``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Indstd``
      - ``int32``
    * - ``Lfdnr``
      - ``int32``
    * - ``Name``
      - ``string``
-   * - ``ObjectTypeDescription``
+   * - ``Pk``
+     - ``string``
+   * - ``Tk``
+     - ``string``
+   * - ``Tsig``
+     - ``single``
+   * - ``TypeDescription``
+     - ``string``
+   * - ``Xdein``
+     - ``single``
+   * - ``bz.Fk``
+     - ``string``
+   * - ``bz.Fkrcpl``
+     - ``string``
+   * - ``bz.Fkswvt``
+     - ``string``
+   * - ``bz.Wsostd``
+     - ``single``
+
+Result Properties
+"""""""""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+   * - ``MAINELEMENT``
+   * - ``RCPL``
+   * - ``SWVT``
+   * - ``W``
+
+RCPL
+^^^^
+Object Type: ``ControlPointTable``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Aktiv``
+     - ``int32``
+   * - ``Beschreibung``
+     - ``string``
+   * - ``Idreferenz``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Name``
      - ``string``
    * - ``Pk``
      - ``string``
-   * - ``bz.Attrtype``
+   * - ``Typ``
+     - ``int32``
+
+Result Properties
+"""""""""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+   * - ``KNOT``
+   * - ``MAINELEMENT``
+   * - ``W``
+   * - ``X``
+   * - ``XD``
+
+RCPL_ROWT
+^^^^^^^^^
+Object Type: ``ControlPointTable_Row``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Aktiv``
+     - ``int32``
+   * - ``Fk``
      - ``string``
+   * - ``Fkkref1``
+     - ``string``
+   * - ``Fkkref2``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Name``
+     - ``string``
+   * - ``Pk``
+     - ``string``
+   * - ``W``
+     - ``single``
+
+Result Properties
+"""""""""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+   * - ``MAINELEMENT``
+   * - ``W``
+   * - ``X``
+   * - ``XD``
+
+RDIV
+^^^^
+Object Type: ``Divider``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Angle``
+     - ``double``
+   * - ``Beschreibung``
+     - ``string``
+   * - ``E1``
+     - ``string``
+   * - ``E2``
+     - ``string``
+   * - ``Fkcont``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Inddiv``
+     - ``int32``
+   * - ``Ka``
+     - ``string``
+   * - ``Mindiv``
+     - ``single``
+   * - ``Name``
+     - ``string``
+   * - ``Pk``
+     - ``string``
+   * - ``RglSymbolTyp``
+     - ``rglsymboltype``
+   * - ``SymbolFactor``
+     - ``double``
+   * - ``Tk``
+     - ``string``
+   * - ``Xkor``
+     - ``double``
+   * - ``Ykor``
+     - ``double``
    * - ``bz.Fk``
-     - ``string``
-   * - ``bz.Fkobjtype``
-     - ``string``
-   * - ``bz.Objtype``
      - ``string``
 
 Result Properties
 """""""""""""""""
 
-No result properties found.
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+   * - ``MAINELEMENT``
+   * - ``XA``
+   * - ``XE1``
+   * - ``XE2``
 
 RECT
 ^^^^
@@ -6843,9 +5656,9 @@ Result Properties
 
 No result properties found.
 
-ZEP1
+REGP
 ^^^^
-Object Type: ``RegulatorsTable``
+Object Type: ``REGP_ControlParameters``
 
 
 Properties
@@ -6856,33 +5669,843 @@ Properties
 
    * - Name
      - Value Types
-   * - ``Beschreibung``
-     - ``string``
-   * - ``Idreferenz``
-     - ``string``
+   * - ``Dt0reg``
+     - ``single``
+   * - ``FlagsUser``
+     - ``int32``
    * - ``InVariant``
      - ``boolean``
-   * - ``Kvbzg``
-     - ``single``
+   * - ``Indreg``
+     - ``int32``
    * - ``Name``
      - ``string``
    * - ``Pk``
      - ``string``
-   * - ``Tk``
-     - ``string``
-   * - ``Typ``
-     - ``int32``
-   * - ``Zeitoption``
-     - ``int32``
 
 Result Properties
 """""""""""""""""
 
 No result properties found.
 
-ZEP1_ROWS
+REGV
+^^^^
+Object Type: ``ControlValve``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Angle``
+     - ``double``
+   * - ``Beschreibung``
+     - ``string``
+   * - ``Dn``
+     - ``single``
+   * - ``Fkcont``
+     - ``string``
+   * - ``Fkzep1``
+     - ``string``
+   * - ``GeometriesDiffer``
+     - ``boolean``
+   * - ``Idreferenz``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Iplanung``
+     - ``int32``
+   * - ``Name``
+     - ``string``
+   * - ``OnlStrgString``
+     - ``string``
+   * - ``Pk``
+     - ``string``
+   * - ``PositionOfDescription``
+     - ``int32``
+   * - ``ShowDescription``
+     - ``boolean``
+   * - ``SymbolFactor``
+     - ``double``
+   * - ``Thub``
+     - ``single``
+   * - ``Tk``
+     - ``string``
+   * - ``Xkor``
+     - ``double``
+   * - ``Ykor``
+     - ``double``
+   * - ``bz.Fk``
+     - ``string``
+   * - ``bz.Fkrart``
+     - ``string``
+
+Result Properties
+"""""""""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+   * - ``DH``
+   * - ``DP``
+   * - ``DPH``
+   * - ``DSI``
+   * - ``DSK``
+   * - ``FS``
+   * - ``HR``
+   * - ``IAKTIV``
+   * - ``INDSTD``
+   * - ``KV``
+   * - ``M``
+   * - ``MAINELEMENT``
+   * - ``PHI``
+   * - ``PR``
+   * - ``Q2``
+   * - ``QM``
+   * - ``RART``
+   * - ``RHO``
+   * - ``V``
+   * - ``W``
+   * - ``X``
+   * - ``ZETA``
+
+RFKT
+^^^^
+Object Type: ``FunctionGenerator``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Angle``
+     - ``double``
+   * - ``Beschreibung``
+     - ``string``
+   * - ``E1``
+     - ``string``
+   * - ``Fkcont``
+     - ``string``
+   * - ``Fktfkt``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Indfkt``
+     - ``int32``
+   * - ``Ka``
+     - ``string``
+   * - ``Name``
+     - ``string``
+   * - ``Pk``
+     - ``string``
+   * - ``RglSymbolTyp``
+     - ``rglsymboltype``
+   * - ``SymbolFactor``
+     - ``double``
+   * - ``Tk``
+     - ``string``
+   * - ``Xkor``
+     - ``double``
+   * - ``Ykor``
+     - ``double``
+   * - ``bz.Fk``
+     - ``string``
+   * - ``bz.Fklfkt``
+     - ``string``
+
+Result Properties
+"""""""""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+   * - ``LFKT``
+   * - ``MAINELEMENT``
+   * - ``XA``
+   * - ``XE``
+
+RHYS
+^^^^
+Object Type: ``Histeresis``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Angle``
+     - ``double``
+   * - ``Beschreibung``
+     - ``string``
+   * - ``E1``
+     - ``string``
+   * - ``Fkcont``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Indhys``
+     - ``int32``
+   * - ``Ka``
+     - ``string``
+   * - ``Name``
+     - ``string``
+   * - ``Pk``
+     - ``string``
+   * - ``RglSymbolTyp``
+     - ``rglsymboltype``
+   * - ``SymbolFactor``
+     - ``double``
+   * - ``Tk``
+     - ``string``
+   * - ``Xkor``
+     - ``double``
+   * - ``Xo``
+     - ``single``
+   * - ``Xstart``
+     - ``single``
+   * - ``Xu``
+     - ``single``
+   * - ``Ykor``
+     - ``double``
+   * - ``bz.Fk``
+     - ``string``
+
+Result Properties
+"""""""""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+   * - ``MAINELEMENT``
+   * - ``XA``
+   * - ``XE``
+   * - ``XO``
+   * - ``XU``
+
+RINT
+^^^^
+Object Type: ``Integrator``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Angle``
+     - ``double``
+   * - ``Beschreibung``
+     - ``string``
+   * - ``E1``
+     - ``string``
+   * - ``Fkcont``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Ka``
+     - ``string``
+   * - ``Name``
+     - ``string``
+   * - ``Ogr``
+     - ``single``
+   * - ``Pk``
+     - ``string``
+   * - ``RglSymbolTyp``
+     - ``rglsymboltype``
+   * - ``SymbolFactor``
+     - ``double``
+   * - ``Tk``
+     - ``string``
+   * - ``Ugr``
+     - ``single``
+   * - ``Xkor``
+     - ``double``
+   * - ``Ykor``
+     - ``double``
+   * - ``bz.Fk``
+     - ``string``
+
+Result Properties
+"""""""""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+   * - ``MAINELEMENT``
+   * - ``XA``
+   * - ``XE``
+
+RLSR
+^^^^
+Object Type: ``LogicalStorage``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Angle``
+     - ``double``
+   * - ``Beschreibung``
+     - ``string``
+   * - ``E1``
+     - ``string``
+   * - ``E2``
+     - ``string``
+   * - ``Fkcont``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Ka``
+     - ``string``
+   * - ``Name``
+     - ``string``
+   * - ``Pk``
+     - ``string``
+   * - ``RglSymbolTyp``
+     - ``rglsymboltype``
+   * - ``SymbolFactor``
+     - ``double``
+   * - ``Tk``
+     - ``string``
+   * - ``Xkor``
+     - ``double``
+   * - ``Ykor``
+     - ``double``
+   * - ``bz.Fk``
+     - ``string``
+
+Result Properties
+"""""""""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+   * - ``MAINELEMENT``
+   * - ``XA``
+   * - ``XE1``
+   * - ``XE2``
+
+RLVG
+^^^^
+Object Type: ``LogicalComparison``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Angle``
+     - ``double``
+   * - ``Beschreibung``
+     - ``string``
+   * - ``E1``
+     - ``string``
+   * - ``E2``
+     - ``string``
+   * - ``Fkcont``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Indtyp``
+     - ``int32``
+   * - ``Ka``
+     - ``string``
+   * - ``Name``
+     - ``string``
+   * - ``Pk``
+     - ``string``
+   * - ``RglSymbolTyp``
+     - ``rglsymboltype``
+   * - ``SymbolFactor``
+     - ``double``
+   * - ``Tk``
+     - ``string``
+   * - ``Xkor``
+     - ``double``
+   * - ``Ykor``
+     - ``double``
+   * - ``bz.Fk``
+     - ``string``
+
+Result Properties
+"""""""""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+   * - ``MAINELEMENT``
+   * - ``XA``
+   * - ``XE1``
+   * - ``XE2``
+
+RMES
+^^^^
+Object Type: ``Transmitter``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Angle``
+     - ``double``
+   * - ``Beschreibung``
+     - ``string``
+   * - ``Fkcont``
+     - ``string``
+   * - ``Idreferenz``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Indaggreg``
+     - ``int32``
+   * - ``Indxbg``
+     - ``int32``
+   * - ``Indxno``
+     - ``int32``
+   * - ``Indxum``
+     - ``int32``
+   * - ``Ka``
+     - ``string``
+   * - ``Mesdt0``
+     - ``single``
+   * - ``Name``
+     - ``string``
+   * - ``Pk``
+     - ``string``
+   * - ``RglSymbolTyp``
+     - ``rglsymboltype``
+   * - ``SymbolFactor``
+     - ``double``
+   * - ``Tk``
+     - ``string``
+   * - ``Xkor``
+     - ``double``
+   * - ``Xmax``
+     - ``single``
+   * - ``Xmin``
+     - ``single``
+   * - ``Xumb``
+     - ``single``
+   * - ``Xumm``
+     - ``single``
+   * - ``Ykor``
+     - ``double``
+   * - ``bz.Fk``
+     - ``string``
+   * - ``bz.X0``
+     - ``single``
+
+Result Properties
+"""""""""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+   * - ``MAINELEMENT``
+   * - ``XA``
+   * - ``XM``
+   * - ``XU``
+
+RMES_DPTS
 ^^^^^^^^^
-Object Type: ``RegulatorsTable_Row``
+Object Type: ``RMES_DPTS_RmesInternalDataPoint``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Addend``
+     - ``single``
+   * - ``AttributeDescription``
+     - ``string``
+   * - ``Factor``
+     - ``single``
+   * - ``Fkrmes``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Indfunc``
+     - ``int32``
+   * - ``Lfdnr``
+     - ``int32``
+   * - ``Name``
+     - ``string``
+   * - ``ObjectTypeDescription``
+     - ``string``
+   * - ``Pk``
+     - ``string``
+   * - ``bz.Attrtype``
+     - ``string``
+   * - ``bz.Fk``
+     - ``string``
+   * - ``bz.Fkobjtype``
+     - ``string``
+   * - ``bz.Objtype``
+     - ``string``
+
+Result Properties
+"""""""""""""""""
+
+No result properties found.
+
+RMMA
+^^^^
+Object Type: ``MinMaxSelection``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Angle``
+     - ``double``
+   * - ``Beschreibung``
+     - ``string``
+   * - ``E1``
+     - ``string``
+   * - ``E2``
+     - ``string``
+   * - ``Fkcont``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Indmma``
+     - ``int32``
+   * - ``Ka``
+     - ``string``
+   * - ``Name``
+     - ``string``
+   * - ``Pk``
+     - ``string``
+   * - ``RglSymbolTyp``
+     - ``rglsymboltype``
+   * - ``SymbolFactor``
+     - ``double``
+   * - ``Tk``
+     - ``string``
+   * - ``Xkor``
+     - ``double``
+   * - ``Ykor``
+     - ``double``
+   * - ``bz.Fk``
+     - ``string``
+
+Result Properties
+"""""""""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+   * - ``MAINELEMENT``
+   * - ``XA``
+   * - ``XE1``
+   * - ``XE2``
+
+RMUL
+^^^^
+Object Type: ``Multiplier``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Angle``
+     - ``double``
+   * - ``Beschreibung``
+     - ``string``
+   * - ``E1``
+     - ``string``
+   * - ``E2``
+     - ``string``
+   * - ``Fkcont``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Indmul``
+     - ``int32``
+   * - ``Ka``
+     - ``string``
+   * - ``Konst``
+     - ``single``
+   * - ``Name``
+     - ``string``
+   * - ``Pk``
+     - ``string``
+   * - ``RglSymbolTyp``
+     - ``rglsymboltype``
+   * - ``SymbolFactor``
+     - ``double``
+   * - ``Tk``
+     - ``string``
+   * - ``Xkor``
+     - ``double``
+   * - ``Ykor``
+     - ``double``
+   * - ``bz.Fk``
+     - ``string``
+
+Result Properties
+"""""""""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+   * - ``MAINELEMENT``
+   * - ``MULT``
+   * - ``XA``
+   * - ``XE1``
+   * - ``XE2``
+
+ROHR
+^^^^
+Object Type: ``Pipe``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Asoll``
+     - ``single``
+   * - ``Baujahr``
+     - ``string``
+   * - ``Beschreibung``
+     - ``string``
+   * - ``DN``
+     - ``string``
+   * - ``Di``
+     - ``single``
+   * - ``DottedLine``
+     - ``int32``
+   * - ``Fk2lrohr``
+     - ``string``
+   * - ``Fkcont``
+     - ``string``
+   * - ``FkdtroRowd``
+     - ``string``
+   * - ``Fkltgr``
+     - ``string``
+   * - ``Fkstrasse``
+     - ``string``
+   * - ``GeometriesDiffer``
+     - ``boolean``
+   * - ``Hal``
+     - ``int32``
+   * - ``HasClosedNSCHs``
+     - ``nullable`1``
+   * - ``Idreferenz``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Indschall``
+     - ``int32``
+   * - ``Iplanung``
+     - ``int32``
+   * - ``Jlambs``
+     - ``int32``
+   * - ``Kvr``
+     - ``int32``
+   * - ``KvrKlartext``
+     - ``string``
+   * - ``L``
+     - ``single``
+   * - ``Lambda0``
+     - ``single``
+   * - ``LineWidthMM``
+     - ``double``
+   * - ``Lzu``
+     - ``single``
+   * - ``Name``
+     - ``string``
+   * - ``Pk``
+     - ``string``
+   * - ``Rau``
+     - ``single``
+   * - ``Tk``
+     - ``string``
+   * - ``Xkor``
+     - ``double``
+   * - ``Ykor``
+     - ``double``
+   * - ``Zaus``
+     - ``single``
+   * - ``Zein``
+     - ``single``
+   * - ``Zuml``
+     - ``single``
+   * - ``bz.Fk``
+     - ``string``
+   * - ``bz.ITrennWithNSCH``
+     - ``int32``
+   * - ``bz.Imptnz``
+     - ``single``
+   * - ``bz.Irtrenn``
+     - ``int32``
+   * - ``bz.Kantenzv``
+     - ``double``
+   * - ``bz.Leckend``
+     - ``single``
+   * - ``bz.Leckmenge``
+     - ``single``
+   * - ``bz.Leckort``
+     - ``single``
+   * - ``bz.Leckstart``
+     - ``single``
+   * - ``bz.Leckstatus``
+     - ``int32``
+   * - ``bz.Qsvb``
+     - ``single``
+   * - ``bz.Zvlimptnz``
+     - ``double``
+
+Result Properties
+"""""""""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+   * - ``A``
+   * - ``ACALC``
+   * - ``CPI``
+   * - ``CPK``
+   * - ``DH``
+   * - ``DP``
+   * - ``DRAGRED``
+   * - ``DRAKONZ``
+   * - ``DSI``
+   * - ``DSK``
+   * - ``DTTR``
+   * - ``DWVERL``
+   * - ``DWVERLABS``
+   * - ``ETAAV``
+   * - ``FS``
+   * - ``HR``
+   * - ``HVEC``
+   * - ``IAKTIV``
+   * - ``IRTRENN``
+   * - ``JV``
+   * - ``JV2``
+   * - ``LAMBDA``
+   * - ``LECKEINAUS``
+   * - ``LECKMENGE``
+   * - ``LECKORT``
+   * - ``LINEPACK``
+   * - ``LINEPACKGEOM``
+   * - ``LINEPACKRATE``
+   * - ``MAINELEMENT``
+   * - ``MAV``
+   * - ``MI``
+   * - ``MK``
+   * - ``MKOND``
+   * - ``MMAX_INST``
+   * - ``MMIN_INST``
+   * - ``MVEC``
+   * - ``MVECMAX_INST``
+   * - ``MVECMIN_INST``
+   * - ``PAV``
+   * - ``PDAMPF``
+   * - ``PHR``
+   * - ``PHVEC``
+   * - ``PMAX``
+   * - ``PMIN``
+   * - ``PR``
+   * - ``PVEC``
+   * - ``PVECMAX_INST``
+   * - ``PVECMIN_INST``
+   * - ``QI2``
+   * - ``QK2``
+   * - ``QMAV``
+   * - ``QMI``
+   * - ``QMK``
+   * - ``QMMAX_INST``
+   * - ``QMMIN_INST``
+   * - ``QMVEC``
+   * - ``QSVB``
+   * - ``RHOAV``
+   * - ``RHOI``
+   * - ``RHOK``
+   * - ``RHOVEC``
+   * - ``SVEC``
+   * - ``TAV``
+   * - ``TI``
+   * - ``TK``
+   * - ``TTRVEC``
+   * - ``TVEC``
+   * - ``TVECMAX_INST``
+   * - ``TVECMIN_INST``
+   * - ``VAV``
+   * - ``VI``
+   * - ``VK``
+   * - ``VMAX_INST``
+   * - ``VMIN_INST``
+   * - ``VOLDA``
+   * - ``WALTERI``
+   * - ``WALTERK``
+   * - ``WVL``
+   * - ``ZAUS``
+   * - ``ZEIN``
+   * - ``ZHKNR``
+   * - ``ZVEC``
+
+ROHR_VRTX
+^^^^^^^^^
+Object Type: ``PipeVertex``
 
 
 Properties
@@ -6897,25 +6520,43 @@ Properties
      - ``string``
    * - ``InVariant``
      - ``boolean``
-   * - ``Kvrel``
-     - ``single``
+   * - ``Lfdnr``
+     - ``int32``
    * - ``Name``
      - ``string``
-   * - ``Phi``
-     - ``single``
    * - ``Pk``
      - ``string``
-   * - ``Zeta``
+   * - ``Xkor``
+     - ``double``
+   * - ``Ykor``
+     - ``double``
+   * - ``Zkor``
      - ``single``
 
 Result Properties
 """""""""""""""""
 
-No result properties found.
+.. list-table::
+   :header-rows: 1
 
-TRFT
+   * - Name
+   * - ``H``
+   * - ``M``
+   * - ``MAINELEMENT``
+   * - ``MMAX_INST``
+   * - ``MMIN_INST``
+   * - ``P``
+   * - ``PH``
+   * - ``PMAX_INST``
+   * - ``PMIN_INST``
+   * - ``RHO``
+   * - ``T``
+   * - ``TMAX_INST``
+   * - ``TMIN_INST``
+
+RPFL
 ^^^^
-Object Type: ``ReturnTemperaturTable``
+Object Type: ``DirectionalArrow``
 
 
 Properties
@@ -6926,29 +6567,51 @@ Properties
 
    * - Name
      - Value Types
+   * - ``Angle``
+     - ``double``
    * - ``Beschreibung``
      - ``string``
-   * - ``Idreferenz``
+   * - ``FillColor``
+     - ``color``
+   * - ``Fkcont``
      - ``string``
+   * - ``FkdpgrDpkt``
+     - ``string``
+   * - ``GeometriesDiffer``
+     - ``boolean``
    * - ``InVariant``
      - ``boolean``
+   * - ``Inddir``
+     - ``int32``
+   * - ``LineColor``
+     - ``color``
+   * - ``LineWidthMM``
+     - ``double``
    * - ``Name``
      - ``string``
    * - ``Pk``
      - ``string``
+   * - ``SymbolFactor``
+     - ``double``
    * - ``Tk``
      - ``string``
-   * - ``Zeitoption``
-     - ``int32``
+   * - ``Xkor``
+     - ``double``
+   * - ``Ykor``
+     - ``double``
+   * - ``bz.Eps``
+     - ``single``
+   * - ``bz.Fk``
+     - ``string``
 
 Result Properties
 """""""""""""""""
 
 No result properties found.
 
-TRFT_ROWS
-^^^^^^^^^
-Object Type: ``ReturnTemperaturTable_Row``
+RPID
+^^^^
+Object Type: ``PidController``
 
 
 Properties
@@ -6959,23 +6622,125 @@ Properties
 
    * - Name
      - Value Types
-   * - ``Fk``
+   * - ``Angle``
+     - ``double``
+   * - ``Beschreibung``
+     - ``string``
+   * - ``E1``
+     - ``string``
+   * - ``E2``
+     - ``string``
+   * - ``Fkcont``
      - ``string``
    * - ``InVariant``
      - ``boolean``
-   * - ``Lfth``
+   * - ``Inddif``
+     - ``int32``
+   * - ``Indein``
+     - ``int32``
+   * - ``Indint``
+     - ``int32``
+   * - ``Ka``
+     - ``string``
+   * - ``Kd``
+     - ``single``
+   * - ``Kp``
      - ``single``
    * - ``Name``
      - ``string``
    * - ``Pk``
      - ``string``
-   * - ``Trs``
+   * - ``RglSymbolTyp``
+     - ``rglsymboltype``
+   * - ``SymbolFactor``
+     - ``double``
+   * - ``Td``
      - ``single``
+   * - ``Tk``
+     - ``string``
+   * - ``Wirk``
+     - ``int32``
+   * - ``Xdzul``
+     - ``single``
+   * - ``Xkor``
+     - ``double``
+   * - ``Ykor``
+     - ``double``
+   * - ``bz.Fk``
+     - ``string``
 
 Result Properties
 """""""""""""""""
 
-No result properties found.
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+   * - ``DYDT``
+   * - ``DYDTD``
+   * - ``DYDTI``
+   * - ``DYDTP``
+   * - ``MAINELEMENT``
+   * - ``XA``
+   * - ``XE1``
+   * - ``XE2``
+
+RPT1
+^^^^
+Object Type: ``Pt1Controller``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Angle``
+     - ``double``
+   * - ``Beschreibung``
+     - ``string``
+   * - ``E1``
+     - ``string``
+   * - ``Fkcont``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Ka``
+     - ``string``
+   * - ``Kp``
+     - ``single``
+   * - ``Name``
+     - ``string``
+   * - ``Pk``
+     - ``string``
+   * - ``RglSymbolTyp``
+     - ``rglsymboltype``
+   * - ``SymbolFactor``
+     - ``double``
+   * - ``T1``
+     - ``single``
+   * - ``Tk``
+     - ``string``
+   * - ``Xkor``
+     - ``double``
+   * - ``Ykor``
+     - ``double``
+   * - ``bz.Fk``
+     - ``string``
+
+Result Properties
+"""""""""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+   * - ``MAINELEMENT``
+   * - ``XA``
+   * - ``XE``
 
 RRCT
 ^^^^
@@ -7024,9 +6789,9 @@ Result Properties
 
 No result properties found.
 
-ERROR_NO_MAPPING__SIRGRAF
-^^^^^^^^^^^^^^^^^^^^^^^^^
-Object Type: ``SIRGRAF``
+RSLW
+^^^^
+Object Type: ``SetpointDevice``
 
 
 Properties
@@ -7037,103 +6802,371 @@ Properties
 
    * - Name
      - Value Types
-   * - ``BlockBkgndColor``
-     - ``int32``
-   * - ``CacheDirectory``
+   * - ``Angle``
+     - ``double``
+   * - ``Beschreibung``
      - ``string``
-   * - ``CacheInUserProfile``
-     - ``int32``
-   * - ``DrawTileOutlines``
-     - ``int32``
-   * - ``HighlightElement``
-     - ``int32``
-   * - ``ImageQuality``
-     - ``int32``
+   * - ``Fkcont``
+     - ``string``
+   * - ``Idreferenz``
+     - ``string``
    * - ``InVariant``
      - ``boolean``
-   * - ``LegFix``
+   * - ``Indwbg``
      - ``int32``
-   * - ``LegHeight``
-     - ``single``
-   * - ``LegMaxEntries``
+   * - ``Indwno``
      - ``int32``
-   * - ``LegXkor``
-     - ``double``
-   * - ``LegYkor``
-     - ``double``
-   * - ``ListConfigString``
+   * - ``Ka``
      - ``string``
-   * - ``MaxLineSize``
-     - ``int32``
-   * - ``MaxNodeSize``
-     - ``int32``
-   * - ``MaxVbelSize``
-     - ``int32``
    * - ``Name``
      - ``string``
-   * - ``Nbnr``
-     - ``int32``
-   * - ``Nknr``
-     - ``int32``
-   * - ``OsmPasswd``
-     - ``string``
-   * - ``OsmTimeout``
-     - ``int32``
-   * - ``OsmUser``
-     - ``string``
-   * - ``PickingRadius``
-     - ``int32``
-   * - ``Pickingmode``
-     - ``int32``
    * - ``Pk``
      - ``string``
-   * - ``ProxyAuthMethod``
-     - ``int32``
-   * - ``ProxyPasswd``
-     - ``string``
-   * - ``ProxyServer``
-     - ``string``
-   * - ``ProxyUser``
-     - ``string``
-   * - ``Sccnln``
-     - ``int32``
-   * - ``Scelt``
-     - ``int32``
-   * - ``Scknot``
-     - ``int32``
-   * - ``Scrohr``
-     - ``int32``
-   * - ``Sfvbels``
+   * - ``RglSymbolTyp``
+     - ``rglsymboltype``
+   * - ``SymbolFactor``
      - ``double``
-   * - ``Srid``
-     - ``int32``
-   * - ``Srid2``
-     - ``int32``
-   * - ``SridString``
+   * - ``Tk``
      - ``string``
-   * - ``StructuredViewsString``
-     - ``string``
-   * - ``Sylw``
+   * - ``Wmax``
      - ``single``
-   * - ``TileDownloadServer``
+   * - ``Wmin``
+     - ``single``
+   * - ``Xkor``
+     - ``double``
+   * - ``Ykor``
+     - ``double``
+   * - ``bz.Fk``
      - ``string``
-   * - ``Tooltip``
+   * - ``bz.Fklfkt``
+     - ``string``
+   * - ``bz.Fkswvt``
+     - ``string``
+   * - ``bz.Indslw``
      - ``int32``
-   * - ``Uimode``
+   * - ``bz.Slwkon``
+     - ``single``
+
+Result Properties
+"""""""""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+   * - ``LFKT``
+   * - ``MAINELEMENT``
+   * - ``SLWKON``
+   * - ``SWVT``
+   * - ``W``
+   * - ``WAKT``
+   * - ``WE``
+   * - ``WEAKT``
+   * - ``WERCK``
+   * - ``WRCK``
+   * - ``XA``
+
+RSTE
+^^^^
+Object Type: ``ControlVariableConverterRSTE``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Angle``
+     - ``double``
+   * - ``Beschreibung``
+     - ``string``
+   * - ``Dsdt1``
+     - ``single``
+   * - ``Dsdt2``
+     - ``single``
+   * - ``Dsdt3``
+     - ``single``
+   * - ``Dsdt4``
+     - ``single``
+   * - ``Dsdt5``
+     - ``single``
+   * - ``Fkcont``
+     - ``string``
+   * - ``Fkvbel1``
+     - ``string``
+   * - ``Fkvbel2``
+     - ``string``
+   * - ``Fkvbel3``
+     - ``string``
+   * - ``Fkvbel4``
+     - ``string``
+   * - ``Fkvbel5``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Indyno1``
      - ``int32``
-   * - ``Upkc``
+   * - ``Indyno2``
      - ``int32``
-   * - ``UseHttpProxy``
+   * - ``Indyno3``
+     - ``int32``
+   * - ``Indyno4``
+     - ``int32``
+   * - ``Indyno5``
+     - ``int32``
+   * - ``Ka``
+     - ``string``
+   * - ``Kmes1i``
+     - ``string``
+   * - ``Kmes1k``
+     - ``string``
+   * - ``Kmes2i``
+     - ``string``
+   * - ``Kmes2k``
+     - ``string``
+   * - ``Kmes3i``
+     - ``string``
+   * - ``Kmes3k``
+     - ``string``
+   * - ``Kmes4i``
+     - ``string``
+   * - ``Kmes4k``
+     - ``string``
+   * - ``Kmes5i``
+     - ``string``
+   * - ``Kmes5k``
+     - ``string``
+   * - ``Name``
+     - ``string``
+   * - ``Pk``
+     - ``string``
+   * - ``RglSymbolTyp``
+     - ``rglsymboltype``
+   * - ``SymbolFactor``
+     - ``double``
+   * - ``Tk``
+     - ``string``
+   * - ``Typ1``
+     - ``string``
+   * - ``Typ2``
+     - ``string``
+   * - ``Typ3``
+     - ``string``
+   * - ``Typ4``
+     - ``string``
+   * - ``Typ5``
+     - ``string``
+   * - ``Xkor``
+     - ``double``
+   * - ``Ykor``
+     - ``double``
+   * - ``Ymax1``
+     - ``single``
+   * - ``Ymax2``
+     - ``single``
+   * - ``Ymax3``
+     - ``single``
+   * - ``Ymax4``
+     - ``single``
+   * - ``Ymax5``
+     - ``single``
+   * - ``Ymin1``
+     - ``single``
+   * - ``Ymin2``
+     - ``single``
+   * - ``Ymin3``
+     - ``single``
+   * - ``Ymin4``
+     - ``single``
+   * - ``Ymin5``
+     - ``single``
+   * - ``Ys11``
+     - ``single``
+   * - ``Ys12``
+     - ``single``
+   * - ``Ys13``
+     - ``single``
+   * - ``Ys14``
+     - ``single``
+   * - ``Ys15``
+     - ``single``
+   * - ``Ys21``
+     - ``single``
+   * - ``Ys22``
+     - ``single``
+   * - ``Ys23``
+     - ``single``
+   * - ``Ys24``
+     - ``single``
+   * - ``Ys25``
+     - ``single``
+   * - ``bz.Fk``
+     - ``string``
+
+Result Properties
+"""""""""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+   * - ``DYDT1``
+   * - ``DYDT2``
+   * - ``DYDT3``
+   * - ``DYDT4``
+   * - ``DYDT5``
+   * - ``MAINELEMENT``
+   * - ``XE1``
+   * - ``YS1``
+   * - ``YS2``
+   * - ``YS3``
+   * - ``YS4``
+   * - ``YS5``
+
+RSTN
+^^^^
+Object Type: ``ControlVariableConverter``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``AnalogInputE1``
+     - ``string``
+   * - ``Angle``
+     - ``double``
+   * - ``Beschreibung``
+     - ``string``
+   * - ``Dsdt``
+     - ``single``
+   * - ``Fkcont``
+     - ``string``
+   * - ``Fkdprg``
+     - ``string``
+   * - ``Fkfwes``
+     - ``string``
+   * - ``Fkfwwu``
+     - ``string``
+   * - ``Fkgvwk``
+     - ``string``
+   * - ``Fkknot``
+     - ``string``
+   * - ``Fkkomp``
+     - ``string``
+   * - ``Fkmreg``
+     - ``string``
+   * - ``Fkobeh``
+     - ``string``
+   * - ``Fkpgrp``
+     - ``string``
+   * - ``Fkpreg``
+     - ``string``
+   * - ``Fkpump``
+     - ``string``
+   * - ``Fkpumppg``
+     - ``string``
+   * - ``Fkrart``
+     - ``string``
+   * - ``Fkrartpg``
+     - ``string``
+   * - ``Fkregv``
+     - ``string``
+   * - ``Fkrohr``
+     - ``string``
+   * - ``Fkvent``
+     - ``string``
+   * - ``Idreferenz``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Indyno``
+     - ``int32``
+   * - ``Ityp``
+     - ``int32``
+   * - ``Ka``
+     - ``string``
+   * - ``LogicalInputE2``
+     - ``string``
+   * - ``Name``
+     - ``string``
+   * - ``Pk``
+     - ``string``
+   * - ``RglSymbolTyp``
+     - ``rglsymboltype``
+   * - ``SymbolFactor``
+     - ``double``
+   * - ``Tk``
+     - ``string``
+   * - ``Typ``
+     - ``string``
+   * - ``Xkor``
+     - ``double``
+   * - ``Ykor``
+     - ``double``
+   * - ``Ymax``
+     - ``single``
+   * - ``Ymin``
+     - ``single``
+   * - ``Ys1``
+     - ``single``
+   * - ``Ys2``
+     - ``single``
+   * - ``bz.Fk``
+     - ``string``
+   * - ``bz.Fklfkt``
+     - ``string``
+   * - ``bz.Fkphi1``
+     - ``string``
+   * - ``bz.Fkpumd``
+     - ``string``
+   * - ``bz.Fkpvar``
+     - ``string``
+   * - ``bz.Fkqvar``
+     - ``string``
+   * - ``bz.Fkrcpl``
+     - ``string``
+   * - ``bz.FkrcplRowt``
+     - ``string``
+   * - ``bz.Fkswvt``
+     - ``string``
+   * - ``bz.Fktevt``
+     - ``string``
+   * - ``bz.Fkwevt``
+     - ``string``
+   * - ``bz.Iaktiv``
      - ``int32``
 
 Result Properties
 """""""""""""""""
 
-No result properties found.
+.. list-table::
+   :header-rows: 1
 
-SPLZ
+   * - Name
+   * - ``LFKT``
+   * - ``MAINELEMENT``
+   * - ``PHI1``
+   * - ``PUMD``
+   * - ``PVAR``
+   * - ``QVAR``
+   * - ``SWVT``
+   * - ``TEVT``
+   * - ``TRGCOUNT``
+   * - ``WEVT``
+   * - ``XE1``
+   * - ``XE2``
+
+RTOT
 ^^^^
-Object Type: ``SPLZ_TimeSeries``
+Object Type: ``DeadTimeElement``
 
 
 Properties
@@ -7144,15 +7177,92 @@ Properties
 
    * - Name
      - Value Types
-   * - ``Aktiv``
-     - ``int32``
+   * - ``Angle``
+     - ``double``
+   * - ``Beschreibung``
+     - ``string``
+   * - ``E1``
+     - ``string``
+   * - ``Fkcont``
+     - ``string``
    * - ``InVariant``
      - ``boolean``
-   * - ``Lfdnr``
-     - ``int32``
+   * - ``Ka``
+     - ``string``
    * - ``Name``
      - ``string``
    * - ``Pk``
+     - ``string``
+   * - ``RglSymbolTyp``
+     - ``rglsymboltype``
+   * - ``SymbolFactor``
+     - ``double``
+   * - ``Tk``
+     - ``string``
+   * - ``Ttot``
+     - ``single``
+   * - ``Xkor``
+     - ``double``
+   * - ``Ykor``
+     - ``double``
+   * - ``bz.Fk``
+     - ``string``
+
+Result Properties
+"""""""""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+   * - ``MAINELEMENT``
+   * - ``XA``
+   * - ``XE``
+
+RUES
+^^^^
+Object Type: ``TransitionSymbol``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Angle``
+     - ``double``
+   * - ``Beschreibung``
+     - ``string``
+   * - ``Fkcont``
+     - ``string``
+   * - ``Idue``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``InputRues``
+     - ``string``
+   * - ``Iotyp``
+     - ``int32``
+   * - ``Ka``
+     - ``string``
+   * - ``Name``
+     - ``string``
+   * - ``Pk``
+     - ``string``
+   * - ``RglSymbolTyp``
+     - ``rglsymboltype``
+   * - ``SymbolFactor``
+     - ``double``
+   * - ``Tk``
+     - ``string``
+   * - ``Xkor``
+     - ``double``
+   * - ``Ykor``
+     - ``double``
+   * - ``bz.Fk``
      - ``string``
 
 Result Properties
@@ -7244,83 +7354,6 @@ Result Properties
    * - ``RHO``
    * - ``V``
    * - ``ZETA``
-
-RSLW
-^^^^
-Object Type: ``SetpointDevice``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Angle``
-     - ``double``
-   * - ``Beschreibung``
-     - ``string``
-   * - ``Fkcont``
-     - ``string``
-   * - ``Idreferenz``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Indwbg``
-     - ``int32``
-   * - ``Indwno``
-     - ``int32``
-   * - ``Ka``
-     - ``string``
-   * - ``Name``
-     - ``string``
-   * - ``Pk``
-     - ``string``
-   * - ``RglSymbolTyp``
-     - ``rglsymboltype``
-   * - ``SymbolFactor``
-     - ``double``
-   * - ``Tk``
-     - ``string``
-   * - ``Wmax``
-     - ``single``
-   * - ``Wmin``
-     - ``single``
-   * - ``Xkor``
-     - ``double``
-   * - ``Ykor``
-     - ``double``
-   * - ``bz.Fk``
-     - ``string``
-   * - ``bz.Fklfkt``
-     - ``string``
-   * - ``bz.Fkswvt``
-     - ``string``
-   * - ``bz.Indslw``
-     - ``int32``
-   * - ``bz.Slwkon``
-     - ``single``
-
-Result Properties
-"""""""""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-   * - ``LFKT``
-   * - ``MAINELEMENT``
-   * - ``SLWKON``
-   * - ``SWVT``
-   * - ``W``
-   * - ``WAKT``
-   * - ``WE``
-   * - ``WEAKT``
-   * - ``WERCK``
-   * - ``WRCK``
-   * - ``XA``
 
 SOKO
 ^^^^
@@ -7421,6 +7454,210 @@ Result Properties
 
 No result properties found.
 
+SPLZ
+^^^^
+Object Type: ``SPLZ_TimeSeries``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Aktiv``
+     - ``int32``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Lfdnr``
+     - ``int32``
+   * - ``Name``
+     - ``string``
+   * - ``Pk``
+     - ``string``
+
+Result Properties
+"""""""""""""""""
+
+No result properties found.
+
+SRAT
+^^^^
+Object Type: ``DamageRatesTable``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Beschreibung``
+     - ``string``
+   * - ``Idreferenz``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Name``
+     - ``string``
+   * - ``Pk``
+     - ``string``
+   * - ``Tk``
+     - ``string``
+   * - ``Zeitoption``
+     - ``int32``
+
+Result Properties
+"""""""""""""""""
+
+No result properties found.
+
+SRAT_ROWS
+^^^^^^^^^
+Object Type: ``DamageRatesTable_Row``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Erate``
+     - ``single``
+   * - ``Fk``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Name``
+     - ``string``
+   * - ``Pk``
+     - ``string``
+   * - ``Ralter``
+     - ``int32``
+   * - ``Srate``
+     - ``single``
+
+Result Properties
+"""""""""""""""""
+
+No result properties found.
+
+STOF
+^^^^
+Object Type: ``ThermophysPropTable``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Beschreibung``
+     - ``string``
+   * - ``Idreferenz``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Name``
+     - ``string``
+   * - ``Pk``
+     - ``string``
+   * - ``Tk``
+     - ``string``
+   * - ``Zeitoption``
+     - ``int32``
+
+Result Properties
+"""""""""""""""""
+
+No result properties found.
+
+STOF_ROWS
+^^^^^^^^^
+Object Type: ``ThermophysPropTable_Row``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Cp``
+     - ``single``
+   * - ``Fk``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Lambda``
+     - ``single``
+   * - ``Name``
+     - ``string``
+   * - ``Nue``
+     - ``single``
+   * - ``Pd``
+     - ``single``
+   * - ``Pk``
+     - ``string``
+   * - ``Rho``
+     - ``single``
+   * - ``T``
+     - ``single``
+
+Result Properties
+"""""""""""""""""
+
+No result properties found.
+
+STRASSE
+^^^^^^^
+Object Type: ``Street``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``GeometriesDiffer``
+     - ``boolean``
+   * - ``Idreferenz``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Name``
+     - ``string``
+   * - ``Nummer``
+     - ``string``
+   * - ``Ort``
+     - ``string``
+   * - ``Ortsteil``
+     - ``string``
+   * - ``Pk``
+     - ``string``
+   * - ``Tk``
+     - ``string``
+
+Result Properties
+"""""""""""""""""
+
+No result properties found.
+
 STRO
 ^^^^
 Object Type: ``StandPipe``
@@ -7509,9 +7746,9 @@ Result Properties
    * - ``WALTER``
    * - ``WST``
 
-STRASSE
-^^^^^^^
-Object Type: ``Street``
+SWVT
+^^^^
+Object Type: ``MeasuredVariableTable``
 
 
 Properties
@@ -7522,75 +7759,20 @@ Properties
 
    * - Name
      - Value Types
-   * - ``GeometriesDiffer``
-     - ``boolean``
+   * - ``Beschreibung``
+     - ``string``
    * - ``Idreferenz``
      - ``string``
    * - ``InVariant``
      - ``boolean``
-   * - ``Name``
-     - ``string``
-   * - ``Nummer``
-     - ``string``
-   * - ``Ort``
-     - ``string``
-   * - ``Ortsteil``
-     - ``string``
-   * - ``Pk``
-     - ``string``
-   * - ``Tk``
-     - ``string``
-
-Result Properties
-"""""""""""""""""
-
-No result properties found.
-
-RADD
-^^^^
-Object Type: ``SummingPoint``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Angle``
-     - ``double``
-   * - ``Beschreibung``
-     - ``string``
-   * - ``E1``
-     - ``string``
-   * - ``E2``
-     - ``string``
-   * - ``Fkcont``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Indadd``
+   * - ``Intpol``
      - ``int32``
-   * - ``Ka``
-     - ``string``
    * - ``Name``
      - ``string``
    * - ``Pk``
      - ``string``
-   * - ``RglSymbolTyp``
-     - ``rglsymboltype``
-   * - ``SymbolFactor``
-     - ``double``
-   * - ``Tk``
-     - ``string``
-   * - ``Xkor``
-     - ``double``
-   * - ``Ykor``
-     - ``double``
-   * - ``bz.Fk``
-     - ``string``
+   * - ``Zeitoption``
+     - ``int32``
 
 Result Properties
 """""""""""""""""
@@ -7600,13 +7782,11 @@ Result Properties
 
    * - Name
    * - ``MAINELEMENT``
-   * - ``XA``
-   * - ``XE1``
-   * - ``XE2``
+   * - ``W``
 
-BREF
-^^^^
-Object Type: ``SwitchInBlock``
+SWVT_ROWT
+^^^^^^^^^
+Object Type: ``MeasuredVariableTable_Row``
 
 
 Properties
@@ -7617,15 +7797,7 @@ Properties
 
    * - Name
      - Value Types
-   * - ``Beschreibung``
-     - ``string``
-   * - ``BoundingRectangle``
-     - ``irectangle``
-   * - ``ElementFont``
-     - ``c3sfont``
-   * - ``Fkblock``
-     - ``string``
-   * - ``Fkcont``
+   * - ``Fk``
      - ``string``
    * - ``InVariant``
      - ``boolean``
@@ -7633,14 +7805,12 @@ Properties
      - ``string``
    * - ``Pk``
      - ``string``
-   * - ``TextColor``
-     - ``color``
-   * - ``Tk``
+   * - ``W``
+     - ``single``
+   * - ``Zeit``
+     - ``single``
+   * - ``Zeitstempel``
      - ``string``
-   * - ``Xkor``
-     - ``double``
-   * - ``Ykor``
-     - ``double``
 
 Result Properties
 """""""""""""""""
@@ -7718,129 +7888,9 @@ Result Properties
 
 No result properties found.
 
-GTXT
+TFKT
 ^^^^
-Object Type: ``Text``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Angle``
-     - ``double``
-   * - ``Beschreibung``
-     - ``string``
-   * - ``ElementColor``
-     - ``color``
-   * - ``ElementFont``
-     - ``c3sfont``
-   * - ``Fkcont``
-     - ``string``
-   * - ``GeometriesDiffer``
-     - ``boolean``
-   * - ``Graftext``
-     - ``string``
-   * - ``Idreferenz``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Name``
-     - ``string``
-   * - ``Pk``
-     - ``string``
-   * - ``Tk``
-     - ``string``
-   * - ``Xkor``
-     - ``double``
-   * - ``Ykor``
-     - ``double``
-   * - ``bz.Fk``
-     - ``string``
-
-Result Properties
-"""""""""""""""""
-
-No result properties found.
-
-WEVT
-^^^^
-Object Type: ``ThermalOutputTable``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Beschreibung``
-     - ``string``
-   * - ``Idreferenz``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Intpol``
-     - ``int32``
-   * - ``Name``
-     - ``string``
-   * - ``Pk``
-     - ``string``
-   * - ``Zeitoption``
-     - ``int32``
-
-Result Properties
-"""""""""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-   * - ``MAINELEMENT``
-   * - ``W``
-
-WEVT_ROWT
-^^^^^^^^^
-Object Type: ``ThermalOutputTable_Row``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Fk``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Name``
-     - ``string``
-   * - ``Pk``
-     - ``string``
-   * - ``W``
-     - ``single``
-   * - ``Zeit``
-     - ``single``
-   * - ``Zeitstempel``
-     - ``string``
-
-Result Properties
-"""""""""""""""""
-
-No result properties found.
-
-STOF
-^^^^
-Object Type: ``ThermophysPropTable``
+Object Type: ``FunctionTable``
 
 
 Properties
@@ -7871,9 +7921,9 @@ Result Properties
 
 No result properties found.
 
-STOF_ROWS
+TFKT_ROWS
 ^^^^^^^^^
-Object Type: ``ThermophysPropTable_Row``
+Object Type: ``FunctionTable_Row``
 
 
 Properties
@@ -7884,25 +7934,17 @@ Properties
 
    * - Name
      - Value Types
-   * - ``Cp``
-     - ``single``
    * - ``Fk``
      - ``string``
    * - ``InVariant``
      - ``boolean``
-   * - ``Lambda``
-     - ``single``
    * - ``Name``
      - ``string``
-   * - ``Nue``
-     - ``single``
-   * - ``Pd``
-     - ``single``
    * - ``Pk``
      - ``string``
-   * - ``Rho``
+   * - ``X``
      - ``single``
-   * - ``T``
+   * - ``Y``
      - ``single``
 
 Result Properties
@@ -7910,9 +7952,9 @@ Result Properties
 
 No result properties found.
 
-RUES
+TRFT
 ^^^^
-Object Type: ``TransitionSymbol``
+Object Type: ``ReturnTemperaturTable``
 
 
 Properties
@@ -7923,117 +7965,56 @@ Properties
 
    * - Name
      - Value Types
-   * - ``Angle``
-     - ``double``
    * - ``Beschreibung``
-     - ``string``
-   * - ``Fkcont``
-     - ``string``
-   * - ``Idue``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``InputRues``
-     - ``string``
-   * - ``Iotyp``
-     - ``int32``
-   * - ``Ka``
-     - ``string``
-   * - ``Name``
-     - ``string``
-   * - ``Pk``
-     - ``string``
-   * - ``RglSymbolTyp``
-     - ``rglsymboltype``
-   * - ``SymbolFactor``
-     - ``double``
-   * - ``Tk``
-     - ``string``
-   * - ``Xkor``
-     - ``double``
-   * - ``Ykor``
-     - ``double``
-   * - ``bz.Fk``
-     - ``string``
-
-Result Properties
-"""""""""""""""""
-
-No result properties found.
-
-RMES
-^^^^
-Object Type: ``Transmitter``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Angle``
-     - ``double``
-   * - ``Beschreibung``
-     - ``string``
-   * - ``Fkcont``
      - ``string``
    * - ``Idreferenz``
      - ``string``
    * - ``InVariant``
      - ``boolean``
-   * - ``Indaggreg``
-     - ``int32``
-   * - ``Indxbg``
-     - ``int32``
-   * - ``Indxno``
-     - ``int32``
-   * - ``Indxum``
-     - ``int32``
-   * - ``Ka``
-     - ``string``
-   * - ``Mesdt0``
-     - ``single``
    * - ``Name``
      - ``string``
    * - ``Pk``
      - ``string``
-   * - ``RglSymbolTyp``
-     - ``rglsymboltype``
-   * - ``SymbolFactor``
-     - ``double``
    * - ``Tk``
      - ``string``
-   * - ``Xkor``
-     - ``double``
-   * - ``Xmax``
-     - ``single``
-   * - ``Xmin``
-     - ``single``
-   * - ``Xumb``
-     - ``single``
-   * - ``Xumm``
-     - ``single``
-   * - ``Ykor``
-     - ``double``
-   * - ``bz.Fk``
-     - ``string``
-   * - ``bz.X0``
-     - ``single``
+   * - ``Zeitoption``
+     - ``int32``
 
 Result Properties
 """""""""""""""""
+
+No result properties found.
+
+TRFT_ROWS
+^^^^^^^^^
+Object Type: ``ReturnTemperaturTable_Row``
+
+
+Properties
+""""""""""
 
 .. list-table::
    :header-rows: 1
 
    * - Name
-   * - ``MAINELEMENT``
-   * - ``XA``
-   * - ``XM``
-   * - ``XU``
+     - Value Types
+   * - ``Fk``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Lfth``
+     - ``single``
+   * - ``Name``
+     - ``string``
+   * - ``Pk``
+     - ``string``
+   * - ``Trs``
+     - ``single``
+
+Result Properties
+"""""""""""""""""
+
+No result properties found.
 
 TRVA
 ^^^^
@@ -8115,6 +8096,45 @@ Properties
      - ``string``
    * - ``Valtype``
      - ``int32``
+
+Result Properties
+"""""""""""""""""
+
+No result properties found.
+
+UTMP
+^^^^
+Object Type: ``EnvironmentTemp``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Idreferenz``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Name``
+     - ``string``
+   * - ``Pk``
+     - ``string``
+   * - ``Tk``
+     - ``string``
+   * - ``bz.Fk``
+     - ``string``
+   * - ``bz.Fktevt``
+     - ``string``
+   * - ``bz.Fkwttr``
+     - ``string``
+   * - ``bz.Indi``
+     - ``int32``
+   * - ``bz.Tu``
+     - ``single``
 
 Result Properties
 """""""""""""""""
@@ -8216,41 +8236,6 @@ Properties
    * - ``Valuestart``
      - ``single``
    * - ``Valueub``
-     - ``single``
-
-Result Properties
-"""""""""""""""""
-
-No result properties found.
-
-VRCT
-^^^^
-Object Type: ``VRCT_ViewRectangle``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Lfdnr``
-     - ``int32``
-   * - ``Name``
-     - ``string``
-   * - ``Pk``
-     - ``string``
-   * - ``XLinks``
-     - ``single``
-   * - ``XRechts``
-     - ``single``
-   * - ``YOben``
-     - ``single``
-   * - ``YUnten``
      - ``single``
 
 Result Properties
@@ -8385,9 +8370,9 @@ Result Properties
    * - ``ZETA``
    * - ``ZU``
 
-PHI1
+VERB
 ^^^^
-Object Type: ``ValveLiftTable``
+Object Type: ``Demand``
 
 
 Properties
@@ -8398,443 +8383,103 @@ Properties
 
    * - Name
      - Value Types
-   * - ``Beschreibung``
-     - ``string``
-   * - ``Idreferenz``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Intpol``
+   * - ``AenderungArt``
      - ``int32``
-   * - ``Name``
+   * - ``AenderungDatum``
      - ``string``
-   * - ``Pk``
+   * - ``AenderungInfo``
      - ``string``
-   * - ``Zeitoption``
+   * - ``Betriebsstatus``
      - ``int32``
-
-Result Properties
-"""""""""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-   * - ``MAINELEMENT``
-   * - ``PHI``
-
-PHI1_ROWT
-^^^^^^^^^
-Object Type: ``ValveLiftTable_Row``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Fk``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Name``
-     - ``string``
-   * - ``Phi``
+   * - ``Betriebsstunden``
      - ``single``
-   * - ``Pk``
+   * - ``Dimension``
      - ``string``
-   * - ``Zeit``
-     - ``single``
-   * - ``Zeitstempel``
-     - ``string``
-
-Result Properties
-"""""""""""""""""
-
-No result properties found.
-
-QVAR
-^^^^
-Object Type: ``VarFlowTable``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Beschreibung``
-     - ``string``
-   * - ``Idreferenz``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Intpol``
+   * - ``ErzeugungArt``
      - ``int32``
-   * - ``Name``
+   * - ``ErzeugungInfo``
      - ``string``
-   * - ``Pk``
-     - ``string``
-   * - ``Zeitoption``
-     - ``int32``
-
-Result Properties
-"""""""""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-   * - ``FWVB_DPHMIN``
-   * - ``FWVB_TVLMIN``
-   * - ``MAINELEMENT``
-   * - ``MFVHYUV``
-   * - ``MFVTHUV``
-   * - ``NFVHYUV``
-   * - ``NFVTHUV``
-   * - ``QM``
-   * - ``TVMINMAX``
-
-QVAR_ROWT
-^^^^^^^^^
-Object Type: ``VarFlowTable_Row``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Fk``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Name``
-     - ``string``
-   * - ``Pk``
-     - ``string``
-   * - ``Qm``
-     - ``single``
-   * - ``Zeit``
-     - ``single``
-   * - ``Zeitstempel``
-     - ``string``
-
-Result Properties
-"""""""""""""""""
-
-No result properties found.
-
-PVAR
-^^^^
-Object Type: ``VarPressureTable``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Beschreibung``
-     - ``string``
-   * - ``Idreferenz``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Intpol``
-     - ``int32``
-   * - ``Name``
-     - ``string``
-   * - ``Pk``
-     - ``string``
-   * - ``Zeitoption``
-     - ``int32``
-
-Result Properties
-"""""""""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-   * - ``MAINELEMENT``
-   * - ``PH``
-
-PVAR_ROWT
-^^^^^^^^^
-Object Type: ``VarPressureTable_Row``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Fk``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Name``
-     - ``string``
-   * - ``Ph``
-     - ``single``
-   * - ``Pk``
-     - ``string``
-   * - ``Zeit``
-     - ``single``
-   * - ``Zeitstempel``
-     - ``string``
-
-Result Properties
-"""""""""""""""""
-
-No result properties found.
-
-PHI2
-^^^^
-Object Type: ``VentOpenCloseTable``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Beschreibung``
-     - ``string``
-   * - ``Idreferenz``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Name``
-     - ``string``
-   * - ``Pk``
-     - ``string``
-   * - ``Tk``
-     - ``string``
-   * - ``Zeitoption``
-     - ``int32``
-
-Result Properties
-"""""""""""""""""
-
-No result properties found.
-
-PHI2_ROWS
-^^^^^^^^^
-Object Type: ``VentOpenCloseTable_Row``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Fk``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Name``
-     - ``string``
-   * - ``Phio``
-     - ``single``
-   * - ``Phis``
-     - ``single``
-   * - ``Pk``
-     - ``string``
-   * - ``Zeit``
-     - ``single``
-
-Result Properties
-"""""""""""""""""
-
-No result properties found.
-
-BEVE
-^^^^
-Object Type: ``VentValve``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``Alpha``
-     - ``single``
-   * - ``Angle``
-     - ``double``
-   * - ``Beschreibung``
-     - ``string``
-   * - ``Dgr``
-     - ``single``
-   * - ``Dkl``
-     - ``single``
-   * - ``Fkcont``
-     - ``string``
-   * - ``Fkfstf``
+   * - ``Fkhaus``
      - ``string``
    * - ``GeometriesDiffer``
      - ``boolean``
-   * - ``Ibedef``
+   * - ``Graphics``
+     - ``hausverbgraf``
+   * - ``Hausanlagenbauart``
+     - ``string``
+   * - ``Hausanlagentyp``
+     - ``string``
+   * - ``Hausnr``
      - ``int32``
-   * - ``Ibetyp``
-     - ``int32``
+   * - ``HausnrZus``
+     - ``string``
+   * - ``Heizleistung``
+     - ``single``
    * - ``Idreferenz``
      - ``string``
-   * - ``Iekl``
-     - ``int32``
    * - ``InVariant``
      - ``boolean``
-   * - ``Iplanung``
-     - ``int32``
-   * - ``Knotk``
+   * - ``Jahresarbeit``
+     - ``single``
+   * - ``Kuehlleistung``
+     - ``single``
+   * - ``KundenId``
      - ``string``
+   * - ``Kundengruppe``
+     - ``string``
+   * - ``LaengeHal``
+     - ``single``
+   * - ``LaengeHauseinfuehrung``
+     - ``single``
+   * - ``MengenbegrHwd``
+     - ``single``
    * - ``Name``
      - ``string``
    * - ``Pk``
      - ``string``
-   * - ``Poeff``
+   * - ``Plz``
+     - ``int32``
+   * - ``Prl``
      - ``single``
-   * - ``Qlbmax``
+   * - ``Pvl``
      - ``single``
-   * - ``Qlekl``
+   * - ``Qhm``
      - ``single``
-   * - ``Rgbeve``
+   * - ``QhmaxFd``
      - ``single``
-   * - ``SymbolFactor``
-     - ``double``
-   * - ``SymbolGraf``
-     - ``symbol1c_graf``
+   * - ``QhmaxFh``
+     - ``single``
+   * - ``Rau``
+     - ``single``
+   * - ``Sonstige``
+     - ``single``
+   * - ``Spartentyp``
+     - ``string``
+   * - ``Tariftyp``
+     - ``string``
    * - ``Tk``
      - ``string``
-   * - ``Trohr``
+   * - ``Trs0``
      - ``single``
-   * - ``Vgrest``
+   * - ``Tvl0``
+     - ``single``
+   * - ``Verbrauch``
+     - ``double``
+   * - ``VerbrauchDatum``
+     - ``string``
+   * - ``ViewX``
+     - ``double``
+   * - ``ViewY``
+     - ``double``
+   * - ``Warmwasserleistung``
      - ``single``
    * - ``Xkor``
      - ``double``
    * - ``Ykor``
      - ``double``
-   * - ``Zkor``
-     - ``single``
-   * - ``bz.Fk``
+   * - ``ZaehlerId``
      - ``string``
-
-Result Properties
-"""""""""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-   * - ``IAKTIV``
-   * - ``IND``
-   * - ``M``
-   * - ``MAINELEMENT``
-   * - ``MLUFT``
-   * - ``PHI``
-   * - ``PLUFT``
-   * - ``QLUFT``
-   * - ``QM``
-   * - ``QMLUFT``
-   * - ``RHO``
-   * - ``TLUFT``
-   * - ``VLUFT``
-   * - ``VOLLUFT``
-
-BEWI
-^^^^
-Object Type: ``VentilatedPressureAirVessel``
-
-
-Properties
-""""""""""
-
-.. list-table::
-   :header-rows: 1
-
-   * - Name
-     - Value Types
-   * - ``A``
-     - ``single``
-   * - ``Angle``
-     - ``double``
-   * - ``Beschreibung``
-     - ``string``
-   * - ``Dn``
-     - ``single``
-   * - ``Fkatab``
-     - ``string``
-   * - ``Fkcont``
-     - ``string``
-   * - ``Fkfstf``
-     - ``string``
-   * - ``GeometriesDiffer``
-     - ``boolean``
-   * - ``Hb``
-     - ``single``
-   * - ``Idreferenz``
-     - ``string``
-   * - ``InVariant``
-     - ``boolean``
-   * - ``Indatab``
-     - ``int32``
-   * - ``Iplanung``
-     - ``int32``
-   * - ``Knotk``
-     - ``string``
-   * - ``Lta``
-     - ``single``
-   * - ``Name``
-     - ``string``
-   * - ``Pg0``
-     - ``single``
-   * - ``Pk``
-     - ``string``
-   * - ``Rgas``
-     - ``single``
-   * - ``Rpoly``
-     - ``single``
-   * - ``SymbolFactor``
-     - ``double``
-   * - ``SymbolGraf``
-     - ``symbol1c_graf``
-   * - ``Tgas``
-     - ``single``
-   * - ``Tk``
-     - ``string``
-   * - ``Xkor``
-     - ``double``
-   * - ``Ykor``
-     - ``double``
-   * - ``Zetaneg``
-     - ``single``
-   * - ``Zetapos``
+   * - ``Zeta``
      - ``single``
    * - ``Zkor``
      - ``single``
@@ -8844,26 +8489,83 @@ Properties
 Result Properties
 """""""""""""""""
 
+No result properties found.
+
+VKNO
+^^^^
+Object Type: ``BlockConnectionNode``
+
+
+Properties
+""""""""""
+
 .. list-table::
    :header-rows: 1
 
    * - Name
-   * - ``HLUFT``
-   * - ``IAKTIV``
-   * - ``IND``
-   * - ``M``
-   * - ``MAINELEMENT``
-   * - ``PLUFT``
-   * - ``QM``
-   * - ``RHO``
-   * - ``T``
-   * - ``TLUFT``
-   * - ``V``
-   * - ``VOL``
-   * - ``VOLLUFT``
-   * - ``VOLLUFT1``
-   * - ``WALTER``
-   * - ``WST``
+     - Value Types
+   * - ``Displaymode``
+     - ``int32``
+   * - ``Fkcont``
+     - ``string``
+   * - ``Fkknot``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Name``
+     - ``string``
+   * - ``Pk``
+     - ``string``
+   * - ``Pointinsertx``
+     - ``double``
+   * - ``Pointinserty``
+     - ``double``
+   * - ``Posname``
+     - ``int32``
+   * - ``Showname``
+     - ``int32``
+   * - ``Symbolfact``
+     - ``single``
+
+Result Properties
+"""""""""""""""""
+
+No result properties found.
+
+VRCT
+^^^^
+Object Type: ``VRCT_ViewRectangle``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Lfdnr``
+     - ``int32``
+   * - ``Name``
+     - ``string``
+   * - ``Pk``
+     - ``string``
+   * - ``XLinks``
+     - ``single``
+   * - ``XRechts``
+     - ``single``
+   * - ``YOben``
+     - ``single``
+   * - ``YUnten``
+     - ``single``
+
+Result Properties
+"""""""""""""""""
+
+No result properties found.
 
 WBLZ
 ^^^^
@@ -8917,6 +8619,175 @@ Result Properties
    * - ``WVB_XD``
    * - ``WVERL``
    * - ``WWU``
+
+WEVT
+^^^^
+Object Type: ``ThermalOutputTable``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Beschreibung``
+     - ``string``
+   * - ``Idreferenz``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Intpol``
+     - ``int32``
+   * - ``Name``
+     - ``string``
+   * - ``Pk``
+     - ``string``
+   * - ``Zeitoption``
+     - ``int32``
+
+Result Properties
+"""""""""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+   * - ``MAINELEMENT``
+   * - ``W``
+
+WEVT_ROWT
+^^^^^^^^^
+Object Type: ``ThermalOutputTable_Row``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Fk``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Name``
+     - ``string``
+   * - ``Pk``
+     - ``string``
+   * - ``W``
+     - ``single``
+   * - ``Zeit``
+     - ``single``
+   * - ``Zeitstempel``
+     - ``string``
+
+Result Properties
+"""""""""""""""""
+
+No result properties found.
+
+WIND
+^^^^
+Object Type: ``AirVessel``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``A``
+     - ``single``
+   * - ``Angle``
+     - ``double``
+   * - ``Beschreibung``
+     - ``string``
+   * - ``Dn``
+     - ``single``
+   * - ``Fkatab``
+     - ``string``
+   * - ``Fkcont``
+     - ``string``
+   * - ``Fkfstf``
+     - ``string``
+   * - ``GeometriesDiffer``
+     - ``boolean``
+   * - ``Hb``
+     - ``single``
+   * - ``Ibla``
+     - ``int32``
+   * - ``Idreferenz``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Indatab``
+     - ``int32``
+   * - ``Iplanung``
+     - ``int32``
+   * - ``Knotk``
+     - ``string``
+   * - ``Name``
+     - ``string``
+   * - ``Pg0``
+     - ``single``
+   * - ``Pk``
+     - ``string``
+   * - ``Rgas``
+     - ``single``
+   * - ``Rpoly``
+     - ``single``
+   * - ``SymbolFactor``
+     - ``double``
+   * - ``SymbolGraf``
+     - ``symbol1c_graf``
+   * - ``Tgas``
+     - ``single``
+   * - ``Tk``
+     - ``string``
+   * - ``Vg0``
+     - ``single``
+   * - ``Xkor``
+     - ``double``
+   * - ``Ykor``
+     - ``double``
+   * - ``Zetaneg``
+     - ``single``
+   * - ``Zetapos``
+     - ``single``
+   * - ``Zkor``
+     - ``single``
+   * - ``bz.Fk``
+     - ``string``
+
+Result Properties
+"""""""""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+   * - ``HLUFT``
+   * - ``IAKTIV``
+   * - ``M``
+   * - ``MAINELEMENT``
+   * - ``PLUFT``
+   * - ``QM``
+   * - ``RHO``
+   * - ``T``
+   * - ``V``
+   * - ``VOL``
+   * - ``VOLDA``
+   * - ``VOLGAS``
+   * - ``WALTER``
+   * - ``WST``
 
 WTTR
 ^^^^
@@ -9000,6 +8871,150 @@ Properties
      - ``single``
    * - ``Zeitstempel``
      - ``string``
+
+Result Properties
+"""""""""""""""""
+
+No result properties found.
+
+ZEP1
+^^^^
+Object Type: ``RegulatorsTable``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Beschreibung``
+     - ``string``
+   * - ``Idreferenz``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Kvbzg``
+     - ``single``
+   * - ``Name``
+     - ``string``
+   * - ``Pk``
+     - ``string``
+   * - ``Tk``
+     - ``string``
+   * - ``Typ``
+     - ``int32``
+   * - ``Zeitoption``
+     - ``int32``
+
+Result Properties
+"""""""""""""""""
+
+No result properties found.
+
+ZEP1_ROWS
+^^^^^^^^^
+Object Type: ``RegulatorsTable_Row``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Fk``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Kvrel``
+     - ``single``
+   * - ``Name``
+     - ``string``
+   * - ``Phi``
+     - ``single``
+   * - ``Pk``
+     - ``string``
+   * - ``Zeta``
+     - ``single``
+
+Result Properties
+"""""""""""""""""
+
+No result properties found.
+
+ZEP2
+^^^^
+Object Type: ``CharacteristicLossTable``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Beschreibung``
+     - ``string``
+   * - ``Idreferenz``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Kvbzg``
+     - ``single``
+   * - ``Name``
+     - ``string``
+   * - ``Pk``
+     - ``string``
+   * - ``Tk``
+     - ``string``
+   * - ``Typ``
+     - ``int32``
+   * - ``Zeitoption``
+     - ``int32``
+
+Result Properties
+"""""""""""""""""
+
+No result properties found.
+
+ZEP2_ROWS
+^^^^^^^^^
+Object Type: ``CharacteristicLossTable_Row``
+
+
+Properties
+""""""""""
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Value Types
+   * - ``Fk``
+     - ``string``
+   * - ``InVariant``
+     - ``boolean``
+   * - ``Kvrelneg``
+     - ``single``
+   * - ``Kvrelpos``
+     - ``single``
+   * - ``Name``
+     - ``string``
+   * - ``Phi``
+     - ``single``
+   * - ``Pk``
+     - ``string``
+   * - ``Zetaneg``
+     - ``single``
+   * - ``Zetapos``
+     - ``single``
 
 Result Properties
 """""""""""""""""
