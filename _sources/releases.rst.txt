@@ -82,6 +82,21 @@ Below the release history with all changes is given in detail.
 SIR 3S: 90-15-00-24-Upd2
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
+Version 90.15.25 (TO BE RELEASED )
+""""""""""""""""""""""""""""""""""
+
+Developed and tested using SIR 3S Version: 90-15-00-24-Upd2
+
+C# Changes
+~~~~~~~~~~
+
+Python Changes
+~~~~~~~~~~~~~~
+
+- wrapper.py: new functions
+   - Read_SirGraf_Config_Path(): reads the SirGraf config path from config.txt
+   - Write_SirGraf_Config_Path(basePath): writes the SirGraf config path to config.txt
+
 Version 90.15.24
 """"""""""""""""
 
