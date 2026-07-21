@@ -10,6 +10,8 @@ Core Functions
 ^^^^^^^^^^^^^^
 
 - :func:`sir3stoolkit.core.wrapper.Initialize_Toolkit`
+- :func:`sir3stoolkit.core.wrapper.Read_SirGraf_Config_Path`
+- :func:`sir3stoolkit.core.wrapper.Write_SirGraf_Config_Path`
 - :func:`sir3stoolkit.core.wrapper.create_dotnet_enum`
 
 Core Methods: SIR3S_Model
