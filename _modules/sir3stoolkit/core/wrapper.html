@@ -428,10 +428,12 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">ProviderTypes</span> <span class="o">=</span> <span class="n">create_dotnet_enum</span><span class="p">(</span><span class="s2">&quot;ProviderTypes&quot;</span><span class="p">,</span> <span class="s2">&quot;SirDBProviderType&quot;</span><span class="p">,</span> <span class="s2">&quot;Sir3S_Repository.Interfaces.dll&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">NetworkType</span> <span class="o">=</span> <span class="n">create_dotnet_enum</span><span class="p">(</span><span class="s2">&quot;NetworkType&quot;</span><span class="p">,</span> <span class="s2">&quot;NetworkType&quot;</span><span class="p">,</span> <span class="s2">&quot;Sir3S_Repository.Interfaces.dll&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes_TableNames</span> <span class="o">=</span> <span class="n">create_dotnet_enum</span><span class="p">(</span><span class="s2">&quot;ObjectTypes_TableNames&quot;</span><span class="p">,</span> <span class="s2">&quot;Sir3SObjectTypes_TableNames&quot;</span><span class="p">,</span> <span class="s2">&quot;Sir3S_Repository.Interfaces.dll&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">CalculationType</span> <span class="o">=</span> <span class="n">create_dotnet_enum</span><span class="p">(</span><span class="s2">&quot;CalculationType&quot;</span><span class="p">,</span> <span class="s2">&quot;CalculationType&quot;</span><span class="p">,</span> <span class="s2">&quot;Sir3S_Repository.Interfaces.dll&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_dotnet_enum_type_objecttype</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_dotnet_enum</span><span class="p">(</span><span class="s2">&quot;Sir3SObjectTypes&quot;</span><span class="p">,</span> <span class="s2">&quot;Sir3S_Repository.Interfaces.dll&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_dotnet_enum_type_providertype</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_dotnet_enum</span><span class="p">(</span><span class="s2">&quot;SirDBProviderType&quot;</span><span class="p">,</span> <span class="s2">&quot;Sir3S_Repository.Interfaces.dll&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_dotnet_enum_type_networktype</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_dotnet_enum</span><span class="p">(</span><span class="s2">&quot;NetworkType&quot;</span><span class="p">,</span> <span class="s2">&quot;Sir3S_Repository.Interfaces.dll&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_dotnet_enum_type_objecttype_tablenames</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_dotnet_enum</span><span class="p">(</span><span class="s2">&quot;Sir3SObjectTypes_TableNames&quot;</span><span class="p">,</span> <span class="s2">&quot;Sir3S_Repository.Interfaces.dll&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dotnet_enum_type_calculationtype</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_dotnet_enum</span><span class="p">(</span><span class="s2">&quot;CalculationType&quot;</span><span class="p">,</span>  <span class="s2">&quot;Sir3S_Repository.Interfaces.dll&quot;</span><span class="p">)</span>
 
         <span class="c1"># Variable to enable or disable output comments</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span> <span class="o">=</span> <span class="kc">True</span>
@@ -467,6 +469,8 @@
             <span class="k">return</span> <span class="n">System</span><span class="o">.</span><span class="n">Enum</span><span class="o">.</span><span class="n">ToObject</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dotnet_enum_type_providertype</span><span class="p">,</span> <span class="n">py_enum_member</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
         <span class="k">elif</span> <span class="p">(</span><span class="n">enum_type</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">NetworkType</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">System</span><span class="o">.</span><span class="n">Enum</span><span class="o">.</span><span class="n">ToObject</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dotnet_enum_type_networktype</span><span class="p">,</span> <span class="n">py_enum_member</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">enum_type</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">CalculationType</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">System</span><span class="o">.</span><span class="n">Enum</span><span class="o">.</span><span class="n">ToObject</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dotnet_enum_type_calculationtype</span><span class="p">,</span> <span class="n">py_enum_member</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown enum type </span><span class="si">{</span><span class="n">enum_type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
 
@@ -1909,9 +1913,249 @@
             <span class="n">_log_message</span><span class="p">(</span><span class="s2">&quot;Referencing element list is empty&quot;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="s2">&quot;warning&quot;</span><span class="p">)</span>
             
         <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">references</span><span class="p">),</span> <span class="nb">list</span><span class="p">(</span><span class="n">referencesKeys</span><span class="p">)</span></div>
-</div>
 
         
+
+    <span class="c1">## Changes for https://github.com/3SConsult/sir3stoolkit/issues/9</span>
+    
+<div class="viewcode-block" id="SIR3S_Model.GetWorkingDirectory">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetWorkingDirectory">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">GetWorkingDirectory</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Assign the SIR 3S working Directory to an existing Directory. The current User should have SIR 3S Adminitrator Role.</span>
+
+<span class="sd">        :return: The full Path of the working directory of the current Model as a string, an empty String if the operation fails.</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        :description: This is a wrapper method for GetWorkingDirectory() from toolkit</span>
+<span class="sd">        &quot;&quot;&quot;</span> 
+        <span class="n">workingDirectory</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">GetWorkingDirectory</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">error</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">workingDirectory</span></div>
+
+
+<div class="viewcode-block" id="SIR3S_Model.AllocateWorkingDirectory">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AllocateWorkingDirectory">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">AllocateWorkingDirectory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strDirectory</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Assign the SIR 3S working Directory to an existing Directory. The current User should have SIR 3S Adminitrator Role.</span>
+
+<span class="sd">        :param strDirectory: The path of the Directory to allocate. This must be a valid, existing, writable and readable Directory Path.</span>
+<span class="sd">        :type strDirectory: str</span>
+<span class="sd">        :return: True if the allocation is successful; otherwise, false.</span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        :description: This is a wrapper method for AllocateWorkingDirectory() from toolkit</span>
+<span class="sd">        &quot;&quot;&quot;</span> 
+        <span class="n">isSet</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">AllocateWorkingDirectory</span><span class="p">(</span><span class="n">strDirectory</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">isSet</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">isSet</span></div>
+
+
+<div class="viewcode-block" id="SIR3S_Model.CreateWorkingDirectory">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.CreateWorkingDirectory">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">CreateWorkingDirectory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strDirectory</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Just Create a SIR 3S Working Directory if it doesnt exist yet and assign it. The current User should have SIR 3S Adminitrator Role.</span>
+
+<span class="sd">        :param strDirectory: The Directory to create.</span>
+<span class="sd">        :type strDirectory: str</span>
+<span class="sd">        :return: True if the Creation is successful; otherwise, false.</span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        :description: This is a wrapper method for CreateWorkingDirectory() from toolkit</span>
+<span class="sd">        &quot;&quot;&quot;</span> 
+        <span class="n">isSet</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">CreateWorkingDirectory</span><span class="p">(</span><span class="n">strDirectory</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">isSet</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">isSet</span></div>
+
+
+<div class="viewcode-block" id="SIR3S_Model.CopyWorkingDirectory">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.CopyWorkingDirectory">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">CopyWorkingDirectory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strDestinationDirectory</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Copies the contents of the current SIR 3S working Directory to the specified Destination Directory.</span>
+<span class="sd">        The current User should have SIR 3S Adminitrator Role.</span>
+
+<span class="sd">        :param strDestinationDirectory: The full Path of the Destination Directory where the Contents will be copied. Must be a valid writable Directory Path.</span>
+<span class="sd">        :type strDestinationDirectory: str</span>
+<span class="sd">        :return: True if the Copy Operation is successful; otherwise, false.</span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        :description: This is a wrapper method for CopyWorkingDirectory() from toolkit</span>
+<span class="sd">        &quot;&quot;&quot;</span> 
+        <span class="n">isSet</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">CopyWorkingDirectory</span><span class="p">(</span><span class="n">strDestinationDirectory</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">isSet</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">isSet</span></div>
+
+
+    <span class="c1">## Changes for https://github.com/3SConsult/sir3stoolkit/issues/12</span>
+    
+<div class="viewcode-block" id="SIR3S_Model.SetCalculationType">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.SetCalculationType">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">SetCalculationType</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">calculationType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the Calculation Type for the Model. SircCalc will use this Calculation Type for the next Calculation.</span>
+
+<span class="sd">        :param calculationType: Defined as Enum in &#39;Sir3S_Repository.Interfaces&#39;:  Type of Calculation to be applied.</span>
+<span class="sd">                                Note: TNot every Network Type supports every Calculation Type. For example, Water Networks do not support &#39;Low Frequency Calculation&#39; and &#39;Transient Calculation&#39;.</span>
+<span class="sd">                                For Water and DH networks. Only SteadyState | Quasi_Stat | LowFreq | HighFreq_CHAR | HighFreq_AUTO | LoopForLoadingCondition make sense.</span>
+<span class="sd">                                For Gas/Steam Networks, only SteadyState | Quasi_Stat | HighFreq_CHAR | Instat_FiniteDiff | LoopForLoadingCondition make sense.</span>
+<span class="sd">        :type calculationType: CalculationType</span>
+<span class="sd">        :return: True  if the type is set; otherwise False.</span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        :description: This is a wrapper method for SetCalculationType() from toolkit</span>
+<span class="sd">        &quot;&quot;&quot;</span> 
+        <span class="n">isSet</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">SetCalculationType</span><span class="p">(</span><span class="n">calculationType</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">isSet</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">isSet</span></div>
+
+    
+<div class="viewcode-block" id="SIR3S_Model.GetCalculationType">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetCalculationType">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">GetCalculationType</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the current Type of Calculation to be performed.</span>
+
+<span class="sd">        :return: value representing the type of calculation.  Returns &#39;Unknown&#39; if the operation fails.</span>
+<span class="sd">        :rtype: CalculationType</span>
+<span class="sd">        :description: This is a wrapper method for GetCalculationType() from toolkit</span>
+<span class="sd">        &quot;&quot;&quot;</span> 
+        <span class="n">calcType</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">GetCalculationType</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">error</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">calcType</span></div>
+
+    
+<div class="viewcode-block" id="SIR3S_Model.WriteSirCalcXmlFile">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.WriteSirCalcXmlFile">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">WriteSirCalcXmlFile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">saveItInThisDirectory</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Writes the SirCalc XML Input File before any Calculations are performed.</span>
+<span class="sd">        This Method generates the SirCalc XML File in its initial state, allowing it to be</span>
+<span class="sd">        manually edited  before Calculations are executed. </span>
+
+<span class="sd">        :param saveItInThisDirectory: The Directory Path from where the SirCalc XML File should be saved. Ensure that the directory is writable.</span>
+<span class="sd">                                      If that Path does not exist this Method shall try to create it.</span>
+<span class="sd">        :type saveItInThisDirectory: str</span>
+<span class="sd">        :return: The full Path of the generated SirCalc XML Input File if the Operation succeeds; otherwise, an empty string.</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        :description: This is a wrapper method for WriteSirCalcXmlFile() from toolkit</span>
+<span class="sd">        &quot;&quot;&quot;</span> 
+        <span class="n">genXML</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">WriteSirCalcXmlFile</span><span class="p">(</span><span class="n">saveItInThisDirectory</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">error</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">genXML</span></div>
+
+    
+<div class="viewcode-block" id="SIR3S_Model.SetThermalCalculationParemeters">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.SetThermalCalculationParemeters">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">SetThermalCalculationParemeters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">activateThermalcalculation</span><span class="p">,</span> <span class="n">startWithTempField</span><span class="p">,</span> <span class="n">terminationPrecision</span><span class="p">,</span> <span class="n">transientThermalcalculation</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Change thermal Calculation Parameters</span>
+
+<span class="sd">        :param activateThermalcalculation: True to activate thermal Calculation</span>
+<span class="sd">        :type activateThermalcalculation: bool</span>
+<span class="sd">        :param startWithTempField: True for &#39;Start with given Temperature Field&#39;, False for stady-State thermal Calculation.</span>
+<span class="sd">        :type startWithTempField: bool</span>
+<span class="sd">        :param terminationPrecision: The termination Precision ot the Thermal Calculation in [K]. Examle 0.1</span>
+<span class="sd">        :type terminationPrecision: np.float32</span>
+<span class="sd">        :param transientThermalcalculation: True if the Thermal Calculation is to be done in a transient way.</span>
+<span class="sd">                                            This Parameter only has effect on High Frequency AUTO Calculation, HF CHAR Calculation and Low Freq. Calculation on Water and DH Networks.</span>
+<span class="sd">                                            For more Precisions, please refer to the SirCalc Documentation.</span>
+<span class="sd">        :type transientThermalcalculation: bool</span>
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+<span class="sd">        :description: This is a wrapper method for SetThermalCalculationParemeters() from toolkit</span>
+<span class="sd">        &quot;&quot;&quot;</span> 
+        <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">SetThermalCalculationParemeters</span><span class="p">(</span><span class="n">activateThermalcalculation</span><span class="p">,</span> <span class="n">startWithTempField</span><span class="p">,</span> <span class="n">terminationPrecision</span><span class="p">,</span> <span class="n">transientThermalcalculation</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">error</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="SIR3S_Model.GetThermalCalculationParemeters">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetThermalCalculationParemeters">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">GetThermalCalculationParemeters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the current thermal Calculation Parameters</span>
+
+<span class="sd">        :return: returns activateThermalcalculation, startWithTempField, terminationPrecision, transientThermalcalculation as a tuple</span>
+<span class="sd">        :rtype: tuple[bool, bool, np.float32, bool]</span>
+<span class="sd">        :description: This is a wrapper method for GetThermalCalculationParemeters() from toolkit</span>
+<span class="sd">        &quot;&quot;&quot;</span> 
+        <span class="n">activateThermalcalculation</span><span class="p">,</span> <span class="n">startWithTempField</span><span class="p">,</span> <span class="n">terminationPrecision</span><span class="p">,</span> <span class="n">transientThermalcalculation</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">GetThermalCalculationParemeters</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">error</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">activateThermalcalculation</span><span class="p">,</span> <span class="n">startWithTempField</span><span class="p">,</span> <span class="n">terminationPrecision</span><span class="p">,</span> <span class="n">transientThermalcalculation</span></div>
+
+    
+<div class="viewcode-block" id="SIR3S_Model.SetSimulationTimeFrame">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.SetSimulationTimeFrame">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">SetSimulationTimeFrame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeStep</span><span class="p">,</span> <span class="n">terminationTime</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the Simulation Time Frame for non-stationary Calculations.</span>
+
+<span class="sd">        :param timeStep: The Time Step (Dt) of the instat. calculation in seconds [s]</span>
+<span class="sd">        :type timeStep: np.float32</span>
+<span class="sd">        :param terminationTime: The Termination Time (total Length of the Simulation) in Seconds [s]</span>
+<span class="sd">        :type terminationTime: np.float32</span>
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+<span class="sd">        :description: This is a wrapper method for SetSimulationTimeFrame() from toolkit</span>
+<span class="sd">        &quot;&quot;&quot;</span> 
+        <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">SetSimulationTimeFrame</span><span class="p">(</span><span class="n">timeStep</span><span class="p">,</span> <span class="n">terminationTime</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">error</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span></div>
+
+        
+<div class="viewcode-block" id="SIR3S_Model.GetSimulationTimeFrame">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetSimulationTimeFrame">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">GetSimulationTimeFrame</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the current Simulation time frame Parameters, including the time step and termination time.</span>
+<span class="sd">        </span>
+<span class="sd">        :return: returns timeStep, terminationTime as a tuple</span>
+<span class="sd">                 timeStep contains the time step value for the simulation, in seconds [s]</span>
+<span class="sd">                 terminationTime contains the termination time for the simulation, in seconds [s]        </span>
+<span class="sd">        :rtype: tuple[np.float32, np.float32]</span>
+<span class="sd">        :description: This is a wrapper method for GetSimulationTimeFrame() from toolkit</span>
+<span class="sd">        &quot;&quot;&quot;</span> 
+        <span class="n">timeStep</span><span class="p">,</span> <span class="n">terminationTime</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">GetSimulationTimeFrame</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">error</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">timeStep</span><span class="p">,</span> <span class="n">terminationTime</span></div>
+
+    
+
+    <span class="c1">## Changes for https://github.com/3SConsult/sir3stoolkit/issues/16</span>
+    
+<div class="viewcode-block" id="SIR3S_Model.GetGeometryData">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetGeometryData">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">GetGeometryData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">elemTk</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the WKB Geometry Data if an Element (Technical Data Part, OS Data Part, and eventually connection Lines).</span>
+
+<span class="sd">        :param elemTk: The Key (PK/TK) representing the element for which Geometry Gata is requested.</span>
+<span class="sd">        :type elemTk: str</span>
+<span class="sd">        :return: Returns a boolean result, geometrySACH, geometryBZ, geomCnLnI, geomCnLnK, geomCnLnI2, geomCnLnK2 as a tuple</span>
+<span class="sd">                 Boolean result - True if the Geometry Data was successfully retrieved; otherwise, False.</span>
+<span class="sd">                 geometrySACH - Receives the Technical Data Part of the Geometry if there is any.</span>
+<span class="sd">                 geometryBZ - Receives the OS Data Part of the Geometry, if the operation is successful.</span>
+<span class="sd">                 geomCnLnI - Receives the Geometry for the connection line (I) to the Upstream Node if there is any.</span>
+<span class="sd">                 geomCnLnK - Receives the Geometry for the connection line (K) to the Downstream Node if there is any.</span>
+<span class="sd">                 geomCnLnI2 - Receives the Geometry for the second connection line (I2) to the Upstream Node if there is any. (HeatExchanger only)</span>
+<span class="sd">                 geomCnLnK2 - Receives the Geometry for the second connection line (K2) to the Downstream Node if there is any.(HeatExchanger only)</span>
+<span class="sd">        :rtype: tuple[bool, str, str, str, str, str, str]</span>
+<span class="sd">        :description: This is a wrapper method for GetGeometryData() from toolkit</span>
+<span class="sd">        &quot;&quot;&quot;</span> 
+        <span class="n">result</span><span class="p">,</span> <span class="n">geometrySACH</span><span class="p">,</span> <span class="n">geometryBZ</span><span class="p">,</span> <span class="n">geomCnLnI</span><span class="p">,</span> <span class="n">geomCnLnK</span><span class="p">,</span> <span class="n">geomCnLnI2</span><span class="p">,</span> <span class="n">geomCnLnK2</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">GetGeometryData</span><span class="p">(</span><span class="n">elemTk</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span><span class="p">,</span> <span class="n">geometrySACH</span><span class="p">,</span> <span class="n">geometryBZ</span><span class="p">,</span> <span class="n">geomCnLnI</span><span class="p">,</span> <span class="n">geomCnLnK</span><span class="p">,</span> <span class="n">geomCnLnI2</span><span class="p">,</span> <span class="n">geomCnLnK2</span></div>
+</div>
+
+    
 
 <div class="viewcode-block" id="SIR3S_View">
 <a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_View">[docs]</a>
@@ -3547,6 +3791,122 @@
 <span class="sd">        :description: This is a helper function</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span> <span class="o">=</span> <span class="n">outputComments</span></div>
+
+
+<div class="viewcode-block" id="SIR3S_View.RefreshViews">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_View.RefreshViews">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">RefreshViews</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Refreshes the views.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+<span class="sd">        :description: This is a wrapper method for RefreshViews() from toolkit; Watch out for errors for more information.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">RefreshViews</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Refresh successful&quot;</span><span class="p">)</span></div>
+
+                
+
+    <span class="c1">## Changes for https://github.com/3SConsult/sir3stoolkit/issues/10</span>
+    
+<div class="viewcode-block" id="SIR3S_View.UnmarkAll">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_View.UnmarkAll">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">UnmarkAll</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tkCONT</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Unmarks all Elements within the Container with TK = tkCONT. </span>
+<span class="sd">        If tkCONT = &quot;-1&quot;, all Elements in ALL Views(Containers) are unmarked.</span>
+<span class="sd">        Unmarking an Element also unmarks all its Connection Lines.</span>
+
+<span class="sd">        :param tkCONT: The TK of the Container, which all Elements should be unmarked. </span>
+<span class="sd">                       Enter &quot;-1&quot; if yow want to unmark the whole Model</span>
+<span class="sd">        :type tkCONT: str</span>
+<span class="sd">        :return: True if everything went OK, otherwise False.</span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        :description: This is a wrapper method for UnmarkAll() from toolkit</span>
+<span class="sd">        &quot;&quot;&quot;</span> 
+        <span class="n">isSet</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">UnmarkAll</span><span class="p">(</span><span class="n">tkCONT</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">isSet</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">isSet</span></div>
+
+
+<div class="viewcode-block" id="SIR3S_View.GetMarkedElements">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_View.GetMarkedElements">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">GetMarkedElements</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tkCONT</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves a list of all Elements marked within the Container with TK = tkCONT.</span>
+<span class="sd">        Enter &quot;-1&quot; if you want to retrieve all marked Elements in ALL Views(Containers).</span>
+<span class="sd">        If a Connection Line is marked, the main part of the Element is also returned in the List.</span>
+
+<span class="sd">        :param tkCONT: A token used to identify and filter the marked elements. Cannot be null or empty.</span>
+<span class="sd">        :type tkCONT: str</span>
+<span class="sd">        :return: A list of strings representing the marked elements. Returns an empty list if no elements are found.</span>
+<span class="sd">        :rtype: list</span>
+<span class="sd">        :description: This is a wrapper method for GetMarkedElements() from toolkit</span>
+<span class="sd">        &quot;&quot;&quot;</span> 
+        <span class="n">markedElements</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">GetMarkedElements</span><span class="p">(</span><span class="n">tkCONT</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">error</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">markedElements</span></div>
+
+    
+<div class="viewcode-block" id="SIR3S_View.MarkElement">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_View.MarkElement">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">MarkElement</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tk</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Marks an element AND ALL its connection Lines</span>
+
+<span class="sd">        :param tk: The token used to identify the element to be marked. Cannot be null or empty.</span>
+<span class="sd">        :type tk: str</span>
+<span class="sd">        :return: True if the element was successfully marked; otherwise False.</span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        :description: This is a wrapper method for MarkElement() from toolkit</span>
+<span class="sd">        &quot;&quot;&quot;</span> 
+        <span class="n">isSet</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">MarkElement</span><span class="p">(</span><span class="n">tk</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">isSet</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">isSet</span></div>
+
+
+<div class="viewcode-block" id="SIR3S_View.UnmarkElement">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_View.UnmarkElement">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">UnmarkElement</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tk</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Unmarks the Element and ALL its Connection Lines</span>
+
+<span class="sd">        :param tk: The Key of the Element</span>
+<span class="sd">        :type tk: str</span>
+<span class="sd">        :return: True if everything went OK, otherwise False.</span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        :description: This is a wrapper method for UnmarkElement() from toolkit</span>
+<span class="sd">        &quot;&quot;&quot;</span> 
+        <span class="n">isSet</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">UnmarkElement</span><span class="p">(</span><span class="n">tk</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">isSet</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">isSet</span></div>
+
+
+<div class="viewcode-block" id="SIR3S_View.IsElementMarked">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_View.IsElementMarked">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">IsElementMarked</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tk</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Determines whether the specified element (OR any of its Connection Lines) is marked based on the provided Key.</span>
+
+<span class="sd">        :param tk: The Key of the Element</span>
+<span class="sd">        :type tk: str</span>
+<span class="sd">        :return: True  if the element is marked; otherwise False.</span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        :description: This is a wrapper method for IsElementMarked() from toolkit</span>
+<span class="sd">        &quot;&quot;&quot;</span> 
+        <span class="n">isSet</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">IsElementMarked</span><span class="p">(</span><span class="n">tk</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">error</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">isSet</span></div>
 </div>
 
 
@@ -3629,6 +3989,7 @@
             <span class="n">_log_message</span><span class="p">(</span><span class="s2">&quot;ExecuteRepairTool() has succeeded&quot;</span><span class="p">)</span></div>
 </div>
 
+            
 </pre></div>
 
            </div>
