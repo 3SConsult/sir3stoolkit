@@ -295,6 +295,8 @@ Troubleshooting
 - The hook must be named ``pre-commit`` with no file extension.
 
 
+.. _running-tests-label:
+
 Running Test Suites
 -------------------
 
@@ -375,3 +377,18 @@ To generate documentation, follow these steps:
 4. **Commit the changes.** Commit all files from sir3stoolkit to GitHub (:ref:`commit-changes-label`).
 
 The new documentation can be found at `https://3sconsult.github.io/sir3stoolkit/index.html <https://3sconsult.github.io/sir3stoolkit/index.html>`_
+
+Release a New Version to PyPI
+-----------------------------
+
+1. **Run tests:** Before releasing a new version, ensure that all tests pass. Run the test suite using ``pytest`` as described in :ref:`running-tests-label`.
+
+2. **Determine new version number:** The Toolkit version numbers are formatted as 90.XX.YY with XX being the SIR 3S version number (15 for Quebec), which rarely changes, and YY being the Toolkit version number. The Toolkit version number YY is incremented with every new release of the Toolkit. For example, if the current version is 90.15.23, the next version would be 90.15.24.
+
+3. **Add Changed dll:** If changes were made to the `Sir3S_Toolkit.dll`, add a new folder named the new version number in `sir3stoolkit/src/sir3stoolkit/lib` and insert the new dll.
+
+4. **Document Changes:** In `sir3stoolkit/docs/source/releases.rst` add a new row to the release table with the new version number, corresponding SIR 3S version number, release date, and whether the `Sir3S_Toolkit.dll` was changed. Also below under the corresponding SIR 3S version number insert a new section and describe the changes made in detail.
+
+5. **Update Version Number:** In `sir3stoolkit/pyproject.toml` update the version number
+
+6. **Commit to GitHub**: With the version number in `sir3stoolkit/pyproject.toml` changed, the commit will trigger an automatic workflow, that will release the new version to PyPI. For convenience use the version number as commit message.

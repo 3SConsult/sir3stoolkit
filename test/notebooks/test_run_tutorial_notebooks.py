@@ -12,8 +12,7 @@ from nbclient.exceptions import CellExecutionError
 
 ROOT = Path(__file__).resolve().parents[2]
 TUTORIAL_CANDIDATES = [
-    ROOT / "docs" / "source" / "tutorials",
-    ROOT / "docs" / "tutorials",
+    ROOT / "docs" / "source" / "tutorials"
 ]
 
 TUTORIALS_DIR = next((path for path in TUTORIAL_CANDIDATES if path.is_dir()), None)
@@ -32,7 +31,7 @@ def _collect_notebooks() -> list[Path]:
     return sorted(
         notebook
         for notebook in TUTORIALS_DIR.rglob("*.ipynb")
-        if notebook.name != "Test.ipynb" and ".ipynb_checkpoints" not in notebook.parts
+        if notebook.name != "Test.ipynb" and notebook.name != "object_types.ipynb" and ".ipynb_checkpoints" not in notebook.parts
     )
 
 

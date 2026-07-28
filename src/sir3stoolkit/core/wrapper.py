@@ -181,6 +181,76 @@ def _resolve_base_path(basePath: Optional[str]) -> Optional[str]:
     )
     return None
 
+
+def Read_SirGraf_Config_Path() -> Optional[str]:
+    """Read the SirGraf directory path configured in the package's config file.
+
+    Reads the first non-empty, non-comment line from ``config.txt`` in the
+    package root directory (``sir3stoolkit/config.txt``). If
+    ``config.local.txt`` is also present in that directory (developer
+    override), it is checked first and takes precedence.
+
+    :raises FileNotFoundError: If the configured path does not exist or is
+        not a directory.
+    :return: The configured SirGraf directory path, or ``None`` if no
+        config file exists or contains a usable path.
+    :rtype: Optional[str]
+    """
+    package_root = Path(__file__).resolve().parents[1]
+    config_files = [
+        package_root / "config.local.txt",
+        package_root / "config.txt",
+    ]
+
+    for config_file in config_files:
+        if not config_file.exists():
+            continue
+
+        resolved = _read_base_path_from_config(config_file)
+        if resolved is not None:
+            if not Path(resolved).is_dir():
+                raise FileNotFoundError(f"[Initialization] SirGraf path from config does not exist or is not a directory: {resolved}")
+            _log_message(f"[Initialization] Using SirGraf path from config '{config_file}': '{resolved}'", level="info")
+            return resolved
+
+    _log_message(
+        f"[Initialization] No config files found at '{config_files[0]}' or '{config_files[1]}'.",
+        level="info"
+    )
+    return None
+
+
+def Write_SirGraf_Config_Path(basePath: str) -> None:
+    """Write the SirGraf directory path to the package's config file.
+
+    The path is validated to exist and then written to ``config.txt`` in
+    the package root directory (``sir3stoolkit/config.txt``), normalized to
+    forward slashes (e.g. ``C:/3S/SIR 3S/SirGraf-90-15-00-24_Quebec-Upd2``)
+    to avoid backslash-related issues seen in the host application. If
+    ``config.local.txt`` is already present in that directory (developer
+    override), the path is written there instead.
+
+    :param basePath: Full path to the SirGraf directory to persist.
+    :type basePath: str
+    :raises FileNotFoundError: If ``basePath`` does not exist or is not a
+        directory.
+    :return: None
+    :rtype: None
+    """
+    resolved = str(basePath).strip()
+    if not Path(resolved).is_dir():
+        raise FileNotFoundError(f"[Initialization] Provided SirGraf path does not exist or is not a directory: {resolved}")
+
+    normalized = Path(resolved).as_posix()
+
+    package_root = Path(__file__).resolve().parents[1]
+    config_local_file = package_root / "config.local.txt"
+    config_file = package_root / "config.txt"
+    target_config_file = config_local_file if config_local_file.exists() else config_file
+
+    target_config_file.write_text(normalized + "\n", encoding="utf-8")
+    _log_message(f"[Initialization] Wrote SirGraf path to config file '{target_config_file}': '{normalized}'", level="info")
+
 # CAUTION: User should call this function before creating any instances of the classes provided through this library !!!
 #          Failed to do so will result in incorrect initialization of classes and object model that are key components
 #          to interact with Sir3S
