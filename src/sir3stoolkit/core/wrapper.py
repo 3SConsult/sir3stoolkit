@@ -255,10 +255,12 @@ class SIR3S_Model:
         self.ProviderTypes = create_dotnet_enum("ProviderTypes", "SirDBProviderType", "Sir3S_Repository.Interfaces.dll")
         self.NetworkType = create_dotnet_enum("NetworkType", "NetworkType", "Sir3S_Repository.Interfaces.dll")
         self.ObjectTypes_TableNames = create_dotnet_enum("ObjectTypes_TableNames", "Sir3SObjectTypes_TableNames", "Sir3S_Repository.Interfaces.dll")
+        self.CalculationType = create_dotnet_enum("CalculationType", "CalculationType", "Sir3S_Repository.Interfaces.dll")
         self._dotnet_enum_type_objecttype = self._load_dotnet_enum("Sir3SObjectTypes", "Sir3S_Repository.Interfaces.dll")
         self._dotnet_enum_type_providertype = self._load_dotnet_enum("SirDBProviderType", "Sir3S_Repository.Interfaces.dll")
         self._dotnet_enum_type_networktype = self._load_dotnet_enum("NetworkType", "Sir3S_Repository.Interfaces.dll")
         self._dotnet_enum_type_objecttype_tablenames = self._load_dotnet_enum("Sir3SObjectTypes_TableNames", "Sir3S_Repository.Interfaces.dll")
+        self._dotnet_enum_type_calculationtype = self._load_dotnet_enum("CalculationType",  "Sir3S_Repository.Interfaces.dll")
 
         # Variable to enable or disable output comments
         self.outputComments = True
@@ -292,6 +294,8 @@ class SIR3S_Model:
             return System.Enum.ToObject(self._dotnet_enum_type_providertype, py_enum_member.value)
         elif (enum_type == self.NetworkType):
             return System.Enum.ToObject(self._dotnet_enum_type_networktype, py_enum_member.value)
+        elif (enum_type == self.CalculationType):
+            return System.Enum.ToObject(self._dotnet_enum_type_calculationtype, py_enum_member.value)
         else:
             raise TypeError(f"Unknown enum type {enum_type}")
 
@@ -1546,6 +1550,210 @@ class SIR3S_Model:
             
         return list(references), list(referencesKeys)
         
+
+    ## Changes for https://github.com/3SConsult/sir3stoolkit/issues/9
+    
+    def GetWorkingDirectory(self) -> str:
+        """
+        Assign the SIR 3S working Directory to an existing Directory. The current User should have SIR 3S Adminitrator Role.
+
+        :return: The full Path of the working directory of the current Model as a string, an empty String if the operation fails.
+        :rtype: str
+        :description: This is a wrapper method for GetWorkingDirectory() from toolkit
+        """ 
+        workingDirectory, error = self.toolkit.GetWorkingDirectory()
+        if error != "":
+            print("Error: " + error)
+        return workingDirectory
+
+    def AllocateWorkingDirectory(self, strDirectory) -> bool:
+        """
+        Assign the SIR 3S working Directory to an existing Directory. The current User should have SIR 3S Adminitrator Role.
+
+        :param strDirectory: The path of the Directory to allocate. This must be a valid, existing, writable and readable Directory Path.
+        :type strDirectory: str
+        :return: True if the allocation is successful; otherwise, false.
+        :rtype: bool
+        :description: This is a wrapper method for AllocateWorkingDirectory() from toolkit
+        """ 
+        isSet, error = self.toolkit.AllocateWorkingDirectory(strDirectory)
+        if not isSet:
+            print("Error: " + error)
+        return isSet
+
+    def CreateWorkingDirectory(self, strDirectory) -> bool:
+        """
+        Just Create a SIR 3S Working Directory if it doesnt exist yet and assign it. The current User should have SIR 3S Adminitrator Role.
+
+        :param strDirectory: The Directory to create.
+        :type strDirectory: str
+        :return: True if the Creation is successful; otherwise, false.
+        :rtype: bool
+        :description: This is a wrapper method for CreateWorkingDirectory() from toolkit
+        """ 
+        isSet, error = self.toolkit.CreateWorkingDirectory(strDirectory)
+        if not isSet:
+            print("Error: " + error)
+        return isSet
+
+    def CopyWorkingDirectory(self, strDestinationDirectory) -> bool:
+        """
+        Copies the contents of the current SIR 3S working Directory to the specified Destination Directory.
+        The current User should have SIR 3S Adminitrator Role.
+
+        :param strDestinationDirectory: The full Path of the Destination Directory where the Contents will be copied. Must be a valid writable Directory Path.
+        :type strDestinationDirectory: str
+        :return: True if the Copy Operation is successful; otherwise, false.
+        :rtype: bool
+        :description: This is a wrapper method for CopyWorkingDirectory() from toolkit
+        """ 
+        isSet, error = self.toolkit.CopyWorkingDirectory(strDestinationDirectory)
+        if not isSet:
+            print("Error: " + error)
+        return isSet
+
+    ## Changes for https://github.com/3SConsult/sir3stoolkit/issues/12
+    
+    def SetCalculationType(self, calculationType) -> bool:
+        """
+        Sets the Calculation Type for the Model. SircCalc will use this Calculation Type for the next Calculation.
+
+        :param calculationType: Defined as Enum in 'Sir3S_Repository.Interfaces':  Type of Calculation to be applied.
+                                Note: TNot every Network Type supports every Calculation Type. For example, Water Networks do not support 'Low Frequency Calculation' and 'Transient Calculation'.
+                                For Water and DH networks. Only SteadyState | Quasi_Stat | LowFreq | HighFreq_CHAR | HighFreq_AUTO | LoopForLoadingCondition make sense.
+                                For Gas/Steam Networks, only SteadyState | Quasi_Stat | HighFreq_CHAR | Instat_FiniteDiff | LoopForLoadingCondition make sense.
+        :type calculationType: CalculationType
+        :return: True  if the type is set; otherwise False.
+        :rtype: bool
+        :description: This is a wrapper method for SetCalculationType() from toolkit
+        """ 
+        isSet, error = self.toolkit.SetCalculationType(calculationType)
+        if not isSet:
+            print("Error: " + error)
+        return isSet
+    
+    def GetCalculationType(self):
+        """
+        Gets the current Type of Calculation to be performed.
+
+        :return: value representing the type of calculation.  Returns 'Unknown' if the operation fails.
+        :rtype: CalculationType
+        :description: This is a wrapper method for GetCalculationType() from toolkit
+        """ 
+        calcType, error = self.toolkit.GetCalculationType()
+        if error != "":
+            print("Error: " + error)
+        return calcType
+    
+    def WriteSirCalcXmlFile(self, saveItInThisDirectory) -> str:
+        """
+        Writes the SirCalc XML Input File before any Calculations are performed.
+        This Method generates the SirCalc XML File in its initial state, allowing it to be
+        manually edited  before Calculations are executed. 
+
+        :param saveItInThisDirectory: The Directory Path from where the SirCalc XML File should be saved. Ensure that the directory is writable.
+                                      If that Path does not exist this Method shall try to create it.
+        :type saveItInThisDirectory: str
+        :return: The full Path of the generated SirCalc XML Input File if the Operation succeeds; otherwise, an empty string.
+        :rtype: str
+        :description: This is a wrapper method for WriteSirCalcXmlFile() from toolkit
+        """ 
+        genXML, error = self.toolkit.WriteSirCalcXmlFile(saveItInThisDirectory)
+        if error != "":
+            print("Error: " + error)
+        return genXML
+    
+    def SetThermalCalculationParemeters(self, activateThermalcalculation, startWithTempField, terminationPrecision, transientThermalcalculation):
+        """
+        Change thermal Calculation Parameters
+
+        :param activateThermalcalculation: True to activate thermal Calculation
+        :type activateThermalcalculation: bool
+        :param startWithTempField: True for 'Start with given Temperature Field', False for stady-State thermal Calculation.
+        :type startWithTempField: bool
+        :param terminationPrecision: The termination Precision ot the Thermal Calculation in [K]. Examle 0.1
+        :type terminationPrecision: np.float32
+        :param transientThermalcalculation: True if the Thermal Calculation is to be done in a transient way.
+                                            This Parameter only has effect on High Frequency AUTO Calculation, HF CHAR Calculation and Low Freq. Calculation on Water and DH Networks.
+                                            For more Precisions, please refer to the SirCalc Documentation.
+        :type transientThermalcalculation: bool
+        :return: None
+        :rtype: None
+        :description: This is a wrapper method for SetThermalCalculationParemeters() from toolkit
+        """ 
+        error = self.toolkit.SetThermalCalculationParemeters(activateThermalcalculation, startWithTempField, terminationPrecision, transientThermalcalculation)
+        if error != "":
+            print("Error: " + error)
+    
+    def GetThermalCalculationParemeters(self):
+        """
+        Gets the current thermal Calculation Parameters
+
+        :return: returns activateThermalcalculation, startWithTempField, terminationPrecision, transientThermalcalculation as a tuple
+        :rtype: tuple[bool, bool, np.float32, bool]
+        :description: This is a wrapper method for GetThermalCalculationParemeters() from toolkit
+        """ 
+        activateThermalcalculation, startWithTempField, terminationPrecision, transientThermalcalculation, error = self.toolkit.GetThermalCalculationParemeters()
+        if error != "":
+            print("Error: " + error)
+        return activateThermalcalculation, startWithTempField, terminationPrecision, transientThermalcalculation
+    
+    def SetSimulationTimeFrame(self, timeStep, terminationTime):
+        """
+        Sets the Simulation Time Frame for non-stationary Calculations.
+
+        :param timeStep: The Time Step (Dt) of the instat. calculation in seconds [s]
+        :type timeStep: np.float32
+        :param terminationTime: The Termination Time (total Length of the Simulation) in Seconds [s]
+        :type terminationTime: np.float32
+        :return: None
+        :rtype: None
+        :description: This is a wrapper method for SetSimulationTimeFrame() from toolkit
+        """ 
+        error = self.toolkit.SetSimulationTimeFrame(timeStep, terminationTime)
+        if error != "":
+            print("Error: " + error)
+        
+    def GetSimulationTimeFrame(self):
+        """
+        Retrieves the current Simulation time frame Parameters, including the time step and termination time.
+        
+        :return: returns timeStep, terminationTime as a tuple
+                 timeStep contains the time step value for the simulation, in seconds [s]
+                 terminationTime contains the termination time for the simulation, in seconds [s]        
+        :rtype: tuple[np.float32, np.float32]
+        :description: This is a wrapper method for GetSimulationTimeFrame() from toolkit
+        """ 
+        timeStep, terminationTime, error = self.toolkit.GetSimulationTimeFrame()
+        if error != "":
+            print("Error: " + error)
+        return timeStep, terminationTime
+    
+
+    ## Changes for https://github.com/3SConsult/sir3stoolkit/issues/16
+    
+    def GetGeometryData(self, elemTk):
+        """
+        Retrieves the WKB Geometry Data if an Element (Technical Data Part, OS Data Part, and eventually connection Lines).
+
+        :param elemTk: The Key (PK/TK) representing the element for which Geometry Gata is requested.
+        :type elemTk: str
+        :return: Returns a boolean result, geometrySACH, geometryBZ, geomCnLnI, geomCnLnK, geomCnLnI2, geomCnLnK2 as a tuple
+                 Boolean result - True if the Geometry Data was successfully retrieved; otherwise, False.
+                 geometrySACH - Receives the Technical Data Part of the Geometry if there is any.
+                 geometryBZ - Receives the OS Data Part of the Geometry, if the operation is successful.
+                 geomCnLnI - Receives the Geometry for the connection line (I) to the Upstream Node if there is any.
+                 geomCnLnK - Receives the Geometry for the connection line (K) to the Downstream Node if there is any.
+                 geomCnLnI2 - Receives the Geometry for the second connection line (I2) to the Upstream Node if there is any. (HeatExchanger only)
+                 geomCnLnK2 - Receives the Geometry for the second connection line (K2) to the Downstream Node if there is any.(HeatExchanger only)
+        :rtype: tuple[bool, str, str, str, str, str, str]
+        :description: This is a wrapper method for GetGeometryData() from toolkit
+        """ 
+        result, geometrySACH, geometryBZ, geomCnLnI, geomCnLnK, geomCnLnI2, geomCnLnK2, error = self.toolkit.GetGeometryData(elemTk)
+        if not result:
+            print("Error: " + error)
+        return result, geometrySACH, geometryBZ, geomCnLnI, geomCnLnK, geomCnLnI2, geomCnLnK2
+    
 
 class SIR3S_View:
     """
@@ -3022,6 +3230,104 @@ class SIR3S_View:
         """
         self.outputComments = outputComments
 
+    def RefreshViews(self):
+        """
+        Refreshes the views.
+
+        :return: None
+        :rtype: None
+        :description: This is a wrapper method for RefreshViews() from toolkit; Watch out for errors for more information.
+        """
+        result, error = self.toolkit.RefreshViews()
+        if not result:
+            print("Error: " + error)
+        else:
+            if self.outputComments:
+                print("Refresh successful")
+                
+
+    ## Changes for https://github.com/3SConsult/sir3stoolkit/issues/10
+    
+    def UnmarkAll(self, tkCONT) -> bool:
+        """
+        Unmarks all Elements within the Container with TK = tkCONT. 
+        If tkCONT = "-1", all Elements in ALL Views(Containers) are unmarked.
+        Unmarking an Element also unmarks all its Connection Lines.
+
+        :param tkCONT: The TK of the Container, which all Elements should be unmarked. 
+                       Enter "-1" if yow want to unmark the whole Model
+        :type tkCONT: str
+        :return: True if everything went OK, otherwise False.
+        :rtype: bool
+        :description: This is a wrapper method for UnmarkAll() from toolkit
+        """ 
+        isSet, error = self.toolkit.UnmarkAll(tkCONT)
+        if not isSet:
+            print("Error: " + error)
+        return isSet
+
+    def GetMarkedElements(self, tkCONT):
+        """
+        Retrieves a list of all Elements marked within the Container with TK = tkCONT.
+        Enter "-1" if you want to retrieve all marked Elements in ALL Views(Containers).
+        If a Connection Line is marked, the main part of the Element is also returned in the List.
+
+        :param tkCONT: A token used to identify and filter the marked elements. Cannot be null or empty.
+        :type tkCONT: str
+        :return: A list of strings representing the marked elements. Returns an empty list if no elements are found.
+        :rtype: list
+        :description: This is a wrapper method for GetMarkedElements() from toolkit
+        """ 
+        markedElements, error = self.toolkit.GetMarkedElements(tkCONT)
+        if error != "":
+            print("Error: " + error)
+        return markedElements
+    
+    def MarkElement(self, tk) -> bool:
+        """
+        Marks an element AND ALL its connection Lines
+
+        :param tk: The token used to identify the element to be marked. Cannot be null or empty.
+        :type tk: str
+        :return: True if the element was successfully marked; otherwise False.
+        :rtype: bool
+        :description: This is a wrapper method for MarkElement() from toolkit
+        """ 
+        isSet, error = self.toolkit.MarkElement(tk)
+        if not isSet:
+            print("Error: " + error)
+        return isSet
+
+    def UnmarkElement(self, tk) -> bool:
+        """
+        Unmarks the Element and ALL its Connection Lines
+
+        :param tk: The Key of the Element
+        :type tk: str
+        :return: True if everything went OK, otherwise False.
+        :rtype: bool
+        :description: This is a wrapper method for UnmarkElement() from toolkit
+        """ 
+        isSet, error = self.toolkit.UnmarkElement(tk)
+        if not isSet:
+            print("Error: " + error)
+        return isSet
+
+    def IsElementMarked(self, tk) -> bool:
+        """
+        Determines whether the specified element (OR any of its Connection Lines) is marked based on the provided Key.
+
+        :param tk: The Key of the Element
+        :type tk: str
+        :return: True  if the element is marked; otherwise False.
+        :rtype: bool
+        :description: This is a wrapper method for IsElementMarked() from toolkit
+        """ 
+        isSet, error = self.toolkit.IsElementMarked(tk)
+        if error != "":
+            print("Error: " + error)
+        return isSet
+
 
 # Class definition for ModelRepair
 class SIR3S_ModelRepair:
@@ -3089,3 +3395,4 @@ class SIR3S_ModelRepair:
             _log_message("ExecuteRepairTool() has failed")
         else:
             _log_message("ExecuteRepairTool() has succeeded")
+            
