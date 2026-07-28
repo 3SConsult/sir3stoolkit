@@ -1649,7 +1649,7 @@
 <span class="sd">        Use this method for allowing SIR DB Message Boxes to pop or not</span>
 
 <span class="sd">        :param bAllow: Allow/not allow</span>
-<span class="sd">        :type Tk: bool</span>
+<span class="sd">        :type bAllow: bool</span>
 <span class="sd">        :return: None</span>
 <span class="sd">        :rtype: None</span>
 <span class="sd">        :description: This is a wrapper method for AllowSirMessageBox() from toolkit</span>
@@ -1922,7 +1922,7 @@
 <a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetWorkingDirectory">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">GetWorkingDirectory</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Assign the SIR 3S working Directory to an existing Directory. The current User should have SIR 3S Adminitrator Role.</span>
+<span class="sd">        Get the working directory currently assigned to the open model. The current User should have SIR 3S Adminitrator Role.</span>
 
 <span class="sd">        :return: The full Path of the working directory of the current Model as a string, an empty String if the operation fails.</span>
 <span class="sd">        :rtype: str</span>
@@ -1938,7 +1938,8 @@
 <a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AllocateWorkingDirectory">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">AllocateWorkingDirectory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strDirectory</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Assign the SIR 3S working Directory to an existing Directory. The current User should have SIR 3S Adminitrator Role.</span>
+<span class="sd">        Assign the SIR 3S working Directory to an existing Directory. WARNING: If you change the working directory, the model will disconnect from the mx results. If you want to read results in the newly allocated working directory, reopen the model after closing it.</span>
+
 
 <span class="sd">        :param strDirectory: The path of the Directory to allocate. This must be a valid, existing, writable and readable Directory Path.</span>
 <span class="sd">        :type strDirectory: str</span>
@@ -1998,15 +1999,16 @@
 <span class="sd">        Sets the Calculation Type for the Model. SircCalc will use this Calculation Type for the next Calculation.</span>
 
 <span class="sd">        :param calculationType: Defined as Enum in &#39;Sir3S_Repository.Interfaces&#39;:  Type of Calculation to be applied.</span>
-<span class="sd">                                Note: TNot every Network Type supports every Calculation Type. For example, Water Networks do not support &#39;Low Frequency Calculation&#39; and &#39;Transient Calculation&#39;.</span>
-<span class="sd">                                For Water and DH networks. Only SteadyState | Quasi_Stat | LowFreq | HighFreq_CHAR | HighFreq_AUTO | LoopForLoadingCondition make sense.</span>
-<span class="sd">                                For Gas/Steam Networks, only SteadyState | Quasi_Stat | HighFreq_CHAR | Instat_FiniteDiff | LoopForLoadingCondition make sense.</span>
+<span class="sd">                                Note: Not every Network Type supports every Calculation Type. For example, Water Networks do not support &#39;Low Frequency Calculation&#39; and &#39;Transient Calculation&#39;.</span>
+<span class="sd">                                For Water and DH networks. Only SteadyState | Quasi_Stat | LowFreq | HighFreq_CHAR | HighFreq_AUTO | LoopForLoadingCondition are valid.</span>
+<span class="sd">                                For Gas/Steam Networks, only SteadyState | Quasi_Stat | HighFreq_CHAR | Instat_FiniteDiff | LoopForLoadingCondition are valid.</span>
 <span class="sd">        :type calculationType: CalculationType</span>
 <span class="sd">        :return: True  if the type is set; otherwise False.</span>
 <span class="sd">        :rtype: bool</span>
 <span class="sd">        :description: This is a wrapper method for SetCalculationType() from toolkit</span>
 <span class="sd">        &quot;&quot;&quot;</span> 
-        <span class="n">isSet</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">SetCalculationType</span><span class="p">(</span><span class="n">calculationType</span><span class="p">)</span>
+        <span class="n">calculationType_net</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dotnet_enum</span><span class="p">(</span><span class="n">calculationType</span><span class="p">)</span>
+        <span class="n">isSet</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">SetCalculationType</span><span class="p">(</span><span class="n">calculationType_net</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">isSet</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">isSet</span></div>
@@ -2034,7 +2036,8 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Writes the SirCalc XML Input File before any Calculations are performed.</span>
 <span class="sd">        This Method generates the SirCalc XML File in its initial state, allowing it to be</span>
-<span class="sd">        manually edited  before Calculations are executed. </span>
+<span class="sd">        manually edited  before Calculations are executed.</span>
+<span class="sd">        The SirCalc XML Input File should only be edited by people, who know what they are doing. Otherwise your calculation configuration could become deprecated. If you mess up, you can reset to the current SIR 3S model state by reexecuting WriteSirCalcXmlFile().</span>
 
 <span class="sd">        :param saveItInThisDirectory: The Directory Path from where the SirCalc XML File should be saved. Ensure that the directory is writable.</span>
 <span class="sd">                                      If that Path does not exist this Method shall try to create it.</span>
@@ -2404,6 +2407,7 @@
 <span class="sd">            Authentication is required.</span>
 <span class="sd">        :type userID: str</span>
 <span class="sd">        :param password: Password for Authentication, only needed for ORACLE and for SQLServer Authentication is required.</span>
+<span class="sd">        :type password: str</span>
 <span class="sd">        :return: None</span>
 <span class="sd">        :rtype: None</span>
 <span class="sd">        :description: This is a wrapper method for openModel() from toolkit; Watch out for errors for more information.</span>
@@ -3284,7 +3288,7 @@
 <span class="sd">        :param tkCont: The (tk) key of the Container to insert the Text in</span>
 <span class="sd">        :type tkCont: str</span>
 <span class="sd">        :param x: Absolute x-Coordinate of the Text (left)</span>
-<span class="sd">        :type x np.float64</span>
+<span class="sd">        :type x: np.float64</span>
 <span class="sd">        :param y: Absolute y-Coordinate of the Text (bottom)</span>
 <span class="sd">        :type y: np.float64</span>
 <span class="sd">        :param color: The desired Color as RGB</span>
@@ -3353,9 +3357,9 @@
 <span class="sd">        :param tkCont: The (tk) key of the Container to insert the numerical Display in</span>
 <span class="sd">        :type tkCont: str</span>
 <span class="sd">        :param x: Absolute x-Coordinate of the numerical Displa (left)</span>
-<span class="sd">        :type dX: np.float64</span>
-<span class="sd">        :param dY: Absolute y-Coordinate of the numerical Displa (bottom)</span>
-<span class="sd">        :type dY: np.float64</span>
+<span class="sd">        :type x: np.float64</span>
+<span class="sd">        :param y: Absolute y-Coordinate of the numerical Displa (bottom)</span>
+<span class="sd">        :type y: np.float64</span>
 <span class="sd">        :param color: The desired Color as RGB</span>
 <span class="sd">        :type color: int</span>
 <span class="sd">        :param angle_degree: Angle in Degree</span>
@@ -3975,9 +3979,9 @@
 <span class="sd">        Executes the said repair tool</span>
 
 <span class="sd">        :param imr: IModelRepairMethod returned from CheckRepairTool()</span>
-<span class="sd">        :type toolName: IModelRepairMethod</span>
+<span class="sd">        :type imr: IModelRepairMethod</span>
 <span class="sd">        :param table: intended table, e.g, &quot;ROHR&quot;</span>
-<span class="sd">        :type toolName: str</span>
+<span class="sd">        :type table: str</span>
 <span class="sd">        :return: None</span>
 <span class="sd">        :rtype: None</span>
 <span class="sd">        :description: This is a wrapper method for ExecuteRepairTool() from toolkit</span>

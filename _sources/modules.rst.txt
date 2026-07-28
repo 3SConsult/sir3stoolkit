@@ -80,6 +80,18 @@ Core Methods: SIR3S_Model
 - :meth:`sir3stoolkit.core.wrapper.SIR3S_Model.GetCourseOfHydraulicProfile`
 - :meth:`sir3stoolkit.core.wrapper.SIR3S_Model.ExecuteModelValidation`
 - :meth:`sir3stoolkit.core.wrapper.SIR3S_Model.ExecuteResultsCheck`
+- :meth:`sir3stoolkit.core.wrapper.SIR3S_Model.GetWorkingDirectory`
+- :meth:`sir3stoolkit.core.wrapper.SIR3S_Model.AllocateWorkingDirectory`
+- :meth:`sir3stoolkit.core.wrapper.SIR3S_Model.CreateWorkingDirectory`
+- :meth:`sir3stoolkit.core.wrapper.SIR3S_Model.CopyWorkingDirectory`
+- :meth:`sir3stoolkit.core.wrapper.SIR3S_Model.SetCalculationType`
+- :meth:`sir3stoolkit.core.wrapper.SIR3S_Model.GetCalculationType`
+- :meth:`sir3stoolkit.core.wrapper.SIR3S_Model.WriteSirCalcXmlFile`
+- :meth:`sir3stoolkit.core.wrapper.SIR3S_Model.SetThermalCalculationParemeters`
+- :meth:`sir3stoolkit.core.wrapper.SIR3S_Model.GetThermalCalculationParemeters`
+- :meth:`sir3stoolkit.core.wrapper.SIR3S_Model.SetSimulationTimeFrame`
+- :meth:`sir3stoolkit.core.wrapper.SIR3S_Model.GetSimulationTimeFrame`
+- :meth:`sir3stoolkit.core.wrapper.SIR3S_Model.GetGeometryData`
 
 Core Methods: SIR3S_View
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -137,6 +149,12 @@ Core Methods: SIR3S_View
 - :meth:`sir3stoolkit.core.wrapper.SIR3S_View.AddNewHydrant`
 - :meth:`sir3stoolkit.core.wrapper.SIR3S_View.RemoveAllExternalVisualObjects`
 - :meth:`sir3stoolkit.core.wrapper.SIR3S_View.EnableOrDisableOutputComments`
+- :meth:`sir3stoolkit.core.wrapper.SIR3S_View.RefreshViews`
+- :meth:`sir3stoolkit.core.wrapper.SIR3S_View.UnmarkAll`
+- :meth:`sir3stoolkit.core.wrapper.SIR3S_View.GetMarkedElements`
+- :meth:`sir3stoolkit.core.wrapper.SIR3S_View.MarkElement`
+- :meth:`sir3stoolkit.core.wrapper.SIR3S_View.UnmarkElement`
+- :meth:`sir3stoolkit.core.wrapper.SIR3S_View.IsElementMarked`
 
 Core Methods: SIR3S_ModelRepair
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
