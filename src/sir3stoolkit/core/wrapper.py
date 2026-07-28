@@ -1394,7 +1394,7 @@ class SIR3S_Model:
         Use this method for allowing SIR DB Message Boxes to pop or not
 
         :param bAllow: Allow/not allow
-        :type Tk: bool
+        :type bAllow: bool
         :return: None
         :rtype: None
         :description: This is a wrapper method for AllowSirMessageBox() from toolkit
@@ -1625,7 +1625,7 @@ class SIR3S_Model:
     
     def GetWorkingDirectory(self) -> str:
         """
-        Assign the SIR 3S working Directory to an existing Directory. The current User should have SIR 3S Adminitrator Role.
+        Get the working directory currently assigned to the open model. The current User should have SIR 3S Adminitrator Role.
 
         :return: The full Path of the working directory of the current Model as a string, an empty String if the operation fails.
         :rtype: str
@@ -1638,7 +1638,8 @@ class SIR3S_Model:
 
     def AllocateWorkingDirectory(self, strDirectory) -> bool:
         """
-        Assign the SIR 3S working Directory to an existing Directory. The current User should have SIR 3S Adminitrator Role.
+        Assign the SIR 3S working Directory to an existing Directory. WARNING: If you change the working directory, the model will disconnect from the mx results. If you want to read results in the newly allocated working directory, reopen the model after closing it.
+
 
         :param strDirectory: The path of the Directory to allocate. This must be a valid, existing, writable and readable Directory Path.
         :type strDirectory: str
@@ -1689,15 +1690,16 @@ class SIR3S_Model:
         Sets the Calculation Type for the Model. SircCalc will use this Calculation Type for the next Calculation.
 
         :param calculationType: Defined as Enum in 'Sir3S_Repository.Interfaces':  Type of Calculation to be applied.
-                                Note: TNot every Network Type supports every Calculation Type. For example, Water Networks do not support 'Low Frequency Calculation' and 'Transient Calculation'.
-                                For Water and DH networks. Only SteadyState | Quasi_Stat | LowFreq | HighFreq_CHAR | HighFreq_AUTO | LoopForLoadingCondition make sense.
-                                For Gas/Steam Networks, only SteadyState | Quasi_Stat | HighFreq_CHAR | Instat_FiniteDiff | LoopForLoadingCondition make sense.
+                                Note: Not every Network Type supports every Calculation Type. For example, Water Networks do not support 'Low Frequency Calculation' and 'Transient Calculation'.
+                                For Water and DH networks. Only SteadyState | Quasi_Stat | LowFreq | HighFreq_CHAR | HighFreq_AUTO | LoopForLoadingCondition are valid.
+                                For Gas/Steam Networks, only SteadyState | Quasi_Stat | HighFreq_CHAR | Instat_FiniteDiff | LoopForLoadingCondition are valid.
         :type calculationType: CalculationType
         :return: True  if the type is set; otherwise False.
         :rtype: bool
         :description: This is a wrapper method for SetCalculationType() from toolkit
         """ 
-        isSet, error = self.toolkit.SetCalculationType(calculationType)
+        calculationType_net = self.to_dotnet_enum(calculationType)
+        isSet, error = self.toolkit.SetCalculationType(calculationType_net)
         if not isSet:
             print("Error: " + error)
         return isSet
@@ -1719,7 +1721,8 @@ class SIR3S_Model:
         """
         Writes the SirCalc XML Input File before any Calculations are performed.
         This Method generates the SirCalc XML File in its initial state, allowing it to be
-        manually edited  before Calculations are executed. 
+        manually edited  before Calculations are executed.
+        The SirCalc XML Input File should only be edited by people, who know what they are doing. Otherwise your calculation configuration could become deprecated. If you mess up, you can reset to the current SIR 3S model state by reexecuting WriteSirCalcXmlFile().
 
         :param saveItInThisDirectory: The Directory Path from where the SirCalc XML File should be saved. Ensure that the directory is writable.
                                       If that Path does not exist this Method shall try to create it.
@@ -2044,6 +2047,7 @@ class SIR3S_View:
             Authentication is required.
         :type userID: str
         :param password: Password for Authentication, only needed for ORACLE and for SQLServer Authentication is required.
+        :type password: str
         :return: None
         :rtype: None
         :description: This is a wrapper method for openModel() from toolkit; Watch out for errors for more information.
@@ -2831,7 +2835,7 @@ class SIR3S_View:
         :param tkCont: The (tk) key of the Container to insert the Text in
         :type tkCont: str
         :param x: Absolute x-Coordinate of the Text (left)
-        :type x np.float64
+        :type x: np.float64
         :param y: Absolute y-Coordinate of the Text (bottom)
         :type y: np.float64
         :param color: The desired Color as RGB
@@ -2894,9 +2898,9 @@ class SIR3S_View:
         :param tkCont: The (tk) key of the Container to insert the numerical Display in
         :type tkCont: str
         :param x: Absolute x-Coordinate of the numerical Displa (left)
-        :type dX: np.float64
-        :param dY: Absolute y-Coordinate of the numerical Displa (bottom)
-        :type dY: np.float64
+        :type x: np.float64
+        :param y: Absolute y-Coordinate of the numerical Displa (bottom)
+        :type y: np.float64
         :param color: The desired Color as RGB
         :type color: int
         :param angle_degree: Angle in Degree
@@ -3453,9 +3457,9 @@ class SIR3S_ModelRepair:
         Executes the said repair tool
 
         :param imr: IModelRepairMethod returned from CheckRepairTool()
-        :type toolName: IModelRepairMethod
+        :type imr: IModelRepairMethod
         :param table: intended table, e.g, "ROHR"
-        :type toolName: str
+        :type table: str
         :return: None
         :rtype: None
         :description: This is a wrapper method for ExecuteRepairTool() from toolkit
