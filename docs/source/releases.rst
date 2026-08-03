@@ -32,6 +32,8 @@ Below an overview over all Toolkit Versions for SIR 3S 90-15 Quebec is given. It
 +----------------+---------------------------+-------------+--------------+
 | Toolkit Version| SIR 3S Version            | dll changed | Release Date |
 +================+===========================+=============+==============+
+| 90.15.25       | 90-15-00-24-Upd2          | Yes         | 2026-08-03   |
++----------------+---------------------------+-------------+--------------+
 | 90.15.24       | 90-15-00-24-Upd2          | Yes         | 2026-07-02   |
 +----------------+---------------------------+-------------+--------------+
 | 90.15.23       | 90-15-00-24-Upd2          | Yes         | 2026-06-15   |
@@ -82,13 +84,17 @@ Below the release history with all changes is given in detail.
 SIR 3S: 90-15-00-24-Upd2
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-Version 90.15.25 (TO BE RELEASED )
+Version 90.15.25
 """"""""""""""""""""""""""""""""""
 
 Developed and tested using SIR 3S Version: 90-15-00-24-Upd2
 
 C# Changes
 ~~~~~~~~~~
+- fixed https://github.com/3SConsult/sir3stoolkit/issues/9
+- fixed https://github.com/3SConsult/sir3stoolkit/issues/10
+- fixed https://github.com/3SConsult/sir3stoolkit/issues/12
+- fixed https://github.com/3SConsult/sir3stoolkit/issues/16
 
 Python Changes
 ~~~~~~~~~~~~~~
@@ -96,6 +102,24 @@ Python Changes
 - wrapper.py: new functions
    - Read_SirGraf_Config_Path(): reads the SirGraf config path from config.txt
    - Write_SirGraf_Config_Path(basePath): writes the SirGraf config path to config.txt
+   - GetWorkingDirectory(): get the working directory currently assigned to the open model
+   - AllocateWorkingDirectory(strDirectory): assign the SIR 3S working Directory to an existing Directory
+   - CreateWorkingDirectory(strDirectory): just Create a SIR 3S Working Directory if it doesnt exist yet and assign it
+   - CopyWorkingDirectory(strDestinationDirectory): copies the contents of the current SIR 3S working Directory to the specified Destination Directory
+   - GetDBSourcePath(): retrieves the Database Source Path along with Connection Details
+   - SetCalculationType(calculationType): sets the Calculation Type for the Model
+   - GetCalculationType(): gets the current Type of Calculation to be performed
+   - WriteSirCalcXmlFile(saveItInThisDirectory): writes the SirCalc XML Input File before any Calculations are performed
+   - SetThermalCalculationParemeters(activateThermalcalculation, startWithTempField, terminationPrecision, transientThermalcalculation): change thermal Calculation Parameters
+   - GetThermalCalculationParemeters(): gets the current thermal Calculation Parameters
+   - SetSimulationTimeFrame(timeStep, terminationTime): sets the Simulation Time Frame for non-stationary Calculations
+   - GetSimulationTimeFrame(): retrieves the current Simulation time frame Parameters, including the time step and termination time
+   - GetGeometryData(elemTk): retrieves the WKB Geometry Data if an Element (Technical Data Part, OS Data Part, and eventually connection Lines)
+   - UnmarkAll(tkCONT): unmarks all Elements within the Container with TK = tkCONT
+   - GetMarkedElements(tkCONT): retrieves a list of all Elements marked within the Container with TK = tkCONT
+   - MarkElement(tk): marks an element AND ALL its connection Lines
+   - UnmarkElement(tk): unmarks the Element and ALL its Connection Lines
+   - IsElementMarked(tk): determines whether the specified element (OR any of its Connection Lines) is marked based on the provided Key
 
 Version 90.15.24
 """"""""""""""""
