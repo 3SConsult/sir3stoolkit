@@ -1683,6 +1683,26 @@ class SIR3S_Model:
             print("Error: " + error)
         return isSet
 
+    def GetDBSourcePath(self) -> tuple[str, str, str, str]:
+        """
+        Retrieves the Database Source Path along with Connection Details.
+
+        :return: returns four string elementswrapped in as a tuple (dbPath, conectionString, dbVendor, dbName)
+                 dbPath contains the full Path to the Database File. This will return an empty String for all Database Types, except from
+                 SQLite, XMLFILE and ACCESS.
+                 conectionString contains the ADO.NET Connection String for the Database. For XML File Databases, 
+                 this will return an empty String
+                 dbVendor contains the Database Type.
+                 dbName contains the Name of the Database.       
+        :rtype: tuple[str, str, str, str]
+        :description: This is a wrapper method for GetDBSourcePath() from toolkit
+        """ 
+        dbPath, conectionString, dbVendor, dbName, error = self.toolkit.GetDBSourcePath()
+        if not dbPath:
+            print("Error: " + error)
+        return dbPath, conectionString, dbVendor, dbName
+
+        
     ## Changes for https://github.com/3SConsult/sir3stoolkit/issues/12
     
     def SetCalculationType(self, calculationType) -> bool:
