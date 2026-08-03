@@ -1990,6 +1990,29 @@
         <span class="k">return</span> <span class="n">isSet</span></div>
 
 
+<div class="viewcode-block" id="SIR3S_Model.GetDBSourcePath">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetDBSourcePath">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">GetDBSourcePath</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the Database Source Path along with Connection Details.</span>
+
+<span class="sd">        :return: returns four string elementswrapped in as a tuple (dbPath, conectionString, dbVendor, dbName)</span>
+<span class="sd">                 dbPath contains the full Path to the Database File. This will return an empty String for all Database Types, except from</span>
+<span class="sd">                 SQLite, XMLFILE and ACCESS.</span>
+<span class="sd">                 conectionString contains the ADO.NET Connection String for the Database. For XML File Databases, </span>
+<span class="sd">                 this will return an empty String</span>
+<span class="sd">                 dbVendor contains the Database Type.</span>
+<span class="sd">                 dbName contains the Name of the Database.       </span>
+<span class="sd">        :rtype: tuple[str, str, str, str]</span>
+<span class="sd">        :description: This is a wrapper method for GetDBSourcePath() from toolkit</span>
+<span class="sd">        &quot;&quot;&quot;</span> 
+        <span class="n">dbPath</span><span class="p">,</span> <span class="n">conectionString</span><span class="p">,</span> <span class="n">dbVendor</span><span class="p">,</span> <span class="n">dbName</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">GetDBSourcePath</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">dbPath</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">dbPath</span><span class="p">,</span> <span class="n">conectionString</span><span class="p">,</span> <span class="n">dbVendor</span><span class="p">,</span> <span class="n">dbName</span></div>
+
+
+        
     <span class="c1">## Changes for https://github.com/3SConsult/sir3stoolkit/issues/12</span>
     
 <div class="viewcode-block" id="SIR3S_Model.SetCalculationType">
