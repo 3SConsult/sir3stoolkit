@@ -81,6 +81,7 @@ Core Methods: SIR3S_Model
 - :meth:`sir3stoolkit.core.wrapper.SIR3S_Model.ExecuteModelValidation`
 - :meth:`sir3stoolkit.core.wrapper.SIR3S_Model.ExecuteResultsCheck`
 - :meth:`sir3stoolkit.core.wrapper.SIR3S_Model.GetWorkingDirectory`
+- :meth:`sir3stoolkit.core.wrapper.SIR3S_Model.GetDBSourcePath`
 - :meth:`sir3stoolkit.core.wrapper.SIR3S_Model.AllocateWorkingDirectory`
 - :meth:`sir3stoolkit.core.wrapper.SIR3S_Model.CreateWorkingDirectory`
 - :meth:`sir3stoolkit.core.wrapper.SIR3S_Model.CopyWorkingDirectory`

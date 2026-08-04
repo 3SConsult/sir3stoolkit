@@ -117,9 +117,9 @@
      "name": "stderr",
      "output_type": "stream",
      "text": [
-      "[2026-07-28 21:33:25,050] INFO in sir3stoolkit.core.wrapper: [Initialization] Using provided SirGraf path: C:\\3S\\SIR 3S\\SirGraf-90-15-00-24_Quebec-Upd2\n",
-      "[2026-07-28 21:33:25,050] INFO in sir3stoolkit.core.wrapper: [Initialization] Using provided SirGraf path: C:\\3S\\SIR 3S\\SirGraf-90-15-00-24_Quebec-Upd2\n",
-      "[2026-07-28 21:33:25,099] INFO in sir3stoolkit.core.wrapper: [Initialization] Initializing toolkit with SirGraf path: C:\\3S\\SIR 3S\\SirGraf-90-15-00-24_Quebec-Upd2\n"
+      "[2026-08-04 16:54:58,766] INFO in sir3stoolkit.core.wrapper: [Initialization] Using provided SirGraf path: C:\\3S\\SIR 3S\\SirGraf-90-15-00-24_Quebec-Upd2\n",
+      "[2026-08-04 16:54:58,766] INFO in sir3stoolkit.core.wrapper: [Initialization] Using provided SirGraf path: C:\\3S\\SIR 3S\\SirGraf-90-15-00-24_Quebec-Upd2\n",
+      "[2026-08-04 16:54:58,807] INFO in sir3stoolkit.core.wrapper: [Initialization] Initializing toolkit with SirGraf path: C:\\3S\\SIR 3S\\SirGraf-90-15-00-24_Quebec-Upd2\n"
      ]
     }
    ],
@@ -153,7 +153,7 @@
      "name": "stderr",
      "output_type": "stream",
      "text": [
-      "[2026-07-28 21:33:25,996] INFO in sir3stoolkit.core.wrapper: [Model Class Initialization] Initialization complete\n"
+      "[2026-08-04 16:54:59,325] INFO in sir3stoolkit.core.wrapper: [Model Class Initialization] Initialization complete\n"
      ]
     }
    ],
@@ -179,7 +179,7 @@
      "name": "stderr",
      "output_type": "stream",
      "text": [
-      "[2026-07-28 21:33:40,256] INFO in sir3stoolkit.core.wrapper: Model is open for further operation\n"
+      "[2026-08-04 16:55:07,949] INFO in sir3stoolkit.core.wrapper: Model is open for further operation\n"
      ]
     }
    ],
@@ -217,6 +217,116 @@
    ],
    "source": [
     "print(s3s.GetNetworkType()) # to check that the correct model is responsive, model we are trying to open was created with type Water"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "fff45e6b",
+   "metadata": {},
+   "source": [
+    "# GetDBSourcePath()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "4226f8a3",
+   "metadata": {},
+   "source": [
+    "We can use the method [GetDBSourcePath()](https://3sconsult.github.io/sir3stoolkit/modules.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetDBSourcePath) to retrieve basic information regarding the db file. We get a tuple of four strings as a return."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 60,
+   "id": "eddebff4",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "(dbPath, connectionString, dbVendor, dbName) = s3s.GetDBSourcePath()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 61,
+   "id": "e0737055",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "'Toolkit_Tutorial10_Model.db3'"
+      ]
+     },
+     "execution_count": 61,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "dbPath"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 62,
+   "id": "3a6a0b35",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "'provider=System.Data.SQLite;data source=\"Toolkit_Tutorial10_Model.db3\";version=3'"
+      ]
+     },
+     "execution_count": 62,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "connectionString"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 63,
+   "id": "8cc80f39",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "'SQLite'"
+      ]
+     },
+     "execution_count": 63,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "dbVendor"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 64,
+   "id": "1c78e83a",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "'Toolkit_Tutorial10_Model'"
+      ]
+     },
+     "execution_count": 64,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "dbName"
    ]
   },
   {
@@ -276,7 +386,7 @@
    "id": "e81cc04e",
    "metadata": {},
    "source": [
-    "# WORK IN PROGRESS: AllocateWorkingDirectory()"
+    "# AllocateWorkingDirectory()"
    ]
   },
   {
@@ -294,7 +404,7 @@
    "metadata": {},
    "outputs": [],
    "source": [
-    "#working_directory_2 = r\"C:\\Users\\aUsername\\3S\\sir3stoolkit\\docs\\source\\tutorials\\SIR3S_Model\\Tutorial010_Assets\\WDToolkit_Tutorial10_Model_2\""
+    "working_directory_2 = r\"C:\\Users\\aUsername\\3S\\sir3stoolkit\\docs\\source\\tutorials\\SIR3S_Model\\Tutorial010_Assets\\WDToolkit_Tutorial10_Model_2\""
    ]
   },
   {
@@ -302,9 +412,20 @@
    "execution_count": 12,
    "id": "970910bc",
    "metadata": {},
-   "outputs": [],
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "True"
+      ]
+     },
+     "execution_count": 12,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
    "source": [
-    "#s3s.AllocateWorkingDirectory(strDirectory=working_directory_2)"
+    "s3s.AllocateWorkingDirectory(strDirectory=working_directory_2)"
    ]
   },
   {
@@ -312,9 +433,17 @@
    "execution_count": 13,
    "id": "525ac822",
    "metadata": {},
-   "outputs": [],
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "c:\\Users\\aUsername\\3S\\sir3stoolkit\\docs\\source\\tutorials\\SIR3S_Model\\Tutorial010_Assets\\WDToolkit_Tutorial10_Model_2\n"
+     ]
+    }
+   ],
    "source": [
-    "#print(s3s.GetWorkingDirectory())"
+    "print(s3s.GetWorkingDirectory())"
    ]
   },
   {
@@ -568,7 +697,7 @@
      "name": "stderr",
      "output_type": "stream",
      "text": [
-      "[2026-07-28 21:33:41,225] INFO in sir3stoolkit.core.wrapper: Value is set\n"
+      "[2026-08-04 16:55:09,183] INFO in sir3stoolkit.core.wrapper: Value is set\n"
      ]
     }
    ],
@@ -586,7 +715,7 @@
      "name": "stderr",
      "output_type": "stream",
      "text": [
-      "[2026-07-28 21:33:41,258] INFO in sir3stoolkit.core.wrapper: Value is set\n"
+      "[2026-08-04 16:55:09,233] INFO in sir3stoolkit.core.wrapper: Value is set\n"
      ]
     }
    ],
@@ -956,6 +1085,27 @@
    ]
   },
   {
+   "cell_type": "code",
+   "execution_count": 40,
+   "id": "1b3d90e5",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "True"
+      ]
+     },
+     "execution_count": 40,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "s3s.AllocateWorkingDirectory(strDirectory=working_directory_1)"
+   ]
+  },
+  {
    "cell_type": "markdown",
    "id": "1de1cbad",
    "metadata": {},
@@ -965,7 +1115,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 40,
+   "execution_count": 41,
    "id": "1b5cc8ac",
    "metadata": {},
    "outputs": [
@@ -973,7 +1123,7 @@
      "name": "stderr",
      "output_type": "stream",
      "text": [
-      "[2026-07-28 21:33:48,188] INFO in sir3stoolkit.core.wrapper: Changes saved successfully\n"
+      "[2026-08-04 16:55:15,376] INFO in sir3stoolkit.core.wrapper: Changes saved successfully\n"
      ]
     }
    ],
@@ -991,7 +1141,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 41,
+   "execution_count": 42,
    "id": "c0b386c2",
    "metadata": {},
    "outputs": [
@@ -999,7 +1149,7 @@
      "name": "stderr",
      "output_type": "stream",
      "text": [
-      "[2026-07-28 21:33:56,419] INFO in sir3stoolkit.core.wrapper: Model Calculation is complete\n"
+      "[2026-08-04 16:55:22,642] INFO in sir3stoolkit.core.wrapper: Model Calculation is complete\n"
      ]
     }
    ],
@@ -1017,7 +1167,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 42,
+   "execution_count": 43,
    "id": "0a372505",
    "metadata": {},
    "outputs": [],
@@ -1027,7 +1177,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 43,
+   "execution_count": 44,
    "id": "c0ef0a1c",
    "metadata": {},
    "outputs": [
@@ -1091,7 +1241,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 44,
+   "execution_count": 45,
    "id": "e2d33a10",
    "metadata": {},
    "outputs": [
@@ -1159,7 +1309,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 45,
+   "execution_count": 46,
    "id": "72793a0d",
    "metadata": {},
    "outputs": [],
@@ -1169,7 +1319,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 46,
+   "execution_count": 47,
    "id": "020ff021",
    "metadata": {},
    "outputs": [
@@ -1211,7 +1361,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 47,
+   "execution_count": 48,
    "id": "e6154a09",
    "metadata": {},
    "outputs": [],
@@ -1246,7 +1396,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 48,
+   "execution_count": 49,
    "id": "3aedd63b",
    "metadata": {},
    "outputs": [],
@@ -1280,7 +1430,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 49,
+   "execution_count": 50,
    "id": "d6062a20",
    "metadata": {},
    "outputs": [],
@@ -1290,7 +1440,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 50,
+   "execution_count": 51,
    "id": "0219bbbc",
    "metadata": {},
    "outputs": [
@@ -1320,7 +1470,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 51,
+   "execution_count": 52,
    "id": "75600947",
    "metadata": {},
    "outputs": [],
@@ -1330,7 +1480,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 52,
+   "execution_count": 53,
    "id": "f23ce6c4",
    "metadata": {},
    "outputs": [
@@ -1394,7 +1544,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 53,
+   "execution_count": 54,
    "id": "d1a7761a",
    "metadata": {},
    "outputs": [
@@ -1435,7 +1585,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 54,
+   "execution_count": 55,
    "id": "b32a7b2c",
    "metadata": {},
    "outputs": [
@@ -1481,7 +1631,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 55,
+   "execution_count": 56,
    "id": "de2a9ae2",
    "metadata": {},
    "outputs": [],
@@ -1491,7 +1641,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 56,
+   "execution_count": 57,
    "id": "4d41f4b5",
    "metadata": {},
    "outputs": [
@@ -1501,7 +1651,7 @@
        "True"
       ]
      },
-     "execution_count": 56,
+     "execution_count": 57,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1512,7 +1662,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 57,
+   "execution_count": 58,
    "id": "63d8f31a",
    "metadata": {},
    "outputs": [
@@ -1520,7 +1670,7 @@
      "name": "stderr",
      "output_type": "stream",
      "text": [
-      "[2026-07-28 21:34:10,745] INFO in sir3stoolkit.core.wrapper: Changes saved successfully\n"
+      "[2026-08-04 16:55:36,991] INFO in sir3stoolkit.core.wrapper: Changes saved successfully\n"
      ]
     }
    ],

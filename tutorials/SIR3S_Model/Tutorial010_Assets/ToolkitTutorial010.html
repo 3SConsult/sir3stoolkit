@@ -152,9 +152,9 @@
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2026-07-28 21:33:25,050] INFO in sir3stoolkit.core.wrapper: [Initialization] Using provided SirGraf path: C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2
-[2026-07-28 21:33:25,050] INFO in sir3stoolkit.core.wrapper: [Initialization] Using provided SirGraf path: C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2
-[2026-07-28 21:33:25,099] INFO in sir3stoolkit.core.wrapper: [Initialization] Initializing toolkit with SirGraf path: C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2
+[2026-08-04 16:54:58,766] INFO in sir3stoolkit.core.wrapper: [Initialization] Using provided SirGraf path: C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2
+[2026-08-04 16:54:58,766] INFO in sir3stoolkit.core.wrapper: [Initialization] Using provided SirGraf path: C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2
+[2026-08-04 16:54:58,807] INFO in sir3stoolkit.core.wrapper: [Initialization] Initializing toolkit with SirGraf path: C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2
 </pre></div></div>
 </div>
 </section>
@@ -174,7 +174,7 @@
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2026-07-28 21:33:25,996] INFO in sir3stoolkit.core.wrapper: [Model Class Initialization] Initialization complete
+[2026-08-04 16:54:59,325] INFO in sir3stoolkit.core.wrapper: [Model Class Initialization] Initialization complete
 </pre></div></div>
 </div>
 </section>
@@ -199,7 +199,7 @@
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2026-07-28 21:33:40,256] INFO in sir3stoolkit.core.wrapper: Model is open for further operation
+[2026-08-04 16:55:07,949] INFO in sir3stoolkit.core.wrapper: Model is open for further operation
 </pre></div></div>
 </div>
 <p>Now the model has been opened. All SIR 3S Toolkit operations now apply to this model until another one is opened.</p>
@@ -220,6 +220,86 @@ NetworkType.Water
 </pre></div></div>
 </div>
 </section>
+</section>
+<section id="GetDBSourcePath()">
+<h1>GetDBSourcePath()<a class="headerlink" href="#GetDBSourcePath()" title="Link to this heading"></a></h1>
+<p>We can use the method <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/modules.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetDBSourcePath">GetDBSourcePath()</a> to retrieve basic information regarding the db file. We get a tuple of four strings as a return.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[60]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(dbPath, connectionString, dbVendor, dbName) = s3s.GetDBSourcePath()
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[61]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dbPath
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[61]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&#39;Toolkit_Tutorial10_Model.db3&#39;
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[62]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>connectionString
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[62]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&#39;provider=System.Data.SQLite;data source=&#34;Toolkit_Tutorial10_Model.db3&#34;;version=3&#39;
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[63]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dbVendor
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[63]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&#39;SQLite&#39;
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[64]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dbName
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[64]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&#39;Toolkit_Tutorial10_Model&#39;
+</pre></div></div>
+</div>
 </section>
 <section id="GetWorkingDirectory()">
 <h1>GetWorkingDirectory()<a class="headerlink" href="#GetWorkingDirectory()" title="Link to this heading"></a></h1>
@@ -250,32 +330,49 @@ c:\Users\aUsername\3S\sir3stoolkit\docs\source\tutorials\SIR3S_Model\Tutorial010
 </pre></div></div>
 </div>
 </section>
-<section id="WORK-IN-PROGRESS:-AllocateWorkingDirectory()">
-<h1>WORK IN PROGRESS: AllocateWorkingDirectory()<a class="headerlink" href="#WORK-IN-PROGRESS:-AllocateWorkingDirectory()" title="Link to this heading"></a></h1>
+<section id="AllocateWorkingDirectory()">
+<h1>AllocateWorkingDirectory()<a class="headerlink" href="#AllocateWorkingDirectory()" title="Link to this heading"></a></h1>
 <p>We can use the method <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/modules.html#sir3stoolkit.core.wrapper.SIR3S_Model.AllocateWorkingDirectory">AllocateWorkingDirectory()</a> to change the working directory of the model to a different directory. The basic file structure needed to hold SIR 3S calculation results will be created automatically (if it does not exist already). This must be a valid, existing, writable and readable Directory Path.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>#working_directory_2 = r&quot;C:\Users\aUsername\3S\sir3stoolkit\docs\source\tutorials\SIR3S_Model\Tutorial010_Assets\WDToolkit_Tutorial10_Model_2&quot;
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>working_directory_2 = r&quot;C:\Users\aUsername\3S\sir3stoolkit\docs\source\tutorials\SIR3S_Model\Tutorial010_Assets\WDToolkit_Tutorial10_Model_2&quot;
 </pre></div>
 </div>
 </div>
-<div class="nbinput nblast docutils container">
+<div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>#s3s.AllocateWorkingDirectory(strDirectory=working_directory_2)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.AllocateWorkingDirectory(strDirectory=working_directory_2)
 </pre></div>
 </div>
 </div>
-<div class="nbinput nblast docutils container">
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+True
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>#print(s3s.GetWorkingDirectory())
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(s3s.GetWorkingDirectory())
 </pre></div>
 </div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+c:\Users\aUsername\3S\sir3stoolkit\docs\source\tutorials\SIR3S_Model\Tutorial010_Assets\WDToolkit_Tutorial10_Model_2
+</pre></div></div>
 </div>
 </section>
 <section id="CreateWorkingDirectory()">
@@ -440,7 +537,7 @@ Current Stationary Timestamp: 29.04.2026, 14:10:00
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2026-07-28 21:33:41,225] INFO in sir3stoolkit.core.wrapper: Value is set
+[2026-08-04 16:55:09,183] INFO in sir3stoolkit.core.wrapper: Value is set
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
@@ -456,7 +553,7 @@ Current Stationary Timestamp: 29.04.2026, 14:10:00
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2026-07-28 21:33:41,258] INFO in sir3stoolkit.core.wrapper: Value is set
+[2026-08-04 16:55:09,233] INFO in sir3stoolkit.core.wrapper: Value is set
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
@@ -700,9 +797,26 @@ True
 </section>
 <section id="1st-Calculation">
 <h1>1st Calculation<a class="headerlink" href="#1st-Calculation" title="Link to this heading"></a></h1>
-<p>Make sure to save the changes before calculating.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[40]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.AllocateWorkingDirectory(strDirectory=working_directory_1)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[40]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+True
+</pre></div></div>
+</div>
+<p>Make sure to save the changes before calculating.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[41]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.SaveChanges()
@@ -714,12 +828,12 @@ True
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2026-07-28 21:33:48,188] INFO in sir3stoolkit.core.wrapper: Changes saved successfully
+[2026-08-04 16:55:15,376] INFO in sir3stoolkit.core.wrapper: Changes saved successfully
 </pre></div></div>
 </div>
 <p>We use the <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.ExecCalculation">ExecCalculation()</a> function to trigger a new Calculation of the SIR 3S Model using SIR Calc (version that is specfied in the components of the SIR Graf, that was used to initialize the Toolkit).</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[41]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[42]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.ExecCalculation(waitForSirCalcToExit=True)
@@ -731,12 +845,12 @@ True
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2026-07-28 21:33:56,419] INFO in sir3stoolkit.core.wrapper: Model Calculation is complete
+[2026-08-04 16:55:22,642] INFO in sir3stoolkit.core.wrapper: Model Calculation is complete
 </pre></div></div>
 </div>
 <p>We can check the status of the calculation</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[42]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[43]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>Exit_status = s3s.GetResultValue(s3s.GetTksofElementType(s3s.ObjectTypes.GeneralSection)[0],&quot;EXSTAT&quot;)[0]
@@ -744,7 +858,7 @@ True
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[43]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[44]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(Exit_status)
@@ -782,7 +896,7 @@ True
 <p>Our results are normal.</p>
 <p>Let’s look at the pressure of a singular node to later compare it with another calculation.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[44]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[45]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import matplotlib.pyplot as plt
@@ -808,7 +922,7 @@ plt.show()
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../../_images/tutorials_SIR3S_Model_Tutorial010_Assets_ToolkitTutorial010_89_0.png" src="../../../_images/tutorials_SIR3S_Model_Tutorial010_Assets_ToolkitTutorial010_89_0.png" />
+<img alt="../../../_images/tutorials_SIR3S_Model_Tutorial010_Assets_ToolkitTutorial010_97_0.png" src="../../../_images/tutorials_SIR3S_Model_Tutorial010_Assets_ToolkitTutorial010_97_0.png" />
 </div>
 </div>
 </section>
@@ -818,7 +932,7 @@ plt.show()
 <p>When running <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.ExecCalculation">ExecCalculation()</a> these files will be created and the sent to SirCalc.exe to run the simulation. But now we have the files without instantly running a simulation with them. We can instead manually edit the XML calculation file and later on manually sent it to SirCalc.exe for the simulation.</p>
 <p>You should only manually edit these files, if you know what you are doing. Otherwise your calculation configuration could become deprecated. If you mess up, you can reset to the current SIR 3S model state by reexecuting <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/modules.html#sir3stoolkit.core.wrapper.SIR3S_Model.WriteSirCalcXmlFile">WriteSirCalcXmlFile()</a>.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[45]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[46]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>xml_path = s3s.WriteSirCalcXmlFile(saveItInThisDirectory=working_directory_1)
@@ -826,7 +940,7 @@ plt.show()
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[46]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[47]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(xml_path)
@@ -847,7 +961,7 @@ c:\Users\aUsername\3S\sir3stoolkit\docs\source\tutorials\SIR3S_Model\Tutorial010
 <p>Now we can make any kind of change to the XML-File which mainly contains table values.</p>
 <p>We now perform some silly XML edit by flipping the rpm values from rising to sinking over time. This is just for demonstration, not a realistic edit.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[47]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[48]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import re
@@ -880,7 +994,7 @@ def flip_pumd_rowt_n(xml_file, pumd_fk):
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[48]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[49]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>flip_pumd_rowt_n(xml_path, pumd_fk=&quot;4778790377408093653&quot;)
@@ -893,7 +1007,7 @@ def flip_pumd_rowt_n(xml_file, pumd_fk):
 <p>Now let’s calculate with our changed XML File.</p>
 <p>We need to provide the path to the SirCalc.exe we want to use.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[49]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[50]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIRCALCDIR = r&quot;C:\3S\SIR 3S\SirCalc-90-15-02-46_Quebec.fix7\SirCalc.exe&quot;
@@ -901,7 +1015,7 @@ def flip_pumd_rowt_n(xml_file, pumd_fk):
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[50]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[51]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import subprocess
@@ -922,7 +1036,7 @@ Command [&#39;C:\\3S\\SIR 3S\\SirCalc-90-15-02-46_Quebec.fix7\\SirCalc.exe&#39;,
 </div>
 <p>We can check the status of the calculation</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[51]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[52]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>Exit_status = s3s.GetResultValue(s3s.GetTksofElementType(s3s.ObjectTypes.GeneralSection)[0],&quot;EXSTAT&quot;)[0]
@@ -930,7 +1044,7 @@ Command [&#39;C:\\3S\\SIR 3S\\SirCalc-90-15-02-46_Quebec.fix7\\SirCalc.exe&#39;,
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[52]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[53]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(Exit_status)
@@ -968,7 +1082,7 @@ Command [&#39;C:\\3S\\SIR 3S\\SirCalc-90-15-02-46_Quebec.fix7\\SirCalc.exe&#39;,
 <p>Our results are normal.</p>
 <p>Let’s look at the pressure of a singular node and compare it to the previous calculation.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[53]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[54]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>timestamps = s3s.GetTimeStamps()[0]
@@ -991,12 +1105,12 @@ plt.show()
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../../_images/tutorials_SIR3S_Model_Tutorial010_Assets_ToolkitTutorial010_113_0.png" src="../../../_images/tutorials_SIR3S_Model_Tutorial010_Assets_ToolkitTutorial010_113_0.png" />
+<img alt="../../../_images/tutorials_SIR3S_Model_Tutorial010_Assets_ToolkitTutorial010_121_0.png" src="../../../_images/tutorials_SIR3S_Model_Tutorial010_Assets_ToolkitTutorial010_121_0.png" />
 </div>
 </div>
 <p>Below we see the first calculation as a comparison.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[54]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[55]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.plot(timestamps, values_1, marker=&quot;o&quot;)
@@ -1016,7 +1130,7 @@ plt.show()
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../../_images/tutorials_SIR3S_Model_Tutorial010_Assets_ToolkitTutorial010_115_0.png" src="../../../_images/tutorials_SIR3S_Model_Tutorial010_Assets_ToolkitTutorial010_115_0.png" />
+<img alt="../../../_images/tutorials_SIR3S_Model_Tutorial010_Assets_ToolkitTutorial010_123_0.png" src="../../../_images/tutorials_SIR3S_Model_Tutorial010_Assets_ToolkitTutorial010_123_0.png" />
 </div>
 </div>
 </section>
@@ -1024,7 +1138,7 @@ plt.show()
 <h1>CopyWorkingDirectory()<a class="headerlink" href="#CopyWorkingDirectory()" title="Link to this heading"></a></h1>
 <p>We can use the method <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/modules.html#sir3stoolkit.core.wrapper.SIR3S_Model.CopyWorkingDirectory">CopyWorkingDirectory()</a> to copy the contents and therefore the results of our current working dir to another path. This way we can save a XML calculation configuration and attached results and can continue on our main working dir with another configuration.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[55]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[56]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>config_a_path = r&quot;C:\Users\aUsername\3S\sir3stoolkit\docs\source\tutorials\SIR3S_Model\Tutorial010_Assets\configs\config_a&quot;
@@ -1032,7 +1146,7 @@ plt.show()
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[56]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[57]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.CopyWorkingDirectory(strDestinationDirectory=config_a_path)
@@ -1040,7 +1154,7 @@ plt.show()
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[56]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[57]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -1049,7 +1163,7 @@ True
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[57]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[58]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.SaveChanges()
@@ -1061,7 +1175,7 @@ True
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2026-07-28 21:34:10,745] INFO in sir3stoolkit.core.wrapper: Changes saved successfully
+[2026-08-04 16:55:36,991] INFO in sir3stoolkit.core.wrapper: Changes saved successfully
 </pre></div></div>
 </div>
 </section>

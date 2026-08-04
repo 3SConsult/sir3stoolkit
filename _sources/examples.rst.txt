@@ -107,6 +107,15 @@ This Tutorial demonstrates how to perform a model validation, checking a model f
 
 View: `Notebook <tutorials/SIR3S_Model/Tutorial009_Assets/ToolkitTutorial009.html>`_ | Download: `ZIP archive <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorial009_Assets.zip>`_.
 
+.. _Ttu010:
+
+Tutorial 10: Calculation Settings
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This tutorial demonstrates how to change the calculation type, time frame, thermal settings, and working directory. In addition the manual editing of the XML-Calculation file will be demonstrated. This allows to configure different calculations for one model and seperate them into different directories.
+
+View: `Notebook <tutorials/SIR3S_Model/Tutorial010_Assets/ToolkitTutorial010.html>`_ | Download: `ZIP archive <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorial010_Assets.zip>`_.
+
 .. _Ttu50-99:
 
 .. image:: _static/images/Toolkit_structure_core_mantle.png
