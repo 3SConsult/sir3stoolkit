@@ -15,10 +15,15 @@ import re
 import numpy as np
 import logging
 import sys
+import os
+import struct
+import tempfile
+import shutil
+import xml.etree.ElementTree as ET
 from dataclasses import dataclass, field
 from typing import List, Optional, Union
 from enum import Enum
-from typing import List, Tuple, Any
+from typing import List, Tuple, Any, Set
 from enum import Enum
 from collections import defaultdict
 import geopandas as gpd
@@ -1237,6 +1242,609 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         finally:
             self.toolkit.DeleteElement(dummy)
 
+    ## MX read helpers here
+
+    def get_current_mx1_filepath(self, dot_resolution: int = 1) -> str:
+        """
+        Build the absolute path to the .MX1 result metadata file of the currently open model.
+
+        Derived from the model's working directory (GetWorkingDirectory()) and its model identifier
+        (self.Mid, as passed to OpenModel(), e.g. "M-1-0-1"): the three numbers in Mid become the
+        B/V/BZ subdirectories, and the file itself is named "<Mid>.<dot_resolution>.MX1", e.g.:
+        "<working_directory>\\B1\\V0\\BZ1\\M-1-0-1.1.MX1"
+
+        TODO before shipping: dot_resolution is currently assumed to always be 1. Confirm where this
+        value actually comes from (it may not always be 1) before relying on this in production.
+
+        :param dot_resolution: The dot-resolution segment of the .MX1 filename (the ".Y" from 90-10 on).
+                        Default: 1 (current assumption, unverified for all cases).
+        :type dot_resolution: int, optional
+        :return: Absolute path to the .MX1 file of the currently open model. Existence of the file is
+                        not checked here.
+        :rtype: str
+        """
+        if not self.Mid:
+            raise ValueError(
+                "[get_current_mx1_filepath] No model is open (self.Mid is not set). Call OpenModel() first."
+            )
+
+        parts = self.Mid.split("-")
+        if len(parts) != 4 or parts[0] != "M":
+            raise ValueError(
+                f"[get_current_mx1_filepath] Unexpected Mid format: {self.Mid!r}. Expected 'M-<b>-<v>-<bz>'."
+            )
+        _, b, v, bz = parts
+
+        working_directory = self.GetWorkingDirectory()
+        if not working_directory:
+            raise ValueError("[get_current_mx1_filepath] GetWorkingDirectory() returned no working directory.")
+
+        mx1_filename = f"{self.Mid}.{dot_resolution}.MX1"
+        mx1_filepath = os.path.join(working_directory, f"B{b}", f"V{v}", f"BZ{bz}", mx1_filename)
+
+        return mx1_filepath
+
+    def initialize_mx_read_helpers(self, mx1_filepath: str) -> dict:
+        """
+        Initialize MX read helper state from an MX1 filepath.
+
+        This method mirrors the legacy initialization sequence:
+        parse MX1, parse MX2, build record-unpack format, then build channel indices.
+
+        :param mx1_filepath: Absolute or relative path to .MX1 file.
+        :type mx1_filepath: str
+        :return: Summary dictionary with resolved paths and basic counts.
+        :rtype: dict
+        """
+        logger.info("[mx helpers] Initializing MX read helpers ...")
+
+        if not isinstance(mx1_filepath, str) or mx1_filepath.strip() == "":
+            raise ValueError("[mx helpers] mx1_filepath must be a non-empty string.")
+
+        if not os.path.exists(mx1_filepath):
+            raise FileNotFoundError(f"[mx helpers] MX1 file does not exist: {mx1_filepath}")
+
+        w_d, file_name = os.path.split(mx1_filepath)
+        base, _ext = os.path.splitext(file_name)
+        base, dot_resolution = os.path.splitext(base)
+
+        self._mx_paths = {
+            "mx1": mx1_filepath,
+            "mx2": os.path.join(w_d, f"{base}.MX2"),
+            "mxs": os.path.join(w_d, f"{base}{dot_resolution}.MXS"),
+            "mxs_zip": os.path.join(w_d, f"{base}{dot_resolution}.ZIP"),
+            "dot_resolution": dot_resolution,
+            "work_dir": w_d,
+            "base": base,
+        }
+
+        self._mx1_df = self._parse_mx1_to_dataframe(mx1_filepath)
+        self._mx2_df = self._parse_mx2_to_dataframe(self._mx_paths["mx2"])
+        self._mx_record_struct_fmt_string, self._mx1_df = self._build_mx_record_unpack_format(self._mx1_df)
+        self._mx_layout = self._build_mx_record_unpack_layout(self._mx1_df)
+
+        logger.info(
+            "[mx helpers] Initialized. MX1 rows: %d, MX2 rows: %d, non-vector channels: %d, vector channels: %d",
+            len(self._mx1_df.index),
+            len(self._mx2_df.index),
+            len(self._mx_layout["mx_column_names"]),
+            len(self._mx_layout["mx_column_names_vecs"]),
+        )
+
+        return {
+            "paths": self._mx_paths,
+            "mx1_rows": len(self._mx1_df.index),
+            "mx2_rows": len(self._mx2_df.index),
+            "non_vector_channels": len(self._mx_layout["mx_column_names"]),
+            "vector_channels": len(self._mx_layout["mx_column_names_vecs"]),
+        }
+
+    def _parse_mx1_to_dataframe(self, mx1_filepath: str) -> pd.DataFrame:
+        """
+        Parse an MX1 XML file to a dataframe and add derived helper columns.
+
+        :param mx1_filepath: Path to .MX1 XML file.
+        :type mx1_filepath: str
+        :return: Parsed MX1 dataframe including vector flags and Sir3sID.
+        :rtype: pd.DataFrame
+        """
+        logger.info(f"[mx helpers] Parsing MX1: {mx1_filepath}")
+
+        mx1_tree = ET.parse(mx1_filepath)
+        mx1_root = mx1_tree.getroot()
+
+        all_records = []
+        for mx_channel in mx1_root.findall("XL1"):
+            record = {attr_name: mx_channel.get(attr_name) for attr_name in sorted(mx_channel.keys())}
+            all_records.append(record)
+
+        mx1_df = pd.DataFrame(all_records)
+        if mx1_df.empty:
+            raise ValueError(f"[mx helpers] Parsed MX1 is empty: {mx1_filepath}")
+
+        for col in ["DATALENGTH", "DATATYPELENGTH", "DATAOFFSET", "FLAGS"]:
+            mx1_df[col] = pd.to_numeric(mx1_df[col], errors="raise").astype("int64")
+
+        sep = "~"
+        mx1_df["Sir3sID"] = (
+            mx1_df["OBJTYPE"].astype(str)
+            + sep
+            + mx1_df["NAME1"].astype(str)
+            + sep
+            + mx1_df["NAME2"].astype(str)
+            + sep
+            + mx1_df["OBJTYPE_PK"].astype(str)
+            + sep
+            + mx1_df["ATTRTYPE"].astype(str)
+        )
+
+        mx1_df["NOfItems"] = [
+            int(data_length / data_type_length)
+            for data_length, data_type_length in zip(mx1_df["DATALENGTH"], mx1_df["DATATYPELENGTH"])
+        ]
+
+        mx1_df["is_vector_channel"] = [
+            True if n_items > 1 or (len(objtype_pk) < 3 and objtype != "ALLG") else False
+            for n_items, objtype_pk, objtype in zip(mx1_df["NOfItems"], mx1_df["OBJTYPE_PK"], mx1_df["OBJTYPE"])
+        ]
+
+        mx1_df["is_vector_channel_mx2"] = [
+            True if is_vector and flags >= 4 and bin(flags)[-3] == "1" else False
+            for is_vector, flags in zip(mx1_df["is_vector_channel"], mx1_df["FLAGS"])
+        ]
+
+        mx1_df["is_vector_channel_mx2_rvec"] = [
+            True if is_mx2_vector and data_type == "RVEC" else False
+            for is_mx2_vector, data_type in zip(mx1_df["is_vector_channel_mx2"], mx1_df["DATATYPE"])
+        ]
+
+        logger.info(f"[mx helpers] Parsed MX1 successfully. Shape: {mx1_df.shape}")
+        return mx1_df
+
+    def _parse_mx2_to_dataframe(self, mx2_filepath: str) -> pd.DataFrame:
+        """
+        Parse an MX2 binary file to a dataframe.
+
+        :param mx2_filepath: Path to .MX2 binary file.
+        :type mx2_filepath: str
+        :return: Parsed MX2 dataframe.
+        :rtype: pd.DataFrame
+        """
+        logger.info(f"[mx helpers] Parsing MX2: {mx2_filepath}")
+
+        if not os.path.exists(mx2_filepath):
+            raise FileNotFoundError(f"[mx helpers] MX2 file does not exist: {mx2_filepath}")
+
+        header_fmt_string = "12s12s4si28xi"
+        all_records = []
+
+        with open(mx2_filepath, "rb") as f:
+            offset_to_next_header = 0
+
+            while True:
+                header = f.read(64)
+                header_length = len(header)
+
+                if header_length != 64:
+                    if header_length != 0:
+                        logger.warning(
+                            "[mx helpers] Unexpected MX2 trailing header bytes: %d",
+                            header_length,
+                        )
+                    break
+
+                header_data = struct.unpack(header_fmt_string, header)
+
+                obj_type = header_data[0].decode("utf-8").rstrip()
+                attr_type = header_data[1].decode("utf-8").rstrip()
+                data_type = header_data[2].decode("utf-8").rstrip()
+                data_type_length = int(header_data[3])
+                data_length = int(header_data[4])
+                n_of_items = int(data_length / data_type_length)
+
+                if data_type == "CHAR":
+                    data_fmt_string = f"{data_type_length}s" * n_of_items
+                elif data_type == "INT4":
+                    data_fmt_string = "i" * n_of_items
+                else:
+                    data_fmt_string = f"{data_length}x"
+
+                data_bytes = f.read(data_length)
+                data = struct.unpack(data_fmt_string, data_bytes)
+
+                if data_type == "CHAR":
+                    data = [item.decode("utf-8").rstrip() for item in data]
+
+                all_records.append(
+                    {
+                        "ObjType": obj_type,
+                        "AttrType": attr_type,
+                        "DataType": data_type,
+                        "DataTypeLength": data_type_length,
+                        "DataLength": data_length,
+                        "NOfItems": n_of_items,
+                        "Data": data,
+                    }
+                )
+
+                offset_to_next_header += 64 + data_length
+                if f.tell() != offset_to_next_header:
+                    f.seek(offset_to_next_header)
+
+        mx2_df = pd.DataFrame(all_records)
+        logger.info(f"[mx helpers] Parsed MX2 successfully. Shape: {mx2_df.shape}")
+        return mx2_df
+
+    def _build_mx_record_unpack_format(self, mx1_df: pd.DataFrame) -> Tuple[str, pd.DataFrame]:
+        """
+        Build the struct unpack format string and unpack indices from MX1 metadata.
+
+        :param mx1_df: MX1 dataframe.
+        :type mx1_df: pd.DataFrame
+        :return: Tuple of format string and MX1 dataframe with unpackIdx column.
+        :rtype: Tuple[str, pd.DataFrame]
+        """
+        logger.info("[mx helpers] Building MX record unpack format ...")
+
+        fmt_string = ""
+        unpack_idx = []
+        idx_unpack = 0
+
+        for row in mx1_df.itertuples():
+            fmt_item = ""
+            data_type = row.DATATYPE
+            data_type_length = int(row.DATATYPELENGTH)
+            data_length = int(row.DATALENGTH)
+            n_items = int(row.NOfItems)
+            is_vector_channel = bool(row.is_vector_channel)
+
+            if data_type == "CHAR":
+                unpack_idx.append(idx_unpack)
+                if is_vector_channel:
+                    fmt_item = f"{data_type_length}s" * n_items
+                    idx_unpack += n_items
+                else:
+                    fmt_item = f"{data_length}s"
+                    idx_unpack += 1
+            elif data_type == "INT4":
+                if data_type_length != 4:
+                    raise ValueError(
+                        f"[mx helpers] Invalid DATATYPELENGTH for INT4: {data_type_length}"
+                    )
+                unpack_idx.append(idx_unpack)
+                fmt_item = f"{n_items}i" if is_vector_channel else "i"
+                idx_unpack += n_items if is_vector_channel else 1
+            elif data_type in {"REAL", "RVEC"}:
+                if data_type_length != 4:
+                    raise ValueError(
+                        f"[mx helpers] Invalid DATATYPELENGTH for {data_type}: {data_type_length}"
+                    )
+                unpack_idx.append(idx_unpack)
+                fmt_item = f"{n_items}f" if is_vector_channel else "f"
+                idx_unpack += n_items if is_vector_channel else 1
+            else:
+                raise ValueError(f"[mx helpers] Unknown DATATYPE in MX1: {data_type}")
+
+            fmt_string += fmt_item
+
+        mx_record_length_mx1 = int(mx1_df["DATAOFFSET"].iloc[-1]) + int(mx1_df["DATALENGTH"].iloc[-1])
+        mx_record_length_fmt = struct.calcsize(fmt_string)
+        if mx_record_length_mx1 != mx_record_length_fmt:
+            raise ValueError(
+                "[mx helpers] Record size mismatch between MX1 metadata "
+                f"({mx_record_length_mx1}) and struct format ({mx_record_length_fmt})."
+            )
+
+        mx1_df_with_unpack = mx1_df.copy()
+        mx1_df_with_unpack["unpackIdx"] = pd.Series(unpack_idx, dtype="int64")
+
+        logger.info(
+            "[mx helpers] Built unpack format successfully. Record length: %d bytes",
+            mx_record_length_fmt,
+        )
+        return fmt_string, mx1_df_with_unpack
+
+    def _build_mx_record_unpack_layout(self, mx1_df: pd.DataFrame) -> dict:
+        """
+        Build channel layout indices and column-name lists for later MXS decoding.
+
+        :param mx1_df: MX1 dataframe with unpackIdx and vector flags.
+        :type mx1_df: pd.DataFrame
+        :return: Dictionary with important indices and channel lists.
+        :rtype: dict
+        """
+        logger.info("[mx helpers] Building MX unpack layout ...")
+
+        idx_cverso = mx1_df.index[mx1_df["ATTRTYPE"] == "CVERSO"][0]
+        idx_timestamp = mx1_df.index[mx1_df["ATTRTYPE"] == "TIMESTAMP"][0]
+        idx_snapshottype = mx1_df.index[mx1_df["ATTRTYPE"] == "SNAPSHOTTYPE"][0]
+
+        unpack_idx_cverso = int(mx1_df.loc[idx_cverso, "unpackIdx"])
+        unpack_idx_timestamp = int(mx1_df.loc[idx_timestamp, "unpackIdx"])
+        unpack_idx_snapshottype = int(mx1_df.loc[idx_snapshottype, "unpackIdx"])
+
+        mx_column_names = []
+        mx_column_names_vecs = []
+        for row in mx1_df.itertuples():
+            if int(row.unpackIdx) < 0:
+                continue
+            if bool(row.is_vector_channel):
+                mx_column_names_vecs.append(row.Sir3sID)
+            else:
+                mx_column_names.append(row.Sir3sID)
+
+        timestamp_sir3sid = mx1_df.loc[idx_timestamp, "Sir3sID"]
+        if timestamp_sir3sid in mx_column_names:
+            mx_column_names.remove(timestamp_sir3sid)
+
+        idx_unpack_non_vector_channels = [
+            int(mx1_df.iloc[idx]["unpackIdx"])
+            for idx, is_vector in enumerate(mx1_df["is_vector_channel"])
+            if not is_vector
+        ]
+        if unpack_idx_timestamp in idx_unpack_non_vector_channels:
+            idx_unpack_non_vector_channels.remove(unpack_idx_timestamp)
+
+        idx_unpack_vector_channels = [
+            int(mx1_df.iloc[idx]["unpackIdx"])
+            for idx, is_vector in enumerate(mx1_df["is_vector_channel"])
+            if is_vector
+        ]
+
+        idx_of_non_vector_channels = [
+            idx for idx, is_vector in enumerate(mx1_df["is_vector_channel"]) if not is_vector
+        ]
+        if idx_timestamp in idx_of_non_vector_channels:
+            idx_of_non_vector_channels.remove(idx_timestamp)
+
+        idx_of_vector_channels = [
+            idx for idx, is_vector in enumerate(mx1_df["is_vector_channel"]) if is_vector
+        ]
+
+        layout = {
+            "idx_cverso": idx_cverso,
+            "idx_timestamp": idx_timestamp,
+            "idx_snapshottype": idx_snapshottype,
+            "unpack_idx_cverso": unpack_idx_cverso,
+            "unpack_idx_timestamp": unpack_idx_timestamp,
+            "unpack_idx_snapshottype": unpack_idx_snapshottype,
+            "mx_column_names": mx_column_names,
+            "mx_column_names_vecs": mx_column_names_vecs,
+            "idx_unpack_non_vector_channels": idx_unpack_non_vector_channels,
+            "idx_unpack_vector_channels": idx_unpack_vector_channels,
+            "idx_of_non_vector_channels": idx_of_non_vector_channels,
+            "idx_of_vector_channels": idx_of_vector_channels,
+        }
+
+        logger.info("[mx helpers] Built MX unpack layout successfully.")
+        return layout
+
+    def _discover_output_factors(self) -> Tuple[int, int]:
+        """
+        Discover the currently configured MX result-output factors (SIR 3S: TIMD.DTFAK_KLEIN /
+        TIMD.DTFAK_GROSS) of the currently open model.
+
+        These control how often the calculation core archives results: ``output_factor_small`` is the
+        interval (in internal calculation steps) used for time-curve ("Zeitkurven") output, and
+        ``output_factor_large`` is the interval used for numeric displays / longitudinal sections /
+        network-graph coloring. Both end up as literal dot-resolution numbers in the resulting file names
+        (e.g. "M-1-0-1.1.MX1", "M-1-0-1.100.MX1") — see get_current_mx1_filepath(). If they're equal, only
+        one resolution (and one file) exists.
+
+        This is done by exporting a throwaway SirCalc XML file (via WriteSirCalcXmlFile()) into a
+        temporary directory that is deleted again afterwards; nothing is written into the model's actual
+        working directory and no existing result files are touched.
+
+        :return: (output_factor_small, output_factor_large)
+        :rtype: Tuple[int, int]
+        """
+        if not self.Mid:
+            raise ValueError(
+                "[_discover_output_factors] No model is open (self.Mid is not set). Call OpenModel() first."
+            )
+
+        tmp_dir = tempfile.mkdtemp(prefix="sir3s_output_factors_")
+        try:
+            xml_path = self.WriteSirCalcXmlFile(saveItInThisDirectory=tmp_dir)
+            if not xml_path:
+                raise ValueError("[_discover_output_factors] WriteSirCalcXmlFile() failed (returned no path).")
+
+            with open(xml_path, encoding="Windows-1252") as f:
+                content = f.read()
+
+            timd_match = re.search(r"<TIMD\b[^>]*/>", content)
+            if not timd_match:
+                raise ValueError(f"[_discover_output_factors] No <TIMD> element found in {xml_path}.")
+            timd_tag = timd_match.group(0)
+
+            small_match = re.search(r'\bDTFAK_KLEIN="(\d+)"', timd_tag)
+            large_match = re.search(r'\bDTFAK_GROSS="(\d+)"', timd_tag)
+            if not small_match or not large_match:
+                raise ValueError(f"[_discover_output_factors] DTFAK_KLEIN/DTFAK_GROSS not found in: {timd_tag}")
+
+            output_factor_small = int(small_match.group(1))
+            output_factor_large = int(large_match.group(1))
+        finally:
+            shutil.rmtree(tmp_dir, ignore_errors=True)
+
+        logger.info(
+            f"[_discover_output_factors] output_factor_small={output_factor_small}, "
+            f"output_factor_large={output_factor_large}."
+        )
+        return output_factor_small, output_factor_large
+
+    def _resolve_given_mx_timestamps(self, timestamps: Optional[List[str]]) -> Optional[Set[pd.Timestamp]]:
+        """
+        Validate the format of timestamps passed to read_mx_results().
+
+        Unlike _resolve_given_timestamps(), this does not check given entries against
+        self.GetTimeStamps() of the currently open model, since read_mx_results() may target an .MX1
+        file unrelated to whatever model (if any) is currently open. Each entry is only checked for
+        being a parseable timestamp; whether it actually occurs in the .MXS file is determined naturally
+        during the scan itself (non-matching records are simply skipped).
+
+        :param timestamps: Timestamp strings to filter on, or None to keep every timestamp found in the file.
+        :type timestamps: list[str], optional
+        :return: Set of parsed timestamps to keep, or None (meaning: no filter, keep everything).
+        :rtype: set[pandas.Timestamp], optional
+        """
+        if timestamps is None:
+            return None
+
+        resolved = set()
+        for ts in timestamps:
+            try:
+                resolved.add(pd.to_datetime(ts))
+            except Exception as e:
+                logger.warning(f"[Resolving MX Timestamps] Timestamp {ts!r} is not parseable. It will be excluded: {e}")
+
+        logger.info(f"[Resolving MX Timestamps] Using {len(resolved)} timestamp(s) to filter records.")
+        return resolved
+
+    def read_mx_results(
+        self,
+        mx1_filepath: Optional[str] = None,
+        timestamps: Optional[List[str]] = None,
+    ) -> pd.DataFrame:
+        """
+        Standalone MX result reader. Reads simulation results directly from the binary .MXS result file
+        (via the .MX1/.MX2 metadata) instead of going through the SIR 3S Toolkit API.
+
+        WORK IN PROGRESS: Not wired into generate_element_results_dataframe() or any other dataframe
+        generation/filtering yet. Intended for checking the raw MX read against the legacy PT3S.Mx output.
+
+        NOT HANDLED: SIR 3S can also write wall-clock-timestamped archive snapshots
+        ("{base}_{YYYY-MM-DD_HH-MM}_UTC.{res}.MXS", gated by TIMD.JARCH/NARCH/JZEIT) alongside the regular
+        "{base}.{res}.MXS" files. These reuse the same {res}-tagged record layout but aren't derivable
+        from output_factor_small/output_factor_large alone (their name depends on when the calc was run,
+        not on any setting value) and are out of scope here — this function only ever targets the two
+        deterministic per-resolution files.
+
+        :param mx1_filepath: Absolute or relative path to .MX1 file.
+                        Default: None. If not given, the path is resolved automatically for the
+                        currently open model via get_current_mx1_filepath(): the model's currently
+                        configured output_factor_small/output_factor_large (SIR 3S: TIMD.DTFAK_KLEIN /
+                        TIMD.DTFAK_GROSS, see _discover_output_factors()) are looked up first. If they're
+                        equal, only one resolution (and one file) exists and that path is used. If they
+                        differ, two structurally different files exist (different channel sets and time
+                        resolutions - see read_mx_results() call in the tutorials for a worked example)
+                        and this function cannot guess which one you want: a ValueError is raised naming
+                        both candidate paths, and mx1_filepath must be passed explicitly instead.
+        :type mx1_filepath: str, optional
+        :param timestamps: Timestamps to keep, in the same form as the resolved ``valid_timestamps`` used by
+                        generate_element_results_dataframe() (i.e. timestamp strings as returned by
+                        self.GetTimeStamps()). Matching is done on the parsed instant (via pandas), not on the
+                        literal string, so minor formatting differences don't matter.
+                        Every record in the .MXS file still has to be scanned sequentially (its TIMESTAMP field
+                        is read directly from the raw record bytes, without a struct-format unpack of the
+                        remaining channels), but only matching records pay the full per-channel unpack/decode
+                        cost. This is the expensive part for records that are skipped.
+                        Default: None (keep all TIMESTAMPs found in the file).
+        :type timestamps: list[str], optional
+        :return: DataFrame with one row per unique TIMESTAMP (first occurrence kept for duplicate SIR 3S
+                        TIMESTAMPs, e.g. the initial STAT/TIME pair and the final TIME/TMIN/TMAX triple) and one
+                        column per MX channel (Sir3sID: OBJTYPE~NAME1~NAME2~tk~ATTRTYPE). Scalar channels hold
+                        their raw unpacked value (float/int, or bytes for CHAR channels e.g. CVERSO/SNAPSHOTTYPE).
+                        Vector channels (interior points) hold a tuple of raw unpacked values.
+        :rtype: pd.DataFrame
+        """
+        if mx1_filepath is None:
+            output_factor_small, output_factor_large = self._discover_output_factors()
+            if output_factor_small != output_factor_large:
+                path_small = self.get_current_mx1_filepath(dot_resolution=output_factor_small)
+                path_large = self.get_current_mx1_filepath(dot_resolution=output_factor_large)
+                raise ValueError(
+                    "[mx read] output_factor_small != output_factor_large "
+                    f"({output_factor_small} != {output_factor_large}, SIR 3S: TIMD.DTFAK_KLEIN/"
+                    "DTFAK_GROSS); two structurally different resolution files exist. "
+                    f"Pass mx1_filepath explicitly to pick one: {path_small!r} or {path_large!r}."
+                )
+            mx1_filepath = self.get_current_mx1_filepath(dot_resolution=output_factor_small)
+
+        logger.info(f"[mx read] Reading MX results from: {mx1_filepath}")
+
+        self.initialize_mx_read_helpers(mx1_filepath)
+
+        mxs_filepath = self._mx_paths["mxs"]
+        if not os.path.exists(mxs_filepath):
+            raise FileNotFoundError(f"[mx read] MXS file does not exist: {mxs_filepath}")
+
+        requested_times = self._resolve_given_mx_timestamps(timestamps)
+        if requested_times is not None:
+            logger.info(f"[mx read] Timestamp filter active: {len(requested_times)} requested timestamp(s).")
+
+        record_length = struct.calcsize(self._mx_record_struct_fmt_string)
+        mx_column_names = self._mx_layout["mx_column_names"]
+        mx_column_names_vecs = self._mx_layout["mx_column_names_vecs"]
+        idx_unpack_non_vector_channels = self._mx_layout["idx_unpack_non_vector_channels"]
+        idx_of_vector_channels = self._mx_layout["idx_of_vector_channels"]
+        idx_unpack_vector_channels = self._mx_layout["idx_unpack_vector_channels"]
+        n_of_items = self._mx1_df["NOfItems"]
+
+        # Byte offsets/lengths of CVERSO and TIMESTAMP within a raw record, so both can be read directly
+        # from the record bytes without a full struct.unpack of all channels.
+        cverso_offset = int(self._mx1_df.loc[self._mx_layout["idx_cverso"], "DATAOFFSET"])
+        cverso_length = int(self._mx1_df.loc[self._mx_layout["idx_cverso"], "DATALENGTH"])
+        timestamp_offset = int(self._mx1_df.loc[self._mx_layout["idx_timestamp"], "DATAOFFSET"])
+        timestamp_length = int(self._mx1_df.loc[self._mx_layout["idx_timestamp"], "DATALENGTH"])
+
+        time_delta_read_offset = None
+        times = []
+        rows = []
+
+        with open(mxs_filepath, "rb") as f:
+            f.seek(0, 2)
+            file_size = f.tell()
+            f.seek(0)
+
+            records_read = 0
+            records_decoded = 0
+            while f.tell() < file_size:
+                record = f.read(record_length)
+                if len(record) != record_length:
+                    if len(record) != 0:
+                        logger.warning(f"[mx read] Unexpected trailing MXS bytes: {len(record)}")
+                    break
+                records_read += 1
+
+                if time_delta_read_offset is None:
+                    cverso = record[cverso_offset: cverso_offset + cverso_length].decode("utf-8")
+                    match = re.search(r"SIR 3S (\d{2})-(\d{2})-(\d{2})-(\d{2})", cverso)
+                    sub_version = int(match.group(2)) if match else 99
+                    if sub_version < 10:
+                        time_delta_read_offset = pd.to_timedelta("1 hour")
+                    else:
+                        time_delta_read_offset = pd.to_timedelta("0 seconds")
+
+                timestamp_raw = record[timestamp_offset: timestamp_offset + timestamp_length]
+                time = pd.to_datetime(timestamp_raw.decode("utf-8"), utc=True) + time_delta_read_offset
+
+                if requested_times is not None and time not in requested_times:
+                    continue
+
+                record_data = struct.unpack(self._mx_record_struct_fmt_string, record)
+
+                row = {}
+                for col, idx in zip(mx_column_names, idx_unpack_non_vector_channels):
+                    row[col] = record_data[idx]
+                for col, idx_of, idx_unpack in zip(
+                    mx_column_names_vecs, idx_of_vector_channels, idx_unpack_vector_channels
+                ):
+                    row[col] = record_data[idx_unpack: idx_unpack + int(n_of_items.iloc[idx_of])]
+
+                times.append(time)
+                rows.append(row)
+                records_decoded += 1
+
+        df = pd.DataFrame(rows, index=pd.Index(times, name="TIMESTAMP"), columns=mx_column_names + mx_column_names_vecs)
+        df = df.loc[~df.index.duplicated(keep="first")]
+
+        logger.info(
+            f"[mx read] Done. Records scanned: {records_read}. Records decoded: {records_decoded}. "
+            f"Unique timestamps: {len(df)}."
+        )
+        return df
+
     # Dataframe Operations
 
     def delete_elements_in_dataframe(
@@ -1536,6 +2144,8 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         if time_table_tk not in available_time_table_tks:
             logger.error(f"[insert dataframe into time table] Time table with tk {time_table_tk} does not exist.")
             return pd.DataFrame()
+        
+        logger.info("[insert dataframe into time table] tks check done")
         
         if dataframe.empty:
             logger.error(f"[insert dataframe into time table] Dataframe is empty.")

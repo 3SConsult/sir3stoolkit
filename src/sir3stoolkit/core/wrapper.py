@@ -337,7 +337,17 @@ class SIR3S_Model:
 
         # Variable to enable or disable ObjectTypes_TableNames as return values wherever applicable
         self.IsOutput_ObjectTypes_TableNames = False
-        
+
+        # Model identifier (e.g. "M-1-0-1") of the currently open model, set by OpenModel() or OpenModelXml(). None if no model has
+        # been opened yet.
+        self.Mid = None
+
+        # Path to the currently open model's source file: self.dbFile (database, set by OpenModel()) or
+        # self.xmlFile (XML, set by OpenModelXml()). Exactly one of the two is set for a genuinely open model;
+        # both are None if no model has been opened yet.
+        self.dbFile = None
+        self.xmlFile = None
+
     def _load_dotnet_enum(self, enum_name, assembly_ext):
         if assembly_ext is None:
             raise ValueError("assembly_ext must be provided when using dotnet_enum.")
@@ -547,6 +557,9 @@ class SIR3S_Model:
         """
         result, error = self.toolkit.OpenModelXml(Path, SaveCurrentModel)
         if result:
+            self.Mid = "M-1-0-1"
+            self.xmlFile = Path
+            self.dbFile = None
             if self.outputComments:
                 _log_message("Model is open for further operation")
         else:
@@ -583,6 +596,9 @@ class SIR3S_Model:
         if result:
             if self.outputComments:
                 _log_message("Model is open for further operation")
+            self.Mid = Mid
+            self.dbFile = dbName
+            self.xmlFile = None
         else:
             _log_message("Error while opening the model, " + error)
 
@@ -600,6 +616,10 @@ class SIR3S_Model:
         isClosed, error = self.toolkit.CloseModel(saveChangesBeforeClosing)
         if not isClosed:
             _log_message("Error while closing the model, " + error)
+        else:
+            self.Mid = None
+            self.dbFile = None
+            self.xmlFile = None
         return isClosed
 
     def ExecCalculation(self, waitForSirCalcToExit: bool):
@@ -1891,7 +1911,16 @@ class SIR3S_View:
 
         # Variable to enable or disable output comments
         self.outputComments = True
-        
+
+        # Model identifier (e.g. "M-1-0-1") of the currently open model, set by OpenModel() or OpenModelXml(). None if no model has
+        # been opened yet.
+        self.Mid = None
+
+        # Path to the currently open model's source file: self.dbFile (database, set by OpenModel()) or
+        # self.xmlFile (XML, set by OpenModelXml()). Exactly one of the two is set for a genuinely open model;
+        # both are None if no model has been opened yet.
+        self.dbFile = None
+        self.xmlFile = None
 
     def _load_dotnet_enum(self, enum_name, assembly_ext):
         if assembly_ext is None:
@@ -2043,6 +2072,9 @@ class SIR3S_View:
         """
         result, error = self.toolkit.OpenModelXml(Path, SaveCurrentModel)
         if result:
+            self.Mid = "M-1-0-1"
+            self.xmlFile = Path
+            self.dbFile = None
             if self.outputComments:
                 _log_message("Model is open for further operation")
         else:
@@ -2078,6 +2110,9 @@ class SIR3S_View:
         if result:
             if self.outputComments:
                 _log_message("Model is open for further operation")
+            self.Mid = Mid
+            self.dbFile = dbName
+            self.xmlFile = None
         else:
             _log_message("Error while opening the model, " + error)
 
@@ -2095,6 +2130,10 @@ class SIR3S_View:
         isClosed, error = self.toolkit.CloseModel(saveChangesBeforeClosing)
         if not isClosed:
             _log_message("Error while closing the model, " + error)
+        else:
+            self.Mid = None
+            self.dbFile = None
+            self.xmlFile = None
         return isClosed
 
     def GetMainContainer(self):
