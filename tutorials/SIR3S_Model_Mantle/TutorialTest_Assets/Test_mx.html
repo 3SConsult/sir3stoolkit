@@ -1,0 +1,4665 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Test &mdash; sir3stoolkit  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=9c3e77be" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/nbsphinx-code-cells.css?v=2aa19091" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=f281be69"></script>
+      <script>let toggleHintShow = 'Click to show';</script>
+      <script>let toggleHintHide = 'Click to hide';</script>
+      <script>let toggleOpenOnPrint = 'true';</script>
+      <script src="../../../_static/togglebutton.js?v=b8b12719"></script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            sir3stoolkit
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../releases.html">Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developers.html">For Developers</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">sir3stoolkit</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Test</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/tutorials/SIR3S_Model_Mantle/TutorialTest_Assets/Test_mx.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="Test">
+<h1>Test<a class="headerlink" href="#Test" title="Link to this heading"></a></h1>
+<section id="SIR-3S-Toolkit">
+<h2>SIR 3S Toolkit<a class="headerlink" href="#SIR-3S-Toolkit" title="Link to this heading"></a></h2>
+<section id="Regular-Import/Init">
+<h3>Regular Import/Init<a class="headerlink" href="#Regular-Import/Init" title="Link to this heading"></a></h3>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sir3stoolkit.core import wrapper
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>wrapper
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;module &#39;sir3stoolkit.core.wrapper&#39; from &#39;C:\\Users\\aUsername\\3S\\sir3stoolkit\\src\\sir3stoolkit\\core\\wrapper.py&#39;&gt;
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>wrapper.Initialize_Toolkit(r&quot;C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+[2026-08-12 11:59:25,531] INFO in sir3stoolkit.core.wrapper: [Initialization] Using provided SirGraf path: C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2
+[2026-08-12 11:59:25,531] INFO in sir3stoolkit.core.wrapper: [Initialization] Using provided SirGraf path: C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2
+[2026-08-12 11:59:25,585] INFO in sir3stoolkit.core.wrapper: [Initialization] Initializing toolkit with SirGraf path: C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2
+</pre></div></div>
+</div>
+</section>
+<section id="Additional-Import/Init-for-Dataframes-class">
+<h3>Additional Import/Init for Dataframes class<a class="headerlink" href="#Additional-Import/Init-for-Dataframes-class" title="Link to this heading"></a></h3>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sir3stoolkit.mantle.dataframes import SIR3S_Model_Dataframes
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s = SIR3S_Model_Dataframes()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+[2026-08-12 11:59:35,162] INFO in sir3stoolkit.core.wrapper: [Model Class Initialization] Initialization complete
+</pre></div></div>
+</div>
+</section>
+</section>
+<section id="Additional">
+<h2>Additional<a class="headerlink" href="#Additional" title="Link to this heading"></a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
+from shapely.geometry import Point
+import re
+import folium
+from folium.plugins import HeatMap
+import numpy as np
+import geopandas as gpd
+from shapely import wkt
+import matplotlib.pyplot as plt
+import contextily as cx
+import logging
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+<section id="Open-Model">
+<h1>Open Model<a class="headerlink" href="#Open-Model" title="Link to this heading"></a></h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dbFile = r&quot;..\Tutorial051_Assets\Toolkit_Tutorial51_Model.db3&quot;
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.OpenModel(dbName=dbFile,
+              providerType=s3s.ProviderTypes.SQLite,
+              Mid=&quot;M-1-0-1&quot;,
+              saveCurrentlyOpenModel=False,
+              namedInstance=&quot;&quot;,
+              userID=&quot;&quot;,
+              password=&quot;&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+[2026-08-12 11:59:46,503] INFO in sir3stoolkit.core.wrapper: Model is open for further operation
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from PT3S.Mx import Mx
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>mx = Mx(mx1File=r&quot;C:\Users\aUsername\3S\sir3stoolkit\docs\source\tutorials\SIR3S_Model_Mantle\Tutorial051_Assets\WDToolkit_Tutorial51_Model\B1\V0\BZ1\M-1-0-1.1.MX1&quot;,  NoH5Read=True)
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>mx.df.head()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ALLG~~~5597593673700177669~SNAPSHOTTYPE</th>
+      <th>ALLG~~~5597593673700177669~CVERSO</th>
+      <th>ALLG~~~5597593673700177669~EXSTAT</th>
+      <th>ALLG~~~5597593673700177669~NFEHL</th>
+      <th>ALLG~~~5597593673700177669~NWARN</th>
+      <th>ALLG~~~5597593673700177669~NMELD</th>
+      <th>ALLG~~~5597593673700177669~CPUTIME</th>
+      <th>ALLG~~~5597593673700177669~USRTIME</th>
+      <th>ALLG~~~5597593673700177669~NPGREST</th>
+      <th>ALLG~~~5597593673700177669~NETZABN</th>
+      <th>ALLG~~~5597593673700177669~NFVHYUV</th>
+      <th>ALLG~~~5597593673700177669~NFVTHUV</th>
+      <th>ALLG~~~5597593673700177669~MFVHYUV</th>
+      <th>ALLG~~~5597593673700177669~MFVTHUV</th>
+      <th>ALLG~~~5597593673700177669~TVMINMAX</th>
+      <th>ALLG~~~5597593673700177669~ITERHY</th>
+      <th>ALLG~~~5597593673700177669~JWARN</th>
+      <th>ALLG~~~5597593673700177669~NETZABNEXITS</th>
+      <th>ALLG~~~5597593673700177669~LINEPACKRATE</th>
+      <th>ALLG~~~5597593673700177669~LINEPACKGES</th>
+      <th>ALLG~~~5597593673700177669~LINEPACKGEOM</th>
+      <th>ALLG~~~5597593673700177669~RHOAV</th>
+      <th>ALLG~~~5597593673700177669~TAV</th>
+      <th>ALLG~~~5597593673700177669~PAV</th>
+      <th>ALLG~~~5597593673700177669~FWVB_DPHMIN</th>
+      <th>ALLG~~~5597593673700177669~KNOT_PHMAX</th>
+      <th>ALLG~~~5597593673700177669~KNOT_PHMIN</th>
+      <th>ALLG~~~5597593673700177669~FWVB_TVLMIN</th>
+      <th>ALLG~~~5597593673700177669~NETZBEZ</th>
+      <th>ALLG~~~5597593673700177669~KNOT_PHMAX_V</th>
+      <th>ALLG~~~5597593673700177669~KNOT_PHMAX_R</th>
+      <th>ALLG~~~5597593673700177669~KNOT_PHMAX_U</th>
+      <th>ALLG~~~5597593673700177669~KNOT_PHMIN_V</th>
+      <th>ALLG~~~5597593673700177669~KNOT_PHMIN_R</th>
+      <th>ALLG~~~5597593673700177669~KNOT_PHMIN_U</th>
+      <th>ALLG~~~5597593673700177669~ITERTH</th>
+      <th>ALLG~~~5597593673700177669~INTERAKTTH</th>
+      <th>ALLG~~~5597593673700177669~INTERAKTRG</th>
+      <th>KNOT~R-E~~4945502875946918021~PH</th>
+      <th>KNOT~V-E~~5364585352767333609~PH</th>
+      <th>KNOT~V-E~~5364585352767333609~T</th>
+      <th>VENT~R-E0~R-E~5078909058477631059~QM</th>
+      <th>KNOT~R-E~~4945502875946918021~T</th>
+      <th>WBLZ~WärmeblnzGes~~5747928298316755683~WVB</th>
+      <th>WBLZ~WärmeblnzGes~~5747928298316755683~WVERL</th>
+      <th>FWVB~V-K2153S~R-K4633S~4695691920575201490~LFT</th>
+      <th>FWVB~V-K2243S~R-K4723S~4612643650175000934~DP</th>
+      <th>FWVB~V-K333S~R-K2813S~5298892186072792581~DP</th>
+      <th>FWVB~V-K1393S~R-K3873S~5641820391023802273~DP</th>
+      <th>FWVB~V-K1393S~R-K3873S~5714834959169623562~DP</th>
+      <th>FWVB~V-K593S~R-K3073S~5539308064883517142~DP</th>
+      <th>FWVB~V-K153S~R-K2633S~4851778549814053310~DP</th>
+      <th>FWVB~V-K2263S~R-K4743S~5095755403689234488~DP</th>
+      <th>FWVB~V-K2263S~R-K4743S~4754662858150981800~DP</th>
+      <th>FWVB~V-K133S~R-K2613S~4831899581981959889~DP</th>
+      <th>FWVB~V-SP01~R-SP01~5373061288922912729~DP</th>
+      <th>FWVB~V-SP01~R-SP01~5338005695177201668~DP</th>
+      <th>FWVB~V-SP01~R-SP01~5103671514823328293~DP</th>
+      <th>FWVB~V-K123S~R-K2603S~5568194212677879165~DP</th>
+      <th>FWVB~V-K1363S~R-K3843S~5534236886775923535~DP</th>
+      <th>FWVB~V-K1373S~R-K3853S~5054661805697996469~DP</th>
+      <th>FWVB~V-K1363S~R-K3843S~4677484876769683069~DP</th>
+      <th>FWVB~V-K1343S~R-K3823S~5331382729720004878~DP</th>
+      <th>FWVB~V-K1323S~R-K3803S~5320145816789148184~DP</th>
+      <th>FWVB~V-K73S~R-K2553S~4660745360789977502~DP</th>
+      <th>FWVB~V-K73S~R-K2553S~5475433067817926464~DP</th>
+      <th>FWVB~V-K63S~R-K2543S~5088507410302060583~DP</th>
+      <th>FWVB~V-K23S~R-K2503S~4799202816710088269~DP</th>
+      <th>FWVB~V-K73S~R-K2553S~5567370826017196953~DP</th>
+      <th>FWVB~V-K1313S~R-K3793S~4721603020200203929~DP</th>
+      <th>FWVB~V-K1243S~R-K3723S~5539118071732060322~DP</th>
+      <th>FWVB~V-K1283S~R-K3763S~5433812588779537970~DP</th>
+      <th>FWVB~V-K1303S~R-K3783S~4982647601065704474~DP</th>
+      <th>FWVB~V-K1303S~R-K3783S~4758534110963451621~DP</th>
+      <th>FWVB~V-K13S~R-K2493S~5157987375362402948~DP</th>
+      <th>FWVB~V-K13S~R-K2493S~5572700189436507358~DP</th>
+      <th>FWVB~V-K133S~R-K2623S~5042957248574195254~DP</th>
+      <th>FWVB~V-K123S~R-K2603S~5620374956890186419~DP</th>
+      <th>FWVB~V-K123S~R-K2603S~5642186467419772313~DP</th>
+      <th>FWVB~V-K113S~R-K2593S~4952675334963811549~DP</th>
+      <th>FWVB~V-K63S~R-K2543S~5289349232690798866~DP</th>
+      <th>FWVB~V-K23S~R-K2503S~5263894803742270480~DP</th>
+      <th>FWVB~V-K23S~R-K2503S~5258191418983486434~DP</th>
+      <th>FWVB~V-K13S~R-K2493S~5219695668506679887~DP</th>
+      <th>FWVB~V-K23S~R-K2503S~5089681968228574805~DP</th>
+      <th>FWVB~V-K23S~R-K2503S~4723552478525716099~DP</th>
+      <th>FWVB~V-K1243S~R-K3723S~4717900447084130786~DP</th>
+      <th>FWVB~V-K1243S~R-K3723S~4680566654399387170~DP</th>
+      <th>FWVB~V-K1273S~R-K3753S~4774089356071680115~DP</th>
+      <th>FWVB~V-K1303S~R-K3783S~5483836906626806693~DP</th>
+      <th>FWVB~V-K13S~R-K2493S~5723652079410431099~DP</th>
+      <th>FWVB~V-K13S~R-K2493S~5152070634362289135~DP</th>
+      <th>FWVB~V-K463S~R-K2943S~4715437119287917203~DP</th>
+      <th>FWVB~V-K2023S~R-K4503S~5429690733112787259~DP</th>
+      <th>FWVB~V-K2023S~R-K4503S~5470212073687668936~DP</th>
+      <th>FWVB~V-K2023S~R-K4503S~4690848713916516887~DP</th>
+      <th>FWVB~V-K583S~R-K3063S~5210301978863275664~DP</th>
+      <th>FWVB~V-K583S~R-K3063S~4769972484103895237~DP</th>
+      <th>FWVB~V-K583S~R-K3063S~4839284960010591311~DP</th>
+      <th>FWVB~V-K2173S~R-K4653S~5238469959575677978~DP</th>
+      <th>FWVB~V-K573S~R-K3053S~5378395521233234009~DP</th>
+      <th>FWVB~V-K2153S~R-K4633S~5272427879633450297~DP</th>
+      <th>FWVB~V-K1163S~R-K3643S~5563426535048622787~DP</th>
+      <th>FWVB~V-K583S~R-K3063S~5708564737898353551~DP</th>
+      <th>FWVB~V-K583S~R-K3063S~5646104354697048422~DP</th>
+      <th>FWVB~V-K1163S~R-K3643S~4998245026021181527~DP</th>
+      <th>FWVB~V-K2063S~R-K3063S~5030808405918905856~DP</th>
+      <th>FWVB~V-K2063S~R-K4543S~5589819464555437381~DP</th>
+      <th>FWVB~V-K933S~R-K3413S~5021149544911429814~DP</th>
+      <th>FWVB~V-K2073S~R-K4553S~5483428144944113828~DP</th>
+      <th>FWVB~V-K2073S~R-K4553S~5608524552763679614~DP</th>
+      <th>FWVB~V-K2023S~R-K4503S~5626371875066735675~DP</th>
+      <th>FWVB~V-K403S~R-K2883S~5421154557729864641~DP</th>
+      <th>FWVB~V-K2003S~R-K4483S~4808379698586732872~DP</th>
+      <th>FWVB~V-K253S~R-K2733S~4754045271859275254~DP</th>
+      <th>FWVB~V-K1643S~R-K4123S~4804522946718449543~DP</th>
+      <th>FWVB~V-K1643S~R-K4123S~5397095414062959706~DP</th>
+      <th>FWVB~V-K1653S~R-K4133S~4972542528251576003~DP</th>
+      <th>FWVB~V-K1663S~R-K4143S~4841968208579971744~DP</th>
+      <th>FWVB~V-K1663S~R-K4143S~4790880210700946505~DP</th>
+      <th>FWVB~V-K273S~R-K2753S~5134226995532837471~DP</th>
+      <th>FWVB~V-K273S~R-K2753S~5199665792777686632~DP</th>
+      <th>FWVB~V-K263S~R-K2743S~4829820734742795813~DP</th>
+      <th>FWVB~V-K1643S~R-K4123S~5473902379470916704~DP</th>
+      <th>FWVB~V-K273S~R-K2753S~5095071279723776262~DP</th>
+      <th>FWVB~V-K263S~R-K2743S~4969795535504580282~DP</th>
+      <th>FWVB~V-K263S~R-K2743S~5389503305937461852~DP</th>
+      <th>FWVB~V-K263S~R-K2743S~5491075003903254860~DP</th>
+      <th>FWVB~V-K233S~R-K2713S~5333950106019937551~DP</th>
+      <th>FWVB~V-K243S~R-K2723S~5078322764546640049~DP</th>
+      <th>FWVB~V-K573S~R-K3053S~5074136990830026951~DP</th>
+      <th>FWVB~V-K1083S~R-K3563S~5721943751421394086~DP</th>
+      <th>FWVB~V-K1083S~R-K3563S~4617599012360428982~DP</th>
+      <th>FWVB~V-K1073S~R-K3553S~5143587653110554807~DP</th>
+      <th>FWVB~V-K1073S~R-K3553S~5155974252610494227~DP</th>
+      <th>FWVB~V-K1073S~R-K3553S~5507469098629391620~DP</th>
+      <th>FWVB~V-K1083S~R-K3563S~4644294207793899393~DP</th>
+      <th>FWVB~V-K1083S~R-K3563S~4729135819215267446~DP</th>
+      <th>FWVB~V-K313S~R-K2793S~5397363169018116905~DP</th>
+      <th>FWVB~V-K323S~R-K2803S~5293083471824257348~DP</th>
+      <th>FWVB~V-K573S~R-K3053S~4692947232485098213~DP</th>
+      <th>FWVB~V-K1083S~R-K3563S~4840514655814345420~DP</th>
+      <th>FWVB~V-K1083S~R-K3563S~4984259280617000809~DP</th>
+      <th>FWVB~V-K2153S~R-K4633S~5450848705169565418~DP</th>
+      <th>FWVB~V-K1083S~R-K3563S~5013175068886361021~DP</th>
+      <th>FWVB~V-K1083S~R-K3563S~5129945735358846816~DP</th>
+      <th>FWVB~V-K1123S~R-K3603S~5641063690842961168~DP</th>
+      <th>FWVB~V-K1073S~R-K3553S~5166680757495237751~DP</th>
+      <th>FWVB~V-K1063S~R-K3543S~4614551030187170583~DP</th>
+      <th>FWVB~V-K1063S~R-K3543S~5049615340607119167~DP</th>
+      <th>FWVB~V-K1063S~R-K3543S~5182171757783007257~DP</th>
+      <th>FWVB~V-K293S~R-K2773S~4699379554487286912~DP</th>
+      <th>FWVB~V-K333S~R-K2813S~5493473140425149473~DP</th>
+      <th>FWVB~V-K333S~R-K2813S~5229547090188049969~DP</th>
+      <th>FWVB~V-K03S~R-K2483S~5078971821722268135~DP</th>
+      <th>FWVB~V-K1613S~R-K4093S~4838424991008300464~DP</th>
+      <th>FWVB~V-K1603S~R-K4083S~5119436336432835935~DP</th>
+      <th>FWVB~V-K243S~R-K2723S~5069875460823955334~DP</th>
+      <th>FWVB~V-K1623S~R-K4103S~4612562908060328263~DP</th>
+      <th>FWVB~V-K1613S~R-K4093S~4968006119183593408~DP</th>
+      <th>FWVB~V-K1603S~R-K4113S~4780867592274315225~DP</th>
+      <th>FWVB~V-K1633S~R-K4113S~4689962447077782592~DP</th>
+      <th>FWVB~V-K1633S~R-K4113S~4907629360497270624~DP</th>
+      <th>FWVB~V-K1103S~R-K3583S~5114532772926850507~DP</th>
+      <th>FWVB~V-K1143S~R-K3623S~4957429172484513667~DP</th>
+      <th>FWVB~V-K1153S~R-K3633S~5683164004528603492~DP</th>
+      <th>FWVB~V-K1153S~R-K3633S~4753737713576765068~DP</th>
+      <th>FWVB~V-K1033S~R-K3513S~5511883908108493205~DP</th>
+      <th>FWVB~V-K1033S~R-K3513S~4985463247915540404~DP</th>
+      <th>FWVB~V-K1213S~R-K3663S~5696463829656272308~DP</th>
+      <th>FWVB~V-K1223S~R-K3703S~4879060213783619417~DP</th>
+      <th>FWVB~V-K1233S~R-K3713S~5328839321384231626~DP</th>
+      <th>FWVB~V-K1233S~R-K3713S~4908302009467601605~DP</th>
+      <th>FWVB~V-K1233S~R-K3713S~5081759066536254041~DP</th>
+      <th>FWVB~V-K1223S~R-K3703S~4920414355371836818~DP</th>
+      <th>FWVB~V-K03S~R-K2483S~4953528746012203881~DP</th>
+      <th>FWVB~V-K1133S~R-K3613S~5514426350058393064~DP</th>
+      <th>FWVB~V-K2153S~R-K4633S~4695691920575201490~DP</th>
+      <th>FWVB~V-K1173S~R-K3653S~5686938269985987108~DP</th>
+      <th>FWVB~V-K1173S~R-K3653S~5608013454113942505~DP</th>
+      <th>FWVB~V-K1173S~R-K3653S~5554180086935671036~DP</th>
+      <th>FWVB~V-K1173S~R-K3653S~4715343979099977320~DP</th>
+      <th>FWVB~V-K1153S~R-K3633S~5276185429031066619~DP</th>
+      <th>FWVB~V-K1153S~R-K3633S~5752171491358190657~DP</th>
+      <th>FWVB~V-K1153S~R-K3633S~5044737621363717731~DP</th>
+      <th>FWVB~V-K1153S~R-K3633S~4959178524702114605~DP</th>
+      <th>FWVB~V-K963S~R-K3443S~5184692294783766508~DP</th>
+      <th>FWVB~V-K1023S~R-K3503S~5015574389658457843~DP</th>
+      <th>FWVB~V-K1023S~R-K3503S~5340682804823281975~DP</th>
+      <th>FWVB~V-K1183S~R-K3663S~4773718045303625562~DP</th>
+      <th>FWVB~V-K1203S~R-K3683S~4611752310942477664~DP</th>
+      <th>FWVB~V-K1213S~R-K3693S~5649394575722244706~DP</th>
+      <th>FWVB~V-K1223S~R-K3703S~5683145831265886679~DP</th>
+      <th>FWVB~V-K1223S~R-K3703S~5347934852716104645~DP</th>
+      <th>FWVB~V-K03S~R-K2483S~5338581593552364614~DP</th>
+      <th>FWVB~V-K403S~R-K2883S~4747253770471595859~DP</th>
+      <th>FWVB~V-K403S~R-K2883S~5005156965723780226~DP</th>
+      <th>FWVB~V-K413S~R-K2893S~4737813668193434747~DP</th>
+      <th>FWVB~V-K403S~R-K2883S~4824230293599010462~DP</th>
+      <th>FWVB~V-K413S~R-K2893S~4961446825744614653~DP</th>
+      <th>FWVB~V-K423S~R-K2903S~4794000986315043981~DP</th>
+      <th>FWVB~V-K433S~R-K2913S~5663966403597611254~DP</th>
+      <th>FWVB~V-K443S~R-K2923S~5285271495094652658~DP</th>
+      <th>FWVB~V-K443S~R-K2923S~5010483887057780845~DP</th>
+      <th>FWVB~V-K453S~R-K2933S~5153454494023353435~DP</th>
+      <th>FWVB~V-K463S~R-K2943S~5577210775620233409~DP</th>
+      <th>FWVB~V-K463S~R-K2943S~4884816399211992951~DP</th>
+      <th>FWVB~V-K473S~R-K2953S~5368434258234128749~DP</th>
+      <th>FWVB~V-K473S~R-K2953S~4934825369837329981~DP</th>
+      <th>FWVB~V-K473S~R-K2953S~4716889123169234975~DP</th>
+      <th>FWVB~V-K2383S~R-K4863S~4804005204522723919~DP</th>
+      <th>FWVB~V-K2383S~R-K4863S~5204002376528007016~DP</th>
+      <th>FWVB~V-K163S~R-K2643S~5118203249310421888~DP</th>
+      <th>FWVB~V-K163S~R-K2643S~4869838397682489649~DP</th>
+      <th>FWVB~V-K163S~R-K2643S~5055469814130651373~DP</th>
+      <th>FWVB~V-K163S~R-K2643S~4889571787974482626~DP</th>
+      <th>FWVB~V-K163S~R-K2643S~4615450207162449682~DP</th>
+      <th>FWVB~V-K1663S~R-K4143S~4988773153864880048~DP</th>
+      <th>FWVB~V-K163S~R-K2643S~5563311426525208573~DP</th>
+      <th>FWVB~V-K143S~R-K2623S~5330290974871142634~DP</th>
+      <th>FWVB~V-K463S~R-K2943S~4729161400809722771~DP</th>
+      <th>FWVB~V-K473S~R-K2953S~4754097142009822062~DP</th>
+      <th>FWVB~V-K2403S~R-K4883S~5401810795366193685~DP</th>
+      <th>FWVB~V-K153S~R-K2633S~5384468559580542759~DP</th>
+      <th>FWVB~V-K133S~R-K2613S~5318331789158859772~DP</th>
+      <th>FWVB~V-K1093S~R-K3573S~4738106601869918484~DP</th>
+      <th>FWVB~V-K1093S~R-K3573S~4775801701553878603~DP</th>
+      <th>FWVB~V-K1093S~R-K3573S~4732732360611106938~DP</th>
+      <th>FWVB~V-K1093S~R-K3573S~4778286022227403033~DP</th>
+      <th>FWVB~V-K2083S~R-K4563S~5435045382624363994~DP</th>
+      <th>FWVB~V-K2083S~R-K4563S~5242842916750666925~DP</th>
+      <th>FWVB~V-K2083S~R-K4563S~4912783072892831323~DP</th>
+      <th>FWVB~V-K2083S~R-K4563S~4687151605522873415~DP</th>
+      <th>FWVB~V-K2083S~R-K4563S~5634194602703056958~DP</th>
+      <th>FWVB~V-K593S~R-K3073S~5625042714189478940~DP</th>
+      <th>FWVB~V-K593S~R-K3073S~4840040765573687334~DP</th>
+      <th>FWVB~V-K603S~R-K3083S~5694344737203567106~DP</th>
+      <th>FWVB~V-K2393S~R-K4873S~4620979504570756922~DP</th>
+      <th>FWVB~V-K593S~R-K3073S~5410122665508561633~DP</th>
+      <th>FWVB~V-K603S~R-K3083S~5014468390007665690~DP</th>
+      <th>FWVB~V-K1073S~R-K3553S~5233585288374752785~DP</th>
+      <th>FWVB~V-K953S~R-K3633S~4674360527812832669~DP</th>
+      <th>FWVB~V-K953S~R-K3433S~5087702146373705981~DP</th>
+      <th>FWVB~V-K953S~R-K3433S~5142910015534822732~DP</th>
+      <th>FWVB~V-K963S~R-K3443S~5080512732384776234~DP</th>
+      <th>FWVB~V-K963S~R-K3443S~5227036118096218347~DP</th>
+      <th>FWVB~V-K973S~R-K3453S~5448365009177867429~DP</th>
+      <th>FWVB~V-K1013S~R-K3493S~4904021830209359251~DP</th>
+      <th>FWVB~V-K953S~R-K3433S~5678013267622520703~DP</th>
+      <th>FWVB~V-K953S~R-K3433S~5036661921214789266~DP</th>
+      <th>FWVB~V-K963S~R-K3443S~5533600337297302902~DP</th>
+      <th>FWVB~V-K963S~R-K3443S~4843922463467905314~DP</th>
+      <th>FWVB~V-K973S~R-K3453S~5422109685270461796~DP</th>
+      <th>FWVB~V-K973S~R-K3453S~5510201249316735879~DP</th>
+      <th>FWVB~V-K1003S~R-K3483S~5345883489919526044~DP</th>
+      <th>FWVB~V-K1013S~R-K3493S~5749366699607682518~DP</th>
+      <th>FWVB~V-K1023S~R-K3503S~5395974162027139767~DP</th>
+      <th>FWVB~V-K473S~R-K2953S~5594862625858924531~DP</th>
+      <th>FWVB~V-SP02~R-SP02~4848015442334341000~DP</th>
+      <th>FWVB~V-K473S~R-K2953S~5629665606219325209~DP</th>
+      <th>FWVB~V-K253S~R-K2733S~5033838081953255687~DP</th>
+      <th>FWVB~V-K273S~R-K2753S~4679890828975781067~DP</th>
+      <th>FWVB~V-K2383S~R-K4863S~5037872509385452159~DP</th>
+      <th>FWVB~V-K2383S~R-K4863S~5375255181374254857~DP</th>
+      <th>FWVB~V-K2383S~R-K4863S~5659192153935849444~DP</th>
+      <th>FWVB~V-K473S~R-K2953S~5416161135167168216~DP</th>
+      <th>FWVB~V-K2013S~R-K4493S~4726386820185329079~DP</th>
+      <th>FWVB~V-K2023S~R-K4503S~5048794081120001623~DP</th>
+      <th>FWVB~V-K1493S~R-K3973S~5078575524279271295~DP</th>
+      <th>FWVB~V-K1473S~R-K3953S~5328165953472204269~DP</th>
+      <th>FWVB~V-K1463S~R-K3943S~4827314536298448425~DP</th>
+      <th>FWVB~V-K1453S~R-K3933S~5053527380726940026~DP</th>
+      <th>FWVB~V-K1443S~R-K3923S~5722736529457112020~DP</th>
+      <th>FWVB~V-K1443S~R-K3923S~4833248160019911615~DP</th>
+      <th>FWVB~V-K1433S~R-K3913S~5022762526597417884~DP</th>
+      <th>FWVB~V-K1423S~R-K3903S~5172442747972094426~DP</th>
+      <th>FWVB~V-K1423S~R-K3903S~5219159297285087056~DP</th>
+      <th>FWVB~V-K1403S~R-K3883S~5290157706408162198~DP</th>
+      <th>FWVB~V-K1403S~R-K3883S~5413829902103673412~DP</th>
+      <th>FWVB~V-K1403S~R-K3883S~4724782239687086625~DP</th>
+      <th>FWVB~V-K1403S~R-K3883S~5332535673077775580~DP</th>
+      <th>FWVB~V-K2143S~R-K4623S~5690996677853628489~DP</th>
+      <th>FWVB~V-K1423S~R-K3903S~5462869912273155677~DP</th>
+      <th>FWVB~V-K1433S~R-K3913S~4912417173031909926~DP</th>
+      <th>FWVB~V-K1423S~R-K3903S~5632830894118958363~DP</th>
+      <th>FWVB~V-K1443S~R-K3923S~5129892855980697258~DP</th>
+      <th>FWVB~V-K1433S~R-K3913S~4812170061133334192~DP</th>
+      <th>FWVB~V-K1453S~R-K3933S~4650690516913118760~DP</th>
+      <th>FWVB~V-K1473S~R-K3953S~5593258920455231713~DP</th>
+      <th>FWVB~V-K1473S~R-K3953S~4773249905911243471~DP</th>
+      <th>FWVB~V-K1493S~R-K3973S~5139255343562953856~DP</th>
+      <th>FWVB~V-K1503S~R-K3983S~4945961939269554771~DP</th>
+      <th>FWVB~V-K1533S~R-K4013S~4945833664991839087~DP</th>
+      <th>FWVB~V-K1503S~R-K3983S~4805781336100450167~DP</th>
+      <th>FWVB~V-K1523S~R-K4003S~5111577951994515523~DP</th>
+      <th>FWVB~V-K943S~R-K3423S~5567312130001677534~DP</th>
+      <th>FWVB~V-K2023S~R-K4503S~5430848372257542560~DP</th>
+      <th>FWVB~V-K2063S~R-K4543S~5147813561931418786~DP</th>
+      <th>VENT~V-E~V-E0~5120684848284658605~QM</th>
+      <th>PUMP~R-E~R-E2~5374020919990423089~RHO</th>
+      <th>PUMP~R-E~R-E2~5374020919990423089~M</th>
+      <th>PUMP~R-E~R-E2~5374020919990423089~N</th>
+      <th>PUMP~R-E~R-E2~5374020919990423089~ETA</th>
+      <th>PUMP~R-E~R-E2~5374020919990423089~ETAW</th>
+      <th>PUMP~R-E~R-E2~5374020919990423089~DP</th>
+      <th>KNOT~R-E-DH~~5037146832979712094~PH</th>
+      <th>VENT~R-E3~R-E4~5652541284139882253~QM</th>
+      <th>PGRP~R-E~R-E3~4924988159454251099~RART</th>
+      <th>PGRP~R-E~R-E3~4924988159454251099~W</th>
+      <th>PGRP~R-E~R-E3~4924988159454251099~X</th>
+      <th>PUMP~V-TS-S-WU2~V-TS-S-WU2b~5661833458038115239~RHO</th>
+      <th>PUMP~V-TS-S-WU2~V-TS-S-WU2b~5661833458038115239~M</th>
+      <th>PUMP~V-TS-S-WU2~V-TS-S-WU2b~5661833458038115239~N</th>
+      <th>PUMP~V-TS-S-WU2~V-TS-S-WU2b~5661833458038115239~ETA</th>
+      <th>PUMP~V-TS-S-WU2~V-TS-S-WU2b~5661833458038115239~ETAW</th>
+      <th>PUMP~V-TS-S-WU2~V-TS-S-WU2b~5661833458038115239~DP</th>
+      <th>KNOT~R-TS-DH~~4810663080415972317~PH</th>
+      <th>FWWU~FWWU_505061~~5140753672436942021~Q</th>
+      <th>FWWU~FWWU_505061~~5140753672436942021~T2AUS</th>
+      <th>FWWU~FWWU_505061~~5140753672436942021~T2EIN</th>
+      <th>FWWU~FWWU_505061~~5140753672436942021~T1EIN</th>
+      <th>FWWU~FWWU_505061~~5140753672436942021~T1AUS</th>
+      <th>VENT~V-TS-P~V-TS-P-WU~5257205059759497594~QM</th>
+      <th>VENT~V-TS-S-WU~V-TS-S-WU2~5397401198360947165~QM</th>
+      <th>RMES~Last~~4899351962406121892~XA</th>
+      <th>RMES~Erzeugung~~5554547908379981123~XA</th>
+      <th>RDIV~WVerlProz~~5105729699655079411~XA</th>
+      <th>RMES~UWM~~5255082225302217802~XA</th>
+      <th>RFKT~TVL~~4836221118111466566~XA</th>
+      <th>RFKT~TRSP~~5737169626127702346~XA</th>
+      <th>RSLW~NetzTrennEin~~5347287125110176930~XA</th>
+      <th>SWVT~AT Tag~~5355550039103568011~W</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2023-02-12 23:00:00+00:00</th>
+      <td>b'STAT'</td>
+      <td>b'SIR 3S 90-15-02-44 3S Consult, 30827 Garbsen...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>259</td>
+      <td>0.421875</td>
+      <td>0.826000</td>
+      <td>0</td>
+      <td>0.000003</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>68.507812</td>
+      <td>114</td>
+      <td>30</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>5338.179199</td>
+      <td>975.745972</td>
+      <td>72.855896</td>
+      <td>3.684926</td>
+      <td>0.600001</td>
+      <td>4.902467</td>
+      <td>0.781000</td>
+      <td>10.0</td>
+      <td>0.000003</td>
+      <td>4.881368</td>
+      <td>4.902467</td>
+      <td>0.0</td>
+      <td>2.116193</td>
+      <td>0.781000</td>
+      <td>0.0</td>
+      <td>28</td>
+      <td>13</td>
+      <td>1</td>
+      <td>3.016982</td>
+      <td>4.881368</td>
+      <td>90.0</td>
+      <td>287.091522</td>
+      <td>59.831055</td>
+      <td>9.866673</td>
+      <td>0.216283</td>
+      <td>0.283131</td>
+      <td>1.562128</td>
+      <td>1.534682</td>
+      <td>1.500090</td>
+      <td>1.500090</td>
+      <td>1.645129</td>
+      <td>1.650819</td>
+      <td>1.567316</td>
+      <td>1.567316</td>
+      <td>1.338891</td>
+      <td>1.334246</td>
+      <td>1.334246</td>
+      <td>1.334246</td>
+      <td>1.357544</td>
+      <td>1.346191</td>
+      <td>1.331172</td>
+      <td>1.346191</td>
+      <td>1.345438</td>
+      <td>1.343815</td>
+      <td>1.379869</td>
+      <td>1.379869</td>
+      <td>1.424017</td>
+      <td>1.444013</td>
+      <td>1.379869</td>
+      <td>1.363768</td>
+      <td>1.445711</td>
+      <td>1.486872</td>
+      <td>1.468655</td>
+      <td>1.468655</td>
+      <td>1.467943</td>
+      <td>1.467943</td>
+      <td>1.472395</td>
+      <td>1.357544</td>
+      <td>1.357544</td>
+      <td>1.398005</td>
+      <td>1.424017</td>
+      <td>1.444013</td>
+      <td>1.444013</td>
+      <td>1.467943</td>
+      <td>1.444013</td>
+      <td>1.444013</td>
+      <td>1.445711</td>
+      <td>1.445711</td>
+      <td>1.483802</td>
+      <td>1.468655</td>
+      <td>1.467943</td>
+      <td>1.467943</td>
+      <td>1.652783</td>
+      <td>1.686288</td>
+      <td>1.686288</td>
+      <td>1.686288</td>
+      <td>1.730199</td>
+      <td>1.730199</td>
+      <td>1.730199</td>
+      <td>1.754024</td>
+      <td>1.682265</td>
+      <td>1.627730</td>
+      <td>1.623596</td>
+      <td>1.730199</td>
+      <td>1.730199</td>
+      <td>1.623596</td>
+      <td>1.777303</td>
+      <td>1.734113</td>
+      <td>1.753635</td>
+      <td>1.714682</td>
+      <td>1.714682</td>
+      <td>1.686288</td>
+      <td>1.519881</td>
+      <td>1.669239</td>
+      <td>1.584963</td>
+      <td>1.592160</td>
+      <td>1.592160</td>
+      <td>1.559984</td>
+      <td>1.521728</td>
+      <td>1.521728</td>
+      <td>1.637048</td>
+      <td>1.637048</td>
+      <td>1.598284</td>
+      <td>1.592160</td>
+      <td>1.637048</td>
+      <td>1.598284</td>
+      <td>1.598284</td>
+      <td>1.598284</td>
+      <td>1.566656</td>
+      <td>1.577368</td>
+      <td>1.682265</td>
+      <td>1.650043</td>
+      <td>1.650043</td>
+      <td>1.648810</td>
+      <td>1.648810</td>
+      <td>1.648810</td>
+      <td>1.650043</td>
+      <td>1.650043</td>
+      <td>1.574590</td>
+      <td>1.542218</td>
+      <td>1.682265</td>
+      <td>1.650043</td>
+      <td>1.650043</td>
+      <td>1.627730</td>
+      <td>1.650043</td>
+      <td>1.650043</td>
+      <td>1.630383</td>
+      <td>1.648810</td>
+      <td>1.641663</td>
+      <td>1.641663</td>
+      <td>1.641663</td>
+      <td>1.606455</td>
+      <td>1.534682</td>
+      <td>1.534682</td>
+      <td>1.489102</td>
+      <td>1.563378</td>
+      <td>1.545948</td>
+      <td>1.577368</td>
+      <td>1.562651</td>
+      <td>1.563378</td>
+      <td>1.440225</td>
+      <td>1.499495</td>
+      <td>1.499495</td>
+      <td>1.620642</td>
+      <td>1.641155</td>
+      <td>1.669591</td>
+      <td>1.669591</td>
+      <td>1.602790</td>
+      <td>1.602790</td>
+      <td>1.544558</td>
+      <td>1.558364</td>
+      <td>1.509137</td>
+      <td>1.509137</td>
+      <td>1.509137</td>
+      <td>1.558364</td>
+      <td>1.489102</td>
+      <td>1.640048</td>
+      <td>1.627730</td>
+      <td>1.640466</td>
+      <td>1.640466</td>
+      <td>1.640466</td>
+      <td>1.640466</td>
+      <td>1.669591</td>
+      <td>1.669591</td>
+      <td>1.669591</td>
+      <td>1.669591</td>
+      <td>1.692422</td>
+      <td>1.611863</td>
+      <td>1.611863</td>
+      <td>1.580570</td>
+      <td>1.583802</td>
+      <td>1.585436</td>
+      <td>1.558364</td>
+      <td>1.558364</td>
+      <td>1.489102</td>
+      <td>1.519881</td>
+      <td>1.519881</td>
+      <td>1.583943</td>
+      <td>1.519881</td>
+      <td>1.583943</td>
+      <td>1.592104</td>
+      <td>1.615634</td>
+      <td>1.637201</td>
+      <td>1.637201</td>
+      <td>1.653427</td>
+      <td>1.652783</td>
+      <td>1.652783</td>
+      <td>1.679202</td>
+      <td>1.679202</td>
+      <td>1.679202</td>
+      <td>1.651447</td>
+      <td>1.651447</td>
+      <td>1.583424</td>
+      <td>1.583424</td>
+      <td>1.583424</td>
+      <td>1.583424</td>
+      <td>1.583424</td>
+      <td>1.521728</td>
+      <td>1.583424</td>
+      <td>1.335192</td>
+      <td>1.652783</td>
+      <td>1.679202</td>
+      <td>1.699483</td>
+      <td>1.650819</td>
+      <td>1.338891</td>
+      <td>1.601432</td>
+      <td>1.601432</td>
+      <td>1.601432</td>
+      <td>1.601432</td>
+      <td>1.534154</td>
+      <td>1.534154</td>
+      <td>1.534154</td>
+      <td>1.534154</td>
+      <td>1.534154</td>
+      <td>1.645129</td>
+      <td>1.645129</td>
+      <td>1.614705</td>
+      <td>1.650336</td>
+      <td>1.645129</td>
+      <td>1.614705</td>
+      <td>1.648810</td>
+      <td>1.734889</td>
+      <td>1.711798</td>
+      <td>1.711798</td>
+      <td>1.692422</td>
+      <td>1.692422</td>
+      <td>1.667628</td>
+      <td>1.656252</td>
+      <td>1.711798</td>
+      <td>1.711798</td>
+      <td>1.692422</td>
+      <td>1.692422</td>
+      <td>1.667628</td>
+      <td>1.667628</td>
+      <td>1.654575</td>
+      <td>1.656252</td>
+      <td>1.611863</td>
+      <td>1.679202</td>
+      <td>1.500000</td>
+      <td>1.679202</td>
+      <td>1.584963</td>
+      <td>1.637048</td>
+      <td>1.651447</td>
+      <td>1.651447</td>
+      <td>1.651447</td>
+      <td>1.679202</td>
+      <td>1.671126</td>
+      <td>1.686288</td>
+      <td>0.678945</td>
+      <td>0.708451</td>
+      <td>0.717692</td>
+      <td>0.740269</td>
+      <td>0.772847</td>
+      <td>0.772847</td>
+      <td>0.838474</td>
+      <td>0.806022</td>
+      <td>0.806022</td>
+      <td>0.848033</td>
+      <td>0.848033</td>
+      <td>0.848033</td>
+      <td>0.848033</td>
+      <td>0.811261</td>
+      <td>0.806022</td>
+      <td>0.838474</td>
+      <td>0.806022</td>
+      <td>0.772847</td>
+      <td>0.838474</td>
+      <td>0.740269</td>
+      <td>0.708451</td>
+      <td>0.708451</td>
+      <td>0.678945</td>
+      <td>0.664446</td>
+      <td>0.600001</td>
+      <td>0.664446</td>
+      <td>0.619831</td>
+      <td>1.728623</td>
+      <td>1.686288</td>
+      <td>1.734113</td>
+      <td>287.091522</td>
+      <td>983.784485</td>
+      <td>79.747643</td>
+      <td>750.106018</td>
+      <td>0.670523</td>
+      <td>0.705814</td>
+      <td>1.902467</td>
+      <td>3.0</td>
+      <td>287.091522</td>
+      <td>b'SP          '</td>
+      <td>1.5</td>
+      <td>1.500000</td>
+      <td>972.200012</td>
+      <td>8.407589</td>
+      <td>668.398865</td>
+      <td>0.628501</td>
+      <td>0.661580</td>
+      <td>0.907239</td>
+      <td>3.0</td>
+      <td>708.314880</td>
+      <td>80.0</td>
+      <td>59.880859</td>
+      <td>89.811798</td>
+      <td>60.939499</td>
+      <td>21.072384</td>
+      <td>30.267319</td>
+      <td>9.158356</td>
+      <td>10.082892</td>
+      <td>0.021451</td>
+      <td>287.091583</td>
+      <td>90.0</td>
+      <td>60.0</td>
+      <td>0.0</td>
+      <td>-9.7</td>
+    </tr>
+    <tr>
+      <th>2023-02-13 00:00:00+00:00</th>
+      <td>b'TIME'</td>
+      <td>b'SIR 3S 90-15-02-44 3S Consult, 30827 Garbsen...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>29</td>
+      <td>0.468750</td>
+      <td>0.948995</td>
+      <td>0</td>
+      <td>0.000003</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>68.608490</td>
+      <td>12</td>
+      <td>30</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>5338.179199</td>
+      <td>975.744446</td>
+      <td>72.858612</td>
+      <td>3.689281</td>
+      <td>0.600002</td>
+      <td>4.911819</td>
+      <td>0.787802</td>
+      <td>10.0</td>
+      <td>0.000003</td>
+      <td>4.890245</td>
+      <td>4.911819</td>
+      <td>0.0</td>
+      <td>2.118852</td>
+      <td>0.787802</td>
+      <td>0.0</td>
+      <td>4</td>
+      <td>1</td>
+      <td>1</td>
+      <td>3.017127</td>
+      <td>4.890245</td>
+      <td>90.0</td>
+      <td>290.241211</td>
+      <td>59.832886</td>
+      <td>9.984978</td>
+      <td>0.216273</td>
+      <td>0.286511</td>
+      <td>1.563491</td>
+      <td>1.535672</td>
+      <td>1.500048</td>
+      <td>1.500048</td>
+      <td>1.648057</td>
+      <td>1.653991</td>
+      <td>1.568352</td>
+      <td>1.568352</td>
+      <td>1.335051</td>
+      <td>1.330071</td>
+      <td>1.330071</td>
+      <td>1.330071</td>
+      <td>1.354127</td>
+      <td>1.342270</td>
+      <td>1.327144</td>
+      <td>1.342270</td>
+      <td>1.341702</td>
+      <td>1.340152</td>
+      <td>1.377053</td>
+      <td>1.377053</td>
+      <td>1.422046</td>
+      <td>1.442813</td>
+      <td>1.377053</td>
+      <td>1.360808</td>
+      <td>1.444752</td>
+      <td>1.486120</td>
+      <td>1.467950</td>
+      <td>1.467950</td>
+      <td>1.467404</td>
+      <td>1.467404</td>
+      <td>1.468331</td>
+      <td>1.354127</td>
+      <td>1.354127</td>
+      <td>1.394804</td>
+      <td>1.422046</td>
+      <td>1.442813</td>
+      <td>1.442813</td>
+      <td>1.467404</td>
+      <td>1.442813</td>
+      <td>1.442813</td>
+      <td>1.444752</td>
+      <td>1.444752</td>
+      <td>1.482950</td>
+      <td>1.467950</td>
+      <td>1.467404</td>
+      <td>1.467404</td>
+      <td>1.656327</td>
+      <td>1.690487</td>
+      <td>1.690487</td>
+      <td>1.690487</td>
+      <td>1.735856</td>
+      <td>1.735856</td>
+      <td>1.735856</td>
+      <td>1.760183</td>
+      <td>1.686739</td>
+      <td>1.630895</td>
+      <td>1.627308</td>
+      <td>1.735856</td>
+      <td>1.735856</td>
+      <td>1.627308</td>
+      <td>1.782997</td>
+      <td>1.739900</td>
+      <td>1.759830</td>
+      <td>1.719981</td>
+      <td>1.719981</td>
+      <td>1.690487</td>
+      <td>1.520439</td>
+      <td>1.673188</td>
+      <td>1.586708</td>
+      <td>1.593632</td>
+      <td>1.593632</td>
+      <td>1.561072</td>
+      <td>1.522686</td>
+      <td>1.522686</td>
+      <td>1.639814</td>
+      <td>1.639814</td>
+      <td>1.600339</td>
+      <td>1.593632</td>
+      <td>1.639814</td>
+      <td>1.600339</td>
+      <td>1.600339</td>
+      <td>1.600339</td>
+      <td>1.568120</td>
+      <td>1.578997</td>
+      <td>1.686739</td>
+      <td>1.654032</td>
+      <td>1.654032</td>
+      <td>1.652258</td>
+      <td>1.652258</td>
+      <td>1.652258</td>
+      <td>1.654032</td>
+      <td>1.654032</td>
+      <td>1.576456</td>
+      <td>1.543456</td>
+      <td>1.686739</td>
+      <td>1.654032</td>
+      <td>1.654032</td>
+      <td>1.630895</td>
+      <td>1.654032</td>
+      <td>1.654032</td>
+      <td>1.633662</td>
+      <td>1.652258</td>
+      <td>1.644754</td>
+      <td>1.644754</td>
+      <td>1.644754</td>
+      <td>1.609095</td>
+      <td>1.535672</td>
+      <td>1.535672</td>
+      <td>1.489041</td>
+      <td>1.564634</td>
+      <td>1.546601</td>
+      <td>1.578997</td>
+      <td>1.564011</td>
+      <td>1.564634</td>
+      <td>1.440437</td>
+      <td>1.499444</td>
+      <td>1.499444</td>
+      <td>1.623670</td>
+      <td>1.644545</td>
+      <td>1.674093</td>
+      <td>1.674093</td>
+      <td>1.605948</td>
+      <td>1.605948</td>
+      <td>1.547194</td>
+      <td>1.560272</td>
+      <td>1.510090</td>
+      <td>1.510090</td>
+      <td>1.510090</td>
+      <td>1.560272</td>
+      <td>1.489041</td>
+      <td>1.643367</td>
+      <td>1.630895</td>
+      <td>1.644282</td>
+      <td>1.644282</td>
+      <td>1.644282</td>
+      <td>1.644282</td>
+      <td>1.674093</td>
+      <td>1.674093</td>
+      <td>1.674093</td>
+      <td>1.674093</td>
+      <td>1.697649</td>
+      <td>1.615150</td>
+      <td>1.615150</td>
+      <td>1.583400</td>
+      <td>1.586370</td>
+      <td>1.587907</td>
+      <td>1.560272</td>
+      <td>1.560272</td>
+      <td>1.489041</td>
+      <td>1.520439</td>
+      <td>1.520439</td>
+      <td>1.585847</td>
+      <td>1.520439</td>
+      <td>1.585847</td>
+      <td>1.594161</td>
+      <td>1.618030</td>
+      <td>1.639981</td>
+      <td>1.639981</td>
+      <td>1.656574</td>
+      <td>1.656327</td>
+      <td>1.656327</td>
+      <td>1.683227</td>
+      <td>1.683227</td>
+      <td>1.683227</td>
+      <td>1.654796</td>
+      <td>1.654796</td>
+      <td>1.585102</td>
+      <td>1.585102</td>
+      <td>1.585102</td>
+      <td>1.585102</td>
+      <td>1.585102</td>
+      <td>1.522686</td>
+      <td>1.585102</td>
+      <td>1.331050</td>
+      <td>1.656327</td>
+      <td>1.683227</td>
+      <td>1.703694</td>
+      <td>1.653991</td>
+      <td>1.335051</td>
+      <td>1.604299</td>
+      <td>1.604299</td>
+      <td>1.604299</td>
+      <td>1.604299</td>
+      <td>1.535533</td>
+      <td>1.535533</td>
+      <td>1.535533</td>
+      <td>1.535533</td>
+      <td>1.535533</td>
+      <td>1.648057</td>
+      <td>1.648057</td>
+      <td>1.617488</td>
+      <td>1.653588</td>
+      <td>1.648057</td>
+      <td>1.617488</td>
+      <td>1.652258</td>
+      <td>1.740089</td>
+      <td>1.717255</td>
+      <td>1.717255</td>
+      <td>1.697649</td>
+      <td>1.697649</td>
+      <td>1.672013</td>
+      <td>1.660321</td>
+      <td>1.717255</td>
+      <td>1.717255</td>
+      <td>1.697649</td>
+      <td>1.697649</td>
+      <td>1.672013</td>
+      <td>1.672013</td>
+      <td>1.658721</td>
+      <td>1.660321</td>
+      <td>1.615150</td>
+      <td>1.683227</td>
+      <td>1.500004</td>
+      <td>1.683227</td>
+      <td>1.586708</td>
+      <td>1.639814</td>
+      <td>1.654796</td>
+      <td>1.654796</td>
+      <td>1.654796</td>
+      <td>1.683227</td>
+      <td>1.675139</td>
+      <td>1.690487</td>
+      <td>0.680451</td>
+      <td>0.710622</td>
+      <td>0.720173</td>
+      <td>0.743035</td>
+      <td>0.776145</td>
+      <td>0.776145</td>
+      <td>0.842398</td>
+      <td>0.810434</td>
+      <td>0.810434</td>
+      <td>0.853083</td>
+      <td>0.853083</td>
+      <td>0.853083</td>
+      <td>0.853083</td>
+      <td>0.815827</td>
+      <td>0.810434</td>
+      <td>0.842398</td>
+      <td>0.810434</td>
+      <td>0.776145</td>
+      <td>0.842398</td>
+      <td>0.743035</td>
+      <td>0.710622</td>
+      <td>0.710622</td>
+      <td>0.680451</td>
+      <td>0.665715</td>
+      <td>0.600002</td>
+      <td>0.665715</td>
+      <td>0.620097</td>
+      <td>1.734409</td>
+      <td>1.690487</td>
+      <td>1.739900</td>
+      <td>290.241211</td>
+      <td>983.783569</td>
+      <td>80.622559</td>
+      <td>752.606934</td>
+      <td>0.672545</td>
+      <td>0.707942</td>
+      <td>1.911675</td>
+      <td>3.0</td>
+      <td>290.241211</td>
+      <td>b'SP          '</td>
+      <td>1.5</td>
+      <td>1.500004</td>
+      <td>972.200012</td>
+      <td>8.507134</td>
+      <td>672.864441</td>
+      <td>0.627611</td>
+      <td>0.660644</td>
+      <td>0.913558</td>
+      <td>3.0</td>
+      <td>708.139160</td>
+      <td>80.0</td>
+      <td>59.882263</td>
+      <td>89.812866</td>
+      <td>60.947708</td>
+      <td>21.072384</td>
+      <td>30.625685</td>
+      <td>9.275180</td>
+      <td>10.193499</td>
+      <td>0.021218</td>
+      <td>290.241211</td>
+      <td>90.0</td>
+      <td>60.0</td>
+      <td>0.0</td>
+      <td>-9.4</td>
+    </tr>
+    <tr>
+      <th>2023-02-13 01:00:00+00:00</th>
+      <td>b'TIME'</td>
+      <td>b'SIR 3S 90-15-02-44 3S Consult, 30827 Garbsen...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>34</td>
+      <td>0.468750</td>
+      <td>1.076994</td>
+      <td>0</td>
+      <td>0.000003</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>68.748596</td>
+      <td>14</td>
+      <td>30</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>5338.179199</td>
+      <td>975.742188</td>
+      <td>72.862488</td>
+      <td>3.695250</td>
+      <td>0.600003</td>
+      <td>4.924857</td>
+      <td>0.797154</td>
+      <td>10.0</td>
+      <td>0.000003</td>
+      <td>4.902585</td>
+      <td>4.924857</td>
+      <td>0.0</td>
+      <td>2.122458</td>
+      <td>0.797154</td>
+      <td>0.0</td>
+      <td>4</td>
+      <td>1</td>
+      <td>1</td>
+      <td>3.017127</td>
+      <td>4.902585</td>
+      <td>90.0</td>
+      <td>294.831390</td>
+      <td>59.836853</td>
+      <td>10.148062</td>
+      <td>0.216306</td>
+      <td>0.291185</td>
+      <td>1.565360</td>
+      <td>1.537020</td>
+      <td>1.499971</td>
+      <td>1.499971</td>
+      <td>1.652096</td>
+      <td>1.658371</td>
+      <td>1.569770</td>
+      <td>1.569770</td>
+      <td>1.329720</td>
+      <td>1.324279</td>
+      <td>1.324279</td>
+      <td>1.324279</td>
+      <td>1.349377</td>
+      <td>1.336826</td>
+      <td>1.321553</td>
+      <td>1.336826</td>
+      <td>1.336512</td>
+      <td>1.335063</td>
+      <td>1.373133</td>
+      <td>1.373133</td>
+      <td>1.419292</td>
+      <td>1.441125</td>
+      <td>1.373133</td>
+      <td>1.356689</td>
+      <td>1.443397</td>
+      <td>1.485049</td>
+      <td>1.466945</td>
+      <td>1.466945</td>
+      <td>1.466631</td>
+      <td>1.466631</td>
+      <td>1.462691</td>
+      <td>1.349377</td>
+      <td>1.349377</td>
+      <td>1.390351</td>
+      <td>1.419292</td>
+      <td>1.441125</td>
+      <td>1.441125</td>
+      <td>1.466631</td>
+      <td>1.441125</td>
+      <td>1.441125</td>
+      <td>1.443397</td>
+      <td>1.443397</td>
+      <td>1.481743</td>
+      <td>1.466945</td>
+      <td>1.466631</td>
+      <td>1.466631</td>
+      <td>1.661221</td>
+      <td>1.696295</td>
+      <td>1.696295</td>
+      <td>1.696295</td>
+      <td>1.743698</td>
+      <td>1.743698</td>
+      <td>1.743698</td>
+      <td>1.768727</td>
+      <td>1.692932</td>
+      <td>1.635257</td>
+      <td>1.632188</td>
+      <td>1.743698</td>
+      <td>1.743698</td>
+      <td>1.632188</td>
+      <td>1.790892</td>
+      <td>1.747925</td>
+      <td>1.768424</td>
+      <td>1.727324</td>
+      <td>1.727324</td>
+      <td>1.696295</td>
+      <td>1.521187</td>
+      <td>1.678651</td>
+      <td>1.589105</td>
+      <td>1.595650</td>
+      <td>1.595650</td>
+      <td>1.562556</td>
+      <td>1.523991</td>
+      <td>1.523991</td>
+      <td>1.643629</td>
+      <td>1.643629</td>
+      <td>1.603165</td>
+      <td>1.595650</td>
+      <td>1.643629</td>
+      <td>1.603165</td>
+      <td>1.603165</td>
+      <td>1.603165</td>
+      <td>1.570127</td>
+      <td>1.581232</td>
+      <td>1.692932</td>
+      <td>1.659550</td>
+      <td>1.659550</td>
+      <td>1.657022</td>
+      <td>1.657022</td>
+      <td>1.657022</td>
+      <td>1.659550</td>
+      <td>1.659550</td>
+      <td>1.579022</td>
+      <td>1.545148</td>
+      <td>1.692932</td>
+      <td>1.659550</td>
+      <td>1.659550</td>
+      <td>1.635257</td>
+      <td>1.659550</td>
+      <td>1.659550</td>
+      <td>1.637947</td>
+      <td>1.657022</td>
+      <td>1.649022</td>
+      <td>1.649022</td>
+      <td>1.649022</td>
+      <td>1.612735</td>
+      <td>1.537020</td>
+      <td>1.537020</td>
+      <td>1.488930</td>
+      <td>1.566352</td>
+      <td>1.547488</td>
+      <td>1.581232</td>
+      <td>1.565875</td>
+      <td>1.566352</td>
+      <td>1.440715</td>
+      <td>1.499358</td>
+      <td>1.499358</td>
+      <td>1.627608</td>
+      <td>1.648982</td>
+      <td>1.680076</td>
+      <td>1.680076</td>
+      <td>1.609986</td>
+      <td>1.609986</td>
+      <td>1.550510</td>
+      <td>1.562582</td>
+      <td>1.511087</td>
+      <td>1.511087</td>
+      <td>1.511087</td>
+      <td>1.562582</td>
+      <td>1.488930</td>
+      <td>1.647706</td>
+      <td>1.635257</td>
+      <td>1.649305</td>
+      <td>1.649305</td>
+      <td>1.649305</td>
+      <td>1.649305</td>
+      <td>1.680076</td>
+      <td>1.680076</td>
+      <td>1.680076</td>
+      <td>1.680076</td>
+      <td>1.704469</td>
+      <td>1.619353</td>
+      <td>1.619353</td>
+      <td>1.586984</td>
+      <td>1.589593</td>
+      <td>1.590996</td>
+      <td>1.562582</td>
+      <td>1.562582</td>
+      <td>1.488930</td>
+      <td>1.521187</td>
+      <td>1.521187</td>
+      <td>1.588463</td>
+      <td>1.521187</td>
+      <td>1.588463</td>
+      <td>1.596987</td>
+      <td>1.621328</td>
+      <td>1.643812</td>
+      <td>1.643812</td>
+      <td>1.660915</td>
+      <td>1.661221</td>
+      <td>1.661221</td>
+      <td>1.688794</td>
+      <td>1.688794</td>
+      <td>1.688794</td>
+      <td>1.659422</td>
+      <td>1.659422</td>
+      <td>1.587407</td>
+      <td>1.587407</td>
+      <td>1.587407</td>
+      <td>1.587407</td>
+      <td>1.587407</td>
+      <td>1.523991</td>
+      <td>1.587407</td>
+      <td>1.325304</td>
+      <td>1.661221</td>
+      <td>1.688794</td>
+      <td>1.709519</td>
+      <td>1.658371</td>
+      <td>1.329720</td>
+      <td>1.608011</td>
+      <td>1.608011</td>
+      <td>1.608011</td>
+      <td>1.608011</td>
+      <td>1.537200</td>
+      <td>1.537200</td>
+      <td>1.537200</td>
+      <td>1.537200</td>
+      <td>1.537200</td>
+      <td>1.652096</td>
+      <td>1.652096</td>
+      <td>1.621326</td>
+      <td>1.658078</td>
+      <td>1.652096</td>
+      <td>1.621326</td>
+      <td>1.657022</td>
+      <td>1.747060</td>
+      <td>1.724589</td>
+      <td>1.724589</td>
+      <td>1.704469</td>
+      <td>1.704469</td>
+      <td>1.677689</td>
+      <td>1.665568</td>
+      <td>1.724589</td>
+      <td>1.724589</td>
+      <td>1.704469</td>
+      <td>1.704469</td>
+      <td>1.677689</td>
+      <td>1.677689</td>
+      <td>1.664072</td>
+      <td>1.665568</td>
+      <td>1.619353</td>
+      <td>1.688794</td>
+      <td>1.500005</td>
+      <td>1.688794</td>
+      <td>1.589105</td>
+      <td>1.643629</td>
+      <td>1.659422</td>
+      <td>1.659422</td>
+      <td>1.659422</td>
+      <td>1.688794</td>
+      <td>1.680690</td>
+      <td>1.696295</td>
+      <td>0.682531</td>
+      <td>0.713625</td>
+      <td>0.723610</td>
+      <td>0.746869</td>
+      <td>0.780723</td>
+      <td>0.780723</td>
+      <td>0.847850</td>
+      <td>0.816570</td>
+      <td>0.816570</td>
+      <td>0.860113</td>
+      <td>0.860113</td>
+      <td>0.860113</td>
+      <td>0.860113</td>
+      <td>0.822186</td>
+      <td>0.816570</td>
+      <td>0.847850</td>
+      <td>0.816570</td>
+      <td>0.780723</td>
+      <td>0.847850</td>
+      <td>0.746869</td>
+      <td>0.713625</td>
+      <td>0.713625</td>
+      <td>0.682531</td>
+      <td>0.667464</td>
+      <td>0.600003</td>
+      <td>0.667464</td>
+      <td>0.620461</td>
+      <td>1.742306</td>
+      <td>1.696295</td>
+      <td>1.747925</td>
+      <td>294.831390</td>
+      <td>983.781616</td>
+      <td>81.897606</td>
+      <td>756.205078</td>
+      <td>0.675452</td>
+      <td>0.711002</td>
+      <td>1.924713</td>
+      <td>3.0</td>
+      <td>294.831390</td>
+      <td>b'SP          '</td>
+      <td>1.5</td>
+      <td>1.500005</td>
+      <td>972.200012</td>
+      <td>8.644786</td>
+      <td>679.072144</td>
+      <td>0.626380</td>
+      <td>0.659347</td>
+      <td>0.922368</td>
+      <td>3.0</td>
+      <td>716.336426</td>
+      <td>80.0</td>
+      <td>59.884125</td>
+      <td>89.815430</td>
+      <td>60.958755</td>
+      <td>21.322554</td>
+      <td>31.121227</td>
+      <td>9.429440</td>
+      <td>10.353560</td>
+      <td>0.020890</td>
+      <td>294.831390</td>
+      <td>90.0</td>
+      <td>60.0</td>
+      <td>0.0</td>
+      <td>-8.8</td>
+    </tr>
+    <tr>
+      <th>2023-02-13 02:00:00+00:00</th>
+      <td>b'TIME'</td>
+      <td>b'SIR 3S 90-15-02-44 3S Consult, 30827 Garbsen...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>37</td>
+      <td>0.500000</td>
+      <td>1.149995</td>
+      <td>0</td>
+      <td>0.000003</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>69.217712</td>
+      <td>17</td>
+      <td>30</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>5338.179199</td>
+      <td>975.735474</td>
+      <td>72.874298</td>
+      <td>3.715837</td>
+      <td>0.600002</td>
+      <td>4.969721</td>
+      <td>0.829522</td>
+      <td>10.0</td>
+      <td>0.000003</td>
+      <td>4.945139</td>
+      <td>4.969721</td>
+      <td>0.0</td>
+      <td>2.134760</td>
+      <td>0.829522</td>
+      <td>0.0</td>
+      <td>4</td>
+      <td>1</td>
+      <td>1</td>
+      <td>3.017127</td>
+      <td>4.945139</td>
+      <td>90.0</td>
+      <td>309.794617</td>
+      <td>59.846497</td>
+      <td>10.697124</td>
+      <td>0.216332</td>
+      <td>0.306894</td>
+      <td>1.571905</td>
+      <td>1.541742</td>
+      <td>1.499717</td>
+      <td>1.499717</td>
+      <td>1.666205</td>
+      <td>1.673667</td>
+      <td>1.574739</td>
+      <td>1.574739</td>
+      <td>1.311107</td>
+      <td>1.304053</td>
+      <td>1.304053</td>
+      <td>1.304053</td>
+      <td>1.332799</td>
+      <td>1.317820</td>
+      <td>1.302033</td>
+      <td>1.317820</td>
+      <td>1.318398</td>
+      <td>1.317302</td>
+      <td>1.359456</td>
+      <td>1.359456</td>
+      <td>1.409696</td>
+      <td>1.435251</td>
+      <td>1.359456</td>
+      <td>1.342317</td>
+      <td>1.438689</td>
+      <td>1.481336</td>
+      <td>1.463461</td>
+      <td>1.463461</td>
+      <td>1.463952</td>
+      <td>1.463952</td>
+      <td>1.442999</td>
+      <td>1.332799</td>
+      <td>1.332799</td>
+      <td>1.374814</td>
+      <td>1.409696</td>
+      <td>1.435251</td>
+      <td>1.435251</td>
+      <td>1.463952</td>
+      <td>1.435251</td>
+      <td>1.435251</td>
+      <td>1.438689</td>
+      <td>1.438689</td>
+      <td>1.477552</td>
+      <td>1.463461</td>
+      <td>1.463952</td>
+      <td>1.463952</td>
+      <td>1.678311</td>
+      <td>1.716567</td>
+      <td>1.716567</td>
+      <td>1.716567</td>
+      <td>1.771043</td>
+      <td>1.771043</td>
+      <td>1.771043</td>
+      <td>1.798514</td>
+      <td>1.714536</td>
+      <td>1.650505</td>
+      <td>1.649765</td>
+      <td>1.771043</td>
+      <td>1.771043</td>
+      <td>1.649765</td>
+      <td>1.818419</td>
+      <td>1.775904</td>
+      <td>1.798385</td>
+      <td>1.752939</td>
+      <td>1.752939</td>
+      <td>1.716567</td>
+      <td>1.523833</td>
+      <td>1.697719</td>
+      <td>1.597491</td>
+      <td>1.602718</td>
+      <td>1.602718</td>
+      <td>1.567764</td>
+      <td>1.528574</td>
+      <td>1.528574</td>
+      <td>1.656957</td>
+      <td>1.656957</td>
+      <td>1.613047</td>
+      <td>1.602718</td>
+      <td>1.656957</td>
+      <td>1.613047</td>
+      <td>1.613047</td>
+      <td>1.613047</td>
+      <td>1.577154</td>
+      <td>1.589055</td>
+      <td>1.714536</td>
+      <td>1.678807</td>
+      <td>1.678807</td>
+      <td>1.673654</td>
+      <td>1.673654</td>
+      <td>1.673654</td>
+      <td>1.678807</td>
+      <td>1.678807</td>
+      <td>1.587990</td>
+      <td>1.551072</td>
+      <td>1.714536</td>
+      <td>1.678807</td>
+      <td>1.678807</td>
+      <td>1.650505</td>
+      <td>1.678807</td>
+      <td>1.678807</td>
+      <td>1.653437</td>
+      <td>1.673654</td>
+      <td>1.663926</td>
+      <td>1.663926</td>
+      <td>1.663926</td>
+      <td>1.625450</td>
+      <td>1.541742</td>
+      <td>1.541742</td>
+      <td>1.488562</td>
+      <td>1.572375</td>
+      <td>1.550603</td>
+      <td>1.589055</td>
+      <td>1.572401</td>
+      <td>1.572375</td>
+      <td>1.441702</td>
+      <td>1.499076</td>
+      <td>1.499076</td>
+      <td>1.641888</td>
+      <td>1.665006</td>
+      <td>1.701483</td>
+      <td>1.701483</td>
+      <td>1.624785</td>
+      <td>1.624785</td>
+      <td>1.562789</td>
+      <td>1.571348</td>
+      <td>1.515255</td>
+      <td>1.515255</td>
+      <td>1.515255</td>
+      <td>1.571348</td>
+      <td>1.488562</td>
+      <td>1.663389</td>
+      <td>1.650505</td>
+      <td>1.667382</td>
+      <td>1.667382</td>
+      <td>1.667382</td>
+      <td>1.667382</td>
+      <td>1.701483</td>
+      <td>1.701483</td>
+      <td>1.701483</td>
+      <td>1.701483</td>
+      <td>1.729157</td>
+      <td>1.634757</td>
+      <td>1.634757</td>
+      <td>1.600198</td>
+      <td>1.601546</td>
+      <td>1.602482</td>
+      <td>1.571348</td>
+      <td>1.571348</td>
+      <td>1.488562</td>
+      <td>1.523833</td>
+      <td>1.523833</td>
+      <td>1.597620</td>
+      <td>1.523833</td>
+      <td>1.597620</td>
+      <td>1.606879</td>
+      <td>1.632860</td>
+      <td>1.657203</td>
+      <td>1.657203</td>
+      <td>1.676081</td>
+      <td>1.678311</td>
+      <td>1.678311</td>
+      <td>1.708222</td>
+      <td>1.708222</td>
+      <td>1.708222</td>
+      <td>1.675575</td>
+      <td>1.675575</td>
+      <td>1.595472</td>
+      <td>1.595472</td>
+      <td>1.595472</td>
+      <td>1.595472</td>
+      <td>1.595472</td>
+      <td>1.528574</td>
+      <td>1.595472</td>
+      <td>1.305238</td>
+      <td>1.678311</td>
+      <td>1.708222</td>
+      <td>1.729845</td>
+      <td>1.673667</td>
+      <td>1.311107</td>
+      <td>1.621507</td>
+      <td>1.621507</td>
+      <td>1.621507</td>
+      <td>1.621507</td>
+      <td>1.543539</td>
+      <td>1.543539</td>
+      <td>1.543539</td>
+      <td>1.543539</td>
+      <td>1.543539</td>
+      <td>1.666205</td>
+      <td>1.666205</td>
+      <td>1.634734</td>
+      <td>1.673758</td>
+      <td>1.666205</td>
+      <td>1.634734</td>
+      <td>1.673654</td>
+      <td>1.771878</td>
+      <td>1.750656</td>
+      <td>1.750656</td>
+      <td>1.729157</td>
+      <td>1.729157</td>
+      <td>1.698339</td>
+      <td>1.684700</td>
+      <td>1.750656</td>
+      <td>1.750656</td>
+      <td>1.729157</td>
+      <td>1.729157</td>
+      <td>1.698339</td>
+      <td>1.698339</td>
+      <td>1.683574</td>
+      <td>1.684700</td>
+      <td>1.634757</td>
+      <td>1.708222</td>
+      <td>1.500009</td>
+      <td>1.708222</td>
+      <td>1.597491</td>
+      <td>1.656957</td>
+      <td>1.675575</td>
+      <td>1.675575</td>
+      <td>1.675575</td>
+      <td>1.708222</td>
+      <td>1.700066</td>
+      <td>1.716567</td>
+      <td>0.689788</td>
+      <td>0.724098</td>
+      <td>0.735591</td>
+      <td>0.760233</td>
+      <td>0.796668</td>
+      <td>0.796668</td>
+      <td>0.866837</td>
+      <td>0.837932</td>
+      <td>0.837932</td>
+      <td>0.884576</td>
+      <td>0.884576</td>
+      <td>0.884576</td>
+      <td>0.884576</td>
+      <td>0.844312</td>
+      <td>0.837932</td>
+      <td>0.866837</td>
+      <td>0.837932</td>
+      <td>0.796668</td>
+      <td>0.866837</td>
+      <td>0.760233</td>
+      <td>0.724098</td>
+      <td>0.724098</td>
+      <td>0.689788</td>
+      <td>0.673571</td>
+      <td>0.600002</td>
+      <td>0.673571</td>
+      <td>0.621732</td>
+      <td>1.770113</td>
+      <td>1.716567</td>
+      <td>1.775904</td>
+      <td>309.794617</td>
+      <td>983.776733</td>
+      <td>86.054062</td>
+      <td>768.368835</td>
+      <td>0.684180</td>
+      <td>0.720190</td>
+      <td>1.969577</td>
+      <td>3.0</td>
+      <td>309.794617</td>
+      <td>b'SP          '</td>
+      <td>1.5</td>
+      <td>1.500009</td>
+      <td>972.200012</td>
+      <td>9.107412</td>
+      <td>700.277649</td>
+      <td>0.621843</td>
+      <td>0.654571</td>
+      <td>0.953017</td>
+      <td>3.0</td>
+      <td>727.271973</td>
+      <td>80.0</td>
+      <td>59.890015</td>
+      <td>89.821564</td>
+      <td>60.995255</td>
+      <td>21.670790</td>
+      <td>32.786682</td>
+      <td>9.962311</td>
+      <td>10.877384</td>
+      <td>0.019886</td>
+      <td>309.794617</td>
+      <td>90.0</td>
+      <td>60.0</td>
+      <td>0.0</td>
+      <td>-10.5</td>
+    </tr>
+    <tr>
+      <th>2023-02-13 03:00:00+00:00</th>
+      <td>b'TIME'</td>
+      <td>b'SIR 3S 90-15-02-44 3S Consult, 30827 Garbsen...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>39</td>
+      <td>0.500000</td>
+      <td>1.227994</td>
+      <td>0</td>
+      <td>0.000003</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>70.319183</td>
+      <td>19</td>
+      <td>30</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>5338.179199</td>
+      <td>975.721863</td>
+      <td>72.898102</td>
+      <td>3.768003</td>
+      <td>0.600002</td>
+      <td>5.083303</td>
+      <td>0.911471</td>
+      <td>10.0</td>
+      <td>0.000003</td>
+      <td>5.053027</td>
+      <td>5.083303</td>
+      <td>0.0</td>
+      <td>2.165944</td>
+      <td>0.911471</td>
+      <td>0.0</td>
+      <td>4</td>
+      <td>1</td>
+      <td>1</td>
+      <td>3.017127</td>
+      <td>5.053027</td>
+      <td>90.0</td>
+      <td>345.204987</td>
+      <td>59.867798</td>
+      <td>11.983718</td>
+      <td>0.216454</td>
+      <td>0.343729</td>
+      <td>1.588396</td>
+      <td>1.553559</td>
+      <td>1.499003</td>
+      <td>1.499003</td>
+      <td>1.701789</td>
+      <td>1.712255</td>
+      <td>1.587269</td>
+      <td>1.587269</td>
+      <td>1.263989</td>
+      <td>1.252880</td>
+      <td>1.252880</td>
+      <td>1.252880</td>
+      <td>1.290811</td>
+      <td>1.269709</td>
+      <td>1.252632</td>
+      <td>1.269709</td>
+      <td>1.272528</td>
+      <td>1.272323</td>
+      <td>1.324784</td>
+      <td>1.324784</td>
+      <td>1.385322</td>
+      <td>1.420279</td>
+      <td>1.324784</td>
+      <td>1.305889</td>
+      <td>1.426658</td>
+      <td>1.471818</td>
+      <td>1.454520</td>
+      <td>1.454520</td>
+      <td>1.457042</td>
+      <td>1.457042</td>
+      <td>1.393170</td>
+      <td>1.290811</td>
+      <td>1.290811</td>
+      <td>1.335449</td>
+      <td>1.385322</td>
+      <td>1.420279</td>
+      <td>1.420279</td>
+      <td>1.457042</td>
+      <td>1.420279</td>
+      <td>1.420279</td>
+      <td>1.426658</td>
+      <td>1.426658</td>
+      <td>1.466825</td>
+      <td>1.454520</td>
+      <td>1.457042</td>
+      <td>1.457042</td>
+      <td>1.721433</td>
+      <td>1.767745</td>
+      <td>1.767745</td>
+      <td>1.767745</td>
+      <td>1.840151</td>
+      <td>1.840151</td>
+      <td>1.840151</td>
+      <td>1.873808</td>
+      <td>1.769086</td>
+      <td>1.688966</td>
+      <td>1.693864</td>
+      <td>1.840151</td>
+      <td>1.840151</td>
+      <td>1.693864</td>
+      <td>1.887989</td>
+      <td>1.846619</td>
+      <td>1.874119</td>
+      <td>1.817676</td>
+      <td>1.817676</td>
+      <td>1.767745</td>
+      <td>1.530473</td>
+      <td>1.745871</td>
+      <td>1.618607</td>
+      <td>1.620509</td>
+      <td>1.620509</td>
+      <td>1.580860</td>
+      <td>1.540098</td>
+      <td>1.540098</td>
+      <td>1.690565</td>
+      <td>1.690565</td>
+      <td>1.637942</td>
+      <td>1.620509</td>
+      <td>1.690565</td>
+      <td>1.637942</td>
+      <td>1.637942</td>
+      <td>1.637942</td>
+      <td>1.594857</td>
+      <td>1.608752</td>
+      <td>1.769086</td>
+      <td>1.727415</td>
+      <td>1.727415</td>
+      <td>1.715625</td>
+      <td>1.715625</td>
+      <td>1.715625</td>
+      <td>1.727415</td>
+      <td>1.727415</td>
+      <td>1.610560</td>
+      <td>1.565929</td>
+      <td>1.769086</td>
+      <td>1.727415</td>
+      <td>1.727415</td>
+      <td>1.688966</td>
+      <td>1.727415</td>
+      <td>1.727415</td>
+      <td>1.692274</td>
+      <td>1.715625</td>
+      <td>1.701527</td>
+      <td>1.701527</td>
+      <td>1.701527</td>
+      <td>1.657509</td>
+      <td>1.553559</td>
+      <td>1.553559</td>
+      <td>1.487498</td>
+      <td>1.587530</td>
+      <td>1.558429</td>
+      <td>1.608752</td>
+      <td>1.588825</td>
+      <td>1.587530</td>
+      <td>1.444165</td>
+      <td>1.498341</td>
+      <td>1.498341</td>
+      <td>1.677668</td>
+      <td>1.705190</td>
+      <td>1.755270</td>
+      <td>1.755270</td>
+      <td>1.661795</td>
+      <td>1.661795</td>
+      <td>1.593437</td>
+      <td>1.593136</td>
+      <td>1.525477</td>
+      <td>1.525477</td>
+      <td>1.525477</td>
+      <td>1.593136</td>
+      <td>1.487498</td>
+      <td>1.702712</td>
+      <td>1.688966</td>
+      <td>1.712742</td>
+      <td>1.712742</td>
+      <td>1.712742</td>
+      <td>1.712742</td>
+      <td>1.755270</td>
+      <td>1.755270</td>
+      <td>1.755270</td>
+      <td>1.755270</td>
+      <td>1.791052</td>
+      <td>1.673277</td>
+      <td>1.673277</td>
+      <td>1.633211</td>
+      <td>1.631373</td>
+      <td>1.631129</td>
+      <td>1.593136</td>
+      <td>1.593136</td>
+      <td>1.487498</td>
+      <td>1.530473</td>
+      <td>1.530473</td>
+      <td>1.620696</td>
+      <td>1.530473</td>
+      <td>1.620696</td>
+      <td>1.631809</td>
+      <td>1.661935</td>
+      <td>1.690976</td>
+      <td>1.690976</td>
+      <td>1.714339</td>
+      <td>1.721433</td>
+      <td>1.721433</td>
+      <td>1.757261</td>
+      <td>1.757261</td>
+      <td>1.757261</td>
+      <td>1.716328</td>
+      <td>1.716328</td>
+      <td>1.615792</td>
+      <td>1.615792</td>
+      <td>1.615792</td>
+      <td>1.615792</td>
+      <td>1.615792</td>
+      <td>1.540098</td>
+      <td>1.615792</td>
+      <td>1.254473</td>
+      <td>1.721433</td>
+      <td>1.757261</td>
+      <td>1.781159</td>
+      <td>1.712255</td>
+      <td>1.263989</td>
+      <td>1.655308</td>
+      <td>1.655308</td>
+      <td>1.655308</td>
+      <td>1.655308</td>
+      <td>1.559334</td>
+      <td>1.559334</td>
+      <td>1.559334</td>
+      <td>1.559334</td>
+      <td>1.559334</td>
+      <td>1.701789</td>
+      <td>1.701789</td>
+      <td>1.668547</td>
+      <td>1.713315</td>
+      <td>1.701789</td>
+      <td>1.668547</td>
+      <td>1.715625</td>
+      <td>1.834326</td>
+      <td>1.816269</td>
+      <td>1.816269</td>
+      <td>1.791052</td>
+      <td>1.791052</td>
+      <td>1.750046</td>
+      <td>1.732589</td>
+      <td>1.816269</td>
+      <td>1.816269</td>
+      <td>1.791052</td>
+      <td>1.791052</td>
+      <td>1.750046</td>
+      <td>1.750046</td>
+      <td>1.732393</td>
+      <td>1.732589</td>
+      <td>1.673277</td>
+      <td>1.757261</td>
+      <td>1.500040</td>
+      <td>1.757261</td>
+      <td>1.618607</td>
+      <td>1.690565</td>
+      <td>1.716328</td>
+      <td>1.716328</td>
+      <td>1.716328</td>
+      <td>1.757261</td>
+      <td>1.748989</td>
+      <td>1.767745</td>
+      <td>0.708075</td>
+      <td>0.750524</td>
+      <td>0.765832</td>
+      <td>0.793973</td>
+      <td>0.836954</td>
+      <td>0.836954</td>
+      <td>0.914836</td>
+      <td>0.891947</td>
+      <td>0.891947</td>
+      <td>0.946454</td>
+      <td>0.946454</td>
+      <td>0.946454</td>
+      <td>0.946454</td>
+      <td>0.900311</td>
+      <td>0.891947</td>
+      <td>0.914836</td>
+      <td>0.891947</td>
+      <td>0.836954</td>
+      <td>0.914836</td>
+      <td>0.793973</td>
+      <td>0.750524</td>
+      <td>0.750524</td>
+      <td>0.708075</td>
+      <td>0.688954</td>
+      <td>0.600002</td>
+      <td>0.688954</td>
+      <td>0.624925</td>
+      <td>1.840249</td>
+      <td>1.767745</td>
+      <td>1.846619</td>
+      <td>345.204987</td>
+      <td>983.766113</td>
+      <td>95.890282</td>
+      <td>798.536499</td>
+      <td>0.701463</td>
+      <td>0.738382</td>
+      <td>2.083159</td>
+      <td>3.0</td>
+      <td>345.204987</td>
+      <td>b'SP          '</td>
+      <td>1.5</td>
+      <td>1.500040</td>
+      <td>972.200012</td>
+      <td>10.192231</td>
+      <td>751.692993</td>
+      <td>0.609954</td>
+      <td>0.642057</td>
+      <td>1.030649</td>
+      <td>3.0</td>
+      <td>764.698669</td>
+      <td>80.0</td>
+      <td>59.901703</td>
+      <td>89.835510</td>
+      <td>61.075348</td>
+      <td>22.838249</td>
+      <td>36.692032</td>
+      <td>11.202093</td>
+      <td>12.114928</td>
+      <td>0.017859</td>
+      <td>345.204987</td>
+      <td>90.0</td>
+      <td>60.0</td>
+      <td>0.0</td>
+      <td>-10.2</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>mx1_path = r&quot;C:\Users\aUsername\3S\sir3stoolkit\docs\source\tutorials\SIR3S_Model_Mantle\Tutorial051_Assets\WDToolkit_Tutorial51_Model\B1\V0\BZ1\M-1-0-1.1.MX1&quot;
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetTimeStamps()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+([&#39;2023-02-13 00:00:00.000 +01:00&#39;,
+  &#39;2023-02-13 01:00:00.000 +01:00&#39;,
+  &#39;2023-02-13 02:00:00.000 +01:00&#39;,
+  &#39;2023-02-13 03:00:00.000 +01:00&#39;,
+  &#39;2023-02-13 04:00:00.000 +01:00&#39;,
+  &#39;2023-02-13 05:00:00.000 +01:00&#39;,
+  &#39;2023-02-13 06:00:00.000 +01:00&#39;,
+  &#39;2023-02-13 07:00:00.000 +01:00&#39;,
+  &#39;2023-02-13 08:00:00.000 +01:00&#39;,
+  &#39;2023-02-13 09:00:00.000 +01:00&#39;,
+  &#39;2023-02-13 10:00:00.000 +01:00&#39;,
+  &#39;2023-02-13 11:00:00.000 +01:00&#39;,
+  &#39;2023-02-13 12:00:00.000 +01:00&#39;,
+  &#39;2023-02-13 13:00:00.000 +01:00&#39;,
+  &#39;2023-02-13 14:00:00.000 +01:00&#39;,
+  &#39;2023-02-13 15:00:00.000 +01:00&#39;,
+  &#39;2023-02-13 16:00:00.000 +01:00&#39;,
+  &#39;2023-02-13 17:00:00.000 +01:00&#39;,
+  &#39;2023-02-13 18:00:00.000 +01:00&#39;,
+  &#39;2023-02-13 19:00:00.000 +01:00&#39;,
+  &#39;2023-02-13 20:00:00.000 +01:00&#39;,
+  &#39;2023-02-13 21:00:00.000 +01:00&#39;,
+  &#39;2023-02-13 22:00:00.000 +01:00&#39;,
+  &#39;2023-02-13 23:00:00.000 +01:00&#39;,
+  &#39;2023-02-14 00:00:00.000 +01:00&#39;],
+ &#39;2023-02-13 00:00:00.000 +01:00&#39;,
+ &#39;&#39;,
+ &#39;&#39;)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_mx = s3s.read_mx_results(mx1_filepath=mx1_path
+                            ,timestamps=[&quot;2023-02-13 17:00:00.000 +01:00&quot;, &quot;2023-02-13 22:00:00.000 +01:00&quot;])
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+[2026-08-12 11:59:51,894] INFO in sir3stoolkit.mantle.dataframes: [mx read] Reading MX results from: C:\Users\aUsername\3S\sir3stoolkit\docs\source\tutorials\SIR3S_Model_Mantle\Tutorial051_Assets\WDToolkit_Tutorial51_Model\B1\V0\BZ1\M-1-0-1.1.MX1
+[2026-08-12 11:59:51,896] INFO in sir3stoolkit.mantle.dataframes: [mx helpers] Initializing MX read helpers ...
+[2026-08-12 11:59:51,898] INFO in sir3stoolkit.mantle.dataframes: [mx helpers] Parsing MX1: C:\Users\aUsername\3S\sir3stoolkit\docs\source\tutorials\SIR3S_Model_Mantle\Tutorial051_Assets\WDToolkit_Tutorial51_Model\B1\V0\BZ1\M-1-0-1.1.MX1
+[2026-08-12 11:59:51,927] INFO in sir3stoolkit.mantle.dataframes: [mx helpers] Parsed MX1 successfully. Shape: (509, 27)
+[2026-08-12 11:59:51,927] INFO in sir3stoolkit.mantle.dataframes: [mx helpers] Parsing MX2: C:\Users\aUsername\3S\sir3stoolkit\docs\source\tutorials\SIR3S_Model_Mantle\Tutorial051_Assets\WDToolkit_Tutorial51_Model\B1\V0\BZ1\M-1-0-1.MX2
+[2026-08-12 11:59:51,938] INFO in sir3stoolkit.mantle.dataframes: [mx helpers] Parsed MX2 successfully. Shape: (29, 7)
+[2026-08-12 11:59:51,938] INFO in sir3stoolkit.mantle.dataframes: [mx helpers] Building MX record unpack format ...
+[2026-08-12 11:59:51,950] INFO in sir3stoolkit.mantle.dataframes: [mx helpers] Built unpack format successfully. Record length: 210104 bytes
+[2026-08-12 11:59:51,953] INFO in sir3stoolkit.mantle.dataframes: [mx helpers] Building MX unpack layout ...
+[2026-08-12 11:59:52,012] INFO in sir3stoolkit.mantle.dataframes: [mx helpers] Built MX unpack layout successfully.
+[2026-08-12 11:59:52,013] INFO in sir3stoolkit.mantle.dataframes: [mx helpers] Initialized. MX1 rows: 509, MX2 rows: 29, non-vector channels: 332, vector channels: 176
+[2026-08-12 11:59:52,018] INFO in sir3stoolkit.mantle.dataframes: [mx read] Timestamp filter active: 2 requested timestamp(s).
+[2026-08-12 11:59:52,076] INFO in sir3stoolkit.mantle.dataframes: [mx read] Done. Records scanned: 28. Records decoded: 2. Unique timestamps: 2.
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_mx.head()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ALLG~~~5597593673700177669~SNAPSHOTTYPE</th>
+      <th>ALLG~~~5597593673700177669~CVERSO</th>
+      <th>ALLG~~~5597593673700177669~EXSTAT</th>
+      <th>ALLG~~~5597593673700177669~NFEHL</th>
+      <th>ALLG~~~5597593673700177669~NWARN</th>
+      <th>ALLG~~~5597593673700177669~NMELD</th>
+      <th>ALLG~~~5597593673700177669~CPUTIME</th>
+      <th>ALLG~~~5597593673700177669~USRTIME</th>
+      <th>ALLG~~~5597593673700177669~NPGREST</th>
+      <th>ALLG~~~5597593673700177669~NETZABN</th>
+      <th>ALLG~~~5597593673700177669~NFVHYUV</th>
+      <th>ALLG~~~5597593673700177669~NFVTHUV</th>
+      <th>ALLG~~~5597593673700177669~MFVHYUV</th>
+      <th>ALLG~~~5597593673700177669~MFVTHUV</th>
+      <th>ALLG~~~5597593673700177669~TVMINMAX</th>
+      <th>ALLG~~~5597593673700177669~ITERHY</th>
+      <th>ALLG~~~5597593673700177669~JWARN</th>
+      <th>ALLG~~~5597593673700177669~NETZABNEXITS</th>
+      <th>ALLG~~~5597593673700177669~LINEPACKRATE</th>
+      <th>ALLG~~~5597593673700177669~LINEPACKGES</th>
+      <th>ALLG~~~5597593673700177669~LINEPACKGEOM</th>
+      <th>ALLG~~~5597593673700177669~RHOAV</th>
+      <th>ALLG~~~5597593673700177669~TAV</th>
+      <th>ALLG~~~5597593673700177669~PAV</th>
+      <th>ALLG~~~5597593673700177669~FWVB_DPHMIN</th>
+      <th>ALLG~~~5597593673700177669~KNOT_PHMAX</th>
+      <th>ALLG~~~5597593673700177669~KNOT_PHMIN</th>
+      <th>ALLG~~~5597593673700177669~FWVB_TVLMIN</th>
+      <th>ALLG~~~5597593673700177669~NETZBEZ</th>
+      <th>ALLG~~~5597593673700177669~KNOT_PHMAX_V</th>
+      <th>ALLG~~~5597593673700177669~KNOT_PHMAX_R</th>
+      <th>ALLG~~~5597593673700177669~KNOT_PHMAX_U</th>
+      <th>ALLG~~~5597593673700177669~KNOT_PHMIN_V</th>
+      <th>ALLG~~~5597593673700177669~KNOT_PHMIN_R</th>
+      <th>ALLG~~~5597593673700177669~KNOT_PHMIN_U</th>
+      <th>ALLG~~~5597593673700177669~ITERTH</th>
+      <th>ALLG~~~5597593673700177669~INTERAKTTH</th>
+      <th>ALLG~~~5597593673700177669~INTERAKTRG</th>
+      <th>KNOT~R-E~~4945502875946918021~PH</th>
+      <th>KNOT~V-E~~5364585352767333609~PH</th>
+      <th>KNOT~V-E~~5364585352767333609~T</th>
+      <th>VENT~R-E0~R-E~5078909058477631059~QM</th>
+      <th>KNOT~R-E~~4945502875946918021~T</th>
+      <th>WBLZ~WärmeblnzGes~~5747928298316755683~WVB</th>
+      <th>WBLZ~WärmeblnzGes~~5747928298316755683~WVERL</th>
+      <th>FWVB~V-K2153S~R-K4633S~4695691920575201490~LFT</th>
+      <th>FWVB~V-K2243S~R-K4723S~4612643650175000934~DP</th>
+      <th>FWVB~V-K333S~R-K2813S~5298892186072792581~DP</th>
+      <th>FWVB~V-K1393S~R-K3873S~5641820391023802273~DP</th>
+      <th>FWVB~V-K1393S~R-K3873S~5714834959169623562~DP</th>
+      <th>FWVB~V-K593S~R-K3073S~5539308064883517142~DP</th>
+      <th>FWVB~V-K153S~R-K2633S~4851778549814053310~DP</th>
+      <th>FWVB~V-K2263S~R-K4743S~5095755403689234488~DP</th>
+      <th>FWVB~V-K2263S~R-K4743S~4754662858150981800~DP</th>
+      <th>FWVB~V-K133S~R-K2613S~4831899581981959889~DP</th>
+      <th>FWVB~V-SP01~R-SP01~5373061288922912729~DP</th>
+      <th>FWVB~V-SP01~R-SP01~5338005695177201668~DP</th>
+      <th>FWVB~V-SP01~R-SP01~5103671514823328293~DP</th>
+      <th>FWVB~V-K123S~R-K2603S~5568194212677879165~DP</th>
+      <th>FWVB~V-K1363S~R-K3843S~5534236886775923535~DP</th>
+      <th>FWVB~V-K1373S~R-K3853S~5054661805697996469~DP</th>
+      <th>FWVB~V-K1363S~R-K3843S~4677484876769683069~DP</th>
+      <th>FWVB~V-K1343S~R-K3823S~5331382729720004878~DP</th>
+      <th>FWVB~V-K1323S~R-K3803S~5320145816789148184~DP</th>
+      <th>FWVB~V-K73S~R-K2553S~4660745360789977502~DP</th>
+      <th>FWVB~V-K73S~R-K2553S~5475433067817926464~DP</th>
+      <th>FWVB~V-K63S~R-K2543S~5088507410302060583~DP</th>
+      <th>FWVB~V-K23S~R-K2503S~4799202816710088269~DP</th>
+      <th>FWVB~V-K73S~R-K2553S~5567370826017196953~DP</th>
+      <th>FWVB~V-K1313S~R-K3793S~4721603020200203929~DP</th>
+      <th>FWVB~V-K1243S~R-K3723S~5539118071732060322~DP</th>
+      <th>FWVB~V-K1283S~R-K3763S~5433812588779537970~DP</th>
+      <th>FWVB~V-K1303S~R-K3783S~4982647601065704474~DP</th>
+      <th>FWVB~V-K1303S~R-K3783S~4758534110963451621~DP</th>
+      <th>FWVB~V-K13S~R-K2493S~5157987375362402948~DP</th>
+      <th>FWVB~V-K13S~R-K2493S~5572700189436507358~DP</th>
+      <th>FWVB~V-K133S~R-K2623S~5042957248574195254~DP</th>
+      <th>FWVB~V-K123S~R-K2603S~5620374956890186419~DP</th>
+      <th>FWVB~V-K123S~R-K2603S~5642186467419772313~DP</th>
+      <th>FWVB~V-K113S~R-K2593S~4952675334963811549~DP</th>
+      <th>FWVB~V-K63S~R-K2543S~5289349232690798866~DP</th>
+      <th>FWVB~V-K23S~R-K2503S~5263894803742270480~DP</th>
+      <th>FWVB~V-K23S~R-K2503S~5258191418983486434~DP</th>
+      <th>FWVB~V-K13S~R-K2493S~5219695668506679887~DP</th>
+      <th>FWVB~V-K23S~R-K2503S~5089681968228574805~DP</th>
+      <th>FWVB~V-K23S~R-K2503S~4723552478525716099~DP</th>
+      <th>FWVB~V-K1243S~R-K3723S~4717900447084130786~DP</th>
+      <th>FWVB~V-K1243S~R-K3723S~4680566654399387170~DP</th>
+      <th>FWVB~V-K1273S~R-K3753S~4774089356071680115~DP</th>
+      <th>FWVB~V-K1303S~R-K3783S~5483836906626806693~DP</th>
+      <th>FWVB~V-K13S~R-K2493S~5723652079410431099~DP</th>
+      <th>FWVB~V-K13S~R-K2493S~5152070634362289135~DP</th>
+      <th>FWVB~V-K463S~R-K2943S~4715437119287917203~DP</th>
+      <th>FWVB~V-K2023S~R-K4503S~5429690733112787259~DP</th>
+      <th>FWVB~V-K2023S~R-K4503S~5470212073687668936~DP</th>
+      <th>FWVB~V-K2023S~R-K4503S~4690848713916516887~DP</th>
+      <th>FWVB~V-K583S~R-K3063S~5210301978863275664~DP</th>
+      <th>FWVB~V-K583S~R-K3063S~4769972484103895237~DP</th>
+      <th>FWVB~V-K583S~R-K3063S~4839284960010591311~DP</th>
+      <th>FWVB~V-K2173S~R-K4653S~5238469959575677978~DP</th>
+      <th>FWVB~V-K573S~R-K3053S~5378395521233234009~DP</th>
+      <th>FWVB~V-K2153S~R-K4633S~5272427879633450297~DP</th>
+      <th>FWVB~V-K1163S~R-K3643S~5563426535048622787~DP</th>
+      <th>FWVB~V-K583S~R-K3063S~5708564737898353551~DP</th>
+      <th>FWVB~V-K583S~R-K3063S~5646104354697048422~DP</th>
+      <th>FWVB~V-K1163S~R-K3643S~4998245026021181527~DP</th>
+      <th>FWVB~V-K2063S~R-K3063S~5030808405918905856~DP</th>
+      <th>FWVB~V-K2063S~R-K4543S~5589819464555437381~DP</th>
+      <th>FWVB~V-K933S~R-K3413S~5021149544911429814~DP</th>
+      <th>FWVB~V-K2073S~R-K4553S~5483428144944113828~DP</th>
+      <th>FWVB~V-K2073S~R-K4553S~5608524552763679614~DP</th>
+      <th>FWVB~V-K2023S~R-K4503S~5626371875066735675~DP</th>
+      <th>FWVB~V-K403S~R-K2883S~5421154557729864641~DP</th>
+      <th>FWVB~V-K2003S~R-K4483S~4808379698586732872~DP</th>
+      <th>FWVB~V-K253S~R-K2733S~4754045271859275254~DP</th>
+      <th>FWVB~V-K1643S~R-K4123S~4804522946718449543~DP</th>
+      <th>FWVB~V-K1643S~R-K4123S~5397095414062959706~DP</th>
+      <th>FWVB~V-K1653S~R-K4133S~4972542528251576003~DP</th>
+      <th>FWVB~V-K1663S~R-K4143S~4841968208579971744~DP</th>
+      <th>FWVB~V-K1663S~R-K4143S~4790880210700946505~DP</th>
+      <th>FWVB~V-K273S~R-K2753S~5134226995532837471~DP</th>
+      <th>FWVB~V-K273S~R-K2753S~5199665792777686632~DP</th>
+      <th>FWVB~V-K263S~R-K2743S~4829820734742795813~DP</th>
+      <th>FWVB~V-K1643S~R-K4123S~5473902379470916704~DP</th>
+      <th>FWVB~V-K273S~R-K2753S~5095071279723776262~DP</th>
+      <th>FWVB~V-K263S~R-K2743S~4969795535504580282~DP</th>
+      <th>FWVB~V-K263S~R-K2743S~5389503305937461852~DP</th>
+      <th>FWVB~V-K263S~R-K2743S~5491075003903254860~DP</th>
+      <th>FWVB~V-K233S~R-K2713S~5333950106019937551~DP</th>
+      <th>FWVB~V-K243S~R-K2723S~5078322764546640049~DP</th>
+      <th>FWVB~V-K573S~R-K3053S~5074136990830026951~DP</th>
+      <th>FWVB~V-K1083S~R-K3563S~5721943751421394086~DP</th>
+      <th>FWVB~V-K1083S~R-K3563S~4617599012360428982~DP</th>
+      <th>FWVB~V-K1073S~R-K3553S~5143587653110554807~DP</th>
+      <th>FWVB~V-K1073S~R-K3553S~5155974252610494227~DP</th>
+      <th>FWVB~V-K1073S~R-K3553S~5507469098629391620~DP</th>
+      <th>FWVB~V-K1083S~R-K3563S~4644294207793899393~DP</th>
+      <th>FWVB~V-K1083S~R-K3563S~4729135819215267446~DP</th>
+      <th>FWVB~V-K313S~R-K2793S~5397363169018116905~DP</th>
+      <th>FWVB~V-K323S~R-K2803S~5293083471824257348~DP</th>
+      <th>FWVB~V-K573S~R-K3053S~4692947232485098213~DP</th>
+      <th>FWVB~V-K1083S~R-K3563S~4840514655814345420~DP</th>
+      <th>FWVB~V-K1083S~R-K3563S~4984259280617000809~DP</th>
+      <th>FWVB~V-K2153S~R-K4633S~5450848705169565418~DP</th>
+      <th>FWVB~V-K1083S~R-K3563S~5013175068886361021~DP</th>
+      <th>FWVB~V-K1083S~R-K3563S~5129945735358846816~DP</th>
+      <th>FWVB~V-K1123S~R-K3603S~5641063690842961168~DP</th>
+      <th>FWVB~V-K1073S~R-K3553S~5166680757495237751~DP</th>
+      <th>FWVB~V-K1063S~R-K3543S~4614551030187170583~DP</th>
+      <th>FWVB~V-K1063S~R-K3543S~5049615340607119167~DP</th>
+      <th>FWVB~V-K1063S~R-K3543S~5182171757783007257~DP</th>
+      <th>FWVB~V-K293S~R-K2773S~4699379554487286912~DP</th>
+      <th>FWVB~V-K333S~R-K2813S~5493473140425149473~DP</th>
+      <th>FWVB~V-K333S~R-K2813S~5229547090188049969~DP</th>
+      <th>FWVB~V-K03S~R-K2483S~5078971821722268135~DP</th>
+      <th>FWVB~V-K1613S~R-K4093S~4838424991008300464~DP</th>
+      <th>FWVB~V-K1603S~R-K4083S~5119436336432835935~DP</th>
+      <th>FWVB~V-K243S~R-K2723S~5069875460823955334~DP</th>
+      <th>FWVB~V-K1623S~R-K4103S~4612562908060328263~DP</th>
+      <th>FWVB~V-K1613S~R-K4093S~4968006119183593408~DP</th>
+      <th>FWVB~V-K1603S~R-K4113S~4780867592274315225~DP</th>
+      <th>FWVB~V-K1633S~R-K4113S~4689962447077782592~DP</th>
+      <th>FWVB~V-K1633S~R-K4113S~4907629360497270624~DP</th>
+      <th>FWVB~V-K1103S~R-K3583S~5114532772926850507~DP</th>
+      <th>FWVB~V-K1143S~R-K3623S~4957429172484513667~DP</th>
+      <th>FWVB~V-K1153S~R-K3633S~5683164004528603492~DP</th>
+      <th>FWVB~V-K1153S~R-K3633S~4753737713576765068~DP</th>
+      <th>FWVB~V-K1033S~R-K3513S~5511883908108493205~DP</th>
+      <th>FWVB~V-K1033S~R-K3513S~4985463247915540404~DP</th>
+      <th>FWVB~V-K1213S~R-K3663S~5696463829656272308~DP</th>
+      <th>FWVB~V-K1223S~R-K3703S~4879060213783619417~DP</th>
+      <th>FWVB~V-K1233S~R-K3713S~5328839321384231626~DP</th>
+      <th>FWVB~V-K1233S~R-K3713S~4908302009467601605~DP</th>
+      <th>FWVB~V-K1233S~R-K3713S~5081759066536254041~DP</th>
+      <th>FWVB~V-K1223S~R-K3703S~4920414355371836818~DP</th>
+      <th>FWVB~V-K03S~R-K2483S~4953528746012203881~DP</th>
+      <th>FWVB~V-K1133S~R-K3613S~5514426350058393064~DP</th>
+      <th>FWVB~V-K2153S~R-K4633S~4695691920575201490~DP</th>
+      <th>FWVB~V-K1173S~R-K3653S~5686938269985987108~DP</th>
+      <th>FWVB~V-K1173S~R-K3653S~5608013454113942505~DP</th>
+      <th>FWVB~V-K1173S~R-K3653S~5554180086935671036~DP</th>
+      <th>FWVB~V-K1173S~R-K3653S~4715343979099977320~DP</th>
+      <th>FWVB~V-K1153S~R-K3633S~5276185429031066619~DP</th>
+      <th>FWVB~V-K1153S~R-K3633S~5752171491358190657~DP</th>
+      <th>FWVB~V-K1153S~R-K3633S~5044737621363717731~DP</th>
+      <th>FWVB~V-K1153S~R-K3633S~4959178524702114605~DP</th>
+      <th>FWVB~V-K963S~R-K3443S~5184692294783766508~DP</th>
+      <th>FWVB~V-K1023S~R-K3503S~5015574389658457843~DP</th>
+      <th>FWVB~V-K1023S~R-K3503S~5340682804823281975~DP</th>
+      <th>FWVB~V-K1183S~R-K3663S~4773718045303625562~DP</th>
+      <th>FWVB~V-K1203S~R-K3683S~4611752310942477664~DP</th>
+      <th>FWVB~V-K1213S~R-K3693S~5649394575722244706~DP</th>
+      <th>FWVB~V-K1223S~R-K3703S~5683145831265886679~DP</th>
+      <th>FWVB~V-K1223S~R-K3703S~5347934852716104645~DP</th>
+      <th>FWVB~V-K03S~R-K2483S~5338581593552364614~DP</th>
+      <th>FWVB~V-K403S~R-K2883S~4747253770471595859~DP</th>
+      <th>FWVB~V-K403S~R-K2883S~5005156965723780226~DP</th>
+      <th>FWVB~V-K413S~R-K2893S~4737813668193434747~DP</th>
+      <th>FWVB~V-K403S~R-K2883S~4824230293599010462~DP</th>
+      <th>FWVB~V-K413S~R-K2893S~4961446825744614653~DP</th>
+      <th>FWVB~V-K423S~R-K2903S~4794000986315043981~DP</th>
+      <th>FWVB~V-K433S~R-K2913S~5663966403597611254~DP</th>
+      <th>FWVB~V-K443S~R-K2923S~5285271495094652658~DP</th>
+      <th>FWVB~V-K443S~R-K2923S~5010483887057780845~DP</th>
+      <th>FWVB~V-K453S~R-K2933S~5153454494023353435~DP</th>
+      <th>FWVB~V-K463S~R-K2943S~5577210775620233409~DP</th>
+      <th>FWVB~V-K463S~R-K2943S~4884816399211992951~DP</th>
+      <th>FWVB~V-K473S~R-K2953S~5368434258234128749~DP</th>
+      <th>FWVB~V-K473S~R-K2953S~4934825369837329981~DP</th>
+      <th>FWVB~V-K473S~R-K2953S~4716889123169234975~DP</th>
+      <th>FWVB~V-K2383S~R-K4863S~4804005204522723919~DP</th>
+      <th>FWVB~V-K2383S~R-K4863S~5204002376528007016~DP</th>
+      <th>FWVB~V-K163S~R-K2643S~5118203249310421888~DP</th>
+      <th>FWVB~V-K163S~R-K2643S~4869838397682489649~DP</th>
+      <th>FWVB~V-K163S~R-K2643S~5055469814130651373~DP</th>
+      <th>FWVB~V-K163S~R-K2643S~4889571787974482626~DP</th>
+      <th>FWVB~V-K163S~R-K2643S~4615450207162449682~DP</th>
+      <th>FWVB~V-K1663S~R-K4143S~4988773153864880048~DP</th>
+      <th>FWVB~V-K163S~R-K2643S~5563311426525208573~DP</th>
+      <th>FWVB~V-K143S~R-K2623S~5330290974871142634~DP</th>
+      <th>FWVB~V-K463S~R-K2943S~4729161400809722771~DP</th>
+      <th>FWVB~V-K473S~R-K2953S~4754097142009822062~DP</th>
+      <th>FWVB~V-K2403S~R-K4883S~5401810795366193685~DP</th>
+      <th>FWVB~V-K153S~R-K2633S~5384468559580542759~DP</th>
+      <th>FWVB~V-K133S~R-K2613S~5318331789158859772~DP</th>
+      <th>FWVB~V-K1093S~R-K3573S~4738106601869918484~DP</th>
+      <th>FWVB~V-K1093S~R-K3573S~4775801701553878603~DP</th>
+      <th>FWVB~V-K1093S~R-K3573S~4732732360611106938~DP</th>
+      <th>FWVB~V-K1093S~R-K3573S~4778286022227403033~DP</th>
+      <th>FWVB~V-K2083S~R-K4563S~5435045382624363994~DP</th>
+      <th>FWVB~V-K2083S~R-K4563S~5242842916750666925~DP</th>
+      <th>FWVB~V-K2083S~R-K4563S~4912783072892831323~DP</th>
+      <th>FWVB~V-K2083S~R-K4563S~4687151605522873415~DP</th>
+      <th>FWVB~V-K2083S~R-K4563S~5634194602703056958~DP</th>
+      <th>FWVB~V-K593S~R-K3073S~5625042714189478940~DP</th>
+      <th>FWVB~V-K593S~R-K3073S~4840040765573687334~DP</th>
+      <th>FWVB~V-K603S~R-K3083S~5694344737203567106~DP</th>
+      <th>FWVB~V-K2393S~R-K4873S~4620979504570756922~DP</th>
+      <th>FWVB~V-K593S~R-K3073S~5410122665508561633~DP</th>
+      <th>FWVB~V-K603S~R-K3083S~5014468390007665690~DP</th>
+      <th>FWVB~V-K1073S~R-K3553S~5233585288374752785~DP</th>
+      <th>FWVB~V-K953S~R-K3633S~4674360527812832669~DP</th>
+      <th>FWVB~V-K953S~R-K3433S~5087702146373705981~DP</th>
+      <th>FWVB~V-K953S~R-K3433S~5142910015534822732~DP</th>
+      <th>FWVB~V-K963S~R-K3443S~5080512732384776234~DP</th>
+      <th>FWVB~V-K963S~R-K3443S~5227036118096218347~DP</th>
+      <th>FWVB~V-K973S~R-K3453S~5448365009177867429~DP</th>
+      <th>FWVB~V-K1013S~R-K3493S~4904021830209359251~DP</th>
+      <th>FWVB~V-K953S~R-K3433S~5678013267622520703~DP</th>
+      <th>FWVB~V-K953S~R-K3433S~5036661921214789266~DP</th>
+      <th>FWVB~V-K963S~R-K3443S~5533600337297302902~DP</th>
+      <th>FWVB~V-K963S~R-K3443S~4843922463467905314~DP</th>
+      <th>FWVB~V-K973S~R-K3453S~5422109685270461796~DP</th>
+      <th>FWVB~V-K973S~R-K3453S~5510201249316735879~DP</th>
+      <th>FWVB~V-K1003S~R-K3483S~5345883489919526044~DP</th>
+      <th>FWVB~V-K1013S~R-K3493S~5749366699607682518~DP</th>
+      <th>FWVB~V-K1023S~R-K3503S~5395974162027139767~DP</th>
+      <th>FWVB~V-K473S~R-K2953S~5594862625858924531~DP</th>
+      <th>FWVB~V-SP02~R-SP02~4848015442334341000~DP</th>
+      <th>FWVB~V-K473S~R-K2953S~5629665606219325209~DP</th>
+      <th>FWVB~V-K253S~R-K2733S~5033838081953255687~DP</th>
+      <th>FWVB~V-K273S~R-K2753S~4679890828975781067~DP</th>
+      <th>FWVB~V-K2383S~R-K4863S~5037872509385452159~DP</th>
+      <th>FWVB~V-K2383S~R-K4863S~5375255181374254857~DP</th>
+      <th>FWVB~V-K2383S~R-K4863S~5659192153935849444~DP</th>
+      <th>FWVB~V-K473S~R-K2953S~5416161135167168216~DP</th>
+      <th>FWVB~V-K2013S~R-K4493S~4726386820185329079~DP</th>
+      <th>FWVB~V-K2023S~R-K4503S~5048794081120001623~DP</th>
+      <th>FWVB~V-K1493S~R-K3973S~5078575524279271295~DP</th>
+      <th>FWVB~V-K1473S~R-K3953S~5328165953472204269~DP</th>
+      <th>FWVB~V-K1463S~R-K3943S~4827314536298448425~DP</th>
+      <th>FWVB~V-K1453S~R-K3933S~5053527380726940026~DP</th>
+      <th>FWVB~V-K1443S~R-K3923S~5722736529457112020~DP</th>
+      <th>FWVB~V-K1443S~R-K3923S~4833248160019911615~DP</th>
+      <th>FWVB~V-K1433S~R-K3913S~5022762526597417884~DP</th>
+      <th>FWVB~V-K1423S~R-K3903S~5172442747972094426~DP</th>
+      <th>FWVB~V-K1423S~R-K3903S~5219159297285087056~DP</th>
+      <th>FWVB~V-K1403S~R-K3883S~5290157706408162198~DP</th>
+      <th>FWVB~V-K1403S~R-K3883S~5413829902103673412~DP</th>
+      <th>FWVB~V-K1403S~R-K3883S~4724782239687086625~DP</th>
+      <th>FWVB~V-K1403S~R-K3883S~5332535673077775580~DP</th>
+      <th>FWVB~V-K2143S~R-K4623S~5690996677853628489~DP</th>
+      <th>FWVB~V-K1423S~R-K3903S~5462869912273155677~DP</th>
+      <th>FWVB~V-K1433S~R-K3913S~4912417173031909926~DP</th>
+      <th>FWVB~V-K1423S~R-K3903S~5632830894118958363~DP</th>
+      <th>FWVB~V-K1443S~R-K3923S~5129892855980697258~DP</th>
+      <th>FWVB~V-K1433S~R-K3913S~4812170061133334192~DP</th>
+      <th>FWVB~V-K1453S~R-K3933S~4650690516913118760~DP</th>
+      <th>FWVB~V-K1473S~R-K3953S~5593258920455231713~DP</th>
+      <th>FWVB~V-K1473S~R-K3953S~4773249905911243471~DP</th>
+      <th>FWVB~V-K1493S~R-K3973S~5139255343562953856~DP</th>
+      <th>FWVB~V-K1503S~R-K3983S~4945961939269554771~DP</th>
+      <th>FWVB~V-K1533S~R-K4013S~4945833664991839087~DP</th>
+      <th>FWVB~V-K1503S~R-K3983S~4805781336100450167~DP</th>
+      <th>FWVB~V-K1523S~R-K4003S~5111577951994515523~DP</th>
+      <th>FWVB~V-K943S~R-K3423S~5567312130001677534~DP</th>
+      <th>FWVB~V-K2023S~R-K4503S~5430848372257542560~DP</th>
+      <th>FWVB~V-K2063S~R-K4543S~5147813561931418786~DP</th>
+      <th>VENT~V-E~V-E0~5120684848284658605~QM</th>
+      <th>PUMP~R-E~R-E2~5374020919990423089~RHO</th>
+      <th>PUMP~R-E~R-E2~5374020919990423089~M</th>
+      <th>PUMP~R-E~R-E2~5374020919990423089~N</th>
+      <th>PUMP~R-E~R-E2~5374020919990423089~ETA</th>
+      <th>PUMP~R-E~R-E2~5374020919990423089~ETAW</th>
+      <th>PUMP~R-E~R-E2~5374020919990423089~DP</th>
+      <th>KNOT~R-E-DH~~5037146832979712094~PH</th>
+      <th>VENT~R-E3~R-E4~5652541284139882253~QM</th>
+      <th>PGRP~R-E~R-E3~4924988159454251099~RART</th>
+      <th>PGRP~R-E~R-E3~4924988159454251099~W</th>
+      <th>PGRP~R-E~R-E3~4924988159454251099~X</th>
+      <th>PUMP~V-TS-S-WU2~V-TS-S-WU2b~5661833458038115239~RHO</th>
+      <th>PUMP~V-TS-S-WU2~V-TS-S-WU2b~5661833458038115239~M</th>
+      <th>PUMP~V-TS-S-WU2~V-TS-S-WU2b~5661833458038115239~N</th>
+      <th>PUMP~V-TS-S-WU2~V-TS-S-WU2b~5661833458038115239~ETA</th>
+      <th>PUMP~V-TS-S-WU2~V-TS-S-WU2b~5661833458038115239~ETAW</th>
+      <th>PUMP~V-TS-S-WU2~V-TS-S-WU2b~5661833458038115239~DP</th>
+      <th>KNOT~R-TS-DH~~4810663080415972317~PH</th>
+      <th>FWWU~FWWU_505061~~5140753672436942021~Q</th>
+      <th>FWWU~FWWU_505061~~5140753672436942021~T2AUS</th>
+      <th>FWWU~FWWU_505061~~5140753672436942021~T2EIN</th>
+      <th>FWWU~FWWU_505061~~5140753672436942021~T1EIN</th>
+      <th>FWWU~FWWU_505061~~5140753672436942021~T1AUS</th>
+      <th>VENT~V-TS-P~V-TS-P-WU~5257205059759497594~QM</th>
+      <th>VENT~V-TS-S-WU~V-TS-S-WU2~5397401198360947165~QM</th>
+      <th>RMES~Last~~4899351962406121892~XA</th>
+      <th>RMES~Erzeugung~~5554547908379981123~XA</th>
+      <th>RDIV~WVerlProz~~5105729699655079411~XA</th>
+      <th>RMES~UWM~~5255082225302217802~XA</th>
+      <th>RFKT~TVL~~4836221118111466566~XA</th>
+      <th>RFKT~TRSP~~5737169626127702346~XA</th>
+      <th>RSLW~NetzTrennEin~~5347287125110176930~XA</th>
+      <th>SWVT~AT Tag~~5355550039103568011~W</th>
+      <th>FWES~*~*~*~DPH</th>
+      <th>FWES~*~*~*~IAKTIV</th>
+      <th>FWES~*~*~*~IHYTYP</th>
+      <th>FWES~*~*~*~ITHTYP</th>
+      <th>FWES~*~*~*~QM</th>
+      <th>FWES~*~*~*~TI</th>
+      <th>FWES~*~*~*~TK</th>
+      <th>FWES~*~*~*~W</th>
+      <th>FWES~*~*~*~WSOLL</th>
+      <th>FWWU~*~*~*~Q</th>
+      <th>FWWU~*~*~*~T1EIN</th>
+      <th>FWWU~*~*~*~T1AUS</th>
+      <th>FWWU~*~*~*~T2EIN</th>
+      <th>FWWU~*~*~*~T2AUS</th>
+      <th>FWWU~*~*~*~RE1</th>
+      <th>FWWU~*~*~*~RE2</th>
+      <th>FWWU~*~*~*~INDUV</th>
+      <th>FWWU~*~*~*~IAKTIV</th>
+      <th>KLAP~*~*~*~IAKTIV</th>
+      <th>KLAP~*~*~*~PHI</th>
+      <th>KLAP~*~*~*~PHR</th>
+      <th>KLAP~*~*~*~QM</th>
+      <th>KLAP~*~*~*~V</th>
+      <th>KLAP~*~*~*~ZETA</th>
+      <th>LFKT~*~*~*~FWVB_DPHMIN</th>
+      <th>LFKT~*~*~*~FWVB_TVLMIN</th>
+      <th>LFKT~*~*~*~NFVHYUV</th>
+      <th>LFKT~*~*~*~NFVTHUV</th>
+      <th>LFKT~*~*~*~MFVHYUV</th>
+      <th>LFKT~*~*~*~MFVTHUV</th>
+      <th>LFKT~*~*~*~TVMINMAX</th>
+      <th>PGRP~*~*~*~BK</th>
+      <th>PGRP~*~*~*~DPH</th>
+      <th>PGRP~*~*~*~ETA</th>
+      <th>PGRP~*~*~*~IAKTIV</th>
+      <th>PGRP~*~*~*~INDSTD</th>
+      <th>PGRP~*~*~*~IZSTPG</th>
+      <th>PGRP~*~*~*~NPUMPIST</th>
+      <th>PGRP~*~*~*~PE</th>
+      <th>PGRP~*~*~*~QM</th>
+      <th>PGRP~*~*~*~RART</th>
+      <th>PGRP~*~*~*~W</th>
+      <th>PGRP~*~*~*~X</th>
+      <th>PGRP_PUMP~*~*~*~IAKTIV</th>
+      <th>PUMP~*~*~*~DPH</th>
+      <th>PUMP~*~*~*~EINAUS</th>
+      <th>PUMP~*~*~*~ETA</th>
+      <th>PUMP~*~*~*~IAKTIV</th>
+      <th>PUMP~*~*~*~IND</th>
+      <th>PUMP~*~*~*~N</th>
+      <th>PUMP~*~*~*~PE</th>
+      <th>PUMP~*~*~*~QM</th>
+      <th>PUMP~*~*~*~RHO</th>
+      <th>PUMP~*~*~*~STOERUNG</th>
+      <th>PUMP~*~*~*~RCPU_W</th>
+      <th>PUMP~*~*~*~RCPU_X</th>
+      <th>PUMP~*~*~*~NPSH</th>
+      <th>PUMP~*~*~*~NPSHMIN</th>
+      <th>PUMP~*~*~*~NMINMAXDIF</th>
+      <th>PUMP~*~*~*~QN0</th>
+      <th>QVAR~*~*~*~FWVB_DPHMIN</th>
+      <th>QVAR~*~*~*~FWVB_TVLMIN</th>
+      <th>QVAR~*~*~*~NFVHYUV</th>
+      <th>QVAR~*~*~*~NFVTHUV</th>
+      <th>QVAR~*~*~*~MFVHYUV</th>
+      <th>QVAR~*~*~*~MFVTHUV</th>
+      <th>QVAR~*~*~*~TVMINMAX</th>
+      <th>RART~*~*~*~RCPL</th>
+      <th>RART~*~*~*~W</th>
+      <th>RCPL~*~*~*~KNOT</th>
+      <th>RCPL~*~*~*~W</th>
+      <th>RCPL~*~*~*~X</th>
+      <th>RCPL_ROWT~*~*~*~W</th>
+      <th>RCPL_ROWT~*~*~*~X</th>
+      <th>RDIV~*~*~*~XA</th>
+      <th>RDIV~*~*~*~XE1</th>
+      <th>RDIV~*~*~*~XE2</th>
+      <th>RFKT~*~*~*~XA</th>
+      <th>RFKT~*~*~*~XE</th>
+      <th>RLVG~*~*~*~XA</th>
+      <th>RLVG~*~*~*~XE1</th>
+      <th>RLVG~*~*~*~XE2</th>
+      <th>RMES~*~*~*~XA</th>
+      <th>RMES~*~*~*~XM</th>
+      <th>RMES~*~*~*~XU</th>
+      <th>RSLW~*~*~*~SWVT</th>
+      <th>RSLW~*~*~*~WAKT</th>
+      <th>RSLW~*~*~*~XA</th>
+      <th>RSTN~*~*~*~XE1</th>
+      <th>VENT~*~*~*~AUFZU</th>
+      <th>VENT~*~*~*~PHI</th>
+      <th>VENT~*~*~*~PHR</th>
+      <th>VENT~*~*~*~QM</th>
+      <th>VENT~*~*~*~V</th>
+      <th>VENT~*~*~*~ZETA</th>
+      <th>WBLZ~*~*~*~WES</th>
+      <th>WBLZ~*~*~*~WRAND</th>
+      <th>WBLZ~*~*~*~WSPEI</th>
+      <th>WBLZ~*~*~*~WVB</th>
+      <th>WBLZ~*~*~*~WVERL</th>
+      <th>FWES~*~*~*~V</th>
+      <th>FWVB~*~*~*~DPH</th>
+      <th>FWVB~*~*~*~IAKTIV</th>
+      <th>FWVB~*~*~*~INDUV</th>
+      <th>FWVB~*~*~*~LFH</th>
+      <th>FWVB~*~*~*~LFT</th>
+      <th>FWVB~*~*~*~M</th>
+      <th>FWVB~*~*~*~PHIRL</th>
+      <th>FWVB~*~*~*~PHIVL</th>
+      <th>FWVB~*~*~*~QM</th>
+      <th>FWVB~*~*~*~TI</th>
+      <th>FWVB~*~*~*~TK</th>
+      <th>FWVB~*~*~*~TVMIN</th>
+      <th>FWVB~*~*~*~W</th>
+      <th>FWVB~*~*~*~WSOLL</th>
+      <th>KNOT~*~*~*~DP</th>
+      <th>KNOT~*~*~*~DPH</th>
+      <th>KNOT~*~*~*~H</th>
+      <th>KNOT~*~*~*~IAKTIV</th>
+      <th>KNOT~*~*~*~LFAKTAKT</th>
+      <th>KNOT~*~*~*~P</th>
+      <th>KNOT~*~*~*~PDAMPF</th>
+      <th>KNOT~*~*~*~PH</th>
+      <th>KNOT~*~*~*~PH_EIN</th>
+      <th>KNOT~*~*~*~PH_MIN</th>
+      <th>KNOT~*~*~*~QM</th>
+      <th>KNOT~*~*~*~RHO</th>
+      <th>KNOT~*~*~*~T</th>
+      <th>KNOT~*~*~*~VOLD</th>
+      <th>KNOT~*~*~*~BCIND</th>
+      <th>KNOT~*~*~*~PHMINMAXDIF</th>
+      <th>KNOT~*~*~*~TTR</th>
+      <th>ROHR~*~*~*~A</th>
+      <th>ROHR~*~*~*~DWVERL</th>
+      <th>ROHR~*~*~*~IAKTIV</th>
+      <th>ROHR~*~*~*~IRTRENN</th>
+      <th>ROHR~*~*~*~PHR</th>
+      <th>ROHR~*~*~*~VOLDA</th>
+      <th>ROHR~*~*~*~VAV</th>
+      <th>ROHR~*~*~*~QMAV</th>
+      <th>ROHR~*~*~*~JV</th>
+      <th>ROHR~*~*~*~DWVERLABS</th>
+      <th>ROHR~*~*~*~PMIN</th>
+      <th>ROHR~*~*~*~PDAMPF</th>
+      <th>ROHR~*~*~*~TTRVEC</th>
+      <th>ROHR~*~*~*~DTTR</th>
+      <th>ROHR~*~*~*~WVL</th>
+      <th>KNOT~*~*~*~HMAX_INST</th>
+      <th>KNOT~*~*~*~HMIN_INST</th>
+      <th>KNOT~*~*~*~PMAX_INST</th>
+      <th>KNOT~*~*~*~PMIN_INST</th>
+      <th>ROHR~*~*~*~VI</th>
+      <th>ROHR~*~*~*~VK</th>
+      <th>ROHR~*~*~*~QMI</th>
+      <th>ROHR~*~*~*~QMK</th>
+      <th>ROHR~*~*~*~SVEC</th>
+      <th>ROHR~*~*~*~ZVEC</th>
+      <th>ROHR~*~*~*~PVEC</th>
+      <th>ROHR~*~*~*~MVEC</th>
+      <th>ROHR~*~*~*~TVEC</th>
+      <th>ROHR~*~*~*~RHOVEC</th>
+      <th>ROHR~*~*~*~PVECMAX_INST</th>
+      <th>ROHR~*~*~*~PVECMIN_INST</th>
+      <th>VENT~*~*~*~IAKTIV</th>
+      <th>ROHR~*~*~*~TI</th>
+      <th>ROHR~*~*~*~TK</th>
+      <th>ROHR~*~*~*~RHOI</th>
+      <th>ROHR~*~*~*~RHOK</th>
+      <th>FWVB~*~*~*~RHOI</th>
+      <th>FWVB~*~*~*~RHOK</th>
+      <th>VENT~*~*~*~RHO</th>
+      <th>VENT~*~*~*~DH</th>
+      <th>FWVB~*~*~*~DP</th>
+      <th>FWVB~*~*~*~DH</th>
+      <th>FWVB~*~*~*~MHYUV</th>
+      <th>FWVB~*~*~*~MTHUV</th>
+    </tr>
+    <tr>
+      <th>TIMESTAMP</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2023-02-13 16:00:00+00:00</th>
+      <td>b'TIME'</td>
+      <td>b'SIR 3S 90-15-02-44 3S Consult, 30827 Garbsen...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>37</td>
+      <td>0.890625</td>
+      <td>2.273989</td>
+      <td>0</td>
+      <td>0.000003</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>75.924225</td>
+      <td>17</td>
+      <td>30</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>5338.179199</td>
+      <td>975.678711</td>
+      <td>72.974152</td>
+      <td>4.117993</td>
+      <td>0.600003</td>
+      <td>5.860337</td>
+      <td>1.252633</td>
+      <td>10.0</td>
+      <td>0.000003</td>
+      <td>5.778688</td>
+      <td>5.860337</td>
+      <td>0.0</td>
+      <td>2.376822</td>
+      <td>1.252633</td>
+      <td>0.0</td>
+      <td>4</td>
+      <td>1</td>
+      <td>1</td>
+      <td>3.017126</td>
+      <td>5.778688</td>
+      <td>90.0</td>
+      <td>534.107300</td>
+      <td>59.972809</td>
+      <td>18.479509</td>
+      <td>0.216680</td>
+      <td>0.530255</td>
+      <td>1.694825</td>
+      <td>1.627802</td>
+      <td>1.491793</td>
+      <td>1.491793</td>
+      <td>1.933505</td>
+      <td>1.963840</td>
+      <td>1.668141</td>
+      <td>1.668141</td>
+      <td>0.951344</td>
+      <td>0.914057</td>
+      <td>0.914057</td>
+      <td>0.914057</td>
+      <td>1.011583</td>
+      <td>0.950532</td>
+      <td>0.925201</td>
+      <td>0.950532</td>
+      <td>0.967854</td>
+      <td>0.973436</td>
+      <td>1.093315</td>
+      <td>1.093315</td>
+      <td>1.221301</td>
+      <td>1.317946</td>
+      <td>1.093315</td>
+      <td>1.062908</td>
+      <td>1.343575</td>
+      <td>1.405231</td>
+      <td>1.391734</td>
+      <td>1.391734</td>
+      <td>1.407497</td>
+      <td>1.407497</td>
+      <td>1.063090</td>
+      <td>1.011583</td>
+      <td>1.011583</td>
+      <td>1.073307</td>
+      <td>1.221301</td>
+      <td>1.317946</td>
+      <td>1.317946</td>
+      <td>1.407497</td>
+      <td>1.317946</td>
+      <td>1.317946</td>
+      <td>1.343575</td>
+      <td>1.343575</td>
+      <td>1.392300</td>
+      <td>1.391734</td>
+      <td>1.407497</td>
+      <td>1.407497</td>
+      <td>2.002861</td>
+      <td>2.102654</td>
+      <td>2.102654</td>
+      <td>2.102654</td>
+      <td>2.294490</td>
+      <td>2.294490</td>
+      <td>2.294490</td>
+      <td>2.369285</td>
+      <td>2.126359</td>
+      <td>1.939471</td>
+      <td>1.966738</td>
+      <td>2.294490</td>
+      <td>2.294490</td>
+      <td>1.966738</td>
+      <td>2.345406</td>
+      <td>2.311658</td>
+      <td>2.372527</td>
+      <td>2.243196</td>
+      <td>2.243196</td>
+      <td>2.102654</td>
+      <td>1.572073</td>
+      <td>2.061213</td>
+      <td>1.754921</td>
+      <td>1.735027</td>
+      <td>1.735027</td>
+      <td>1.664638</td>
+      <td>1.613620</td>
+      <td>1.613620</td>
+      <td>1.909201</td>
+      <td>1.909201</td>
+      <td>1.799091</td>
+      <td>1.735027</td>
+      <td>1.909201</td>
+      <td>1.799091</td>
+      <td>1.799091</td>
+      <td>1.799091</td>
+      <td>1.709182</td>
+      <td>1.735767</td>
+      <td>2.126359</td>
+      <td>2.045314</td>
+      <td>2.045314</td>
+      <td>1.989707</td>
+      <td>1.989707</td>
+      <td>1.989707</td>
+      <td>2.045314</td>
+      <td>2.045314</td>
+      <td>1.756072</td>
+      <td>1.660315</td>
+      <td>2.126359</td>
+      <td>2.045314</td>
+      <td>2.045314</td>
+      <td>1.939471</td>
+      <td>2.045314</td>
+      <td>2.045314</td>
+      <td>1.930890</td>
+      <td>1.989707</td>
+      <td>1.946704</td>
+      <td>1.946704</td>
+      <td>1.946704</td>
+      <td>1.865960</td>
+      <td>1.627802</td>
+      <td>1.627802</td>
+      <td>1.476548</td>
+      <td>1.684862</td>
+      <td>1.607993</td>
+      <td>1.735767</td>
+      <td>1.694440</td>
+      <td>1.684862</td>
+      <td>1.458788</td>
+      <td>1.492115</td>
+      <td>1.492115</td>
+      <td>1.896206</td>
+      <td>1.952639</td>
+      <td>2.092251</td>
+      <td>2.092251</td>
+      <td>1.883895</td>
+      <td>1.883895</td>
+      <td>1.773839</td>
+      <td>1.715680</td>
+      <td>1.573167</td>
+      <td>1.573167</td>
+      <td>1.573167</td>
+      <td>1.715680</td>
+      <td>1.476548</td>
+      <td>1.944510</td>
+      <td>1.939471</td>
+      <td>1.993881</td>
+      <td>1.993881</td>
+      <td>1.993881</td>
+      <td>1.993881</td>
+      <td>2.092251</td>
+      <td>2.092251</td>
+      <td>2.092251</td>
+      <td>2.092251</td>
+      <td>2.171427</td>
+      <td>1.904381</td>
+      <td>1.904381</td>
+      <td>1.829180</td>
+      <td>1.806426</td>
+      <td>1.798453</td>
+      <td>1.715680</td>
+      <td>1.715680</td>
+      <td>1.476548</td>
+      <td>1.572073</td>
+      <td>1.572073</td>
+      <td>1.770087</td>
+      <td>1.572073</td>
+      <td>1.770087</td>
+      <td>1.793346</td>
+      <td>1.850716</td>
+      <td>1.910707</td>
+      <td>1.910707</td>
+      <td>1.963644</td>
+      <td>2.002861</td>
+      <td>2.002861</td>
+      <td>2.077910</td>
+      <td>2.077910</td>
+      <td>2.077910</td>
+      <td>1.982194</td>
+      <td>1.982194</td>
+      <td>1.747162</td>
+      <td>1.747162</td>
+      <td>1.747162</td>
+      <td>1.747162</td>
+      <td>1.747162</td>
+      <td>1.613620</td>
+      <td>1.747162</td>
+      <td>0.918425</td>
+      <td>2.002861</td>
+      <td>2.077910</td>
+      <td>2.116946</td>
+      <td>1.963840</td>
+      <td>0.951344</td>
+      <td>1.860881</td>
+      <td>1.860881</td>
+      <td>1.860881</td>
+      <td>1.860881</td>
+      <td>1.648412</td>
+      <td>1.648412</td>
+      <td>1.648412</td>
+      <td>1.648412</td>
+      <td>1.648412</td>
+      <td>1.933505</td>
+      <td>1.933505</td>
+      <td>1.888637</td>
+      <td>1.971290</td>
+      <td>1.933505</td>
+      <td>1.888637</td>
+      <td>1.989707</td>
+      <td>2.229898</td>
+      <td>2.232952</td>
+      <td>2.232952</td>
+      <td>2.171427</td>
+      <td>2.171427</td>
+      <td>2.064589</td>
+      <td>2.022750</td>
+      <td>2.232952</td>
+      <td>2.232952</td>
+      <td>2.171427</td>
+      <td>2.171427</td>
+      <td>2.064589</td>
+      <td>2.064589</td>
+      <td>2.028461</td>
+      <td>2.022750</td>
+      <td>1.904381</td>
+      <td>2.077910</td>
+      <td>1.500008</td>
+      <td>2.077910</td>
+      <td>1.754921</td>
+      <td>1.909201</td>
+      <td>1.982194</td>
+      <td>1.982194</td>
+      <td>1.982194</td>
+      <td>2.077910</td>
+      <td>2.069277</td>
+      <td>2.102654</td>
+      <td>0.827105</td>
+      <td>0.923396</td>
+      <td>0.963988</td>
+      <td>1.015335</td>
+      <td>1.101921</td>
+      <td>1.101921</td>
+      <td>1.231323</td>
+      <td>1.248476</td>
+      <td>1.248476</td>
+      <td>1.355529</td>
+      <td>1.355529</td>
+      <td>1.355529</td>
+      <td>1.355529</td>
+      <td>1.271168</td>
+      <td>1.248476</td>
+      <td>1.231323</td>
+      <td>1.248476</td>
+      <td>1.101921</td>
+      <td>1.231323</td>
+      <td>1.015335</td>
+      <td>0.923396</td>
+      <td>0.923396</td>
+      <td>0.827105</td>
+      <td>0.788882</td>
+      <td>0.600003</td>
+      <td>0.788882</td>
+      <td>0.645460</td>
+      <td>2.293492</td>
+      <td>2.102654</td>
+      <td>2.311658</td>
+      <td>534.107300</td>
+      <td>983.713623</td>
+      <td>148.363144</td>
+      <td>986.735901</td>
+      <td>0.742187</td>
+      <td>0.781250</td>
+      <td>2.860192</td>
+      <td>3.0</td>
+      <td>534.107300</td>
+      <td>b'SP          '</td>
+      <td>1.5</td>
+      <td>1.500008</td>
+      <td>972.200012</td>
+      <td>15.684753</td>
+      <td>1033.146729</td>
+      <td>0.555533</td>
+      <td>0.584771</td>
+      <td>1.546259</td>
+      <td>3.0</td>
+      <td>1291.224365</td>
+      <td>80.0</td>
+      <td>59.936066</td>
+      <td>89.898438</td>
+      <td>61.401920</td>
+      <td>38.918922</td>
+      <td>56.465111</td>
+      <td>17.184872</td>
+      <td>18.666954</td>
+      <td>0.011608</td>
+      <td>534.107300</td>
+      <td>90.0</td>
+      <td>60.0</td>
+      <td>0.0</td>
+      <td>-0.4</td>
+      <td>(0.04686073213815689, 0.13468925654888153)</td>
+      <td>(0, 0)</td>
+      <td>(1, 1)</td>
+      <td>(3, 5)</td>
+      <td>(534.1072998046875, 56.465110778808594)</td>
+      <td>(59.972808837890625, 59.936065673828125)</td>
+      <td>(90.0, 80.0)</td>
+      <td>(18670.3203125, 1317.77392578125)</td>
+      <td>(18670.3203125, 1317.77392578125)</td>
+      <td>(1291.224365234375,)</td>
+      <td>(89.8984375,)</td>
+      <td>(61.401920318603516,)</td>
+      <td>(59.936065673828125,)</td>
+      <td>(80.0,)</td>
+      <td>(29350.732421875,)</td>
+      <td>(39981.25,)</td>
+      <td>(0,)</td>
+      <td>(0,)</td>
+      <td>(0, 0, 0)</td>
+      <td>(91.61691284179688, 1.3721764087677002, 1.3560...</td>
+      <td>(0.04232770577073097, 0.006994479801505804, 0....</td>
+      <td>(534.1072998046875, 56.465110778808594, 56.465...</td>
+      <td>(3.0724685192108154, 0.020582646131515503, 0.0...</td>
+      <td>(0.9116143584251404, 3396.466796875, 3477.4765...</td>
+      <td>(0.0, 0.0, 0.0, 0.6000030040740967, 1.22130119...</td>
+      <td>(0.0, 0.0, 0.0, 79.6610107421875, 10.0)</td>
+      <td>(0, 0, 0, 0, 0)</td>
+      <td>(0, 0, 0, 0, 0)</td>
+      <td>(0.0, 0.0, 0.0, 0.0, 0.0)</td>
+      <td>(0.0, 0.0, 0.0, 0.0, 0.0)</td>
+      <td>(0.0, 0.0, 0.0, 75.92422485351562, 60.00003051...</td>
+      <td>(0.0, 0.0)</td>
+      <td>(2.817864418029785, 1.5462591648101807)</td>
+      <td>(0.7421872615814209, 0.5555325150489807)</td>
+      <td>(1, 1)</td>
+      <td>(21, 21)</td>
+      <td>(2, 2)</td>
+      <td>(1, 1)</td>
+      <td>(58.122074127197266, 4.490500450134277)</td>
+      <td>(534.1072998046875, 56.465110778808594)</td>
+      <td>(b'SP          ', b'SP_TS       ')</td>
+      <td>(1.5, 0.6000000238418579)</td>
+      <td>(1.500008463859558, 0.6000030040740967)</td>
+      <td>(1, 1)</td>
+      <td>(2.86019229888916, 1.5462591648101807)</td>
+      <td>(1, 1)</td>
+      <td>(0.7421872615814209, 0.5555325150489807)</td>
+      <td>(0, 0)</td>
+      <td>(16, 16)</td>
+      <td>(986.7359008789062, 1033.146728515625)</td>
+      <td>(58.122074127197266, 4.490500450134277)</td>
+      <td>(534.1072998046875, 56.465110778808594)</td>
+      <td>(983.713623046875, 972.2000122070312)</td>
+      <td>(0, 0)</td>
+      <td>(-3.333333443937845e+32, -3.333333443937845e+32)</td>
+      <td>(-3.333333443937845e+32, -3.333333443937845e+32)</td>
+      <td>(39.579105377197266, 35.57479476928711)</td>
+      <td>(0.0, 0.0)</td>
+      <td>(0.0, 0.0)</td>
+      <td>(527.0228881835938, 58.33674621582031)</td>
+      <td>(0.0,)</td>
+      <td>(0.0,)</td>
+      <td>(0,)</td>
+      <td>(0,)</td>
+      <td>(0.0,)</td>
+      <td>(0.0,)</td>
+      <td>(0.0,)</td>
+      <td>(b'SP          ', b'\x00           ', b'SP_TS ...</td>
+      <td>(1.5, 1500.0, 0.6000000238418579)</td>
+      <td>(b'V-SP02      R-SP02      ', b'V-K1533S    R-...</td>
+      <td>(1.5, 0.6000000238418579)</td>
+      <td>(150000.84375, 60000.3046875)</td>
+      <td>(0.6000000238418579, 1.5, 0.6000000238418579)</td>
+      <td>(91405.7265625, 150000.84375, 60000.3046875)</td>
+      <td>(0.011607524007558823,)</td>
+      <td>(0.21667711436748505,)</td>
+      <td>(18.666954040527344,)</td>
+      <td>(90.0, 60.0, 0.3928999900817871)</td>
+      <td>(-0.4000000059604645, -0.4000000059604645, -0....</td>
+      <td>(1.0, 0.0)</td>
+      <td>(0.0, 1.0)</td>
+      <td>(0.0, 0.0)</td>
+      <td>(17.184871673583984, 18.666954040527344, 0.216...</td>
+      <td>(17.184871673583984, 18.666954040527344, 0.216...</td>
+      <td>(17.184871673583984, 18.666954040527344, 0.216...</td>
+      <td>(b'AT Tag      ', b'AT          ', b'\x00     ...</td>
+      <td>(-0.4000000059604645, 1.0, 0.0, 666.0, 0.53020...</td>
+      <td>(-0.4000000059604645, 1.0, 0.0, 666.0, 0.53020...</td>
+      <td>(90.0, 60.0, 0.3928999900817871, 666.0, 666.0,...</td>
+      <td>(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)</td>
+      <td>(100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100...</td>
+      <td>(0.009286317974328995, 0.0094595393165946, 0.0...</td>
+      <td>(534.1072998046875, 534.1072998046875, 534.107...</td>
+      <td>(3.0724685192108154, 3.1297805309295654, 3.072...</td>
+      <td>(0.20000000298023224, 0.20000000298023224, 0.2...</td>
+      <td>(18.670320510864258,)</td>
+      <td>(-2.894078079407336e-07,)</td>
+      <td>(0.0006799216498620808,)</td>
+      <td>(18.479509353637695,)</td>
+      <td>(0.21667978167533875,)</td>
+      <td>(3.1008596420288086, 2.042039155960083)</td>
+      <td>(-0.001965109258890152, -0.000983197707682848,...</td>
+      <td>(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ...</td>
+      <td>(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...</td>
+      <td>(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ...</td>
+      <td>(-0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0....</td>
+      <td>(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ...</td>
+      <td>(-3.333333443937845e+32, -3.333333443937845e+3...</td>
+      <td>(-3.333333443937845e+32, -3.333333443937845e+3...</td>
+      <td>(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ...</td>
+      <td>(10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10....</td>
+      <td>(60.0, 60.0, 60.0, 60.0, 60.0, 60.0, 60.0, 60....</td>
+      <td>(10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10....</td>
+      <td>(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ...</td>
+      <td>(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ...</td>
+      <td>(1.4765483140945435, 1.4074965715408325, 1.317...</td>
+      <td>(1.4765483140945435, 1.4074965715408325, 1.317...</td>
+      <td>(5.334344863891602, 5.307101249694824, 5.27599...</td>
+      <td>(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...</td>
+      <td>(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...</td>
+      <td>(4.957493305206299, 4.722349166870117, 4.21561...</td>
+      <td>(0.6973068714141846, 0.6970070004463196, 0.694...</td>
+      <td>(3.957493543624878, 3.7223494052886963, 3.2156...</td>
+      <td>(3.957493543624878, 3.7223494052886963, 3.2156...</td>
+      <td>(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ...</td>
+      <td>(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ...</td>
+      <td>(965.786865234375, 965.7937622070312, 965.8575...</td>
+      <td>(89.855224609375, 89.84378051757812, 89.737457...</td>
+      <td>(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ...</td>
+      <td>(17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 1...</td>
+      <td>(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ...</td>
+      <td>(0.1737784892320633, 0.18102377653121948, 0.23...</td>
+      <td>(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ...</td>
+      <td>(35.940895080566406, 29.947294235229492, 29.91...</td>
+      <td>(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...</td>
+      <td>(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...</td>
+      <td>(0.0343552827835083, 0.04736962541937828, 0.03...</td>
+      <td>(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ...</td>
+      <td>(1.3966686725616455, 1.1546658277511597, 1.181...</td>
+      <td>(98.00235748291016, 54.69015884399414, 55.9876...</td>
+      <td>(0.9430660009384155, 0.8278825283050537, 0.866...</td>
+      <td>(1.3093035221099854, 1.7135186195373535, 1.226...</td>
+      <td>(4.722349166870117, 4.215618133544922, 3.98592...</td>
+      <td>(0.6971569657325745, 0.6966556310653687, 0.693...</td>
+      <td>(0.1737784892320633, 0.17558979988098145, 0.17...</td>
+      <td>(0.007245286367833614, 0.0137648805975914, 0.0...</td>
+      <td>(3420.648193359375, 1906.439697265625, 1944.62...</td>
+      <td>(5.40717887878418, 5.376114845275879, 5.339814...</td>
+      <td>(4.879334449768066, 4.876009464263916, 4.87760...</td>
+      <td>(5.030327320098877, 4.791362762451172, 4.27943...</td>
+      <td>(4.502483367919922, 4.291257381439209, 3.81723...</td>
+      <td>(1.3966763019561768, 1.1546779870986938, 1.181...</td>
+      <td>(1.396666407585144, 1.1546587944030762, 1.1819...</td>
+      <td>(98.00235748291016, 54.69015884399414, 55.9876...</td>
+      <td>(98.00235748291016, 54.69015884399414, 55.9876...</td>
+      <td>(0.0, 9.107337951660156, 18.214675903320312, 2...</td>
+      <td>(554.0399780273438, 554.5699462890625, 555.099...</td>
+      <td>(4.957494735717773, 4.898705005645752, 4.83992...</td>
+      <td>(27.222877502441406, 27.222877502441406, 27.22...</td>
+      <td>(89.855224609375, 89.85238647460938, 89.849517...</td>
+      <td>(965.786865234375, 965.78857421875, 965.790283...</td>
+      <td>(5.030324935913086, 4.970584869384766, 4.91084...</td>
+      <td>(4.5024847984313965, 4.4496750831604, 4.396869...</td>
+      <td>(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)</td>
+      <td>(89.85523223876953, 89.84378814697266, 89.7374...</td>
+      <td>(89.84378814697266, 89.81695556640625, 89.7187...</td>
+      <td>(965.786865234375, 965.7937622070312, 965.8575...</td>
+      <td>(965.7937622070312, 965.809814453125, 965.8687...</td>
+      <td>(1000.2999877929688, 1000.2999877929688, 1000....</td>
+      <td>(983.7000122070312, 983.7000122070312, 983.700...</td>
+      <td>(983.713623046875, 965.7000122070312, 983.7136...</td>
+      <td>(0.15625950694084167, 0.09988656640052795, 0.0...</td>
+      <td>(-0.001965109258890152, -0.000983197707682848,...</td>
+      <td>(-0.020032526925206184, -0.010022819973528385,...</td>
+      <td>(-0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0....</td>
+      <td>(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ...</td>
+    </tr>
+    <tr>
+      <th>2023-02-13 21:00:00+00:00</th>
+      <td>b'TIME'</td>
+      <td>b'SIR 3S 90-15-02-44 3S Consult, 30827 Garbsen...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>65</td>
+      <td>1.062500</td>
+      <td>2.702989</td>
+      <td>0</td>
+      <td>0.000003</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>70.699402</td>
+      <td>33</td>
+      <td>30</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>5338.179199</td>
+      <td>975.715759</td>
+      <td>72.909088</td>
+      <td>3.787585</td>
+      <td>0.600001</td>
+      <td>5.126469</td>
+      <td>0.941460</td>
+      <td>10.0</td>
+      <td>0.000003</td>
+      <td>5.093683</td>
+      <td>5.126469</td>
+      <td>0.0</td>
+      <td>2.178458</td>
+      <td>0.941460</td>
+      <td>0.0</td>
+      <td>6</td>
+      <td>2</td>
+      <td>1</td>
+      <td>3.017126</td>
+      <td>5.093683</td>
+      <td>90.0</td>
+      <td>360.165192</td>
+      <td>59.915466</td>
+      <td>12.409992</td>
+      <td>0.216464</td>
+      <td>0.356114</td>
+      <td>1.593761</td>
+      <td>1.557271</td>
+      <td>1.498489</td>
+      <td>1.498489</td>
+      <td>1.713732</td>
+      <td>1.725239</td>
+      <td>1.591311</td>
+      <td>1.591311</td>
+      <td>1.247699</td>
+      <td>1.235255</td>
+      <td>1.235255</td>
+      <td>1.235255</td>
+      <td>1.276223</td>
+      <td>1.253067</td>
+      <td>1.235572</td>
+      <td>1.253067</td>
+      <td>1.256627</td>
+      <td>1.256719</td>
+      <td>1.312647</td>
+      <td>1.312647</td>
+      <td>1.376663</td>
+      <td>1.414798</td>
+      <td>1.312647</td>
+      <td>1.293159</td>
+      <td>1.422166</td>
+      <td>1.468179</td>
+      <td>1.451079</td>
+      <td>1.451079</td>
+      <td>1.454297</td>
+      <td>1.454297</td>
+      <td>1.375987</td>
+      <td>1.276223</td>
+      <td>1.276223</td>
+      <td>1.321736</td>
+      <td>1.376663</td>
+      <td>1.414798</td>
+      <td>1.414798</td>
+      <td>1.454297</td>
+      <td>1.414798</td>
+      <td>1.414798</td>
+      <td>1.422166</td>
+      <td>1.422166</td>
+      <td>1.462774</td>
+      <td>1.451079</td>
+      <td>1.454297</td>
+      <td>1.454297</td>
+      <td>1.735967</td>
+      <td>1.785114</td>
+      <td>1.785114</td>
+      <td>1.785114</td>
+      <td>1.863875</td>
+      <td>1.863875</td>
+      <td>1.863875</td>
+      <td>1.899717</td>
+      <td>1.787666</td>
+      <td>1.701812</td>
+      <td>1.704860</td>
+      <td>1.863875</td>
+      <td>1.863875</td>
+      <td>1.704860</td>
+      <td>1.911876</td>
+      <td>1.870911</td>
+      <td>1.900184</td>
+      <td>1.839825</td>
+      <td>1.839825</td>
+      <td>1.785114</td>
+      <td>1.532410</td>
+      <td>1.762206</td>
+      <td>1.625527</td>
+      <td>1.626277</td>
+      <td>1.626277</td>
+      <td>1.585017</td>
+      <td>1.543719</td>
+      <td>1.543719</td>
+      <td>1.701813</td>
+      <td>1.701813</td>
+      <td>1.646165</td>
+      <td>1.626277</td>
+      <td>1.701813</td>
+      <td>1.646165</td>
+      <td>1.646165</td>
+      <td>1.646165</td>
+      <td>1.600632</td>
+      <td>1.615181</td>
+      <td>1.787666</td>
+      <td>1.743907</td>
+      <td>1.743907</td>
+      <td>1.729799</td>
+      <td>1.729799</td>
+      <td>1.729799</td>
+      <td>1.743907</td>
+      <td>1.743907</td>
+      <td>1.617996</td>
+      <td>1.570693</td>
+      <td>1.787666</td>
+      <td>1.743907</td>
+      <td>1.743907</td>
+      <td>1.701812</td>
+      <td>1.743907</td>
+      <td>1.743907</td>
+      <td>1.701551</td>
+      <td>1.729799</td>
+      <td>1.714180</td>
+      <td>1.714180</td>
+      <td>1.714180</td>
+      <td>1.668236</td>
+      <td>1.557271</td>
+      <td>1.557271</td>
+      <td>1.486763</td>
+      <td>1.592417</td>
+      <td>1.560848</td>
+      <td>1.615181</td>
+      <td>1.594143</td>
+      <td>1.592417</td>
+      <td>1.444773</td>
+      <td>1.497872</td>
+      <td>1.497872</td>
+      <td>1.685900</td>
+      <td>1.714929</td>
+      <td>1.769709</td>
+      <td>1.769709</td>
+      <td>1.669256</td>
+      <td>1.669256</td>
+      <td>1.598743</td>
+      <td>1.595463</td>
+      <td>1.524008</td>
+      <td>1.524008</td>
+      <td>1.524008</td>
+      <td>1.595463</td>
+      <td>1.486763</td>
+      <td>1.712155</td>
+      <td>1.701812</td>
+      <td>1.724183</td>
+      <td>1.724183</td>
+      <td>1.724183</td>
+      <td>1.724183</td>
+      <td>1.769709</td>
+      <td>1.769709</td>
+      <td>1.769709</td>
+      <td>1.769709</td>
+      <td>1.805677</td>
+      <td>1.681037</td>
+      <td>1.681037</td>
+      <td>1.639317</td>
+      <td>1.636401</td>
+      <td>1.635759</td>
+      <td>1.595463</td>
+      <td>1.595463</td>
+      <td>1.486763</td>
+      <td>1.532410</td>
+      <td>1.532410</td>
+      <td>1.628261</td>
+      <td>1.532410</td>
+      <td>1.628261</td>
+      <td>1.640012</td>
+      <td>1.671570</td>
+      <td>1.702240</td>
+      <td>1.702240</td>
+      <td>1.727170</td>
+      <td>1.735967</td>
+      <td>1.735967</td>
+      <td>1.773895</td>
+      <td>1.773895</td>
+      <td>1.773895</td>
+      <td>1.730066</td>
+      <td>1.730066</td>
+      <td>1.622453</td>
+      <td>1.622453</td>
+      <td>1.622453</td>
+      <td>1.622453</td>
+      <td>1.622453</td>
+      <td>1.543719</td>
+      <td>1.622453</td>
+      <td>1.236998</td>
+      <td>1.735967</td>
+      <td>1.773895</td>
+      <td>1.798596</td>
+      <td>1.725239</td>
+      <td>1.247699</td>
+      <td>1.662867</td>
+      <td>1.662867</td>
+      <td>1.662867</td>
+      <td>1.662867</td>
+      <td>1.560955</td>
+      <td>1.560955</td>
+      <td>1.560955</td>
+      <td>1.560955</td>
+      <td>1.560955</td>
+      <td>1.713732</td>
+      <td>1.713732</td>
+      <td>1.679884</td>
+      <td>1.726636</td>
+      <td>1.713732</td>
+      <td>1.679884</td>
+      <td>1.729799</td>
+      <td>1.852031</td>
+      <td>1.835141</td>
+      <td>1.835141</td>
+      <td>1.805677</td>
+      <td>1.805677</td>
+      <td>1.761508</td>
+      <td>1.742916</td>
+      <td>1.835141</td>
+      <td>1.835141</td>
+      <td>1.805677</td>
+      <td>1.805677</td>
+      <td>1.761508</td>
+      <td>1.761508</td>
+      <td>1.742991</td>
+      <td>1.742916</td>
+      <td>1.681037</td>
+      <td>1.773895</td>
+      <td>1.499998</td>
+      <td>1.773895</td>
+      <td>1.625527</td>
+      <td>1.701813</td>
+      <td>1.730066</td>
+      <td>1.730066</td>
+      <td>1.730066</td>
+      <td>1.773895</td>
+      <td>1.765585</td>
+      <td>1.785114</td>
+      <td>0.714244</td>
+      <td>0.759538</td>
+      <td>0.776191</td>
+      <td>0.805568</td>
+      <td>0.850876</td>
+      <td>0.850876</td>
+      <td>0.931512</td>
+      <td>0.910777</td>
+      <td>0.910777</td>
+      <td>0.968115</td>
+      <td>0.968115</td>
+      <td>0.968115</td>
+      <td>0.968115</td>
+      <td>0.919946</td>
+      <td>0.910777</td>
+      <td>0.931512</td>
+      <td>0.910777</td>
+      <td>0.850876</td>
+      <td>0.931512</td>
+      <td>0.805568</td>
+      <td>0.759538</td>
+      <td>0.759538</td>
+      <td>0.714244</td>
+      <td>0.694117</td>
+      <td>0.600001</td>
+      <td>0.694117</td>
+      <td>0.625981</td>
+      <td>1.862346</td>
+      <td>1.785114</td>
+      <td>1.870911</td>
+      <td>360.165192</td>
+      <td>983.742310</td>
+      <td>100.045891</td>
+      <td>810.599548</td>
+      <td>0.707729</td>
+      <td>0.744978</td>
+      <td>2.126324</td>
+      <td>3.0</td>
+      <td>360.165192</td>
+      <td>b'SP          '</td>
+      <td>1.5</td>
+      <td>1.499998</td>
+      <td>972.200012</td>
+      <td>10.556989</td>
+      <td>769.294495</td>
+      <td>0.605759</td>
+      <td>0.637641</td>
+      <td>1.057998</td>
+      <td>3.0</td>
+      <td>886.995300</td>
+      <td>80.0</td>
+      <td>59.904999</td>
+      <td>89.867767</td>
+      <td>61.095837</td>
+      <td>26.479753</td>
+      <td>38.005157</td>
+      <td>11.522965</td>
+      <td>12.606760</td>
+      <td>0.017171</td>
+      <td>360.165192</td>
+      <td>90.0</td>
+      <td>60.0</td>
+      <td>0.0</td>
+      <td>-1.6</td>
+      <td>(0.021308446303009987, 0.06101749464869499)</td>
+      <td>(0, 0)</td>
+      <td>(1, 1)</td>
+      <td>(3, 5)</td>
+      <td>(360.1651916503906, 38.005157470703125)</td>
+      <td>(59.91546630859375, 59.904998779296875)</td>
+      <td>(90.0, 80.0)</td>
+      <td>(12613.9775390625, 888.3296508789062)</td>
+      <td>(12613.9775390625, 888.3296508789062)</td>
+      <td>(886.9953002929688,)</td>
+      <td>(89.86776733398438,)</td>
+      <td>(61.0958366394043,)</td>
+      <td>(59.904998779296875,)</td>
+      <td>(80.0,)</td>
+      <td>(19914.173828125,)</td>
+      <td>(26903.138671875,)</td>
+      <td>(0,)</td>
+      <td>(0,)</td>
+      <td>(0, 0, 0)</td>
+      <td>(78.61201477050781, 0.9235752820968628, 0.9127...</td>
+      <td>(0.024080483242869377, 0.00699052307754755, 0....</td>
+      <td>(360.1651916503906, 38.005157470703125, 38.005...</td>
+      <td>(2.071800947189331, 0.013853630051016808, 0.01...</td>
+      <td>(1.140559196472168, 7493.02001953125, 7671.919...</td>
+      <td>(0.0, 0.0, 0.0, 0.6000007390975952, 1.37666332...</td>
+      <td>(0.0, 0.0, 0.0, 79.496826171875, 10.0)</td>
+      <td>(0, 0, 0, 0, 0)</td>
+      <td>(0, 0, 0, 0, 0)</td>
+      <td>(0.0, 0.0, 0.0, 0.0, 0.0)</td>
+      <td>(0.0, 0.0, 0.0, 0.0, 0.0)</td>
+      <td>(0.0, 0.0, 0.0, 70.69940185546875, 60.00003051...</td>
+      <td>(0.0, 0.0)</td>
+      <td>(2.102243661880493, 1.0579984188079834)</td>
+      <td>(0.7077288031578064, 0.6057589650154114)</td>
+      <td>(1, 1)</td>
+      <td>(21, 21)</td>
+      <td>(2, 2)</td>
+      <td>(1, 1)</td>
+      <td>(30.55524444580078, 1.8965684175491333)</td>
+      <td>(360.1651916503906, 38.005157470703125)</td>
+      <td>(b'SP          ', b'SP_TS       ')</td>
+      <td>(1.5, 0.6000000238418579)</td>
+      <td>(1.4999977350234985, 0.6000007390975952)</td>
+      <td>(1, 1)</td>
+      <td>(2.126324415206909, 1.0579984188079834)</td>
+      <td>(1, 1)</td>
+      <td>(0.7077288031578064, 0.6057589650154114)</td>
+      <td>(0, 0)</td>
+      <td>(16, 16)</td>
+      <td>(810.5995483398438, 769.2944946289062)</td>
+      <td>(30.55524444580078, 1.8965684175491333)</td>
+      <td>(360.1651916503906, 38.005157470703125)</td>
+      <td>(983.7423095703125, 972.2000122070312)</td>
+      <td>(0, 0)</td>
+      <td>(-3.333333443937845e+32, -3.333333443937845e+32)</td>
+      <td>(-3.333333443937845e+32, -3.333333443937845e+32)</td>
+      <td>(39.58330154418945, 36.3475227355957)</td>
+      <td>(0.0, 0.0)</td>
+      <td>(0.0, 0.0)</td>
+      <td>(291.9497375488281, 29.23716163635254)</td>
+      <td>(0.0,)</td>
+      <td>(0.0,)</td>
+      <td>(0,)</td>
+      <td>(0,)</td>
+      <td>(0.0,)</td>
+      <td>(0.0,)</td>
+      <td>(0.0,)</td>
+      <td>(b'SP          ', b'\x00           ', b'SP_TS ...</td>
+      <td>(1.5, 1500.0, 0.6000000238418579)</td>
+      <td>(b'V-SP02      R-SP02      ', b'V-K1533S    R-...</td>
+      <td>(1.5, 0.6000000238418579)</td>
+      <td>(149999.78125, 60000.07421875)</td>
+      <td>(0.6000000238418579, 1.5, 0.6000000238418579)</td>
+      <td>(123525.4453125, 149999.78125, 60000.07421875)</td>
+      <td>(0.01717097871005535,)</td>
+      <td>(0.216470405459404,)</td>
+      <td>(12.606760025024414,)</td>
+      <td>(90.0, 60.0, 0.4165000021457672)</td>
+      <td>(-1.600000023841858, -1.600000023841858, -1.60...</td>
+      <td>(1.0, 0.0)</td>
+      <td>(0.0, 1.0)</td>
+      <td>(0.0, 0.0)</td>
+      <td>(11.522965431213379, 12.606760025024414, 0.216...</td>
+      <td>(11.522965431213379, 12.606760025024414, 0.216...</td>
+      <td>(11.522965431213379, 12.606760025024414, 0.216...</td>
+      <td>(b'AT Tag      ', b'AT          ', b'\x00     ...</td>
+      <td>(-1.600000023841858, 1.0, 0.0, 666.0, 0.356113...</td>
+      <td>(-1.600000023841858, 1.0, 0.0, 666.0, 0.356113...</td>
+      <td>(90.0, 60.0, 0.4165000021457672, 666.0, 666.0,...</td>
+      <td>(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)</td>
+      <td>(100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100...</td>
+      <td>(0.004222574643790722, 0.004301465582102537, 0...</td>
+      <td>(360.1651916503906, 360.1651916503906, 360.165...</td>
+      <td>(2.071800708770752, 2.110508441925049, 2.07180...</td>
+      <td>(0.20000000298023224, 0.20000000298023224, 0.2...</td>
+      <td>(12.61397647857666,)</td>
+      <td>(-2.9499702236535086e-07,)</td>
+      <td>(-0.01114555262029171,)</td>
+      <td>(12.409992218017578,)</td>
+      <td>(0.2164638787508011,)</td>
+      <td>(2.090975522994995, 1.3744311332702637)</td>
+      <td>(-0.001965109258890152, -0.000981040415354073,...</td>
+      <td>(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ...</td>
+      <td>(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...</td>
+      <td>(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ...</td>
+      <td>(-0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0....</td>
+      <td>(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ...</td>
+      <td>(-3.333333443937845e+32, -3.333333443937845e+3...</td>
+      <td>(-3.333333443937845e+32, -3.333333443937845e+3...</td>
+      <td>(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ...</td>
+      <td>(10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10....</td>
+      <td>(60.0, 60.0, 60.0, 60.0, 60.0, 60.0, 60.0, 60....</td>
+      <td>(10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10....</td>
+      <td>(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ...</td>
+      <td>(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ...</td>
+      <td>(1.48676335811615, 1.4542973041534424, 1.41479...</td>
+      <td>(1.48676335811615, 1.4542973041534424, 1.41479...</td>
+      <td>(4.987554550170898, 4.9785966873168945, 4.9724...</td>
+      <td>(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...</td>
+      <td>(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...</td>
+      <td>(4.610702991485596, 4.3938446044921875, 3.9120...</td>
+      <td>(0.6954934000968933, 0.6950480937957764, 0.690...</td>
+      <td>(3.6107029914855957, 3.3938446044921875, 2.912...</td>
+      <td>(3.6107029914855957, 3.3938446044921875, 2.912...</td>
+      <td>(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ...</td>
+      <td>(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ...</td>
+      <td>(965.8284301757812, 965.838623046875, 965.9329...</td>
+      <td>(89.7860107421875, 89.76901245117188, 89.61169...</td>
+      <td>(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ...</td>
+      <td>(17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 1...</td>
+      <td>(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ...</td>
+      <td>(0.2574503719806671, 0.26817965507507324, 0.34...</td>
+      <td>(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ...</td>
+      <td>(35.900821685791016, 29.915708541870117, 29.85...</td>
+      <td>(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...</td>
+      <td>(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...</td>
+      <td>(0.016060957685112953, 0.02237587980926037, 0....</td>
+      <td>(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ...</td>
+      <td>(0.9431421160697937, 0.7824788689613342, 0.799...</td>
+      <td>(66.18184661865234, 37.06350326538086, 37.8516...</td>
+      <td>(0.44087958335876465, 0.39106494188308716, 0.4...</td>
+      <td>(1.3078436851501465, 1.7117114067077637, 1.223...</td>
+      <td>(4.3938446044921875, 3.9120850563049316, 3.701...</td>
+      <td>(0.6952707767486572, 0.6945276260375977, 0.690...</td>
+      <td>(0.2574503719806671, 0.26013267040252686, 0.26...</td>
+      <td>(0.010729310102760792, 0.02031216025352478, 0....</td>
+      <td>(2300.63330078125, 1285.1812744140625, 1305.25...</td>
+      <td>(5.40717887878418, 5.376114845275879, 5.339814...</td>
+      <td>(4.879334449768066, 4.876009464263916, 4.87760...</td>
+      <td>(5.030327320098877, 4.791362762451172, 4.27943...</td>
+      <td>(4.502483367919922, 4.291257381439209, 3.81723...</td>
+      <td>(0.9431471228599548, 0.7824885249137878, 0.799...</td>
+      <td>(0.9431371688842773, 0.7824692130088806, 0.799...</td>
+      <td>(66.18184661865234, 37.06350326538086, 37.8516...</td>
+      <td>(66.18184661865234, 37.06350326538086, 37.8516...</td>
+      <td>(0.0, 9.107337951660156, 18.214675903320312, 2...</td>
+      <td>(554.0399780273438, 554.5699462890625, 555.099...</td>
+      <td>(4.6107048988342285, 4.556489944458008, 4.5022...</td>
+      <td>(18.383846282958984, 18.383846282958984, 18.38...</td>
+      <td>(89.7860107421875, 89.78176879882812, 89.77752...</td>
+      <td>(965.8284301757812, 965.8309936523438, 965.833...</td>
+      <td>(5.030324935913086, 4.970584869384766, 4.91084...</td>
+      <td>(4.5024847984313965, 4.4496750831604, 4.396869...</td>
+      <td>(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)</td>
+      <td>(89.78600311279297, 89.76901245117188, 89.6117...</td>
+      <td>(89.76901245117188, 89.72928619384766, 89.5838...</td>
+      <td>(965.8284301757812, 965.838623046875, 965.9329...</td>
+      <td>(965.838623046875, 965.8624267578125, 965.9496...</td>
+      <td>(1000.2999877929688, 1000.2999877929688, 1000....</td>
+      <td>(983.7000122070312, 983.7000122070312, 983.700...</td>
+      <td>(983.7423095703125, 965.7000122070312, 983.742...</td>
+      <td>(0.10376729816198349, 0.04542067274451256, 0.0...</td>
+      <td>(-0.001965109258890152, -0.000981040415354073,...</td>
+      <td>(-0.020032526925206184, -0.01000082865357399, ...</td>
+      <td>(-0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0....</td>
+      <td>(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ...</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_mx.columns
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Index([&#39;ALLG~~~5597593673700177669~SNAPSHOTTYPE&#39;,
+       &#39;ALLG~~~5597593673700177669~CVERSO&#39;,
+       &#39;ALLG~~~5597593673700177669~EXSTAT&#39;, &#39;ALLG~~~5597593673700177669~NFEHL&#39;,
+       &#39;ALLG~~~5597593673700177669~NWARN&#39;, &#39;ALLG~~~5597593673700177669~NMELD&#39;,
+       &#39;ALLG~~~5597593673700177669~CPUTIME&#39;,
+       &#39;ALLG~~~5597593673700177669~USRTIME&#39;,
+       &#39;ALLG~~~5597593673700177669~NPGREST&#39;,
+       &#39;ALLG~~~5597593673700177669~NETZABN&#39;,
+       ...
+       &#39;ROHR~*~*~*~RHOI&#39;, &#39;ROHR~*~*~*~RHOK&#39;, &#39;FWVB~*~*~*~RHOI&#39;,
+       &#39;FWVB~*~*~*~RHOK&#39;, &#39;VENT~*~*~*~RHO&#39;, &#39;VENT~*~*~*~DH&#39;, &#39;FWVB~*~*~*~DP&#39;,
+       &#39;FWVB~*~*~*~DH&#39;, &#39;FWVB~*~*~*~MHYUV&#39;, &#39;FWVB~*~*~*~MTHUV&#39;],
+      dtype=&#39;object&#39;, length=508)
+</pre></div></div>
+</div>
+<p>Compare against the legacy PT3S.Mx read for the same file (shape and columns should line up).</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(&quot;legacy  mx.df shape:&quot;, mx.df.shape)
+print(&quot;sir3stoolkit df_mx shape:&quot;, df_mx.shape)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+legacy  mx.df shape: (25, 332)
+sir3stoolkit df_mx shape: (2, 508)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetPropertiesofElementType(s3s.ObjectTypes.GeneralSection)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;Name&#39;,
+ &#39;Idqm&#39;,
+ &#39;Idph&#39;,
+ &#39;Netztyp&#39;,
+ &#39;Forc&#39;,
+ &#39;Pfadol1&#39;,
+ &#39;Pk&#39;,
+ &#39;InVariant&#39;,
+ &#39;bz.Fk&#39;,
+ &#39;bz.Cdat&#39;,
+ &#39;bz.Cuhr&#39;,
+ &#39;bz.Czon&#39;,
+ &#39;bz.Iart&#39;,
+ &#39;bz.ArtTh&#39;,
+ &#39;bz.Thfakt&#39;,
+ &#39;bz.Itrenn&#39;,
+ &#39;bz.ThStat&#39;,
+ &#39;bz.ThInst&#39;,
+ &#39;bz.Jwarn&#39;,
+ &#39;bz.Lfqsv&#39;,
+ &#39;bz.Schwellqsig&#39;,
+ &#39;bz.Knuvtyp&#39;,
+ &#39;bz.ValidAggr&#39;,
+ &#39;bz.CalcNetwork&#39;,
+ &#39;bz.Idra&#39;,
+ &#39;bz.CheckRes&#39;,
+ &#39;bz.CheckMod&#39;]
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.ObjectTypes_TableNames
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;enum &#39;ObjectTypes_TableNames&#39;&gt;
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>object_types = [item for item in dir(s3s.ObjectTypes_TableNames) if not (item.startswith(&#39;__&#39;) and item.endswith(&#39;__&#39;))]
+print(object_types)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;AGSN&#39;, &#39;ALLG&#39;, &#39;ANTP&#39;, &#39;ANTP_ROWS&#39;, &#39;ARRW&#39;, &#39;ATMO&#39;, &#39;AVOS&#39;, &#39;AVOS_ROWS&#39;, &#39;BEVE&#39;, &#39;BEWI&#39;, &#39;BREF&#39;, &#39;CIRC&#39;, &#39;CONT&#39;, &#39;CRGL&#39;, &#39;DPGR&#39;, &#39;DPGR_DPKT&#39;, &#39;DPKT&#39;, &#39;DPRG&#39;, &#39;DTRO&#39;, &#39;DTRO_ROWD&#39;, &#39;EBES&#39;, &#39;ELEMENTQUERY&#39;, &#39;ETAM&#39;, &#39;ETAM_ROWS&#39;, &#39;ETAR&#39;, &#39;ETAR_ROWS&#39;, &#39;ETAU&#39;, &#39;ETAU_ROWS&#39;, &#39;FKNL&#39;, &#39;FQPS&#39;, &#39;FQPS_BZ&#39;, &#39;FSTF&#39;, &#39;FWBZ&#39;, &#39;FWEA&#39;, &#39;FWES&#39;, &#39;FWVB&#39;, &#39;FWWU&#39;, &#39;GKMP&#39;, &#39;GMIX&#39;, &#39;GRAV&#39;, &#39;GTXT&#39;, &#39;GVWK&#39;, &#39;HAUS&#39;, &#39;HYDR&#39;, &#39;KLAP&#39;, &#39;KNOT&#39;, &#39;KOMK&#39;, &#39;KOMK_ROWS&#39;, &#39;KOMP&#39;, &#39;LAYR&#39;, &#39;LFKT&#39;, &#39;LFKT_ROWT&#39;, &#39;LTGR&#39;, &#39;MREG&#39;, &#39;NRCV&#39;, &#39;NSCH&#39;, &#39;OBEH&#39;, &#39;OVAL&#39;, &#39;PARI&#39;, &#39;PARZ&#39;, &#39;PGRP&#39;, &#39;PGRP_PUMP&#39;, &#39;PHI1&#39;, &#39;PHI1_ROWT&#39;, &#39;PHI2&#39;, &#39;PHI2_ROWS&#39;, &#39;PHIV&#39;, &#39;PHIV_ROWS&#39;, &#39;PHTR&#39;, &#39;PLYG&#39;, &#39;POLY&#39;, &#39;PREG&#39;, &#39;PUMD&#39;, &#39;PUMD_ROWT&#39;, &#39;PUMK&#39;, &#39;PUMK_ROWS&#39;, &#39;PUMP&#39;, &#39;PVAR&#39;, &#39;PVAR_ROWT&#39;, &#39;PZON&#39;, &#39;QVAR&#39;, &#39;QVAR_ROWT&#39;, &#39;RADD&#39;, &#39;RART&#39;, &#39;RCPL&#39;, &#39;RCPL_ROWT&#39;, &#39;RDIV&#39;, &#39;RECT&#39;, &#39;REGP&#39;, &#39;REGV&#39;, &#39;RFKT&#39;, &#39;RHYS&#39;, &#39;RINT&#39;, &#39;RLSR&#39;, &#39;RLVG&#39;, &#39;RMES&#39;, &#39;RMES_DPTS&#39;, &#39;RMMA&#39;, &#39;RMUL&#39;, &#39;ROHR&#39;, &#39;ROHR_VRTX&#39;, &#39;RPFL&#39;, &#39;RPID&#39;, &#39;RPT1&#39;, &#39;RRCT&#39;, &#39;RSLW&#39;, &#39;RSTE&#39;, &#39;RSTN&#39;, &#39;RTOT&#39;, &#39;RUES&#39;, &#39;SIVE&#39;, &#39;SOKO&#39;, &#39;SPLZ&#39;, &#39;SRAT&#39;, &#39;SRAT_ROWS&#39;, &#39;STOF&#39;, &#39;STOF_ROWS&#39;, &#39;STRASSE&#39;, &#39;STRO&#39;, &#39;SWVT&#39;, &#39;SWVT_ROWT&#39;, &#39;TEVT&#39;, &#39;TEVT_ROWT&#39;, &#39;TFKT&#39;, &#39;TFKT_ROWS&#39;, &#39;TRFT&#39;, &#39;TRFT_ROWS&#39;, &#39;TRVA&#39;, &#39;USCH&#39;, &#39;UTMP&#39;, &#39;VARA&#39;, &#39;VARA_ROWS&#39;, &#39;VENT&#39;, &#39;VERB&#39;, &#39;VKNO&#39;, &#39;VRCT&#39;, &#39;WBLZ&#39;, &#39;WEVT&#39;, &#39;WEVT_ROWT&#39;, &#39;WIND&#39;, &#39;WTTR&#39;, &#39;WTTR_ROWT&#39;, &#39;ZEP1&#39;, &#39;ZEP1_ROWS&#39;, &#39;ZEP2&#39;, &#39;ZEP2_ROWS&#39;]
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>len(object_types)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+146
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import sqlite3
+
+with sqlite3.connect(f&quot;file:C:\\Users\\aUsername\\3S\\sir3stoolkit\\docs\\source\\tutorials\\SIR3S_Model_Mantle\\Tutorial051_Assets\\Toolkit_Tutorial51_Model.db3?mode=ro&quot;, uri=True) as conn:
+    rows = conn.execute(&quot;SELECT * FROM TIMD&quot;).fetchall()
+conn.close()
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.CloseModel(False)
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+True
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-intense-fg ansi-bold">The Kernel crashed while executing code in the current cell or a previous cell.
+
+</span><span class="ansi-red-intense-fg ansi-bold">Please review the code in the cell(s) to identify a possible cause of the failure.
+
+</span><span class="ansi-red-intense-fg ansi-bold">Click &lt;a href=&#39;https://aka.ms/vscodeJupyterKernelCrash&#39;&gt;here&lt;/a&gt; for more info.
+
+</span><span class="ansi-red-intense-fg ansi-bold">View Jupyter &lt;a href=&#39;command:jupyter.viewOutput&#39;&gt;log&lt;/a&gt; for further details.</span>
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025 - 2026 3S Consult GmbH.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

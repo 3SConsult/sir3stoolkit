@@ -300,11 +300,14 @@
 <li class="toctree-l4"><a class="reference internal" href="#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.generate_element_results_dataframe"><code class="docutils literal notranslate"><span class="pre">SIR3S_Model_Dataframes.generate_element_results_dataframe()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.generate_longitudinal_section_dataframes"><code class="docutils literal notranslate"><span class="pre">SIR3S_Model_Dataframes.generate_longitudinal_section_dataframes()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.get_EPSG"><code class="docutils literal notranslate"><span class="pre">SIR3S_Model_Dataframes.get_EPSG()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.get_current_mx1_filepath"><code class="docutils literal notranslate"><span class="pre">SIR3S_Model_Dataframes.get_current_mx1_filepath()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.get_dataframe_from_time_table"><code class="docutils literal notranslate"><span class="pre">SIR3S_Model_Dataframes.get_dataframe_from_time_table()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.get_dataframes_from_nominal_diameter_tables"><code class="docutils literal notranslate"><span class="pre">SIR3S_Model_Dataframes.get_dataframes_from_nominal_diameter_tables()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.get_dataframes_from_time_table_type"><code class="docutils literal notranslate"><span class="pre">SIR3S_Model_Dataframes.get_dataframes_from_time_table_type()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.initialize_mx_read_helpers"><code class="docutils literal notranslate"><span class="pre">SIR3S_Model_Dataframes.initialize_mx_read_helpers()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.insert_dataframe_into_time_table"><code class="docutils literal notranslate"><span class="pre">SIR3S_Model_Dataframes.insert_dataframe_into_time_table()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.merge_model_data_and_results"><code class="docutils literal notranslate"><span class="pre">SIR3S_Model_Dataframes.merge_model_data_and_results()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.read_mx_results"><code class="docutils literal notranslate"><span class="pre">SIR3S_Model_Dataframes.read_mx_results()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#sir3stoolkit.mantle.alternative_models.SIR3S_Model_Alternative_Models"><code class="docutils literal notranslate"><span class="pre">SIR3S_Model_Alternative_Models</span></code></a><ul>
@@ -5342,6 +5345,31 @@ Supports both timestamp strings and index-based selection. Produces a MultiIndex
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.get_current_mx1_filepath">
+<span class="sig-name descname"><span class="pre">get_current_mx1_filepath</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dot_resolution</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/sir3stoolkit/mantle/dataframes.html#SIR3S_Model_Dataframes.get_current_mx1_filepath"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.get_current_mx1_filepath" title="Link to this definition"></a></dt>
+<dd><p>Build the absolute path to the .MX1 result metadata file of the currently open model.</p>
+<p>Derived from the model’s working directory (GetWorkingDirectory()) and its model identifier
+(self.Mid, as passed to OpenModel(), e.g. “M-1-0-1”): the three numbers in Mid become the
+B/V/BZ subdirectories, and the file itself is named “&lt;Mid&gt;.&lt;dot_resolution&gt;.MX1”, e.g.:
+“&lt;working_directory&gt;B1V0BZ1M-1-0-1.1.MX1”</p>
+<p>TODO before shipping: dot_resolution is currently assumed to always be 1. Confirm where this
+value actually comes from (it may not always be 1) before relying on this in production.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dot_resolution</strong> (<em>int</em><em>, </em><em>optional</em>) – The dot-resolution segment of the .MX1 filename (the “.Y” from 90-10 on).
+Default: 1 (current assumption, unverified for all cases).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Absolute path to the .MX1 file of the currently open model. Existence of the file is
+not checked here.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.get_dataframe_from_time_table">
 <span class="sig-name descname"><span class="pre">get_dataframe_from_time_table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_table_tk</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value_col_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flag_mapping</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="_modules/sir3stoolkit/mantle/dataframes.html#SIR3S_Model_Dataframes.get_dataframe_from_time_table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.get_dataframe_from_time_table" title="Link to this definition"></a></dt>
 <dd><p>Obtain time variable table (tables = [“VarPressureTable”, “VarFlowTable”, “ValveLiftTable”, “PumpSpeedTable”, “MeasuredVariableTable”, “LoadFactorTable”, “ThermalOutputTable”, “TemperatureTable”]) in format of a pandas dataframe with time and value column.</p>
@@ -5427,6 +5455,25 @@ and a dictionary of individual nominal diameter DataFrames.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.initialize_mx_read_helpers">
+<span class="sig-name descname"><span class="pre">initialize_mx_read_helpers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mx1_filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/sir3stoolkit/mantle/dataframes.html#SIR3S_Model_Dataframes.initialize_mx_read_helpers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.initialize_mx_read_helpers" title="Link to this definition"></a></dt>
+<dd><p>Initialize MX read helper state from an MX1 filepath.</p>
+<p>This method mirrors the legacy initialization sequence:
+parse MX1, parse MX2, build record-unpack format, then build channel indices.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>mx1_filepath</strong> (<em>str</em>) – Absolute or relative path to .MX1 file.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Summary dictionary with resolved paths and basic counts.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.insert_dataframe_into_time_table">
 <span class="sig-name descname"><span class="pre">insert_dataframe_into_time_table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_table_tk</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataframe</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference_time_stamp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keep</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date_col</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'TAG'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_col</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'UHRZEIT'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value_col</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'WERT'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="_modules/sir3stoolkit/mantle/dataframes.html#SIR3S_Model_Dataframes.insert_dataframe_into_time_table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.insert_dataframe_into_time_table" title="Link to this definition"></a></dt>
 <dd><p>Imports time-value pairs for a time table based on the provided dataframe into a SIR 3S model.
@@ -5460,6 +5507,56 @@ How previously existing rows in the target time table are handled is determined 
 <dt class="sig sig-object py" id="sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.merge_model_data_and_results">
 <span class="sig-name descname"><span class="pre">merge_model_data_and_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df_model_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df_results</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sir3stoolkit/mantle/dataframes.html#SIR3S_Model_Dataframes.merge_model_data_and_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.merge_model_data_and_results" title="Link to this definition"></a></dt>
 <dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.read_mx_results">
+<span class="sig-name descname"><span class="pre">read_mx_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mx1_filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timestamps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="_modules/sir3stoolkit/mantle/dataframes.html#SIR3S_Model_Dataframes.read_mx_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.read_mx_results" title="Link to this definition"></a></dt>
+<dd><p>Standalone MX result reader. Reads simulation results directly from the binary .MXS result file
+(via the .MX1/.MX2 metadata) instead of going through the SIR 3S Toolkit API.</p>
+<p>WORK IN PROGRESS: Not wired into generate_element_results_dataframe() or any other dataframe
+generation/filtering yet. Intended for checking the raw MX read against the legacy PT3S.Mx output.</p>
+<p>NOT HANDLED: SIR 3S can also write wall-clock-timestamped archive snapshots
+(“{base}_{YYYY-MM-DD_HH-MM}_UTC.{res}.MXS”, gated by TIMD.JARCH/NARCH/JZEIT) alongside the regular
+“{base}.{res}.MXS” files. These reuse the same {res}-tagged record layout but aren’t derivable
+from output_factor_small/output_factor_large alone (their name depends on when the calc was run,
+not on any setting value) and are out of scope here — this function only ever targets the two
+deterministic per-resolution files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mx1_filepath</strong> (<em>str</em><em>, </em><em>optional</em>) – Absolute or relative path to .MX1 file.
+Default: None. If not given, the path is resolved automatically for the
+currently open model via get_current_mx1_filepath(): the model’s currently
+configured output_factor_small/output_factor_large (SIR 3S: TIMD.DTFAK_KLEIN /
+TIMD.DTFAK_GROSS, see _discover_output_factors()) are looked up first. If they’re
+equal, only one resolution (and one file) exists and that path is used. If they
+differ, two structurally different files exist (different channel sets and time
+resolutions - see read_mx_results() call in the tutorials for a worked example)
+and this function cannot guess which one you want: a ValueError is raised naming
+both candidate paths, and mx1_filepath must be passed explicitly instead.</p></li>
+<li><p><strong>timestamps</strong> (<em>list</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Timestamps to keep, in the same form as the resolved <code class="docutils literal notranslate"><span class="pre">valid_timestamps</span></code> used by
+generate_element_results_dataframe() (i.e. timestamp strings as returned by
+self.GetTimeStamps()). Matching is done on the parsed instant (via pandas), not on the
+literal string, so minor formatting differences don’t matter.
+Every record in the .MXS file still has to be scanned sequentially (its TIMESTAMP field
+is read directly from the raw record bytes, without a struct-format unpack of the
+remaining channels), but only matching records pay the full per-channel unpack/decode
+cost. This is the expensive part for records that are skipped.
+Default: None (keep all TIMESTAMPs found in the file).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame with one row per unique TIMESTAMP (first occurrence kept for duplicate SIR 3S
+TIMESTAMPs, e.g. the initial STAT/TIME pair and the final TIME/TMIN/TMAX triple) and one
+column per MX channel (Sir3sID: OBJTYPE~NAME1~NAME2~tk~ATTRTYPE). Scalar channels hold
+their raw unpacked value (float/int, or bytes for CHAR channels e.g. CVERSO/SNAPSHOTTYPE).
+Vector channels (interior points) hold a tuple of raw unpacked values.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 

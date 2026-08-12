@@ -440,7 +440,17 @@
 
         <span class="c1"># Variable to enable or disable ObjectTypes_TableNames as return values wherever applicable</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">IsOutput_ObjectTypes_TableNames</span> <span class="o">=</span> <span class="kc">False</span>
-        
+
+        <span class="c1"># Model identifier (e.g. &quot;M-1-0-1&quot;) of the currently open model, set by OpenModel() or OpenModelXml(). None if no model has</span>
+        <span class="c1"># been opened yet.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Mid</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># Path to the currently open model&#39;s source file: self.dbFile (database, set by OpenModel()) or</span>
+        <span class="c1"># self.xmlFile (XML, set by OpenModelXml()). Exactly one of the two is set for a genuinely open model;</span>
+        <span class="c1"># both are None if no model has been opened yet.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dbFile</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">xmlFile</span> <span class="o">=</span> <span class="kc">None</span>
+
     <span class="k">def</span><span class="w"> </span><span class="nf">_load_dotnet_enum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enum_name</span><span class="p">,</span> <span class="n">assembly_ext</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">assembly_ext</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;assembly_ext must be provided when using dotnet_enum.&quot;</span><span class="p">)</span>
@@ -682,6 +692,9 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">result</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">OpenModelXml</span><span class="p">(</span><span class="n">Path</span><span class="p">,</span> <span class="n">SaveCurrentModel</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Mid</span> <span class="o">=</span> <span class="s2">&quot;M-1-0-1&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">xmlFile</span> <span class="o">=</span> <span class="n">Path</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dbFile</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
                 <span class="n">_log_message</span><span class="p">(</span><span class="s2">&quot;Model is open for further operation&quot;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
@@ -721,6 +734,9 @@
         <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
                 <span class="n">_log_message</span><span class="p">(</span><span class="s2">&quot;Model is open for further operation&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Mid</span> <span class="o">=</span> <span class="n">Mid</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dbFile</span> <span class="o">=</span> <span class="n">dbName</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">xmlFile</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">_log_message</span><span class="p">(</span><span class="s2">&quot;Error while opening the model, &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span></div>
 
@@ -741,6 +757,10 @@
         <span class="n">isClosed</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">CloseModel</span><span class="p">(</span><span class="n">saveChangesBeforeClosing</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">isClosed</span><span class="p">:</span>
             <span class="n">_log_message</span><span class="p">(</span><span class="s2">&quot;Error while closing the model, &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Mid</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dbFile</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">xmlFile</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">return</span> <span class="n">isClosed</span></div>
 
 
@@ -2228,7 +2248,16 @@
 
         <span class="c1"># Variable to enable or disable output comments</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span> <span class="o">=</span> <span class="kc">True</span>
-        
+
+        <span class="c1"># Model identifier (e.g. &quot;M-1-0-1&quot;) of the currently open model, set by OpenModel() or OpenModelXml(). None if no model has</span>
+        <span class="c1"># been opened yet.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Mid</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># Path to the currently open model&#39;s source file: self.dbFile (database, set by OpenModel()) or</span>
+        <span class="c1"># self.xmlFile (XML, set by OpenModelXml()). Exactly one of the two is set for a genuinely open model;</span>
+        <span class="c1"># both are None if no model has been opened yet.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dbFile</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">xmlFile</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_load_dotnet_enum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enum_name</span><span class="p">,</span> <span class="n">assembly_ext</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">assembly_ext</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -2403,6 +2432,9 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">result</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">OpenModelXml</span><span class="p">(</span><span class="n">Path</span><span class="p">,</span> <span class="n">SaveCurrentModel</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Mid</span> <span class="o">=</span> <span class="s2">&quot;M-1-0-1&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">xmlFile</span> <span class="o">=</span> <span class="n">Path</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dbFile</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
                 <span class="n">_log_message</span><span class="p">(</span><span class="s2">&quot;Model is open for further operation&quot;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
@@ -2441,6 +2473,9 @@
         <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
                 <span class="n">_log_message</span><span class="p">(</span><span class="s2">&quot;Model is open for further operation&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Mid</span> <span class="o">=</span> <span class="n">Mid</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dbFile</span> <span class="o">=</span> <span class="n">dbName</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">xmlFile</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">_log_message</span><span class="p">(</span><span class="s2">&quot;Error while opening the model, &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span></div>
 
@@ -2461,6 +2496,10 @@
         <span class="n">isClosed</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">CloseModel</span><span class="p">(</span><span class="n">saveChangesBeforeClosing</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">isClosed</span><span class="p">:</span>
             <span class="n">_log_message</span><span class="p">(</span><span class="s2">&quot;Error while closing the model, &quot;</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Mid</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dbFile</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">xmlFile</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">return</span> <span class="n">isClosed</span></div>
 
 

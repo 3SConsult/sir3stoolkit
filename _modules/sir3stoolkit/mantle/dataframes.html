@@ -101,10 +101,15 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">struct</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">tempfile</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">shutil</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">xml.etree.ElementTree</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ET</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Any</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Set</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">defaultdict</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">geopandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">gpd</span>
@@ -1358,6 +1363,618 @@
         <span class="k">finally</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">DeleteElement</span><span class="p">(</span><span class="n">dummy</span><span class="p">)</span>
 
+    <span class="c1">## MX read helpers here</span>
+
+<div class="viewcode-block" id="SIR3S_Model_Dataframes.get_current_mx1_filepath">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.get_current_mx1_filepath">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_current_mx1_filepath</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dot_resolution</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Build the absolute path to the .MX1 result metadata file of the currently open model.</span>
+
+<span class="sd">        Derived from the model&#39;s working directory (GetWorkingDirectory()) and its model identifier</span>
+<span class="sd">        (self.Mid, as passed to OpenModel(), e.g. &quot;M-1-0-1&quot;): the three numbers in Mid become the</span>
+<span class="sd">        B/V/BZ subdirectories, and the file itself is named &quot;&lt;Mid&gt;.&lt;dot_resolution&gt;.MX1&quot;, e.g.:</span>
+<span class="sd">        &quot;&lt;working_directory&gt;\\B1\\V0\\BZ1\\M-1-0-1.1.MX1&quot;</span>
+
+<span class="sd">        TODO before shipping: dot_resolution is currently assumed to always be 1. Confirm where this</span>
+<span class="sd">        value actually comes from (it may not always be 1) before relying on this in production.</span>
+
+<span class="sd">        :param dot_resolution: The dot-resolution segment of the .MX1 filename (the &quot;.Y&quot; from 90-10 on).</span>
+<span class="sd">                        Default: 1 (current assumption, unverified for all cases).</span>
+<span class="sd">        :type dot_resolution: int, optional</span>
+<span class="sd">        :return: Absolute path to the .MX1 file of the currently open model. Existence of the file is</span>
+<span class="sd">                        not checked here.</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">Mid</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;[get_current_mx1_filepath] No model is open (self.Mid is not set). Call OpenModel() first.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="n">parts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Mid</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">4</span> <span class="ow">or</span> <span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;M&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;[get_current_mx1_filepath] Unexpected Mid format: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">Mid</span><span class="si">!r}</span><span class="s2">. Expected &#39;M-&lt;b&gt;-&lt;v&gt;-&lt;bz&gt;&#39;.&quot;</span>
+            <span class="p">)</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">bz</span> <span class="o">=</span> <span class="n">parts</span>
+
+        <span class="n">working_directory</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetWorkingDirectory</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">working_directory</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;[get_current_mx1_filepath] GetWorkingDirectory() returned no working directory.&quot;</span><span class="p">)</span>
+
+        <span class="n">mx1_filename</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">Mid</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">dot_resolution</span><span class="si">}</span><span class="s2">.MX1&quot;</span>
+        <span class="n">mx1_filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">working_directory</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;B</span><span class="si">{</span><span class="n">b</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;V</span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;BZ</span><span class="si">{</span><span class="n">bz</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">mx1_filename</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">mx1_filepath</span></div>
+
+
+<div class="viewcode-block" id="SIR3S_Model_Dataframes.initialize_mx_read_helpers">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.initialize_mx_read_helpers">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">initialize_mx_read_helpers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mx1_filepath</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize MX read helper state from an MX1 filepath.</span>
+
+<span class="sd">        This method mirrors the legacy initialization sequence:</span>
+<span class="sd">        parse MX1, parse MX2, build record-unpack format, then build channel indices.</span>
+
+<span class="sd">        :param mx1_filepath: Absolute or relative path to .MX1 file.</span>
+<span class="sd">        :type mx1_filepath: str</span>
+<span class="sd">        :return: Summary dictionary with resolved paths and basic counts.</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;[mx helpers] Initializing MX read helpers ...&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">mx1_filepath</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">or</span> <span class="n">mx1_filepath</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;[mx helpers] mx1_filepath must be a non-empty string.&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">mx1_filepath</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[mx helpers] MX1 file does not exist: </span><span class="si">{</span><span class="n">mx1_filepath</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="n">w_d</span><span class="p">,</span> <span class="n">file_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">mx1_filepath</span><span class="p">)</span>
+        <span class="n">base</span><span class="p">,</span> <span class="n">_ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
+        <span class="n">base</span><span class="p">,</span> <span class="n">dot_resolution</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">base</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mx_paths</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;mx1&quot;</span><span class="p">:</span> <span class="n">mx1_filepath</span><span class="p">,</span>
+            <span class="s2">&quot;mx2&quot;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">w_d</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">base</span><span class="si">}</span><span class="s2">.MX2&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;mxs&quot;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">w_d</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">base</span><span class="si">}{</span><span class="n">dot_resolution</span><span class="si">}</span><span class="s2">.MXS&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;mxs_zip&quot;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">w_d</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">base</span><span class="si">}{</span><span class="n">dot_resolution</span><span class="si">}</span><span class="s2">.ZIP&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;dot_resolution&quot;</span><span class="p">:</span> <span class="n">dot_resolution</span><span class="p">,</span>
+            <span class="s2">&quot;work_dir&quot;</span><span class="p">:</span> <span class="n">w_d</span><span class="p">,</span>
+            <span class="s2">&quot;base&quot;</span><span class="p">:</span> <span class="n">base</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mx1_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_mx1_to_dataframe</span><span class="p">(</span><span class="n">mx1_filepath</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mx2_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_mx2_to_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mx_paths</span><span class="p">[</span><span class="s2">&quot;mx2&quot;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mx_record_struct_fmt_string</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mx1_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_mx_record_unpack_format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mx1_df</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mx_layout</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_mx_record_unpack_layout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mx1_df</span><span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="s2">&quot;[mx helpers] Initialized. MX1 rows: </span><span class="si">%d</span><span class="s2">, MX2 rows: </span><span class="si">%d</span><span class="s2">, non-vector channels: </span><span class="si">%d</span><span class="s2">, vector channels: </span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mx1_df</span><span class="o">.</span><span class="n">index</span><span class="p">),</span>
+            <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mx2_df</span><span class="o">.</span><span class="n">index</span><span class="p">),</span>
+            <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mx_layout</span><span class="p">[</span><span class="s2">&quot;mx_column_names&quot;</span><span class="p">]),</span>
+            <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mx_layout</span><span class="p">[</span><span class="s2">&quot;mx_column_names_vecs&quot;</span><span class="p">]),</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;paths&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mx_paths</span><span class="p">,</span>
+            <span class="s2">&quot;mx1_rows&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mx1_df</span><span class="o">.</span><span class="n">index</span><span class="p">),</span>
+            <span class="s2">&quot;mx2_rows&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mx2_df</span><span class="o">.</span><span class="n">index</span><span class="p">),</span>
+            <span class="s2">&quot;non_vector_channels&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mx_layout</span><span class="p">[</span><span class="s2">&quot;mx_column_names&quot;</span><span class="p">]),</span>
+            <span class="s2">&quot;vector_channels&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mx_layout</span><span class="p">[</span><span class="s2">&quot;mx_column_names_vecs&quot;</span><span class="p">]),</span>
+        <span class="p">}</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_parse_mx1_to_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mx1_filepath</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parse an MX1 XML file to a dataframe and add derived helper columns.</span>
+
+<span class="sd">        :param mx1_filepath: Path to .MX1 XML file.</span>
+<span class="sd">        :type mx1_filepath: str</span>
+<span class="sd">        :return: Parsed MX1 dataframe including vector flags and Sir3sID.</span>
+<span class="sd">        :rtype: pd.DataFrame</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[mx helpers] Parsing MX1: </span><span class="si">{</span><span class="n">mx1_filepath</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="n">mx1_tree</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">mx1_filepath</span><span class="p">)</span>
+        <span class="n">mx1_root</span> <span class="o">=</span> <span class="n">mx1_tree</span><span class="o">.</span><span class="n">getroot</span><span class="p">()</span>
+
+        <span class="n">all_records</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">mx_channel</span> <span class="ow">in</span> <span class="n">mx1_root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;XL1&quot;</span><span class="p">):</span>
+            <span class="n">record</span> <span class="o">=</span> <span class="p">{</span><span class="n">attr_name</span><span class="p">:</span> <span class="n">mx_channel</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">attr_name</span><span class="p">)</span> <span class="k">for</span> <span class="n">attr_name</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">mx_channel</span><span class="o">.</span><span class="n">keys</span><span class="p">())}</span>
+            <span class="n">all_records</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
+
+        <span class="n">mx1_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">all_records</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">mx1_df</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[mx helpers] Parsed MX1 is empty: </span><span class="si">{</span><span class="n">mx1_filepath</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;DATALENGTH&quot;</span><span class="p">,</span> <span class="s2">&quot;DATATYPELENGTH&quot;</span><span class="p">,</span> <span class="s2">&quot;DATAOFFSET&quot;</span><span class="p">,</span> <span class="s2">&quot;FLAGS&quot;</span><span class="p">]:</span>
+            <span class="n">mx1_df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">mx1_df</span><span class="p">[</span><span class="n">col</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s2">&quot;raise&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;int64&quot;</span><span class="p">)</span>
+
+        <span class="n">sep</span> <span class="o">=</span> <span class="s2">&quot;~&quot;</span>
+        <span class="n">mx1_df</span><span class="p">[</span><span class="s2">&quot;Sir3sID&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">mx1_df</span><span class="p">[</span><span class="s2">&quot;OBJTYPE&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+            <span class="o">+</span> <span class="n">sep</span>
+            <span class="o">+</span> <span class="n">mx1_df</span><span class="p">[</span><span class="s2">&quot;NAME1&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+            <span class="o">+</span> <span class="n">sep</span>
+            <span class="o">+</span> <span class="n">mx1_df</span><span class="p">[</span><span class="s2">&quot;NAME2&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+            <span class="o">+</span> <span class="n">sep</span>
+            <span class="o">+</span> <span class="n">mx1_df</span><span class="p">[</span><span class="s2">&quot;OBJTYPE_PK&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+            <span class="o">+</span> <span class="n">sep</span>
+            <span class="o">+</span> <span class="n">mx1_df</span><span class="p">[</span><span class="s2">&quot;ATTRTYPE&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="n">mx1_df</span><span class="p">[</span><span class="s2">&quot;NOfItems&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="nb">int</span><span class="p">(</span><span class="n">data_length</span> <span class="o">/</span> <span class="n">data_type_length</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">data_length</span><span class="p">,</span> <span class="n">data_type_length</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">mx1_df</span><span class="p">[</span><span class="s2">&quot;DATALENGTH&quot;</span><span class="p">],</span> <span class="n">mx1_df</span><span class="p">[</span><span class="s2">&quot;DATATYPELENGTH&quot;</span><span class="p">])</span>
+        <span class="p">]</span>
+
+        <span class="n">mx1_df</span><span class="p">[</span><span class="s2">&quot;is_vector_channel&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="kc">True</span> <span class="k">if</span> <span class="n">n_items</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">objtype_pk</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">3</span> <span class="ow">and</span> <span class="n">objtype</span> <span class="o">!=</span> <span class="s2">&quot;ALLG&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="kc">False</span>
+            <span class="k">for</span> <span class="n">n_items</span><span class="p">,</span> <span class="n">objtype_pk</span><span class="p">,</span> <span class="n">objtype</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">mx1_df</span><span class="p">[</span><span class="s2">&quot;NOfItems&quot;</span><span class="p">],</span> <span class="n">mx1_df</span><span class="p">[</span><span class="s2">&quot;OBJTYPE_PK&quot;</span><span class="p">],</span> <span class="n">mx1_df</span><span class="p">[</span><span class="s2">&quot;OBJTYPE&quot;</span><span class="p">])</span>
+        <span class="p">]</span>
+
+        <span class="n">mx1_df</span><span class="p">[</span><span class="s2">&quot;is_vector_channel_mx2&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="kc">True</span> <span class="k">if</span> <span class="n">is_vector</span> <span class="ow">and</span> <span class="n">flags</span> <span class="o">&gt;=</span> <span class="mi">4</span> <span class="ow">and</span> <span class="nb">bin</span><span class="p">(</span><span class="n">flags</span><span class="p">)[</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span> <span class="k">else</span> <span class="kc">False</span>
+            <span class="k">for</span> <span class="n">is_vector</span><span class="p">,</span> <span class="n">flags</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">mx1_df</span><span class="p">[</span><span class="s2">&quot;is_vector_channel&quot;</span><span class="p">],</span> <span class="n">mx1_df</span><span class="p">[</span><span class="s2">&quot;FLAGS&quot;</span><span class="p">])</span>
+        <span class="p">]</span>
+
+        <span class="n">mx1_df</span><span class="p">[</span><span class="s2">&quot;is_vector_channel_mx2_rvec&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="kc">True</span> <span class="k">if</span> <span class="n">is_mx2_vector</span> <span class="ow">and</span> <span class="n">data_type</span> <span class="o">==</span> <span class="s2">&quot;RVEC&quot;</span> <span class="k">else</span> <span class="kc">False</span>
+            <span class="k">for</span> <span class="n">is_mx2_vector</span><span class="p">,</span> <span class="n">data_type</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">mx1_df</span><span class="p">[</span><span class="s2">&quot;is_vector_channel_mx2&quot;</span><span class="p">],</span> <span class="n">mx1_df</span><span class="p">[</span><span class="s2">&quot;DATATYPE&quot;</span><span class="p">])</span>
+        <span class="p">]</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[mx helpers] Parsed MX1 successfully. Shape: </span><span class="si">{</span><span class="n">mx1_df</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">mx1_df</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_parse_mx2_to_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mx2_filepath</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parse an MX2 binary file to a dataframe.</span>
+
+<span class="sd">        :param mx2_filepath: Path to .MX2 binary file.</span>
+<span class="sd">        :type mx2_filepath: str</span>
+<span class="sd">        :return: Parsed MX2 dataframe.</span>
+<span class="sd">        :rtype: pd.DataFrame</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[mx helpers] Parsing MX2: </span><span class="si">{</span><span class="n">mx2_filepath</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">mx2_filepath</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[mx helpers] MX2 file does not exist: </span><span class="si">{</span><span class="n">mx2_filepath</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="n">header_fmt_string</span> <span class="o">=</span> <span class="s2">&quot;12s12s4si28xi&quot;</span>
+        <span class="n">all_records</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">mx2_filepath</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">offset_to_next_header</span> <span class="o">=</span> <span class="mi">0</span>
+
+            <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="n">header</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">64</span><span class="p">)</span>
+                <span class="n">header_length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">header</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">header_length</span> <span class="o">!=</span> <span class="mi">64</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">header_length</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                            <span class="s2">&quot;[mx helpers] Unexpected MX2 trailing header bytes: </span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">,</span>
+                            <span class="n">header_length</span><span class="p">,</span>
+                        <span class="p">)</span>
+                    <span class="k">break</span>
+
+                <span class="n">header_data</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="n">header_fmt_string</span><span class="p">,</span> <span class="n">header</span><span class="p">)</span>
+
+                <span class="n">obj_type</span> <span class="o">=</span> <span class="n">header_data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
+                <span class="n">attr_type</span> <span class="o">=</span> <span class="n">header_data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
+                <span class="n">data_type</span> <span class="o">=</span> <span class="n">header_data</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
+                <span class="n">data_type_length</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">header_data</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+                <span class="n">data_length</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">header_data</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
+                <span class="n">n_of_items</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">data_length</span> <span class="o">/</span> <span class="n">data_type_length</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">data_type</span> <span class="o">==</span> <span class="s2">&quot;CHAR&quot;</span><span class="p">:</span>
+                    <span class="n">data_fmt_string</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">data_type_length</span><span class="si">}</span><span class="s2">s&quot;</span> <span class="o">*</span> <span class="n">n_of_items</span>
+                <span class="k">elif</span> <span class="n">data_type</span> <span class="o">==</span> <span class="s2">&quot;INT4&quot;</span><span class="p">:</span>
+                    <span class="n">data_fmt_string</span> <span class="o">=</span> <span class="s2">&quot;i&quot;</span> <span class="o">*</span> <span class="n">n_of_items</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">data_fmt_string</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">data_length</span><span class="si">}</span><span class="s2">x&quot;</span>
+
+                <span class="n">data_bytes</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">data_length</span><span class="p">)</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="n">data_fmt_string</span><span class="p">,</span> <span class="n">data_bytes</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">data_type</span> <span class="o">==</span> <span class="s2">&quot;CHAR&quot;</span><span class="p">:</span>
+                    <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">data</span><span class="p">]</span>
+
+                <span class="n">all_records</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="p">{</span>
+                        <span class="s2">&quot;ObjType&quot;</span><span class="p">:</span> <span class="n">obj_type</span><span class="p">,</span>
+                        <span class="s2">&quot;AttrType&quot;</span><span class="p">:</span> <span class="n">attr_type</span><span class="p">,</span>
+                        <span class="s2">&quot;DataType&quot;</span><span class="p">:</span> <span class="n">data_type</span><span class="p">,</span>
+                        <span class="s2">&quot;DataTypeLength&quot;</span><span class="p">:</span> <span class="n">data_type_length</span><span class="p">,</span>
+                        <span class="s2">&quot;DataLength&quot;</span><span class="p">:</span> <span class="n">data_length</span><span class="p">,</span>
+                        <span class="s2">&quot;NOfItems&quot;</span><span class="p">:</span> <span class="n">n_of_items</span><span class="p">,</span>
+                        <span class="s2">&quot;Data&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">,</span>
+                    <span class="p">}</span>
+                <span class="p">)</span>
+
+                <span class="n">offset_to_next_header</span> <span class="o">+=</span> <span class="mi">64</span> <span class="o">+</span> <span class="n">data_length</span>
+                <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">tell</span><span class="p">()</span> <span class="o">!=</span> <span class="n">offset_to_next_header</span><span class="p">:</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="n">offset_to_next_header</span><span class="p">)</span>
+
+        <span class="n">mx2_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">all_records</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[mx helpers] Parsed MX2 successfully. Shape: </span><span class="si">{</span><span class="n">mx2_df</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">mx2_df</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_build_mx_record_unpack_format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mx1_df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Build the struct unpack format string and unpack indices from MX1 metadata.</span>
+
+<span class="sd">        :param mx1_df: MX1 dataframe.</span>
+<span class="sd">        :type mx1_df: pd.DataFrame</span>
+<span class="sd">        :return: Tuple of format string and MX1 dataframe with unpackIdx column.</span>
+<span class="sd">        :rtype: Tuple[str, pd.DataFrame]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;[mx helpers] Building MX record unpack format ...&quot;</span><span class="p">)</span>
+
+        <span class="n">fmt_string</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">unpack_idx</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">idx_unpack</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">mx1_df</span><span class="o">.</span><span class="n">itertuples</span><span class="p">():</span>
+            <span class="n">fmt_item</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+            <span class="n">data_type</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">DATATYPE</span>
+            <span class="n">data_type_length</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">DATATYPELENGTH</span><span class="p">)</span>
+            <span class="n">data_length</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">DATALENGTH</span><span class="p">)</span>
+            <span class="n">n_items</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">NOfItems</span><span class="p">)</span>
+            <span class="n">is_vector_channel</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">is_vector_channel</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">data_type</span> <span class="o">==</span> <span class="s2">&quot;CHAR&quot;</span><span class="p">:</span>
+                <span class="n">unpack_idx</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">idx_unpack</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">is_vector_channel</span><span class="p">:</span>
+                    <span class="n">fmt_item</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">data_type_length</span><span class="si">}</span><span class="s2">s&quot;</span> <span class="o">*</span> <span class="n">n_items</span>
+                    <span class="n">idx_unpack</span> <span class="o">+=</span> <span class="n">n_items</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">fmt_item</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">data_length</span><span class="si">}</span><span class="s2">s&quot;</span>
+                    <span class="n">idx_unpack</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">elif</span> <span class="n">data_type</span> <span class="o">==</span> <span class="s2">&quot;INT4&quot;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">data_type_length</span> <span class="o">!=</span> <span class="mi">4</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;[mx helpers] Invalid DATATYPELENGTH for INT4: </span><span class="si">{</span><span class="n">data_type_length</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="p">)</span>
+                <span class="n">unpack_idx</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">idx_unpack</span><span class="p">)</span>
+                <span class="n">fmt_item</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">n_items</span><span class="si">}</span><span class="s2">i&quot;</span> <span class="k">if</span> <span class="n">is_vector_channel</span> <span class="k">else</span> <span class="s2">&quot;i&quot;</span>
+                <span class="n">idx_unpack</span> <span class="o">+=</span> <span class="n">n_items</span> <span class="k">if</span> <span class="n">is_vector_channel</span> <span class="k">else</span> <span class="mi">1</span>
+            <span class="k">elif</span> <span class="n">data_type</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;REAL&quot;</span><span class="p">,</span> <span class="s2">&quot;RVEC&quot;</span><span class="p">}:</span>
+                <span class="k">if</span> <span class="n">data_type_length</span> <span class="o">!=</span> <span class="mi">4</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;[mx helpers] Invalid DATATYPELENGTH for </span><span class="si">{</span><span class="n">data_type</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">data_type_length</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="p">)</span>
+                <span class="n">unpack_idx</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">idx_unpack</span><span class="p">)</span>
+                <span class="n">fmt_item</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">n_items</span><span class="si">}</span><span class="s2">f&quot;</span> <span class="k">if</span> <span class="n">is_vector_channel</span> <span class="k">else</span> <span class="s2">&quot;f&quot;</span>
+                <span class="n">idx_unpack</span> <span class="o">+=</span> <span class="n">n_items</span> <span class="k">if</span> <span class="n">is_vector_channel</span> <span class="k">else</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[mx helpers] Unknown DATATYPE in MX1: </span><span class="si">{</span><span class="n">data_type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="n">fmt_string</span> <span class="o">+=</span> <span class="n">fmt_item</span>
+
+        <span class="n">mx_record_length_mx1</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">mx1_df</span><span class="p">[</span><span class="s2">&quot;DATAOFFSET&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">mx1_df</span><span class="p">[</span><span class="s2">&quot;DATALENGTH&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">mx_record_length_fmt</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">calcsize</span><span class="p">(</span><span class="n">fmt_string</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">mx_record_length_mx1</span> <span class="o">!=</span> <span class="n">mx_record_length_fmt</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;[mx helpers] Record size mismatch between MX1 metadata &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;(</span><span class="si">{</span><span class="n">mx_record_length_mx1</span><span class="si">}</span><span class="s2">) and struct format (</span><span class="si">{</span><span class="n">mx_record_length_fmt</span><span class="si">}</span><span class="s2">).&quot;</span>
+            <span class="p">)</span>
+
+        <span class="n">mx1_df_with_unpack</span> <span class="o">=</span> <span class="n">mx1_df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">mx1_df_with_unpack</span><span class="p">[</span><span class="s2">&quot;unpackIdx&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">unpack_idx</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;int64&quot;</span><span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="s2">&quot;[mx helpers] Built unpack format successfully. Record length: </span><span class="si">%d</span><span class="s2"> bytes&quot;</span><span class="p">,</span>
+            <span class="n">mx_record_length_fmt</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">fmt_string</span><span class="p">,</span> <span class="n">mx1_df_with_unpack</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_build_mx_record_unpack_layout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mx1_df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Build channel layout indices and column-name lists for later MXS decoding.</span>
+
+<span class="sd">        :param mx1_df: MX1 dataframe with unpackIdx and vector flags.</span>
+<span class="sd">        :type mx1_df: pd.DataFrame</span>
+<span class="sd">        :return: Dictionary with important indices and channel lists.</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;[mx helpers] Building MX unpack layout ...&quot;</span><span class="p">)</span>
+
+        <span class="n">idx_cverso</span> <span class="o">=</span> <span class="n">mx1_df</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">mx1_df</span><span class="p">[</span><span class="s2">&quot;ATTRTYPE&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;CVERSO&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">idx_timestamp</span> <span class="o">=</span> <span class="n">mx1_df</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">mx1_df</span><span class="p">[</span><span class="s2">&quot;ATTRTYPE&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;TIMESTAMP&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">idx_snapshottype</span> <span class="o">=</span> <span class="n">mx1_df</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">mx1_df</span><span class="p">[</span><span class="s2">&quot;ATTRTYPE&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;SNAPSHOTTYPE&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="n">unpack_idx_cverso</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">mx1_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx_cverso</span><span class="p">,</span> <span class="s2">&quot;unpackIdx&quot;</span><span class="p">])</span>
+        <span class="n">unpack_idx_timestamp</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">mx1_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx_timestamp</span><span class="p">,</span> <span class="s2">&quot;unpackIdx&quot;</span><span class="p">])</span>
+        <span class="n">unpack_idx_snapshottype</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">mx1_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx_snapshottype</span><span class="p">,</span> <span class="s2">&quot;unpackIdx&quot;</span><span class="p">])</span>
+
+        <span class="n">mx_column_names</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">mx_column_names_vecs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">mx1_df</span><span class="o">.</span><span class="n">itertuples</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">unpackIdx</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="nb">bool</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">is_vector_channel</span><span class="p">):</span>
+                <span class="n">mx_column_names_vecs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">Sir3sID</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">mx_column_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">Sir3sID</span><span class="p">)</span>
+
+        <span class="n">timestamp_sir3sid</span> <span class="o">=</span> <span class="n">mx1_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx_timestamp</span><span class="p">,</span> <span class="s2">&quot;Sir3sID&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">timestamp_sir3sid</span> <span class="ow">in</span> <span class="n">mx_column_names</span><span class="p">:</span>
+            <span class="n">mx_column_names</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">timestamp_sir3sid</span><span class="p">)</span>
+
+        <span class="n">idx_unpack_non_vector_channels</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="nb">int</span><span class="p">(</span><span class="n">mx1_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="s2">&quot;unpackIdx&quot;</span><span class="p">])</span>
+            <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">is_vector</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">mx1_df</span><span class="p">[</span><span class="s2">&quot;is_vector_channel&quot;</span><span class="p">])</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">is_vector</span>
+        <span class="p">]</span>
+        <span class="k">if</span> <span class="n">unpack_idx_timestamp</span> <span class="ow">in</span> <span class="n">idx_unpack_non_vector_channels</span><span class="p">:</span>
+            <span class="n">idx_unpack_non_vector_channels</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">unpack_idx_timestamp</span><span class="p">)</span>
+
+        <span class="n">idx_unpack_vector_channels</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="nb">int</span><span class="p">(</span><span class="n">mx1_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="s2">&quot;unpackIdx&quot;</span><span class="p">])</span>
+            <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">is_vector</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">mx1_df</span><span class="p">[</span><span class="s2">&quot;is_vector_channel&quot;</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">is_vector</span>
+        <span class="p">]</span>
+
+        <span class="n">idx_of_non_vector_channels</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">idx</span> <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">is_vector</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">mx1_df</span><span class="p">[</span><span class="s2">&quot;is_vector_channel&quot;</span><span class="p">])</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">is_vector</span>
+        <span class="p">]</span>
+        <span class="k">if</span> <span class="n">idx_timestamp</span> <span class="ow">in</span> <span class="n">idx_of_non_vector_channels</span><span class="p">:</span>
+            <span class="n">idx_of_non_vector_channels</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">idx_timestamp</span><span class="p">)</span>
+
+        <span class="n">idx_of_vector_channels</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">idx</span> <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">is_vector</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">mx1_df</span><span class="p">[</span><span class="s2">&quot;is_vector_channel&quot;</span><span class="p">])</span> <span class="k">if</span> <span class="n">is_vector</span>
+        <span class="p">]</span>
+
+        <span class="n">layout</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;idx_cverso&quot;</span><span class="p">:</span> <span class="n">idx_cverso</span><span class="p">,</span>
+            <span class="s2">&quot;idx_timestamp&quot;</span><span class="p">:</span> <span class="n">idx_timestamp</span><span class="p">,</span>
+            <span class="s2">&quot;idx_snapshottype&quot;</span><span class="p">:</span> <span class="n">idx_snapshottype</span><span class="p">,</span>
+            <span class="s2">&quot;unpack_idx_cverso&quot;</span><span class="p">:</span> <span class="n">unpack_idx_cverso</span><span class="p">,</span>
+            <span class="s2">&quot;unpack_idx_timestamp&quot;</span><span class="p">:</span> <span class="n">unpack_idx_timestamp</span><span class="p">,</span>
+            <span class="s2">&quot;unpack_idx_snapshottype&quot;</span><span class="p">:</span> <span class="n">unpack_idx_snapshottype</span><span class="p">,</span>
+            <span class="s2">&quot;mx_column_names&quot;</span><span class="p">:</span> <span class="n">mx_column_names</span><span class="p">,</span>
+            <span class="s2">&quot;mx_column_names_vecs&quot;</span><span class="p">:</span> <span class="n">mx_column_names_vecs</span><span class="p">,</span>
+            <span class="s2">&quot;idx_unpack_non_vector_channels&quot;</span><span class="p">:</span> <span class="n">idx_unpack_non_vector_channels</span><span class="p">,</span>
+            <span class="s2">&quot;idx_unpack_vector_channels&quot;</span><span class="p">:</span> <span class="n">idx_unpack_vector_channels</span><span class="p">,</span>
+            <span class="s2">&quot;idx_of_non_vector_channels&quot;</span><span class="p">:</span> <span class="n">idx_of_non_vector_channels</span><span class="p">,</span>
+            <span class="s2">&quot;idx_of_vector_channels&quot;</span><span class="p">:</span> <span class="n">idx_of_vector_channels</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;[mx helpers] Built MX unpack layout successfully.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">layout</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_discover_output_factors</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Discover the currently configured MX result-output factors (SIR 3S: TIMD.DTFAK_KLEIN /</span>
+<span class="sd">        TIMD.DTFAK_GROSS) of the currently open model.</span>
+
+<span class="sd">        These control how often the calculation core archives results: ``output_factor_small`` is the</span>
+<span class="sd">        interval (in internal calculation steps) used for time-curve (&quot;Zeitkurven&quot;) output, and</span>
+<span class="sd">        ``output_factor_large`` is the interval used for numeric displays / longitudinal sections /</span>
+<span class="sd">        network-graph coloring. Both end up as literal dot-resolution numbers in the resulting file names</span>
+<span class="sd">        (e.g. &quot;M-1-0-1.1.MX1&quot;, &quot;M-1-0-1.100.MX1&quot;) — see get_current_mx1_filepath(). If they&#39;re equal, only</span>
+<span class="sd">        one resolution (and one file) exists.</span>
+
+<span class="sd">        This is done by exporting a throwaway SirCalc XML file (via WriteSirCalcXmlFile()) into a</span>
+<span class="sd">        temporary directory that is deleted again afterwards; nothing is written into the model&#39;s actual</span>
+<span class="sd">        working directory and no existing result files are touched.</span>
+
+<span class="sd">        :return: (output_factor_small, output_factor_large)</span>
+<span class="sd">        :rtype: Tuple[int, int]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">Mid</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;[_discover_output_factors] No model is open (self.Mid is not set). Call OpenModel() first.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="n">tmp_dir</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkdtemp</span><span class="p">(</span><span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;sir3s_output_factors_&quot;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">xml_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">WriteSirCalcXmlFile</span><span class="p">(</span><span class="n">saveItInThisDirectory</span><span class="o">=</span><span class="n">tmp_dir</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">xml_path</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;[_discover_output_factors] WriteSirCalcXmlFile() failed (returned no path).&quot;</span><span class="p">)</span>
+
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">xml_path</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;Windows-1252&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">content</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+            <span class="n">timd_match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;&lt;TIMD\b[^&gt;]*/&gt;&quot;</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">timd_match</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[_discover_output_factors] No &lt;TIMD&gt; element found in </span><span class="si">{</span><span class="n">xml_path</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+            <span class="n">timd_tag</span> <span class="o">=</span> <span class="n">timd_match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+            <span class="n">small_match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\bDTFAK_KLEIN=&quot;(\d+)&quot;&#39;</span><span class="p">,</span> <span class="n">timd_tag</span><span class="p">)</span>
+            <span class="n">large_match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\bDTFAK_GROSS=&quot;(\d+)&quot;&#39;</span><span class="p">,</span> <span class="n">timd_tag</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">small_match</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">large_match</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[_discover_output_factors] DTFAK_KLEIN/DTFAK_GROSS not found in: </span><span class="si">{</span><span class="n">timd_tag</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="n">output_factor_small</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">small_match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+            <span class="n">output_factor_large</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">large_match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">tmp_dir</span><span class="p">,</span> <span class="n">ignore_errors</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;[_discover_output_factors] output_factor_small=</span><span class="si">{</span><span class="n">output_factor_small</span><span class="si">}</span><span class="s2">, &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;output_factor_large=</span><span class="si">{</span><span class="n">output_factor_large</span><span class="si">}</span><span class="s2">.&quot;</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">output_factor_small</span><span class="p">,</span> <span class="n">output_factor_large</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_resolve_given_mx_timestamps</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timestamps</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Set</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Validate the format of timestamps passed to read_mx_results().</span>
+
+<span class="sd">        Unlike _resolve_given_timestamps(), this does not check given entries against</span>
+<span class="sd">        self.GetTimeStamps() of the currently open model, since read_mx_results() may target an .MX1</span>
+<span class="sd">        file unrelated to whatever model (if any) is currently open. Each entry is only checked for</span>
+<span class="sd">        being a parseable timestamp; whether it actually occurs in the .MXS file is determined naturally</span>
+<span class="sd">        during the scan itself (non-matching records are simply skipped).</span>
+
+<span class="sd">        :param timestamps: Timestamp strings to filter on, or None to keep every timestamp found in the file.</span>
+<span class="sd">        :type timestamps: list[str], optional</span>
+<span class="sd">        :return: Set of parsed timestamps to keep, or None (meaning: no filter, keep everything).</span>
+<span class="sd">        :rtype: set[pandas.Timestamp], optional</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">timestamps</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">resolved</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">ts</span> <span class="ow">in</span> <span class="n">timestamps</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">resolved</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">ts</span><span class="p">))</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[Resolving MX Timestamps] Timestamp </span><span class="si">{</span><span class="n">ts</span><span class="si">!r}</span><span class="s2"> is not parseable. It will be excluded: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[Resolving MX Timestamps] Using </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">resolved</span><span class="p">)</span><span class="si">}</span><span class="s2"> timestamp(s) to filter records.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">resolved</span>
+
+<div class="viewcode-block" id="SIR3S_Model_Dataframes.read_mx_results">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.read_mx_results">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">read_mx_results</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">mx1_filepath</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">timestamps</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Standalone MX result reader. Reads simulation results directly from the binary .MXS result file</span>
+<span class="sd">        (via the .MX1/.MX2 metadata) instead of going through the SIR 3S Toolkit API.</span>
+
+<span class="sd">        WORK IN PROGRESS: Not wired into generate_element_results_dataframe() or any other dataframe</span>
+<span class="sd">        generation/filtering yet. Intended for checking the raw MX read against the legacy PT3S.Mx output.</span>
+
+<span class="sd">        NOT HANDLED: SIR 3S can also write wall-clock-timestamped archive snapshots</span>
+<span class="sd">        (&quot;{base}_{YYYY-MM-DD_HH-MM}_UTC.{res}.MXS&quot;, gated by TIMD.JARCH/NARCH/JZEIT) alongside the regular</span>
+<span class="sd">        &quot;{base}.{res}.MXS&quot; files. These reuse the same {res}-tagged record layout but aren&#39;t derivable</span>
+<span class="sd">        from output_factor_small/output_factor_large alone (their name depends on when the calc was run,</span>
+<span class="sd">        not on any setting value) and are out of scope here — this function only ever targets the two</span>
+<span class="sd">        deterministic per-resolution files.</span>
+
+<span class="sd">        :param mx1_filepath: Absolute or relative path to .MX1 file.</span>
+<span class="sd">                        Default: None. If not given, the path is resolved automatically for the</span>
+<span class="sd">                        currently open model via get_current_mx1_filepath(): the model&#39;s currently</span>
+<span class="sd">                        configured output_factor_small/output_factor_large (SIR 3S: TIMD.DTFAK_KLEIN /</span>
+<span class="sd">                        TIMD.DTFAK_GROSS, see _discover_output_factors()) are looked up first. If they&#39;re</span>
+<span class="sd">                        equal, only one resolution (and one file) exists and that path is used. If they</span>
+<span class="sd">                        differ, two structurally different files exist (different channel sets and time</span>
+<span class="sd">                        resolutions - see read_mx_results() call in the tutorials for a worked example)</span>
+<span class="sd">                        and this function cannot guess which one you want: a ValueError is raised naming</span>
+<span class="sd">                        both candidate paths, and mx1_filepath must be passed explicitly instead.</span>
+<span class="sd">        :type mx1_filepath: str, optional</span>
+<span class="sd">        :param timestamps: Timestamps to keep, in the same form as the resolved ``valid_timestamps`` used by</span>
+<span class="sd">                        generate_element_results_dataframe() (i.e. timestamp strings as returned by</span>
+<span class="sd">                        self.GetTimeStamps()). Matching is done on the parsed instant (via pandas), not on the</span>
+<span class="sd">                        literal string, so minor formatting differences don&#39;t matter.</span>
+<span class="sd">                        Every record in the .MXS file still has to be scanned sequentially (its TIMESTAMP field</span>
+<span class="sd">                        is read directly from the raw record bytes, without a struct-format unpack of the</span>
+<span class="sd">                        remaining channels), but only matching records pay the full per-channel unpack/decode</span>
+<span class="sd">                        cost. This is the expensive part for records that are skipped.</span>
+<span class="sd">                        Default: None (keep all TIMESTAMPs found in the file).</span>
+<span class="sd">        :type timestamps: list[str], optional</span>
+<span class="sd">        :return: DataFrame with one row per unique TIMESTAMP (first occurrence kept for duplicate SIR 3S</span>
+<span class="sd">                        TIMESTAMPs, e.g. the initial STAT/TIME pair and the final TIME/TMIN/TMAX triple) and one</span>
+<span class="sd">                        column per MX channel (Sir3sID: OBJTYPE~NAME1~NAME2~tk~ATTRTYPE). Scalar channels hold</span>
+<span class="sd">                        their raw unpacked value (float/int, or bytes for CHAR channels e.g. CVERSO/SNAPSHOTTYPE).</span>
+<span class="sd">                        Vector channels (interior points) hold a tuple of raw unpacked values.</span>
+<span class="sd">        :rtype: pd.DataFrame</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">mx1_filepath</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">output_factor_small</span><span class="p">,</span> <span class="n">output_factor_large</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_discover_output_factors</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">output_factor_small</span> <span class="o">!=</span> <span class="n">output_factor_large</span><span class="p">:</span>
+                <span class="n">path_small</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_current_mx1_filepath</span><span class="p">(</span><span class="n">dot_resolution</span><span class="o">=</span><span class="n">output_factor_small</span><span class="p">)</span>
+                <span class="n">path_large</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_current_mx1_filepath</span><span class="p">(</span><span class="n">dot_resolution</span><span class="o">=</span><span class="n">output_factor_large</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;[mx read] output_factor_small != output_factor_large &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;(</span><span class="si">{</span><span class="n">output_factor_small</span><span class="si">}</span><span class="s2"> != </span><span class="si">{</span><span class="n">output_factor_large</span><span class="si">}</span><span class="s2">, SIR 3S: TIMD.DTFAK_KLEIN/&quot;</span>
+                    <span class="s2">&quot;DTFAK_GROSS); two structurally different resolution files exist. &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;Pass mx1_filepath explicitly to pick one: </span><span class="si">{</span><span class="n">path_small</span><span class="si">!r}</span><span class="s2"> or </span><span class="si">{</span><span class="n">path_large</span><span class="si">!r}</span><span class="s2">.&quot;</span>
+                <span class="p">)</span>
+            <span class="n">mx1_filepath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_current_mx1_filepath</span><span class="p">(</span><span class="n">dot_resolution</span><span class="o">=</span><span class="n">output_factor_small</span><span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[mx read] Reading MX results from: </span><span class="si">{</span><span class="n">mx1_filepath</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">initialize_mx_read_helpers</span><span class="p">(</span><span class="n">mx1_filepath</span><span class="p">)</span>
+
+        <span class="n">mxs_filepath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mx_paths</span><span class="p">[</span><span class="s2">&quot;mxs&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">mxs_filepath</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[mx read] MXS file does not exist: </span><span class="si">{</span><span class="n">mxs_filepath</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="n">requested_times</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_resolve_given_mx_timestamps</span><span class="p">(</span><span class="n">timestamps</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">requested_times</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[mx read] Timestamp filter active: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">requested_times</span><span class="p">)</span><span class="si">}</span><span class="s2"> requested timestamp(s).&quot;</span><span class="p">)</span>
+
+        <span class="n">record_length</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">calcsize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mx_record_struct_fmt_string</span><span class="p">)</span>
+        <span class="n">mx_column_names</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mx_layout</span><span class="p">[</span><span class="s2">&quot;mx_column_names&quot;</span><span class="p">]</span>
+        <span class="n">mx_column_names_vecs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mx_layout</span><span class="p">[</span><span class="s2">&quot;mx_column_names_vecs&quot;</span><span class="p">]</span>
+        <span class="n">idx_unpack_non_vector_channels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mx_layout</span><span class="p">[</span><span class="s2">&quot;idx_unpack_non_vector_channels&quot;</span><span class="p">]</span>
+        <span class="n">idx_of_vector_channels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mx_layout</span><span class="p">[</span><span class="s2">&quot;idx_of_vector_channels&quot;</span><span class="p">]</span>
+        <span class="n">idx_unpack_vector_channels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mx_layout</span><span class="p">[</span><span class="s2">&quot;idx_unpack_vector_channels&quot;</span><span class="p">]</span>
+        <span class="n">n_of_items</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mx1_df</span><span class="p">[</span><span class="s2">&quot;NOfItems&quot;</span><span class="p">]</span>
+
+        <span class="c1"># Byte offsets/lengths of CVERSO and TIMESTAMP within a raw record, so both can be read directly</span>
+        <span class="c1"># from the record bytes without a full struct.unpack of all channels.</span>
+        <span class="n">cverso_offset</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mx1_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_mx_layout</span><span class="p">[</span><span class="s2">&quot;idx_cverso&quot;</span><span class="p">],</span> <span class="s2">&quot;DATAOFFSET&quot;</span><span class="p">])</span>
+        <span class="n">cverso_length</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mx1_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_mx_layout</span><span class="p">[</span><span class="s2">&quot;idx_cverso&quot;</span><span class="p">],</span> <span class="s2">&quot;DATALENGTH&quot;</span><span class="p">])</span>
+        <span class="n">timestamp_offset</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mx1_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_mx_layout</span><span class="p">[</span><span class="s2">&quot;idx_timestamp&quot;</span><span class="p">],</span> <span class="s2">&quot;DATAOFFSET&quot;</span><span class="p">])</span>
+        <span class="n">timestamp_length</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mx1_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_mx_layout</span><span class="p">[</span><span class="s2">&quot;idx_timestamp&quot;</span><span class="p">],</span> <span class="s2">&quot;DATALENGTH&quot;</span><span class="p">])</span>
+
+        <span class="n">time_delta_read_offset</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">times</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">rows</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">mxs_filepath</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="n">file_size</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">tell</span><span class="p">()</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+            <span class="n">records_read</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">records_decoded</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">while</span> <span class="n">f</span><span class="o">.</span><span class="n">tell</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">file_size</span><span class="p">:</span>
+                <span class="n">record</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">record_length</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">record</span><span class="p">)</span> <span class="o">!=</span> <span class="n">record_length</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">record</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[mx read] Unexpected trailing MXS bytes: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">record</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="k">break</span>
+                <span class="n">records_read</span> <span class="o">+=</span> <span class="mi">1</span>
+
+                <span class="k">if</span> <span class="n">time_delta_read_offset</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">cverso</span> <span class="o">=</span> <span class="n">record</span><span class="p">[</span><span class="n">cverso_offset</span><span class="p">:</span> <span class="n">cverso_offset</span> <span class="o">+</span> <span class="n">cverso_length</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+                    <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;SIR 3S (\d</span><span class="si">{2}</span><span class="s2">)-(\d</span><span class="si">{2}</span><span class="s2">)-(\d</span><span class="si">{2}</span><span class="s2">)-(\d</span><span class="si">{2}</span><span class="s2">)&quot;</span><span class="p">,</span> <span class="n">cverso</span><span class="p">)</span>
+                    <span class="n">sub_version</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span> <span class="k">if</span> <span class="n">match</span> <span class="k">else</span> <span class="mi">99</span>
+                    <span class="k">if</span> <span class="n">sub_version</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
+                        <span class="n">time_delta_read_offset</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_timedelta</span><span class="p">(</span><span class="s2">&quot;1 hour&quot;</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">time_delta_read_offset</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_timedelta</span><span class="p">(</span><span class="s2">&quot;0 seconds&quot;</span><span class="p">)</span>
+
+                <span class="n">timestamp_raw</span> <span class="o">=</span> <span class="n">record</span><span class="p">[</span><span class="n">timestamp_offset</span><span class="p">:</span> <span class="n">timestamp_offset</span> <span class="o">+</span> <span class="n">timestamp_length</span><span class="p">]</span>
+                <span class="n">time</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">timestamp_raw</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">),</span> <span class="n">utc</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">+</span> <span class="n">time_delta_read_offset</span>
+
+                <span class="k">if</span> <span class="n">requested_times</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">time</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">requested_times</span><span class="p">:</span>
+                    <span class="k">continue</span>
+
+                <span class="n">record_data</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mx_record_struct_fmt_string</span><span class="p">,</span> <span class="n">record</span><span class="p">)</span>
+
+                <span class="n">row</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="k">for</span> <span class="n">col</span><span class="p">,</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">mx_column_names</span><span class="p">,</span> <span class="n">idx_unpack_non_vector_channels</span><span class="p">):</span>
+                    <span class="n">row</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">record_data</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">col</span><span class="p">,</span> <span class="n">idx_of</span><span class="p">,</span> <span class="n">idx_unpack</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
+                    <span class="n">mx_column_names_vecs</span><span class="p">,</span> <span class="n">idx_of_vector_channels</span><span class="p">,</span> <span class="n">idx_unpack_vector_channels</span>
+                <span class="p">):</span>
+                    <span class="n">row</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">record_data</span><span class="p">[</span><span class="n">idx_unpack</span><span class="p">:</span> <span class="n">idx_unpack</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_of_items</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">idx_of</span><span class="p">])]</span>
+
+                <span class="n">times</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">time</span><span class="p">)</span>
+                <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+                <span class="n">records_decoded</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;TIMESTAMP&quot;</span><span class="p">),</span> <span class="n">columns</span><span class="o">=</span><span class="n">mx_column_names</span> <span class="o">+</span> <span class="n">mx_column_names_vecs</span><span class="p">)</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="o">~</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">duplicated</span><span class="p">(</span><span class="n">keep</span><span class="o">=</span><span class="s2">&quot;first&quot;</span><span class="p">)]</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;[mx read] Done. Records scanned: </span><span class="si">{</span><span class="n">records_read</span><span class="si">}</span><span class="s2">. Records decoded: </span><span class="si">{</span><span class="n">records_decoded</span><span class="si">}</span><span class="s2">. &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;Unique timestamps: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">df</span></div>
+
+
     <span class="c1"># Dataframe Operations</span>
 
 <div class="viewcode-block" id="SIR3S_Model_Dataframes.delete_elements_in_dataframe">
@@ -1665,6 +2282,8 @@
         <span class="k">if</span> <span class="n">time_table_tk</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">available_time_table_tks</span><span class="p">:</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[insert dataframe into time table] Time table with tk </span><span class="si">{</span><span class="n">time_table_tk</span><span class="si">}</span><span class="s2"> does not exist.&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+        
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;[insert dataframe into time table] tks check done&quot;</span><span class="p">)</span>
         
         <span class="k">if</span> <span class="n">dataframe</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[insert dataframe into time table] Dataframe is empty.&quot;</span><span class="p">)</span>
