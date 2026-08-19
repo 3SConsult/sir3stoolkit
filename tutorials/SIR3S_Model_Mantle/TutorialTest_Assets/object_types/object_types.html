@@ -122,7 +122,7 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>wrapper.Initialize_Toolkit(r&quot;C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>wrapper.Initialize_Toolkit(r"C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2")
 </pre></div>
 </div>
 </div>
@@ -196,13 +196,13 @@ import logging
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from pathlib import Path
 
 network_configs = [
-    (&quot;Water&quot;, s3s.NetworkType.Water),
-    (&quot;DistrictHeating&quot;, s3s.NetworkType.DistrictHeating),
-    (&quot;Gas&quot;, s3s.NetworkType.Gas),
-    (&quot;Steam&quot;, s3s.NetworkType.Steam),
+    ("Water", s3s.NetworkType.Water),
+    ("DistrictHeating", s3s.NetworkType.DistrictHeating),
+    ("Gas", s3s.NetworkType.Gas),
+    ("Steam", s3s.NetworkType.Steam),
 ]
 
-output_dir = (Path.cwd().resolve() / &quot;./output/.&quot;).resolve()
+output_dir = (Path.cwd().resolve() / "./output/.").resolve()
 output_dir.mkdir(parents=True, exist_ok=True)
 
 network_configs
@@ -241,15 +241,15 @@ network_object_data = {}
 
 def normalize_type(value_type):
     if value_type is None:
-        return &quot;Unknown&quot;
+        return "Unknown"
     text = str(value_type).strip()
-    return text if text else &quot;Unknown&quot;
+    return text if text else "Unknown"
 
 def filter_unknown_types(type_iterable):
-    return sorted({t for t in type_iterable if t != &quot;Unknown&quot;})
+    return sorted({t for t in type_iterable if t != "Unknown"})
 
 def map_object_type_headings(rst_text, table_name_mapping):
-    heading_pattern = re.compile(r&quot;^(?P&lt;name&gt;[^\r\n]+)\r?\n(?P&lt;uline&gt;\^{3,})\r?\n&quot;, re.MULTILINE)
+    heading_pattern = re.compile(r"^(?P&lt;name&gt;[^\r\n]+)\r?\n(?P&lt;uline&gt;\^{3,})\r?\n", re.MULTILINE)
     transformed_parts = []
     last_idx = 0
     mapped_count = 0
@@ -257,23 +257,23 @@ def map_object_type_headings(rst_text, table_name_mapping):
 
     for match in heading_pattern.finditer(rst_text):
         start, end = match.span()
-        old_name = match.group(&quot;name&quot;).strip()
+        old_name = match.group("name").strip()
         transformed_parts.append(rst_text[last_idx:start])
 
         if old_name in table_name_mapping:
             new_heading = table_name_mapping[old_name]
             mapped_count += 1
         else:
-            new_heading = f&quot;ERROR_NO_MAPPING__{old_name}&quot;
+            new_heading = f"ERROR_NO_MAPPING__{old_name}"
             error_count += 1
 
-        transformed_parts.append(new_heading + &quot;\n&quot;)
-        transformed_parts.append(&quot;^&quot; * len(new_heading) + &quot;\n&quot;)
-        transformed_parts.append(f&quot;Object Type: ``{old_name}``\n\n&quot;)
+        transformed_parts.append(new_heading + "\n")
+        transformed_parts.append("^" * len(new_heading) + "\n")
+        transformed_parts.append(f"Object Type: ``{old_name}``\n\n")
         last_idx = end
 
     transformed_parts.append(rst_text[last_idx:])
-    mapped_text = &quot;&quot;.join(transformed_parts)
+    mapped_text = "".join(transformed_parts)
     return mapped_text, mapped_count, error_count
 
 # Build table-name mapping once and use it for all mapped output files.
@@ -288,8 +288,8 @@ for i in range(0, 150):
 
 # Phase 1: collect per-network object data and write per-network RST files.
 for network_name, network_enum in network_configs:
-    db_path = f&quot;.\\network_type_{network_name}.db3&quot;
-    print(f&quot;=== Collecting network: {network_name} ===&quot;)
+    db_path = f".\\network_type_{network_name}.db3"
+    print(f"=== Collecting network: {network_name} ===")
 
     network_object_data[network_name] = {}
 
@@ -297,16 +297,16 @@ for network_name, network_enum in network_configs:
         s3s.NewModel(
             dbName=db_path,
             providerType=s3s.ProviderTypes.SQLite,
-            namedInstance=&quot;&quot;,
+            namedInstance="",
             netType=network_enum,
-            modelDescription=f&quot;Tutorial New Model - {network_name}&quot;,
-            userID=&quot;&quot;,
-            password=&quot;&quot;,
+            modelDescription=f"Tutorial New Model - {network_name}",
+            userID="",
+            password="",
         )
-        s3s.StartTransaction(&quot;Inserting Nodes&quot;)
+        s3s.StartTransaction("Inserting Nodes")
 
-        node10 = s3s.AddNewNode(tkCont=&quot;-1&quot;, name=&quot;Node10&quot;, typ=&quot;QKON&quot;, x=200, y=700, z=213, qm_PH=0, symbolFactor=1, description=&quot;DNODE 10&quot;, idRef=&quot;RefNode 10&quot;, kvr=0)
-        node11 = s3s.AddNewNode(tkCont=&quot;-1&quot;, name=&quot;Node11&quot;, typ=&quot;QKON&quot;, x=300, y=700, z=213, qm_PH=0, symbolFactor=1, description=&quot;DNODE 11&quot;, idRef=&quot;RefNode 11&quot;, kvr=0)
+        node10 = s3s.AddNewNode(tkCont="-1", name="Node10", typ="QKON", x=200, y=700, z=213, qm_PH=0, symbolFactor=1, description="DNODE 10", idRef="RefNode 10", kvr=0)
+        node11 = s3s.AddNewNode(tkCont="-1", name="Node11", typ="QKON", x=300, y=700, z=213, qm_PH=0, symbolFactor=1, description="DNODE 11", idRef="RefNode 11", kvr=0)
 
         s3s.EndTransaction()
         s3s.SaveChanges()
@@ -314,9 +314,9 @@ for network_name, network_enum in network_configs:
         object_types = [
             item
             for item in dir(s3s.ObjectTypes)
-            if not (item.startswith(&quot;__&quot;) and item.endswith(&quot;__&quot;))
-            and item not in {&quot;name&quot;, &quot;value&quot;}
-            and not item.startswith(&quot;_&quot;)
+            if not (item.startswith("__") and item.endswith("__"))
+            and item not in {"name", "value"}
+            and not item.startswith("_")
         ]
 
         # 1) Gather property/result names and insert all possible elements first.
@@ -331,127 +331,127 @@ for network_name, network_enum in network_configs:
                 props = s3s.GetPropertiesofElementType(s3s.ObjectTypes[ot]) or []
             except Exception as ex:
                 props = []
-                insert_error = f&quot;GetProperties error: {ex}&quot;
+                insert_error = f"GetProperties error: {ex}"
 
             try:
                 results = s3s.GetResultProperties_from_elementType(s3s.ObjectTypes[ot], False) or []
             except Exception as ex:
                 results = []
                 if insert_error is None:
-                    insert_error = f&quot;GetResultProperties error: {ex}&quot;
+                    insert_error = f"GetResultProperties error: {ex}"
 
             try:
-                tk = s3s.InsertElement(s3s.ObjectTypes[ot], &quot;-1&quot;)
+                tk = s3s.InsertElement(s3s.ObjectTypes[ot], "-1")
             except Exception as ex:
                 if insert_error is None:
-                    insert_error = f&quot;InsertElement error: {ex}&quot;
+                    insert_error = f"InsertElement error: {ex}"
 
             object_records[ot] = {
-                &quot;props&quot;: list(props),
-                &quot;results&quot;: list(results),
-                &quot;tk&quot;: tk,
-                &quot;insert_error&quot;: insert_error,
+                "props": list(props),
+                "results": list(results),
+                "tk": tk,
+                "insert_error": insert_error,
             }
 
         # 2) Render RST.
         rst_lines = []
-        rst_lines.append(&quot;Object Types, Properties, and Result Value Types&quot;)
-        rst_lines.append(&quot;-----------------------------------------------&quot;)
-        rst_lines.append(&quot;&quot;)
-        rst_lines.append(f&quot;.. note:: Network Type: {network_name}&quot;)
-        rst_lines.append(&quot;   The below sections lists all table names from self.ObjectTypes_TableNames, along with their properties, result properties, and respective object type from self.ObjectTypes (needed for toolkit operations like self.InsertElement(), self.GetPropertiesOfElementType()). The value types of the properties are also listed.&quot;)
-        rst_lines.append(&quot;   Every property both model data and result will be returned as a python str. For result properties, this report intentionally lists names only.&quot;)
-        rst_lines.append(&quot;&quot;)
+        rst_lines.append("Object Types, Properties, and Result Value Types")
+        rst_lines.append("-----------------------------------------------")
+        rst_lines.append("")
+        rst_lines.append(f".. note:: Network Type: {network_name}")
+        rst_lines.append("   The below sections lists all table names from self.ObjectTypes_TableNames, along with their properties, result properties, and respective object type from self.ObjectTypes (needed for toolkit operations like self.InsertElement(), self.GetPropertiesOfElementType()). The value types of the properties are also listed.")
+        rst_lines.append("   Every property both model data and result will be returned as a python str. For result properties, this report intentionally lists names only.")
+        rst_lines.append("")
 
         for ot in object_types:
             record = object_records[ot]
-            props = record[&quot;props&quot;]
-            results = record[&quot;results&quot;]
-            tk = record[&quot;tk&quot;]
-            insert_error = record[&quot;insert_error&quot;]
+            props = record["props"]
+            results = record["results"]
+            tk = record["tk"]
+            insert_error = record["insert_error"]
 
             rst_lines.append(ot)
-            rst_lines.append(&quot;^&quot; * len(ot))
-            rst_lines.append(&quot;&quot;)
+            rst_lines.append("^" * len(ot))
+            rst_lines.append("")
 
             prop_map = {}
             result_map = {}
 
-            rst_lines.append(&quot;Properties&quot;)
-            rst_lines.append(&#39;&quot;&#39; * len(&quot;Properties&quot;))
-            rst_lines.append(&quot;&quot;)
+            rst_lines.append("Properties")
+            rst_lines.append('"' * len("Properties"))
+            rst_lines.append("")
             if props:
-                rst_lines.append(&quot;.. list-table::&quot;)
-                rst_lines.append(&quot;   :header-rows: 1&quot;)
-                rst_lines.append(&quot;&quot;)
-                rst_lines.append(&quot;   * - Name&quot;)
-                rst_lines.append(&quot;     - Value Type&quot;)
+                rst_lines.append(".. list-table::")
+                rst_lines.append("   :header-rows: 1")
+                rst_lines.append("")
+                rst_lines.append("   * - Name")
+                rst_lines.append("     - Value Type")
                 for prop in props:
-                    value_type = &quot;Unknown&quot;
+                    value_type = "Unknown"
                     if tk is not None:
                         try:
                             value_type = s3s.GetValue(tk, prop)[1]
                         except Exception:
-                            value_type = &quot;Unknown&quot;
+                            value_type = "Unknown"
                     value_type = normalize_type(value_type)
                     prop_map[prop] = value_type
-                    rst_lines.append(f&quot;   * - ``{prop}``&quot;)
-                    rst_lines.append(f&quot;     - ``{value_type}``&quot;)
+                    rst_lines.append(f"   * - ``{prop}``")
+                    rst_lines.append(f"     - ``{value_type}``")
             else:
-                rst_lines.append(&quot;No properties found.&quot;)
-            rst_lines.append(&quot;&quot;)
+                rst_lines.append("No properties found.")
+            rst_lines.append("")
 
-            rst_lines.append(&quot;Result Properties&quot;)
-            rst_lines.append(&#39;&quot;&#39; * len(&quot;Result Properties&quot;))
-            rst_lines.append(&quot;&quot;)
+            rst_lines.append("Result Properties")
+            rst_lines.append('"' * len("Result Properties"))
+            rst_lines.append("")
             if results:
-                rst_lines.append(&quot;.. list-table::&quot;)
-                rst_lines.append(&quot;   :header-rows: 1&quot;)
-                rst_lines.append(&quot;&quot;)
-                rst_lines.append(&quot;   * - Name&quot;)
+                rst_lines.append(".. list-table::")
+                rst_lines.append("   :header-rows: 1")
+                rst_lines.append("")
+                rst_lines.append("   * - Name")
                 for result_name in results:
-                    result_map[result_name] = &quot;Unknown&quot;
-                    rst_lines.append(f&quot;   * - ``{result_name}``&quot;)
+                    result_map[result_name] = "Unknown"
+                    rst_lines.append(f"   * - ``{result_name}``")
             else:
-                rst_lines.append(&quot;No result properties found.&quot;)
-            rst_lines.append(&quot;&quot;)
+                rst_lines.append("No result properties found.")
+            rst_lines.append("")
 
             if insert_error:
-                rst_lines.append(f&quot;.. warning:: {insert_error}&quot;)
-                rst_lines.append(&quot;&quot;)
+                rst_lines.append(f".. warning:: {insert_error}")
+                rst_lines.append("")
 
             network_object_data[network_name][ot] = {
-                &quot;properties&quot;: prop_map,
-                &quot;result_properties&quot;: result_map,
+                "properties": prop_map,
+                "result_properties": result_map,
             }
 
         # 3) Delete all temporary elements after reading.
         for rec in object_records.values():
-            tk = rec[&quot;tk&quot;]
+            tk = rec["tk"]
             if tk is not None:
                 try:
                     s3s.DeleteElement(tk)
                 except Exception:
                     pass
 
-        network_snippet_text = &quot;\n&quot;.join(rst_lines) + &quot;\n&quot;
-        network_output_path = output_dir / f&quot;object_types_props_results_snippet_{network_name}.rst&quot;
-        network_output_path.write_text(network_snippet_text, encoding=&quot;utf-8&quot;)
+        network_snippet_text = "\n".join(rst_lines) + "\n"
+        network_output_path = output_dir / f"object_types_props_results_snippet_{network_name}.rst"
+        network_output_path.write_text(network_snippet_text, encoding="utf-8")
 
         network_mapped_text, network_mapped_count, network_error_count = map_object_type_headings(
             network_snippet_text,
             table_name_mapping,
         )
-        network_mapped_output_path = output_dir / f&quot;object_types_props_results_snippet_{network_name}_mapped.rst&quot;
-        network_mapped_output_path.write_text(network_mapped_text, encoding=&quot;utf-8&quot;)
+        network_mapped_output_path = output_dir / f"object_types_props_results_snippet_{network_name}_mapped.rst"
+        network_mapped_output_path.write_text(network_mapped_text, encoding="utf-8")
 
         all_reports.append({
-            &quot;network&quot;: network_name,
-            &quot;network_output&quot;: str(network_output_path),
-            &quot;network_mapped_output&quot;: str(network_mapped_output_path),
-            &quot;object_types&quot;: len(network_object_data[network_name]),
-            &quot;mapped_headings&quot;: network_mapped_count,
-            &quot;mapping_errors&quot;: network_error_count,
+            "network": network_name,
+            "network_output": str(network_output_path),
+            "network_mapped_output": str(network_mapped_output_path),
+            "object_types": len(network_object_data[network_name]),
+            "mapped_headings": network_mapped_count,
+            "mapping_errors": network_error_count,
         })
 
     finally:
@@ -468,17 +468,17 @@ all_object_types = sorted(
         for data in network_object_data.values()
         for ot in data.keys()
     },
-    key=lambda ot: table_name_mapping.get(ot, f&quot;ERROR_NO_MAPPING__{ot}&quot;),
+    key=lambda ot: table_name_mapping.get(ot, f"ERROR_NO_MAPPING__{ot}"),
 )
 
 global_rst_lines = []
-global_rst_lines.append(&quot;Object Types, Properties, and Result Value Types&quot;)
-global_rst_lines.append(&quot;---------------------------------------------&quot;)
-global_rst_lines.append(&quot;&quot;)
-global_rst_lines.append(&quot;.. note:: Aggregated global view across configured network types.&quot;)
-global_rst_lines.append(&quot;   The below sections lists all table names from self.ObjectTypes_TableNames, along with their properties, result properties, and respective object type from self.ObjectTypes (needed for toolkit operations like self.InsertElement(), self.GetPropertiesOfElementType()).&quot;)
-global_rst_lines.append(&quot;   Result properties are listed by name only.&quot;)
-global_rst_lines.append(&quot;&quot;)
+global_rst_lines.append("Object Types, Properties, and Result Value Types")
+global_rst_lines.append("---------------------------------------------")
+global_rst_lines.append("")
+global_rst_lines.append(".. note:: Aggregated global view across configured network types.")
+global_rst_lines.append("   The below sections lists all table names from self.ObjectTypes_TableNames, along with their properties, result properties, and respective object type from self.ObjectTypes (needed for toolkit operations like self.InsertElement(), self.GetPropertiesOfElementType()).")
+global_rst_lines.append("   Result properties are listed by name only.")
+global_rst_lines.append("")
 
 property_presence_conflicts = []
 property_type_conflicts = []
@@ -487,8 +487,8 @@ result_type_conflicts = []
 
 for ot in all_object_types:
     global_rst_lines.append(ot)
-    global_rst_lines.append(&quot;^&quot; * len(ot))
-    global_rst_lines.append(&quot;&quot;)
+    global_rst_lines.append("^" * len(ot))
+    global_rst_lines.append("")
 
     prop_entries = {}
     result_entries = {}
@@ -496,88 +496,88 @@ for ot in all_object_types:
     for network_name in all_network_names:
         ot_data = network_object_data.get(network_name, {}).get(ot, {})
 
-        for prop_name, prop_type in ot_data.get(&quot;properties&quot;, {}).items():
+        for prop_name, prop_type in ot_data.get("properties", {}).items():
             if prop_name not in prop_entries:
-                prop_entries[prop_name] = {&quot;networks&quot;: set(), &quot;types&quot;: set(), &quot;typed_networks&quot;: set()}
-            prop_entries[prop_name][&quot;networks&quot;].add(network_name)
+                prop_entries[prop_name] = {"networks": set(), "types": set(), "typed_networks": set()}
+            prop_entries[prop_name]["networks"].add(network_name)
             ntype = normalize_type(prop_type)
-            prop_entries[prop_name][&quot;types&quot;].add(ntype)
-            if ntype != &quot;Unknown&quot;:
-                prop_entries[prop_name][&quot;typed_networks&quot;].add(network_name)
+            prop_entries[prop_name]["types"].add(ntype)
+            if ntype != "Unknown":
+                prop_entries[prop_name]["typed_networks"].add(network_name)
 
-        for result_name, result_type in ot_data.get(&quot;result_properties&quot;, {}).items():
+        for result_name, result_type in ot_data.get("result_properties", {}).items():
             if result_name not in result_entries:
-                result_entries[result_name] = {&quot;networks&quot;: set(), &quot;types&quot;: set(), &quot;typed_networks&quot;: set()}
-            result_entries[result_name][&quot;networks&quot;].add(network_name)
+                result_entries[result_name] = {"networks": set(), "types": set(), "typed_networks": set()}
+            result_entries[result_name]["networks"].add(network_name)
             ntype = normalize_type(result_type)
-            result_entries[result_name][&quot;types&quot;].add(ntype)
-            if ntype != &quot;Unknown&quot;:
-                result_entries[result_name][&quot;typed_networks&quot;].add(network_name)
+            result_entries[result_name]["types"].add(ntype)
+            if ntype != "Unknown":
+                result_entries[result_name]["typed_networks"].add(network_name)
 
-    global_rst_lines.append(&quot;Properties&quot;)
-    global_rst_lines.append(&#39;&quot;&#39; * len(&quot;Properties&quot;))
-    global_rst_lines.append(&quot;&quot;)
+    global_rst_lines.append("Properties")
+    global_rst_lines.append('"' * len("Properties"))
+    global_rst_lines.append("")
     if prop_entries:
-        global_rst_lines.append(&quot;.. list-table::&quot;)
-        global_rst_lines.append(&quot;   :header-rows: 1&quot;)
-        global_rst_lines.append(&quot;&quot;)
-        global_rst_lines.append(&quot;   * - Name&quot;)
-        global_rst_lines.append(&quot;     - Value Types&quot;)
+        global_rst_lines.append(".. list-table::")
+        global_rst_lines.append("   :header-rows: 1")
+        global_rst_lines.append("")
+        global_rst_lines.append("   * - Name")
+        global_rst_lines.append("     - Value Types")
 
         rendered_any_property = False
         for prop_name in sorted(prop_entries.keys()):
-            networks_seen = sorted(prop_entries[prop_name][&quot;networks&quot;])
-            all_types_seen = sorted({normalize_type(t) for t in prop_entries[prop_name][&quot;types&quot;]})
+            networks_seen = sorted(prop_entries[prop_name]["networks"])
+            all_types_seen = sorted({normalize_type(t) for t in prop_entries[prop_name]["types"]})
             known_types_seen = filter_unknown_types(all_types_seen)
-            types_seen = known_types_seen if known_types_seen else [&quot;Unknown&quot;]
+            types_seen = known_types_seen if known_types_seen else ["Unknown"]
 
             rendered_any_property = True
             presence_conflict = len(networks_seen) != len(all_network_names)
             type_conflict = len(known_types_seen) &gt; 1
             conflict_flags = []
             if presence_conflict:
-                conflict_flags.append(&quot;presence&quot;)
+                conflict_flags.append("presence")
                 property_presence_conflicts.append({
-                    &quot;object_type&quot;: ot,
-                    &quot;property&quot;: prop_name,
-                    &quot;networks_with_property&quot;: networks_seen,
-                    &quot;missing_in_networks&quot;: [n for n in all_network_names if n not in networks_seen],
+                    "object_type": ot,
+                    "property": prop_name,
+                    "networks_with_property": networks_seen,
+                    "missing_in_networks": [n for n in all_network_names if n not in networks_seen],
                 })
             if type_conflict:
-                conflict_flags.append(&quot;type&quot;)
+                conflict_flags.append("type")
                 property_type_conflicts.append({
-                    &quot;object_type&quot;: ot,
-                    &quot;property&quot;: prop_name,
-                    &quot;types&quot;: known_types_seen,
-                    &quot;networks_with_property&quot;: networks_seen,
+                    "object_type": ot,
+                    "property": prop_name,
+                    "types": known_types_seen,
+                    "networks_with_property": networks_seen,
                 })
 
-            global_rst_lines.append(f&quot;   * - ``{prop_name}``&quot;)
-            global_rst_lines.append(f&quot;     - ``{&#39; | &#39;.join(types_seen)}``&quot;)
+            global_rst_lines.append(f"   * - ``{prop_name}``")
+            global_rst_lines.append(f"     - ``{' | '.join(types_seen)}``")
         if not rendered_any_property:
             global_rst_lines.pop()
             global_rst_lines.pop()
             global_rst_lines.pop()
             global_rst_lines.pop()
             global_rst_lines.pop()
-            global_rst_lines.append(&quot;No properties found.&quot;)
+            global_rst_lines.append("No properties found.")
     else:
-        global_rst_lines.append(&quot;No properties found.&quot;)
-    global_rst_lines.append(&quot;&quot;)
+        global_rst_lines.append("No properties found.")
+    global_rst_lines.append("")
 
-    global_rst_lines.append(&quot;Result Properties&quot;)
-    global_rst_lines.append(&#39;&quot;&#39; * len(&quot;Result Properties&quot;))
-    global_rst_lines.append(&quot;&quot;)
+    global_rst_lines.append("Result Properties")
+    global_rst_lines.append('"' * len("Result Properties"))
+    global_rst_lines.append("")
     if result_entries:
-        global_rst_lines.append(&quot;.. list-table::&quot;)
-        global_rst_lines.append(&quot;   :header-rows: 1&quot;)
-        global_rst_lines.append(&quot;&quot;)
-        global_rst_lines.append(&quot;   * - Name&quot;)
+        global_rst_lines.append(".. list-table::")
+        global_rst_lines.append("   :header-rows: 1")
+        global_rst_lines.append("")
+        global_rst_lines.append("   * - Name")
 
         rendered_any_result = False
         for result_name in sorted(result_entries.keys()):
-            networks_seen = sorted(result_entries[result_name][&quot;networks&quot;])
-            all_types_seen = sorted({normalize_type(t) for t in result_entries[result_name][&quot;types&quot;]})
+            networks_seen = sorted(result_entries[result_name]["networks"])
+            all_types_seen = sorted({normalize_type(t) for t in result_entries[result_name]["types"]})
             known_types_seen = filter_unknown_types(all_types_seen)
 
             rendered_any_result = True
@@ -585,78 +585,78 @@ for ot in all_object_types:
             type_conflict = len(known_types_seen) &gt; 1
             conflict_flags = []
             if presence_conflict:
-                conflict_flags.append(&quot;presence&quot;)
+                conflict_flags.append("presence")
                 result_presence_conflicts.append({
-                    &quot;object_type&quot;: ot,
-                    &quot;result_property&quot;: result_name,
-                    &quot;networks_with_result_property&quot;: networks_seen,
-                    &quot;missing_in_networks&quot;: [n for n in all_network_names if n not in networks_seen],
+                    "object_type": ot,
+                    "result_property": result_name,
+                    "networks_with_result_property": networks_seen,
+                    "missing_in_networks": [n for n in all_network_names if n not in networks_seen],
                 })
             if type_conflict:
-                conflict_flags.append(&quot;type&quot;)
+                conflict_flags.append("type")
                 result_type_conflicts.append({
-                    &quot;object_type&quot;: ot,
-                    &quot;result_property&quot;: result_name,
-                    &quot;types&quot;: known_types_seen,
-                    &quot;networks_with_result_property&quot;: networks_seen,
+                    "object_type": ot,
+                    "result_property": result_name,
+                    "types": known_types_seen,
+                    "networks_with_result_property": networks_seen,
                 })
 
-            global_rst_lines.append(f&quot;   * - ``{result_name}``&quot;)
+            global_rst_lines.append(f"   * - ``{result_name}``")
 
         if not rendered_any_result:
             global_rst_lines.pop()
             global_rst_lines.pop()
             global_rst_lines.pop()
             global_rst_lines.pop()
-            global_rst_lines.append(&quot;No result properties found.&quot;)
+            global_rst_lines.append("No result properties found.")
     else:
-        global_rst_lines.append(&quot;No result properties found.&quot;)
-    global_rst_lines.append(&quot;&quot;)
+        global_rst_lines.append("No result properties found.")
+    global_rst_lines.append("")
 
-global_rst_text = &quot;\n&quot;.join(global_rst_lines) + &quot;\n&quot;
-global_output_path = output_dir / &quot;object_types_props_results_snippet_global.rst&quot;
-global_output_path.write_text(global_rst_text, encoding=&quot;utf-8&quot;)
+global_rst_text = "\n".join(global_rst_lines) + "\n"
+global_output_path = output_dir / "object_types_props_results_snippet_global.rst"
+global_output_path.write_text(global_rst_text, encoding="utf-8")
 
 conflict_report = {
-    &quot;networks&quot;: all_network_names,
-    &quot;summary&quot;: {
-        &quot;property_presence_conflicts&quot;: len(property_presence_conflicts),
-        &quot;property_type_conflicts&quot;: len(property_type_conflicts),
-        &quot;result_presence_conflicts&quot;: len(result_presence_conflicts),
-        &quot;result_type_conflicts&quot;: len(result_type_conflicts),
+    "networks": all_network_names,
+    "summary": {
+        "property_presence_conflicts": len(property_presence_conflicts),
+        "property_type_conflicts": len(property_type_conflicts),
+        "result_presence_conflicts": len(result_presence_conflicts),
+        "result_type_conflicts": len(result_type_conflicts),
     },
-    &quot;property_presence_conflicts&quot;: property_presence_conflicts,
-    &quot;property_type_conflicts&quot;: property_type_conflicts,
-    &quot;result_presence_conflicts&quot;: result_presence_conflicts,
-    &quot;result_type_conflicts&quot;: result_type_conflicts,
+    "property_presence_conflicts": property_presence_conflicts,
+    "property_type_conflicts": property_type_conflicts,
+    "result_presence_conflicts": result_presence_conflicts,
+    "result_type_conflicts": result_type_conflicts,
 }
 
-conflicts_output_path = output_dir / &quot;object_types_global_conflicts.json&quot;
-conflicts_output_path.write_text(json.dumps(conflict_report, indent=2), encoding=&quot;utf-8&quot;)
+conflicts_output_path = output_dir / "object_types_global_conflicts.json"
+conflicts_output_path.write_text(json.dumps(conflict_report, indent=2), encoding="utf-8")
 
 global_mapped_text, mapped_count, error_count = map_object_type_headings(
     global_rst_text,
     table_name_mapping,
 )
-global_mapped_output_path = output_dir / &quot;object_types_props_results_snippet_global_mapped.rst&quot;
-global_mapped_output_path.write_text(global_mapped_text, encoding=&quot;utf-8&quot;)
+global_mapped_output_path = output_dir / "object_types_props_results_snippet_global_mapped.rst"
+global_mapped_output_path.write_text(global_mapped_text, encoding="utf-8")
 
-table_map_output_path = output_dir / &quot;object_type_table_map_independent.json&quot;
+table_map_output_path = output_dir / "object_type_table_map_independent.json"
 table_map_output_path.write_text(
     json.dumps(table_name_mapping, indent=2, sort_keys=True),
-    encoding=&quot;utf-8&quot;,
+    encoding="utf-8",
 )
 
-print(f&quot;Global RST: {global_output_path}&quot;)
-print(f&quot;Global mapped RST: {global_mapped_output_path}&quot;)
-print(f&quot;Global conflict report: {conflicts_output_path}&quot;)
-print(f&quot;Independent table map: {table_map_output_path}&quot;)
-print(f&quot;Property presence conflicts: {len(property_presence_conflicts)}&quot;)
-print(f&quot;Property type conflicts: {len(property_type_conflicts)}&quot;)
-print(f&quot;Result presence conflicts: {len(result_presence_conflicts)}&quot;)
-print(f&quot;Result type conflicts: {len(result_type_conflicts)}&quot;)
-print(f&quot;Mapped headings (global): {mapped_count}&quot;)
-print(f&quot;Headings with ERROR_NO_MAPPING__ (global): {error_count}&quot;)
+print(f"Global RST: {global_output_path}")
+print(f"Global mapped RST: {global_mapped_output_path}")
+print(f"Global conflict report: {conflicts_output_path}")
+print(f"Independent table map: {table_map_output_path}")
+print(f"Property presence conflicts: {len(property_presence_conflicts)}")
+print(f"Property type conflicts: {len(property_type_conflicts)}")
+print(f"Result presence conflicts: {len(result_presence_conflicts)}")
+print(f"Result type conflicts: {len(result_type_conflicts)}")
+print(f"Mapped headings (global): {mapped_count}")
+print(f"Headings with ERROR_NO_MAPPING__ (global): {error_count}")
 
 all_reports
 </pre></div>

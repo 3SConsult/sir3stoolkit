@@ -97,7 +97,7 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r&quot;C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2&quot; #change to local path
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r"C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2" #change to local path
 </pre></div>
 </div>
 </div>
@@ -170,7 +170,7 @@ Initialization complete
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dbFilePath=r&quot;ToolkitTutorial073.db3&quot;
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dbFilePath=r"ToolkitTutorial073.db3"
 </pre></div>
 </div>
 </div>
@@ -180,11 +180,11 @@ Initialization complete
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.OpenModel(dbName=dbFilePath,
               providerType=s3s.ProviderTypes.SQLite,
-              Mid=&quot;M-1-0-1&quot;,
+              Mid="M-1-0-1",
               saveCurrentlyOpenModel=False,
-              namedInstance=&quot;&quot;,
-              userID=&quot;&quot;,
-              password=&quot;&quot;)
+              namedInstance="",
+              userID="",
+              password="")
 </pre></div>
 </div>
 </div>
@@ -229,7 +229,7 @@ Model is open for further operation
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_district_heating_consumer_results=s3s.generate_element_results_dataframe(element_type=s3s.ObjectTypes.DistrictHeatingConsumer
-                                                           ,properties=[&quot;QM&quot;]
+                                                           ,properties=["QM"]
                                                            ,timestamps=[0])
 </pre></div>
 </div>
@@ -256,8 +256,8 @@ Model is open for further operation
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_district_heating_consumer_results.columns = df_district_heating_consumer_results.columns.droplevel([1, 2])
 df_district_heating_consumer_results = df_district_heating_consumer_results.T.unstack(level=0).T
 df_district_heating_consumer_results = df_district_heating_consumer_results.droplevel(0, axis=0)
-df_district_heating_consumer = df_district_heating_consumer_model_data.merge(on=&quot;tk&quot;,
-                    how=&quot;outer&quot;,
+df_district_heating_consumer = df_district_heating_consumer_model_data.merge(on="tk",
+                    how="outer",
                     right=df_district_heating_consumer_results)
 </pre></div>
 </div>
@@ -329,7 +329,7 @@ df_district_heating_consumer = df_district_heating_consumer_model_data.merge(on=
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_model_data=s3s.generate_element_model_data_dataframe(s3s.ObjectTypes.Pipe
-                                                   ,properties=[&quot;DN&quot;]
+                                                   ,properties=["DN"]
                                                    ,geometry=True)
 </pre></div>
 </div>
@@ -352,7 +352,7 @@ df_district_heating_consumer = df_district_heating_consumer_model_data.merge(on=
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_results=s3s.generate_element_results_dataframe(element_type=s3s.ObjectTypes.Pipe
-                                                           ,properties=[&quot;QMAV&quot;]
+                                                           ,properties=["QMAV"]
                                                            ,timestamps=[0])
 </pre></div>
 </div>
@@ -379,8 +379,8 @@ df_district_heating_consumer = df_district_heating_consumer_model_data.merge(on=
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_results.columns = df_pipes_results.columns.droplevel([1, 2])
 df_pipes_results = df_pipes_results.T.unstack(level=0).T
 df_pipes_results = df_pipes_results.droplevel(0, axis=0)
-df_pipes = df_pipes_model_data.merge(on=&quot;tk&quot;,
-                                    how=&quot;outer&quot;,
+df_pipes = df_pipes_model_data.merge(on="tk",
+                                    how="outer",
                                     right=df_pipes_results)
 </pre></div>
 </div>
@@ -389,7 +389,7 @@ df_pipes = df_pipes_model_data.merge(on=&quot;tk&quot;,
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes[&#39;QMAVAbs&#39;] = df_pipes[&#39;QMAV&#39;].abs()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes['QMAVAbs'] = df_pipes['QMAV'].abs()
 </pre></div>
 </div>
 </div>
@@ -470,18 +470,18 @@ df_pipes = df_pipes_model_data.merge(on=&quot;tk&quot;,
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def plot_Result_ncd(df_pipes, df_district_heating_consumer, axTitle=&#39;ncd&#39;):
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def plot_Result_ncd(df_pipes, df_district_heating_consumer, axTitle='ncd'):
     fig, ax = plt.subplots(figsize=(16.54, 11.69))
 
     # Nodes (size+color by QM)
     nodes_patches_1 = s3s.plot_node_layer(
         ax=ax,
         gdf=df_district_heating_consumer,
-        attribute=&#39;QM&#39;,
-        colors=[&#39;cyan&#39;, &#39;teal&#39;],
-        marker_style=&#39;p&#39;,
+        attribute='QM',
+        colors=['cyan', 'teal'],
+        marker_style='p',
         marker_size_factor=3000,
-        legend_fmt=&#39;{:4.0f} t/h&#39;,
+        legend_fmt='{:4.0f} t/h',
         legend_values=[0, 25, 50, 75, 100],
         zorder=1
     )
@@ -490,9 +490,9 @@ df_pipes = df_pipes_model_data.merge(on=&quot;tk&quot;,
     pipes_patches_2 = s3s.plot_pipe_layer(
         ax=ax,
         gdf=df_pipes,
-        attribute=&#39;DN&#39;,
-        colors=[&#39;lightgray&#39;, &#39;dimgray&#39;],
-        legend_fmt=&#39;{:4.0f} mm&#39;,
+        attribute='DN',
+        colors=['lightgray', 'dimgray'],
+        legend_fmt='{:4.0f} mm',
         line_width_factor=25,
         legend_values=[0, 250, 500, 750],
         zorder=2
@@ -501,9 +501,9 @@ df_pipes = df_pipes_model_data.merge(on=&quot;tk&quot;,
     pipes_patches_3 = s3s.plot_pipe_layer(
         ax=ax,
         gdf=df_pipes,
-        attribute=&#39;QMAVAbs&#39;,
-        colors=[&#39;darkgreen&#39;, &#39;magenta&#39;],
-        legend_fmt=&#39;{:4.0f} t/h&#39;,
+        attribute='QMAVAbs',
+        colors=['darkgreen', 'magenta'],
+        legend_fmt='{:4.0f} t/h',
         line_width_factor=20,
         legend_values=[0, 500, 1000, 1500, 2000],
         zorder=3
@@ -523,7 +523,7 @@ df_pipes = df_pipes_model_data.merge(on=&quot;tk&quot;,
             if h.get_label() not in seen:
                 unique.append(h)
                 seen.add(h.get_label())
-        ax.legend(handles=unique, loc=&#39;best&#39;)
+        ax.legend(handles=unique, loc='best')
 
     ax.set_title(axTitle)
     plt.tight_layout()

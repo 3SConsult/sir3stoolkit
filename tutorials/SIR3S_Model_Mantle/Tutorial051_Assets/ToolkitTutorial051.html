@@ -112,7 +112,7 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r&quot;C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2&quot; #change to local path
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r"C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2" #change to local path
 </pre></div>
 </div>
 </div>
@@ -215,13 +215,13 @@ import contextily as cx
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.OpenModel(dbName=r&quot;Toolkit_Tutorial51_Model.db3&quot;,
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.OpenModel(dbName=r"Toolkit_Tutorial51_Model.db3",
               providerType=s3s.ProviderTypes.SQLite,
-              Mid=&quot;M-1-0-1&quot;,
+              Mid="M-1-0-1",
               saveCurrentlyOpenModel=False,
-              namedInstance=&quot;&quot;,
-              userID=&quot;&quot;,
-              password=&quot;&quot;)
+              namedInstance="",
+              userID="",
+              password="")
 </pre></div>
 </div>
 </div>
@@ -382,7 +382,7 @@ import contextily as cx
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(s3s.generate_element_model_data_dataframe(element_type=s3s.ObjectTypes.Node
-                                        ,properties=[&quot;Kvr&quot;, &quot;Zkor&quot;]
+                                        ,properties=["Kvr", "Zkor"]
                                         )).head(3)
 </pre></div>
 </div>
@@ -684,7 +684,7 @@ import contextily as cx
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for container_id in (s3s.GetTksofElementType(s3s.ObjectTypes.ObjectContainerSymbol)):
-    print(f&quot;{container_id}: {s3s.GetValue(container_id, &#39;Name&#39;)[0]}&quot;)
+    print(f"{container_id}: {s3s.GetValue(container_id, 'Name')[0]}")
 </pre></div>
 </div>
 </div>
@@ -722,8 +722,8 @@ import contextily as cx
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for tk in all_tks:
-    if s3s.GetValue(tk, &quot;FkCont&quot;) == &quot;5029128874972463118&quot;: # Main container
-        if s3s.GetValue(tk, &quot;Kvr&quot;)[0] == &quot;1&quot;: # Supply/Vorlauf
+    if s3s.GetValue(tk, "FkCont") == "5029128874972463118": # Main container
+        if s3s.GetValue(tk, "Kvr")[0] == "1": # Supply/Vorlauf
             good_tks.append(tk)
 </pre></div>
 </div>
@@ -3861,7 +3861,7 @@ import contextily as cx
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_2 = s3s.generate_element_results_dataframe(element_type=s3s.ObjectTypes.Pipe
-                                                    ,properties=[&quot;DTTR&quot;, &quot;PHR&quot;] # Specify result properties of interest
+                                                    ,properties=["DTTR", "PHR"] # Specify result properties of interest
                                                     ,timestamps=None # None =&gt; All available simulation timestamps
                                                     )
 </pre></div>
@@ -9811,8 +9811,8 @@ import contextily as cx
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_2.loc[
-    &quot;2023-02-13 00:00:00.000 +01:00&quot;,
-    (&quot;5442010239090746007&quot;, slice(None), slice(None), &quot;DTTR&quot;)
+    "2023-02-13 00:00:00.000 +01:00",
+    ("5442010239090746007", slice(None), slice(None), "DTTR")
 ].item()
 <br/></pre></div>
 </div>
@@ -9835,8 +9835,8 @@ import contextily as cx
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(s3s.generate_element_results_dataframe(element_type=s3s.ObjectTypes.Pipe
-                                        ,properties=[&quot;DTTR&quot;, &quot;PHR&quot;]
-                                        ,timestamps=[&#39;2023-02-13 00:00:00.000 +01:00&#39;, &#39;2023-02-13 05:00:00.000 +01:00&#39;, &#39;2023-02-13 23:00:00.000 +01:00&#39;]
+                                        ,properties=["DTTR", "PHR"]
+                                        ,timestamps=['2023-02-13 00:00:00.000 +01:00', '2023-02-13 05:00:00.000 +01:00', '2023-02-13 23:00:00.000 +01:00']
                                         )).head(3)
 </pre></div>
 </div>
@@ -15824,7 +15824,7 @@ import contextily as cx
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(s3s.generate_element_results_dataframe(element_type=s3s.ObjectTypes.Pipe
-                                        ,properties=[&quot;DTTR&quot;, &quot;PHR&quot;]
+                                        ,properties=["DTTR", "PHR"]
                                         ,timestamps=[0, 5, -2]
                                         )).head(3)
 </pre></div>
@@ -21800,8 +21800,8 @@ import contextily as cx
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for tk in all_tks:
-    if s3s.GetValue(tk, &quot;FkCont&quot;)[0] == &quot;5029128874972463118&quot;:
-        if s3s.GetValue(tk, &quot;bz.Irtrenn&quot;)[0] == &quot;0&quot;: # Rohr nicht getrennt
+    if s3s.GetValue(tk, "FkCont")[0] == "5029128874972463118":
+        if s3s.GetValue(tk, "bz.Irtrenn")[0] == "0": # Rohr nicht getrennt
             good_tks.append(tk)
 </pre></div>
 </div>
@@ -21829,7 +21829,7 @@ import contextily as cx
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(s3s.generate_element_results_dataframe(element_type=s3s.ObjectTypes.Pipe
                                         ,tks=good_tks # here we specify that not all available tks should be used
-                                        ,properties=[&quot;DTTR&quot;, &quot;PHR&quot;]
+                                        ,properties=["DTTR", "PHR"]
                                         ,timestamps=[0, 5, -2]
                                         )).head(3)
 </pre></div>
@@ -27878,7 +27878,7 @@ import contextily as cx
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[39]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>available_result_vector_props=[available_result_props for available_result_props in available_result_props if &quot;VEC&quot; in available_result_props]
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>available_result_vector_props=[available_result_props for available_result_props in available_result_props if "VEC" in available_result_props]
 </pre></div>
 </div>
 </div>
@@ -27919,7 +27919,7 @@ import contextily as cx
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes = s3s.generate_element_results_dataframe(element_type=s3s.ObjectTypes.Pipe
-                                        ,properties=[&quot;TTRVEC&quot;, &quot;MVEC&quot;, &quot;DTTR&quot;]
+                                        ,properties=["TTRVEC", "MVEC", "DTTR"]
                                         ,timestamps=[0, 5, -2]
                                         )
 </pre></div>
@@ -38388,8 +38388,8 @@ import contextily as cx
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_interior_points.loc[
-    &quot;2023-02-13 00:00:00.000 +01:00&quot;,
-    (&quot;5442010239090746007&quot;, slice(None), slice(None), &quot;MVEC_sequence&quot;)
+    "2023-02-13 00:00:00.000 +01:00",
+    ("5442010239090746007", slice(None), slice(None), "MVEC_sequence")
 ].item()
 <br/></pre></div>
 </div>
@@ -40674,7 +40674,7 @@ import contextily as cx
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_simplified.loc[
     0,
-    (&quot;5442010239090746007&quot;, slice(None), slice(None), &quot;DTTR&quot;)
+    ("5442010239090746007", slice(None), slice(None), "DTTR")
 ].item()
 </pre></div>
 </div>
@@ -40695,8 +40695,8 @@ import contextily as cx
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_simplified.loc[
     0,
-    (&quot;5442010239090746007&quot;, slice(None), slice(None), &quot;DTTR&quot;)
-].item()[timestamp_to_tuple_index[&#39;2023-02-13 00:00:00.000 +01:00&#39;]]
+    ("5442010239090746007", slice(None), slice(None), "DTTR")
+].item()[timestamp_to_tuple_index['2023-02-13 00:00:00.000 +01:00']]
 </pre></div>
 </div>
 </div>
@@ -40716,7 +40716,7 @@ import contextily as cx
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_simplified.loc[
     0,
-    (&quot;5442010239090746007&quot;, slice(None), slice(None), &quot;MVEC_sequence&quot;)
+    ("5442010239090746007", slice(None), slice(None), "MVEC_sequence")
 ].item()
 </pre></div>
 </div>
@@ -40738,8 +40738,8 @@ import contextily as cx
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_simplified.loc[
     0,
-    (&quot;5442010239090746007&quot;, slice(None), slice(None), &quot;MVEC_sequence&quot;)
-].item()[timestamp_to_tuple_index[&#39;2023-02-13 00:00:00.000 +01:00&#39;]]
+    ("5442010239090746007", slice(None), slice(None), "MVEC_sequence")
+].item()[timestamp_to_tuple_index['2023-02-13 00:00:00.000 +01:00']]
 </pre></div>
 </div>
 </div>
@@ -40765,7 +40765,7 @@ import contextily as cx
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_model_data = s3s.generate_element_model_data_dataframe(element_type=s3s.ObjectTypes.Pipe
-                                                            ,properties=[&quot;L&quot;, &quot;DN&quot;]
+                                                            ,properties=["L", "DN"]
                                                             ,geometry=True
                                                             )
 </pre></div>
@@ -43107,8 +43107,8 @@ import contextily as cx
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_simplified.columns = df_pipes_simplified.columns.droplevel([1, 2])
 df_pipes_simplified = df_pipes_simplified.T.unstack(level=0).T
 df_pipes_simplified = df_pipes_simplified.droplevel(0, axis=0)
-df_pipes = df_pipes_model_data.merge(on=&quot;tk&quot;,
-                    how=&quot;outer&quot;,
+df_pipes = df_pipes_model_data.merge(on="tk",
+                    how="outer",
                     right=df_pipes_simplified)
 </pre></div>
 </div>

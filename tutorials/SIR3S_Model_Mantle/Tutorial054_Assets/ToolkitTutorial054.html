@@ -97,7 +97,7 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r&quot;C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2&quot; #change to local path
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r"C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2" #change to local path
 </pre></div>
 </div>
 </div>
@@ -198,7 +198,7 @@ s3s = dataframes.SIR3S_Model_Dataframes()
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dbFilePath=r&quot;Toolkit_Tutorial54_Model.db3&quot;
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dbFilePath=r"Toolkit_Tutorial54_Model.db3"
 </pre></div>
 </div>
 </div>
@@ -208,11 +208,11 @@ s3s = dataframes.SIR3S_Model_Dataframes()
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.OpenModel(dbName=dbFilePath,
               providerType=s3s.ProviderTypes.SQLite,
-              Mid=&quot;M-1-0-1&quot;,
+              Mid="M-1-0-1",
               saveCurrentlyOpenModel=False,
-              namedInstance=&quot;&quot;,
-              userID=&quot;&quot;,
-              password=&quot;&quot;)
+              namedInstance="",
+              userID="",
+              password="")
 </pre></div>
 </div>
 </div>
@@ -255,7 +255,7 @@ s3s = dataframes.SIR3S_Model_Dataframes()
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>measured_variable_table_1 = s3s.InsertElement(ElementType=s3s.ObjectTypes.MeasuredVariableTable, IdRef=&quot;1&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>measured_variable_table_1 = s3s.InsertElement(ElementType=s3s.ObjectTypes.MeasuredVariableTable, IdRef="1")
 </pre></div>
 </div>
 </div>
@@ -271,7 +271,7 @@ s3s = dataframes.SIR3S_Model_Dataframes()
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.SetValue(Tk=measured_variable_table_1, propertyName=&quot;Name&quot;, Value=&quot;Variable 1&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.SetValue(Tk=measured_variable_table_1, propertyName="Name", Value="Variable 1")
 </pre></div>
 </div>
 </div>
@@ -287,7 +287,7 @@ s3s = dataframes.SIR3S_Model_Dataframes()
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.SetValue(Tk=measured_variable_table_1, propertyName=&quot;Zeitoption&quot;, Value=&quot;0&quot;) # We do not want special time reference, see general SIR 3S documentation for details
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.SetValue(Tk=measured_variable_table_1, propertyName="Zeitoption", Value="0") # We do not want special time reference, see general SIR 3S documentation for details
 </pre></div>
 </div>
 </div>
@@ -303,7 +303,7 @@ s3s = dataframes.SIR3S_Model_Dataframes()
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.SetValue(Tk=measured_variable_table_1, propertyName=&quot;Intpol&quot;, Value=&quot;0&quot;) # We choose linear interpolation scheme. Use 9 for step function
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.SetValue(Tk=measured_variable_table_1, propertyName="Intpol", Value="0") # We choose linear interpolation scheme. Use 9 for step function
 </pre></div>
 </div>
 </div>
@@ -321,7 +321,7 @@ s3s = dataframes.SIR3S_Model_Dataframes()
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.StartEditSession(SessionName=&quot;Insert DataFrame into Time Table&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.StartEditSession(SessionName="Insert DataFrame into Time Table")
 </pre></div>
 </div>
 </div>
@@ -353,27 +353,27 @@ rows = []
 
 for t, w in zip(time_seconds, werte):
     timestamp = DATE + timedelta(seconds=int(t))
-    tag = timestamp.strftime(&quot;%Y-%m-%d&quot;)
-    uhrzeit = timestamp.strftime(&quot;%H:%M:%S.%f&quot;)
+    tag = timestamp.strftime("%Y-%m-%d")
+    uhrzeit = timestamp.strftime("%H:%M:%S.%f")
 
     rows.append({
-        &quot;TAG&quot;: tag,
-        &quot;UHRZEIT&quot;: uhrzeit,
-        &quot;WERT&quot;: w
+        "TAG": tag,
+        "UHRZEIT": uhrzeit,
+        "WERT": w
     })
 
 # duplicate timestamp to check behavior
 timestamp = DATE + timedelta(seconds=int(0))
-tag = timestamp.strftime(&quot;%Y-%m-%d&quot;)
-uhrzeit = timestamp.strftime(&quot;%H:%M:%S.%f&quot;)
+tag = timestamp.strftime("%Y-%m-%d")
+uhrzeit = timestamp.strftime("%H:%M:%S.%f")
 rows.append({
-        &quot;TAG&quot;: tag,
-        &quot;UHRZEIT&quot;: uhrzeit,
-        &quot;WERT&quot;: 0.00001 # low numerical value
+        "TAG": tag,
+        "UHRZEIT": uhrzeit,
+        "WERT": 0.00001 # low numerical value
     })
 
 # Build DataFrame
-df = pd.DataFrame(rows, columns=[&quot;TAG&quot;, &quot;UHRZEIT&quot;, &quot;WERT&quot;])
+df = pd.DataFrame(rows, columns=["TAG", "UHRZEIT", "WERT"])
 </pre></div>
 </div>
 </div>
@@ -849,27 +849,27 @@ rows = []
 
 for t, w in zip(time_seconds, werte):
     timestamp = DATE + timedelta(seconds=int(t))
-    tag = timestamp.strftime(&quot;%Y-%m-%d&quot;)
-    uhrzeit = timestamp.strftime(&quot;%H:%M:%S.%f&quot;)
+    tag = timestamp.strftime("%Y-%m-%d")
+    uhrzeit = timestamp.strftime("%H:%M:%S.%f")
 
     rows.append({
-        &quot;TAG&quot;: tag,
-        &quot;UHRZEIT&quot;: uhrzeit,
-        &quot;WERT&quot;: w
+        "TAG": tag,
+        "UHRZEIT": uhrzeit,
+        "WERT": w
     })
 
 # duplicate timestamp to check behavior
 timestamp = DATE + timedelta(seconds=int(300))
-tag = timestamp.strftime(&quot;%Y-%m-%d&quot;)
-uhrzeit = timestamp.strftime(&quot;%H:%M:%S.%f&quot;)
+tag = timestamp.strftime("%Y-%m-%d")
+uhrzeit = timestamp.strftime("%H:%M:%S.%f")
 rows.append({
-        &quot;TAG&quot;: tag,
-        &quot;UHRZEIT&quot;: uhrzeit,
-        &quot;WERT&quot;: 10000 # high numerical value
+        "TAG": tag,
+        "UHRZEIT": uhrzeit,
+        "WERT": 10000 # high numerical value
     })
 
 # Build DataFrame
-df = pd.DataFrame(rows, columns=[&quot;TAG&quot;, &quot;UHRZEIT&quot;, &quot;WERT&quot;])
+df = pd.DataFrame(rows, columns=["TAG", "UHRZEIT", "WERT"])
 </pre></div>
 </div>
 </div>
@@ -1355,17 +1355,17 @@ rows = []
 
 for t, w in zip(time_seconds, werte):
     timestamp = DATE + timedelta(seconds=int(t))
-    tag = timestamp.strftime(&quot;%Y-%m-%d&quot;)
-    uhrzeit = timestamp.strftime(&quot;%H:%M:%S.%f&quot;)
+    tag = timestamp.strftime("%Y-%m-%d")
+    uhrzeit = timestamp.strftime("%H:%M:%S.%f")
 
     rows.append({
-        &quot;TAG&quot;: tag,
-        &quot;UHRZEIT&quot;: uhrzeit,
-        &quot;WERT&quot;: w
+        "TAG": tag,
+        "UHRZEIT": uhrzeit,
+        "WERT": w
     })
 
 # Build DataFrame
-df = pd.DataFrame(rows, columns=[&quot;TAG&quot;, &quot;UHRZEIT&quot;, &quot;WERT&quot;])
+df = pd.DataFrame(rows, columns=["TAG", "UHRZEIT", "WERT"])
 </pre></div>
 </div>
 </div>
@@ -1796,17 +1796,17 @@ rows = []
 
 for t, w in zip(time_seconds, werte):
     timestamp = DATE + timedelta(seconds=int(t))
-    tag = timestamp.strftime(&quot;%Y-%m-%d&quot;)
-    uhrzeit = timestamp.strftime(&quot;%H:%M:%S.%f&quot;)
+    tag = timestamp.strftime("%Y-%m-%d")
+    uhrzeit = timestamp.strftime("%H:%M:%S.%f")
 
     rows.append({
-        &quot;TAG&quot;: tag,
-        &quot;UHRZEIT&quot;: uhrzeit,
-        &quot;WERT&quot;: w
+        "TAG": tag,
+        "UHRZEIT": uhrzeit,
+        "WERT": w
     })
 
 # Build DataFrame
-df = pd.DataFrame(rows, columns=[&quot;TAG&quot;, &quot;UHRZEIT&quot;, &quot;WERT&quot;])
+df = pd.DataFrame(rows, columns=["TAG", "UHRZEIT", "WERT"])
 </pre></div>
 </div>
 </div>
@@ -2222,17 +2222,17 @@ rows = []
 
 for t, w in zip(time_seconds, werte):
     timestamp = DATE + timedelta(seconds=int(t))
-    tag = timestamp.strftime(&quot;%Y-%m-%d&quot;)
-    uhrzeit = timestamp.strftime(&quot;%H:%M:%S.%f&quot;)
+    tag = timestamp.strftime("%Y-%m-%d")
+    uhrzeit = timestamp.strftime("%H:%M:%S.%f")
 
     rows.append({
-        &quot;TAG&quot;: tag,
-        &quot;UHRZEIT&quot;: uhrzeit,
-        &quot;WERT&quot;: w
+        "TAG": tag,
+        "UHRZEIT": uhrzeit,
+        "WERT": w
     })
 
 # Build DataFrame
-df = pd.DataFrame(rows, columns=[&quot;TAG&quot;, &quot;UHRZEIT&quot;, &quot;WERT&quot;])
+df = pd.DataFrame(rows, columns=["TAG", "UHRZEIT", "WERT"])
 </pre></div>
 </div>
 </div>
@@ -2813,15 +2813,15 @@ df = pd.DataFrame(rows, columns=[&quot;TAG&quot;, &quot;UHRZEIT&quot;, &quot;WER
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def view_non_value_data_of_measured_variable_table(measured_variable_table_tk):
-    name = s3s.GetValue(Tk=measured_variable_table_tk, propertyName=&quot;Name&quot;)[0]
-    intpol = s3s.GetValue(Tk=measured_variable_table_tk, propertyName=&quot;Intpol&quot;)[0]
-    if intpol == &quot;0&quot;:
-        intpol_clear = &quot;linear&quot;
-    elif intpol == &quot;9&quot;:
-        intpol_clear = &quot;step function&quot;
+    name = s3s.GetValue(Tk=measured_variable_table_tk, propertyName="Name")[0]
+    intpol = s3s.GetValue(Tk=measured_variable_table_tk, propertyName="Intpol")[0]
+    if intpol == "0":
+        intpol_clear = "linear"
+    elif intpol == "9":
+        intpol_clear = "step function"
     else:
-        intpol_clear = &quot;invalid intpol&quot;
-    print(f&quot;Tk: {measured_variable_table_tk}, Name: {name}, Interpolation scheme: {intpol_clear}&quot;)
+        intpol_clear = "invalid intpol"
+    print(f"Tk: {measured_variable_table_tk}, Name: {name}, Interpolation scheme: {intpol_clear}")
 </pre></div>
 </div>
 </div>
@@ -2830,7 +2830,7 @@ df = pd.DataFrame(rows, columns=[&quot;TAG&quot;, &quot;UHRZEIT&quot;, &quot;WER
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[38]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_h, table_dfs, table_tks = s3s.get_dataframes_from_time_table_type(&quot;MeasuredVariableTable&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_h, table_dfs, table_tks = s3s.get_dataframes_from_time_table_type("MeasuredVariableTable")
 </pre></div>
 </div>
 </div>
@@ -3188,7 +3188,7 @@ Tk: 4866615149030577210, Name: Variable 1, Interpolation scheme: linear
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[48]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_h, table_dfs, table_tks = s3s.get_dataframes_from_time_table_type(&quot;MeasuredVariableTable&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_h, table_dfs, table_tks = s3s.get_dataframes_from_time_table_type("MeasuredVariableTable")
 </pre></div>
 </div>
 </div>

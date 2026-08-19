@@ -97,7 +97,7 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r&quot;C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2&quot; #change to local path
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r"C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2" #change to local path
 </pre></div>
 </div>
 </div>
@@ -175,7 +175,7 @@ Initialization complete
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dbFilePath=r&quot;Toolkit_Tutorial71_Model.db3&quot;
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dbFilePath=r"Toolkit_Tutorial71_Model.db3"
 </pre></div>
 </div>
 </div>
@@ -185,11 +185,11 @@ Initialization complete
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.OpenModel(dbName=dbFilePath,
               providerType=s3s.ProviderTypes.SQLite,
-              Mid=&quot;M-1-0-1&quot;,
+              Mid="M-1-0-1",
               saveCurrentlyOpenModel=False,
-              namedInstance=&quot;&quot;,
-              userID=&quot;&quot;,
-              password=&quot;&quot;)
+              namedInstance="",
+              userID="",
+              password="")
 </pre></div>
 </div>
 </div>
@@ -219,7 +219,7 @@ Model is open for further operation
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>object_types = [item for item in dir(s3s.ObjectTypes) if not (item.startswith(&#39;__&#39;) and item.endswith(&#39;__&#39;))]
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>object_types = [item for item in dir(s3s.ObjectTypes) if not (item.startswith('__') and item.endswith('__'))]
 print(object_types)
 </pre></div>
 </div>
@@ -238,7 +238,7 @@ print(object_types)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>nodes_tks = [&quot;5471942051669438823&quot;, &quot;5166327497394449628&quot;, &quot;5667818255300782920&quot;, &quot;5262999985134416180&quot;]
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>nodes_tks = ["5471942051669438823", "5166327497394449628", "5667818255300782920", "5262999985134416180"]
 </pre></div>
 </div>
 </div>
@@ -248,7 +248,7 @@ print(object_types)
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_nodes_results = s3s.generate_element_results_dataframe(element_type=s3s.ObjectTypes.Node
                                                           ,tks=nodes_tks
-                                                          ,properties=[&quot;PH&quot;]
+                                                          ,properties=["PH"]
                                                           ,timestamps=None # all available simulation timestamps will be used
                                                           )
 </pre></div>
@@ -278,7 +278,7 @@ print(object_types)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>vent_tks = [&quot;5303247238968995258&quot;]
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>vent_tks = ["5303247238968995258"]
 </pre></div>
 </div>
 </div>
@@ -288,7 +288,7 @@ print(object_types)
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_vent_results = s3s.generate_element_results_dataframe(element_type=s3s.ObjectTypes.FlapValve
                                                           ,tks=vent_tks
-                                                          ,properties=[&quot;PHI&quot;, &quot;QM&quot;]
+                                                          ,properties=["PHI", "QM"]
                                                           ,timestamps=None # all available simulation timestamps will be used
                                                           )
 </pre></div>
@@ -394,7 +394,7 @@ print(object_types)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>valves_tks = [&quot;5430537691154258843&quot;]
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>valves_tks = ["5430537691154258843"]
 </pre></div>
 </div>
 </div>
@@ -404,7 +404,7 @@ print(object_types)
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_valves_results = s3s.generate_element_results_dataframe(element_type=s3s.ObjectTypes.Valve
                                                           ,tks=valves_tks
-                                                          ,properties=[&quot;QM&quot;]
+                                                          ,properties=["QM"]
                                                           ,timestamps=None # all available simulation timestamps will be used
                                                           )
 </pre></div>
@@ -505,7 +505,7 @@ print(object_types)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_results = pd.concat([df_nodes_results, df_vent_results, df_valves_results], axis=1, join=&quot;inner&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_results = pd.concat([df_nodes_results, df_vent_results, df_valves_results], axis=1, join="inner")
 </pre></div>
 </div>
 </div>
@@ -751,15 +751,15 @@ print(object_types)
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fig, axes, used = s3s.plot_time_curves(
     df=df_results,
-    start=&quot;2020-01-28 15:45:01.000 +01:00&quot;,
-    end=&quot;2020-01-28 15:46:00.000 +01:00&quot;,
-    properties=[&quot;PH&quot;, &quot;QM&quot;, &quot;PHI&quot;],
-    axis_labels=[&quot;PH bar&quot;, &quot;QM m³/h&quot;, &quot;RSK %&quot;],
+    start="2020-01-28 15:45:01.000 +01:00",
+    end="2020-01-28 15:46:00.000 +01:00",
+    properties=["PH", "QM", "PHI"],
+    axis_labels=["PH bar", "QM m³/h", "RSK %"],
     ylims=[(0, 12), (0, 40), (0, 60)],
     tks_per_property=[
-        [&quot;5471942051669438823&quot;, &quot;5166327497394449628&quot;, &quot;5667818255300782920&quot;, &quot;5262999985134416180&quot;],
-        [&quot;5303247238968995258&quot;, &quot;5430537691154258843&quot;],
-        [&quot;5303247238968995258&quot;],
+        ["5471942051669438823", "5166327497394449628", "5667818255300782920", "5262999985134416180"],
+        ["5303247238968995258", "5430537691154258843"],
+        ["5303247238968995258"],
     ],
 
     y_label_ticks=[7, 9, 13],
@@ -769,22 +769,22 @@ print(object_types)
 
     legend=True,
     legend_in_figure=True,
-    legend_loc=&quot;upper left&quot;,
+    legend_loc="upper left",
     legend_coords=(0.67, 0.33),
     legend_fontsize=15,
 
-    title_prefix=&quot;Testplot: &quot;,
+    title_prefix="Testplot: ",
     show_title=True,
 
     axis_offset=70,
-    linestyles=[&quot;-&quot;, &quot;--&quot;, &quot;:&quot;],
+    linestyles=["-", "--", ":"],
     rotate_xticks=0,
 
     grid=True,
-    grid_style=&quot;--&quot;,
+    grid_style="--",
     grid_alpha=0.8,
 
-    missing=&quot;warn&quot;,
+    missing="warn",
     logger=None,
 )
 </pre></div>

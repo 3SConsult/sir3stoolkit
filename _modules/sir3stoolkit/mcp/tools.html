@@ -84,11 +84,11 @@
            <div itemprop="articleBody">
              
   <h1>Source code for sir3stoolkit.mcp.tools</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Tool implementations for an MCP server template.</span>
+<span></span><span class="sd">"""Tool implementations for an MCP server template.</span>
 
 <span class="sd">These functions are intentionally small and conservative so you can adapt them</span>
 <span class="sd">for your chosen MCP framework.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
 
@@ -108,69 +108,69 @@
 <div class="viewcode-block" id="initialize_toolkit">
 <a class="viewcode-back" href="../../../references/sir3stoolkit.mcp.html#sir3stoolkit.mcp.tools.initialize_toolkit">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">initialize_toolkit</span><span class="p">(</span><span class="n">sirgraf_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Initialize sir3stoolkit with a SirGraf directory.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Initialize sir3stoolkit with a SirGraf directory."""</span>
     <span class="n">wrapper</span><span class="o">.</span><span class="n">Initialize_Toolkit</span><span class="p">(</span><span class="n">sirgraf_dir</span><span class="p">)</span>
     <span class="n">SESSION_STATE</span><span class="o">.</span><span class="n">toolkit_package_is_initialized</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="n">SESSION_STATE</span><span class="o">.</span><span class="n">sirgraf_dir</span> <span class="o">=</span> <span class="n">sirgraf_dir</span>
     <span class="n">SESSION_STATE</span><span class="o">.</span><span class="n">reset_class_instances</span><span class="p">()</span>
     <span class="k">return</span> <span class="p">{</span>
-        <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;ok&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Toolkit initialized.&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;sirgraf_dir&quot;</span><span class="p">:</span> <span class="n">sirgraf_dir</span><span class="p">,</span>
+        <span class="s2">"status"</span><span class="p">:</span> <span class="s2">"ok"</span><span class="p">,</span>
+        <span class="s2">"message"</span><span class="p">:</span> <span class="s2">"Toolkit initialized."</span><span class="p">,</span>
+        <span class="s2">"sirgraf_dir"</span><span class="p">:</span> <span class="n">sirgraf_dir</span><span class="p">,</span>
     <span class="p">}</span></div>
 
 
 <div class="viewcode-block" id="initialize_one_of_the_available_toolkit_classes">
 <a class="viewcode-back" href="../../../references/sir3stoolkit.mcp.html#sir3stoolkit.mcp.tools.initialize_one_of_the_available_toolkit_classes">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">initialize_one_of_the_available_toolkit_classes</span><span class="p">(</span><span class="n">toolkit_class_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Initialize one of the available toolkit classes.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Initialize one of the available toolkit classes."""</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">SESSION_STATE</span><span class="o">.</span><span class="n">toolkit_package_is_initialized</span><span class="p">:</span>
         <span class="k">return</span> <span class="p">{</span>
-            <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;error&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;error_code&quot;</span><span class="p">:</span> <span class="s2">&quot;NOT_INITIALIZED&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Call initialize_toolkit first.&quot;</span><span class="p">,</span>
+            <span class="s2">"status"</span><span class="p">:</span> <span class="s2">"error"</span><span class="p">,</span>
+            <span class="s2">"error_code"</span><span class="p">:</span> <span class="s2">"NOT_INITIALIZED"</span><span class="p">,</span>
+            <span class="s2">"message"</span><span class="p">:</span> <span class="s2">"Call initialize_toolkit first."</span><span class="p">,</span>
         <span class="p">}</span>
 
     <span class="k">if</span> <span class="n">toolkit_class_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">SESSION_STATE</span><span class="o">.</span><span class="n">class_instances</span><span class="p">:</span>
         <span class="k">return</span> <span class="p">{</span>
-            <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;error&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;error_code&quot;</span><span class="p">:</span> <span class="s2">&quot;UNKNOWN_CLASS&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Unknown toolkit class: </span><span class="si">{</span><span class="n">toolkit_class_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="s2">"status"</span><span class="p">:</span> <span class="s2">"error"</span><span class="p">,</span>
+            <span class="s2">"error_code"</span><span class="p">:</span> <span class="s2">"UNKNOWN_CLASS"</span><span class="p">,</span>
+            <span class="s2">"message"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"Unknown toolkit class: </span><span class="si">{</span><span class="n">toolkit_class_name</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
         <span class="p">}</span>
 
     <span class="k">if</span> <span class="n">SESSION_STATE</span><span class="o">.</span><span class="n">get_instance</span><span class="p">(</span><span class="n">toolkit_class_name</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="p">{</span>
-            <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;error&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;error_code&quot;</span><span class="p">:</span> <span class="s2">&quot;ALREADY_INITIALIZED&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">toolkit_class_name</span><span class="si">}</span><span class="s2"> is already initialized.&quot;</span><span class="p">,</span>
+            <span class="s2">"status"</span><span class="p">:</span> <span class="s2">"error"</span><span class="p">,</span>
+            <span class="s2">"error_code"</span><span class="p">:</span> <span class="s2">"ALREADY_INITIALIZED"</span><span class="p">,</span>
+            <span class="s2">"message"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">toolkit_class_name</span><span class="si">}</span><span class="s2"> is already initialized."</span><span class="p">,</span>
         <span class="p">}</span>
 
     <span class="c1"># Initialize the requested toolkit class</span>
-    <span class="k">if</span> <span class="n">toolkit_class_name</span> <span class="o">==</span> <span class="s2">&quot;SIR3S_Model&quot;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">toolkit_class_name</span> <span class="o">==</span> <span class="s2">"SIR3S_Model"</span><span class="p">:</span>
         <span class="n">instance</span> <span class="o">=</span> <span class="n">SIR3S_Model</span><span class="p">()</span>
-    <span class="k">elif</span> <span class="n">toolkit_class_name</span> <span class="o">==</span> <span class="s2">&quot;SIR3S_View&quot;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">toolkit_class_name</span> <span class="o">==</span> <span class="s2">"SIR3S_View"</span><span class="p">:</span>
         <span class="n">instance</span> <span class="o">=</span> <span class="n">SIR3S_View</span><span class="p">()</span>
-    <span class="k">elif</span> <span class="n">toolkit_class_name</span> <span class="o">==</span> <span class="s2">&quot;SIR3S_Model_Dataframes&quot;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">toolkit_class_name</span> <span class="o">==</span> <span class="s2">"SIR3S_Model_Dataframes"</span><span class="p">:</span>
         <span class="n">instance</span> <span class="o">=</span> <span class="n">SIR3S_Model_Dataframes</span><span class="p">()</span>
-    <span class="k">elif</span> <span class="n">toolkit_class_name</span> <span class="o">==</span> <span class="s2">&quot;SIR3S_Model_Alternative_Models&quot;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">toolkit_class_name</span> <span class="o">==</span> <span class="s2">"SIR3S_Model_Alternative_Models"</span><span class="p">:</span>
         <span class="n">instance</span> <span class="o">=</span> <span class="n">SIR3S_Model_Alternative_Models</span><span class="p">()</span>
-    <span class="k">elif</span> <span class="n">toolkit_class_name</span> <span class="o">==</span> <span class="s2">&quot;SIR3S_Model_Plotting&quot;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">toolkit_class_name</span> <span class="o">==</span> <span class="s2">"SIR3S_Model_Plotting"</span><span class="p">:</span>
         <span class="n">instance</span> <span class="o">=</span> <span class="n">SIR3S_Model_Plotting</span><span class="p">()</span>
-    <span class="k">elif</span> <span class="n">toolkit_class_name</span> <span class="o">==</span> <span class="s2">&quot;SIR3S_Model_Advanced_Operations&quot;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">toolkit_class_name</span> <span class="o">==</span> <span class="s2">"SIR3S_Model_Advanced_Operations"</span><span class="p">:</span>
         <span class="n">instance</span> <span class="o">=</span> <span class="n">SIR3S_Model_Advanced_Operations</span><span class="p">()</span>
-    <span class="k">elif</span> <span class="n">toolkit_class_name</span> <span class="o">==</span> <span class="s2">&quot;SIR3S_Model_Mantle&quot;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">toolkit_class_name</span> <span class="o">==</span> <span class="s2">"SIR3S_Model_Mantle"</span><span class="p">:</span>
         <span class="n">instance</span> <span class="o">=</span> <span class="n">SIR3S_Model_Mantle</span><span class="p">()</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="p">{</span>
-            <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;error&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;error_code&quot;</span><span class="p">:</span> <span class="s2">&quot;UNSUPPORTED_CLASS&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Unsupported toolkit class: </span><span class="si">{</span><span class="n">toolkit_class_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="s2">"status"</span><span class="p">:</span> <span class="s2">"error"</span><span class="p">,</span>
+            <span class="s2">"error_code"</span><span class="p">:</span> <span class="s2">"UNSUPPORTED_CLASS"</span><span class="p">,</span>
+            <span class="s2">"message"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"Unsupported toolkit class: </span><span class="si">{</span><span class="n">toolkit_class_name</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
         <span class="p">}</span>
 
     <span class="n">SESSION_STATE</span><span class="o">.</span><span class="n">set_instance</span><span class="p">(</span><span class="n">toolkit_class_name</span><span class="p">,</span> <span class="n">instance</span><span class="p">)</span>
     <span class="k">return</span> <span class="p">{</span>
-        <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;ok&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">toolkit_class_name</span><span class="si">}</span><span class="s2"> initialized.&quot;</span><span class="p">,</span>
+        <span class="s2">"status"</span><span class="p">:</span> <span class="s2">"ok"</span><span class="p">,</span>
+        <span class="s2">"message"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">toolkit_class_name</span><span class="si">}</span><span class="s2"> initialized."</span><span class="p">,</span>
     <span class="p">}</span></div>
 
 
@@ -180,22 +180,22 @@
 
     <span class="k">if</span> <span class="ow">not</span> <span class="n">SESSION_STATE</span><span class="o">.</span><span class="n">toolkit_package_is_initialized</span><span class="p">:</span>
         <span class="k">return</span> <span class="p">{</span>
-            <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;error&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;error_code&quot;</span><span class="p">:</span> <span class="s2">&quot;NOT_INITIALIZED&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Call initialize_toolkit first.&quot;</span><span class="p">,</span>
+            <span class="s2">"status"</span><span class="p">:</span> <span class="s2">"error"</span><span class="p">,</span>
+            <span class="s2">"error_code"</span><span class="p">:</span> <span class="s2">"NOT_INITIALIZED"</span><span class="p">,</span>
+            <span class="s2">"message"</span><span class="p">:</span> <span class="s2">"Call initialize_toolkit first."</span><span class="p">,</span>
         <span class="p">}</span>
     
-    <span class="k">if</span> <span class="n">SESSION_STATE</span><span class="o">.</span><span class="n">get_instance</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s2">&quot;SIR3S_Model&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">SESSION_STATE</span><span class="o">.</span><span class="n">get_instance</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s2">"SIR3S_Model"</span><span class="p">)</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="p">{</span>
-            <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;error&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;error_code&quot;</span><span class="p">:</span> <span class="s2">&quot;CLASS_INSTANCE_MISSING&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;First instantiated the SIR3S_Model class with initialize_one_of_the_available_toolkit_classes&quot;</span><span class="p">,</span>
+            <span class="s2">"status"</span><span class="p">:</span> <span class="s2">"error"</span><span class="p">,</span>
+            <span class="s2">"error_code"</span><span class="p">:</span> <span class="s2">"CLASS_INSTANCE_MISSING"</span><span class="p">,</span>
+            <span class="s2">"message"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"First instantiated the SIR3S_Model class with initialize_one_of_the_available_toolkit_classes"</span><span class="p">,</span>
         <span class="p">}</span>
     
-    <span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">value_type</span><span class="p">)</span> <span class="o">=</span> <span class="n">SESSION_STATE</span><span class="o">.</span><span class="n">get_instance</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s2">&quot;SIR3S_Model&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">GetValue</span><span class="p">(</span><span class="n">Tk</span><span class="o">=</span><span class="n">tk</span><span class="p">,</span> <span class="n">propertyName</span><span class="o">=</span><span class="n">property_name</span><span class="p">)</span>
+    <span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">value_type</span><span class="p">)</span> <span class="o">=</span> <span class="n">SESSION_STATE</span><span class="o">.</span><span class="n">get_instance</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s2">"SIR3S_Model"</span><span class="p">)</span><span class="o">.</span><span class="n">GetValue</span><span class="p">(</span><span class="n">Tk</span><span class="o">=</span><span class="n">tk</span><span class="p">,</span> <span class="n">propertyName</span><span class="o">=</span><span class="n">property_name</span><span class="p">)</span>
     <span class="k">return</span> <span class="p">{</span>
-        <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;ok&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">property_name</span><span class="si">}</span><span class="s2"> for tk </span><span class="si">{</span><span class="n">tk</span><span class="si">}</span><span class="s2"> has value </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2"> and value type </span><span class="si">{</span><span class="n">value_type</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">,</span>
+        <span class="s2">"status"</span><span class="p">:</span> <span class="s2">"ok"</span><span class="p">,</span>
+        <span class="s2">"message"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">property_name</span><span class="si">}</span><span class="s2"> for tk </span><span class="si">{</span><span class="n">tk</span><span class="si">}</span><span class="s2"> has value </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2"> and value type </span><span class="si">{</span><span class="n">value_type</span><span class="si">}</span><span class="s2">."</span><span class="p">,</span>
     <span class="p">}</span></div>
 
     

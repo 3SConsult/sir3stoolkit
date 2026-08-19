@@ -93,7 +93,7 @@
 
 
 <span class="k">class</span><span class="w"> </span><span class="nc">_HostAwarePrintFallbackHandler</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">Handler</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fallback handler: host print, otherwise standard Python logging.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Fallback handler: host print, otherwise standard Python logging."""</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">emit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">record</span><span class="p">:</span> <span class="n">logging</span><span class="o">.</span><span class="n">LogRecord</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
@@ -110,19 +110,19 @@
 
 
 <span class="k">class</span><span class="w"> </span><span class="nc">_ToolkitRecordFilter</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">Filter</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Allow only toolkit log records on the root fallback handler.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Allow only toolkit log records on the root fallback handler."""</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">record</span><span class="p">:</span> <span class="n">logging</span><span class="o">.</span><span class="n">LogRecord</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;sir3stoolkit&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"sir3stoolkit"</span><span class="p">)</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_emit_via_default_python_logging</span><span class="p">(</span><span class="n">record</span><span class="p">:</span> <span class="n">logging</span><span class="o">.</span><span class="n">LogRecord</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Emit via root logger with a default stream handler when none is configured.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Emit via root logger with a default stream handler when none is configured."""</span>
     <span class="n">root_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span>
 
     <span class="n">has_toolkit_fallback</span> <span class="o">=</span> <span class="nb">any</span><span class="p">(</span>
         <span class="nb">isinstance</span><span class="p">(</span><span class="n">handler</span><span class="p">,</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">)</span>
-        <span class="ow">and</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">handler</span><span class="p">,</span> <span class="s2">&quot;_sir3stoolkit_fallback&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="ow">and</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">handler</span><span class="p">,</span> <span class="s2">"_sir3stoolkit_fallback"</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">handler</span> <span class="ow">in</span> <span class="n">root_logger</span><span class="o">.</span><span class="n">handlers</span>
     <span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">has_toolkit_fallback</span><span class="p">:</span>
@@ -130,7 +130,7 @@
         <span class="n">handler</span><span class="o">.</span><span class="n">_sir3stoolkit_fallback</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="n">handler</span><span class="o">.</span><span class="n">addFilter</span><span class="p">(</span><span class="n">_ToolkitRecordFilter</span><span class="p">())</span>
         <span class="n">handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span><span class="s2">&quot;[</span><span class="si">%(asctime)s</span><span class="s2">] </span><span class="si">%(levelname)s</span><span class="s2"> in </span><span class="si">%(name)s</span><span class="s2">: </span><span class="si">%(message)s</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span><span class="s2">"[</span><span class="si">%(asctime)s</span><span class="s2">] </span><span class="si">%(levelname)s</span><span class="s2"> in </span><span class="si">%(name)s</span><span class="s2">: </span><span class="si">%(message)s</span><span class="s2">"</span><span class="p">)</span>
         <span class="p">)</span>
         <span class="n">root_logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span>
 
@@ -157,7 +157,7 @@
 <div class="viewcode-block" id="get_logger">
 <a class="viewcode-back" href="../../references/sir3stoolkit.html#sir3stoolkit.logging_utils.get_logger">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_logger</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">logging</span><span class="o">.</span><span class="n">Logger</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create/get module logger with a host-aware fallback print handler.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Create/get module logger with a host-aware fallback print handler."""</span>
     <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
     <span class="n">has_fallback</span> <span class="o">=</span> <span class="nb">any</span><span class="p">(</span>
@@ -167,7 +167,7 @@
     <span class="k">if</span> <span class="ow">not</span> <span class="n">has_fallback</span><span class="p">:</span>
         <span class="n">handler</span> <span class="o">=</span> <span class="n">_HostAwarePrintFallbackHandler</span><span class="p">()</span>
         <span class="n">handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span><span class="s2">&quot;[</span><span class="si">%(asctime)s</span><span class="s2">] </span><span class="si">%(levelname)s</span><span class="s2"> in </span><span class="si">%(name)s</span><span class="s2">: </span><span class="si">%(message)s</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span><span class="s2">"[</span><span class="si">%(asctime)s</span><span class="s2">] </span><span class="si">%(levelname)s</span><span class="s2"> in </span><span class="si">%(name)s</span><span class="s2">: </span><span class="si">%(message)s</span><span class="s2">"</span><span class="p">)</span>
         <span class="p">)</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">logger</span></div>
@@ -178,21 +178,21 @@
 <a class="viewcode-back" href="../../references/sir3stoolkit.html#sir3stoolkit.logging_utils.is_host_process">[docs]</a>
 <span class="nd">@lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">is_host_process</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True when running inside SirGraf host process.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return True when running inside SirGraf host process."""</span>
     <span class="n">exe_name</span> <span class="o">=</span> <span class="n">get_process_executable_name</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">exe_name</span> <span class="o">==</span> <span class="s2">&quot;sirgraf.exe&quot;</span></div>
+    <span class="k">return</span> <span class="n">exe_name</span> <span class="o">==</span> <span class="s2">"sirgraf.exe"</span></div>
 
 
 
 <div class="viewcode-block" id="get_process_executable_path">
 <a class="viewcode-back" href="../../references/sir3stoolkit.html#sir3stoolkit.logging_utils.get_process_executable_path">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_process_executable_path</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get absolute path to current process executable when available.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Get absolute path to current process executable when available."""</span>
     <span class="n">host_path</span> <span class="o">=</span> <span class="n">_get_process_executable_path_via_pythonnet</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">host_path</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">host_path</span>
 
-    <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;win&quot;</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"win"</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">buffer_len</span> <span class="o">=</span> <span class="mi">32768</span>
             <span class="n">buffer</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">create_unicode_buffer</span><span class="p">(</span><span class="n">buffer_len</span><span class="p">)</span>
@@ -212,18 +212,18 @@
 <div class="viewcode-block" id="get_process_executable_name">
 <a class="viewcode-back" href="../../references/sir3stoolkit.html#sir3stoolkit.logging_utils.get_process_executable_name">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_process_executable_name</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get executable name of current process when available.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Get executable name of current process when available."""</span>
     <span class="n">process_path</span> <span class="o">=</span> <span class="n">get_process_executable_path</span><span class="p">()</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">process_path</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">return</span> <span class="s2">""</span>
     <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">process_path</span><span class="p">)</span></div>
 
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_get_process_executable_path_via_pythonnet</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Try to resolve process executable path via pythonnet when available.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Try to resolve process executable path via pythonnet when available."""</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">system_module</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s2">&quot;System&quot;</span><span class="p">)</span>
+        <span class="n">system_module</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s2">"System"</span><span class="p">)</span>
         <span class="n">process</span> <span class="o">=</span> <span class="n">system_module</span><span class="o">.</span><span class="n">Diagnostics</span><span class="o">.</span><span class="n">Process</span><span class="o">.</span><span class="n">GetCurrentProcess</span><span class="p">()</span>
         <span class="n">main_module</span> <span class="o">=</span> <span class="n">process</span><span class="o">.</span><span class="n">MainModule</span>
         <span class="k">if</span> <span class="n">main_module</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">main_module</span><span class="o">.</span><span class="n">FileName</span><span class="p">:</span>
@@ -236,12 +236,12 @@
 <div class="viewcode-block" id="emit_message">
 <a class="viewcode-back" href="../../references/sir3stoolkit.html#sir3stoolkit.logging_utils.emit_message">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">emit_message</span><span class="p">(</span><span class="n">logger</span><span class="p">:</span> <span class="n">logging</span><span class="o">.</span><span class="n">Logger</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Emit a legacy message with level inference.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Emit a legacy message with level inference."""</span>
     <span class="n">text</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
     <span class="n">lower_text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-    <span class="k">if</span> <span class="n">lower_text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;error&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">lower_text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;could not&quot;</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">lower_text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"error"</span><span class="p">)</span> <span class="ow">or</span> <span class="n">lower_text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"could not"</span><span class="p">):</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">lower_text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;warning&quot;</span><span class="p">):</span>
+    <span class="k">elif</span> <span class="n">lower_text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"warning"</span><span class="p">):</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></div>

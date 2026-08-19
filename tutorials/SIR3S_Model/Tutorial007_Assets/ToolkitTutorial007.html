@@ -96,7 +96,7 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r&quot;C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2&quot; #change to local path
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r"C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2" #change to local path
 </pre></div>
 </div>
 </div>
@@ -191,7 +191,7 @@ Initialization complete
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dbFilePath=r&quot;Toolkit_Tutorial7_Model.db3&quot;
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dbFilePath=r"Toolkit_Tutorial7_Model.db3"
 </pre></div>
 </div>
 </div>
@@ -201,11 +201,11 @@ Initialization complete
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.OpenModel(dbName=dbFilePath,
               providerType=s3s.ProviderTypes.SQLite,
-              Mid=&quot;M-1-0-1&quot;,
+              Mid="M-1-0-1",
               saveCurrentlyOpenModel=False,
-              namedInstance=&quot;&quot;,
-              userID=&quot;&quot;,
-              password=&quot;&quot;)
+              namedInstance="",
+              userID="",
+              password="")
 </pre></div>
 </div>
 </div>
@@ -284,7 +284,7 @@ NetworkType.Water
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for tk in group_tks:
-        print(f&quot;Tk: {tk}, Name: {s3s.GetValue(tk, props[0])[0]}, ObjsString: {s3s.GetValue(tk, props[5])[0]}&quot;)
+        print(f"Tk: {tk}, Name: {s3s.GetValue(tk, props[0])[0]}, ObjsString: {s3s.GetValue(tk, props[5])[0]}")
 </pre></div>
 </div>
 </div>
@@ -306,7 +306,7 @@ Tk: 5238820536187712277, Name: Rücklauf, ObjsString: KNOT~5470637040092884723  
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>supply_object_string = s3s.GetValue(group_tks[0], &quot;ObjsString&quot;)[0]
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>supply_object_string = s3s.GetValue(group_tks[0], "ObjsString")[0]
 </pre></div>
 </div>
 </div>
@@ -348,7 +348,7 @@ str
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>return_object_string = s3s.GetValue(group_tks[1], &quot;ObjsString&quot;)[0]
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>return_object_string = s3s.GetValue(group_tks[1], "ObjsString")[0]
 </pre></div>
 </div>
 </div>
@@ -376,9 +376,9 @@ str
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>supply_elements_tks = []
-for element in supply_object_string.split(&#39;\t&#39;):
+for element in supply_object_string.split('\t'):
     if element:
-        obj_type, obj_id = element.split(&#39;~&#39;)
+        obj_type, obj_id = element.split('~')
         supply_elements_tks.append((obj_type, obj_id))
 <br/></pre></div>
 </div>
@@ -449,7 +449,7 @@ for element in supply_object_string.split(&#39;\t&#39;):
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>supply_object_string = &#39;KNOT~4968737254281413660\tKNOT~5130290893660176749\tROHR~5316743965501398998\t&#39;
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>supply_object_string = 'KNOT~4968737254281413660\tKNOT~5130290893660176749\tROHR~5316743965501398998\t'
 </pre></div>
 </div>
 </div>
@@ -457,7 +457,7 @@ for element in supply_object_string.split(&#39;\t&#39;):
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>return_object_string = &#39;KNOT~5470637040092884723\tROHR~5736978569585339616\tKNOT~4906600779019373637\t&#39;
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>return_object_string = 'KNOT~5470637040092884723\tROHR~5736978569585339616\tKNOT~4906600779019373637\t'
 </pre></div>
 </div>
 </div>
@@ -465,7 +465,7 @@ for element in supply_object_string.split(&#39;\t&#39;):
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.SetValue(group_tks[0], &quot;ObjsString&quot;, supply_object_string)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.SetValue(group_tks[0], "ObjsString", supply_object_string)
 </pre></div>
 </div>
 </div>
@@ -481,7 +481,7 @@ Value is set
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.SetValue(group_tks[1], &quot;ObjsString&quot;, return_object_string)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.SetValue(group_tks[1], "ObjsString", return_object_string)
 </pre></div>
 </div>
 </div>
@@ -513,9 +513,9 @@ Value is set
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for tk in group_tks:
     if tk in groups_to_add_to:
-        s3s.SetValue(tk, &quot;Setzen&quot;, &quot;1&quot;)
+        s3s.SetValue(tk, "Setzen", "1")
     else:
-        s3s.SetValue(tk, &quot;Setzen&quot;, &quot;0&quot;)
+        s3s.SetValue(tk, "Setzen", "0")
 </pre></div>
 </div>
 </div>
@@ -532,7 +532,7 @@ Value is set
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.InsertElement(ElementType=s3s.ObjectTypes.Node, IdRef=&quot;-1&quot;) # Newly create element
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.InsertElement(ElementType=s3s.ObjectTypes.Node, IdRef="-1") # Newly create element
 </pre></div>
 </div>
 </div>
@@ -558,7 +558,7 @@ Element inserted successfully into the model with Tk: 4919077416104559424
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for tk in group_tks:
-        print(f&quot;Tk: {tk}, Name: {s3s.GetValue(tk, props[0])[0]}, ObjsString: {s3s.GetValue(tk, props[5])[0]}&quot;)
+        print(f"Tk: {tk}, Name: {s3s.GetValue(tk, props[0])[0]}, ObjsString: {s3s.GetValue(tk, props[5])[0]}")
 </pre></div>
 </div>
 </div>
@@ -588,9 +588,9 @@ Tk: 5238820536187712277, Name: Rücklauf, ObjsString: KNOT~5470637040092884723  
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for tk in group_tks:
     if tk in groups_to_add_to:
-        s3s.SetValue(tk, &quot;Setzen&quot;, &quot;1&quot;)
+        s3s.SetValue(tk, "Setzen", "1")
     else:
-        s3s.SetValue(tk, &quot;Setzen&quot;, &quot;0&quot;)
+        s3s.SetValue(tk, "Setzen", "0")
 </pre></div>
 </div>
 </div>
@@ -607,7 +607,7 @@ Value is set
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[34]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.InsertElement(ElementType=s3s.ObjectTypes.Node, IdRef=&quot;-1&quot;) # Newly create element
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.InsertElement(ElementType=s3s.ObjectTypes.Node, IdRef="-1") # Newly create element
 </pre></div>
 </div>
 </div>
@@ -633,7 +633,7 @@ Element inserted successfully into the model with Tk: 4695903655171808515
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for tk in group_tks:
-        print(f&quot;Tk: {tk}, Name: {s3s.GetValue(tk, props[0])[0]}, ObjsString: {s3s.GetValue(tk, props[5])[0]}&quot;)
+        print(f"Tk: {tk}, Name: {s3s.GetValue(tk, props[0])[0]}, ObjsString: {s3s.GetValue(tk, props[5])[0]}")
 </pre></div>
 </div>
 </div>

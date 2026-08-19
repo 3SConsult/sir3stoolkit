@@ -85,14 +85,14 @@
              
   <h1>Source code for sir3stoolkit.mantle.plotting</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 <span class="sd">Created on Thu Okt 7 13:39:13 2025</span>
 
 <span class="sd">This module implements general plotting functions for SIR 3S applications. TODO: AGSN, Time Curves, Network Color Diagram</span>
 
 <span class="sd">@author: Jablonski</span>
 
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
@@ -134,7 +134,7 @@
         <span class="n">color_mixing_col</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">attribute</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="c1"># visual params</span>
-        <span class="n">colors</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;darkgreen&#39;</span><span class="p">,</span> <span class="s1">&#39;magenta&#39;</span><span class="p">),</span>
+        <span class="n">colors</span><span class="o">=</span><span class="p">(</span><span class="s1">'darkgreen'</span><span class="p">,</span> <span class="s1">'magenta'</span><span class="p">),</span>
         <span class="n">legend_fmt</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">legend_values</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="c1"># independent norms</span>
@@ -147,11 +147,11 @@
         <span class="n">line_width_factor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">10.0</span><span class="p">,</span>
         <span class="n">zorder</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">show_value_labels</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-        <span class="n">value_label_fmt</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{:.4f}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">value_label_fmt</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"</span><span class="si">{:.4f}</span><span class="s2">"</span><span class="p">,</span>
         <span class="n">value_label_fontsize</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">8.0</span><span class="p">,</span>
         <span class="n">value_label_offset</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">),</span>
     <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Plot line geometries with separate width and color scaling.</span>
 
 <span class="sd">        Parameters</span>
@@ -159,7 +159,7 @@
 <span class="sd">        ax : matplotlib.axes.Axes, optional</span>
 <span class="sd">            Axis to plot into. If None, uses current axes (plt.gca()).</span>
 <span class="sd">        gdf : pandas.DataFrame or geopandas.GeoDataFrame</span>
-<span class="sd">            Input with a &#39;geometry&#39; column of shapely LineString/MultiLineString (z-coord is stripped if present).</span>
+<span class="sd">            Input with a 'geometry' column of shapely LineString/MultiLineString (z-coord is stripped if present).</span>
 <span class="sd">        width_scaling_col : str, optional</span>
 <span class="sd">            Column used to scale line widths (numeric). If None, uses `attribute`</span>
 <span class="sd">            if provided; otherwise constant width.</span>
@@ -172,7 +172,7 @@
 <span class="sd">        colors : tuple[str, str], optional</span>
 <span class="sd">            Two colors to build a linear segmented colormap.</span>
 <span class="sd">        legend_fmt : str, optional</span>
-<span class="sd">            Legend label format, default: f&quot;{color_col} {{:.4f}}&quot;.</span>
+<span class="sd">            Legend label format, default: f"{color_col} {{:.4f}}".</span>
 <span class="sd">        legend_values : list[float], optional</span>
 <span class="sd">            Explicit legend tick values; default: 5 linear steps.</span>
 <span class="sd">        width_vmin, width_vmin : float, optional</span>
@@ -189,7 +189,7 @@
 <span class="sd">            If True and a color scaling column is active, draw the numeric color</span>
 <span class="sd">            value next to each element using its mapped color.</span>
 <span class="sd">        value_label_fmt : str, optional</span>
-<span class="sd">            Format string used for value labels, default &quot;{:.4f}&quot;.</span>
+<span class="sd">            Format string used for value labels, default "{:.4f}".</span>
 <span class="sd">        value_label_fontsize : float, optional</span>
 <span class="sd">            Font size for value labels, default 8.0.</span>
 <span class="sd">        value_label_offset : tuple[float, float], optional</span>
@@ -199,17 +199,17 @@
 <span class="sd">        -------</span>
 <span class="sd">        list[matplotlib.patches.Patch] or None</span>
 <span class="sd">            Legend patches based on the color scaling column; None if constant color.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[plot] Plotting pipes (width=&#39;</span><span class="si">{</span><span class="n">width_scaling_col</span><span class="si">}</span><span class="s2">&#39;, color=&#39;</span><span class="si">{</span><span class="n">color_mixing_col</span><span class="si">}</span><span class="s2">&#39;, attr=&#39;</span><span class="si">{</span><span class="n">attribute</span><span class="si">}</span><span class="s2">&#39;)&quot;</span><span class="p">)</span>
+<span class="sd">        """</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"[plot] Plotting pipes (width='</span><span class="si">{</span><span class="n">width_scaling_col</span><span class="si">}</span><span class="s2">', color='</span><span class="si">{</span><span class="n">color_mixing_col</span><span class="si">}</span><span class="s2">', attr='</span><span class="si">{</span><span class="n">attribute</span><span class="si">}</span><span class="s2">')"</span><span class="p">)</span>
 
         <span class="n">ax</span> <span class="o">=</span> <span class="n">ax</span> <span class="ow">or</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">gdf</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">gdf</span><span class="p">,</span> <span class="s1">&#39;empty&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span> <span class="ow">or</span> <span class="s1">&#39;geometry&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">gdf</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;[plot] Pipes: missing data or geometry column.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">gdf</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">gdf</span><span class="p">,</span> <span class="s1">'empty'</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span> <span class="ow">or</span> <span class="s1">'geometry'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">gdf</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">"[plot] Pipes: missing data or geometry column."</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">None</span>
 
         <span class="n">df</span> <span class="o">=</span> <span class="n">gdf</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">query</span><span class="p">)</span> <span class="k">if</span> <span class="n">query</span> <span class="k">else</span> <span class="n">gdf</span>
         <span class="k">if</span> <span class="n">df</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;[plot] Pipes: filtered dataframe is empty.&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">"[plot] Pipes: filtered dataframe is empty."</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">None</span>
 
         <span class="c1"># --- WIDTH SCALING ---</span>
@@ -218,7 +218,7 @@
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">a_w</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">width_col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[plot] Pipes: width column &#39;</span><span class="si">{</span><span class="n">width_col</span><span class="si">}</span><span class="s2">&#39; not numeric or missing. </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">"[plot] Pipes: width column '</span><span class="si">{</span><span class="n">width_col</span><span class="si">}</span><span class="s2">' not numeric or missing. </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
                 <span class="k">return</span> <span class="kc">None</span>
             <span class="n">vmin_w</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">width_vmin</span><span class="p">)</span> <span class="k">if</span> <span class="n">width_vmin</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">a_w</span><span class="p">))</span>
             <span class="n">vmax_w</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">width_vmax</span><span class="p">)</span> <span class="k">if</span> <span class="n">width_vmax</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">a_w</span><span class="p">))</span>
@@ -232,14 +232,14 @@
 
         <span class="c1"># --- COLOR SCALING ---</span>
         <span class="n">color_col</span> <span class="o">=</span> <span class="n">color_mixing_col</span> <span class="ow">or</span> <span class="n">attribute</span>
-        <span class="n">cmap</span> <span class="o">=</span> <span class="n">mcolors</span><span class="o">.</span><span class="n">LinearSegmentedColormap</span><span class="o">.</span><span class="n">from_list</span><span class="p">(</span><span class="s1">&#39;cmap&#39;</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">colors</span><span class="p">),</span> <span class="n">N</span><span class="o">=</span><span class="mi">256</span><span class="p">)</span>
+        <span class="n">cmap</span> <span class="o">=</span> <span class="n">mcolors</span><span class="o">.</span><span class="n">LinearSegmentedColormap</span><span class="o">.</span><span class="n">from_list</span><span class="p">(</span><span class="s1">'cmap'</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">colors</span><span class="p">),</span> <span class="n">N</span><span class="o">=</span><span class="mi">256</span><span class="p">)</span>
         <span class="n">patches</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="n">a_c</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="n">color_col</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">a_c</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">color_col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[plot] Pipes: color column &#39;</span><span class="si">{</span><span class="n">color_col</span><span class="si">}</span><span class="s2">&#39; not numeric or missing. </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">"[plot] Pipes: color column '</span><span class="si">{</span><span class="n">color_col</span><span class="si">}</span><span class="s2">' not numeric or missing. </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
                 <span class="k">return</span> <span class="kc">None</span>
             <span class="n">vmin_c</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">color_vmin</span><span class="p">)</span> <span class="k">if</span> <span class="n">color_vmin</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">a_c</span><span class="p">))</span>
             <span class="n">vmax_c</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">color_vmax</span><span class="p">)</span> <span class="k">if</span> <span class="n">color_vmax</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">a_c</span><span class="p">))</span>
@@ -247,7 +247,7 @@
                 <span class="n">vmax_c</span> <span class="o">=</span> <span class="n">vmin_c</span> <span class="o">+</span> <span class="mf">1e-12</span>
             <span class="n">norm_c</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">Normalize</span><span class="p">(</span><span class="n">vmin</span><span class="o">=</span><span class="n">vmin_c</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax_c</span><span class="p">)</span>
             <span class="n">colors_full</span> <span class="o">=</span> <span class="n">cmap</span><span class="p">(</span><span class="n">norm_c</span><span class="p">(</span><span class="n">a_c</span><span class="p">))</span>
-            <span class="n">legend_fmt</span> <span class="o">=</span> <span class="n">legend_fmt</span> <span class="ow">or</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">color_col</span><span class="si">}</span><span class="s2"> </span><span class="se">{{</span><span class="s2">:.4f</span><span class="se">}}</span><span class="s2">&quot;</span>
+            <span class="n">legend_fmt</span> <span class="o">=</span> <span class="n">legend_fmt</span> <span class="ow">or</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">color_col</span><span class="si">}</span><span class="s2"> </span><span class="se">{{</span><span class="s2">:.4f</span><span class="se">}}</span><span class="s2">"</span>
             <span class="n">vals</span> <span class="o">=</span> <span class="n">legend_values</span> <span class="k">if</span> <span class="n">legend_values</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">vmin_c</span><span class="p">,</span> <span class="n">vmax_c</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
             <span class="n">patches</span> <span class="o">=</span> <span class="p">[</span><span class="n">mpatches</span><span class="o">.</span><span class="n">Patch</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">cmap</span><span class="p">(</span><span class="n">norm_c</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">v</span><span class="p">))),</span> <span class="n">label</span><span class="o">=</span><span class="n">legend_fmt</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">v</span><span class="p">)))</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">vals</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
@@ -256,15 +256,15 @@
         <span class="c1"># --- BUILD SEGMENTS ---</span>
         <span class="n">segs</span><span class="p">,</span> <span class="n">cols</span><span class="p">,</span> <span class="n">lw</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
         <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">geom</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]):</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">geom</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'geometry'</span><span class="p">]):</span>
             <span class="k">if</span> <span class="n">geom</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">continue</span>
 
-            <span class="n">gt</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">geom</span><span class="p">,</span> <span class="s1">&#39;geom_type&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">gt</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">geom</span><span class="p">,</span> <span class="s1">'geom_type'</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
             <span class="n">col</span> <span class="o">=</span> <span class="n">colors_full</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">if</span> <span class="n">colors_full</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">mcolors</span><span class="o">.</span><span class="n">to_rgba</span><span class="p">(</span><span class="n">colors</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
             <span class="n">w</span>   <span class="o">=</span> <span class="n">widths_full</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">if</span> <span class="n">widths_full</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">float</span><span class="p">(</span><span class="n">line_width_factor</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.5</span>
 
-        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">geom</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]):</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">geom</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'geometry'</span><span class="p">]):</span>
             <span class="k">if</span> <span class="n">geom</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">continue</span>
 
@@ -274,13 +274,13 @@
             <span class="n">col</span> <span class="o">=</span> <span class="n">colors_full</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">if</span> <span class="n">colors_full</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">mcolors</span><span class="o">.</span><span class="n">to_rgba</span><span class="p">(</span><span class="n">colors</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
             <span class="n">w</span>   <span class="o">=</span> <span class="n">widths_full</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">if</span> <span class="n">widths_full</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">float</span><span class="p">(</span><span class="n">line_width_factor</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.5</span>
 
-            <span class="k">if</span> <span class="n">gt</span> <span class="o">==</span> <span class="s1">&#39;LineString&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">gt</span> <span class="o">==</span> <span class="s1">'LineString'</span><span class="p">:</span>
                 <span class="n">segs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">geom2</span><span class="o">.</span><span class="n">coords</span><span class="p">))</span>
                 <span class="n">cols</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
                 <span class="n">lw</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
                 <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
 
-            <span class="k">elif</span> <span class="n">gt</span> <span class="o">==</span> <span class="s1">&#39;MultiLineString&#39;</span><span class="p">:</span>
+            <span class="k">elif</span> <span class="n">gt</span> <span class="o">==</span> <span class="s1">'MultiLineString'</span><span class="p">:</span>
                 <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="n">geom2</span><span class="o">.</span><span class="n">geoms</span><span class="p">:</span>
                     <span class="n">segs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">part</span><span class="o">.</span><span class="n">coords</span><span class="p">))</span>
                     <span class="n">cols</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
@@ -289,9 +289,9 @@
 
             <span class="k">if</span> <span class="n">show_value_labels</span> <span class="ow">and</span> <span class="n">color_col</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">a_c</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">anchor</span> <span class="o">=</span> <span class="kc">None</span>
-                <span class="k">if</span> <span class="n">gt</span> <span class="o">==</span> <span class="s1">&#39;LineString&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">gt</span> <span class="o">==</span> <span class="s1">'LineString'</span><span class="p">:</span>
                     <span class="n">anchor</span> <span class="o">=</span> <span class="n">geom2</span><span class="o">.</span><span class="n">interpolate</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">normalized</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-                <span class="k">elif</span> <span class="n">gt</span> <span class="o">==</span> <span class="s1">&#39;MultiLineString&#39;</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">geom2</span><span class="o">.</span><span class="n">geoms</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">elif</span> <span class="n">gt</span> <span class="o">==</span> <span class="s1">'MultiLineString'</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">geom2</span><span class="o">.</span><span class="n">geoms</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
                     <span class="n">longest</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">geom2</span><span class="o">.</span><span class="n">geoms</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">part</span><span class="p">:</span> <span class="n">part</span><span class="o">.</span><span class="n">length</span><span class="p">)</span>
                     <span class="n">anchor</span> <span class="o">=</span> <span class="n">longest</span><span class="o">.</span><span class="n">interpolate</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">normalized</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
@@ -304,20 +304,20 @@
                         <span class="n">label</span><span class="p">,</span>
                         <span class="p">(</span><span class="n">anchor</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">anchor</span><span class="o">.</span><span class="n">y</span><span class="p">),</span>
                         <span class="n">xytext</span><span class="o">=</span><span class="n">value_label_offset</span><span class="p">,</span>
-                        <span class="n">textcoords</span><span class="o">=</span><span class="s1">&#39;offset points&#39;</span><span class="p">,</span>
+                        <span class="n">textcoords</span><span class="o">=</span><span class="s1">'offset points'</span><span class="p">,</span>
                         <span class="n">color</span><span class="o">=</span><span class="n">col</span><span class="p">,</span>
                         <span class="n">fontsize</span><span class="o">=</span><span class="n">value_label_fontsize</span><span class="p">,</span>
                         <span class="n">zorder</span><span class="o">=</span><span class="p">(</span><span class="n">zorder</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="n">zorder</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
                     <span class="p">)</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">segs</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;[plot] Pipes: no line geometries found.&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">"[plot] Pipes: no line geometries found."</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">None</span>
 
         <span class="n">lc</span> <span class="o">=</span> <span class="n">LineCollection</span><span class="p">(</span><span class="n">segs</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="n">cols</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="n">lw</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="n">zorder</span><span class="p">)</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">add_collection</span><span class="p">(</span><span class="n">lc</span><span class="p">);</span> <span class="n">ax</span><span class="o">.</span><span class="n">autoscale_view</span><span class="p">()</span>
 
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[plot] Pipes: plotted </span><span class="si">{</span><span class="n">count</span><span class="si">}</span><span class="s2"> segments.&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"[plot] Pipes: plotted </span><span class="si">{</span><span class="n">count</span><span class="si">}</span><span class="s2"> segments."</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">patches</span></div>
 
 
@@ -332,7 +332,7 @@
         <span class="n">color_mixing_col</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">attribute</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="c1"># visual params</span>
-        <span class="n">colors</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;darkgreen&#39;</span><span class="p">,</span> <span class="s1">&#39;magenta&#39;</span><span class="p">),</span>
+        <span class="n">colors</span><span class="o">=</span><span class="p">(</span><span class="s1">'darkgreen'</span><span class="p">,</span> <span class="s1">'magenta'</span><span class="p">),</span>
         <span class="n">legend_fmt</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">legend_values</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="c1"># independent norms</span>
@@ -342,15 +342,15 @@
         <span class="n">color_vmax</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="c1"># filtering &amp; styling</span>
         <span class="n">query</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">marker_style</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span>
+        <span class="n">marker_style</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">'o'</span><span class="p">,</span>
         <span class="n">marker_size_factor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1000.0</span><span class="p">,</span>
         <span class="n">zorder</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">show_value_labels</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-        <span class="n">value_label_fmt</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{:.4f}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">value_label_fmt</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"</span><span class="si">{:.4f}</span><span class="s2">"</span><span class="p">,</span>
         <span class="n">value_label_fontsize</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">8.0</span><span class="p">,</span>
         <span class="n">value_label_offset</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">),</span>
     <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Plot point nodes with separate size and color scaling.</span>
 
 <span class="sd">        Parameters</span>
@@ -358,7 +358,7 @@
 <span class="sd">        ax : matplotlib.axes.Axes, optional</span>
 <span class="sd">            Axis to plot into. If None, uses current axes (plt.gca()).</span>
 <span class="sd">        gdf : pandas.DataFrame or geopandas.GeoDataFrame</span>
-<span class="sd">            Input with a &#39;geometry&#39; column of shapely geometries (z-coord is stripped if present).</span>
+<span class="sd">            Input with a 'geometry' column of shapely geometries (z-coord is stripped if present).</span>
 <span class="sd">        size_scaling_col : str, optional</span>
 <span class="sd">            Column used to scale marker sizes (numeric). If None, uses `attribute`</span>
 <span class="sd">            if provided; otherwise constant size.</span>
@@ -371,7 +371,7 @@
 <span class="sd">        colors : tuple[str, str], optional</span>
 <span class="sd">            Two colors to build a linear segmented colormap.</span>
 <span class="sd">        legend_fmt : str, optional</span>
-<span class="sd">            Legend label format, default: f&quot;{color_col} {{:.4f}}&quot;.</span>
+<span class="sd">            Legend label format, default: f"{color_col} {{:.4f}}".</span>
 <span class="sd">        legend_values : list[float], optional</span>
 <span class="sd">            Explicit legend tick values; default: 5 linear steps.</span>
 <span class="sd">        size_vmin, size_vmax : float, optional</span>
@@ -381,7 +381,7 @@
 <span class="sd">        query : str, optional</span>
 <span class="sd">            Pandas query string to filter rows before plotting.</span>
 <span class="sd">        marker_style : str, optional</span>
-<span class="sd">            Matplotlib marker style, default &#39;o&#39;.</span>
+<span class="sd">            Matplotlib marker style, default 'o'.</span>
 <span class="sd">        marker_size_factor : float, optional</span>
 <span class="sd">            Factor applied after size normalization, default 1000.0.</span>
 <span class="sd">        zorder : float, optional</span>
@@ -390,7 +390,7 @@
 <span class="sd">            If True and a color scaling column is active, draw the numeric color</span>
 <span class="sd">            value next to each point using its mapped color.</span>
 <span class="sd">        value_label_fmt : str, optional</span>
-<span class="sd">            Format string used for value labels, default &quot;{:.4f}&quot;.</span>
+<span class="sd">            Format string used for value labels, default "{:.4f}".</span>
 <span class="sd">        value_label_fontsize : float, optional</span>
 <span class="sd">            Font size for value labels, default 8.0.</span>
 <span class="sd">        value_label_offset : tuple[float, float], optional</span>
@@ -400,24 +400,24 @@
 <span class="sd">        -------</span>
 <span class="sd">        list[matplotlib.patches.Patch] or None</span>
 <span class="sd">            Legend patches based on the color scaling column; None if constant color.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[plot] Plotting nodes (size=&#39;</span><span class="si">{</span><span class="n">size_scaling_col</span><span class="si">}</span><span class="s2">&#39;, color=&#39;</span><span class="si">{</span><span class="n">color_mixing_col</span><span class="si">}</span><span class="s2">&#39;, attr=&#39;</span><span class="si">{</span><span class="n">attribute</span><span class="si">}</span><span class="s2">&#39;)&quot;</span><span class="p">)</span>
+<span class="sd">        """</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"[plot] Plotting nodes (size='</span><span class="si">{</span><span class="n">size_scaling_col</span><span class="si">}</span><span class="s2">', color='</span><span class="si">{</span><span class="n">color_mixing_col</span><span class="si">}</span><span class="s2">', attr='</span><span class="si">{</span><span class="n">attribute</span><span class="si">}</span><span class="s2">')"</span><span class="p">)</span>
 
         <span class="n">ax</span> <span class="o">=</span> <span class="n">ax</span> <span class="ow">or</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">gdf</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">gdf</span><span class="p">,</span> <span class="s1">&#39;empty&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span> <span class="ow">or</span> <span class="s1">&#39;geometry&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">gdf</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;[plot] Nodes: missing data or geometry column.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">gdf</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">gdf</span><span class="p">,</span> <span class="s1">'empty'</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span> <span class="ow">or</span> <span class="s1">'geometry'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">gdf</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">"[plot] Nodes: missing data or geometry column."</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">None</span>
 
         <span class="n">df</span> <span class="o">=</span> <span class="n">gdf</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">query</span><span class="p">)</span> <span class="k">if</span> <span class="n">query</span> <span class="k">else</span> <span class="n">gdf</span>
         <span class="k">if</span> <span class="n">df</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;[plot] Nodes: filtered dataframe is empty.&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">"[plot] Nodes: filtered dataframe is empty."</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">None</span>
         
-        <span class="n">geoms</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__to_2d_geom</span><span class="p">)</span>
+        <span class="n">geoms</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'geometry'</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__to_2d_geom</span><span class="p">)</span>
 
-        <span class="n">is_point</span> <span class="o">=</span> <span class="n">geoms</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">g</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="s2">&quot;geom_type&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;Point&quot;</span><span class="p">)</span>
+        <span class="n">is_point</span> <span class="o">=</span> <span class="n">geoms</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">g</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="s2">"geom_type"</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="o">==</span> <span class="s2">"Point"</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">is_point</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;[plot] Nodes: no Point geometries found.&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">"[plot] Nodes: no Point geometries found."</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">None</span>
         
         <span class="c1"># --- SIZE SCALING ---</span>
@@ -426,7 +426,7 @@
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">a_size</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">is_point</span><span class="p">,</span> <span class="n">size_col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[plot] Nodes: size column &#39;</span><span class="si">{</span><span class="n">size_col</span><span class="si">}</span><span class="s2">&#39; not numeric or missing. </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">"[plot] Nodes: size column '</span><span class="si">{</span><span class="n">size_col</span><span class="si">}</span><span class="s2">' not numeric or missing. </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
                 <span class="k">return</span> <span class="kc">None</span>
             <span class="n">vmin_s</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">size_vmin</span><span class="p">)</span> <span class="k">if</span> <span class="n">size_vmin</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">a_size</span><span class="p">))</span>
             <span class="n">vmax_s</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">size_vmax</span><span class="p">)</span> <span class="k">if</span> <span class="n">size_vmax</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">a_size</span><span class="p">))</span>
@@ -439,13 +439,13 @@
 
         <span class="c1"># --- COLOR SCALING ---</span>
         <span class="n">color_col</span> <span class="o">=</span> <span class="n">color_mixing_col</span> <span class="ow">or</span> <span class="n">attribute</span>
-        <span class="n">cmap</span> <span class="o">=</span> <span class="n">mcolors</span><span class="o">.</span><span class="n">LinearSegmentedColormap</span><span class="o">.</span><span class="n">from_list</span><span class="p">(</span><span class="s1">&#39;cmap&#39;</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">colors</span><span class="p">),</span> <span class="n">N</span><span class="o">=</span><span class="mi">256</span><span class="p">)</span>
+        <span class="n">cmap</span> <span class="o">=</span> <span class="n">mcolors</span><span class="o">.</span><span class="n">LinearSegmentedColormap</span><span class="o">.</span><span class="n">from_list</span><span class="p">(</span><span class="s1">'cmap'</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">colors</span><span class="p">),</span> <span class="n">N</span><span class="o">=</span><span class="mi">256</span><span class="p">)</span>
         <span class="n">patches</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="n">color_col</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">a_col</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">is_point</span><span class="p">,</span> <span class="n">color_col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[plot] Nodes: color column &#39;</span><span class="si">{</span><span class="n">color_col</span><span class="si">}</span><span class="s2">&#39; not numeric or missing. </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">"[plot] Nodes: color column '</span><span class="si">{</span><span class="n">color_col</span><span class="si">}</span><span class="s2">' not numeric or missing. </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
                 <span class="k">return</span> <span class="kc">None</span>
             <span class="n">vmin_c</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">color_vmin</span><span class="p">)</span> <span class="k">if</span> <span class="n">color_vmin</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">a_col</span><span class="p">))</span>
             <span class="n">vmax_c</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">color_vmax</span><span class="p">)</span> <span class="k">if</span> <span class="n">color_vmax</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">a_col</span><span class="p">))</span>
@@ -454,7 +454,7 @@
             <span class="n">norm_c</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">Normalize</span><span class="p">(</span><span class="n">vmin</span><span class="o">=</span><span class="n">vmin_c</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax_c</span><span class="p">)</span>
             <span class="n">colors_arr</span> <span class="o">=</span> <span class="n">cmap</span><span class="p">(</span><span class="n">norm_c</span><span class="p">(</span><span class="n">a_col</span><span class="p">))</span>
             <span class="c1"># Legend only for color scaling</span>
-            <span class="n">legend_fmt</span> <span class="o">=</span> <span class="n">legend_fmt</span> <span class="ow">or</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">color_col</span><span class="si">}</span><span class="s2"> </span><span class="se">{{</span><span class="s2">:.4f</span><span class="se">}}</span><span class="s2">&quot;</span>
+            <span class="n">legend_fmt</span> <span class="o">=</span> <span class="n">legend_fmt</span> <span class="ow">or</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">color_col</span><span class="si">}</span><span class="s2"> </span><span class="se">{{</span><span class="s2">:.4f</span><span class="se">}}</span><span class="s2">"</span>
             <span class="n">vals</span> <span class="o">=</span> <span class="n">legend_values</span> <span class="k">if</span> <span class="n">legend_values</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">vmin_c</span><span class="p">,</span> <span class="n">vmax_c</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
             <span class="n">patches</span> <span class="o">=</span> <span class="p">[</span><span class="n">mpatches</span><span class="o">.</span><span class="n">Patch</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">cmap</span><span class="p">(</span><span class="n">norm_c</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">v</span><span class="p">))),</span> <span class="n">label</span><span class="o">=</span><span class="n">legend_fmt</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">v</span><span class="p">)))</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">vals</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
@@ -476,13 +476,13 @@
                     <span class="n">label</span><span class="p">,</span>
                     <span class="p">(</span><span class="n">geom</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">geom</span><span class="o">.</span><span class="n">y</span><span class="p">),</span>
                     <span class="n">xytext</span><span class="o">=</span><span class="n">value_label_offset</span><span class="p">,</span>
-                    <span class="n">textcoords</span><span class="o">=</span><span class="s1">&#39;offset points&#39;</span><span class="p">,</span>
+                    <span class="n">textcoords</span><span class="o">=</span><span class="s1">'offset points'</span><span class="p">,</span>
                     <span class="n">color</span><span class="o">=</span><span class="n">col</span><span class="p">,</span>
                     <span class="n">fontsize</span><span class="o">=</span><span class="n">value_label_fontsize</span><span class="p">,</span>
                     <span class="n">zorder</span><span class="o">=</span><span class="p">(</span><span class="n">zorder</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="n">zorder</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
                 <span class="p">)</span>
 
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[plot] Nodes: plotted </span><span class="si">{</span><span class="n">is_point</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s2"> points.&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"[plot] Nodes: plotted </span><span class="si">{</span><span class="n">is_point</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s2"> points."</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">patches</span></div>
 
 
@@ -507,25 +507,25 @@
         <span class="n">linestyles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="n">legend_fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
-        <span class="n">legend_loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">,</span>
+        <span class="n">legend_loc</span><span class="o">=</span><span class="s2">"upper left"</span><span class="p">,</span>
         <span class="n">legend_coords</span><span class="o">=</span><span class="p">(</span><span class="mf">0.67</span><span class="p">,</span> <span class="mf">0.33</span><span class="p">),</span>
         <span class="n">legend_in_figure</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">missing</span><span class="o">=</span><span class="s2">&quot;skip&quot;</span><span class="p">,</span>
+        <span class="n">missing</span><span class="o">=</span><span class="s2">"skip"</span><span class="p">,</span>
         <span class="n">normalize</span><span class="o">=</span><span class="nb">str</span><span class="o">.</span><span class="n">upper</span><span class="p">,</span>
         <span class="n">aliases</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">title_prefix</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">title_prefix</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span>
         <span class="n">show_title</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="n">rotate_xticks</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
         <span class="n">grid</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">grid_style</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span>
+        <span class="n">grid_style</span><span class="o">=</span><span class="s2">"--"</span><span class="p">,</span>
         <span class="n">grid_alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span>
         <span class="n">logger</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Plot multiple properties using multiple y-axes (all on the left).</span>
 <span class="sd">        Optionally restrict which TKs are plotted for each property.</span>
 
-<span class="sd">        Legend labels are &quot;PROPERTY NAME&quot;.</span>
+<span class="sd">        Legend labels are "PROPERTY NAME".</span>
 
 <span class="sd">        Tick/grid separation:</span>
 <span class="sd">        - Labeled ticks come from major ticks (x_label_ticks, y_label_ticks)</span>
@@ -533,7 +533,7 @@
 <span class="sd">        - Horizontal grid is based on the first y-axis (axis 0)</span>
 
 <span class="sd">        :param df: Input DataFrame with MultiIndex columns (from s3s.generate_element_results_dataframe()). Level 0 must represent TK/group; last level must represent property.</span>
-<span class="sd">                A column level named &quot;name&quot; is used for legend labels if present.</span>
+<span class="sd">                A column level named "name" is used for legend labels if present.</span>
 <span class="sd">        :type df: pandas.DataFrame</span>
 <span class="sd">        :param start: Start timestamp (inclusive) for slicing and x-axis limits. If None, uses first timestamp in df.</span>
 <span class="sd">        :type start: Any</span>
@@ -541,7 +541,7 @@
 <span class="sd">        :type end: Any</span>
 <span class="sd">        :param properties: List of property names to plot (matched against the last MultiIndex level). If None, plots all properties found.</span>
 <span class="sd">        :type properties: list[str] | None</span>
-<span class="sd">        :param axis_labels: List of y-axis labels corresponding to properties. If None, uses &quot;property=&lt;name&gt;&quot;.</span>
+<span class="sd">        :param axis_labels: List of y-axis labels corresponding to properties. If None, uses "property=&lt;name&gt;".</span>
 <span class="sd">        :type axis_labels: list[str] | None</span>
 <span class="sd">        :param ylims: List of y-limits tuples per property axis, e.g. [(0, 12), (0, 40), (0, 60)]. Use None entries to keep autoscale.</span>
 <span class="sd">        :type ylims: list[tuple[float, float] | None] | None</span>
@@ -559,23 +559,23 @@
 <span class="sd">        :type figsize: tuple[int, int]</span>
 <span class="sd">        :param axis_offset: Outward offset (in points) between stacked left-side y-axes.</span>
 <span class="sd">        :type axis_offset: int</span>
-<span class="sd">        :param linestyles: List of linestyles used per property (cycled if shorter than properties). Default cycles [&quot;-&quot;,&quot;--&quot;,&quot;:&quot;,&quot;-.&quot;].</span>
+<span class="sd">        :param linestyles: List of linestyles used per property (cycled if shorter than properties). Default cycles ["-","--",":","-."].</span>
 <span class="sd">        :type linestyles: list[str] | None</span>
 <span class="sd">        :param legend: Whether to draw a legend.</span>
 <span class="sd">        :type legend: bool</span>
 <span class="sd">        :param legend_fontsize: Legend font size.</span>
 <span class="sd">        :type legend_fontsize: int | float</span>
-<span class="sd">        :param legend_loc: Legend location argument passed to matplotlib (e.g. &quot;upper left&quot;).</span>
+<span class="sd">        :param legend_loc: Legend location argument passed to matplotlib (e.g. "upper left").</span>
 <span class="sd">        :type legend_loc: str</span>
 <span class="sd">        :param legend_coords: Legend anchor coordinates passed as bbox_to_anchor.</span>
 <span class="sd">        :type legend_coords: tuple[float, float]</span>
 <span class="sd">        :param legend_in_figure: If True, uses fig.legend(...) (more robust for multiple twinx axes). If False, uses ax0.legend(...).</span>
 <span class="sd">        :type legend_in_figure: bool</span>
-<span class="sd">        :param missing: Policy if a requested property yields no plotted lines after filtering: &quot;skip&quot;, &quot;warn&quot;, or &quot;error&quot;.</span>
+<span class="sd">        :param missing: Policy if a requested property yields no plotted lines after filtering: "skip", "warn", or "error".</span>
 <span class="sd">        :type missing: str</span>
 <span class="sd">        :param normalize: Function applied to property strings for robust matching (e.g. str.upper).</span>
 <span class="sd">        :type normalize: callable</span>
-<span class="sd">        :param aliases: Mapping applied after normalization to unify names (e.g. {&quot;PHI&quot;: &quot;PH&quot;}). Keys/values must be normalized form.</span>
+<span class="sd">        :param aliases: Mapping applied after normalization to unify names (e.g. {"PHI": "PH"}). Keys/values must be normalized form.</span>
 <span class="sd">        :type aliases: dict[str, str] | None</span>
 <span class="sd">        :param title_prefix: Optional text prepended to the timeframe title.</span>
 <span class="sd">        :type title_prefix: str</span>
@@ -589,30 +589,30 @@
 <span class="sd">        :type grid_style: str</span>
 <span class="sd">        :param grid_alpha: Alpha for grid lines.</span>
 <span class="sd">        :type grid_alpha: float</span>
-<span class="sd">        :param logger: Optional logger with .info/.warning methods. If provided, logs are prefixed with &quot;[time curves]&quot;.</span>
+<span class="sd">        :param logger: Optional logger with .info/.warning methods. If provided, logs are prefixed with "[time curves]".</span>
 <span class="sd">        :type logger: Any</span>
 <span class="sd">        :return: (fig, axes, used_properties) where axes is a list of axes (one per property), and used_properties are normalized properties used.</span>
 <span class="sd">        :rtype: tuple[matplotlib.figure.Figure, list[matplotlib.axes.Axes], list[str]]</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
 
         <span class="c1"># -------------------------------------------------------------------------</span>
         <span class="c1"># Logging helpers</span>
         <span class="c1"># -------------------------------------------------------------------------</span>
         <span class="k">def</span><span class="w"> </span><span class="nf">_log_info</span><span class="p">(</span><span class="n">msg</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">logger</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[time curves] </span><span class="si">{</span><span class="n">msg</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"[time curves] </span><span class="si">{</span><span class="n">msg</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
         <span class="k">def</span><span class="w"> </span><span class="nf">_log_warn</span><span class="p">(</span><span class="n">msg</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">logger</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">logger</span><span class="p">,</span> <span class="s2">&quot;warning&quot;</span><span class="p">):</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[time curves] </span><span class="si">{</span><span class="n">msg</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">logger</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">logger</span><span class="p">,</span> <span class="s2">"warning"</span><span class="p">):</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">"[time curves] </span><span class="si">{</span><span class="n">msg</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
             <span class="k">elif</span> <span class="n">logger</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[time curves] </span><span class="si">{</span><span class="n">msg</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"[time curves] </span><span class="si">{</span><span class="n">msg</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
         <span class="c1"># -------------------------------------------------------------------------</span>
         <span class="c1"># Input validation + index normalization</span>
         <span class="c1"># -------------------------------------------------------------------------</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">MultiIndex</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;DataFrame must have MultiIndex columns.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"DataFrame must have MultiIndex columns."</span><span class="p">)</span>
 
         <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
@@ -620,7 +620,7 @@
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">df</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Index must be convertible to DateTimeIndex.&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Index must be convertible to DateTimeIndex."</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
 
         <span class="c1"># -------------------------------------------------------------------------</span>
         <span class="c1"># Time-window slicing and exact x-limits</span>
@@ -632,21 +632,21 @@
             <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">start_ts</span><span class="p">:</span><span class="n">end_ts</span><span class="p">]</span>
 
         <span class="k">if</span> <span class="n">df</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No data available in the requested start/end window.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"No data available in the requested start/end window."</span><span class="p">)</span>
 
         <span class="n">x_start</span> <span class="o">=</span> <span class="n">start_ts</span> <span class="k">if</span> <span class="n">start_ts</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
         <span class="n">x_end</span> <span class="o">=</span> <span class="n">end_ts</span> <span class="k">if</span> <span class="n">end_ts</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">x_start</span> <span class="o">&gt;</span> <span class="n">x_end</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;start must be &lt;= end.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"start must be &lt;= end."</span><span class="p">)</span>
 
-        <span class="n">_log_info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Plot window: </span><span class="si">{</span><span class="n">x_start</span><span class="si">}</span><span class="s2"> .. </span><span class="si">{</span><span class="n">x_end</span><span class="si">}</span><span class="s2"> (rows=</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+        <span class="n">_log_info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Plot window: </span><span class="si">{</span><span class="n">x_start</span><span class="si">}</span><span class="s2"> .. </span><span class="si">{</span><span class="n">x_end</span><span class="si">}</span><span class="s2"> (rows=</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
 
         <span class="c1"># -------------------------------------------------------------------------</span>
         <span class="c1"># Column level names and property normalization</span>
         <span class="c1"># -------------------------------------------------------------------------</span>
-        <span class="n">top_level_name</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">names</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">or</span> <span class="s2">&quot;TK&quot;</span>
-        <span class="n">last_level_name</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">names</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="ow">or</span> <span class="s2">&quot;property&quot;</span>
-        <span class="n">index_label</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="ow">or</span> <span class="s2">&quot;time&quot;</span>
+        <span class="n">top_level_name</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">names</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">or</span> <span class="s2">"TK"</span>
+        <span class="n">last_level_name</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">names</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="ow">or</span> <span class="s2">"property"</span>
+        <span class="n">index_label</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="ow">or</span> <span class="s2">"time"</span>
 
         <span class="k">def</span><span class="w"> </span><span class="nf">norm_prop</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
             <span class="n">s2</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">s</span><span class="p">))</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
@@ -664,31 +664,31 @@
 
         <span class="n">n_props</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">used_properties</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">n_props</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No properties to plot.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"No properties to plot."</span><span class="p">)</span>
 
         <span class="c1"># -------------------------------------------------------------------------</span>
         <span class="c1"># Axis labels and limits</span>
         <span class="c1"># -------------------------------------------------------------------------</span>
         <span class="k">if</span> <span class="n">axis_labels</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">used_axis_labels</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">last_level_name</span><span class="si">}</span><span class="s2">=</span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">used_properties</span><span class="p">]</span>
+            <span class="n">used_axis_labels</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">last_level_name</span><span class="si">}</span><span class="s2">=</span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">used_properties</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">axis_labels</span><span class="p">)</span> <span class="o">!=</span> <span class="n">n_props</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;axis_labels must have same length as properties.&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"axis_labels must have same length as properties."</span><span class="p">)</span>
             <span class="n">used_axis_labels</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">axis_labels</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">ylims</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ylims</span><span class="p">)</span> <span class="o">!=</span> <span class="n">n_props</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;ylims must have same length as properties (or be None).&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"ylims must have same length as properties (or be None)."</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">lim</span> <span class="ow">in</span> <span class="n">ylims</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">lim</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">lim</span><span class="p">,</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">list</span><span class="p">))</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">lim</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">):</span>
-                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Each ylims entry must be (ymin, ymax) or None.&quot;</span><span class="p">)</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Each ylims entry must be (ymin, ymax) or None."</span><span class="p">)</span>
 
         <span class="c1"># -------------------------------------------------------------------------</span>
         <span class="c1"># Per-property TK allow-lists</span>
         <span class="c1"># -------------------------------------------------------------------------</span>
         <span class="k">if</span> <span class="n">tks_per_property</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tks_per_property</span><span class="p">)</span> <span class="o">!=</span> <span class="n">n_props</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;tks_per_property must have same length as properties (or be None).&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"tks_per_property must have same length as properties (or be None)."</span><span class="p">)</span>
             <span class="n">allowed_tks_sets</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="k">for</span> <span class="n">allow</span> <span class="ow">in</span> <span class="n">tks_per_property</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">allow</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -704,24 +704,24 @@
         <span class="c1"># -------------------------------------------------------------------------</span>
         <span class="k">if</span> <span class="n">y_label_ticks</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_label_ticks</span><span class="p">)</span> <span class="o">!=</span> <span class="n">n_props</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;y_label_ticks must have same length as properties (or be None).&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"y_label_ticks must have same length as properties (or be None)."</span><span class="p">)</span>
             <span class="k">if</span> <span class="nb">any</span><span class="p">((</span><span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">or</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">y_label_ticks</span><span class="p">):</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Each y_label_ticks entry must be an int &gt;= 2.&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Each y_label_ticks entry must be an int &gt;= 2."</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">y_grid_ticks</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">y_grid_ticks</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">or</span> <span class="n">y_grid_ticks</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;y_grid_ticks must be an int &gt;= 2 (or None).&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"y_grid_ticks must be an int &gt;= 2 (or None)."</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">x_label_ticks</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x_label_ticks</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">or</span> <span class="n">x_label_ticks</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;x_label_ticks must be an int &gt;= 2 (or None).&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"x_label_ticks must be an int &gt;= 2 (or None)."</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">x_grid_ticks</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x_grid_ticks</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">or</span> <span class="n">x_grid_ticks</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;x_grid_ticks must be an int &gt;= 2 (or None).&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"x_grid_ticks must be an int &gt;= 2 (or None)."</span><span class="p">)</span>
 
         <span class="c1"># -------------------------------------------------------------------------</span>
         <span class="c1"># Line styling per property</span>
         <span class="c1"># -------------------------------------------------------------------------</span>
         <span class="k">if</span> <span class="n">linestyles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">linestyles</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="s2">&quot;:&quot;</span><span class="p">,</span> <span class="s2">&quot;-.&quot;</span><span class="p">]</span>
+            <span class="n">linestyles</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"-"</span><span class="p">,</span> <span class="s2">"--"</span><span class="p">,</span> <span class="s2">":"</span><span class="p">,</span> <span class="s2">"-."</span><span class="p">]</span>
         <span class="n">prop_linestyle</span> <span class="o">=</span> <span class="p">{</span><span class="n">p</span><span class="p">:</span> <span class="n">linestyles</span><span class="p">[</span><span class="n">i</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">linestyles</span><span class="p">)]</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">used_properties</span><span class="p">)}</span>
 
         <span class="c1"># -------------------------------------------------------------------------</span>
@@ -731,28 +731,28 @@
         <span class="n">axes</span> <span class="o">=</span> <span class="p">[</span><span class="n">ax0</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_props</span><span class="p">):</span>
             <span class="n">ax</span> <span class="o">=</span> <span class="n">ax0</span><span class="o">.</span><span class="n">twinx</span><span class="p">()</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_label_position</span><span class="p">(</span><span class="s2">&quot;left&quot;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_label_position</span><span class="p">(</span><span class="s2">"left"</span><span class="p">)</span>
             <span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">tick_left</span><span class="p">()</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s2">&quot;left&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">set_position</span><span class="p">((</span><span class="s2">&quot;outward&quot;</span><span class="p">,</span> <span class="n">axis_offset</span> <span class="o">*</span> <span class="n">i</span><span class="p">))</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s2">&quot;right&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s2">"left"</span><span class="p">]</span><span class="o">.</span><span class="n">set_position</span><span class="p">((</span><span class="s2">"outward"</span><span class="p">,</span> <span class="n">axis_offset</span> <span class="o">*</span> <span class="n">i</span><span class="p">))</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s2">"right"</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
             <span class="n">axes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
 
         <span class="c1"># Exact x-limits, no padding, for all axes</span>
         <span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">axes</span><span class="p">:</span>
             <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">x_start</span><span class="p">,</span> <span class="n">x_end</span><span class="p">)</span>
             <span class="n">ax</span><span class="o">.</span><span class="n">margins</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">autoscale</span><span class="p">(</span><span class="n">enable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">autoscale</span><span class="p">(</span><span class="n">enable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s2">"x"</span><span class="p">)</span>
 
         <span class="c1"># -------------------------------------------------------------------------</span>
         <span class="c1"># X tick formatting (show time for short spans) + label/grid tick placement</span>
         <span class="c1"># -------------------------------------------------------------------------</span>
         <span class="n">span</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="n">x_end</span><span class="p">)</span> <span class="o">-</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="n">x_start</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">span</span> <span class="o">&lt;=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="s2">&quot;1D&quot;</span><span class="p">):</span>
-            <span class="n">x_fmt</span> <span class="o">=</span> <span class="s2">&quot;%H:%M:%S&quot;</span>
-        <span class="k">elif</span> <span class="n">span</span> <span class="o">&lt;=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="s2">&quot;7D&quot;</span><span class="p">):</span>
-            <span class="n">x_fmt</span> <span class="o">=</span> <span class="s2">&quot;%m-</span><span class="si">%d</span><span class="s2"> %H:%M&quot;</span>
+        <span class="k">if</span> <span class="n">span</span> <span class="o">&lt;=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="s2">"1D"</span><span class="p">):</span>
+            <span class="n">x_fmt</span> <span class="o">=</span> <span class="s2">"%H:%M:%S"</span>
+        <span class="k">elif</span> <span class="n">span</span> <span class="o">&lt;=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="s2">"7D"</span><span class="p">):</span>
+            <span class="n">x_fmt</span> <span class="o">=</span> <span class="s2">"%m-</span><span class="si">%d</span><span class="s2"> %H:%M"</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">x_fmt</span> <span class="o">=</span> <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span>
+            <span class="n">x_fmt</span> <span class="o">=</span> <span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2">"</span>
 
         <span class="n">ax0</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">mdates</span><span class="o">.</span><span class="n">DateFormatter</span><span class="p">(</span><span class="n">x_fmt</span><span class="p">))</span>
 
@@ -778,34 +778,34 @@
         <span class="k">if</span> <span class="n">rotate_xticks</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">lbl</span> <span class="ow">in</span> <span class="n">ax0</span><span class="o">.</span><span class="n">get_xticklabels</span><span class="p">():</span>
                 <span class="n">lbl</span><span class="o">.</span><span class="n">set_rotation</span><span class="p">(</span><span class="n">rotate_xticks</span><span class="p">)</span>
-                <span class="n">lbl</span><span class="o">.</span><span class="n">set_ha</span><span class="p">(</span><span class="s2">&quot;right&quot;</span><span class="p">)</span>
+                <span class="n">lbl</span><span class="o">.</span><span class="n">set_ha</span><span class="p">(</span><span class="s2">"right"</span><span class="p">)</span>
 
         <span class="c1"># -------------------------------------------------------------------------</span>
-        <span class="c1"># Determine TK groups (level 0), colors per TK, and find &quot;name&quot; level index</span>
+        <span class="c1"># Determine TK groups (level 0), colors per TK, and find "name" level index</span>
         <span class="c1"># -------------------------------------------------------------------------</span>
         <span class="n">lvl0_str</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">get_level_values</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="nb">str</span><span class="o">.</span><span class="n">strip</span><span class="p">)</span>
         <span class="n">top_groups</span> <span class="o">=</span> <span class="n">lvl0_str</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
 
-        <span class="n">colors</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;axes.prop_cycle&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">by_key</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;color&quot;</span><span class="p">,</span> <span class="p">[])</span>
+        <span class="n">colors</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">"axes.prop_cycle"</span><span class="p">]</span><span class="o">.</span><span class="n">by_key</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"color"</span><span class="p">,</span> <span class="p">[])</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">colors</span><span class="p">:</span>
-            <span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;C0&quot;</span><span class="p">,</span> <span class="s2">&quot;C1&quot;</span><span class="p">,</span> <span class="s2">&quot;C2&quot;</span><span class="p">,</span> <span class="s2">&quot;C3&quot;</span><span class="p">,</span> <span class="s2">&quot;C4&quot;</span><span class="p">,</span> <span class="s2">&quot;C5&quot;</span><span class="p">,</span> <span class="s2">&quot;C6&quot;</span><span class="p">,</span> <span class="s2">&quot;C7&quot;</span><span class="p">,</span> <span class="s2">&quot;C8&quot;</span><span class="p">,</span> <span class="s2">&quot;C9&quot;</span><span class="p">]</span>
+            <span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"C0"</span><span class="p">,</span> <span class="s2">"C1"</span><span class="p">,</span> <span class="s2">"C2"</span><span class="p">,</span> <span class="s2">"C3"</span><span class="p">,</span> <span class="s2">"C4"</span><span class="p">,</span> <span class="s2">"C5"</span><span class="p">,</span> <span class="s2">"C6"</span><span class="p">,</span> <span class="s2">"C7"</span><span class="p">,</span> <span class="s2">"C8"</span><span class="p">,</span> <span class="s2">"C9"</span><span class="p">]</span>
         <span class="n">group_color</span> <span class="o">=</span> <span class="p">{</span><span class="n">g</span><span class="p">:</span> <span class="n">colors</span><span class="p">[</span><span class="n">i</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">colors</span><span class="p">)]</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">g</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">top_groups</span><span class="p">)}</span>
 
         <span class="n">col_names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">names</span><span class="p">)</span>
-        <span class="n">name_level_idx</span> <span class="o">=</span> <span class="n">col_names</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="s2">&quot;name&quot;</span> <span class="ow">in</span> <span class="n">col_names</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="n">name_level_idx</span> <span class="o">=</span> <span class="n">col_names</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">"name"</span><span class="p">)</span> <span class="k">if</span> <span class="s2">"name"</span> <span class="ow">in</span> <span class="n">col_names</span> <span class="k">else</span> <span class="kc">None</span>
 
         <span class="c1"># Strict: each (TK, property) must resolve to exactly one column</span>
         <span class="k">def</span><span class="w"> </span><span class="nf">pick_single_series</span><span class="p">(</span><span class="n">frame</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">frame</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">frame</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Expected exactly 1 column for a given (TK, property), but got </span><span class="si">{</span><span class="n">frame</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">. &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;Columns: </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">frame</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="sa">f</span><span class="s2">"Expected exactly 1 column for a given (TK, property), but got </span><span class="si">{</span><span class="n">frame</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">. "</span>
+                <span class="sa">f</span><span class="s2">"Columns: </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">frame</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span>
             <span class="p">)</span>
 
         <span class="c1"># -------------------------------------------------------------------------</span>
         <span class="c1"># Plot lines: only if property exists AND TK is allowed for that property</span>
-        <span class="c1"># Legend label: &quot;PROPERTY NAME&quot; (no TK)</span>
+        <span class="c1"># Legend label: "PROPERTY NAME" (no TK)</span>
         <span class="c1"># -------------------------------------------------------------------------</span>
         <span class="n">all_lines</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">plotted_any_for_property</span> <span class="o">=</span> <span class="p">{</span><span class="n">p</span><span class="p">:</span> <span class="kc">False</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">used_properties</span><span class="p">}</span>
@@ -826,14 +826,14 @@
 
                 <span class="n">series</span> <span class="o">=</span> <span class="n">pick_single_series</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">cols</span><span class="p">])</span>
 
-                <span class="c1"># Extract element name from &quot;name&quot; level (fallback to TK if missing)</span>
+                <span class="c1"># Extract element name from "name" level (fallback to TK if missing)</span>
                 <span class="k">if</span> <span class="n">name_level_idx</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">name_vals</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">get_level_values</span><span class="p">(</span><span class="n">name_level_idx</span><span class="p">)[</span><span class="n">mask</span><span class="p">]</span>
                     <span class="n">name_val</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">name_vals</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">name_vals</span><span class="p">)</span> <span class="k">else</span> <span class="nb">str</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">name_val</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
 
-                <span class="n">line_label</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prop</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">name_val</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+                <span class="n">line_label</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">prop</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">name_val</span><span class="si">}</span><span class="s2">"</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
 
                 <span class="p">(</span><span class="n">ln</span><span class="p">,)</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
                     <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
@@ -856,10 +856,10 @@
         <span class="c1"># -------------------------------------------------------------------------</span>
         <span class="n">missing_props</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span><span class="p">,</span> <span class="n">ok</span> <span class="ow">in</span> <span class="n">plotted_any_for_property</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">ok</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">missing_props</span><span class="p">:</span>
-            <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Requested properties produced no plotted lines (missing or filtered out): </span><span class="si">{</span><span class="n">missing_props</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="k">if</span> <span class="n">missing</span> <span class="o">==</span> <span class="s2">&quot;error&quot;</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"Requested properties produced no plotted lines (missing or filtered out): </span><span class="si">{</span><span class="n">missing_props</span><span class="si">}</span><span class="s2">"</span>
+            <span class="k">if</span> <span class="n">missing</span> <span class="o">==</span> <span class="s2">"error"</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="n">missing</span> <span class="o">==</span> <span class="s2">&quot;warn&quot;</span><span class="p">:</span>
+            <span class="k">elif</span> <span class="n">missing</span> <span class="o">==</span> <span class="s2">"warn"</span><span class="p">:</span>
                 <span class="n">_log_warn</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
 
         <span class="c1"># -------------------------------------------------------------------------</span>
@@ -883,19 +883,19 @@
         <span class="n">ax0</span><span class="o">.</span><span class="n">set_axisbelow</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">grid</span><span class="p">:</span>
-            <span class="n">ax0</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s2">&quot;major&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="n">grid_style</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">grid_alpha</span><span class="p">)</span>
+            <span class="n">ax0</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s2">"major"</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s2">"both"</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="n">grid_style</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">grid_alpha</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">x_grid_ticks</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">ax0</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s2">&quot;minor&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="n">grid_style</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">grid_alpha</span><span class="p">)</span>
+                <span class="n">ax0</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s2">"minor"</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s2">"x"</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="n">grid_style</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">grid_alpha</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">y_grid_ticks</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">ax0</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s2">&quot;minor&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="n">grid_style</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">grid_alpha</span><span class="p">)</span>
+                <span class="n">ax0</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s2">"minor"</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s2">"y"</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="n">grid_style</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">grid_alpha</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">show_title</span><span class="p">:</span>
             <span class="n">s</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="n">x_start</span><span class="p">)</span>
             <span class="n">e</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="n">x_end</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">s</span><span class="o">.</span><span class="n">date</span><span class="p">()</span> <span class="o">==</span> <span class="n">e</span><span class="o">.</span><span class="n">date</span><span class="p">():</span>
-                <span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">title_prefix</span><span class="si">}{</span><span class="n">s</span><span class="si">:</span><span class="s2">%Y-%m-%d</span><span class="si">}</span><span class="s2">  </span><span class="si">{</span><span class="n">s</span><span class="si">:</span><span class="s2">%H:%M:%S</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">e</span><span class="si">:</span><span class="s2">%H:%M:%S</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">title_prefix</span><span class="si">}{</span><span class="n">s</span><span class="si">:</span><span class="s2">%Y-%m-%d</span><span class="si">}</span><span class="s2">  </span><span class="si">{</span><span class="n">s</span><span class="si">:</span><span class="s2">%H:%M:%S</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">e</span><span class="si">:</span><span class="s2">%H:%M:%S</span><span class="si">}</span><span class="s2">"</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">title_prefix</span><span class="si">}{</span><span class="n">s</span><span class="si">:</span><span class="s2">%Y-%m-%d %H:%M:%S</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">e</span><span class="si">:</span><span class="s2">%Y-%m-%d %H:%M:%S</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">title_prefix</span><span class="si">}{</span><span class="n">s</span><span class="si">:</span><span class="s2">%Y-%m-%d %H:%M:%S</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">e</span><span class="si">:</span><span class="s2">%Y-%m-%d %H:%M:%S</span><span class="si">}</span><span class="s2">"</span>
             <span class="n">ax0</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">legend</span> <span class="ow">and</span> <span class="n">all_lines</span><span class="p">:</span>
@@ -915,32 +915,32 @@
                 <span class="n">ax0</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">handles</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="n">legend_loc</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="n">legend_coords</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">legend_fontsize</span><span class="p">)</span>
 
         <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-        <span class="n">_log_info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Plotted </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">all_lines</span><span class="p">)</span><span class="si">}</span><span class="s2"> lines for </span><span class="si">{</span><span class="n">n_props</span><span class="si">}</span><span class="s2"> properties.&quot;</span><span class="p">)</span>
+        <span class="n">_log_info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Plotted </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">all_lines</span><span class="p">)</span><span class="si">}</span><span class="s2"> lines for </span><span class="si">{</span><span class="n">n_props</span><span class="si">}</span><span class="s2"> properties."</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span><span class="p">,</span> <span class="n">used_properties</span></div>
 
 
 
 
     <span class="k">def</span><span class="w"> </span><span class="nf">__to_2d_geom</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">geom</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Drop Z/M and return a 2D Shapely geometry.</span>
 <span class="sd">        Works for Point, LineString, MultiLineString.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="n">geom</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
 
         <span class="n">gt</span> <span class="o">=</span> <span class="n">geom</span><span class="o">.</span><span class="n">geom_type</span>
 
         <span class="c1"># Point</span>
-        <span class="k">if</span> <span class="n">gt</span> <span class="o">==</span> <span class="s2">&quot;Point&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">gt</span> <span class="o">==</span> <span class="s2">"Point"</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">Point</span><span class="p">(</span><span class="n">geom</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">geom</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
 
         <span class="c1"># LineString</span>
-        <span class="k">if</span> <span class="n">gt</span> <span class="o">==</span> <span class="s2">&quot;LineString&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">gt</span> <span class="o">==</span> <span class="s2">"LineString"</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">LineString</span><span class="p">([(</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">c</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">geom</span><span class="o">.</span><span class="n">coords</span><span class="p">])</span>
 
         <span class="c1"># MultiLineString</span>
-        <span class="k">if</span> <span class="n">gt</span> <span class="o">==</span> <span class="s2">&quot;MultiLineString&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">gt</span> <span class="o">==</span> <span class="s2">"MultiLineString"</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">MultiLineString</span><span class="p">([</span>
                 <span class="n">LineString</span><span class="p">([(</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">c</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">part</span><span class="o">.</span><span class="n">coords</span><span class="p">])</span>
                 <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="n">geom</span><span class="o">.</span><span class="n">geoms</span>

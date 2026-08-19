@@ -114,7 +114,7 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r&quot;C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2&quot; #change to local path
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r"C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2" #change to local path
 </pre></div>
 </div>
 </div>
@@ -230,13 +230,13 @@ Initialization complete
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.OpenModel(dbName=r&quot;Toolkit_Tutorial62_Model.db3&quot;,
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.OpenModel(dbName=r"Toolkit_Tutorial62_Model.db3",
               providerType=s3s.ProviderTypes.SQLite,
-              Mid=&quot;M-1-0-1&quot;,
+              Mid="M-1-0-1",
               saveCurrentlyOpenModel=False,
-              namedInstance=&quot;&quot;,
-              userID=&quot;&quot;,
-              password=&quot;&quot;)
+              namedInstance="",
+              userID="",
+              password="")
 </pre></div>
 </div>
 </div>
@@ -278,7 +278,7 @@ Model Calculation is complete
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>net = pp.create_empty_network(fluid=&quot;water&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>net = pp.create_empty_network(fluid="water")
 </pre></div>
 </div>
 </div>
@@ -286,7 +286,7 @@ Model Calculation is complete
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_nodes_model_data = s3s.generate_element_model_data_dataframe(element_type=s3s.ObjectTypes.Node, properties=[&#39;Name&#39;, &#39;QmEin&#39;, &#39;bz.PhEin&#39;, &#39;Zkor&#39;, &#39;Ktyp&#39;], geometry=True)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_nodes_model_data = s3s.generate_element_model_data_dataframe(element_type=s3s.ObjectTypes.Node, properties=['Name', 'QmEin', 'bz.PhEin', 'Zkor', 'Ktyp'], geometry=True)
 </pre></div>
 </div>
 </div>
@@ -382,7 +382,7 @@ Model Calculation is complete
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_nodes_results = s3s.generate_element_results_dataframe(element_type=s3s.ObjectTypes.Node, properties=[&#39;PH&#39;, &#39;T&#39;, &#39;QM&#39;], timestamps=s3s.GetTimeStamps()[0])
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_nodes_results = s3s.generate_element_results_dataframe(element_type=s3s.ObjectTypes.Node, properties=['PH', 'T', 'QM'], timestamps=s3s.GetTimeStamps()[0])
 </pre></div>
 </div>
 </div>
@@ -573,8 +573,8 @@ Model Calculation is complete
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_nodes_results.columns = df_nodes_results.columns.droplevel([1, 2])
 df_nodes_results = df_nodes_results.T.unstack(level=0).T
 df_nodes_results = df_nodes_results.droplevel(0, axis=0)
-df_nodes = df_nodes_model_data.merge(on=&quot;tk&quot;,
-                    how=&quot;outer&quot;,
+df_nodes = df_nodes_model_data.merge(on="tk",
+                    how="outer",
                     right=df_nodes_results)
 </pre></div>
 </div>
@@ -673,22 +673,22 @@ df_nodes = df_nodes_model_data.merge(on=&quot;tk&quot;,
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>js = {}
 
 for idx, row in df_nodes.iterrows():
-    geom = row[&quot;geometry&quot;]
+    geom = row["geometry"]
     x, y = geom.x, geom.y
 
     j = pp.create_junction(
         net,
-        pn_bar=1 + float(row[&#39;PH&#39;]),
-        tfluid_k=273.15 + float(row[&#39;T&#39;]),
-        height_m=float(row[&#39;Zkor&#39;]),
-        name=f&quot;{row[&#39;Name&#39;]}~{row[&#39;tk&#39;]}&quot;
+        pn_bar=1 + float(row['PH']),
+        tfluid_k=273.15 + float(row['T']),
+        height_m=float(row['Zkor']),
+        name=f"{row['Name']}~{row['tk']}"
     )
 
     # Assign geodata to junction_geodata table
-    net.junction_geodata.at[j, &quot;x&quot;] = x
-    net.junction_geodata.at[j, &quot;y&quot;] = y
+    net.junction_geodata.at[j, "x"] = x
+    net.junction_geodata.at[j, "y"] = y
 
-    js[int(row[&#39;tk&#39;])] = j
+    js[int(row['tk'])] = j
 </pre></div>
 </div>
 </div>
@@ -824,7 +824,7 @@ for idx, row in df_nodes.iterrows():
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_model_data = s3s.generate_element_model_data_dataframe(element_type=s3s.ObjectTypes.Pipe, properties=[&#39;L&#39;, &#39;Di&#39;, &#39;Rau&#39;, &#39;Name&#39;], end_nodes=True, geometry=True)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_pipes_model_data = s3s.generate_element_model_data_dataframe(element_type=s3s.ObjectTypes.Pipe, properties=['L', 'Di', 'Rau', 'Name'], end_nodes=True, geometry=True)
 </pre></div>
 </div>
 </div>
@@ -928,22 +928,22 @@ for idx, row in df_nodes.iterrows():
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>ps = {}
 
 for idx, row in df_pipes_model_data.iterrows():
-    geom = row[&quot;geometry&quot;]
+    geom = row["geometry"]
     coords = list(geom.coords)
 
     # Create pipe
     p = pp.create_pipe_from_parameters(
         net,
-        from_junction=js[row[&#39;fkKI&#39;]],
-        to_junction=js[row[&#39;fkKK&#39;]],
-        length_km=float(row[&#39;L&#39;]) / 1000.,
-        diameter_m=float(row[&#39;Di&#39;]) / 1000.,
-        k_mm=float(row[&#39;Rau&#39;]),
-        name=f&quot;{row[&#39;Name&#39;]}~{row[&#39;tk&#39;]}&quot;
+        from_junction=js[row['fkKI']],
+        to_junction=js[row['fkKK']],
+        length_km=float(row['L']) / 1000.,
+        diameter_m=float(row['Di']) / 1000.,
+        k_mm=float(row['Rau']),
+        name=f"{row['Name']}~{row['tk']}"
     )
-    ps[row[&#39;tk&#39;]] = p
+    ps[row['tk']] = p
 
-    net.pipe_geodata.at[p, &quot;coords&quot;] = coords
+    net.pipe_geodata.at[p, "coords"] = coords
 </pre></div>
 </div>
 </div>
@@ -1058,26 +1058,26 @@ for idx, row in df_pipes_model_data.iterrows():
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for idx, row in df_nodes.iterrows():
-    ktyp = (row.get(&quot;Ktyp&quot;))
-    tk = int(row.get(&quot;tk&quot;))
+    ktyp = (row.get("Ktyp"))
+    tk = int(row.get("tk"))
 
     # Create source if Ktyp is PKON and PH &gt; 0
-    if ktyp == &quot;PKON&quot; and float(row.get(&quot;PH&quot;, 0)) &gt; 0:
+    if ktyp == "PKON" and float(row.get("PH", 0)) &gt; 0:
         pp.create_ext_grid(
             net,
             junction=js[tk],
-            p_bar=1 + float(row[&quot;PH&quot;]),
-            t_k=273.15 + float(row[&quot;T&quot;]),
-            name=f&quot;Src: {row[&#39;Name&#39;]}~{tk}&quot;
+            p_bar=1 + float(row["PH"]),
+            t_k=273.15 + float(row["T"]),
+            name=f"Src: {row['Name']}~{tk}"
         )
 
     # Create sink if Ktyp is QKON and QM &lt; 0
-    elif ktyp == &quot;QKON&quot; and float(row.get(&quot;QM&quot;, 0)) &lt; 0:
+    elif ktyp == "QKON" and float(row.get("QM", 0)) &lt; 0:
         pp.create_sink(
             net,
             junction=js[tk],
-            mdot_kg_per_s=abs(float(row[&quot;QM&quot;])),
-            name=f&quot;Snk: {row[&#39;Name&#39;]}~{tk}&quot;
+            mdot_kg_per_s=abs(float(row["QM"])),
+            name=f"Snk: {row['Name']}~{tk}"
         )
 </pre></div>
 </div>
@@ -1622,16 +1622,16 @@ for idx, row in df_pipes_model_data.iterrows():
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import plotly.express as px
 
 junctions = net.res_junction.copy()
-junctions[&quot;x&quot;] = net.junction_geodata[&quot;x&quot;]
-junctions[&quot;y&quot;] = net.junction_geodata[&quot;y&quot;]
+junctions["x"] = net.junction_geodata["x"]
+junctions["y"] = net.junction_geodata["y"]
 
 fig = px.scatter(
     junctions,
-    x=&quot;x&quot;, y=&quot;y&quot;,
-    color=&quot;p_bar&quot;,
-    hover_data=[&quot;p_bar&quot;],
-    title=&quot;Junctions: Pressure and Temperature&quot;,
-    labels={&quot;p_bar&quot;: &quot;Pressure [bar]&quot;}
+    x="x", y="y",
+    color="p_bar",
+    hover_data=["p_bar"],
+    title="Junctions: Pressure and Temperature",
+    labels={"p_bar": "Pressure [bar]"}
 )
 fig.show()
 </pre></div>
@@ -2072,16 +2072,16 @@ fig.show()
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import plotly.express as px
 
 junctions = net.res_junction.copy()
-junctions[&quot;x&quot;] = net.junction_geodata[&quot;x&quot;]
-junctions[&quot;y&quot;] = net.junction_geodata[&quot;y&quot;]
+junctions["x"] = net.junction_geodata["x"]
+junctions["y"] = net.junction_geodata["y"]
 
 fig = px.scatter(
     junctions,
-    x=&quot;x&quot;, y=&quot;y&quot;,
-    color=&quot;p_bar&quot;,
-    hover_data=[&quot;p_bar&quot;],
-    title=&quot;Junctions: Pressure and Temperature&quot;,
-    labels={&quot;p_bar&quot;: &quot;Pressure [bar]&quot;}
+    x="x", y="y",
+    color="p_bar",
+    hover_data=["p_bar"],
+    title="Junctions: Pressure and Temperature",
+    labels={"p_bar": "Pressure [bar]"}
 )
 fig.show()
 </pre></div>

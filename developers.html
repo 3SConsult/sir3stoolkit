@@ -137,12 +137,12 @@
 <li><p><strong>Download Git:</strong> Visit the <a class="reference external" href="https://git-scm.com/downloads">official Git website</a> and download the version that is compatible with your operating system.</p></li>
 <li><p><strong>Install Git:</strong> Launch the downloaded installer and follow the setup wizard to complete the installation.</p></li>
 <li><p><strong>Configure Your GitHub Username:</strong> Open your terminal or command prompt and enter the following command, replacing “Your Name” with your actual GitHub username:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>user.name<span class="w"> </span><span class="s2">&quot;Your Name&quot;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>user.name<span class="w"> </span><span class="s2">"Your Name"</span>
 </pre></div>
 </div>
 </li>
 <li><p><strong>Configure Your GitHub Email:</strong> Similarly, set your GitHub email using the following command, replacing <code class="docutils literal notranslate"><span class="pre">your.email&#64;example.com</span></code> with your actual email:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>user.email<span class="w"> </span><span class="s2">&quot;your.email@example.com&quot;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>user.email<span class="w"> </span><span class="s2">"your.email@example.com"</span>
 </pre></div>
 </div>
 </li>
@@ -159,7 +159,7 @@
 <p>To clone a GitHub repository to your local folder, follow these steps:</p>
 <ol class="arabic">
 <li><p><strong>Navigate to the Parent Directory of Your Project:</strong> Use the <code class="docutils literal notranslate"><span class="pre">cd</span></code> command followed by the path to the parent directory of your project (This is the directory that should contain your project folder).</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span><span class="s2">&quot;C:\Users\User\3S&quot;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span><span class="s2">"C:\Users\User\3S"</span>
 </pre></div>
 </div>
 </li>
@@ -189,7 +189,7 @@
 <p>To fetch the latest changes from the origin and merge them into your current branch, follow these steps:</p>
 <ol class="arabic">
 <li><p><strong>Navigate to project directory:</strong> Use the <code class="docutils literal notranslate"><span class="pre">cd</span></code> command followed by the path to the directory of your project (This directory should contain an invisible .git folder).</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span><span class="s2">&quot;C:\Users\User\sir3stoolkit&quot;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span><span class="s2">"C:\Users\User\sir3stoolkit"</span>
 </pre></div>
 </div>
 </li>
@@ -225,7 +225,7 @@
 <p>To commit your changes to the GitHub repository, follow these steps:</p>
 <ol class="arabic">
 <li><p><strong>Navigate to project directory:</strong> Use the <code class="docutils literal notranslate"><span class="pre">cd</span></code> command followed by the path to the directory of your project (This directory should contain an invisible .git folder).</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span><span class="s2">&quot;C:\Users\User\3S\sir3stoolkti&quot;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span><span class="s2">"C:\Users\User\3S\sir3stoolkti"</span>
 </pre></div>
 </div>
 </li>
@@ -235,7 +235,7 @@
 </div>
 </li>
 <li><p><strong>Create a new commit with a descriptive message:</strong> Use the <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">commit</span> <span class="pre">-m</span> <span class="pre">&quot;commit_message&quot;</span></code> command.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;commit_message&quot;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">"commit_message"</span>
 </pre></div>
 </div>
 </li>
@@ -321,20 +321,20 @@
 <p>Open the <code class="docutils literal notranslate"><span class="pre">pre-commit</span></code> file in a text editor and replace its contents with the following:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/sh
 
-staged_notebooks=&quot;$(git diff --cached --name-only --diff-filter=ACMR -- &#39;*.ipynb&#39;)&quot;
+staged_notebooks="$(git diff --cached --name-only --diff-filter=ACMR -- '*.ipynb')"
 
-echo &quot;🔒 Running anonymization script...&quot;
-&quot;C:/Users/&lt;your_username&gt;/AppData/Local/anaconda3/python.exe&quot; &quot;docs/source/anonymize_notebooks.py&quot;
+echo "🔒 Running anonymization script..."
+"C:/Users/&lt;your_username&gt;/AppData/Local/anaconda3/python.exe" "docs/source/anonymize_notebooks.py"
 
 if [ $? -ne 0 ]; then
-   echo &quot;❌ Anonymization failed. Commit aborted.&quot;
+   echo "❌ Anonymization failed. Commit aborted."
    exit 1
 fi
 
 # Re-stage only notebooks that were already staged before running this hook
-echo &quot;$staged_notebooks&quot; | grep &#39;\.ipynb$&#39; | while read -r file; do
-   [ -z &quot;$file&quot; ] &amp;&amp; continue
-   git add &quot;$file&quot;
+echo "$staged_notebooks" | grep '\.ipynb$' | while read -r file; do
+   [ -z "$file" ] &amp;&amp; continue
+   git add "$file"
 done
 </pre></div>
 </div>
@@ -353,7 +353,7 @@ done
 <h4>Step 4: Verify the Setup<a class="headerlink" href="#step-4-verify-the-setup" title="Link to this heading"></a></h4>
 <p>Make a small change in a Jupyter notebook that contains one of the names listed. Then run:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">add</span> <span class="o">.</span>
-<span class="n">git</span> <span class="n">commit</span> <span class="o">-</span><span class="n">m</span> <span class="s2">&quot;Test anonymization&quot;</span>
+<span class="n">git</span> <span class="n">commit</span> <span class="o">-</span><span class="n">m</span> <span class="s2">"Test anonymization"</span>
 </pre></div>
 </div>
 <p>You should see output indicating that the anonymization script ran and which names were replaced.</p>
@@ -372,7 +372,7 @@ done
 <span id="running-tests-label"></span><h2>Running Test Suites<a class="headerlink" href="#running-test-suites" title="Link to this heading"></a></h2>
 <p>The repository uses <code class="docutils literal notranslate"><span class="pre">pytest</span></code> for automated tests.</p>
 <p>Before running tests, navigate to the repository root:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span><span class="s2">&quot;C:\Users\User\3S\sir3stoolkit&quot;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span><span class="s2">"C:\Users\User\3S\sir3stoolkit"</span>
 </pre></div>
 </div>
 <p>Run all default tests (unit/integration tests configured in <code class="docutils literal notranslate"><span class="pre">test/</span></code>):</p>
@@ -391,7 +391,7 @@ done
 <code class="docutils literal notranslate"><span class="pre">test/notebooks/test_run_tutorial_notebooks.py</span></code> and are <strong>opt-in</strong>.
 By default, they are skipped to keep regular test runs fast and stable.</p>
 <p>To run the full suite including notebook tests:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">$env</span>:SIR3S_RUN_NOTEBOOKS<span class="o">=</span><span class="s2">&quot;1&quot;</span><span class="p">;</span><span class="w"> </span>pytest<span class="w"> </span>-vv<span class="w"> </span>-rA<span class="w"> </span><span class="c1"># -s for notebook output # powershell</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">$env</span>:SIR3S_RUN_NOTEBOOKS<span class="o">=</span><span class="s2">"1"</span><span class="p">;</span><span class="w"> </span>pytest<span class="w"> </span>-vv<span class="w"> </span>-rA<span class="w"> </span><span class="c1"># -s for notebook output # powershell</span>
 </pre></div>
 </div>
 </section>
@@ -415,7 +415,7 @@ By default, they are skipped to keep regular test runs fast and stable.</p>
 </div>
 <ol class="arabic" start="2">
 <li><p><strong>Navigate to the sir3stoolkit directory:</strong> Use the <code class="docutils literal notranslate"><span class="pre">cd</span></code> command.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span><span class="s2">&quot;C:\Users\User\3S\sir3stoolkit&quot;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span><span class="s2">"C:\Users\User\3S\sir3stoolkit"</span>
 </pre></div>
 </div>
 </li>

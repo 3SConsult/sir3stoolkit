@@ -96,7 +96,7 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r&quot;C:\3S\SIR 3S\SirGraf-90-15-00-22_Quebec-Upd2&quot; #change to local path
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r"C:\3S\SIR 3S\SirGraf-90-15-00-22_Quebec-Upd2" #change to local path
 </pre></div>
 </div>
 </div>
@@ -215,7 +215,7 @@ s3s_view.EnableOrDisableOutputComments(outputComments=False)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>src = r&quot;C:\DevOps\Github_Direct_sir3stoolkit\Test\Examples\EmptyModel.XML&quot;
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>src = r"C:\DevOps\Github_Direct_sir3stoolkit\Test\Examples\EmptyModel.XML"
 </pre></div>
 </div>
 </div>
@@ -224,9 +224,9 @@ s3s_view.EnableOrDisableOutputComments(outputComments=False)
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Generate a unique filename with timestamp
-timestamp = datetime.now().strftime(&quot;%Y%m%d_%H%M%S&quot;)
-dst_folder = r&quot;.&quot;
-dst_filename = f&quot;EmptyModelCopy_{timestamp}.XML&quot;
+timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+dst_folder = r"."
+dst_filename = f"EmptyModelCopy_{timestamp}.XML"
 dst = os.path.join(dst_folder, dst_filename)
 </pre></div>
 </div>
@@ -282,7 +282,7 @@ s3s.OpenModelXml(dst, True)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fp = r&quot;C:\3S\Modelle\Beispiele\Wasser\Manual\Projektdaten\01 Shape-Dateien\Wassernetz_Leitungen.shp&quot;
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fp = r"C:\3S\Modelle\Beispiele\Wasser\Manual\Projektdaten\01 Shape-Dateien\Wassernetz_Leitungen.shp"
 </pre></div>
 </div>
 </div>
@@ -373,8 +373,8 @@ None
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for index, row in gdf.iterrows():
-    geometry = row[&#39;geometry&#39;]
-    coords = [(coords) for coords in list(row[&#39;geometry&#39;].coords)]
+    geometry = row['geometry']
+    coords = [(coords) for coords in list(row['geometry'].coords)]
     first_coord, last_coord = [ coords[i] for i in (0, -1) ]
     key = first_coord
     if not key in dictionaryNodes:
@@ -400,7 +400,7 @@ None
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.StartTransaction(&quot;Add Nodes&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.StartTransaction("Add Nodes")
 </pre></div>
 </div>
 </div>
@@ -411,11 +411,11 @@ None
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for key in dictionaryNodes:
     Id = str(dictionaryNodes[key])
     text = str(key)
-    coor = text.split(&#39;,&#39;)
-    x = float(coor[0].replace(&#39;(&#39;,&#39;&#39;))
+    coor = text.split(',')
+    x = float(coor[0].replace('(',''))
     y = float(coor[1])
-    z = float(coor[2].replace(&#39;)&#39;,&#39;&#39;))
-    Tk = s3s.AddNewNode(&quot;-1&quot;, Id, &quot;QKON&quot;, x, y,z,0, 1, Id, Id, 0)
+    z = float(coor[2].replace(')',''))
+    Tk = s3s.AddNewNode("-1", Id, "QKON", x, y,z,0, 1, Id, Id, 0)
     dicNodes2[key] = Tk
 </pre></div>
 </div>
@@ -432,7 +432,7 @@ None
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.StartTransaction(&quot;Add Pipes&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.StartTransaction("Add Pipes")
 </pre></div>
 </div>
 </div>
@@ -441,13 +441,13 @@ None
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for index, row in gdf.iterrows():
-    geometry = row[&#39;geometry&#39;]
-    coords = [(coords) for coords in list(row[&#39;geometry&#39;].coords)]
+    geometry = row['geometry']
+    coords = [(coords) for coords in list(row['geometry'].coords)]
     first_coord, last_coord = [ coords[i] for i in (0, -1) ]
-    fromNode = toNode = &quot;-1&quot;
-    mat = str(row[&quot;MAT&quot;])
-    DN = str(row[&quot;DN&quot;])
-    IdRef = row[&quot;IDREFERENZ&quot;]
+    fromNode = toNode = "-1"
+    mat = str(row["MAT"])
+    DN = str(row["DN"])
+    IdRef = row["IDREFERENZ"]
 
     if first_coord in dicNodes2:
         fromNode = dicNodes2[first_coord]
@@ -457,7 +457,7 @@ None
     lines = [xy[:2] for xy in list(geometry.coords)]
     new_p = LineString(lines)
 
-    s3s.AddNewPipe(&quot;-1&quot;, fromNode, toNode, float(row[&quot;L&quot;]), str(new_p), mat, DN, 0.25, IdRef, row[&quot;TYPE&quot;], 0)
+    s3s.AddNewPipe("-1", fromNode, toNode, float(row["L"]), str(new_p), mat, DN, 0.25, IdRef, row["TYPE"], 0)
 </pre></div>
 </div>
 </div>

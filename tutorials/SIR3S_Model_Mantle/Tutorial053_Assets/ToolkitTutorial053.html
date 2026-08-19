@@ -112,7 +112,7 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r&quot;C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2&quot; #change to local path
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r"C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2" #change to local path
 </pre></div>
 </div>
 </div>
@@ -215,13 +215,13 @@ import contextily as cx
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.OpenModel(dbName=r&quot;Toolkit_Tutorial53_Model.db3&quot;,
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.OpenModel(dbName=r"Toolkit_Tutorial53_Model.db3",
               providerType=s3s.ProviderTypes.SQLite,
-              Mid=&quot;M-1-0-1&quot;,
+              Mid="M-1-0-1",
               saveCurrentlyOpenModel=False,
-              namedInstance=&quot;&quot;,
-              userID=&quot;&quot;,
-              password=&quot;&quot;)
+              namedInstance="",
+              userID="",
+              password="")
 </pre></div>
 </div>
 </div>
@@ -244,9 +244,9 @@ import contextily as cx
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>edge_types = [
-    &#39;Pipe&#39;, &#39;Valve&#39;, &#39;SafetyValve&#39;, &#39;PressureRegulator&#39;, &#39;DifferentialRegulator&#39;,
-    &#39;FlapValve&#39;, &#39;PhaseSeparation&#39;, &#39;FlowControlUnit&#39;, &#39;ControlValve&#39;, &#39;Pump&#39;,
-    &#39;DistrictHeatingConsumer&#39;, &#39;DistrictHeatingFeeder&#39;, &#39;Compressor&#39;, &#39;HeaterCooler&#39;, &#39;HeatFeederConsumerStation&#39;
+    'Pipe', 'Valve', 'SafetyValve', 'PressureRegulator', 'DifferentialRegulator',
+    'FlapValve', 'PhaseSeparation', 'FlowControlUnit', 'ControlValve', 'Pump',
+    'DistrictHeatingConsumer', 'DistrictHeatingFeeder', 'Compressor', 'HeaterCooler', 'HeatFeederConsumerStation'
 ]
 </pre></div>
 </div>
@@ -478,7 +478,7 @@ df.head(5)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>tks_of_interest = df[&quot;tk&quot;][520:550].tolist() # now we just choose some randomly
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>tks_of_interest = df["tk"][520:550].tolist() # now we just choose some randomly
 </pre></div>
 </div>
 </div>
@@ -486,7 +486,7 @@ df.head(5)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df, timestamp_to_tuple_index = s3s.generate_edge_dataframe(properties=[&quot;Hal&quot;, &quot;Kvr&quot;, &quot;JV&quot;, &quot;PVEC&quot;, &quot;MVEC&quot;],
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df, timestamp_to_tuple_index = s3s.generate_edge_dataframe(properties=["Hal", "Kvr", "JV", "PVEC", "MVEC"],
                                                            tks=tks_of_interest)
 df.head(5)
 </pre></div>
@@ -821,7 +821,7 @@ df.head(5)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_edge, timestamp_to_tuple_index = s3s.generate_edge_dataframe(properties=[&quot;Hal&quot;, &quot;Kvr&quot;, &quot;JV&quot;, &quot;PVEC&quot;, &quot;MVEC&quot;]
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_edge, timestamp_to_tuple_index = s3s.generate_edge_dataframe(properties=["Hal", "Kvr", "JV", "PVEC", "MVEC"]
                                                                 ,timestamps=[0, 5, -1])
 df_edge.head(5)
 </pre></div>
@@ -1090,7 +1090,7 @@ df_edge.head(5)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_edge[&quot;JV&quot;].iloc[0]
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_edge["JV"].iloc[0]
 </pre></div>
 </div>
 </div>
@@ -1127,7 +1127,7 @@ df_edge.head(5)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_edge[&quot;JV&quot;].iloc[0][timestamp_to_tuple_index[simulation_timestamps[0]]]
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_edge["JV"].iloc[0][timestamp_to_tuple_index[simulation_timestamps[0]]]
 </pre></div>
 </div>
 </div>
@@ -1145,7 +1145,7 @@ df_edge.head(5)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_edge[&quot;JV&quot;].str[timestamp_to_tuple_index[simulation_timestamps[0]]]
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_edge["JV"].str[timestamp_to_tuple_index[simulation_timestamps[0]]]
 </pre></div>
 </div>
 </div>
@@ -2042,7 +2042,7 @@ Name: JV, dtype: float64
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_edge[&quot;MVEC_sequence&quot;].iloc[0]
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_edge["MVEC_sequence"].iloc[0]
 </pre></div>
 </div>
 </div>
@@ -2059,7 +2059,7 @@ Name: JV, dtype: float64
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_edge[&quot;MVEC_sequence&quot;].iloc[0][timestamp_to_tuple_index[simulation_timestamps[0]]]
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_edge["MVEC_sequence"].iloc[0][timestamp_to_tuple_index[simulation_timestamps[0]]]
 </pre></div>
 </div>
 </div>

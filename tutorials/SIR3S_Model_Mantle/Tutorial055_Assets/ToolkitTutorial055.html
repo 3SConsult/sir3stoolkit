@@ -101,7 +101,7 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r&quot;C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2&quot; #change to local path
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r"C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2" #change to local path
 </pre></div>
 </div>
 </div>
@@ -204,13 +204,13 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.OpenModel(dbName=r&quot;Toolkit_Tutorial55_Model.db3&quot;,
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.OpenModel(dbName=r"Toolkit_Tutorial55_Model.db3",
               providerType=s3s.ProviderTypes.SQLite,
-              Mid=&quot;M-1-0-1&quot;,
+              Mid="M-1-0-1",
               saveCurrentlyOpenModel=False,
-              namedInstance=&quot;&quot;,
-              userID=&quot;&quot;,
-              password=&quot;&quot;)
+              namedInstance="",
+              userID="",
+              password="")
 </pre></div>
 </div>
 </div>
@@ -251,7 +251,7 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.SetValue(Tk=valve, propertyName=&quot;bz.Indphi&quot;, Value=&quot;0&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.SetValue(Tk=valve, propertyName="bz.Indphi", Value="0")
 </pre></div>
 </div>
 </div>
@@ -924,7 +924,7 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.SetValue(Tk=valve, propertyName=&quot;bz.Indphi&quot;, Value=&quot;-1&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.SetValue(Tk=valve, propertyName="bz.Indphi", Value="-1")
 </pre></div>
 </div>
 </div>
@@ -1030,7 +1030,7 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.SetValue(Tk=valve, propertyName=&quot;bz.Indphi&quot;, Value=&quot;2&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.SetValue(Tk=valve, propertyName="bz.Indphi", Value="2")
 </pre></div>
 </div>
 </div>
@@ -1154,7 +1154,7 @@
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for df in df_pipes:
-    df[&quot;QMAV&quot;] = abs(df[&quot;QMAV&quot;].str[0])
+    df["QMAV"] = abs(df["QMAV"].str[0])
 </pre></div>
 </div>
 </div>
@@ -1163,7 +1163,7 @@
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for df in df_nodes:
-    df[&quot;P&quot;] = df[&quot;P&quot;].str[0]
+    df["P"] = df["P"].str[0]
 </pre></div>
 </div>
 </div>
@@ -1177,38 +1177,38 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def plot_Result_ncd(df_pipes, df_nodes, axTitle=&#39;ncd&#39;, valve_percentage=100):
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def plot_Result_ncd(df_pipes, df_nodes, axTitle='ncd', valve_percentage=100):
     fig, ax = plt.subplots(figsize=(16.54, 11.69))
 
     # Nodes (size+color by pressure)
     nodes_patches_1 = s3s.plot_node_layer(
         ax=ax,
         gdf=df_nodes,
-        attribute=&#39;P&#39;,
-        colors=[&#39;cyan&#39;, &#39;teal&#39;],
-        marker_style=&#39;p&#39;,
+        attribute='P',
+        colors=['cyan', 'teal'],
+        marker_style='p',
         marker_size_factor=5000,
         size_vmin=0,
         size_vmax=10,
         color_vmin=0,
         color_vmax=10,
-        legend_fmt=&#39;{:4.0f} bar&#39;,
+        legend_fmt='{:4.0f} bar',
         legend_values=[0, 2, 4, 6],
         zorder=3,
         show_value_labels=True,
         value_label_fontsize=15,
         value_label_offset=(4, 30),
-        value_label_fmt=&quot;{:.2f} bar&quot;,
+        value_label_fmt="{:.2f} bar",
     )
 
     # Pipes (width by DN, color by QMAV)
     pipes_patches_2 = s3s.plot_pipe_layer(
         ax=ax,
         gdf=df_pipes,
-        color_mixing_col=&#39;QMAV&#39;,
-        width_scaling_col=&#39;DN&#39;,
-        colors=[&#39;darkgreen&#39;, &#39;magenta&#39;],
-        legend_fmt=&#39;{:.0f} m3/h&#39;,
+        color_mixing_col='QMAV',
+        width_scaling_col='DN',
+        colors=['darkgreen', 'magenta'],
+        legend_fmt='{:.0f} m3/h',
         line_width_factor=25,
         legend_values=[0, 4, 8, 12],
         color_vmin=0,
@@ -1217,12 +1217,12 @@
         show_value_labels=True,
         value_label_fontsize=15,
         value_label_offset=(0, 10),
-        value_label_fmt=&quot;{:.2f} m3/h&quot;,
+        value_label_fmt="{:.2f} m3/h",
     )
 
     # Draw Valve
     linewidth = 10 * (valve_percentage / 100.0) + 1
-    ax.plot([40, 80], [0, 0], color=&quot;black&quot;, linestyle=&quot;-&quot;, linewidth=linewidth, zorder=2)
+    ax.plot([40, 80], [0, 0], color="black", linestyle="-", linewidth=linewidth, zorder=2)
 
     # Combine handles
     handles = []
@@ -1238,7 +1238,7 @@
             if h.get_label() not in seen:
                 unique.append(h)
                 seen.add(h.get_label())
-        ax.legend(handles=unique, loc=&#39;upper left&#39;)
+        ax.legend(handles=unique, loc='upper left')
 
     ax.set_title(axTitle)
     plt.tight_layout()
@@ -1250,7 +1250,7 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plot_Result_ncd(df_nodes=df_nodes_1, df_pipes=df_pipes_1, axTitle=&#39;Scenario 1: Valve open (100%)&#39;, valve_percentage=100)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plot_Result_ncd(df_nodes=df_nodes_1, df_pipes=df_pipes_1, axTitle='Scenario 1: Valve open (100%)', valve_percentage=100)
 </pre></div>
 </div>
 </div>
@@ -1277,7 +1277,7 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plot_Result_ncd(df_nodes=df_nodes_2, df_pipes=df_pipes_2, axTitle=&#39;Scenario 2: Valve closed (0%)&#39;, valve_percentage=0)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plot_Result_ncd(df_nodes=df_nodes_2, df_pipes=df_pipes_2, axTitle='Scenario 2: Valve closed (0%)', valve_percentage=0)
 </pre></div>
 </div>
 </div>
@@ -1304,7 +1304,7 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plot_Result_ncd(df_nodes=df_nodes_3, df_pipes=df_pipes_3, axTitle=&#39;Scenario 3: Valve variable (55%)&#39;, valve_percentage=55)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plot_Result_ncd(df_nodes=df_nodes_3, df_pipes=df_pipes_3, axTitle='Scenario 3: Valve variable (55%)', valve_percentage=55)
 </pre></div>
 </div>
 </div>

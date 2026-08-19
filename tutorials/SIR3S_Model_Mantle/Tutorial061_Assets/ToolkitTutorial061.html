@@ -97,7 +97,7 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r&quot;C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2&quot; #change to local path
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r"C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2" #change to local path
 </pre></div>
 </div>
 </div>
@@ -207,7 +207,7 @@ import logging
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dbFilePath=r&quot;Toolkit_Tutorial61_Model.db3&quot;
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dbFilePath=r"Toolkit_Tutorial61_Model.db3"
 </pre></div>
 </div>
 </div>
@@ -217,11 +217,11 @@ import logging
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.OpenModel(dbName=dbFilePath,
               providerType=s3s.ProviderTypes.SQLite,
-              Mid=&quot;M-1-0-1&quot;,
+              Mid="M-1-0-1",
               saveCurrentlyOpenModel=False,
-              namedInstance=&quot;&quot;,
-              userID=&quot;&quot;,
-              password=&quot;&quot;)
+              namedInstance="",
+              userID="",
+              password="")
 </pre></div>
 </div>
 </div>
@@ -338,7 +338,7 @@ import logging
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>edge_attrs[(4680103632661687203, 5432609004919372061)][&#39;Fkcont&#39;]
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>edge_attrs[(4680103632661687203, 5432609004919372061)]['Fkcont']
 </pre></div>
 </div>
 </div>
@@ -375,29 +375,29 @@ True
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def plot_nx_graph(G, main_container):
     # Extract node positions from geometry and filter by Fkcont
     pos = {
-        node_id: (data[&#39;geometry&#39;].x, data[&#39;geometry&#39;].y)
+        node_id: (data['geometry'].x, data['geometry'].y)
         for node_id, data in G.nodes(data=True)
-        if &#39;geometry&#39; in data and hasattr(data[&#39;geometry&#39;], &#39;x&#39;) and hasattr(data[&#39;geometry&#39;], &#39;y&#39;)
-        and data.get(&#39;Fkcont&#39;) == main_container
+        if 'geometry' in data and hasattr(data['geometry'], 'x') and hasattr(data['geometry'], 'y')
+        and data.get('Fkcont') == main_container
     }
 
     # Extract edges with valid geometry and both nodes in pos
     edges = [
         (u, v, data) for u, v, data in G.edges(data=True)
-        if u in pos and v in pos and &#39;geometry&#39; in data and data[&#39;geometry&#39;].geom_type != &#39;Point&#39;
+        if u in pos and v in pos and 'geometry' in data and data['geometry'].geom_type != 'Point'
     ]
 
     # Plot
     plt.figure(figsize=(20, 14))
     for _, _, data in edges:
-        geom = data[&#39;geometry&#39;]
+        geom = data['geometry']
         x, y = geom.xy
-        plt.plot(x, y, color=&#39;black&#39;, linewidth=1)
+        plt.plot(x, y, color='black', linewidth=1)
 
     # Only draw nodes that have positions
-    nx.draw_networkx_nodes(G, pos=pos, nodelist=list(pos.keys()), node_color=&#39;black&#39;, node_size=10)
-    plt.title(f&quot;nx-Graph&#39;{main_container}&#39;&quot;)
-    plt.axis(&#39;equal&#39;)
+    nx.draw_networkx_nodes(G, pos=pos, nodelist=list(pos.keys()), node_color='black', node_size=10)
+    plt.title(f"nx-Graph'{main_container}'")
+    plt.axis('equal')
     plt.show()
 </pre></div>
 </div>
@@ -425,10 +425,10 @@ True
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>props_to_add = [&quot;Kvr&quot;, &quot;T&quot;, &quot;BCIND&quot;]
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>props_to_add = ["Kvr", "T", "BCIND"]
 G = s3s.add_properties_to_graph(
     G=G,
-    element_type=&quot;Node&quot;,
+    element_type="Node",
     properties=props_to_add,
 )
 </pre></div>
@@ -491,10 +491,10 @@ G = s3s.add_properties_to_graph(
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>props_to_add = [&quot;DN&quot;, &quot;L&quot;, &quot;JV&quot;, &quot;PHR&quot;]
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>props_to_add = ["DN", "L", "JV", "PHR"]
 G = s3s.add_properties_to_graph(
     G=G,
-    element_type=&quot;Pipe&quot;,
+    element_type="Pipe",
     properties=props_to_add,
 )
 </pre></div>

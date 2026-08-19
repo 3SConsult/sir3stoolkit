@@ -96,7 +96,7 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r&quot;C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2&quot; #change to local path
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r"C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2" #change to local path
 </pre></div>
 </div>
 </div>
@@ -200,7 +200,7 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dbFilePath=r&quot;Toolkit_Tutorial3_Model.db3&quot;
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dbFilePath=r"Toolkit_Tutorial3_Model.db3"
 </pre></div>
 </div>
 </div>
@@ -218,11 +218,11 @@
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.OpenModel(dbName=dbFilePath,
               providerType=s3s.ProviderTypes.SQLite,
-              Mid=&quot;M-1-0-1&quot;,
+              Mid="M-1-0-1",
               saveCurrentlyOpenModel=False,
-              namedInstance=&quot;&quot;,
-              userID=&quot;&quot;,
-              password=&quot;&quot;)
+              namedInstance="",
+              userID="",
+              password="")
 </pre></div>
 </div>
 </div>
@@ -276,7 +276,7 @@ NetworkType.Water
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>Exit_status = s3s.GetResultValue(s3s.GetTksofElementType(s3s.ObjectTypes.GeneralSection)[0],&quot;EXSTAT&quot;)[0]
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>Exit_status = s3s.GetResultValue(s3s.GetTksofElementType(s3s.ObjectTypes.GeneralSection)[0],"EXSTAT")[0]
 </pre></div>
 </div>
 </div>
@@ -380,7 +380,7 @@ re-running notebooks.</p>
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for node in nodes:
-    if(s3s.GetValue(node, &#39;Name&#39;)[0]==&#39;Node11&#39;):
+    if(s3s.GetValue(node, 'Name')[0]=='Node11'):
         tk_of_interest=node
 </pre></div>
 </div>
@@ -627,7 +627,7 @@ re-running notebooks.</p>
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[38]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pressure1=s3s.GetResultValue(elementKey=tk_of_interest, propertyName=&#39;P&#39;)[0]
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pressure1=s3s.GetResultValue(elementKey=tk_of_interest, propertyName='P')[0]
 </pre></div>
 </div>
 </div>
@@ -677,7 +677,7 @@ re-running notebooks.</p>
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[42]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pressure2=s3s.GetResultValue(elementKey=tk_of_interest, propertyName=&#39;P&#39;)[0]
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pressure2=s3s.GetResultValue(elementKey=tk_of_interest, propertyName='P')[0]
 </pre></div>
 </div>
 </div>
@@ -702,7 +702,7 @@ re-running notebooks.</p>
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[44]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pressure2=s3s.GetResultfortimestamp(timestamp=available_timestamps[0][4], Tk=tk_of_interest, property=&#39;P&#39;)[0]
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pressure2=s3s.GetResultfortimestamp(timestamp=available_timestamps[0][4], Tk=tk_of_interest, property='P')[0]
 </pre></div>
 </div>
 </div>
@@ -710,7 +710,7 @@ re-running notebooks.</p>
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[45]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(f&quot;Difference in Pressure {available_timestamps[0][0]} to {available_timestamps[0][4]}: {float(pressure1)-float(pressure2)} bar&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(f"Difference in Pressure {available_timestamps[0][0]} to {available_timestamps[0][4]}: {float(pressure1)-float(pressure2)} bar")
 </pre></div>
 </div>
 </div>
@@ -728,7 +728,7 @@ Difference in Pressure 2026-03-15 22:46:21.000 +01:00 to 2026-03-15 22:50:21.000
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[46]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetResultforAllTimestamp(Tk=tk_of_interest, property=&#39;P&#39;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetResultforAllTimestamp(Tk=tk_of_interest, property='P')
 </pre></div>
 </div>
 </div>
@@ -759,7 +759,7 @@ Difference in Pressure 2026-03-15 22:46:21.000 +01:00 to 2026-03-15 22:50:21.000
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[47]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetMinResult(elementType=node_type, propertyName=&#39;P&#39;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetMinResult(elementType=node_type, propertyName='P')
 </pre></div>
 </div>
 </div>
@@ -777,7 +777,7 @@ Difference in Pressure 2026-03-15 22:46:21.000 +01:00 to 2026-03-15 22:50:21.000
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[48]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetMaxResult(elementType=node_type, propertyName=&#39;P&#39;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetMaxResult(elementType=node_type, propertyName='P')
 </pre></div>
 </div>
 </div>
@@ -799,7 +799,7 @@ Difference in Pressure 2026-03-15 22:46:21.000 +01:00 to 2026-03-15 22:50:21.000
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[49]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetMinResult_for_timestamp(timestamp=available_timestamps[0][0], elementType=node_type, propertyName=&#39;P&#39;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetMinResult_for_timestamp(timestamp=available_timestamps[0][0], elementType=node_type, propertyName='P')
 </pre></div>
 </div>
 </div>
@@ -816,7 +816,7 @@ Difference in Pressure 2026-03-15 22:46:21.000 +01:00 to 2026-03-15 22:50:21.000
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[50]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetMinResult_for_timestamp(timestamp=available_timestamps[0][0], elementType=node_type, propertyName=&#39;P&#39;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.GetMinResult_for_timestamp(timestamp=available_timestamps[0][0], elementType=node_type, propertyName='P')
 </pre></div>
 </div>
 </div>
@@ -833,7 +833,7 @@ Difference in Pressure 2026-03-15 22:46:21.000 +01:00 to 2026-03-15 22:50:21.000
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[51]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>max_pressure1=s3s.GetMaxResult_for_timestamp(timestamp=available_timestamps[0][0], elementType= node_type, propertyName=&#39;P&#39;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>max_pressure1=s3s.GetMaxResult_for_timestamp(timestamp=available_timestamps[0][0], elementType= node_type, propertyName='P')
 </pre></div>
 </div>
 </div>
@@ -841,7 +841,7 @@ Difference in Pressure 2026-03-15 22:46:21.000 +01:00 to 2026-03-15 22:50:21.000
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[52]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>max_pressure2=s3s.GetMaxResult_for_timestamp(timestamp=available_timestamps[0][4],elementType=node_type, propertyName=&#39;P&#39;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>max_pressure2=s3s.GetMaxResult_for_timestamp(timestamp=available_timestamps[0][4],elementType=node_type, propertyName='P')
 </pre></div>
 </div>
 </div>
@@ -849,7 +849,7 @@ Difference in Pressure 2026-03-15 22:46:21.000 +01:00 to 2026-03-15 22:50:21.000
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[53]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(f&quot;Max Pressure: {max_pressure1[0]} bar at {available_timestamps[0][0]} compared to: {max_pressure2[0]} bar at {available_timestamps[0][4]}.&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(f"Max Pressure: {max_pressure1[0]} bar at {available_timestamps[0][0]} compared to: {max_pressure2[0]} bar at {available_timestamps[0][4]}.")
 </pre></div>
 </div>
 </div>

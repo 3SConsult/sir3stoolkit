@@ -94,26 +94,26 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">sir3stoolkit.mantle.advanced_operations</span><span class="w"> </span><span class="kn">import</span> <span class="n">SIR3S_Model_Advanced_Operations</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sir3stoolkit.mantle.mantle</span><span class="w"> </span><span class="kn">import</span> <span class="n">SIR3S_Model_Mantle</span>
 
-<span class="n">RegistryKey</span> <span class="o">=</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;SIR3S_Model&quot;</span><span class="p">,</span> <span class="s2">&quot;SIR3S_Model_Dataframes&quot;</span><span class="p">,</span> <span class="s2">&quot;SIR3S_Model_Alternative_Models&quot;</span><span class="p">,</span> <span class="s2">&quot;SIR3S_Model_Plotting&quot;</span><span class="p">,</span> <span class="s2">&quot;SIR3S_Model_Advanced_Operations&quot;</span><span class="p">,</span> <span class="s2">&quot;SIR3S_Model_Mantle&quot;</span><span class="p">,</span> <span class="s2">&quot;SIR3S_View&quot;</span><span class="p">]</span>
+<span class="n">RegistryKey</span> <span class="o">=</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"SIR3S_Model"</span><span class="p">,</span> <span class="s2">"SIR3S_Model_Dataframes"</span><span class="p">,</span> <span class="s2">"SIR3S_Model_Alternative_Models"</span><span class="p">,</span> <span class="s2">"SIR3S_Model_Plotting"</span><span class="p">,</span> <span class="s2">"SIR3S_Model_Advanced_Operations"</span><span class="p">,</span> <span class="s2">"SIR3S_Model_Mantle"</span><span class="p">,</span> <span class="s2">"SIR3S_View"</span><span class="p">]</span>
 <span class="n">RegistryInstance</span> <span class="o">=</span> <span class="n">SIR3S_Model</span> <span class="o">|</span> <span class="n">SIR3S_View</span> <span class="o">|</span> <span class="n">SIR3S_Model_Dataframes</span> <span class="o">|</span> <span class="n">SIR3S_Model_Alternative_Models</span> <span class="o">|</span> <span class="n">SIR3S_Model_Plotting</span> <span class="o">|</span> <span class="n">SIR3S_Model_Advanced_Operations</span> <span class="o">|</span> <span class="n">SIR3S_Model_Mantle</span>
 
 <div class="viewcode-block" id="ToolkitSessionState">
 <a class="viewcode-back" href="../../../references/sir3stoolkit.mcp.html#sir3stoolkit.mcp.state.ToolkitSessionState">[docs]</a>
 <span class="nd">@dataclass</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">ToolkitSessionState</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;In-memory session state for MCP tool calls.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""In-memory session state for MCP tool calls."""</span>
 
     <span class="n">sirgraf_dir</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">toolkit_package_is_initialized</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="n">class_instances</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">RegistryKey</span><span class="p">,</span> <span class="n">RegistryInstance</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
         <span class="n">default_factory</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;SIR3S_Model&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="s2">&quot;SIR3S_Model_Dataframes&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="s2">&quot;SIR3S_Model_Alternative_Models&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="s2">&quot;SIR3S_Model_Plotting&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="s2">&quot;SIR3S_Model_Advanced_Operations&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="s2">&quot;SIR3S_Model_Mantle&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="s2">&quot;SIR3S_View&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="s2">"SIR3S_Model"</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="s2">"SIR3S_Model_Dataframes"</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="s2">"SIR3S_Model_Alternative_Models"</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="s2">"SIR3S_Model_Plotting"</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="s2">"SIR3S_Model_Advanced_Operations"</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="s2">"SIR3S_Model_Mantle"</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="s2">"SIR3S_View"</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
         <span class="p">}</span>
     <span class="p">)</span>
 
@@ -132,13 +132,13 @@
 <div class="viewcode-block" id="ToolkitSessionState.reset_class_instances">
 <a class="viewcode-back" href="../../../references/sir3stoolkit.mcp.html#sir3stoolkit.mcp.state.ToolkitSessionState.reset_class_instances">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">reset_class_instances</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">class_instances</span><span class="p">[</span><span class="s2">&quot;SIR3S_Model&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">class_instances</span><span class="p">[</span><span class="s2">&quot;SIR3S_Model_Dataframes&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">class_instances</span><span class="p">[</span><span class="s2">&quot;SIR3S_Model_Alternative_Models&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">class_instances</span><span class="p">[</span><span class="s2">&quot;SIR3S_Model_Plotting&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">class_instances</span><span class="p">[</span><span class="s2">&quot;SIR3S_Model_Advanced_Operations&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">class_instances</span><span class="p">[</span><span class="s2">&quot;SIR3S_Model_Mantle&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">class_instances</span><span class="p">[</span><span class="s2">&quot;SIR3S_View&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">class_instances</span><span class="p">[</span><span class="s2">"SIR3S_Model"</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">class_instances</span><span class="p">[</span><span class="s2">"SIR3S_Model_Dataframes"</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">class_instances</span><span class="p">[</span><span class="s2">"SIR3S_Model_Alternative_Models"</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">class_instances</span><span class="p">[</span><span class="s2">"SIR3S_Model_Plotting"</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">class_instances</span><span class="p">[</span><span class="s2">"SIR3S_Model_Advanced_Operations"</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">class_instances</span><span class="p">[</span><span class="s2">"SIR3S_Model_Mantle"</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">class_instances</span><span class="p">[</span><span class="s2">"SIR3S_View"</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></div>
 </div>
 
 

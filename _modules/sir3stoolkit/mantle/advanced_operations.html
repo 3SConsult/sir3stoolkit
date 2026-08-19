@@ -85,13 +85,13 @@
              
   <h1>Source code for sir3stoolkit.mantle.advanced_operations</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 <span class="sd">Created on Fri Jan 23 12:11:41 2026</span>
 
 <span class="sd">This module implements functions that extend the basic C# operations with more advanced operations to change a SIR 3S model.</span>
 
 <span class="sd">@author: Jablonski</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Any</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
@@ -107,9 +107,9 @@
 <div class="viewcode-block" id="SIR3S_Model_Advanced_Operations">
 <a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.advanced_operations.SIR3S_Model_Advanced_Operations">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">SIR3S_Model_Advanced_Operations</span><span class="p">(</span><span class="n">SIR3S_Model</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    This class implements functions that extend the basic C# operations with more advanced operations to change a SIR 3S model.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
 <div class="viewcode-block" id="SIR3S_Model_Advanced_Operations.set_group_elements">
 <a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.advanced_operations.SIR3S_Model_Advanced_Operations.set_group_elements">[docs]</a>
@@ -118,28 +118,28 @@
         <span class="n">group_tk</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
         <span class="n">element_tks</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span> <span class="o">|</span> <span class="nb">int</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Overwrites elements in a group with a new list of elements.</span>
 
 <span class="sd">        :param self:</span>
 <span class="sd">        :param group_tk: Tk of the group the elements should be set for.</span>
 <span class="sd">        :type group_tk: int</span>
 <span class="sd">        :param element_tks: Tks of elements that should be set for the group.</span>
-<span class="sd">            Eg. [(&#39;KNOT&#39;, &#39;5428054456958551597&#39;),</span>
-<span class="sd">                (&#39;KNOT&#39;, &#39;5099111544186125239&#39;)]</span>
+<span class="sd">            Eg. [('KNOT', '5428054456958551597'),</span>
+<span class="sd">                ('KNOT', '5099111544186125239')]</span>
 <span class="sd">        :type element_tks: list[tuple[str, str]]</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         
         <span class="c1"># --- Validate Input Data ---</span>
         <span class="n">valid_group_tk</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
         <span class="n">available_group_tks</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">GetTksofElementType</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="o">.</span><span class="n">LAYR_Layer</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">group_tk</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">available_group_tks</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[validate_group_changes_data] given tk for group </span><span class="si">{</span><span class="n">group_tk</span><span class="si">}</span><span class="s2"> does not exist.&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">"[validate_group_changes_data] given tk for group </span><span class="si">{</span><span class="n">group_tk</span><span class="si">}</span><span class="s2"> does not exist."</span><span class="p">)</span>
             <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">valid_group_tk</span> <span class="o">=</span> <span class="n">group_tk</span>
             
-        <span class="n">object_types</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;__&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">item</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;__&#39;</span><span class="p">))]</span>
+        <span class="n">object_types</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">'__'</span><span class="p">)</span> <span class="ow">and</span> <span class="n">item</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">'__'</span><span class="p">))]</span>
         <span class="n">available_tks</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">object_type</span> <span class="ow">in</span> <span class="n">object_types</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">tk</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTksofElementType</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="p">[</span><span class="n">object_type</span><span class="p">]):</span>
@@ -150,18 +150,18 @@
             <span class="k">if</span> <span class="n">tk</span> <span class="ow">in</span> <span class="n">available_tks</span><span class="p">:</span>
                 <span class="n">valid_element_tks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">element_tks</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;validate_group_changes_data] element tk </span><span class="si">{</span><span class="n">tk</span><span class="si">}</span><span class="s2"> does not exist in model. Excluding...&quot;</span><span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"validate_group_changes_data] element tk </span><span class="si">{</span><span class="n">tk</span><span class="si">}</span><span class="s2"> does not exist in model. Excluding..."</span><span class="p">)</span>
 
         <span class="c1"># --- Set ---</span>
         <span class="n">element_obj_string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_group_objs_string</span><span class="p">(</span><span class="n">valid_element_tks</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">SetValue</span><span class="p">(</span><span class="n">valid_group_tk</span><span class="p">,</span> <span class="s2">&quot;ObjsString&quot;</span><span class="p">,</span><span class="n">element_obj_string</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SetValue</span><span class="p">(</span><span class="n">valid_group_tk</span><span class="p">,</span> <span class="s2">"ObjsString"</span><span class="p">,</span><span class="n">element_obj_string</span><span class="p">)</span>
 
         
         <span class="c1"># --- Check ---</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_tks_of_group_elements</span><span class="p">(</span><span class="n">group_tk</span><span class="o">=</span><span class="n">valid_group_tk</span><span class="p">))</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">valid_element_tks</span><span class="p">):</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[set elements for group] Check successful&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"[set elements for group] Check successful"</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[set elements for group] Check unsuccessful. Mismatch in amount of elements in edited group and intended amount.&quot;</span><span class="p">)</span></div>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"[set elements for group] Check unsuccessful. Mismatch in amount of elements in edited group and intended amount."</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="SIR3S_Model_Advanced_Operations.add_elements_to_group">
@@ -171,24 +171,24 @@
         <span class="n">group_tk</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
         <span class="n">element_tks</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span> <span class="o">|</span> <span class="nb">int</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Adds elements to a group with a list of elements.</span>
 
 <span class="sd">        :param self:</span>
 <span class="sd">        :param group_tk: Tk of the group the elements should be added to.</span>
 <span class="sd">        :type group_tk: int</span>
 <span class="sd">        :param element_tks: Tks of elements that should be added to the group.</span>
-<span class="sd">            Eg. [(&#39;KNOT&#39;, &#39;5428054456958551597&#39;),</span>
-<span class="sd">                (&#39;KNOT&#39;, &#39;5099111544186125239&#39;)]</span>
+<span class="sd">            Eg. [('KNOT', '5428054456958551597'),</span>
+<span class="sd">                ('KNOT', '5099111544186125239')]</span>
 <span class="sd">        :type element_tks: list[tuple[str, str]]</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
 
 
         <span class="c1"># --- Validate Input Data ---</span>
         <span class="n">valid_group_tk</span><span class="p">,</span> <span class="n">valid_element_tks</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validate_group_changes_data</span><span class="p">(</span><span class="n">group_tk</span><span class="p">,</span> <span class="n">element_tks</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">valid_group_tk</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">valid_element_tks</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[add elements to group] invalid input data&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">"[add elements to group] invalid input data"</span><span class="p">)</span>
             <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
         
         <span class="c1"># --- Get current group object string ---</span>
@@ -197,13 +197,13 @@
         <span class="n">element_obj_string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_group_objs_string</span><span class="p">(</span><span class="n">element_tks_to_be</span><span class="p">)</span>
 
         <span class="c1"># --- Add --</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">SetValue</span><span class="p">(</span><span class="n">valid_group_tk</span><span class="p">,</span> <span class="s2">&quot;ObjsString&quot;</span><span class="p">,</span><span class="n">element_obj_string</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SetValue</span><span class="p">(</span><span class="n">valid_group_tk</span><span class="p">,</span> <span class="s2">"ObjsString"</span><span class="p">,</span><span class="n">element_obj_string</span><span class="p">)</span>
 
         <span class="c1"># --- Check ---</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_tks_of_group_elements</span><span class="p">(</span><span class="n">group_tk</span><span class="o">=</span><span class="n">valid_group_tk</span><span class="p">))</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">element_tks_to_be</span><span class="p">):</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[add elements to group] Check successful&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"[add elements to group] Check successful"</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[add elements to group] Check unsuccessful. Mismatch in amount of elements in edited group and intended amount.&quot;</span><span class="p">)</span></div>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"[add elements to group] Check unsuccessful. Mismatch in amount of elements in edited group and intended amount."</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="SIR3S_Model_Advanced_Operations.remove_elements_from_group">
@@ -213,24 +213,24 @@
         <span class="n">group_tk</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
         <span class="n">element_tks</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span> <span class="o">|</span> <span class="nb">int</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Removes elements from a group with a list of elements.</span>
 
 <span class="sd">        :param self:</span>
 <span class="sd">        :param group_tk: Tk of the group the elements should be removed from.</span>
 <span class="sd">        :type group_tk: int</span>
 <span class="sd">        :param element_tks: Tks of elements that should be removed from the group.</span>
-<span class="sd">            Eg. [(&#39;KNOT&#39;, &#39;5428054456958551597&#39;),</span>
-<span class="sd">                (&#39;KNOT&#39;, &#39;5099111544186125239&#39;)]</span>
+<span class="sd">            Eg. [('KNOT', '5428054456958551597'),</span>
+<span class="sd">                ('KNOT', '5099111544186125239')]</span>
 <span class="sd">        :type element_tks: list[tuple[str, str]]</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
 
 
         <span class="c1"># --- Validate Input Data ---</span>
         <span class="n">valid_group_tk</span><span class="p">,</span> <span class="n">valid_element_tks</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validate_group_changes_data</span><span class="p">(</span><span class="n">group_tk</span><span class="p">,</span> <span class="n">element_tks</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">valid_group_tk</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">valid_element_tks</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[remove elements from group] invalid input data&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"[remove elements from group] invalid input data"</span><span class="p">)</span>
             <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
         
         <span class="c1"># --- Get current group object string ---</span>
@@ -240,13 +240,13 @@
         <span class="n">element_obj_string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_group_objs_string</span><span class="p">(</span><span class="n">element_tks_to_be</span><span class="p">)</span>
         
         <span class="c1"># --- Add --</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">SetValue</span><span class="p">(</span><span class="n">valid_group_tk</span><span class="p">,</span> <span class="s2">&quot;ObjsString&quot;</span><span class="p">,</span><span class="n">element_obj_string</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SetValue</span><span class="p">(</span><span class="n">valid_group_tk</span><span class="p">,</span> <span class="s2">"ObjsString"</span><span class="p">,</span><span class="n">element_obj_string</span><span class="p">)</span>
 
         <span class="c1"># --- Check ---</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_tks_of_group_elements</span><span class="p">(</span><span class="n">group_tk</span><span class="o">=</span><span class="n">valid_group_tk</span><span class="p">))</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">element_tks_to_be</span><span class="p">):</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[remove elements from group] Check successful&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"[remove elements from group] Check successful"</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[remove elements from group] Check unsuccessful. Mismatch in amount of elements in edited group and intended amount.&quot;</span><span class="p">)</span></div>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"[remove elements from group] Check unsuccessful. Mismatch in amount of elements in edited group and intended amount."</span><span class="p">)</span></div>
 
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_validate_group_changes_data</span><span class="p">(</span>
@@ -255,27 +255,27 @@
         <span class="n">element_tks</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]],</span>
         <span class="n">remove_or_add</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="c1"># True for remove, False for add</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Needed for remove_elements_from_group() and add_elements_to_group(). validates inputs for them.</span>
 <span class="sd">        </span>
 <span class="sd">        :param self:</span>
 <span class="sd">        :param group_tk: Tk of the group that should be validated</span>
 <span class="sd">        :type group_tk: int</span>
-<span class="sd">        :param element_tks: Tks of elements, that should be validated. Eg. [(&#39;KNOT&#39;, &#39;5428054456958551597&#39;), (&#39;KNOT&#39;, &#39;5099111544186125239&#39;)]</span>
+<span class="sd">        :param element_tks: Tks of elements, that should be validated. Eg. [('KNOT', '5428054456958551597'), ('KNOT', '5099111544186125239')]</span>
 <span class="sd">        :type element_tks: list[tuple(str, str)]</span>
 <span class="sd">        :param remove_or_add: True for remove, False for add</span>
 <span class="sd">        :type remove_or_add: bool</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="c1"># --- Group tk ---</span>
         <span class="n">valid_group_tk</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
         <span class="n">available_group_tks</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">GetTksofElementType</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="o">.</span><span class="n">LAYR_Layer</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">group_tk</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">available_group_tks</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[validate_group_changes_data] given tk for group </span><span class="si">{</span><span class="n">group_tk</span><span class="si">}</span><span class="s2"> does not exist.&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"[validate_group_changes_data] given tk for group </span><span class="si">{</span><span class="n">group_tk</span><span class="si">}</span><span class="s2"> does not exist."</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">valid_group_tk</span> <span class="o">=</span> <span class="n">group_tk</span>
         
         <span class="c1"># --- Element tks ---</span>
-        <span class="n">object_types</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;__&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">item</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;__&#39;</span><span class="p">))]</span>
+        <span class="n">object_types</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">'__'</span><span class="p">)</span> <span class="ow">and</span> <span class="n">item</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">'__'</span><span class="p">))]</span>
         <span class="n">available_tks</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">object_type</span> <span class="ow">in</span> <span class="n">object_types</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">tk</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTksofElementType</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="p">[</span><span class="n">object_type</span><span class="p">]):</span>
@@ -290,14 +290,14 @@
                     <span class="k">if</span> <span class="n">tk</span> <span class="ow">in</span> <span class="n">available_tks_in_group</span><span class="p">:</span>
                         <span class="n">valid_element_tks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">element_tks</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
                     <span class="k">else</span><span class="p">:</span>
-                        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;validate_group_changes_data] element tk </span><span class="si">{</span><span class="n">tk</span><span class="si">}</span><span class="s2"> does not lie in group </span><span class="si">{</span><span class="n">group_tk</span><span class="si">}</span><span class="s2">. Excluding...&quot;</span><span class="p">)</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"validate_group_changes_data] element tk </span><span class="si">{</span><span class="n">tk</span><span class="si">}</span><span class="s2"> does not lie in group </span><span class="si">{</span><span class="n">group_tk</span><span class="si">}</span><span class="s2">. Excluding..."</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="k">if</span> <span class="n">tk</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">available_tks_in_group</span><span class="p">:</span>
                         <span class="n">valid_element_tks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">element_tks</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
                     <span class="k">else</span><span class="p">:</span>
-                        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;validate_group_changes_data] element tk </span><span class="si">{</span><span class="n">tk</span><span class="si">}</span><span class="s2"> already lies in group </span><span class="si">{</span><span class="n">group_tk</span><span class="si">}</span><span class="s2">. Excluding...&quot;</span><span class="p">)</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"validate_group_changes_data] element tk </span><span class="si">{</span><span class="n">tk</span><span class="si">}</span><span class="s2"> already lies in group </span><span class="si">{</span><span class="n">group_tk</span><span class="si">}</span><span class="s2">. Excluding..."</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;validate_group_changes_data] element tk </span><span class="si">{</span><span class="n">tk</span><span class="si">}</span><span class="s2"> does not exist in model. Excluding...&quot;</span><span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"validate_group_changes_data] element tk </span><span class="si">{</span><span class="n">tk</span><span class="si">}</span><span class="s2"> does not exist in model. Excluding..."</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">valid_group_tk</span><span class="p">,</span> <span class="n">valid_element_tks</span>
 
@@ -307,15 +307,15 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">tks</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Turns list of tks into list of tuples with element type and tk. Only works for DistrictHeating networks. For other mappings we need an additional mapping. see sir3stoolkit/docs/code snippets/mapping_for_groups.ipynb</span>
 <span class="sd">        </span>
 <span class="sd">        :param self: </span>
-<span class="sd">        :param tks: List of tks of elements like [&#39;5428054456958551597&#39;, &#39;50736424189751239&#39;]</span>
+<span class="sd">        :param tks: List of tks of elements like ['5428054456958551597', '50736424189751239']</span>
 <span class="sd">        :type tks: List[str]</span>
-<span class="sd">        :return: [(&#39;KNOT&#39;, &#39;5428054456958551597&#39;), (&#39;ROHR&#39;, &#39;50736424189751239&#39;)]</span>
+<span class="sd">        :return: [('KNOT', '5428054456958551597'), ('ROHR', '50736424189751239')]</span>
 <span class="sd">        :rtype: List[Tuple[str, str]]</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
 
         <span class="n">element_type_alternative_names</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">tk</span> <span class="ow">in</span> <span class="n">tks</span><span class="p">:</span>
@@ -334,7 +334,7 @@
             <span class="bp">self</span><span class="p">,</span>
             <span class="n">group_tk</span><span class="p">:</span> <span class="nb">int</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Returns list of tuples with element type and tk of elements that are part of specific group.</span>
 <span class="sd">        </span>
 <span class="sd">        :param self: </span>
@@ -342,20 +342,20 @@
 <span class="sd">        :type group_tk: int</span>
 <span class="sd">        :return: List of tuples with element type and tk of elements of group.</span>
 <span class="sd">        :rtype: Any</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
 
         <span class="c1"># --- Validate Input Data ---</span>
         <span class="n">available_group_tks</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">GetTksofElementType</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="o">.</span><span class="n">LAYR_Layer</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">group_tk</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">available_group_tks</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[get group tks] given tk for group </span><span class="si">{</span><span class="n">group_tk</span><span class="si">}</span><span class="s2"> does not exist.&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">"[get group tks] given tk for group </span><span class="si">{</span><span class="n">group_tk</span><span class="si">}</span><span class="s2"> does not exist."</span><span class="p">)</span>
             <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
 
         <span class="c1"># --- Get group object string</span>
-        <span class="n">ObjStr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetValue</span><span class="p">(</span><span class="n">group_tk</span><span class="p">,</span> <span class="s2">&quot;ObjsString&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">ObjStr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetValue</span><span class="p">(</span><span class="n">group_tk</span><span class="p">,</span> <span class="s2">"ObjsString"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">current_group_tks</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">ObjStr</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">ObjStr</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'</span><span class="se">\t</span><span class="s1">'</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">element</span><span class="p">:</span> 
-                <span class="n">obj_type</span><span class="p">,</span> <span class="n">obj_tk</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;~&#39;</span><span class="p">)</span>
+                <span class="n">obj_type</span><span class="p">,</span> <span class="n">obj_tk</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'~'</span><span class="p">)</span>
                 <span class="n">current_group_tks</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">obj_type</span><span class="p">,</span> <span class="n">obj_tk</span><span class="p">))</span>
 
         <span class="k">return</span> <span class="n">current_group_tks</span></div>
@@ -366,14 +366,14 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">group_tks</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">str</span><span class="p">]]</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Build an ObjStr from a list of (object_type, object_tk) tuples.</span>
 
 <span class="sd">        Format:</span>
-<span class="sd">        &quot;TYPE~tk\tTYPE~tk\t...&quot;</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        "TYPE~tk\tTYPE~tk\t..."</span>
+<span class="sd">        """</span>
 
-        <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">obj_type</span><span class="si">}</span><span class="s2">~</span><span class="si">{</span><span class="n">obj_tk</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">obj_type</span><span class="p">,</span> <span class="n">obj_tk</span> <span class="ow">in</span> <span class="n">group_tks</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="s2">"</span><span class="se">\t</span><span class="s2">"</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">obj_type</span><span class="si">}</span><span class="s2">~</span><span class="si">{</span><span class="n">obj_tk</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">obj_type</span><span class="p">,</span> <span class="n">obj_tk</span> <span class="ow">in</span> <span class="n">group_tks</span><span class="p">)</span> <span class="o">+</span> <span class="s2">"</span><span class="se">\t</span><span class="s2">"</span>
 
 <div class="viewcode-block" id="SIR3S_Model_Advanced_Operations.get_element_type_from_tk">
 <a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.advanced_operations.SIR3S_Model_Advanced_Operations.get_element_type_from_tk">[docs]</a>
@@ -381,7 +381,7 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">tk</span><span class="p">:</span> <span class="nb">str</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Return element type for given tk.</span>
 <span class="sd">        </span>
 <span class="sd">        :param self:</span>
@@ -389,9 +389,9 @@
 <span class="sd">        :type tk: int</span>
 <span class="sd">        :return: element type</span>
 <span class="sd">        :rtype: str</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
 
-        <span class="n">object_types</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;__&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">item</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;__&#39;</span><span class="p">))]</span>
+        <span class="n">object_types</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">'__'</span><span class="p">)</span> <span class="ow">and</span> <span class="n">item</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">'__'</span><span class="p">))]</span>
         <span class="k">for</span> <span class="n">object_type</span> <span class="ow">in</span> <span class="n">object_types</span><span class="p">:</span>
             <span class="n">tks</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">GetTksofElementType</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="p">[</span><span class="n">object_type</span><span class="p">])</span>
             <span class="k">if</span> <span class="n">tk</span> <span class="ow">in</span> <span class="n">tks</span><span class="p">:</span>
@@ -405,155 +405,155 @@
 <span class="c1"># --- Mappings ---</span>
 
 <span class="c1"># Only for District Heating    </span>
-<span class="n">mapping_for_groups</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;AGSN_HydraulicProfile&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;AirVessel&#39;</span><span class="p">:</span> <span class="s1">&#39;WIND&#39;</span><span class="p">,</span>
-<span class="s1">&#39;Arrow&#39;</span><span class="p">:</span> <span class="s1">&#39;ARRW&#39;</span><span class="p">,</span>
-<span class="s1">&#39;Atmosphere&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;BlockConnectionNode&#39;</span><span class="p">:</span> <span class="s1">&#39;VKNO&#39;</span><span class="p">,</span>
-<span class="s1">&#39;CalcPari&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;CharacteristicLossTable&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;CharacteristicLossTable_Row&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;Circle&#39;</span><span class="p">:</span> <span class="s1">&#39;CIRC&#39;</span><span class="p">,</span>
-<span class="s1">&#39;Compressor&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;CompressorTable&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;CompressorTable_Row&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;ControlEngineeringNexus&#39;</span><span class="p">:</span> <span class="s1">&#39;CRGL&#39;</span><span class="p">,</span>
-<span class="s1">&#39;ControlMode&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;ControlPointTable&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;ControlPointTable_Row&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;ControlValve&#39;</span><span class="p">:</span> <span class="s1">&#39;REGV&#39;</span><span class="p">,</span>
-<span class="s1">&#39;ControlVariableConverter&#39;</span><span class="p">:</span> <span class="s1">&#39;RSTN&#39;</span><span class="p">,</span>
-<span class="s1">&#39;ControlVariableConverterRSTE&#39;</span><span class="p">:</span> <span class="s1">&#39;RSTE&#39;</span><span class="p">,</span>
-<span class="s1">&#39;CrossSectionTable&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;CrossSectionTable_Row&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;DPGR_DPKT_DatapointDpgrConnection&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;DPGR_DataPointGroup&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;DPKT_Datapoint&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;DamageRatesTable&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;DamageRatesTable_Row&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;DeadTimeElement&#39;</span><span class="p">:</span> <span class="s1">&#39;RTOT&#39;</span><span class="p">,</span>
-<span class="s1">&#39;Demand&#39;</span><span class="p">:</span> <span class="s1">&#39;VERB&#39;</span><span class="p">,</span>
-<span class="s1">&#39;DifferentialRegulator&#39;</span><span class="p">:</span> <span class="s1">&#39;DPRG&#39;</span><span class="p">,</span>
-<span class="s1">&#39;DirectionalArrow&#39;</span><span class="p">:</span> <span class="s1">&#39;RPFL&#39;</span><span class="p">,</span>
-<span class="s1">&#39;DistrictHeatingConsumer&#39;</span><span class="p">:</span> <span class="s1">&#39;FWVB&#39;</span><span class="p">,</span>
-<span class="s1">&#39;DistrictHeatingFeeder&#39;</span><span class="p">:</span> <span class="s1">&#39;FWES&#39;</span><span class="p">,</span>
-<span class="s1">&#39;Divider&#39;</span><span class="p">:</span> <span class="s1">&#39;RDIV&#39;</span><span class="p">,</span>
-<span class="s1">&#39;DriveEfficiencyTable&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;DriveEfficiencyTable_Row&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;DrivePowerTable&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;DrivePowerTable_Row&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;EBES_FeederGroups&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;EfficiencyConverterTable&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;EfficiencyConverterTable_Row&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;ElementQuery&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;EnergyRecoveryTable&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;EnergyRecoveryTable_Row&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;EnvironmentTemp&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;FWBZ_DistrictHeatingReferenceValues&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;FlapValve&#39;</span><span class="p">:</span> <span class="s1">&#39;KLAP&#39;</span><span class="p">,</span>
-<span class="s1">&#39;FlowControlUnit&#39;</span><span class="p">:</span> <span class="s1">&#39;MREG&#39;</span><span class="p">,</span>
-<span class="s1">&#39;FluidQualityParamSet&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;FluidQualityParamSet_OS&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;FluidThermalPropertyGroup&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;FreeDuct&#39;</span><span class="p">:</span> <span class="s1">&#39;FKNL&#39;</span><span class="p">,</span>
-<span class="s1">&#39;FunctionGenerator&#39;</span><span class="p">:</span> <span class="s1">&#39;RFKT&#39;</span><span class="p">,</span>
-<span class="s1">&#39;FunctionTable&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;FunctionTable_Row&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;GasComponent&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;GasMixture&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;GeneralSection&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;Gravitation&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;HeatExchanger&#39;</span><span class="p">:</span> <span class="s1">&#39;FWWU&#39;</span><span class="p">,</span>
-<span class="s1">&#39;HeatFeederConsumerStation&#39;</span><span class="p">:</span> <span class="s1">&#39;FWEA&#39;</span><span class="p">,</span>
-<span class="s1">&#39;HeaterCooler&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;Histeresis&#39;</span><span class="p">:</span> <span class="s1">&#39;RHYS&#39;</span><span class="p">,</span>
-<span class="s1">&#39;House&#39;</span><span class="p">:</span> <span class="s1">&#39;HAUS&#39;</span><span class="p">,</span>
-<span class="s1">&#39;Hydrant&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;Integrator&#39;</span><span class="p">:</span> <span class="s1">&#39;RINT&#39;</span><span class="p">,</span>
-<span class="s1">&#39;LAYR_Layer&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;LoadFactorTable&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;LoadFactorTable_Row&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;LogicalComparison&#39;</span><span class="p">:</span> <span class="s1">&#39;RLVG&#39;</span><span class="p">,</span>
-<span class="s1">&#39;LogicalStorage&#39;</span><span class="p">:</span> <span class="s1">&#39;RLSR&#39;</span><span class="p">,</span>
-<span class="s1">&#39;MeasuredVariableTable&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;MeasuredVariableTable_Row&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;MinMaxSelection&#39;</span><span class="p">:</span> <span class="s1">&#39;RMMA&#39;</span><span class="p">,</span>
-<span class="s1">&#39;Multiplier&#39;</span><span class="p">:</span> <span class="s1">&#39;RMUL&#39;</span><span class="p">,</span>
-<span class="s1">&#39;NetValve&#39;</span><span class="p">:</span> <span class="s1">&#39;NSCH&#39;</span><span class="p">,</span>
-<span class="s1">&#39;Node&#39;</span><span class="p">:</span> <span class="s1">&#39;KNOT&#39;</span><span class="p">,</span>
-<span class="s1">&#39;NonReturnValvesTable&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;NonReturnValvesTable_Row&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;NumericalDisplay&#39;</span><span class="p">:</span> <span class="s1">&#39;NRCV&#39;</span><span class="p">,</span>
-<span class="s1">&#39;ObjectContainerSymbol&#39;</span><span class="p">:</span> <span class="s1">&#39;CONT&#39;</span><span class="p">,</span>
-<span class="s1">&#39;OpenContainer&#39;</span><span class="p">:</span> <span class="s1">&#39;OBEH&#39;</span><span class="p">,</span>
-<span class="s1">&#39;Oval&#39;</span><span class="p">:</span> <span class="s1">&#39;OVAL&#39;</span><span class="p">,</span>
-<span class="s1">&#39;PARZ_TransientCalculationParameters&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;PhaseSeparation&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;PidController&#39;</span><span class="p">:</span> <span class="s1">&#39;RPID&#39;</span><span class="p">,</span>
-<span class="s1">&#39;Pipe&#39;</span><span class="p">:</span> <span class="s1">&#39;ROHR&#39;</span><span class="p">,</span>
-<span class="s1">&#39;PipeGroup&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;PipeTable&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;PipeTable_Row&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;PipeVertex&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;Polygon&#39;</span><span class="p">:</span> <span class="s1">&#39;PLYG&#39;</span><span class="p">,</span>
-<span class="s1">&#39;Polyline&#39;</span><span class="p">:</span> <span class="s1">&#39;POLY&#39;</span><span class="p">,</span>
-<span class="s1">&#39;PressureRegulator&#39;</span><span class="p">:</span> <span class="s1">&#39;PREG&#39;</span><span class="p">,</span>
-<span class="s1">&#39;PressureZone&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;Pt1Controller&#39;</span><span class="p">:</span> <span class="s1">&#39;RPT1&#39;</span><span class="p">,</span>
-<span class="s1">&#39;Pump&#39;</span><span class="p">:</span> <span class="s1">&#39;PUMP&#39;</span><span class="p">,</span>
-<span class="s1">&#39;PumpCharTable&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;PumpCharTable_Row&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;PumpGroup&#39;</span><span class="p">:</span> <span class="s1">&#39;PGRP&#39;</span><span class="p">,</span>
-<span class="s1">&#39;PumpOfPumpGroup&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;PumpSpeedTable&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;PumpSpeedTable_Row&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;RART_ControlMode&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;REGP_ControlParameters&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;RMES_DPTS_RmesInternalDataPoint&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;Rectangle&#39;</span><span class="p">:</span> <span class="s1">&#39;RECT&#39;</span><span class="p">,</span>
-<span class="s1">&#39;RegulatorsTable&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;RegulatorsTable_Row&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;ReturnTemperaturTable&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;ReturnTemperaturTable_Row&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;RoundRectangle&#39;</span><span class="p">:</span> <span class="s1">&#39;RRCT&#39;</span><span class="p">,</span>
-<span class="s1">&#39;SIRGRAF&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;SPLZ_TimeSeries&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;SafetyValve&#39;</span><span class="p">:</span> <span class="s1">&#39;SIVE&#39;</span><span class="p">,</span>
-<span class="s1">&#39;SetpointDevice&#39;</span><span class="p">:</span> <span class="s1">&#39;RSLW&#39;</span><span class="p">,</span>
-<span class="s1">&#39;SolarCollector&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;StandPipe&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;Street&#39;</span><span class="p">:</span> <span class="s1">&#39;STRASSE&#39;</span><span class="p">,</span>
-<span class="s1">&#39;SummingPoint&#39;</span><span class="p">:</span> <span class="s1">&#39;RADD&#39;</span><span class="p">,</span>
-<span class="s1">&#39;SwitchInBlock&#39;</span><span class="p">:</span> <span class="s1">&#39;BREF&#39;</span><span class="p">,</span>
-<span class="s1">&#39;TemperatureTable&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;TemperatureTable_Row&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;Text&#39;</span><span class="p">:</span> <span class="s1">&#39;GTXT&#39;</span><span class="p">,</span>
-<span class="s1">&#39;ThermalOutputTable&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;ThermalOutputTable_Row&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;ThermophysPropTable&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;ThermophysPropTable_Row&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;TransitionSymbol&#39;</span><span class="p">:</span> <span class="s1">&#39;RUES&#39;</span><span class="p">,</span>
-<span class="s1">&#39;Transmitter&#39;</span><span class="p">:</span> <span class="s1">&#39;RMES&#39;</span><span class="p">,</span>
-<span class="s1">&#39;TransportVariable&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;USCH_UserDefinedProperties&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;Unknown&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;VARA_ColorScale&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;VARA_ROWS_WidthOrScale&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;VRCT_ViewRectangle&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;Valve&#39;</span><span class="p">:</span> <span class="s1">&#39;VENT&#39;</span><span class="p">,</span>
-<span class="s1">&#39;ValveLiftTable&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;ValveLiftTable_Row&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;VarFlowTable&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;VarFlowTable_Row&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;VarPressureTable&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;VarPressureTable_Row&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;VentOpenCloseTable&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;VentOpenCloseTable_Row&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;VentValve&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;VentilatedPressureAirVessel&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;WBLZ_ThermalBalance&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;WeatherDataTable&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">&#39;WeatherDataTable_Row&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">}</span>
+<span class="n">mapping_for_groups</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'AGSN_HydraulicProfile'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'AirVessel'</span><span class="p">:</span> <span class="s1">'WIND'</span><span class="p">,</span>
+<span class="s1">'Arrow'</span><span class="p">:</span> <span class="s1">'ARRW'</span><span class="p">,</span>
+<span class="s1">'Atmosphere'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'BlockConnectionNode'</span><span class="p">:</span> <span class="s1">'VKNO'</span><span class="p">,</span>
+<span class="s1">'CalcPari'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'CharacteristicLossTable'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'CharacteristicLossTable_Row'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'Circle'</span><span class="p">:</span> <span class="s1">'CIRC'</span><span class="p">,</span>
+<span class="s1">'Compressor'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'CompressorTable'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'CompressorTable_Row'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'ControlEngineeringNexus'</span><span class="p">:</span> <span class="s1">'CRGL'</span><span class="p">,</span>
+<span class="s1">'ControlMode'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'ControlPointTable'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'ControlPointTable_Row'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'ControlValve'</span><span class="p">:</span> <span class="s1">'REGV'</span><span class="p">,</span>
+<span class="s1">'ControlVariableConverter'</span><span class="p">:</span> <span class="s1">'RSTN'</span><span class="p">,</span>
+<span class="s1">'ControlVariableConverterRSTE'</span><span class="p">:</span> <span class="s1">'RSTE'</span><span class="p">,</span>
+<span class="s1">'CrossSectionTable'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'CrossSectionTable_Row'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'DPGR_DPKT_DatapointDpgrConnection'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'DPGR_DataPointGroup'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'DPKT_Datapoint'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'DamageRatesTable'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'DamageRatesTable_Row'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'DeadTimeElement'</span><span class="p">:</span> <span class="s1">'RTOT'</span><span class="p">,</span>
+<span class="s1">'Demand'</span><span class="p">:</span> <span class="s1">'VERB'</span><span class="p">,</span>
+<span class="s1">'DifferentialRegulator'</span><span class="p">:</span> <span class="s1">'DPRG'</span><span class="p">,</span>
+<span class="s1">'DirectionalArrow'</span><span class="p">:</span> <span class="s1">'RPFL'</span><span class="p">,</span>
+<span class="s1">'DistrictHeatingConsumer'</span><span class="p">:</span> <span class="s1">'FWVB'</span><span class="p">,</span>
+<span class="s1">'DistrictHeatingFeeder'</span><span class="p">:</span> <span class="s1">'FWES'</span><span class="p">,</span>
+<span class="s1">'Divider'</span><span class="p">:</span> <span class="s1">'RDIV'</span><span class="p">,</span>
+<span class="s1">'DriveEfficiencyTable'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'DriveEfficiencyTable_Row'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'DrivePowerTable'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'DrivePowerTable_Row'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'EBES_FeederGroups'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'EfficiencyConverterTable'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'EfficiencyConverterTable_Row'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'ElementQuery'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'EnergyRecoveryTable'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'EnergyRecoveryTable_Row'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'EnvironmentTemp'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'FWBZ_DistrictHeatingReferenceValues'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'FlapValve'</span><span class="p">:</span> <span class="s1">'KLAP'</span><span class="p">,</span>
+<span class="s1">'FlowControlUnit'</span><span class="p">:</span> <span class="s1">'MREG'</span><span class="p">,</span>
+<span class="s1">'FluidQualityParamSet'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'FluidQualityParamSet_OS'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'FluidThermalPropertyGroup'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'FreeDuct'</span><span class="p">:</span> <span class="s1">'FKNL'</span><span class="p">,</span>
+<span class="s1">'FunctionGenerator'</span><span class="p">:</span> <span class="s1">'RFKT'</span><span class="p">,</span>
+<span class="s1">'FunctionTable'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'FunctionTable_Row'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'GasComponent'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'GasMixture'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'GeneralSection'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'Gravitation'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'HeatExchanger'</span><span class="p">:</span> <span class="s1">'FWWU'</span><span class="p">,</span>
+<span class="s1">'HeatFeederConsumerStation'</span><span class="p">:</span> <span class="s1">'FWEA'</span><span class="p">,</span>
+<span class="s1">'HeaterCooler'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'Histeresis'</span><span class="p">:</span> <span class="s1">'RHYS'</span><span class="p">,</span>
+<span class="s1">'House'</span><span class="p">:</span> <span class="s1">'HAUS'</span><span class="p">,</span>
+<span class="s1">'Hydrant'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'Integrator'</span><span class="p">:</span> <span class="s1">'RINT'</span><span class="p">,</span>
+<span class="s1">'LAYR_Layer'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'LoadFactorTable'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'LoadFactorTable_Row'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'LogicalComparison'</span><span class="p">:</span> <span class="s1">'RLVG'</span><span class="p">,</span>
+<span class="s1">'LogicalStorage'</span><span class="p">:</span> <span class="s1">'RLSR'</span><span class="p">,</span>
+<span class="s1">'MeasuredVariableTable'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'MeasuredVariableTable_Row'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'MinMaxSelection'</span><span class="p">:</span> <span class="s1">'RMMA'</span><span class="p">,</span>
+<span class="s1">'Multiplier'</span><span class="p">:</span> <span class="s1">'RMUL'</span><span class="p">,</span>
+<span class="s1">'NetValve'</span><span class="p">:</span> <span class="s1">'NSCH'</span><span class="p">,</span>
+<span class="s1">'Node'</span><span class="p">:</span> <span class="s1">'KNOT'</span><span class="p">,</span>
+<span class="s1">'NonReturnValvesTable'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'NonReturnValvesTable_Row'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'NumericalDisplay'</span><span class="p">:</span> <span class="s1">'NRCV'</span><span class="p">,</span>
+<span class="s1">'ObjectContainerSymbol'</span><span class="p">:</span> <span class="s1">'CONT'</span><span class="p">,</span>
+<span class="s1">'OpenContainer'</span><span class="p">:</span> <span class="s1">'OBEH'</span><span class="p">,</span>
+<span class="s1">'Oval'</span><span class="p">:</span> <span class="s1">'OVAL'</span><span class="p">,</span>
+<span class="s1">'PARZ_TransientCalculationParameters'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'PhaseSeparation'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'PidController'</span><span class="p">:</span> <span class="s1">'RPID'</span><span class="p">,</span>
+<span class="s1">'Pipe'</span><span class="p">:</span> <span class="s1">'ROHR'</span><span class="p">,</span>
+<span class="s1">'PipeGroup'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'PipeTable'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'PipeTable_Row'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'PipeVertex'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'Polygon'</span><span class="p">:</span> <span class="s1">'PLYG'</span><span class="p">,</span>
+<span class="s1">'Polyline'</span><span class="p">:</span> <span class="s1">'POLY'</span><span class="p">,</span>
+<span class="s1">'PressureRegulator'</span><span class="p">:</span> <span class="s1">'PREG'</span><span class="p">,</span>
+<span class="s1">'PressureZone'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'Pt1Controller'</span><span class="p">:</span> <span class="s1">'RPT1'</span><span class="p">,</span>
+<span class="s1">'Pump'</span><span class="p">:</span> <span class="s1">'PUMP'</span><span class="p">,</span>
+<span class="s1">'PumpCharTable'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'PumpCharTable_Row'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'PumpGroup'</span><span class="p">:</span> <span class="s1">'PGRP'</span><span class="p">,</span>
+<span class="s1">'PumpOfPumpGroup'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'PumpSpeedTable'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'PumpSpeedTable_Row'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'RART_ControlMode'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'REGP_ControlParameters'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'RMES_DPTS_RmesInternalDataPoint'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'Rectangle'</span><span class="p">:</span> <span class="s1">'RECT'</span><span class="p">,</span>
+<span class="s1">'RegulatorsTable'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'RegulatorsTable_Row'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'ReturnTemperaturTable'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'ReturnTemperaturTable_Row'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'RoundRectangle'</span><span class="p">:</span> <span class="s1">'RRCT'</span><span class="p">,</span>
+<span class="s1">'SIRGRAF'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'SPLZ_TimeSeries'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'SafetyValve'</span><span class="p">:</span> <span class="s1">'SIVE'</span><span class="p">,</span>
+<span class="s1">'SetpointDevice'</span><span class="p">:</span> <span class="s1">'RSLW'</span><span class="p">,</span>
+<span class="s1">'SolarCollector'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'StandPipe'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'Street'</span><span class="p">:</span> <span class="s1">'STRASSE'</span><span class="p">,</span>
+<span class="s1">'SummingPoint'</span><span class="p">:</span> <span class="s1">'RADD'</span><span class="p">,</span>
+<span class="s1">'SwitchInBlock'</span><span class="p">:</span> <span class="s1">'BREF'</span><span class="p">,</span>
+<span class="s1">'TemperatureTable'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'TemperatureTable_Row'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'Text'</span><span class="p">:</span> <span class="s1">'GTXT'</span><span class="p">,</span>
+<span class="s1">'ThermalOutputTable'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'ThermalOutputTable_Row'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'ThermophysPropTable'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'ThermophysPropTable_Row'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'TransitionSymbol'</span><span class="p">:</span> <span class="s1">'RUES'</span><span class="p">,</span>
+<span class="s1">'Transmitter'</span><span class="p">:</span> <span class="s1">'RMES'</span><span class="p">,</span>
+<span class="s1">'TransportVariable'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'USCH_UserDefinedProperties'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'Unknown'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'VARA_ColorScale'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'VARA_ROWS_WidthOrScale'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'VRCT_ViewRectangle'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'Valve'</span><span class="p">:</span> <span class="s1">'VENT'</span><span class="p">,</span>
+<span class="s1">'ValveLiftTable'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'ValveLiftTable_Row'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'VarFlowTable'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'VarFlowTable_Row'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'VarPressureTable'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'VarPressureTable_Row'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'VentOpenCloseTable'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'VentOpenCloseTable_Row'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'VentValve'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'VentilatedPressureAirVessel'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'WBLZ_ThermalBalance'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'WeatherDataTable'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'WeatherDataTable_Row'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">}</span>
 </pre></div>
 
            </div>
