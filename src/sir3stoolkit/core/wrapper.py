@@ -1374,7 +1374,7 @@ class SIR3S_Model:
 
     def GetGeometryInformation(self, Tk: str) -> str:
         """
-        Extracts the geometry information of an element using its TK.
+        Extracts the technical geometry information (Sachdatengeometrie) of an element using its TK.
 
         :param Tk: TK of the element whose geometry information is needed.
         :type Tk: str
@@ -1390,7 +1390,7 @@ class SIR3S_Model:
 
     def SetGeometryInformation(self, Tk: str, Wkt: str) -> bool:
         """
-        Sets the geometry information of an element using its TK.
+        Sets the technical geometry information (Sachdatengeometrie) of an element using its TK.
 
         :param Tk: TK of the element whose geometry information needs to be set.
         :type Tk: str
