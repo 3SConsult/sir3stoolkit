@@ -1827,7 +1827,8 @@ on the main UI (SirGraf).</p>
 <dd><p>Writes the SirCalc XML Input File before any Calculations are performed.
 This Method generates the SirCalc XML File in its initial state, allowing it to be
 manually edited  before Calculations are executed.
-The SirCalc XML Input File should only be edited by people, who know what they are doing. Otherwise your calculation configuration could become deprecated. If you mess up, you can reset to the current SIR 3S model state by reexecuting WriteSirCalcXmlFile().</p>
+The SirCalc XML Input File should only be edited by people, who know what they are doing. Otherwise your calculation configuration could become deprecated. If you mess up, you can reset to the current SIR 3S model state by reexecuting WriteSirCalcXmlFile().
+WARNING: Running this method, will leave stale result data to be accessed with GetResultValue() or similar functions. To fix this close and reopen the model, after running calculations. This is a bug currently investigated: <a class="reference external" href="https://github.com/3SConsult/sir3stoolkit/issues/23">https://github.com/3SConsult/sir3stoolkit/issues/23</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>saveItInThisDirectory</strong> (<em>str</em>) – The Directory Path from where the SirCalc XML File should be saved. Ensure that the directory is writable.
