@@ -8,8 +8,12 @@ This module implements functions that extend the basic C# operations with more a
 """
 
 from typing import List, Tuple, Any
-import pandas as pd
 from datetime import datetime
+
+from sir3stoolkit.dependency_check import require_packages
+require_packages(__name__, "pandas")
+
+import pandas as pd
 import numpy as np
 
 from sir3stoolkit.logging_utils import get_logger

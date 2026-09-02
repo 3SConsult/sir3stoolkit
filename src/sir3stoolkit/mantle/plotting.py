@@ -9,6 +9,13 @@ This module implements general plotting functions for SIR 3S applications. TODO:
 """
 from __future__ import annotations
 
+from collections import OrderedDict
+import re
+from typing import Dict, Tuple, Optional
+
+from sir3stoolkit.dependency_check import require_packages
+require_packages(__name__, "matplotlib", "pandas", "shapely")
+
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
@@ -20,12 +27,7 @@ import matplotlib.colors as mcolors
 import matplotlib.patches as mpatches
 import matplotlib.dates as mdates
 import matplotlib.ticker as mticker
-from collections import OrderedDict
 from shapely.geometry import Point, LineString, MultiLineString
-
-
-import re
-from typing import Dict, Tuple, Optional
 
 from sir3stoolkit.logging_utils import get_logger
 

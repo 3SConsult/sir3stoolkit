@@ -7,13 +7,16 @@ This module implements the generation of SIR 3S models in alternative model form
 @author: Jablonski
 """
 
+from typing import List, Optional, Union
+
+from sir3stoolkit.dependency_check import require_packages
+require_packages(__name__, "pandapipes", "pandas", "shapely", "networkx")
+
 import pandapipes as pp
 import pandas as pd
 from shapely import wkt
 from shapely.geometry.base import BaseGeometry
-
 import networkx as nx
-from typing import List, Optional, Union
 
 from sir3stoolkit.logging_utils import get_logger
 
