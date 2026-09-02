@@ -409,6 +409,40 @@
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
 </section>
+<section id="module-sir3stoolkit.dependency_check">
+<span id="sir3stoolkit-dependency-check-module"></span><h2>sir3stoolkit.dependency_check module<a class="headerlink" href="#module-sir3stoolkit.dependency_check" title="Link to this heading"></a></h2>
+<p>Shared helper for sir3stoolkit’s optional (“mantle”) third-party dependencies.</p>
+<p>Each sir3stoolkit.mantle module calls require_packages() with its own actual requirements as the
+first thing it does (before any of the third-party imports it’s checking for), so a missing package
+surfaces as one clear, actionable message naming exactly what’s missing and how to install it -
+instead of a raw ModuleNotFoundError/ImportError traceback from wherever inside that package’s own
+import machinery it happened to fail.</p>
+<p>&#64;author: Jablonski</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="sir3stoolkit.dependency_check.require_packages">
+<span class="sig-prename descclassname"><span class="pre">sir3stoolkit.dependency_check.</span></span><span class="sig-name descname"><span class="pre">require_packages</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">module_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">package_names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/dependency_check.html#require_packages"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.dependency_check.require_packages" title="Link to this definition"></a></dt>
+<dd><p>Verify each of <code class="docutils literal notranslate"><span class="pre">package_names</span></code> is importable, and raise one combined ImportError naming every
+missing one if any are missing.</p>
+<p>Uses importlib.util.find_spec() rather than actually importing each package - cheap (no module
+code executes) and side-effect-free, so calling this before the real imports below it doesn’t
+do any of that work twice.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>module_name</strong> (<em>str</em>) – The calling module’s <code class="docutils literal notranslate"><span class="pre">__name__</span></code>, used in the error message so the user
+knows which part of sir3stoolkit needs the missing package(s).</p></li>
+<li><p><strong>package_names</strong> (<em>str</em>) – Top-level import names to check (e.g. “pandas”, “geopandas”). Assumed to
+match their PyPI/pip distribution name - true for every package sir3stoolkit’s
+“mantle” extra currently uses.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ImportError</strong> – If any of package_names is not importable.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
 <section id="module-sir3stoolkit.logging_utils">
 <span id="sir3stoolkit-logging-utils-module"></span><h2>sir3stoolkit.logging_utils module<a class="headerlink" href="#module-sir3stoolkit.logging_utils" title="Link to this heading"></a></h2>
 <dl class="py function">
