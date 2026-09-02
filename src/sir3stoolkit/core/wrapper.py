@@ -1763,7 +1763,8 @@ class SIR3S_Model:
         This Method generates the SirCalc XML File in its initial state, allowing it to be
         manually edited  before Calculations are executed.
         The SirCalc XML Input File should only be edited by people, who know what they are doing. Otherwise your calculation configuration could become deprecated. If you mess up, you can reset to the current SIR 3S model state by reexecuting WriteSirCalcXmlFile().
-
+        WARNING: Running this method, will leave stale result data to be accessed with GetResultValue() or similar functions. To fix this close and reopen the model, after running calculations. This is a bug currently investigated: https://github.com/3SConsult/sir3stoolkit/issues/23
+        
         :param saveItInThisDirectory: The Directory Path from where the SirCalc XML File should be saved. Ensure that the directory is writable.
                                       If that Path does not exist this Method shall try to create it.
         :type saveItInThisDirectory: str
