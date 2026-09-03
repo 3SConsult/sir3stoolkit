@@ -23,7 +23,7 @@ than guessing. Full docs: https://3sconsult.github.io/sir3stoolkit/
 
 For `GetValue`/`SetValue`/`GetResultValue` and friends, the *property name strings* and each element
 type's OBJTYPE table code are opaque and must match exactly — use the generated reference:
-https://3sconsult.github.io/sir3stoolkit/object_types_props_results_snippet_global_mapped.html
+https://3sconsult.github.io/sir3stoolkit/object_types_props_results_snippet_global_mapped_with_descriptions.html
 (machine-generated from the toolkit's own `ObjectTypes_TableNames`/`GetPropertiesofElementType()`/
 `GetResultProperties_from_elementType()` — authoritative for the installed SIR 3S version).
 
