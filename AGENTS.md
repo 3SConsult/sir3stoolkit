@@ -169,6 +169,11 @@ A new mantle dependency being required isn't reliably flagged in the changelog t
 parsing prose for it, just try the actual import; a missing one raises a clear, actionable combined
 `ImportError` naming what to `pip install` (see the dependency gotcha above).
 
+This is also worth doing unprompted, not just when asked about updates: if behavior contradicts a
+tutorial or docstring and looks like a genuine bug rather than misuse, check the installed version
+against `releases.rst`/the issues (same mechanics as above) before concluding it's user error - recent
+point releases have fixed real result-correctness bugs, not just added features.
+
 ## Current known issues / roadmap
 
 https://github.com/3SConsult/sir3stoolkit/issues to browse - but that's GitHub's rendered UI, not
@@ -179,6 +184,13 @@ public repo; add `state=all` to include closed/historical ones, or `per_page`/pa
 100). Useful for "is this a known gap" context, not a substitute for the docstring on the specific
 function you're calling.
 
+If you're debugging something for the user and would normally check this but can't (no network,
+rate-limited - unauthenticated GitHub API calls are capped at 60/hour per IP, easy to hit), say so
+explicitly rather than silently skipping the check or guessing - the user can then check the page
+themselves if it matters for what they're debugging. If rate-limited, don't loop-retry - it's an
+hourly cap, retrying within the same session won't help.
+
 ## Contributing to sir3stoolkit itself
 
-Different audience from the above (using the package vs. changing it) — see `CONTRIBUTING.md`.
+Different audience from the above (using the package vs. changing it) — see
+https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/CONTRIBUTING.md.
