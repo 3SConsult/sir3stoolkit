@@ -90,6 +90,9 @@
 
 <span class="sd">This module implements functions that extend the basic C# operations with more advanced operations to change a SIR 3S model.</span>
 
+<span class="sd">AI assistant: see sir3stoolkit/__init__.py for orientation (architecture, API/property reference,</span>
+<span class="sd">known gotchas) before writing code against this module.</span>
+
 <span class="sd">@author: Jablonski</span>
 <span class="sd">"""</span>
 
@@ -408,33 +411,34 @@
 
 <span class="c1"># --- Mappings ---</span>
 
-<span class="c1"># Only for District Heating    </span>
-<span class="n">mapping_for_groups</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'AGSN_HydraulicProfile'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="c1"># Maps every ObjectTypes .NET class name to its MX/SIR3S OBJTYPE (table) code, Generated from the toolkit's own</span>
+<span class="c1"># self.ObjectTypes_TableNames / GetPropertiesofElementType() / GetResultProperties_from_elementType(). Equivalent to API Documentation </span>
+<span class="n">mapping_for_groups</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'AGSN_HydraulicProfile'</span><span class="p">:</span> <span class="s1">'AGSN'</span><span class="p">,</span>
 <span class="s1">'AirVessel'</span><span class="p">:</span> <span class="s1">'WIND'</span><span class="p">,</span>
 <span class="s1">'Arrow'</span><span class="p">:</span> <span class="s1">'ARRW'</span><span class="p">,</span>
-<span class="s1">'Atmosphere'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'Atmosphere'</span><span class="p">:</span> <span class="s1">'ATMO'</span><span class="p">,</span>
 <span class="s1">'BlockConnectionNode'</span><span class="p">:</span> <span class="s1">'VKNO'</span><span class="p">,</span>
-<span class="s1">'CalcPari'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'CharacteristicLossTable'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'CharacteristicLossTable_Row'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'CalcPari'</span><span class="p">:</span> <span class="s1">'PARI'</span><span class="p">,</span>
+<span class="s1">'CharacteristicLossTable'</span><span class="p">:</span> <span class="s1">'ZEP2'</span><span class="p">,</span>
+<span class="s1">'CharacteristicLossTable_Row'</span><span class="p">:</span> <span class="s1">'ZEP2_ROWS'</span><span class="p">,</span>
 <span class="s1">'Circle'</span><span class="p">:</span> <span class="s1">'CIRC'</span><span class="p">,</span>
-<span class="s1">'Compressor'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'CompressorTable'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'CompressorTable_Row'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'Compressor'</span><span class="p">:</span> <span class="s1">'KOMP'</span><span class="p">,</span>
+<span class="s1">'CompressorTable'</span><span class="p">:</span> <span class="s1">'KOMK'</span><span class="p">,</span>
+<span class="s1">'CompressorTable_Row'</span><span class="p">:</span> <span class="s1">'KOMK_ROWS'</span><span class="p">,</span>
 <span class="s1">'ControlEngineeringNexus'</span><span class="p">:</span> <span class="s1">'CRGL'</span><span class="p">,</span>
-<span class="s1">'ControlMode'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'ControlPointTable'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'ControlPointTable_Row'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'ControlMode'</span><span class="p">:</span> <span class="s1">'RART'</span><span class="p">,</span>
+<span class="s1">'ControlPointTable'</span><span class="p">:</span> <span class="s1">'RCPL'</span><span class="p">,</span>
+<span class="s1">'ControlPointTable_Row'</span><span class="p">:</span> <span class="s1">'RCPL_ROWT'</span><span class="p">,</span>
 <span class="s1">'ControlValve'</span><span class="p">:</span> <span class="s1">'REGV'</span><span class="p">,</span>
 <span class="s1">'ControlVariableConverter'</span><span class="p">:</span> <span class="s1">'RSTN'</span><span class="p">,</span>
 <span class="s1">'ControlVariableConverterRSTE'</span><span class="p">:</span> <span class="s1">'RSTE'</span><span class="p">,</span>
-<span class="s1">'CrossSectionTable'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'CrossSectionTable_Row'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'DPGR_DPKT_DatapointDpgrConnection'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'DPGR_DataPointGroup'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'DPKT_Datapoint'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'DamageRatesTable'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'DamageRatesTable_Row'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'CrossSectionTable'</span><span class="p">:</span> <span class="s1">'AVOS'</span><span class="p">,</span>
+<span class="s1">'CrossSectionTable_Row'</span><span class="p">:</span> <span class="s1">'AVOS_ROWS'</span><span class="p">,</span>
+<span class="s1">'DPGR_DPKT_DatapointDpgrConnection'</span><span class="p">:</span> <span class="s1">'DPGR_DPKT'</span><span class="p">,</span>
+<span class="s1">'DPGR_DataPointGroup'</span><span class="p">:</span> <span class="s1">'DPGR'</span><span class="p">,</span>
+<span class="s1">'DPKT_Datapoint'</span><span class="p">:</span> <span class="s1">'DPKT'</span><span class="p">,</span>
+<span class="s1">'DamageRatesTable'</span><span class="p">:</span> <span class="s1">'SRAT'</span><span class="p">,</span>
+<span class="s1">'DamageRatesTable_Row'</span><span class="p">:</span> <span class="s1">'SRAT_ROWS'</span><span class="p">,</span>
 <span class="s1">'DeadTimeElement'</span><span class="p">:</span> <span class="s1">'RTOT'</span><span class="p">,</span>
 <span class="s1">'Demand'</span><span class="p">:</span> <span class="s1">'VERB'</span><span class="p">,</span>
 <span class="s1">'DifferentialRegulator'</span><span class="p">:</span> <span class="s1">'DPRG'</span><span class="p">,</span>
@@ -442,122 +446,122 @@
 <span class="s1">'DistrictHeatingConsumer'</span><span class="p">:</span> <span class="s1">'FWVB'</span><span class="p">,</span>
 <span class="s1">'DistrictHeatingFeeder'</span><span class="p">:</span> <span class="s1">'FWES'</span><span class="p">,</span>
 <span class="s1">'Divider'</span><span class="p">:</span> <span class="s1">'RDIV'</span><span class="p">,</span>
-<span class="s1">'DriveEfficiencyTable'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'DriveEfficiencyTable_Row'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'DrivePowerTable'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'DrivePowerTable_Row'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'EBES_FeederGroups'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'EfficiencyConverterTable'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'EfficiencyConverterTable_Row'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'ElementQuery'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'EnergyRecoveryTable'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'EnergyRecoveryTable_Row'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'EnvironmentTemp'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'FWBZ_DistrictHeatingReferenceValues'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'DriveEfficiencyTable'</span><span class="p">:</span> <span class="s1">'ETAM'</span><span class="p">,</span>
+<span class="s1">'DriveEfficiencyTable_Row'</span><span class="p">:</span> <span class="s1">'ETAM_ROWS'</span><span class="p">,</span>
+<span class="s1">'DrivePowerTable'</span><span class="p">:</span> <span class="s1">'ANTP'</span><span class="p">,</span>
+<span class="s1">'DrivePowerTable_Row'</span><span class="p">:</span> <span class="s1">'ANTP_ROWS'</span><span class="p">,</span>
+<span class="s1">'EBES_FeederGroups'</span><span class="p">:</span> <span class="s1">'EBES'</span><span class="p">,</span>
+<span class="s1">'EfficiencyConverterTable'</span><span class="p">:</span> <span class="s1">'ETAU'</span><span class="p">,</span>
+<span class="s1">'EfficiencyConverterTable_Row'</span><span class="p">:</span> <span class="s1">'ETAU_ROWS'</span><span class="p">,</span>
+<span class="s1">'ElementQuery'</span><span class="p">:</span> <span class="s1">'ELEMENTQUERY'</span><span class="p">,</span>
+<span class="s1">'EnergyRecoveryTable'</span><span class="p">:</span> <span class="s1">'ETAR'</span><span class="p">,</span>
+<span class="s1">'EnergyRecoveryTable_Row'</span><span class="p">:</span> <span class="s1">'ETAR_ROWS'</span><span class="p">,</span>
+<span class="s1">'EnvironmentTemp'</span><span class="p">:</span> <span class="s1">'UTMP'</span><span class="p">,</span>
+<span class="s1">'FWBZ_DistrictHeatingReferenceValues'</span><span class="p">:</span> <span class="s1">'FWBZ'</span><span class="p">,</span>
 <span class="s1">'FlapValve'</span><span class="p">:</span> <span class="s1">'KLAP'</span><span class="p">,</span>
 <span class="s1">'FlowControlUnit'</span><span class="p">:</span> <span class="s1">'MREG'</span><span class="p">,</span>
-<span class="s1">'FluidQualityParamSet'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'FluidQualityParamSet_OS'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'FluidThermalPropertyGroup'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'FluidQualityParamSet'</span><span class="p">:</span> <span class="s1">'FQPS'</span><span class="p">,</span>
+<span class="s1">'FluidQualityParamSet_OS'</span><span class="p">:</span> <span class="s1">'FQPS_BZ'</span><span class="p">,</span>
+<span class="s1">'FluidThermalPropertyGroup'</span><span class="p">:</span> <span class="s1">'FSTF'</span><span class="p">,</span>
 <span class="s1">'FreeDuct'</span><span class="p">:</span> <span class="s1">'FKNL'</span><span class="p">,</span>
 <span class="s1">'FunctionGenerator'</span><span class="p">:</span> <span class="s1">'RFKT'</span><span class="p">,</span>
-<span class="s1">'FunctionTable'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'FunctionTable_Row'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'GasComponent'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'GasMixture'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'GeneralSection'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'Gravitation'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'FunctionTable'</span><span class="p">:</span> <span class="s1">'TFKT'</span><span class="p">,</span>
+<span class="s1">'FunctionTable_Row'</span><span class="p">:</span> <span class="s1">'TFKT_ROWS'</span><span class="p">,</span>
+<span class="s1">'GasComponent'</span><span class="p">:</span> <span class="s1">'GKMP'</span><span class="p">,</span>
+<span class="s1">'GasMixture'</span><span class="p">:</span> <span class="s1">'GMIX'</span><span class="p">,</span>
+<span class="s1">'GeneralSection'</span><span class="p">:</span> <span class="s1">'ALLG'</span><span class="p">,</span>
+<span class="s1">'Gravitation'</span><span class="p">:</span> <span class="s1">'GRAV'</span><span class="p">,</span>
 <span class="s1">'HeatExchanger'</span><span class="p">:</span> <span class="s1">'FWWU'</span><span class="p">,</span>
 <span class="s1">'HeatFeederConsumerStation'</span><span class="p">:</span> <span class="s1">'FWEA'</span><span class="p">,</span>
-<span class="s1">'HeaterCooler'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'HeaterCooler'</span><span class="p">:</span> <span class="s1">'GVWK'</span><span class="p">,</span>
 <span class="s1">'Histeresis'</span><span class="p">:</span> <span class="s1">'RHYS'</span><span class="p">,</span>
 <span class="s1">'House'</span><span class="p">:</span> <span class="s1">'HAUS'</span><span class="p">,</span>
-<span class="s1">'Hydrant'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'Hydrant'</span><span class="p">:</span> <span class="s1">'HYDR'</span><span class="p">,</span>
 <span class="s1">'Integrator'</span><span class="p">:</span> <span class="s1">'RINT'</span><span class="p">,</span>
-<span class="s1">'LAYR_Layer'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'LoadFactorTable'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'LoadFactorTable_Row'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'LAYR_Layer'</span><span class="p">:</span> <span class="s1">'LAYR'</span><span class="p">,</span>
+<span class="s1">'LoadFactorTable'</span><span class="p">:</span> <span class="s1">'LFKT'</span><span class="p">,</span>
+<span class="s1">'LoadFactorTable_Row'</span><span class="p">:</span> <span class="s1">'LFKT_ROWT'</span><span class="p">,</span>
 <span class="s1">'LogicalComparison'</span><span class="p">:</span> <span class="s1">'RLVG'</span><span class="p">,</span>
 <span class="s1">'LogicalStorage'</span><span class="p">:</span> <span class="s1">'RLSR'</span><span class="p">,</span>
-<span class="s1">'MeasuredVariableTable'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'MeasuredVariableTable_Row'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'MeasuredVariableTable'</span><span class="p">:</span> <span class="s1">'SWVT'</span><span class="p">,</span>
+<span class="s1">'MeasuredVariableTable_Row'</span><span class="p">:</span> <span class="s1">'SWVT_ROWT'</span><span class="p">,</span>
 <span class="s1">'MinMaxSelection'</span><span class="p">:</span> <span class="s1">'RMMA'</span><span class="p">,</span>
 <span class="s1">'Multiplier'</span><span class="p">:</span> <span class="s1">'RMUL'</span><span class="p">,</span>
 <span class="s1">'NetValve'</span><span class="p">:</span> <span class="s1">'NSCH'</span><span class="p">,</span>
 <span class="s1">'Node'</span><span class="p">:</span> <span class="s1">'KNOT'</span><span class="p">,</span>
-<span class="s1">'NonReturnValvesTable'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'NonReturnValvesTable_Row'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'NonReturnValvesTable'</span><span class="p">:</span> <span class="s1">'PHIV'</span><span class="p">,</span>
+<span class="s1">'NonReturnValvesTable_Row'</span><span class="p">:</span> <span class="s1">'PHIV_ROWS'</span><span class="p">,</span>
 <span class="s1">'NumericalDisplay'</span><span class="p">:</span> <span class="s1">'NRCV'</span><span class="p">,</span>
 <span class="s1">'ObjectContainerSymbol'</span><span class="p">:</span> <span class="s1">'CONT'</span><span class="p">,</span>
 <span class="s1">'OpenContainer'</span><span class="p">:</span> <span class="s1">'OBEH'</span><span class="p">,</span>
 <span class="s1">'Oval'</span><span class="p">:</span> <span class="s1">'OVAL'</span><span class="p">,</span>
-<span class="s1">'PARZ_TransientCalculationParameters'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'PhaseSeparation'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'PARZ_TransientCalculationParameters'</span><span class="p">:</span> <span class="s1">'PARZ'</span><span class="p">,</span>
+<span class="s1">'PhaseSeparation'</span><span class="p">:</span> <span class="s1">'PHTR'</span><span class="p">,</span>
 <span class="s1">'PidController'</span><span class="p">:</span> <span class="s1">'RPID'</span><span class="p">,</span>
 <span class="s1">'Pipe'</span><span class="p">:</span> <span class="s1">'ROHR'</span><span class="p">,</span>
-<span class="s1">'PipeGroup'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'PipeTable'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'PipeTable_Row'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'PipeVertex'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'PipeGroup'</span><span class="p">:</span> <span class="s1">'LTGR'</span><span class="p">,</span>
+<span class="s1">'PipeTable'</span><span class="p">:</span> <span class="s1">'DTRO'</span><span class="p">,</span>
+<span class="s1">'PipeTable_Row'</span><span class="p">:</span> <span class="s1">'DTRO_ROWD'</span><span class="p">,</span>
+<span class="s1">'PipeVertex'</span><span class="p">:</span> <span class="s1">'ROHR_VRTX'</span><span class="p">,</span>
 <span class="s1">'Polygon'</span><span class="p">:</span> <span class="s1">'PLYG'</span><span class="p">,</span>
 <span class="s1">'Polyline'</span><span class="p">:</span> <span class="s1">'POLY'</span><span class="p">,</span>
 <span class="s1">'PressureRegulator'</span><span class="p">:</span> <span class="s1">'PREG'</span><span class="p">,</span>
-<span class="s1">'PressureZone'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'PressureZone'</span><span class="p">:</span> <span class="s1">'PZON'</span><span class="p">,</span>
 <span class="s1">'Pt1Controller'</span><span class="p">:</span> <span class="s1">'RPT1'</span><span class="p">,</span>
 <span class="s1">'Pump'</span><span class="p">:</span> <span class="s1">'PUMP'</span><span class="p">,</span>
-<span class="s1">'PumpCharTable'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'PumpCharTable_Row'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'PumpCharTable'</span><span class="p">:</span> <span class="s1">'PUMK'</span><span class="p">,</span>
+<span class="s1">'PumpCharTable_Row'</span><span class="p">:</span> <span class="s1">'PUMK_ROWS'</span><span class="p">,</span>
 <span class="s1">'PumpGroup'</span><span class="p">:</span> <span class="s1">'PGRP'</span><span class="p">,</span>
-<span class="s1">'PumpOfPumpGroup'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'PumpSpeedTable'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'PumpSpeedTable_Row'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'PumpOfPumpGroup'</span><span class="p">:</span> <span class="s1">'PGRP_PUMP'</span><span class="p">,</span>
+<span class="s1">'PumpSpeedTable'</span><span class="p">:</span> <span class="s1">'PUMD'</span><span class="p">,</span>
+<span class="s1">'PumpSpeedTable_Row'</span><span class="p">:</span> <span class="s1">'PUMD_ROWT'</span><span class="p">,</span>
 <span class="s1">'RART_ControlMode'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'REGP_ControlParameters'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'RMES_DPTS_RmesInternalDataPoint'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'REGP_ControlParameters'</span><span class="p">:</span> <span class="s1">'REGP'</span><span class="p">,</span>
+<span class="s1">'RMES_DPTS_RmesInternalDataPoint'</span><span class="p">:</span> <span class="s1">'RMES_DPTS'</span><span class="p">,</span>
 <span class="s1">'Rectangle'</span><span class="p">:</span> <span class="s1">'RECT'</span><span class="p">,</span>
-<span class="s1">'RegulatorsTable'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'RegulatorsTable_Row'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'ReturnTemperaturTable'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'ReturnTemperaturTable_Row'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'RegulatorsTable'</span><span class="p">:</span> <span class="s1">'ZEP1'</span><span class="p">,</span>
+<span class="s1">'RegulatorsTable_Row'</span><span class="p">:</span> <span class="s1">'ZEP1_ROWS'</span><span class="p">,</span>
+<span class="s1">'ReturnTemperaturTable'</span><span class="p">:</span> <span class="s1">'TRFT'</span><span class="p">,</span>
+<span class="s1">'ReturnTemperaturTable_Row'</span><span class="p">:</span> <span class="s1">'TRFT_ROWS'</span><span class="p">,</span>
 <span class="s1">'RoundRectangle'</span><span class="p">:</span> <span class="s1">'RRCT'</span><span class="p">,</span>
 <span class="s1">'SIRGRAF'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'SPLZ_TimeSeries'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'SPLZ_TimeSeries'</span><span class="p">:</span> <span class="s1">'SPLZ'</span><span class="p">,</span>
 <span class="s1">'SafetyValve'</span><span class="p">:</span> <span class="s1">'SIVE'</span><span class="p">,</span>
 <span class="s1">'SetpointDevice'</span><span class="p">:</span> <span class="s1">'RSLW'</span><span class="p">,</span>
-<span class="s1">'SolarCollector'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'StandPipe'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'SolarCollector'</span><span class="p">:</span> <span class="s1">'SOKO'</span><span class="p">,</span>
+<span class="s1">'StandPipe'</span><span class="p">:</span> <span class="s1">'STRO'</span><span class="p">,</span>
 <span class="s1">'Street'</span><span class="p">:</span> <span class="s1">'STRASSE'</span><span class="p">,</span>
 <span class="s1">'SummingPoint'</span><span class="p">:</span> <span class="s1">'RADD'</span><span class="p">,</span>
 <span class="s1">'SwitchInBlock'</span><span class="p">:</span> <span class="s1">'BREF'</span><span class="p">,</span>
-<span class="s1">'TemperatureTable'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'TemperatureTable_Row'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'TemperatureTable'</span><span class="p">:</span> <span class="s1">'TEVT'</span><span class="p">,</span>
+<span class="s1">'TemperatureTable_Row'</span><span class="p">:</span> <span class="s1">'TEVT_ROWT'</span><span class="p">,</span>
 <span class="s1">'Text'</span><span class="p">:</span> <span class="s1">'GTXT'</span><span class="p">,</span>
-<span class="s1">'ThermalOutputTable'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'ThermalOutputTable_Row'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'ThermophysPropTable'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'ThermophysPropTable_Row'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'ThermalOutputTable'</span><span class="p">:</span> <span class="s1">'WEVT'</span><span class="p">,</span>
+<span class="s1">'ThermalOutputTable_Row'</span><span class="p">:</span> <span class="s1">'WEVT_ROWT'</span><span class="p">,</span>
+<span class="s1">'ThermophysPropTable'</span><span class="p">:</span> <span class="s1">'STOF'</span><span class="p">,</span>
+<span class="s1">'ThermophysPropTable_Row'</span><span class="p">:</span> <span class="s1">'STOF_ROWS'</span><span class="p">,</span>
 <span class="s1">'TransitionSymbol'</span><span class="p">:</span> <span class="s1">'RUES'</span><span class="p">,</span>
 <span class="s1">'Transmitter'</span><span class="p">:</span> <span class="s1">'RMES'</span><span class="p">,</span>
-<span class="s1">'TransportVariable'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'USCH_UserDefinedProperties'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'TransportVariable'</span><span class="p">:</span> <span class="s1">'TRVA'</span><span class="p">,</span>
+<span class="s1">'USCH_UserDefinedProperties'</span><span class="p">:</span> <span class="s1">'USCH'</span><span class="p">,</span>
 <span class="s1">'Unknown'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'VARA_ColorScale'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'VARA_ROWS_WidthOrScale'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'VRCT_ViewRectangle'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'VARA_ColorScale'</span><span class="p">:</span> <span class="s1">'VARA'</span><span class="p">,</span>
+<span class="s1">'VARA_ROWS_WidthOrScale'</span><span class="p">:</span> <span class="s1">'VARA_ROWS'</span><span class="p">,</span>
+<span class="s1">'VRCT_ViewRectangle'</span><span class="p">:</span> <span class="s1">'VRCT'</span><span class="p">,</span>
 <span class="s1">'Valve'</span><span class="p">:</span> <span class="s1">'VENT'</span><span class="p">,</span>
-<span class="s1">'ValveLiftTable'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'ValveLiftTable_Row'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'VarFlowTable'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'VarFlowTable_Row'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'VarPressureTable'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'VarPressureTable_Row'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'VentOpenCloseTable'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'VentOpenCloseTable_Row'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'VentValve'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'VentilatedPressureAirVessel'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'WBLZ_ThermalBalance'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'WeatherDataTable'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<span class="s1">'WeatherDataTable_Row'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">}</span>
+<span class="s1">'ValveLiftTable'</span><span class="p">:</span> <span class="s1">'PHI1'</span><span class="p">,</span>
+<span class="s1">'ValveLiftTable_Row'</span><span class="p">:</span> <span class="s1">'PHI1_ROWT'</span><span class="p">,</span>
+<span class="s1">'VarFlowTable'</span><span class="p">:</span> <span class="s1">'QVAR'</span><span class="p">,</span>
+<span class="s1">'VarFlowTable_Row'</span><span class="p">:</span> <span class="s1">'QVAR_ROWT'</span><span class="p">,</span>
+<span class="s1">'VarPressureTable'</span><span class="p">:</span> <span class="s1">'PVAR'</span><span class="p">,</span>
+<span class="s1">'VarPressureTable_Row'</span><span class="p">:</span> <span class="s1">'PVAR_ROWT'</span><span class="p">,</span>
+<span class="s1">'VentOpenCloseTable'</span><span class="p">:</span> <span class="s1">'PHI2'</span><span class="p">,</span>
+<span class="s1">'VentOpenCloseTable_Row'</span><span class="p">:</span> <span class="s1">'PHI2_ROWS'</span><span class="p">,</span>
+<span class="s1">'VentValve'</span><span class="p">:</span> <span class="s1">'BEVE'</span><span class="p">,</span>
+<span class="s1">'VentilatedPressureAirVessel'</span><span class="p">:</span> <span class="s1">'BEWI'</span><span class="p">,</span>
+<span class="s1">'WBLZ_ThermalBalance'</span><span class="p">:</span> <span class="s1">'WBLZ'</span><span class="p">,</span>
+<span class="s1">'WeatherDataTable'</span><span class="p">:</span> <span class="s1">'WTTR'</span><span class="p">,</span>
+<span class="s1">'WeatherDataTable_Row'</span><span class="p">:</span> <span class="s1">'WTTR_ROWT'</span><span class="p">}</span>
 </pre></div>
 
            </div>
