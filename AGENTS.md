@@ -162,9 +162,9 @@ If they differ, check `docs/source/releases.rst`'s version-overview table
 (https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/docs/source/releases.rst) for whether
 upgrading also needs a manual `Sir3S_Toolkit.dll` replacement in the SirGraf directory. The table's
 `dll changed` column is a per-version delta, not cumulative - OR that column across *every* version
-strictly between the installed and target version, not just the target's own row (e.g. 90.15.20 ->
-90.15.25 needs a DLL update because .21/.23/.24 say "Yes", even though the logic can't stop at just
-checking .25's row).
+strictly between the installed and target version, not just the target's own row (e.g. 90.15.19 ->
+90.15.21 needs a DLL update because .20 says "Yes", even though the logic can't stop at just
+checking .21's row).
 A new mantle dependency being required isn't reliably flagged in the changelog text - instead of
 parsing prose for it, just try the actual import; a missing one raises a clear, actionable combined
 `ImportError` naming what to `pip install` (see the dependency gotcha above).
