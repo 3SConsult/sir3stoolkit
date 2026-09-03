@@ -12,7 +12,7 @@ AI assistant writing code against this package? Quick orientation:
   codes; see the generated reference at
   https://3sconsult.github.io/sir3stoolkit/object_types_props_results_snippet_global_mapped.html
 - Full guide, known gotchas, docs/tutorial links:
-  https://github.com/3SConsult/sir3stoolkit/blob/master/AGENTS.md
+  https://github.com/3SConsult/sir3stoolkit/blob/main/AGENTS.md
 """
 
 from . import core

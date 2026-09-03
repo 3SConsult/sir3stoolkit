@@ -36,7 +36,7 @@ This layered architecture of the SIR 3S Toolkit ensures both flexibility and ext
 
 Note: This package is a client toolkit for the proprietary SIR 3S software. A valid license for SIR 3S is required to use this package in production.
 
-**Using an AI assistant to write code against this package?** See `AGENTS.md <https://github.com/3SConsult/sir3stoolkit/blob/master/AGENTS.md>`_ for architecture, the authoritative API/property reference, and known gotchas.
+**Using an AI assistant to write code against this package?** See `AGENTS.md <https://github.com/3SConsult/sir3stoolkit/blob/main/AGENTS.md>`_ for architecture, the authoritative API/property reference, and known gotchas.
 
 Features
 --------
