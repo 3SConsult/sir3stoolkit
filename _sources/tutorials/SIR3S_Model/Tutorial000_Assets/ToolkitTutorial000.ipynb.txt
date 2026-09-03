@@ -1,202 +1,300 @@
 {
-  "cells": [
-    {
-      "cell_type": "markdown",
-      "id": "5556432f",
-      "metadata": {},
-      "source": [
-        "# Tutorial 0: Importing and initialization of the SIR 3S Toolkit"
-      ]
-    },
-    {
-      "cell_type": "markdown",
-      "id": "c9397791",
-      "metadata": {},
-      "source": [
-        "This tutorial demonstrates how to import the SIR 3S Toolkit and initialize instances of its classes.\n"
-      ]
-    },
-    {
-      "cell_type": "markdown",
-      "id": "a1affc3c-90c0-4590-ae08-28b6d5799dba",
-      "metadata": {},
-      "source": [
-        "## SIR 3S Installation"
-      ]
-    },
-    {
-      "cell_type": "code",
-      "execution_count": null,
-      "id": "99b10f8f-1537-4ce9-8a6d-b6954b23a51c",
-      "metadata": {},
-      "outputs": [],
-      "source": [
-        "SIR3S_SIRGRAF_DIR = r\"C:\\3S\\SIR 3S\\SirGraf-90-15-00-24_Quebec-Upd2\" #change to local path"
-      ]
-    },
-    {
-      "cell_type": "markdown",
-      "id": "d6773e12",
-      "metadata": {},
-      "source": [
-        "## Imports"
-      ]
-    },
-    {
-      "cell_type": "markdown",
-      "id": "0c29ae20",
-      "metadata": {},
-      "source": [
-        "Note: The SIR 3S Toolkit requires the Sir3S_Toolkit.dll included in SIR 3S installations (version Quebec and higher)."
-      ]
-    },
-    {
-      "cell_type": "code",
-      "execution_count": 2,
-      "id": "4552a777",
-      "metadata": {},
-      "outputs": [],
-      "source": [
-        "import sir3stoolkit"
-      ]
-    },
-    {
-      "cell_type": "markdown",
-      "id": "29743e38",
-      "metadata": {},
-      "source": [
-        "The core of sir3stoolkit is a Python wrapper around basic functionality of SIR 3S, offering a low-level access to the creation, modification and simulation of SIR 3S models. In the future pure python subpackages may be added."
-      ]
-    },
-    {
-      "cell_type": "code",
-      "execution_count": 3,
-      "id": "ff2227b3",
-      "metadata": {},
-      "outputs": [],
-      "source": [
-        "from sir3stoolkit.core import wrapper"
-      ]
-    },
-    {
-      "cell_type": "code",
-      "execution_count": 4,
-      "id": "a5910232",
-      "metadata": {},
-      "outputs": [
-        {
-          "data": {
-            "text/plain": [
-              "<module 'sir3stoolkit' from 'c:\\\\Users\\\\wolters\\\\AppData\\\\Local\\\\anaconda3\\\\Lib\\\\site-packages\\\\sir3stoolkit\\\\__init__.py'>"
-            ]
-          },
-          "execution_count": 4,
-          "metadata": {},
-          "output_type": "execute_result"
-        }
-      ],
-      "source": [
-        "sir3stoolkit"
-      ]
-    },
-    {
-      "cell_type": "markdown",
-      "id": "b05c8cae",
-      "metadata": {},
-      "source": [
-        "The [wrapper package](https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.Initialize_Toolkit) has to be initialized with reference to a SIR 3S (SirGraf) installation."
-      ]
-    },
-    {
-      "cell_type": "code",
-      "execution_count": 5,
-      "id": "7540fe7b",
-      "metadata": {},
-      "outputs": [],
-      "source": [
-        "wrapper.Initialize_Toolkit(SIR3S_SIRGRAF_DIR)"
-      ]
-    },
-    {
-      "cell_type": "markdown",
-      "id": "0352dd43",
-      "metadata": {},
-      "source": [
-        "## Initialization"
-      ]
-    },
-    {
-      "cell_type": "markdown",
-      "id": "e14ffe06",
-      "metadata": {},
-      "source": [
-        "The SIR 3S Toolkit contains two classes: [SIR3S_Model](https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model) (model and data) and [SIR3S_View](https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_View) (interactive work in SIR Graf using the SIR Graf Python console). All SIR 3S Toolkit basis functionality is accessed via the methods of these classes. In this line of tutorials (0-49) we focus on SIR3S_Model."
-      ]
-    },
-    {
-      "cell_type": "code",
-      "execution_count": 6,
-      "id": "7e40a5af",
-      "metadata": {},
-      "outputs": [
-        {
-          "name": "stdout",
-          "output_type": "stream",
-          "text": [
-            "Initialization complete\n"
-          ]
-        }
-      ],
-      "source": [
-        "s3s = wrapper.SIR3S_Model()"
-      ]
-    },
-    {
-      "cell_type": "code",
-      "execution_count": 7,
-      "id": "3770c93f",
-      "metadata": {},
-      "outputs": [
-        {
-          "name": "stdout",
-          "output_type": "stream",
-          "text": [
-            "Initialization complete\n"
-          ]
-        }
-      ],
-      "source": [
-        "s3s_view = wrapper.SIR3S_View()"
-      ]
-    },
-    {
-      "cell_type": "markdown",
-      "id": "18aa477e",
-      "metadata": {},
-      "source": [
-        "__Next__: Tutorial 1: Creating a new or opening an existing SIR 3S Model"
-      ]
-    }
-  ],
-  "metadata": {
-    "kernelspec": {
-      "display_name": "base",
-      "language": "python",
-      "name": "python3"
-    },
-    "language_info": {
-      "codemirror_mode": {
-        "name": "ipython",
-        "version": 3
-      },
-      "file_extension": ".py",
-      "mimetype": "text/x-python",
-      "name": "python",
-      "nbconvert_exporter": "python",
-      "pygments_lexer": "ipython3",
-      "version": "3.13.5"
-    }
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "id": "5556432f",
+   "metadata": {},
+   "source": [
+    "# Tutorial 0: Importing and initialization of the SIR 3S Toolkit"
+   ]
   },
-  "nbformat": 4,
-  "nbformat_minor": 5
+  {
+   "cell_type": "markdown",
+   "id": "c9397791",
+   "metadata": {},
+   "source": [
+    "This tutorial demonstrates how to import the SIR 3S Toolkit and initialize instances of its classes.\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "a1affc3c-90c0-4590-ae08-28b6d5799dba",
+   "metadata": {},
+   "source": [
+    "## SIR 3S Installation"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "id": "99b10f8f-1537-4ce9-8a6d-b6954b23a51c",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "SIR3S_SIRGRAF_DIR = r\"C:\\3S\\SIR 3S\\SirGraf-90-15-00-24_Quebec-Upd2\" #change to local path"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "d6773e12",
+   "metadata": {},
+   "source": [
+    "## Imports"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "0c29ae20",
+   "metadata": {},
+   "source": [
+    "Note: The SIR 3S Toolkit requires the Sir3S_Toolkit.dll included in SIR 3S installations (version Quebec and higher)."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "id": "4552a777",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import sir3stoolkit"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "29743e38",
+   "metadata": {},
+   "source": [
+    "The core of sir3stoolkit is a Python wrapper around basic functionality of SIR 3S, offering a low-level access to the creation, modification and simulation of SIR 3S models. In the future pure python subpackages may be added."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "id": "ff2227b3",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from sir3stoolkit.core import wrapper"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "id": "a5910232",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "<module 'sir3stoolkit' from 'C:\\\\Users\\\\aUsername\\\\3S\\\\sir3stoolkit\\\\src\\\\sir3stoolkit\\\\__init__.py'>"
+      ]
+     },
+     "execution_count": 4,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "sir3stoolkit"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "b05c8cae",
+   "metadata": {},
+   "source": [
+    "The Toolkit has to be initialized with reference to a SIR 3S (SirGraf) installation using [Initialize_Toolkit()](https://3sconsult.github.io/sir3stoolkit/modules.html#sir3stoolkit.core.wrapper.Initialize_Toolkit)."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "id": "7540fe7b",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "[2026-09-03 13:51:14,852] INFO in sir3stoolkit.core.wrapper: [Initialization] Using provided SirGraf path: C:\\3S\\SIR 3S\\SirGraf-90-15-00-24_Quebec-Upd2\n",
+      "[2026-09-03 13:51:14,852] INFO in sir3stoolkit.core.wrapper: [Initialization] Using provided SirGraf path: C:\\3S\\SIR 3S\\SirGraf-90-15-00-24_Quebec-Upd2\n",
+      "[2026-09-03 13:51:14,899] INFO in sir3stoolkit.core.wrapper: [Initialization] Initializing toolkit with SirGraf path: C:\\3S\\SIR 3S\\SirGraf-90-15-00-24_Quebec-Upd2\n"
+     ]
+    }
+   ],
+   "source": [
+    "wrapper.Initialize_Toolkit(SIR3S_SIRGRAF_DIR)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "bf6acf99",
+   "metadata": {},
+   "source": [
+    "## Persisting the SirGraf Path"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "f90b7656",
+   "metadata": {},
+   "source": [
+    "Hardcoding `SIR3S_SIRGRAF_DIR` in every script is repetitive. Instead, the path can be written once to the package's config file via [Write_SirGraf_Config_Path()](https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.Write_SirGraf_Config_Path) - after that, [Initialize_Toolkit()](https://3sconsult.github.io/sir3stoolkit/modules.html#sir3stoolkit.core.wrapper.Initialize_Toolkit) can be called with no argument at all and will resolve the path from that config file automatically (see its docstring for the full resolution order). [Read_SirGraf_Config_Path()](https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.Read_SirGraf_Config_Path) reads back what is currently configured, or `None` if nothing is set yet."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "id": "14c6eee0",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "[2026-09-03 13:51:15,305] INFO in sir3stoolkit.core.wrapper: [Initialization] Wrote SirGraf path to config file 'C:\\Users\\aUsername\\3S\\sir3stoolkit\\src\\sir3stoolkit\\config.local.txt': 'C:/3S/SIR 3S/SirGraf-90-15-00-24_Quebec-Upd2'\n"
+     ]
+    }
+   ],
+   "source": [
+    "wrapper.Write_SirGraf_Config_Path(SIR3S_SIRGRAF_DIR)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "id": "e7e2f999",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "[2026-09-03 13:51:15,341] INFO in sir3stoolkit.core.wrapper: [Initialization] Using SirGraf path from config 'C:\\Users\\aUsername\\3S\\sir3stoolkit\\src\\sir3stoolkit\\config.local.txt': 'C:/3S/SIR 3S/SirGraf-90-15-00-24_Quebec-Upd2'\n"
+     ]
+    },
+    {
+     "data": {
+      "text/plain": [
+       "'C:/3S/SIR 3S/SirGraf-90-15-00-24_Quebec-Upd2'"
+      ]
+     },
+     "execution_count": 7,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "wrapper.Read_SirGraf_Config_Path()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "b0298803",
+   "metadata": {},
+   "source": [
+    "With the path persisted, `Initialize_Toolkit()` no longer needs `SIR3S_SIRGRAF_DIR` explicitly:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "id": "38552625",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "[2026-09-03 13:51:15,378] INFO in sir3stoolkit.core.wrapper: [Initialization] Host application is 'python.exe', not 'SirGraf.exe'. Toolkit is attempted to be initialized inside a non-SirGraf process ...\n[2026-09-03 13:51:15,392] INFO in sir3stoolkit.core.wrapper: [Initialization] Using SirGraf path from config 'C:\\Users\\aUsername\\3S\\sir3stoolkit\\src\\sir3stoolkit\\config.local.txt': C:/3S/SIR 3S/SirGraf-90-15-00-24_Quebec-Upd2\n[2026-09-03 13:51:15,395] INFO in sir3stoolkit.core.wrapper: [Initialization] Initializing toolkit with SirGraf path: C:/3S/SIR 3S/SirGraf-90-15-00-24_Quebec-Upd2\n"
+     ]
+    }
+   ],
+   "source": [
+    "wrapper.Initialize_Toolkit()  # basePath omitted - resolved from the config file written above"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "0352dd43",
+   "metadata": {},
+   "source": [
+    "## Initialization"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "e14ffe06",
+   "metadata": {},
+   "source": [
+    "The SIR 3S Toolkit contains two classes: [SIR3S_Model](https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model) (model and data) and [SIR3S_View](https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_View) (interactive work in SIR Graf using the SIR Graf Python console). All SIR 3S Toolkit basis functionality is accessed via the methods of these classes. In this line of tutorials (0-49) we focus on SIR3S_Model."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "id": "7e40a5af",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "[2026-09-03 13:51:15,849] INFO in sir3stoolkit.core.wrapper: [Model Class Initialization] Initialization complete\n"
+     ]
+    }
+   ],
+   "source": [
+    "s3s = wrapper.SIR3S_Model()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "id": "3770c93f",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "[2026-09-03 13:51:16,093] INFO in sir3stoolkit.core.wrapper: Initialization complete\n"
+     ]
+    }
+   ],
+   "source": [
+    "s3s_view = wrapper.SIR3S_View()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "18aa477e",
+   "metadata": {},
+   "source": [
+    "__Next__: Tutorial 1: Creating a new or opening an existing SIR 3S Model"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "base",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.13.5"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
 }

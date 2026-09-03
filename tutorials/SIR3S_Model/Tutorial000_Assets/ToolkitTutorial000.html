@@ -93,7 +93,7 @@
 <section id="SIR-3S-Installation">
 <h2>SIR 3S Installation<a class="headerlink" href="#SIR-3S-Installation" title="Link to this heading"></a></h2>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r"C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2" #change to local path
@@ -135,11 +135,11 @@
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&lt;module &#39;sir3stoolkit&#39; from &#39;c:\\Users\\wolters\\AppData\\Local\\anaconda3\\Lib\\site-packages\\sir3stoolkit\\__init__.py&#39;&gt;
+&lt;module &#39;sir3stoolkit&#39; from &#39;C:\\Users\\aUsername\\3S\\sir3stoolkit\\src\\sir3stoolkit\\__init__.py&#39;&gt;
 </pre></div></div>
 </div>
-<p>The <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.Initialize_Toolkit">wrapper package</a> has to be initialized with reference to a SIR 3S (SirGraf) installation.</p>
-<div class="nbinput nblast docutils container">
+<p>The Toolkit has to be initialized with reference to a SIR 3S (SirGraf) installation using <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/modules.html#sir3stoolkit.core.wrapper.Initialize_Toolkit">Initialize_Toolkit()</a>.</p>
+<div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
@@ -147,13 +147,88 @@
 </pre></div>
 </div>
 </div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+[2026-09-03 13:51:14,852] INFO in sir3stoolkit.core.wrapper: [Initialization] Using provided SirGraf path: C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2
+[2026-09-03 13:51:14,852] INFO in sir3stoolkit.core.wrapper: [Initialization] Using provided SirGraf path: C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2
+[2026-09-03 13:51:14,899] INFO in sir3stoolkit.core.wrapper: [Initialization] Initializing toolkit with SirGraf path: C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2
+</pre></div></div>
+</div>
+</section>
+<section id="Persisting-the-SirGraf-Path">
+<h2>Persisting the SirGraf Path<a class="headerlink" href="#Persisting-the-SirGraf-Path" title="Link to this heading"></a></h2>
+<p>Hardcoding <code class="docutils literal notranslate"><span class="pre">SIR3S_SIRGRAF_DIR</span></code> in every script is repetitive. Instead, the path can be written once to the package’s config file via <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.Write_SirGraf_Config_Path">Write_SirGraf_Config_Path()</a> - after that, <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/modules.html#sir3stoolkit.core.wrapper.Initialize_Toolkit">Initialize_Toolkit()</a> can be called with no argument at all and will resolve the path
+from that config file automatically (see its docstring for the full resolution order). <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.Read_SirGraf_Config_Path">Read_SirGraf_Config_Path()</a> reads back what is currently configured, or <code class="docutils literal notranslate"><span class="pre">None</span></code> if nothing is set yet.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>wrapper.Write_SirGraf_Config_Path(SIR3S_SIRGRAF_DIR)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+[2026-09-03 13:51:15,305] INFO in sir3stoolkit.core.wrapper: [Initialization] Wrote SirGraf path to config file &#39;C:\Users\aUsername\3S\sir3stoolkit\src\sir3stoolkit\config.local.txt&#39;: &#39;C:/3S/SIR 3S/SirGraf-90-15-00-24_Quebec-Upd2&#39;
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>wrapper.Read_SirGraf_Config_Path()
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+[2026-09-03 13:51:15,341] INFO in sir3stoolkit.core.wrapper: [Initialization] Using SirGraf path from config &#39;C:\Users\aUsername\3S\sir3stoolkit\src\sir3stoolkit\config.local.txt&#39;: &#39;C:/3S/SIR 3S/SirGraf-90-15-00-24_Quebec-Upd2&#39;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&#39;C:/3S/SIR 3S/SirGraf-90-15-00-24_Quebec-Upd2&#39;
+</pre></div></div>
+</div>
+<p>With the path persisted, <code class="docutils literal notranslate"><span class="pre">Initialize_Toolkit()</span></code> no longer needs <code class="docutils literal notranslate"><span class="pre">SIR3S_SIRGRAF_DIR</span></code> explicitly:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>wrapper.Initialize_Toolkit()  # basePath omitted - resolved from the config file written above
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+[2026-09-03 13:51:15,378] INFO in sir3stoolkit.core.wrapper: [Initialization] Host application is &#39;python.exe&#39;, not &#39;SirGraf.exe&#39;. Toolkit is attempted to be initialized inside a non-SirGraf process ...
+[2026-09-03 13:51:15,392] INFO in sir3stoolkit.core.wrapper: [Initialization] Using SirGraf path from config &#39;C:\Users\aUsername\3S\sir3stoolkit\src\sir3stoolkit\config.local.txt&#39;: C:/3S/SIR 3S/SirGraf-90-15-00-24_Quebec-Upd2
+[2026-09-03 13:51:15,395] INFO in sir3stoolkit.core.wrapper: [Initialization] Initializing toolkit with SirGraf path: C:/3S/SIR 3S/SirGraf-90-15-00-24_Quebec-Upd2
+</pre></div></div>
+</div>
 </section>
 <section id="Initialization">
 <h2>Initialization<a class="headerlink" href="#Initialization" title="Link to this heading"></a></h2>
 <p>The SIR 3S Toolkit contains two classes: <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model">SIR3S_Model</a> (model and data) and <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_View">SIR3S_View</a> (interactive work in SIR Graf using the SIR Graf Python console). All SIR 3S Toolkit basis functionality is accessed via the methods of these classes. In this line of tutorials
 (0-49) we focus on SIR3S_Model.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s = wrapper.SIR3S_Model()
@@ -163,13 +238,13 @@
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="output_area docutils container">
+<div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-Initialization complete
+[2026-09-03 13:51:15,849] INFO in sir3stoolkit.core.wrapper: [Model Class Initialization] Initialization complete
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s_view = wrapper.SIR3S_View()
@@ -179,9 +254,9 @@ Initialization complete
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="output_area docutils container">
+<div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-Initialization complete
+[2026-09-03 13:51:16,093] INFO in sir3stoolkit.core.wrapper: Initialization complete
 </pre></div></div>
 </div>
 <p><strong>Next</strong>: Tutorial 1: Creating a new or opening an existing SIR 3S Model</p>
