@@ -478,6 +478,23 @@ match their PyPI/pip distribution name - true for every package sir3stoolkit’s
 </section>
 <section id="module-sir3stoolkit">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-sir3stoolkit" title="Link to this heading"></a></h2>
+<p>sir3stoolkit: Python client for SIR 3S (pipe network simulation/analysis software, 3S Consult).</p>
+<p>AI assistant writing code against this package? Quick orientation:
+- <code class="docutils literal notranslate"><span class="pre">core.wrapper</span></code>: thin low-level wrapper around the SIR 3S .NET Toolkit API (<code class="docutils literal notranslate"><span class="pre">SIR3S_Model</span></code>:</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">OpenModel</span></code>, <code class="docutils literal notranslate"><span class="pre">GetValue</span></code>/<code class="docutils literal notranslate"><span class="pre">SetValue</span></code>, <code class="docutils literal notranslate"><span class="pre">ExecCalculation</span></code>, <code class="docutils literal notranslate"><span class="pre">GetResultValue</span></code>, …).</p>
+</div></blockquote>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">mantle</span></code>: higher-level convenience functions built on core (dataframes, model-editing,
+plotting, alternative-model export) - prefer these when one exists for what you need.</p></li>
+<li><p>Docstrings in this package are the ground truth for exact signatures - introspect directly
+(<code class="docutils literal notranslate"><span class="pre">help(...)</span></code>) rather than guessing.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GetValue</span></code>/<code class="docutils literal notranslate"><span class="pre">SetValue</span></code>/<code class="docutils literal notranslate"><span class="pre">GetResultValue</span></code> take opaque property-name strings and OBJTYPE
+codes; see the generated reference at
+<a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/object_types_props_results_snippet_global_mapped.html">https://3sconsult.github.io/sir3stoolkit/object_types_props_results_snippet_global_mapped.html</a></p></li>
+<li><p>Full guide, known gotchas, docs/tutorial links:
+<a class="reference external" href="https://github.com/3SConsult/sir3stoolkit/blob/master/AGENTS.md">https://github.com/3SConsult/sir3stoolkit/blob/master/AGENTS.md</a></p></li>
+</ul>
 </section>
 </section>
 
