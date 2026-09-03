@@ -1,0 +1,12 @@
+name: Sync AGENTS.md into package
+description: >
+  Copies the repo-root AGENTS.md into src/sir3stoolkit/AGENTS.md so it's included in the
+  wheel via package-data. Must run as a step in a job that already checked out the repo -
+  it operates on the current working directory's files, it does not check out anything itself.
+
+runs:
+  using: composite
+  steps:
+    - name: Copy AGENTS.md into src/sir3stoolkit/
+      shell: pwsh
+      run: Copy-Item -Path "AGENTS.md" -Destination "src\sir3stoolkit\AGENTS.md" -Force
