@@ -389,6 +389,8 @@ Release a New Version to PyPI
 
 4. **Document Changes:** In `sir3stoolkit/docs/source/releases.rst` add a new row to the release table with the new version number, corresponding SIR 3S version number, release date, and whether the `Sir3S_Toolkit.dll` was changed. Also below under the corresponding SIR 3S version number insert a new section and describe the changes made in detail.
 
-5. **Update Version Number:** In `sir3stoolkit/pyproject.toml` update the version number
+5. **Update AGENTS.md if a structural change happened:** If this release adds/renames/removes a public function, adds a new tutorial, or changes the core/mantle module layout, update `sir3stoolkit/AGENTS.md` at the repo root to match (e.g. its Tutorial index entries, the function lists there, the Architecture section). Not needed for a release with no such changes (bug fixes, internal-only changes, etc.).
 
-6. **Commit to GitHub**: With the version number in `sir3stoolkit/pyproject.toml` changed, the commit will trigger an automatic workflow, that will release the new version to PyPI. For convenience use the version number as commit message.
+6. **Update Version Number:** In `sir3stoolkit/pyproject.toml` update the version number
+
+7. **Commit to GitHub**: With the version number in `sir3stoolkit/pyproject.toml` changed, the commit will trigger an automatic workflow, that will release the new version to PyPI. For convenience use the version number as commit message.
