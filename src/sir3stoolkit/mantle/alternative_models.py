@@ -67,7 +67,8 @@ class SIR3S_Model_Alternative_Models(SIR3S_Model_Dataframes):
 
             j = pp.create_junction(
                 net,
-                pn_bar=float(row['PH']),
+                # SIR 3S's PH is gauge pressure; pandapipes' pn_bar is absolute - add atmospheric.
+                pn_bar=1 + float(row['PH']),
                 tfluid_k=273.15 + float(row['T']),
                 height_m=float(row['Zkor']),
                 name=f"{row['Name']}~{row['tk']}"
@@ -112,7 +113,8 @@ class SIR3S_Model_Alternative_Models(SIR3S_Model_Dataframes):
                 pp.create_ext_grid(
                     net,
                     junction=js[tk],
-                    p_bar=float(row["PH"]),
+                    # SIR 3S's PH is gauge pressure; pandapipes' p_bar is absolute - add atmospheric.
+                    p_bar=1 + float(row["PH"]),
                     t_k=273.15 + float(row["T"]),
                     name=f"Src: {row['Name']}~{tk}"
                 )

@@ -84,8 +84,18 @@ Below the release history with all changes is given in detail.
 SIR 3S: 90-15-00-24-Upd2
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
+Version 90.15.26 (TO BE RELEASED)
+"""""""""""""""""""""""""""""""""
+
+Developed and tested using SIR 3S Version: 90-15-00-24-Upd2
+
+Python Changes
+~~~~~~~~~~~~~~
+
+- alternative_models.py: fix: SIR_3S_to_pandapipes() gauge to absolute pressure fix
+
 Version 90.15.25
-""""""""""""""""""""""""""""""""""
+""""""""""""""""
 
 Developed and tested using SIR 3S Version: 90-15-00-24-Upd2
 
