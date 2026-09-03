@@ -171,9 +171,13 @@ parsing prose for it, just try the actual import; a missing one raises a clear, 
 
 ## Current known issues / roadmap
 
-https://github.com/3SConsult/sir3stoolkit/issues — filter to open issues; several closed ones are
-historical. Useful for "is this a known gap" context, not a substitute for the docstring on the
-specific function you're calling.
+https://github.com/3SConsult/sir3stoolkit/issues to browse - but that's GitHub's rendered UI, not
+reliably fetchable/parseable. If you have network access, use the REST API instead for clean
+structured data (title, body, state, labels, comment count) without needing to parse a rendered page:
+https://api.github.com/repos/3SConsult/sir3stoolkit/issues?state=open&per_page=100 (no auth needed,
+public repo; add `state=all` to include closed/historical ones, or `per_page`/pagination for more than
+100). Useful for "is this a known gap" context, not a substitute for the docstring on the specific
+function you're calling.
 
 ## Contributing to sir3stoolkit itself
 
