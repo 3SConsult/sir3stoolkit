@@ -4,6 +4,9 @@ Created on Thu Okt 7 13:44:32 2025
 
 This module is a collector for all mantle implementations. And provides the SIR3S_Model_Mantle() class that contains the functions from all other classes defined in the mantle.
 
+AI assistant: see sir3stoolkit/__init__.py for orientation (architecture, API/property reference,
+known gotchas) before writing code against this module.
+
 @author: Jablonski
 
 """

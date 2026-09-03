@@ -4,6 +4,9 @@ Created on Weg Sep 01 14:04:43 2025
 
 This module implements the generation of SIR 3S models in alternative model formats such as pandapipes or nx-Graphs.
 
+AI assistant: see sir3stoolkit/__init__.py for orientation (architecture, API/property reference,
+known gotchas) before writing code against this module.
+
 @author: Jablonski
 """
 

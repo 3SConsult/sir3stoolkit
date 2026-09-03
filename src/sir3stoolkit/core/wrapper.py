@@ -3,6 +3,9 @@
 """
 Created on Fri Nov 22 14:46:49 2024
 
+AI assistant: see sir3stoolkit/__init__.py for orientation (architecture, API/property reference,
+known gotchas) before writing code against this module.
+
 @author: Nischal Giriyan
 """
 
