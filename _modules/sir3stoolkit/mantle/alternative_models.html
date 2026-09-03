@@ -157,7 +157,8 @@
 
             <span class="n">j</span> <span class="o">=</span> <span class="n">pp</span><span class="o">.</span><span class="n">create_junction</span><span class="p">(</span>
                 <span class="n">net</span><span class="p">,</span>
-                <span class="n">pn_bar</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">'PH'</span><span class="p">]),</span>
+                <span class="c1"># SIR 3S's PH is gauge pressure; pandapipes' pn_bar is absolute - add atmospheric.</span>
+                <span class="n">pn_bar</span><span class="o">=</span><span class="mi">1</span> <span class="o">+</span> <span class="nb">float</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">'PH'</span><span class="p">]),</span>
                 <span class="n">tfluid_k</span><span class="o">=</span><span class="mf">273.15</span> <span class="o">+</span> <span class="nb">float</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">'T'</span><span class="p">]),</span>
                 <span class="n">height_m</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">'Zkor'</span><span class="p">]),</span>
                 <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">'Name'</span><span class="p">]</span><span class="si">}</span><span class="s2">~</span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">'tk'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
@@ -202,7 +203,8 @@
                 <span class="n">pp</span><span class="o">.</span><span class="n">create_ext_grid</span><span class="p">(</span>
                     <span class="n">net</span><span class="p">,</span>
                     <span class="n">junction</span><span class="o">=</span><span class="n">js</span><span class="p">[</span><span class="n">tk</span><span class="p">],</span>
-                    <span class="n">p_bar</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">"PH"</span><span class="p">]),</span>
+                    <span class="c1"># SIR 3S's PH is gauge pressure; pandapipes' p_bar is absolute - add atmospheric.</span>
+                    <span class="n">p_bar</span><span class="o">=</span><span class="mi">1</span> <span class="o">+</span> <span class="nb">float</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">"PH"</span><span class="p">]),</span>
                     <span class="n">t_k</span><span class="o">=</span><span class="mf">273.15</span> <span class="o">+</span> <span class="nb">float</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">"T"</span><span class="p">]),</span>
                     <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">"Src: </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">'Name'</span><span class="p">]</span><span class="si">}</span><span class="s2">~</span><span class="si">{</span><span class="n">tk</span><span class="si">}</span><span class="s2">"</span>
                 <span class="p">)</span>
