@@ -1,8 +1,9 @@
 Object Types, Properties, and Result Value Types
 ---------------------------------------------
 
-.. note::
+.. note:: Aggregated global view across configured network types.
    The below sections lists all table names from self.ObjectTypes_TableNames, along with their properties, result properties, and respective object type from self.ObjectTypes (needed for toolkit operations like self.InsertElement(), self.GetPropertiesOfElementType()).
+   Result properties are listed with descriptions and standard physical units, if available.
 
 AGSN
 ^^^^
@@ -116,49 +117,137 @@ Result Properties
    :header-rows: 1
 
    * - Name
+     - Description
+     - Standard Physical Unit
    * - ``CPUTIME``
+     - ``CPU-Zeit seit Start``
+     - ``[s]``
    * - ``CVERSO``
+     - ``Versionskennung``
+     - ``[text]``
    * - ``EXSTAT``
+     - ``Exit-Status der Berechnung``
+     - ``[]``
    * - ``FWVB_DPHMIN``
+     - ``Min. Differenzdruck aller Verbraucher``
+     - ``[bar]``
    * - ``FWVB_TVLMIN``
+     - ``Min. VL-Temperatur aller Verbraucher``
+     - ``[°C]``
    * - ``INTERAKTRG``
+     - ``Anzahl benötigter Sign.-Durchläufe``
+     - ``[]``
    * - ``INTERAKTTH``
+     - ``Anzahl benötigter therm. Durchläufe``
+     - ``[]``
    * - ``ITERHY``
+     - ``Anzahl benötigter hydr. Iterationen``
+     - ``[]``
    * - ``ITERTH``
+     - ``Anzahl benötigter therm. Iterationen``
+     - ``[]``
    * - ``JWARN``
+     - ``Warnstufe``
+     - ``[]``
    * - ``KNOT_PHMAX``
+     - ``Max. Knotendruck im Netz``
+     - ``[bar]``
    * - ``KNOT_PHMAX_R``
+     - ``Max. Knotendruck im Netz RL``
+     - ``[bar]``
    * - ``KNOT_PHMAX_U``
+     - ``Max. Knotendruck im Netz undef.``
+     - ``[bar]``
    * - ``KNOT_PHMAX_V``
+     - ``Max. Knotendruck im Netz VL``
+     - ``[bar]``
    * - ``KNOT_PHMIN``
+     - ``Min. Knotendruck im Netz``
+     - ``[bar]``
    * - ``KNOT_PHMIN_R``
+     - ``Min. Knotendruck im Netz RL``
+     - ``[bar]``
    * - ``KNOT_PHMIN_U``
+     - ``Min. Knotendruck im Netz undef.``
+     - ``[bar]``
    * - ``KNOT_PHMIN_V``
+     - ``Min. Knotendruck im Netz VL``
+     - ``[bar]``
    * - ``LFQSV``
+     - ``Lastfaktor für Strangentnahmen``
+     - ``[]``
    * - ``LINEPACKGEOM``
+     - ``Gesamt-Linepack Rohrinhalt``
+     - ``[(N)m3]``
    * - ``LINEPACKGES``
+     - ``Gesamt-Linepack``
+     - ``[(N)m3]``
    * - ``LINEPACKRATE``
+     - ``Gesamt-Linepack-Rate``
+     - ``[(N)m3/h]``
    * - ``MAINELEMENT``
+     - 
+     - 
    * - ``MFVHYUV``
+     - ``Fehlmenge FWVB aus hydr. Unterversorgung``
+     - ``[m3/h]``
    * - ``MFVTHUV``
+     - ``Fehlmenge FWVB aus ther. Unterversorgung``
+     - ``[m3/h]``
    * - ``MKNUV``
+     - ``Fehlmenge KNOT aus Unterversorgung``
+     - ``[m3/h]``
    * - ``NETZABN``
+     - ``Netzabnahme``
+     - ``[m3/h]``
    * - ``NETZABNEXITS``
+     - ``Netzabnahme ohne Druckränder``
+     - ``[m3/h]``
    * - ``NETZBEZ``
+     - ``Netzbezug``
+     - ``[m3/h]``
    * - ``NFEHL``
+     - ``Anzahl Fehler im Berechnungsabschnitt``
+     - ``[]``
    * - ``NFVHYUV``
+     - ``Anzahl FWVB mit hydr. Unterversorgung``
+     - ``[]``
    * - ``NFVTHUV``
+     - ``Anzahl FWVB mit ther. Unterversorgung``
+     - ``[]``
    * - ``NKNUV``
+     - ``Anzahl KNOT mit Unterversorgung``
+     - ``[]``
    * - ``NMELD``
+     - ``Anzahl Meldungen im Berechnungsabschnitt``
+     - ``[]``
    * - ``NPGREST``
+     - ``Anzahl aktiver PGRP in Restriktion``
+     - ``[]``
    * - ``NWARN``
+     - ``Anzahl Warnungen im Berechnungsabschnitt``
+     - ``[]``
    * - ``PAV``
+     - ``Mittlerer Druck``
+     - ``[bar,a]``
    * - ``RHOAV``
+     - ``Mittlere Dichte``
+     - ``[kg/m3]``
    * - ``SNAPSHOTTYPE``
+     - ``Typ des Zeitpunktes/Ausgabedatensatzes``
+     - ``[text]``
    * - ``TAV``
+     - ``Mittlere Temperatur``
+     - ``[°C]``
    * - ``TIMESTAMP``
+     - ``Zeitstempel nach ISO 8601``
+     - ``[text]``
    * - ``TVMINMAX``
+     - ``Maximum der erf. min. VL-Temperatur``
+     - ``[°C]``
    * - ``USRTIME``
+     - ``USR-Zeit seit Start``
+     - ``[s]``
 
 ANTP
 ^^^^
@@ -449,20 +538,50 @@ Result Properties
    :header-rows: 1
 
    * - Name
+     - Description
+     - Standard Physical Unit
    * - ``IAKTIV``
+     - ``Netztrennstatus``
+     - ``[]``
    * - ``IND``
+     - ``Betriebszustand``
+     - ``[]``
    * - ``M``
+     - ``Fluidmassenstrom``
+     - ``[kg/s]``
    * - ``MAINELEMENT``
+     - 
+     - 
    * - ``MLUFT``
+     - ``Luftmassenstrom``
+     - ``[kg/s]``
    * - ``PHI``
+     - ``Querschnitt Be- und Entlüftung``
+     - ``[%]``
    * - ``PLUFT``
+     - ``Druck im Luftvolumen``
+     - ``[bar,a]``
    * - ``QLUFT``
+     - ``Luftvolumenstrom``
+     - ``[m3/s]``
    * - ``QM``
+     - ``Durchfluss``
+     - ``[m3/h]``
    * - ``QMLUFT``
+     - ``Luftstrom``
+     - ``[m3/h]``
    * - ``RHO``
+     - ``Dichte``
+     - ``[kg/m3]``
    * - ``TLUFT``
+     - ``Lufttemperatur``
+     - ``[°C]``
    * - ``VLUFT``
+     - ``Strömungsgeschwindigkeit Luft``
+     - ``[m/s]``
    * - ``VOLLUFT``
+     - ``Luftvolumen``
+     - ``[m3]``
 
 BEWI
 ^^^^
@@ -545,22 +664,56 @@ Result Properties
    :header-rows: 1
 
    * - Name
+     - Description
+     - Standard Physical Unit
    * - ``HLUFT``
+     - ``Druckhöhe im Luftvolumen``
+     - ``[mNN]``
    * - ``IAKTIV``
+     - ``Netztrennstatus``
+     - ``[]``
    * - ``IND``
+     - ``Betriebszustand``
+     - ``[]``
    * - ``M``
+     - ``Massenstrom``
+     - ``[kg/s]``
    * - ``MAINELEMENT``
+     - 
+     - 
    * - ``PLUFT``
+     - ``Druck im Luftvolumen``
+     - ``[bar,a]``
    * - ``QM``
+     - ``Durchfluss``
+     - ``[m3/h]``
    * - ``RHO``
+     - ``Dichte``
+     - ``[kg/m3]``
    * - ``T``
+     - ``Fluidtemperatur``
+     - ``[°C]``
    * - ``TLUFT``
+     - ``Temperatur im Luftvolumen``
+     - ``[°C]``
    * - ``V``
+     - ``Strömungsgeschwindigkeit Anschluss``
+     - ``[m/s]``
    * - ``VOL``
+     - ``Wasservolumen``
+     - ``[m3]``
    * - ``VOLLUFT``
+     - ``Luftvolumen``
+     - ``[m3]``
    * - ``VOLLUFT1``
+     - ``Luftvolumen unter Tauchrohr``
+     - ``[m3]``
    * - ``WALTER``
+     - ``Wasseralter``
+     - ``[h]``
    * - ``WST``
+     - ``Wasserstand``
+     - ``[m]``
 
 BREF
 ^^^^
@@ -998,26 +1151,68 @@ Result Properties
    :header-rows: 1
 
    * - Name
+     - Description
+     - Standard Physical Unit
    * - ``DH``
+     - ``Differenzdruckhöhe``
+     - ``[m]``
    * - ``DP``
+     - ``Differenzdruck``
+     - ``[bar]``
    * - ``DPH``
+     - ``Reibungsdruckverlust/-druckverlusthöhe``
+     - ``[bar]``
    * - ``DPHSOLL``
+     - ``Sollwert Differenzdruck/-druckhöhe``
+     - ``[bar]``
    * - ``DPSOLL``
+     - ``Sollwert Differenzdruck``
+     - ``[bar]``
    * - ``DSI``
+     - 
+     - 
    * - ``DSK``
+     - 
+     - 
    * - ``FS``
+     - 
+     - 
    * - ``HR``
+     - ``Reibungsdruckverlusthöhe``
+     - ``[m]``
    * - ``IAKTIV``
+     - ``Netztrennstatus``
+     - ``[]``
    * - ``KV``
+     - ``KV-Wert``
+     - ``[m3/h]``
    * - ``M``
+     - ``Massenstrom``
+     - ``[kg/s]``
    * - ``MAINELEMENT``
+     - 
+     - 
    * - ``PHI``
+     - ``Reglerstellung``
+     - ``[%]``
    * - ``PR``
+     - ``Reibungsdruckverlust``
+     - ``[bar]``
    * - ``QM``
+     - ``Durchfluss``
+     - ``[m3/h]``
    * - ``RHO``
+     - ``Dichte``
+     - ``[kg/m3]``
    * - ``SWVT``
+     - ``Name Sollwerttabelle``
+     - ``[3Sname]``
    * - ``V``
+     - ``Strömungsgeschwindigkeit``
+     - ``[m/s]``
    * - ``ZETA``
+     - ``Verlustbeiwert, berechnet``
+     - ``[]``
 
 DTRO
 ^^^^
@@ -1566,12 +1761,26 @@ Result Properties
    :header-rows: 1
 
    * - Name
+     - Description
+     - Standard Physical Unit
    * - ``MAINELEMENT``
+     - 
+     - 
    * - ``OA``
+     - ``Obere Alarmgrenze überschritten``
+     - ``[]``
    * - ``OW``
+     - ``Obere Warngrenze überschritten``
+     - ``[]``
    * - ``UA``
+     - ``Untere Alarmgrenze unterschritten``
+     - ``[]``
    * - ``UW``
+     - ``Untere Warngrenze unterschritten``
+     - ``[]``
    * - ``WERT``
+     - ``Sollwert``
+     - ``[unitX]``
 
 FQPS
 ^^^^
@@ -1674,18 +1883,44 @@ Result Properties
    :header-rows: 1
 
    * - Name
+     - Description
+     - Standard Physical Unit
    * - ``MAINELEMENT``
+     - 
+     - 
    * - ``SWVTCHLORID``
+     - ``Name Sollwerttabelle Chlorid``
+     - ``[3Sname]``
    * - ``SWVTEISENFILT``
+     - 
+     - 
    * - ``SWVTEISENGES``
+     - ``Name Sollwerttabelle Eisengehalt gesamt``
+     - ``[3Sname]``
    * - ``SWVTHI``
+     - ``Name Sollwerttabelle Heizwert``
+     - ``[3Sname]``
    * - ``SWVTHS``
+     - ``Name Sollwerttabelle Brennwert``
+     - ``[3Sname]``
    * - ``SWVTLEITFAEH``
+     - ``Name Sollwerttabelle Leitfähigkeit``
+     - ``[3Sname]``
    * - ``SWVTMN``
+     - ``Name Sollwerttabelle Methanzahl``
+     - ``[3Sname]``
    * - ``SWVTPHWERT``
+     - ``Name Sollwerttabelle PH-Wert``
+     - ``[3Sname]``
    * - ``SWVTRHON``
+     - ``Name Sollwerttabelle Normdichte``
+     - ``[3Sname]``
    * - ``SWVTSULFAT``
+     - ``Name Sollwerttabelle Sulfat``
+     - ``[3Sname]``
    * - ``SWVTTEMP``
+     - ``Name Sollwerttabelle Temperatur``
+     - ``[3Sname]``
 
 FQPS_BZ
 ^^^^^^^
@@ -2089,53 +2324,149 @@ Result Properties
    :header-rows: 1
 
    * - Name
+     - Description
+     - Standard Physical Unit
    * - ``DH_KALT``
+     - 
+     - 
    * - ``DH_MIX``
+     - 
+     - 
    * - ``DH_WARM``
+     - 
+     - 
    * - ``DPH_ES``
+     - ``Differenzdruck Einspeiser``
+     - ``[bar]``
    * - ``DPH_VB``
+     - ``Differenzdruck Abnehmer``
+     - ``[bar]``
    * - ``DTLEER``
+     - 
+     - 
    * - ``ETA_PU``
+     - ``Wirkungsgrad Einspeisepumpe``
+     - ``[]``
    * - ``GGLOB``
+     - ``Globalstrahlung``
+     - ``[W/m²]``
    * - ``GKOLL``
+     - ``Strahlung auf Kollektorebene``
+     - ``[W/m²]``
    * - ``H_MIX``
+     - 
+     - 
    * - ``H_PU``
+     - ``Förderhöhe Einspeisepumpe``
+     - ``[m]``
    * - ``H_WS``
+     - ``FreeTTES: Wasserstand``
+     - ``[m]``
    * - ``IAKTIV``
+     - ``Netztrennstatus``
+     - ``[]``
    * - ``MAINELEMENT``
+     - 
+     - 
    * - ``MMAXBL``
+     - 
+     - 
    * - ``MMAXEL``
+     - 
+     - 
    * - ``MMIN``
+     - 
+     - 
    * - ``N_PU``
+     - ``Drehzahl Einspeisepumpe``
+     - ``[1/min]``
    * - ``P_PU``
+     - ``Hydraulische Leistung Einspeisepumpe``
+     - ``[kW]``
    * - ``QM``
+     - ``Durchfluss zum Netz``
+     - ``[t/h]``
    * - ``QM_ES``
+     - ``Durchfluss Einspeiser/Pumpe``
+     - ``[t/h]``
    * - ``QM_PR``
+     - ``Durchfluss Überströmer``
+     - ``[t/h]``
    * - ``QM_VB``
+     - ``Durchfluss Abnehmer``
+     - ``[t/h]``
    * - ``QSP``
+     - ``Wärmeinhalt``
+     - ``[kWh]``
    * - ``QSPREL``
+     - ``Relativer Wärmeinhalt``
+     - ``[%]``
    * - ``QV_BODEN``
+     - 
+     - 
    * - ``QV_DR``
+     - ``FreeTTES: Wärmegewinn Dampfraum``
+     - ``[kW]``
    * - ``QV_MANTEL``
+     - 
+     - 
    * - ``QV_TOTAL``
+     - 
+     - 
    * - ``Q_PU``
+     - ``Volumenstrom Einspeisepumpe``
+     - ``[m³/h]``
    * - ``TDIFFO``
+     - 
+     - 
    * - ``TDIFFU``
+     - 
+     - 
    * - ``TRL``
+     - ``Rücklauftemperatur``
+     - ``[°C]``
    * - ``TRS``
+     - ``Rückspeisetemperatur``
+     - ``[°C]``
    * - ``TSP``
+     - ``Speisetemperatur``
+     - ``[°C]``
    * - ``TVEC``
+     - ``FreeTTES Speichergitter: Temp.-Profil``
+     - ``[°C]``
    * - ``TVL``
+     - ``Vorlauftemperatur``
+     - ``[°C]``
    * - ``T_KALT``
+     - 
+     - 
    * - ``T_MIX``
+     - 
+     - 
    * - ``T_WARM``
+     - 
+     - 
    * - ``W``
+     - ``Wärmeleistung zum Netz``
+     - ``[kW]``
    * - ``WKOLL``
+     - ``Strahlungsleistung auf Kollektorfläche``
+     - ``[kW]``
    * - ``W_ES``
+     - ``Wärmeleistung Einspeiser``
+     - ``[kW]``
    * - ``W_FS``
+     - ``Wärmeleistung Frostschutz``
+     - ``[kW]``
    * - ``W_PR``
+     - ``Überschüssige Wärmeleistung``
+     - ``[kW]``
    * - ``W_RO``
+     - ``Wärmeverlustleistung Rohrleitungen``
+     - ``[kW]``
    * - ``W_VB``
+     - ``Wärmeleistung Abnehmer``
+     - ``[kW]``
 
 FWES
 ^^^^
@@ -2214,26 +2545,68 @@ Result Properties
    :header-rows: 1
 
    * - Name
+     - Description
+     - Standard Physical Unit
    * - ``DH``
+     - ``Differenzdruckhöhe``
+     - ``[m]``
    * - ``DP``
+     - ``Differenzdruck``
+     - ``[bar]``
    * - ``DPH``
+     - ``Reibungsdruckverlust/-druckverlusthöhe``
+     - ``[bar]``
    * - ``IAKTIV``
+     - ``Netztrennstatus``
+     - ``[]``
    * - ``IHYTYP``
+     - ``Hydraulische Fahrweise``
+     - ``[]``
    * - ``ITHTYP``
+     - ``Thermische Fahrweise``
+     - ``[]``
    * - ``M``
+     - ``Massenstrom``
+     - ``[kg/s]``
    * - ``MAINELEMENT``
+     - 
+     - 
    * - ``QM``
+     - ``Durchfluss``
+     - ``[t/h]``
    * - ``RHOI``
+     - ``Zulaufdichte``
+     - ``[kg/m3]``
    * - ``RHOK``
+     - ``Speisedichte``
+     - ``[kg/m3]``
    * - ``TEVT``
+     - ``Name Zeittabelle Speisetemperatur``
+     - ``[3Sname]``
    * - ``TI``
+     - ``Zulauftemperatur``
+     - ``[°C]``
    * - ``TK``
+     - ``Speisetemperatur``
+     - ``[°C]``
    * - ``TKON``
+     - ``Konstante Speisetemperatur``
+     - ``[°C]``
    * - ``V``
+     - ``Strömungsgeschwindigkeit``
+     - ``[m/s]``
    * - ``W``
+     - ``Wärmeleistung``
+     - ``[kW]``
    * - ``W0``
+     - ``Wärmeleistung konstant``
+     - ``[kW]``
    * - ``WEVT``
+     - ``Name Zeittabelle Wärmeleistung``
+     - ``[3Sname]``
    * - ``WSOLL``
+     - ``Sollwert Wärmeleistung``
+     - ``[kW]``
 
 FWVB
 ^^^^
@@ -2366,42 +2739,116 @@ Result Properties
    :header-rows: 1
 
    * - Name
+     - Description
+     - Standard Physical Unit
    * - ``DH``
+     - ``Differenzdruckhöhe``
+     - ``[m]``
    * - ``DP``
+     - ``Differenzdruck``
+     - ``[bar]``
    * - ``DPH``
+     - ``Reibungsdruckverlust/-druckverlusthöhe``
+     - ``[bar]``
    * - ``IAKTIV``
+     - ``Netztrennstatus``
+     - ``[]``
    * - ``INDUV``
+     - ``Indikator Unterversorgung``
+     - ``[]``
    * - ``LFH``
+     - ``Hydraulischer Lastfaktor``
+     - ``[]``
    * - ``LFKT``
+     - ``Name Lastgangtabelle``
+     - ``[3Sname]``
    * - ``LFT``
+     - ``Thermischer Lastfaktor``
+     - ``[]``
    * - ``M``
+     - ``Massenstrom``
+     - ``[kg/s]``
    * - ``MAINELEMENT``
+     - 
+     - 
    * - ``MHYUV``
+     - ``Mengendefizit aus hydr. Unterversorgung``
+     - ``[t/h]``
    * - ``MSOLL``
+     - ``Sollmassenstrom``
+     - ``[kg/s]``
    * - ``MTHUV``
+     - ``Mengendefizit aus therm. Unterversorgung``
+     - ``[t/h]``
    * - ``P1``
+     - ``Druck hinter VL Armatur``
+     - ``[bar]``
    * - ``P2``
+     - ``Druck vor RL Armatur``
+     - ``[bar]``
    * - ``P3``
+     - ``Druck am kompressiblen Volumen``
+     - ``[bar]``
    * - ``PH1``
+     - ``Druck hinter VL Armatur``
+     - ``[bar]``
    * - ``PH2``
+     - ``Druck vor RL Armatur``
+     - ``[bar]``
    * - ``PH3``
+     - ``Druck am kompressiblen Volumen``
+     - ``[bar]``
    * - ``PHIRL``
+     - ``Stellung RL Armatur``
+     - ``[%]``
    * - ``PHIVL``
+     - ``Stellung VL Armatur``
+     - ``[%]``
    * - ``QM``
+     - ``Durchfluss``
+     - ``[t/h]``
    * - ``QM13``
+     - ``Abzw. Durchfl. in Richtung kompress. Vol``
+     - ``[t/h]``
    * - ``QM31``
+     - ``Zulaufdurchfluss kompressibles Volumen``
+     - ``[t/h]``
    * - ``QMI``
+     - ``Durchfluss Vorlauf``
+     - ``[t/h]``
    * - ``QMK``
+     - ``Durchfluss Rücklauf``
+     - ``[t/h]``
    * - ``QVAR``
+     - ``Name Zeittabelle Durchfluss``
+     - ``[3Sname]``
    * - ``RHOI``
+     - ``Dichte Vorlauf``
+     - ``[kg/m3]``
    * - ``RHOK``
+     - ``Dichte Rücklauf``
+     - ``[kg/m3]``
    * - ``TI``
+     - ``Vorlauftemperatur``
+     - ``[°C]``
    * - ``TK``
+     - ``Rückspeisetemperatur``
+     - ``[°C]``
    * - ``TVMIN``
+     - ``Minimale Vorlauftemperatur``
+     - ``[]``
    * - ``W``
+     - ``Wärmeleistung``
+     - ``[kW]``
    * - ``WHYUV``
+     - ``Wärmedefizit aus hydr. Unterversorgung``
+     - ``[kW]``
    * - ``WSOLL``
+     - ``Sollwert Wärmeleistung``
+     - ``[kW]``
    * - ``WTHUV``
+     - ``Wärmedefizit aus therm. Unterversorgung``
+     - ``[kW]``
 
 FWWU
 ^^^^
@@ -2510,32 +2957,86 @@ Result Properties
    :header-rows: 1
 
    * - Name
+     - Description
+     - Standard Physical Unit
    * - ``AKTIV``
+     - ``Aktivitätszustand``
+     - ``[]``
    * - ``C1``
+     - ``Verhältnis Wärmekapazitätsströme W1/W2``
+     - ``[]``
    * - ``C2``
+     - ``Verhältnis Wärmekapazitätsströme W2/W1``
+     - ``[]``
    * - ``EPS1``
+     - ``Temperaturänderung primär``
+     - ``[]``
    * - ``EPS2``
+     - ``Temperaturänderung sekundär``
+     - ``[]``
    * - ``IAKTIV``
+     - ``Netztrennstatus``
+     - ``[]``
    * - ``INDUV``
+     - ``Indikator Unterversorgung``
+     - ``[]``
    * - ``KA``
+     - ``Übertragungsfähigkeit``
+     - ``[kW/K]``
    * - ``MAINELEMENT``
+     - 
+     - 
    * - ``NTU1``
+     - ``Übertragungsfähigkeit (NTU) primär``
+     - ``[]``
    * - ``NTU2``
+     - ``Übertragungsfähigkeit (NTU) sekundär``
+     - ``[]``
    * - ``NU1``
+     - ``Nußelt-Zahl primär``
+     - ``[]``
    * - ``NU2``
+     - ``Nußelt-Zahl sekundär``
+     - ``[]``
    * - ``PR1``
+     - ``Prandtl-Zahl primär``
+     - ``[]``
    * - ``PR2``
+     - ``Prandtl-Zahl sekundär``
+     - ``[]``
    * - ``Q``
+     - ``Übertragungsleistung``
+     - ``[kW]``
    * - ``RE1``
+     - ``Reynolds-Zahl primär``
+     - ``[]``
    * - ``RE2``
+     - ``Reynolds-Zahl sekundär``
+     - ``[]``
    * - ``T1AUS``
+     - ``Austrittstemperatur primär``
+     - ``[°C]``
    * - ``T1EIN``
+     - ``Eintrittstemperatur primär``
+     - ``[°C]``
    * - ``T2AUS``
+     - ``Austrittstemperatur sekundär``
+     - ``[°C]``
    * - ``T2EIN``
+     - ``Eintrittstemperatur sekundär``
+     - ``[°C]``
    * - ``THETA``
+     - ``Dimensionslose mittlere Temperaturdiff.``
+     - ``[]``
    * - ``TMLOG``
+     - ``Mittlere Temperaturdifferenz``
+     - ``[K]``
    * - ``W1``
+     - ``Wärmekapazitätsstrom primär``
+     - ``[kJ/(s K)]``
    * - ``W2``
+     - ``Wärmekapazitätsstrom sekundär``
+     - ``[kJ/(s K)]``
 
 GKMP
 ^^^^
@@ -2872,17 +3373,41 @@ Result Properties
    :header-rows: 1
 
    * - Name
+     - Description
+     - Standard Physical Unit
    * - ``EINAUS``
+     - ``Heizer/Kühler ein/aus``
+     - ``[]``
    * - ``IAKTIV``
+     - ``Netztrennstatus``
+     - ``[]``
    * - ``M``
+     - ``Massenstrom``
+     - ``[kg/s]``
    * - ``MAINELEMENT``
+     - 
+     - 
    * - ``P``
+     - ``Leistung``
+     - ``[kW]``
    * - ``PE``
+     - ``Energieverbrauch``
+     - ``[kW]``
    * - ``PI``
+     - ``Eingangsdruck``
+     - ``[bar]``
    * - ``PK``
+     - ``Ausgangsdruck``
+     - ``[bar]``
    * - ``QN``
+     - ``Durchfluss``
+     - ``[Nm3/h]``
    * - ``TI``
+     - ``Eingangstemperatur``
+     - ``[°C]``
    * - ``TK``
+     - ``Ausgangstemperatur``
+     - ``[°C]``
 
 HAUS
 ^^^^
@@ -3022,18 +3547,44 @@ Result Properties
    :header-rows: 1
 
    * - Name
+     - Description
+     - Standard Physical Unit
    * - ``BCTYP``
+     - ``Verhalten, Funktion, Bedingung``
+     - ``[]``
    * - ``IAKTIV``
+     - ``Aktivität``
+     - ``[]``
    * - ``MAINELEMENT``
+     - 
+     - 
    * - ``PHR``
+     - ``Reibungsdruckverlust Hydrant``
+     - ``[bar]``
    * - ``PHR_ROHR``
+     - ``Reibungsdruckverlust Anschlussleitung``
+     - ``[bar]``
    * - ``PHSOLL``
+     - ``Solldruck am Einbindepunkt``
+     - ``[bar]``
    * - ``PH_EINB``
+     - ``Druck am Einbindepunkt``
+     - ``[bar]``
    * - ``PH_ENTN``
+     - ``Druck am Entnahmepunkt``
+     - ``[bar]``
    * - ``PH_MIN``
+     - ``Mindest- oder Solldruck am Entnahmepunkt``
+     - ``[bar]``
    * - ``QM``
+     - ``Entnahmemenge``
+     - ``[m3/h]``
    * - ``QSOLL``
+     - ``Sollentnahmemenge``
+     - ``[m3/h]``
    * - ``UV``
+     - ``Entnahmeleistung``
+     - ``[%]``
 
 KLAP
 ^^^^
@@ -3100,23 +3651,59 @@ Result Properties
    :header-rows: 1
 
    * - Name
+     - Description
+     - Standard Physical Unit
    * - ``DH``
+     - ``Differenzdruckhöhe``
+     - ``[m]``
    * - ``DP``
+     - ``Differenzdruck``
+     - ``[bar]``
    * - ``DSI``
+     - 
+     - 
    * - ``DSK``
+     - 
+     - 
    * - ``FS``
+     - 
+     - 
    * - ``HR``
+     - ``Reibungsdruckverlusthöhe``
+     - ``[m]``
    * - ``IAKTIV``
+     - ``Netztrennstatus``
+     - ``[]``
    * - ``KV``
+     - ``KV-Wert``
+     - ``[m3/h]``
    * - ``M``
+     - ``Massenstrom``
+     - ``[kg/s]``
    * - ``MAINELEMENT``
+     - 
+     - 
    * - ``PHI``
+     - ``Stellung``
+     - ``[%]``
    * - ``PHR``
+     - ``Reibungsdruckverlust/-druckverlusthöhe``
+     - ``[bar]``
    * - ``PR``
+     - ``Reibungsdruckverlust``
+     - ``[bar]``
    * - ``QM``
+     - ``Durchfluss``
+     - ``[m3/h]``
    * - ``RHO``
+     - ``Dichte``
+     - ``[kg/m3]``
    * - ``V``
+     - ``Strömungsgeschwindigkeit``
+     - ``[m/s]``
    * - ``ZETA``
+     - ``Verlustbeiwert``
+     - ``[]``
 
 KNOT
 ^^^^
@@ -3213,79 +3800,227 @@ Result Properties
    :header-rows: 1
 
    * - Name
+     - Description
+     - Standard Physical Unit
    * - ``BCIND``
+     - ``Indikator Rand (Summencode)``
+     - ``[]``
    * - ``BCIND_CALC``
+     - ``Indikator Rand Berechnet``
+     - ``[]``
    * - ``BCIND_FLOW``
+     - ``Indikator Rand Durchfluss``
+     - ``[]``
    * - ``BCIND_MODEL``
+     - ``Indikator Rand Modelliert``
+     - ``[]``
    * - ``BCIND_SOURCE``
+     - ``Indikator Rand Herkunft``
+     - ``[]``
    * - ``BCIND_TYPE``
+     - ``Indikator Rand Typ``
+     - ``[]``
    * - ``CHLORID``
+     - ``Chlorid``
+     - ``[mg/l]``
    * - ``CP``
+     - ``Spezifische Wärmekapazität``
+     - ``[kJ/kg/K]``
    * - ``DP``
+     - ``Differenzdruck zwischen VL und RL``
+     - ``[bar]``
    * - ``DPH``
+     - ``Differenzdruck zwischen VL und RL``
+     - ``[bar]``
    * - ``DYNVISKO``
+     - ``Dynamische Viskosität``
+     - ``[kg/m/s]``
    * - ``EH``
+     - ``Energiehöhe``
+     - ``[mNN]``
    * - ``EISENFILT``
+     - ``Eisengehalt im Filtrat``
+     - ``[mg/l]``
    * - ``EISENGES``
+     - ``Eisengehalt gesamt``
+     - ``[mg/l]``
    * - ``ESQUELLSP``
+     - ``Einspeiserquellspektrum``
+     - ``[%]``
    * - ``FITT_ANGLE``
+     - ``Formstück: Winkel``
+     - ``[°]``
    * - ``FITT_BASTYPE``
+     - ``Formstück: Typ``
+     - ``[]``
    * - ``FITT_DP1``
+     - ``Formstück: Druckverlust am VBEL1``
+     - ``[bar]``
    * - ``FITT_DP2``
+     - ``Formstück: Druckverlust am VBEL 2``
+     - ``[bar]``
    * - ``FITT_DP3``
+     - ``Formstück: Druckverlust am VBEL 3``
+     - ``[bar]``
    * - ``FITT_STATE``
+     - ``Formstück: Indikator Fließzustand``
+     - ``[]``
    * - ``FITT_SUBTYPE``
+     - ``Formstück: Details``
+     - ``[3Sname]``
    * - ``FITT_VBTYPE1``
+     - ``Formstück: Typ Verbindungselement 1``
+     - ``[3Sname]``
    * - ``FITT_VBTYPE2``
+     - ``Formstück: Typ Verbindungselement 2``
+     - ``[3Sname]``
    * - ``FITT_VBTYPE3``
+     - ``Formstück: Typ Verbindungselement 3``
+     - ``[3Sname]``
    * - ``FITT_ZETA1``
+     - ``Formstück: Einzelverlustbeiw. am VBEL 1``
+     - ``[]``
    * - ``FITT_ZETA2``
+     - ``Formstück: Einzelverlustbeiw. am VBEL 2``
+     - ``[]``
    * - ``FITT_ZETA3``
+     - ``Formstück: Einzelverlustbeiw. am VBEL 3``
+     - ``[]``
    * - ``FSTF_NAME``
+     - ``Name der Stoffwertegruppe``
+     - ``[3Sname]``
    * - ``GMIX_NAME``
+     - ``Name des Gasgemisches``
+     - ``[3Sname]``
    * - ``H``
+     - ``Druckhöhe``
+     - ``[mNN]``
    * - ``HI``
+     - ``Heizwert``
+     - ``[kWh/Nm3]``
    * - ``HMAX_INST``
+     - ``Druckhöhenmaximum instationär``
+     - ``[mNN]``
    * - ``HMIN_INST``
+     - ``Druckhöhenminimum instationär``
+     - ``[mNN]``
    * - ``HS``
+     - ``Brennwert``
+     - ``[kWh/Nm3]``
    * - ``IAKTIV``
+     - ``Netztrennstatus``
+     - ``[]``
    * - ``INDUV``
+     - ``Indikator Unterversorgung``
+     - ``[]``
    * - ``K``
+     - ``Kompressibilitätszahl K``
+     - ``[]``
    * - ``KP``
+     - ``Kompressibilitätszahl Kp``
+     - ``[]``
    * - ``KT``
+     - ``Kompressibilitätszahl KT``
+     - ``[]``
    * - ``LEITFAEH``
+     - ``Leitfähigkeit``
+     - ``[muS/cm]``
    * - ``LFAKTAKT``
+     - ``Aktueller Lastfaktor``
+     - ``[]``
    * - ``LFKT``
+     - ``Name Lastgangtabelle``
+     - ``[3Sname]``
    * - ``M``
+     - ``Externer Massenstrom``
+     - ``[kg/s]``
    * - ``MAINELEMENT``
+     - 
+     - 
    * - ``MN``
+     - ``Methanzahl``
+     - ``[]``
    * - ``P``
+     - ``Druck``
+     - ``[bar,a]``
    * - ``PDAMPF``
+     - ``Dampfdruck``
+     - ``[bar,a]``
    * - ``PH``
+     - ``Druck``
+     - ``[bar]``
    * - ``PHMINMAXDIF``
+     - ``Druckabweichung zum Mindestdruck``
+     - ``[bar]``
    * - ``PHWERT``
+     - ``pH-Wert``
+     - ``[]``
    * - ``PH_EIN``
+     - ``Druck in Eingabeeinheiten``
+     - ``[bar]``
    * - ``PH_MIN``
+     - ``Mindestknotendruck bei Entnahme``
+     - ``[bar]``
    * - ``PMAX_INST``
+     - ``Druckmaximum instationär``
+     - ``[bar,a]``
    * - ``PMIN_INST``
+     - ``Druckminimum instationär``
+     - ``[bar,a]``
    * - ``PVAR``
+     - ``Name Zeittabelle Druck-/Druckhöhe``
+     - ``[3Sname]``
    * - ``Q2``
+     - ``Externer Volumenstrom (altern. Einheit)``
+     - ``[IDQM,5]``
    * - ``QM``
+     - ``Externer Durchfluss``
+     - ``[m3/h]``
    * - ``QMABS``
+     - ``Externer Durchfluss Absolutbetrag``
+     - ``[m3/h]``
    * - ``QVAR``
+     - ``Name Zeittabelle Durchfluss``
+     - ``[3Sname]``
    * - ``RHO``
+     - ``Dichte``
+     - ``[kg/m3]``
    * - ``RHON``
+     - ``Normdichte``
+     - ``[kg/m3]``
    * - ``RHONQUAL``
+     - ``Normdichte (Qualitätsparameter)``
+     - ``[kg/m3]``
    * - ``SULFAT``
+     - ``Sulfat``
+     - ``[mg/l]``
    * - ``T``
+     - ``Temperatur``
+     - ``[°C]``
    * - ``TE``
+     - ``Einspeisetemperatur bei Zufluss``
+     - ``[°C]``
    * - ``TEMP``
+     - ``Temperatur (Wasserqualität)``
+     - ``[°C]``
    * - ``TMAX_INST``
+     - ``Temperaturmaximum instationär``
+     - ``[°C]``
    * - ``TMIN_INST``
+     - ``Temperaturminimum instationär``
+     - ``[°C]``
    * - ``TTR``
+     - ``Fluidalter``
+     - ``[h]``
    * - ``VOLD``
+     - ``Dampfvolumen``
+     - ``[m3]``
    * - ``WALTER``
+     - ``Wasseralter``
+     - ``[h]``
    * - ``ZHKNR``
+     - ``Nummer Zusammenhangskomponente``
+     - ``[]``
 
 KOMK
 ^^^^
@@ -3458,28 +4193,74 @@ Result Properties
    :header-rows: 1
 
    * - Name
+     - Description
+     - Standard Physical Unit
    * - ``DP``
+     - ``Druckerhöhung``
+     - ``[bar]``
    * - ``DT``
+     - ``Temperaturerhöhung``
+     - ``[K]``
    * - ``EINAUS``
+     - ``Verdichter ein/aus``
+     - ``[]``
    * - ``ETAP``
+     - ``Prozess-Wirkungsgrad``
+     - ``[]``
    * - ``IAKTIV``
+     - ``Netztrennstatus``
+     - ``[]``
    * - ``IND``
+     - ``Betriebsstatus``
+     - ``[]``
    * - ``INDANT``
+     - ``Antriebsstatus``
+     - ``[]``
    * - ``M``
+     - ``Massenstrom``
+     - ``[kg/s]``
    * - ``MAINELEMENT``
+     - 
+     - 
    * - ``N``
+     - ``Drehzahl``
+     - ``[1/min]``
    * - ``P``
+     - ``Leistung``
+     - ``[kW]``
    * - ``PE``
+     - ``Energieverbrauch``
+     - ``[kW]``
    * - ``PI``
+     - ``Ansaugdruck``
+     - ``[bar]``
    * - ``PK``
+     - ``Ausgangsdruck``
+     - ``[bar]``
    * - ``PMAX``
+     - ``Maximal verfügbare Antriebsleistung``
+     - ``[kW]``
    * - ``PRATIO``
+     - ``Verdichtungsverhältnis``
+     - ``[]``
    * - ``QN``
+     - ``Durchfluss``
+     - ``[(N)m3/h]``
    * - ``QNBG``
+     - ``Brenngasverbrauch``
+     - ``[(N)m3/h]``
    * - ``QNGES``
+     - ``Durchfluss Kompressor Gesamtsystem``
+     - ``[(N)m3/h]``
    * - ``TI``
+     - ``Ansaugtemperatur``
+     - ``[°C]``
    * - ``TK``
+     - ``Ausgangstemperatur``
+     - ``[°C]``
    * - ``YP``
+     - ``Prozess-Referenzarbeit``
+     - ``[kJ/kg]``
 
 LAYR
 ^^^^
@@ -3553,15 +4334,35 @@ Result Properties
    :header-rows: 1
 
    * - Name
+     - Description
+     - Standard Physical Unit
    * - ``FWVB_DPHMIN``
+     - ``Min. Differenzdruck Verbrauchergruppe``
+     - ``[bar]``
    * - ``FWVB_TVLMIN``
+     - ``Min. VL-Temperatur Verbrauchergruppe``
+     - ``[°C]``
    * - ``LF``
+     - ``Tabellensollwert Lastfaktor``
+     - ``[]``
    * - ``MAINELEMENT``
+     - 
+     - 
    * - ``MFVHYUV``
+     - ``Fehlmenge aus hydr. UV in VERB-Gruppe``
+     - ``[t/h]``
    * - ``MFVTHUV``
+     - ``Fehlmenge aus therm. UV in VERB-Gruppe``
+     - ``[t/h]``
    * - ``NFVHYUV``
+     - ``Anzahl FWVB mit hydr. UV in VERB-Gruppe``
+     - ``[]``
    * - ``NFVTHUV``
+     - ``Anzahl FWVB mit ther. UV in VERB-Gruppe``
+     - ``[]``
    * - ``TVMINMAX``
+     - ``Max der erf. min. VL-Temp in VERB-Gruppe``
+     - ``[°C]``
 
 LFKT_ROWT
 ^^^^^^^^^
@@ -3704,29 +4505,77 @@ Result Properties
    :header-rows: 1
 
    * - Name
+     - Description
+     - Standard Physical Unit
    * - ``DH``
+     - ``Differenzdruckhöhe``
+     - ``[m]``
    * - ``DP``
+     - ``Differenzdruck``
+     - ``[bar]``
    * - ``DPH``
+     - ``Reibungsdruckverlust/-druckverlusthöhe``
+     - ``[bar]``
    * - ``DSI``
+     - 
+     - 
    * - ``DSK``
+     - 
+     - 
    * - ``FS``
+     - 
+     - 
    * - ``HR``
+     - ``Reibungsdruckverlusthöhe``
+     - ``[m]``
    * - ``IAKTIV``
+     - ``Netztrennstatus``
+     - ``[]``
    * - ``IND``
+     - ``Betriebsart``
+     - ``[]``
    * - ``KV``
+     - ``KV-Wert``
+     - ``[m3/h]``
    * - ``M``
+     - ``Massenstrom``
+     - ``[kg/s]``
    * - ``MAINELEMENT``
+     - 
+     - 
    * - ``PHI``
+     - ``Reglerstellung``
+     - ``[%]``
    * - ``PHISOLL``
+     - ``Sollwert Reglerstellung``
+     - ``[%]``
    * - ``PR``
+     - ``Reibungsdruckverlust``
+     - ``[bar]``
    * - ``Q``
+     - ``Volumenstrom``
+     - ``[m3/s]``
    * - ``QM``
+     - ``Durchfluss``
+     - ``[m3/h]``
    * - ``QMSOLL``
+     - ``Konstanter Sollwert Menge``
+     - ``[m3/h]``
    * - ``RHO``
+     - ``Dichte``
+     - ``[kg/m3]``
    * - ``SWVTPHI``
+     - ``Name Sollwerttabelle Stellung``
+     - ``[3Sname]``
    * - ``SWVTQM``
+     - ``Name Sollwerttabelle Durchfluss``
+     - ``[3Sname]``
    * - ``V``
+     - ``Strömungsgeschwindigkeit``
+     - ``[m/s]``
    * - ``ZETA``
+     - ``Verlustbeiwert``
+     - ``[]``
 
 NRCV
 ^^^^
@@ -3866,8 +4715,14 @@ Result Properties
    :header-rows: 1
 
    * - Name
+     - Description
+     - Standard Physical Unit
    * - ``MAINELEMENT``
+     - 
+     - 
    * - ``STELLUNG``
+     - ``Stellung Auf/Zu``
+     - ``[]``
 
 OBEH
 ^^^^
@@ -3952,22 +4807,56 @@ Result Properties
    :header-rows: 1
 
    * - Name
+     - Description
+     - Standard Physical Unit
    * - ``DWST_DT``
+     - ``Wasserstandsänderung``
+     - ``[m/h]``
    * - ``IAKTIV``
+     - ``Netztrennstatus``
+     - ``[]``
    * - ``M``
+     - ``Massenstrom``
+     - ``[kg/s]``
    * - ``MAINELEMENT``
+     - 
+     - 
    * - ``MEXT``
+     - ``Massenstrom aus Behälterbefüllung``
+     - ``[kg/s]``
    * - ``QM``
+     - ``Durchfluss``
+     - ``[m3/h]``
    * - ``QMEXT``
+     - ``Durchfluss aus Behälterbefüllung``
+     - ``[m3/h]``
    * - ``RHO``
+     - ``Dichte``
+     - ``[kg/m3]``
    * - ``T``
+     - ``Fluidtemperatur``
+     - ``[°C]``
    * - ``T0``
+     - ``Anfangsfluidtemperatur``
+     - ``[°C]``
    * - ``V``
+     - ``Strömungsgeschwindigkeit Anschluss``
+     - ``[m/s]``
    * - ``VOL``
+     - ``Wasservolumen``
+     - ``[m3]``
    * - ``WALTER``
+     - ``Wasseralter``
+     - ``[h]``
    * - ``WALTER0``
+     - ``Anfangswasseralter``
+     - ``[h]``
    * - ``WST``
+     - ``Wasserstand``
+     - ``[m]``
    * - ``WST0``
+     - ``Anfangswasserstand``
+     - ``[m]``
 
 OVAL
 ^^^^
@@ -4177,25 +5066,65 @@ Result Properties
    :header-rows: 1
 
    * - Name
+     - Description
+     - Standard Physical Unit
    * - ``BK``
+     - ``Betriebskosten``
+     - ``[EUR/h]``
    * - ``DH``
+     - ``Förderhöhe``
+     - ``[m]``
    * - ``DP``
+     - ``Druckerhöhung``
+     - ``[bar]``
    * - ``DPH``
+     - ``Druckerhöhung/Förderhöhe``
+     - ``[bar]``
    * - ``ETA``
+     - ``Wirkungsgrad``
+     - ``[]``
    * - ``IAKTIV``
+     - ``Aktivität``
+     - ``[]``
    * - ``INDPG``
+     - ``Betriebsart``
+     - ``[]``
    * - ``INDSTD``
+     - ``Indikator Regelungsart``
+     - ``[]``
    * - ``IZSTPG``
+     - ``Zustand Restriktion``
+     - ``[]``
    * - ``M``
+     - ``Gesamtmassenstrom``
+     - ``[kg/s]``
    * - ``MAINELEMENT``
+     - 
+     - 
    * - ``NPUMPIST``
+     - ``Anzahl eingesetzter Pumpen``
+     - ``[]``
    * - ``NPUMPSOLL``
+     - ``Anzahl aktiver Pumpen``
+     - ``[]``
    * - ``PE``
+     - ``Gesamtklemmleistung``
+     - ``[kW]``
    * - ``QM``
+     - ``Gesamtdurchfluss``
+     - ``[m3/h]``
    * - ``RART``
+     - ``Name Regelungsart``
+     - ``[3Sname]``
    * - ``RHO``
+     - ``Dichte``
+     - ``[kg/m3]``
    * - ``W``
+     - ``Sollwert zur Regelungsart``
+     - ``[unitX]``
    * - ``X``
+     - ``Istwert zur Regelungsart``
+     - ``[unitX]``
 
 PGRP_PUMP
 ^^^^^^^^^
@@ -4236,8 +5165,14 @@ Result Properties
    :header-rows: 1
 
    * - Name
+     - Description
+     - Standard Physical Unit
    * - ``IAKTIV``
+     - ``Aktivität``
+     - ``[]``
    * - ``MAINELEMENT``
+     - 
+     - 
 
 PHI1
 ^^^^
@@ -4274,8 +5209,14 @@ Result Properties
    :header-rows: 1
 
    * - Name
+     - Description
+     - Standard Physical Unit
    * - ``MAINELEMENT``
+     - 
+     - 
    * - ``PHI``
+     - ``Tabellensollwert Stellung``
+     - ``[%]``
 
 PHI1_ROWT
 ^^^^^^^^^
@@ -4495,17 +5436,41 @@ Result Properties
    :header-rows: 1
 
    * - Name
+     - Description
+     - Standard Physical Unit
    * - ``DH``
+     - ``Differenzdruckhöhe``
+     - ``[m]``
    * - ``DP``
+     - ``Differenzdruck``
+     - ``[bar]``
    * - ``IAKTIV``
+     - ``Netztrennstatus``
+     - ``[]``
    * - ``MAINELEMENT``
+     - 
+     - 
    * - ``MI``
+     - ``Massenstrom Knoten I``
+     - ``[kg/s]``
    * - ``MK``
+     - ``Massenstrom Knoten K``
+     - ``[kg/s]``
    * - ``Q``
+     - ``Volumenstrom``
+     - ``[m3/s]``
    * - ``QM``
+     - ``Durchfluss Knoten I``
+     - ``[m3/h]``
    * - ``RHOI``
+     - ``Dichte Knoten I``
+     - ``[kg/m3]``
    * - ``RHOK``
+     - ``Dichte Knoten K``
+     - ``[kg/m3]``
    * - ``V``
+     - ``Strömungsgeschwindigkeit``
+     - ``[m/s]``
 
 PLYG
 ^^^^
@@ -4664,27 +5629,71 @@ Result Properties
    :header-rows: 1
 
    * - Name
+     - Description
+     - Standard Physical Unit
    * - ``DH``
+     - ``Differenzdruckhöhe``
+     - ``[m]``
    * - ``DP``
+     - ``Differenzdruck``
+     - ``[bar]``
    * - ``DPH``
+     - ``Reibungsdruckverlust/-druckverlusthöhe``
+     - ``[bar]``
    * - ``DSI``
+     - 
+     - 
    * - ``DSK``
+     - 
+     - 
    * - ``FS``
+     - 
+     - 
    * - ``HR``
+     - ``Reibungsdruckverlusthöhe``
+     - ``[m]``
    * - ``IAKTIV``
+     - ``Netztrennstatus``
+     - ``[]``
    * - ``KV``
+     - ``KV-Wert``
+     - ``[m3/h]``
    * - ``M``
+     - ``Massenstrom``
+     - ``[kg/s]``
    * - ``MAINELEMENT``
+     - 
+     - 
    * - ``PH``
+     - ``Istwert Druck/Druckhöhe``
+     - ``[bar]``
    * - ``PHI``
+     - ``Reglerstellung``
+     - ``[%]``
    * - ``PHSOLL``
+     - ``Sollwert Druck/Druckhöhe``
+     - ``[bar]``
    * - ``PR``
+     - ``Reibungsdruckverlust``
+     - ``[bar]``
    * - ``PSOLL``
+     - ``Sollwert Druck``
+     - ``[bar,a]``
    * - ``QM``
+     - ``Durchfluss``
+     - ``[m3/h]``
    * - ``RHO``
+     - ``Dichte``
+     - ``[kg/m3]``
    * - ``SWVT``
+     - ``Name Sollwerttabelle Druck``
+     - ``[3Sname]``
    * - ``V``
+     - ``Strömungsgeschwindigkeit``
+     - ``[m/s]``
    * - ``ZETA``
+     - ``Verlustbeiwert``
+     - ``[]``
 
 PUMD
 ^^^^
@@ -4721,8 +5730,14 @@ Result Properties
    :header-rows: 1
 
    * - Name
+     - Description
+     - Standard Physical Unit
    * - ``MAINELEMENT``
+     - 
+     - 
    * - ``N``
+     - ``Tabellensollwert Drehzahl``
+     - ``[1/min]``
 
 PUMD_ROWT
 ^^^^^^^^^
@@ -5098,41 +6113,113 @@ Result Properties
    :header-rows: 1
 
    * - Name
+     - Description
+     - Standard Physical Unit
    * - ``BK``
+     - ``Betriebskosten``
+     - ``[EUR/h]``
    * - ``DH``
+     - ``Förderhöhe``
+     - ``[m]``
    * - ``DP``
+     - ``Druckerhöhung``
+     - ``[bar]``
    * - ``DPH``
+     - ``Druckerhöhung/Förderhöhe``
+     - ``[bar]``
    * - ``EINAUS``
+     - ``Pumpe ein/aus``
+     - ``[]``
    * - ``ETA``
+     - ``Wirkungsgrad``
+     - ``[]``
    * - ``ETAW``
+     - ``Wellenwirkungsgrad``
+     - ``[]``
    * - ``IAKTIV``
+     - ``Netztrennstatus``
+     - ``[]``
    * - ``IND``
+     - ``Betriebsstatus``
+     - ``[]``
    * - ``M``
+     - ``Massenstrom``
+     - ``[kg/s]``
    * - ``MAINELEMENT``
+     - 
+     - 
    * - ``MOM``
+     - ``Drehmoment``
+     - ``[Nm]``
    * - ``N``
+     - ``Drehzahl``
+     - ``[1/min]``
    * - ``NMINMAXDIF``
+     - ``Drehzahlabweichung zum Arbeitsbereich``
+     - ``[1/min]``
    * - ``NPSH``
+     - ``NPSH aktuell``
+     - ``[m]``
    * - ``NPSHDIF``
+     - ``NPSH Abstand``
+     - ``[m]``
    * - ``NPSHMIN``
+     - ``NPSH erforderlich``
+     - ``[m]``
    * - ``NSOLLTURB``
+     - ``Sollwert Turbinendrehzahl``
+     - ``[1/min]``
    * - ``PA``
+     - ``Pumpenantriebsleistung``
+     - ``[kW]``
    * - ``PE``
+     - ``Klemmleistung``
+     - ``[kW]``
    * - ``PE_RUECK``
+     - ``Leistung aus Energie-Rückgewinnung``
+     - ``[kW]``
    * - ``PHSOLL``
+     - ``Sollwert Druck/Druckhöhe``
+     - ``[bar]``
    * - ``PP``
+     - ``Pumpenleistung, Wellenleistung``
+     - ``[kW]``
    * - ``PUMD``
+     - ``Name Drehzahltabelle``
+     - ``[3Sname]``
    * - ``QM``
+     - ``Durchfluss``
+     - ``[m3/h]``
    * - ``QMSOLL``
+     - ``Solldurchfluss Pumpe``
+     - ``[m3/h]``
    * - ``QMSOLLTURB``
+     - ``Solldurchfluss Turbine``
+     - ``[m3/h]``
    * - ``QN0``
+     - ``Durchfluss bei Nenndrehzahl``
+     - ``[m3/h]``
    * - ``RCPU_IND``
+     - ``Betriebsstatus RCPU-Zugriff``
+     - ``[]``
    * - ``RCPU_W``
+     - ``Sollwert aus Regelung``
+     - ``[unitX]``
    * - ``RCPU_X``
+     - ``Istwert aus Regelung``
+     - ``[unitX]``
    * - ``RCPU_XD``
+     - ``Regeldifferenz aus Regelung``
+     - ``[unitX]``
    * - ``RHO``
+     - ``Dichte``
+     - ``[kg/m3]``
    * - ``STOERUNG``
+     - ``Pumpenstörung``
+     - ``[]``
    * - ``SWVT``
+     - ``Name Sollwerttabelle``
+     - ``[3Sname]``
 
 PVAR
 ^^^^
@@ -5169,8 +6256,14 @@ Result Properties
    :header-rows: 1
 
    * - Name
+     - Description
+     - Standard Physical Unit
    * - ``MAINELEMENT``
+     - 
+     - 
    * - ``PH``
+     - ``Tabellensollwert Druck``
+     - ``[bar]``
 
 PVAR_ROWT
 ^^^^^^^^^
@@ -5287,15 +6380,35 @@ Result Properties
    :header-rows: 1
 
    * - Name
+     - Description
+     - Standard Physical Unit
    * - ``FWVB_DPHMIN``
+     - ``Min. Differenzdruck Verbrauchergruppe``
+     - ``[bar]``
    * - ``FWVB_TVLMIN``
+     - ``Min. VL-Temperatur Verbrauchergruppe``
+     - ``[°C]``
    * - ``MAINELEMENT``
+     - 
+     - 
    * - ``MFVHYUV``
+     - ``Fehlmenge aus hydr. UV Verbrauchergruppe``
+     - ``[t/h]``
    * - ``MFVTHUV``
+     - ``Fehlmenge aus therm. UV. VERB-Gruppe``
+     - ``[t/h]``
    * - ``NFVHYUV``
+     - ``Anzahl FWVB mit hydr. UV. VERB-Gruppe``
+     - ``[]``
    * - ``NFVTHUV``
+     - ``Anzahl FWVB mit therm. UV. VERB-Gruppe``
+     - ``[]``
    * - ``QM``
+     - ``Tabellensollwert Durchfluss``
+     - ``[m3/h]``
    * - ``TVMINMAX``
+     - ``Max der erf. min. VL-Temp VERB-Gruppe``
+     - ``[°C]``
 
 QVAR_ROWT
 ^^^^^^^^^
@@ -5383,10 +6496,20 @@ Result Properties
    :header-rows: 1
 
    * - Name
+     - Description
+     - Standard Physical Unit
    * - ``MAINELEMENT``
+     - 
+     - 
    * - ``XA``
+     - ``Signalwert am Ausgang``
+     - ``[signal]``
    * - ``XE1``
+     - ``Signalwert am Eingang 1``
+     - ``[signal]``
    * - ``XE2``
+     - ``Signalwert am Eingang 2``
+     - ``[signal]``
 
 RART
 ^^^^
@@ -5445,10 +6568,20 @@ Result Properties
    :header-rows: 1
 
    * - Name
+     - Description
+     - Standard Physical Unit
    * - ``MAINELEMENT``
+     - 
+     - 
    * - ``RCPL``
+     - ``Name Regelpunktliste``
+     - ``[3Sname]``
    * - ``SWVT``
+     - ``Name Sollwerttabelle``
+     - ``[3Sname]``
    * - ``W``
+     - ``Sollwert zur Regelungsart``
+     - ``[unitX]``
 
 RCPL
 ^^^^
@@ -5485,11 +6618,23 @@ Result Properties
    :header-rows: 1
 
    * - Name
+     - Description
+     - Standard Physical Unit
    * - ``KNOT``
+     - ``Name Schlechtpunkt``
+     - ``[3Sname]``
    * - ``MAINELEMENT``
+     - 
+     - 
    * - ``W``
+     - ``Sollwert Druck/Druckhöhe Schlechtpunkt``
+     - ``[bar]``
    * - ``X``
+     - ``Istwert Druck/Druckhöhe Schlechtpunkt``
+     - ``[bar]``
    * - ``XD``
+     - ``Regeldiff. Druck/Druckhöhe Schlechtpunkt``
+     - ``[bar]``
 
 RCPL_ROWT
 ^^^^^^^^^
@@ -5528,10 +6673,20 @@ Result Properties
    :header-rows: 1
 
    * - Name
+     - Description
+     - Standard Physical Unit
    * - ``MAINELEMENT``
+     - 
+     - 
    * - ``W``
+     - 
+     - 
    * - ``X``
+     - 
+     - 
    * - ``XD``
+     - 
+     - 
 
 RDIV
 ^^^^
@@ -5588,10 +6743,20 @@ Result Properties
    :header-rows: 1
 
    * - Name
+     - Description
+     - Standard Physical Unit
    * - ``MAINELEMENT``
+     - 
+     - 
    * - ``XA``
+     - ``Signalwert am Ausgang``
+     - ``[signal]``
    * - ``XE1``
+     - ``Signalwert am Eingang 1``
+     - ``[signal]``
    * - ``XE2``
+     - ``Signalwert am Eingang 2``
+     - ``[signal]``
 
 RECT
 ^^^^
@@ -5734,28 +6899,74 @@ Result Properties
    :header-rows: 1
 
    * - Name
+     - Description
+     - Standard Physical Unit
    * - ``DH``
+     - ``Differenzdruckhöhe``
+     - ``[m]``
    * - ``DP``
+     - ``Differenzdruck``
+     - ``[bar]``
    * - ``DPH``
+     - ``Reibungsdruckverlust/-druckverlusthöhe``
+     - ``[bar]``
    * - ``DSI``
+     - 
+     - 
    * - ``DSK``
+     - 
+     - 
    * - ``FS``
+     - 
+     - 
    * - ``HR``
+     - ``Reibungsdruckverlusthöhe``
+     - ``[m]``
    * - ``IAKTIV``
+     - ``Netztrennstatus``
+     - ``[]``
    * - ``INDSTD``
+     - ``Indikator aus Regelungsart``
+     - ``[]``
    * - ``KV``
+     - ``KV-Wert``
+     - ``[m3/h]``
    * - ``M``
+     - ``Massenstrom``
+     - ``[kg/s]``
    * - ``MAINELEMENT``
+     - 
+     - 
    * - ``PHI``
+     - ``Reglerstellung``
+     - ``[%]``
    * - ``PR``
+     - ``Reibungsdruckverlust``
+     - ``[bar]``
    * - ``Q2``
+     - ``Volumenstrom (altern. Einheit)``
+     - ``[IDQM,5]``
    * - ``QM``
+     - ``Durchfluss``
+     - ``[m3/h]``
    * - ``RART``
+     - ``Name Regelungsart``
+     - ``[3Sname]``
    * - ``RHO``
+     - ``Dichte``
+     - ``[kg/m3]``
    * - ``V``
+     - ``Strömungsgeschwindigkeit``
+     - ``[m/s]``
    * - ``W``
+     - ``Sollwert zur Regelungsart``
+     - ``[unitX]``
    * - ``X``
+     - ``Istwert zur Regelungsart``
+     - ``[unitX]``
    * - ``ZETA``
+     - ``Verlustbeiwert``
+     - ``[]``
 
 RFKT
 ^^^^
@@ -5812,10 +7023,20 @@ Result Properties
    :header-rows: 1
 
    * - Name
+     - Description
+     - Standard Physical Unit
    * - ``LFKT``
+     - ``Name der verwendeten Tabelle``
+     - ``[3Sname]``
    * - ``MAINELEMENT``
+     - 
+     - 
    * - ``XA``
+     - ``Signalwert am Ausgang``
+     - ``[signal]``
    * - ``XE``
+     - ``Signalwert am Eingang``
+     - ``[signal]``
 
 RHYS
 ^^^^
@@ -5874,11 +7095,23 @@ Result Properties
    :header-rows: 1
 
    * - Name
+     - Description
+     - Standard Physical Unit
    * - ``MAINELEMENT``
+     - 
+     - 
    * - ``XA``
+     - ``Signalwert am Ausgang``
+     - ``[signal]``
    * - ``XE``
+     - ``Signalwert am Eingang``
+     - ``[signal]``
    * - ``XO``
+     - ``Wert oberer Schaltpunkt``
+     - ``[signal]``
    * - ``XU``
+     - ``Wert unterer Schaltpunkt``
+     - ``[signal]``
 
 RINT
 ^^^^
@@ -5933,9 +7166,17 @@ Result Properties
    :header-rows: 1
 
    * - Name
+     - Description
+     - Standard Physical Unit
    * - ``MAINELEMENT``
+     - 
+     - 
    * - ``XA``
+     - ``Signalwert am Ausgang``
+     - ``[signal]``
    * - ``XE``
+     - ``Signalwert am Eingang``
+     - ``[signal]``
 
 RLSR
 ^^^^
@@ -5988,10 +7229,20 @@ Result Properties
    :header-rows: 1
 
    * - Name
+     - Description
+     - Standard Physical Unit
    * - ``MAINELEMENT``
+     - 
+     - 
    * - ``XA``
+     - ``Signalwert am Ausgang``
+     - ``[signal]``
    * - ``XE1``
+     - ``Signalwert am Eingang 1``
+     - ``[signal]``
    * - ``XE2``
+     - ``Signalwert am Eingang 2``
+     - ``[signal]``
 
 RLVG
 ^^^^
@@ -6046,10 +7297,20 @@ Result Properties
    :header-rows: 1
 
    * - Name
+     - Description
+     - Standard Physical Unit
    * - ``MAINELEMENT``
+     - 
+     - 
    * - ``XA``
+     - ``Signalwert am Ausgang``
+     - ``[signal]``
    * - ``XE1``
+     - ``Signalwert am Eingang 1``
+     - ``[signal]``
    * - ``XE2``
+     - ``Signalwert am Eingang 2``
+     - ``[signal]``
 
 RMES
 ^^^^
@@ -6120,10 +7381,20 @@ Result Properties
    :header-rows: 1
 
    * - Name
+     - Description
+     - Standard Physical Unit
    * - ``MAINELEMENT``
+     - 
+     - 
    * - ``XA``
+     - ``Signalwert am Ausgang``
+     - ``[signal]``
    * - ``XM``
+     - ``Physikalischer Messwert``
+     - ``[unitX]``
    * - ``XU``
+     - ``Messwert nach Funktionsgeber``
+     - ``[signal]``
 
 RMES_DPTS
 ^^^^^^^^^
@@ -6225,10 +7496,20 @@ Result Properties
    :header-rows: 1
 
    * - Name
+     - Description
+     - Standard Physical Unit
    * - ``MAINELEMENT``
+     - 
+     - 
    * - ``XA``
+     - ``Signalwert am Ausgang``
+     - ``[signal]``
    * - ``XE1``
+     - ``Signalwert am Eingang 1``
+     - ``[signal]``
    * - ``XE2``
+     - ``Signalwert am Eingang 2``
+     - ``[signal]``
 
 RMUL
 ^^^^
@@ -6285,11 +7566,23 @@ Result Properties
    :header-rows: 1
 
    * - Name
+     - Description
+     - Standard Physical Unit
    * - ``MAINELEMENT``
+     - 
+     - 
    * - ``MULT``
+     - ``Multiplikator``
+     - ``[]``
    * - ``XA``
+     - ``Signalwert am Ausgang``
+     - ``[signal]``
    * - ``XE1``
+     - ``Signalwert am Eingang 1``
+     - ``[signal]``
    * - ``XE2``
+     - ``Signalwert am Eingang 2``
+     - ``[signal]``
 
 ROHR
 ^^^^
@@ -6404,88 +7697,254 @@ Result Properties
    :header-rows: 1
 
    * - Name
+     - Description
+     - Standard Physical Unit
    * - ``A``
+     - ``Schallgeschwindigkeit verwendet``
+     - ``[m/s]``
    * - ``ACALC``
+     - ``Schallgeschwindigkeit berechnet``
+     - ``[m/s]``
    * - ``CPI``
+     - ``Spezifische Wärmekapazität Rohranfang``
+     - ``[kJ/kg/K]``
    * - ``CPK``
+     - ``Spezifische Wärmekapazität Rohrende``
+     - ``[kJ/kg/K]``
    * - ``DH``
+     - ``Differenzdruckhöhe``
+     - ``[m]``
    * - ``DP``
+     - ``Differenzdruck``
+     - ``[bar]``
    * - ``DRAGRED``
+     - ``Widerstands-Reduzierung (DRA)``
+     - ``[%]``
    * - ``DRAKONZ``
+     - ``Fließverbesserer-Konzentration``
+     - ``[ppm]``
    * - ``DSI``
+     - 
+     - 
    * - ``DSK``
+     - 
+     - 
    * - ``DTTR``
+     - ``Fließdauer durch das Rohr``
+     - ``[h]``
    * - ``DWVERL``
+     - ``Spezifischer Wärmeverlust``
+     - ``[W/m]``
    * - ``DWVERLABS``
+     - ``Wärmeverlust``
+     - ``[kW]``
    * - ``ETAAV``
+     - ``Mittlere dynamische Viskosität``
+     - ``[kg/(m*s)]``
    * - ``FS``
+     - 
+     - 
    * - ``HR``
+     - ``Reibungsdruckverlusthöhe``
+     - ``[m]``
    * - ``HVEC``
+     - ``Druckhöhen Rohrgitter``
+     - ``[mNN]``
    * - ``IAKTIV``
+     - ``Netztrennstatus``
+     - ``[]``
    * - ``IRTRENN``
+     - ``Rohrtrennung``
+     - ``[]``
    * - ``JV``
+     - ``Spezifischer Reibungsdruckverlust``
+     - ``[bar/km]``
    * - ``JV2``
+     - ``Spezifischer Reibungsdruckverlust``
+     - ``[Pa/m]``
    * - ``LAMBDA``
+     - ``Reibungsbeiwert``
+     - ``[]``
    * - ``LECKEINAUS``
+     - ``Rohrleck aktivieren/deaktivieren``
+     - ``[]``
    * - ``LECKMENGE``
+     - ``Leckmenge``
+     - ``[m3/h]``
    * - ``LECKORT``
+     - ``Leckort``
+     - ``[m]``
    * - ``LINEPACK``
+     - ``Linepack``
+     - ``[(N)m3]``
    * - ``LINEPACKGEOM``
+     - ``Linepack Rohrinhalt``
+     - ``[(N)m3]``
    * - ``LINEPACKRATE``
+     - ``Linepack-Rate``
+     - ``[(N)m3/h]``
    * - ``MAINELEMENT``
+     - 
+     - 
    * - ``MAV``
+     - ``Mittlerer Massenstrom``
+     - ``[kg/s]``
    * - ``MI``
+     - ``Massenstrom Knoten I``
+     - ``[kg/s]``
    * - ``MK``
+     - ``Massenstrom Knoten K``
+     - ``[kg/s]``
    * - ``MKOND``
+     - 
+     - 
    * - ``MMAX_INST``
+     - ``Massenstrommaximum instationär``
+     - ``[kg/s]``
    * - ``MMIN_INST``
+     - ``Massenstromminimum instationär``
+     - ``[kg/s]``
    * - ``MVEC``
+     - ``Massenströme Rohrgitter``
+     - ``[kg/s]``
    * - ``MVECMAX_INST``
+     - ``Massenstrommaxima Rohrgitter instationär``
+     - ``[kg/s]``
    * - ``MVECMIN_INST``
+     - ``Massenstromminima Rohrgitter instationär``
+     - ``[kg/s]``
    * - ``PAV``
+     - ``Mittlerer Druck``
+     - ``[bar,a]``
    * - ``PDAMPF``
+     - ``Mittleres Dampfdruckniveau``
+     - ``[bar,a]``
    * - ``PHR``
+     - ``Reibungsdruckverlust/-druckverlusthöhe``
+     - ``[bar]``
    * - ``PHVEC``
+     - ``Drücke Rohrgitter``
+     - ``[bar]``
    * - ``PMAX``
+     - ``Größter Druck``
+     - ``[bar,a]``
    * - ``PMIN``
+     - ``Kleinster Druck``
+     - ``[bar,a]``
    * - ``PR``
+     - ``Reibungsdruckverlust``
+     - ``[bar]``
    * - ``PVEC``
+     - ``Drücke Rohrgitter``
+     - ``[bar,a]``
    * - ``PVECMAX_INST``
+     - ``Druckmaxima Rohrgitter instationär``
+     - ``[bar,a]``
    * - ``PVECMIN_INST``
+     - ``Druckminima Rohrgitter instationär``
+     - ``[bar,a]``
    * - ``QI2``
+     - ``Volumenstrom Knoten I (altern. Einheit)``
+     - ``[IDQM,5]``
    * - ``QK2``
+     - ``Volumenstrom Knoten K (altern. Einheit)``
+     - ``[IDQM,5]``
    * - ``QMAV``
+     - ``Mittlerer Volumenstrom``
+     - ``[m3/h]``
    * - ``QMI``
+     - ``Durchfluss Knoten I``
+     - ``[m3/h]``
    * - ``QMK``
+     - ``Durchfluss Knoten K``
+     - ``[m3/h]``
    * - ``QMMAX_INST``
+     - ``Durchflussmaximum instationär``
+     - ``[m3/h]``
    * - ``QMMIN_INST``
+     - ``Durchflussminimum instationär``
+     - ``[m3/h]``
    * - ``QMVEC``
+     - ``Durchfluss Rohrgitter``
+     - ``[m3/h]``
    * - ``QSVB``
+     - ``Strangabnahme``
+     - ``[m3/h/m]``
    * - ``RHOAV``
+     - ``Mittlere Dichte``
+     - ``[kg/m3]``
    * - ``RHOI``
+     - ``Dichte Rohranfang``
+     - ``[kg/m3]``
    * - ``RHOK``
+     - ``Dichte Rohrende``
+     - ``[kg/m3]``
    * - ``RHOVEC``
+     - ``Dichten Rohrgitter``
+     - ``[kg/m3]``
    * - ``SVEC``
+     - ``Weglängen Rohrgitter``
+     - ``[m]``
    * - ``TAV``
+     - ``Mittlere Temperatur``
+     - ``[°C]``
    * - ``TI``
+     - ``Temperatur Rohranfang``
+     - ``[°C]``
    * - ``TK``
+     - ``Temperatur Rohrende``
+     - ``[°C]``
    * - ``TTRVEC``
+     - ``Fluidalter Rohrgitter``
+     - ``[h]``
    * - ``TVEC``
+     - ``Temperaturen Rohrgitter``
+     - ``[°C]``
    * - ``TVECMAX_INST``
+     - ``Temperaturmaxima Rohrgitter instationär``
+     - ``[°C]``
    * - ``TVECMIN_INST``
+     - ``Temperaturminima Rohrgitter instationär``
+     - ``[°C]``
    * - ``VAV``
+     - ``Mittlere Strömungsgeschwindigkeit``
+     - ``[m/s]``
    * - ``VI``
+     - ``Strömungsgeschwindigkeit Knoten I``
+     - ``[m/s]``
    * - ``VK``
+     - ``Strömungsgeschwindigkeit Knoten K``
+     - ``[m/s]``
    * - ``VMAX_INST``
+     - ``Geschwindigkeitsmaximum instationär``
+     - ``[m/s]``
    * - ``VMIN_INST``
+     - ``Geschwindigkeitsminimum instationär``
+     - ``[m/s]``
    * - ``VOLDA``
+     - ``Dampfvolumen``
+     - ``[m3]``
    * - ``WALTERI``
+     - ``Wasseralter am Rohranfang``
+     - ``[h]``
    * - ``WALTERK``
+     - ``Wasseralter am Rohrende``
+     - ``[h]``
    * - ``WVL``
+     - ``Wärmestrom Vorlauf``
+     - ``[kW]``
    * - ``ZAUS``
+     - ``Einzelverlustbeiwert am Ausstromrand``
+     - ``[]``
    * - ``ZEIN``
+     - ``Einzelverlustbeiwert am Einstromrand``
+     - ``[]``
    * - ``ZHKNR``
+     - ``Teilgebietsnummer``
+     - ``[]``
    * - ``ZVEC``
+     - ``Geodätische Höhen Rohrgitter``
+     - ``[m]``
 
 ROHR_VRTX
 ^^^^^^^^^
@@ -6524,19 +7983,47 @@ Result Properties
    :header-rows: 1
 
    * - Name
+     - Description
+     - Standard Physical Unit
    * - ``H``
+     - ``Druckhöhe``
+     - ``[mNN]``
    * - ``M``
+     - ``Massenstrom``
+     - ``[kg/s]``
    * - ``MAINELEMENT``
+     - 
+     - 
    * - ``MMAX_INST``
+     - ``Massenstrommaximum instationär``
+     - ``[kg/s]``
    * - ``MMIN_INST``
+     - ``Massenstromminimum instationär``
+     - ``[kg/s]``
    * - ``P``
+     - ``Druck``
+     - ``[bar,a]``
    * - ``PH``
+     - ``Druck``
+     - ``[bar]``
    * - ``PMAX_INST``
+     - ``Druckmaximum instationär``
+     - ``[bar,a]``
    * - ``PMIN_INST``
+     - ``Druckminimum instationär``
+     - ``[bar,a]``
    * - ``RHO``
+     - ``Dichte``
+     - ``[kg/m3]``
    * - ``T``
+     - ``Temperatur``
+     - ``[°C]``
    * - ``TMAX_INST``
+     - ``Temperaturmaximum instationär``
+     - ``[°C]``
    * - ``TMIN_INST``
+     - ``Temperaturminimum instationär``
+     - ``[°C]``
 
 RPFL
 ^^^^
@@ -6660,14 +8147,32 @@ Result Properties
    :header-rows: 1
 
    * - Name
+     - Description
+     - Standard Physical Unit
    * - ``DYDT``
+     - ``Verstellgeschwindigkeit gesamt``
+     - ``[unitY/s]``
    * - ``DYDTD``
+     - ``Verstellgeschwindigkeit differentiell``
+     - ``[unitY/s]``
    * - ``DYDTI``
+     - ``Verstellgeschwindigkeit integral``
+     - ``[unitY/s]``
    * - ``DYDTP``
+     - ``Verstellgeschwindigkeit proportional``
+     - ``[unitY/s]``
    * - ``MAINELEMENT``
+     - 
+     - 
    * - ``XA``
+     - ``Signalwert am Ausgang``
+     - ``[signal]``
    * - ``XE1``
+     - ``Signalwert am Eingang 1``
+     - ``[signal]``
    * - ``XE2``
+     - ``Signalwert am Eingang 2``
+     - ``[signal]``
 
 RPT1
 ^^^^
@@ -6722,9 +8227,17 @@ Result Properties
    :header-rows: 1
 
    * - Name
+     - Description
+     - Standard Physical Unit
    * - ``MAINELEMENT``
+     - 
+     - 
    * - ``XA``
+     - ``Signalwert am Ausgang``
+     - ``[signal]``
    * - ``XE``
+     - ``Signalwert am Eingang``
+     - ``[signal]``
 
 RRCT
 ^^^^
@@ -6838,17 +8351,41 @@ Result Properties
    :header-rows: 1
 
    * - Name
+     - Description
+     - Standard Physical Unit
    * - ``LFKT``
+     - ``Name Lastgangtabelle``
+     - ``[3Sname]``
    * - ``MAINELEMENT``
+     - 
+     - 
    * - ``SLWKON``
+     - ``Sollwert konstant``
+     - ``[unitX]``
    * - ``SWVT``
+     - ``Name Sollwerttabelle``
+     - ``[3Sname]``
    * - ``W``
+     - ``Vorgegebener Sollwert``
+     - ``[unitX]``
    * - ``WAKT``
+     - ``Aktueller Sollwert``
+     - ``[unitX]``
    * - ``WE``
+     - ``Normierter vorgegebener Sollwert``
+     - ``[]``
    * - ``WEAKT``
+     - ``Normierter aktueller Sollwert``
+     - ``[]``
    * - ``WERCK``
+     - ``Normierter rückgemeldeter Sollwert``
+     - ``[]``
    * - ``WRCK``
+     - ``Rückgemeldeter Sollwert``
+     - ``[unitX]``
    * - ``XA``
+     - ``Signalwert am Ausgang``
+     - ``[signal]``
 
 RSTE
 ^^^^
@@ -6997,18 +8534,44 @@ Result Properties
    :header-rows: 1
 
    * - Name
+     - Description
+     - Standard Physical Unit
    * - ``DYDT1``
+     - ``Stellgrößenänderung Element 1``
+     - ``[unitY/s]``
    * - ``DYDT2``
+     - ``Stellgrößenänderung Element 2``
+     - ``[unitY/s]``
    * - ``DYDT3``
+     - ``Stellgrößenänderung Element 3``
+     - ``[unitY/s]``
    * - ``DYDT4``
+     - ``Stellgrößenänderung Element 4``
+     - ``[unitY/s]``
    * - ``DYDT5``
+     - ``Stellgrößenänderung Element 5``
+     - ``[unitY/s]``
    * - ``MAINELEMENT``
+     - 
+     - 
    * - ``XE1``
+     - ``Signalwert am Eingang 1``
+     - ``[signal]``
    * - ``YS1``
+     - ``Stellgröße Element 1``
+     - ``[unitY]``
    * - ``YS2``
+     - ``Stellgröße Element 2``
+     - ``[unitY]``
    * - ``YS3``
+     - ``Stellgröße Element 3``
+     - ``[unitY]``
    * - ``YS4``
+     - ``Stellgröße Element 4``
+     - ``[unitY]``
    * - ``YS5``
+     - ``Stellgröße Element 5``
+     - ``[unitY]``
 
 RSTN
 ^^^^
@@ -7135,18 +8698,44 @@ Result Properties
    :header-rows: 1
 
    * - Name
+     - Description
+     - Standard Physical Unit
    * - ``LFKT``
+     - ``Name Lastgangtabelle``
+     - ``[3Sname]``
    * - ``MAINELEMENT``
+     - 
+     - 
    * - ``PHI1``
+     - ``Name Zeittabelle Stellung``
+     - ``[3Sname]``
    * - ``PUMD``
+     - ``Name Drehzahltabelle``
+     - ``[3Sname]``
    * - ``PVAR``
+     - ``Name Zeittabelle Druck-/Druckhöhe``
+     - ``[3Sname]``
    * - ``QVAR``
+     - ``Name Sollwerttabelle Durchfluss``
+     - ``[3Sname]``
    * - ``SWVT``
+     - ``Name Sollwerttabelle``
+     - ``[3Sname]``
    * - ``TEVT``
+     - ``Name Zeittabelle Speisetemperatur``
+     - ``[3Sname]``
    * - ``TRGCOUNT``
+     - ``Trigger Stellbefehl``
+     - ``[]``
    * - ``WEVT``
+     - ``Name Zeittabelle Wärmeleistung``
+     - ``[3Sname]``
    * - ``XE1``
+     - ``Signalwert am Eingang 1``
+     - ``[signal]``
    * - ``XE2``
+     - ``Signalwert am Eingang 2``
+     - ``[signal]``
 
 RTOT
 ^^^^
@@ -7199,9 +8788,17 @@ Result Properties
    :header-rows: 1
 
    * - Name
+     - Description
+     - Standard Physical Unit
    * - ``MAINELEMENT``
+     - 
+     - 
    * - ``XA``
+     - ``Signalwert am Ausgang``
+     - ``[signal]``
    * - ``XE``
+     - ``Signalwert am Eingang``
+     - ``[signal]``
 
 RUES
 ^^^^
@@ -7321,23 +8918,59 @@ Result Properties
    :header-rows: 1
 
    * - Name
+     - Description
+     - Standard Physical Unit
    * - ``DH``
+     - ``Differenzdruckhöhe``
+     - ``[m]``
    * - ``DP``
+     - ``Differenzdruck``
+     - ``[bar]``
    * - ``DPH``
+     - ``Reibungsdruckverlust/-druckverlusthöhe``
+     - ``[bar]``
    * - ``DSI``
+     - 
+     - 
    * - ``DSK``
+     - 
+     - 
    * - ``FS``
+     - 
+     - 
    * - ``HR``
+     - ``Reibungsdruckverlusthöhe``
+     - ``[m]``
    * - ``IAKTIV``
+     - ``Netztrennstatus``
+     - ``[]``
    * - ``M``
+     - ``Massenstrom``
+     - ``[kg/s]``
    * - ``MAINELEMENT``
+     - 
+     - 
    * - ``PHI``
+     - ``Stellung``
+     - ``[%]``
    * - ``PHSCH``
+     - ``Schaltdruck``
+     - ``[bar]``
    * - ``PR``
+     - ``Reibungsdruckverlust``
+     - ``[bar]``
    * - ``QM``
+     - ``Durchfluss``
+     - ``[m3/h]``
    * - ``RHO``
+     - ``Dichte``
+     - ``[kg/m3]``
    * - ``V``
+     - ``Strömungsgeschwindigkeit``
+     - ``[m/s]``
    * - ``ZETA``
+     - ``Verlustbeiwert``
+     - ``[]``
 
 SOKO
 ^^^^
@@ -7717,18 +9350,44 @@ Result Properties
    :header-rows: 1
 
    * - Name
+     - Description
+     - Standard Physical Unit
    * - ``IAKTIV``
+     - ``Netztrennstatus``
+     - ``[]``
    * - ``M``
+     - ``Massenstrom``
+     - ``[kg/s]``
    * - ``MAINELEMENT``
+     - 
+     - 
    * - ``MUEB``
+     - ``Massenstrom Überfall``
+     - ``[kg/s]``
    * - ``QM``
+     - ``Durchfluss``
+     - ``[m3/h]``
    * - ``QMUEB``
+     - ``Durchfluss Überfall``
+     - ``[m3/h]``
    * - ``RHO``
+     - ``Dichte``
+     - ``[kg/m3]``
    * - ``T``
+     - ``Fluidtemperatur``
+     - ``[°C]``
    * - ``V``
+     - ``Strömungsgeschwindigkeit Anschluss``
+     - ``[m/s]``
    * - ``VOL``
+     - ``Wasservolumen``
+     - ``[m3]``
    * - ``WALTER``
+     - ``Wasseralter``
+     - ``[h]``
    * - ``WST``
+     - ``Wasserstand``
+     - ``[m]``
 
 SWVT
 ^^^^
@@ -7765,8 +9424,14 @@ Result Properties
    :header-rows: 1
 
    * - Name
+     - Description
+     - Standard Physical Unit
    * - ``MAINELEMENT``
+     - 
+     - 
    * - ``W``
+     - ``Tabellensollwert generisch``
+     - ``[unitX]``
 
 SWVT_ROWT
 ^^^^^^^^^
@@ -7836,8 +9501,14 @@ Result Properties
    :header-rows: 1
 
    * - Name
+     - Description
+     - Standard Physical Unit
    * - ``MAINELEMENT``
+     - 
+     - 
    * - ``T``
+     - ``Tabellensollwert Temperatur``
+     - ``[°C]``
 
 TEVT_ROWT
 ^^^^^^^^^
@@ -8326,33 +9997,89 @@ Result Properties
    :header-rows: 1
 
    * - Name
+     - Description
+     - Standard Physical Unit
    * - ``AUF``
+     - ``Auffahren/Endlage Auf``
+     - ``[]``
    * - ``AUFZU``
+     - ``Ventil auf/zu``
+     - ``[]``
    * - ``DH``
+     - ``Differenzdruckhöhe``
+     - ``[m]``
    * - ``DP``
+     - ``Differenzdruck``
+     - ``[bar]``
    * - ``DSI``
+     - 
+     - 
    * - ``DSK``
+     - 
+     - 
    * - ``FREIGABE``
+     - ``Status Freigabe``
+     - ``[]``
    * - ``FS``
+     - 
+     - 
    * - ``HR``
+     - ``Reibungsdruckverlusthöhe``
+     - ``[m]``
    * - ``IAKTIV``
+     - ``Netztrennstatus``
+     - ``[]``
    * - ``KV``
+     - ``KV-Wert``
+     - ``[m3/h]``
    * - ``LAEUFT``
+     - ``Öffnet oder schließt``
+     - ``[]``
    * - ``M``
+     - ``Massenstrom``
+     - ``[kg/s]``
    * - ``MAINELEMENT``
+     - 
+     - 
    * - ``OEFFNET``
+     - ``Öffnet``
+     - ``[]``
    * - ``PHI``
+     - ``Stellung``
+     - ``[%]``
    * - ``PHI1``
+     - ``Name Zeittabelle Stellung``
+     - ``[3Sname]``
    * - ``PHR``
+     - ``Reibungsdruckverlust/-druckverlusthöhe``
+     - ``[bar]``
    * - ``PR``
+     - ``Reibungsdruckverlust``
+     - ``[bar]``
    * - ``Q2``
+     - ``Volumenstrom (altern. Einheit)``
+     - ``[IDQM,5]``
    * - ``QM``
+     - ``Durchfluss``
+     - ``[m3/h]``
    * - ``RHO``
+     - ``Dichte``
+     - ``[kg/m3]``
    * - ``SCHLIESST``
+     - ``Schließt``
+     - ``[]``
    * - ``STOERUNG``
+     - ``Ventilstörung``
+     - ``[]``
    * - ``V``
+     - ``Strömungsgeschwindigkeit``
+     - ``[m/s]``
    * - ``ZETA``
+     - ``Verlustbeiwert``
+     - ``[]``
    * - ``ZU``
+     - ``Zufahren/Endlage Zu``
+     - ``[]``
 
 VERB
 ^^^^
@@ -8592,17 +10319,41 @@ Result Properties
    :header-rows: 1
 
    * - Name
+     - Description
+     - Standard Physical Unit
    * - ``MAINELEMENT``
+     - 
+     - 
    * - ``WES``
+     - ``Einspeiseleistung``
+     - ``[KW|MW]``
    * - ``WRAND``
+     - ``Wärmestrom Gebietsrand``
+     - ``[KW|MW]``
    * - ``WSPEI``
+     - ``Gespeicherte Leistung Rohrnetz``
+     - ``[KW|MW]``
    * - ``WSPEI_SP``
+     - ``Gespeicherte Leistung Wärmespeicher``
+     - ``[KW|MW]``
    * - ``WVB``
+     - ``Verbrauchsleistung Istwert``
+     - ``[KW|MW]``
    * - ``WVB_0``
+     - ``Verbrauchsleistung Auslegung``
+     - ``[KW|MW]``
    * - ``WVB_W``
+     - ``Verbrauchsleistung Sollwert``
+     - ``[KW|MW]``
    * - ``WVB_XD``
+     - ``Verbrauchsleistung Defizit``
+     - ``[KW|MW]``
    * - ``WVERL``
+     - ``Verlustleistung Rohrnetz``
+     - ``[KW|MW]``
    * - ``WWU``
+     - ``Wärmestrom Wärmeübertrager``
+     - ``[KW|MW]``
 
 WEVT
 ^^^^
@@ -8639,8 +10390,14 @@ Result Properties
    :header-rows: 1
 
    * - Name
+     - Description
+     - Standard Physical Unit
    * - ``MAINELEMENT``
+     - 
+     - 
    * - ``W``
+     - ``Tabellensollwert Wärmeleistung``
+     - ``[kW]``
 
 WEVT_ROWT
 ^^^^^^^^^
@@ -8758,20 +10515,50 @@ Result Properties
    :header-rows: 1
 
    * - Name
+     - Description
+     - Standard Physical Unit
    * - ``HLUFT``
+     - ``Druckhöhe im Gasvolumen``
+     - ``[mNN]``
    * - ``IAKTIV``
+     - ``Netztrennstatus``
+     - ``[]``
    * - ``M``
+     - ``Massenstrom``
+     - ``[kg/s]``
    * - ``MAINELEMENT``
+     - 
+     - 
    * - ``PLUFT``
+     - ``Druck im Gasvolumen``
+     - ``[bar,a]``
    * - ``QM``
+     - ``Durchfluss``
+     - ``[m3/h]``
    * - ``RHO``
+     - ``Dichte``
+     - ``[kg/m3]``
    * - ``T``
+     - ``Fluidtemperatur``
+     - ``[°C]``
    * - ``V``
+     - ``Strömungsgeschwindigkeit``
+     - ``[m/s]``
    * - ``VOL``
+     - ``Wasservolumen``
+     - ``[m3]``
    * - ``VOLDA``
+     - ``Dampfvolumen``
+     - ``[m3]``
    * - ``VOLGAS``
+     - ``Gasvolumen``
+     - ``[m3]``
    * - ``WALTER``
+     - ``Wasseralter``
+     - ``[h]``
    * - ``WST``
+     - ``Wasserstand``
+     - ``[m]``
 
 WTTR
 ^^^^
@@ -8816,11 +10603,23 @@ Result Properties
    :header-rows: 1
 
    * - Name
+     - Description
+     - Standard Physical Unit
    * - ``GDIFF``
+     - ``Diffusstrahlung``
+     - ``[W/m²]``
    * - ``GGLOB``
+     - ``Globalstrahlung``
+     - ``[W/m²]``
    * - ``MAINELEMENT``
+     - 
+     - 
    * - ``TEMP``
+     - ``Lufttemperatur``
+     - ``[°C]``
    * - ``WIND``
+     - ``Windgeschwindigkeit``
+     - ``[m/s]``
 
 WTTR_ROWT
 ^^^^^^^^^
