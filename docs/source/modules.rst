@@ -257,4 +257,4 @@ Utilities
    :undoc-members:
    :show-inheritance:
    
-.. include:: object_types_props_results_snippet_global_mapped.rst
+.. include:: object_types_props_results_snippet_global_mapped_with_descriptions.rst
