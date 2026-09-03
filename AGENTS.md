@@ -148,6 +148,27 @@ number/scope or the operation it teaches changes.
   what to `pip install` — read that message rather than debugging the underlying traceback.
 - SetValue always takes Value as str regardless of the underlying field's type.
 
+## Checking for updates
+
+If relevant to what the user's asking (they mention updating, or ask if they're current) - not
+something to check unconditionally every time - compare the installed version against the latest on
+PyPI and tell them if they differ:
+
+- Installed: `importlib.metadata.version("sir3stoolkit")`.
+- Latest: https://pypi.org/pypi/sir3stoolkit/json (`info.version`) - needs network access; without it,
+  just point the user at https://pypi.org/project/sir3stoolkit/ instead of guessing.
+
+If they differ, check `docs/source/releases.rst`'s version-overview table
+(https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/docs/source/releases.rst) for whether
+upgrading also needs a manual `Sir3S_Toolkit.dll` replacement in the SirGraf directory. The table's
+`dll changed` column is a per-version delta, not cumulative - OR that column across *every* version
+strictly between the installed and target version, not just the target's own row (e.g. 90.15.20 ->
+90.15.25 needs a DLL update because .21/.23/.24 say "Yes", even though the logic can't stop at just
+checking .25's row).
+A new mantle dependency being required isn't reliably flagged in the changelog text - instead of
+parsing prose for it, just try the actual import; a missing one raises a clear, actionable combined
+`ImportError` naming what to `pip install` (see the dependency gotcha above).
+
 ## Current known issues / roadmap
 
 https://github.com/3SConsult/sir3stoolkit/issues — filter to open issues; several closed ones are
