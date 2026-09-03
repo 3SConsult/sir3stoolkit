@@ -3,7 +3,7 @@ Object Types, Properties, and Result Value Types
 
 .. note:: Aggregated global view across configured network types.
    The below sections lists all table names from self.ObjectTypes_TableNames, along with their properties, result properties, and respective object type from self.ObjectTypes (needed for toolkit operations like self.InsertElement(), self.GetPropertiesOfElementType()).
-   Result properties are listed by name only.
+   Result properties additionally list a Description and Standard Physical Unit where known, sourced from SIR 3S's own .MX1 output plus a handful of manual additions (see result_props_descriptions.ipynb). Both are in German, as embedded in SIR 3S itself.
 
 AGSN
 ^^^^
@@ -1169,14 +1169,14 @@ Result Properties
      - ``Sollwert Differenzdruck``
      - ``[bar]``
    * - ``DSI``
-     - 
-     - 
+     - ``dynamische Stützkraft Knoten I``
+     - ``[N|kN|MN]``
    * - ``DSK``
-     - 
-     - 
+     - ``dynamische Stützkraft Knoten K``
+     - ``[N|kN|MN]``
    * - ``FS``
-     - 
-     - 
+     - ``dynamische axiale Last``
+     - ``[N|kN|MN]``
    * - ``HR``
      - ``Reibungsdruckverlusthöhe``
      - ``[m]``
@@ -3675,14 +3675,14 @@ Result Properties
      - ``Differenzdruck``
      - ``[bar]``
    * - ``DSI``
-     - 
-     - 
+     - ``dynamische Stützkraft Knoten I``
+     - ``[N|kN|MN]``
    * - ``DSK``
-     - 
-     - 
+     - ``dynamische Stützkraft Knoten K``
+     - ``[N|kN|MN]``
    * - ``FS``
-     - 
-     - 
+     - ``dynamische axiale Last``
+     - ``[N|kN|MN]``
    * - ``HR``
      - ``Reibungsdruckverlusthöhe``
      - ``[m]``
@@ -4532,14 +4532,14 @@ Result Properties
      - ``Reibungsdruckverlust/-druckverlusthöhe``
      - ``[bar]``
    * - ``DSI``
-     - 
-     - 
+     - ``dynamische Stützkraft Knoten I``
+     - ``[N|kN|MN]``
    * - ``DSK``
-     - 
-     - 
+     - ``dynamische Stützkraft Knoten K``
+     - ``[N|kN|MN]``
    * - ``FS``
-     - 
-     - 
+     - ``dynamische axiale Last``
+     - ``[N|kN|MN]``
    * - ``HR``
      - ``Reibungsdruckverlusthöhe``
      - ``[m]``
@@ -5656,14 +5656,14 @@ Result Properties
      - ``Reibungsdruckverlust/-druckverlusthöhe``
      - ``[bar]``
    * - ``DSI``
-     - 
-     - 
+     - ``dynamische Stützkraft Knoten I``
+     - ``[N|kN|MN]``
    * - ``DSK``
-     - 
-     - 
+     - ``dynamische Stützkraft Knoten K``
+     - ``[N|kN|MN]``
    * - ``FS``
-     - 
-     - 
+     - ``dynamische axiale Last``
+     - ``[N|kN|MN]``
    * - ``HR``
      - ``Reibungsdruckverlusthöhe``
      - ``[m]``
@@ -6926,14 +6926,14 @@ Result Properties
      - ``Reibungsdruckverlust/-druckverlusthöhe``
      - ``[bar]``
    * - ``DSI``
-     - 
-     - 
+     - ``dynamische Stützkraft Knoten I``
+     - ``[N|kN|MN]``
    * - ``DSK``
-     - 
-     - 
+     - ``dynamische Stützkraft Knoten K``
+     - ``[N|kN|MN]``
    * - ``FS``
-     - 
-     - 
+     - ``dynamische axiale Last``
+     - ``[N|kN|MN]``
    * - ``HR``
      - ``Reibungsdruckverlusthöhe``
      - ``[m]``
@@ -7739,11 +7739,11 @@ Result Properties
      - ``Fließverbesserer-Konzentration``
      - ``[ppm]``
    * - ``DSI``
-     - 
-     - 
+     - ``dynamische Stützkraft Knoten I``
+     - ``[N|kN|MN]``
    * - ``DSK``
-     - 
-     - 
+     - ``dynamische Stützkraft Knoten K``
+     - ``[N|kN|MN]``
    * - ``DTTR``
      - ``Fließdauer durch das Rohr``
      - ``[h]``
@@ -7757,8 +7757,8 @@ Result Properties
      - ``Mittlere dynamische Viskosität``
      - ``[kg/(m*s)]``
    * - ``FS``
-     - 
-     - 
+     - ``dynamische axiale Last``
+     - ``[N|kN|MN]``
    * - ``HR``
      - ``Reibungsdruckverlusthöhe``
      - ``[m]``
@@ -8945,14 +8945,14 @@ Result Properties
      - ``Reibungsdruckverlust/-druckverlusthöhe``
      - ``[bar]``
    * - ``DSI``
-     - 
-     - 
+     - ``dynamische Stützkraft Knoten I``
+     - ``[N|kN|MN]``
    * - ``DSK``
-     - 
-     - 
+     - ``dynamische Stützkraft Knoten K``
+     - ``[N|kN|MN]``
    * - ``FS``
-     - 
-     - 
+     - ``dynamische axiale Last``
+     - ``[N|kN|MN]``
    * - ``HR``
      - ``Reibungsdruckverlusthöhe``
      - ``[m]``
@@ -10027,17 +10027,17 @@ Result Properties
      - ``Differenzdruck``
      - ``[bar]``
    * - ``DSI``
-     - 
-     - 
+     - ``dynamische Stützkraft Knoten I``
+     - ``[N|kN|MN]``
    * - ``DSK``
-     - 
-     - 
+     - ``dynamische Stützkraft Knoten K``
+     - ``[N|kN|MN]``
    * - ``FREIGABE``
      - ``Status Freigabe``
      - ``[]``
    * - ``FS``
-     - 
-     - 
+     - ``dynamische axiale Last``
+     - ``[N|kN|MN]``
    * - ``HR``
      - ``Reibungsdruckverlusthöhe``
      - ``[m]``
