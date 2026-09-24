@@ -4,37 +4,75 @@ Created on Fri Aug 29 09:22:31 2025
 
 This module implements interactions between SIR 3S and pandas dataframes. You can obtain pandas dfs with model- or resultdata, insert nodes and pipes via a df, etc.
 
+AI assistant: see sir3stoolkit/__init__.py for orientation (architecture, API/property reference,
+known gotchas) before writing code against this module.
+
 @author: Jablonski
 """
 from __future__ import annotations
-from attrs import field
-from pytoolconfig import dataclass
 
-import pandas as pd
 import re
-import numpy as np
 import logging
 import sys
 import os
 import struct
 import tempfile
 import shutil
+import json
+import io
+import zipfile
 import xml.etree.ElementTree as ET
+from decimal import Decimal, Context, ROUND_HALF_UP
 from dataclasses import dataclass, field
 from typing import List, Optional, Union
 from enum import Enum
 from typing import List, Tuple, Any, Set
 from enum import Enum
 from collections import defaultdict
-import geopandas as gpd
-from shapely import wkt
 from datetime import datetime
 
+from sir3stoolkit.dependency_check import require_packages
+# pyarrow backs the on-disk MX results cache (_write_mx_cache_file()/_read_mx_cache_file()) - only
+# ever imported lazily, inside those functions, so it isn't a hard requirement for the rest of this
+# module - but it IS a real requirement of this module, so it's checked here too rather than only
+# surfacing as a raw ModuleNotFoundError deep inside a cache read/write much later.
+require_packages(__name__, "attrs", "pytoolconfig", "pandas", "geopandas", "shapely", "pyarrow")
+
+from attrs import field
+from pytoolconfig import dataclass
+import pandas as pd
+import numpy as np
+import geopandas as gpd
+from shapely import wkt
+
 from sir3stoolkit.logging_utils import get_logger
+from sir3stoolkit.mantle.advanced_operations import mapping_for_groups
 
 logger = get_logger(__name__)
 
 from sir3stoolkit.core.wrapper import SIR3S_Model
+
+# Sentinel for "Tier 1 MX results cache has never been loaded this session" (distinct from None, which
+# means "the live/default cache").
+_MX_CACHE_NOT_LOADED = object()
+
+# MX1 DATATYPEs this module knows how to unpack.
+_KNOWN_MX_DATATYPES = {"CHAR", "INT4", "REAL", "RVEC"}
+_KNOWN_MX_NUMERIC_DATATYPES = {"INT4", "REAL"}
+
+# SIR 3S formats result values as 7-significant-digit, upper-case-E strings, with ties rounded
+# away from zero (Python's default rounds ties to even) - this context reproduces that.
+_SIR3S_FLOAT_FORMAT_CTX = Context(prec=7, rounding=ROUND_HALF_UP)
+
+
+def _format_sir3s_float(value: float) -> str:
+    """Format a float the same way SIR 3S itself formats result values: 7 significant digits,
+    upper-case scientific notation for very small/large magnitudes, ties rounded away from zero."""
+    if value == 0.0:
+        return "0"
+    rounded = _SIR3S_FLOAT_FORMAT_CTX.create_decimal(Decimal(value))
+    return "{:.7G}".format(float(rounded))
+
 
 class SIR3S_Model_Dataframes(SIR3S_Model):
     """
@@ -262,6 +300,403 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         logger.info(f"[model_data] Done. Shape: {df.shape}")
         return df
 
+    ## Dataframe Creation: Bulk (MX-based) results cache, used by generate_element_results_dataframe(bulk=True)
+
+    def _get_mx_raw_results_cache(self, cache_suffix: Optional[str] = None) -> pd.DataFrame:
+        """
+        Tier 1 of the bulk-results cache: the raw MX results dataframe (read_mx_results()'s shape),
+        refreshed when the underlying .MXS file has changed. Tries an on-disk cache ("mxcache.zip" next
+        to the .MX1 file) before falling back to a full read_mx_results() re-scan, and writes a fresh
+        on-disk cache afterward. Holds exactly one calculation's results at a time; Tier 2 (the
+        per-element-type caches) is cleared whenever this refreshes.
+
+        :param cache_suffix: None (default) for the live cache. A name to instead load a specific
+                        archived snapshot ("mxcache.<cache_suffix>.zip") unconditionally, without
+                        checking it against the live .MXS - raises FileNotFoundError if that file
+                        doesn't exist; it's never created automatically, only by manually
+                        copying/renaming a previously-written default cache file. See
+                        generate_element_results_dataframe()'s mx_cache_suffix param.
+        :type cache_suffix: Optional[str]
+        :return: The cached (or freshly read/loaded) raw MX results dataframe.
+        :rtype: pd.DataFrame
+        """
+        cached_suffix = getattr(self, "_mx_results_cache_suffix", _MX_CACHE_NOT_LOADED)
+
+        mx1_filepath = self.get_current_mx1_filepath(dot_resolution=1)
+        mx_paths = self._resolve_mx_file_paths(mx1_filepath)
+        mxs_filepath = mx_paths["mxs"]
+
+        def _load_new_snapshot(raw_df: pd.DataFrame, suffix: Optional[str]) -> pd.DataFrame:
+            self._mx_results_cache_raw = raw_df
+            self._mx_results_cache_suffix = suffix
+            self._mx_results_cache_by_element_type = {}
+            self._mx_results_cache_vector_by_element_type = {}
+            return raw_df
+
+        if cache_suffix is not None:
+            if cached_suffix == cache_suffix:
+                logger.info(f"[bulk results] In-memory Tier 1 cache already holds archived snapshot {cache_suffix!r}; reusing.")
+                return self._mx_results_cache_raw
+
+            disk_path = self._mx_cache_filepath(mx_paths, cache_suffix)
+            if not os.path.exists(disk_path):
+                default_path = self._mx_cache_filepath(mx_paths, None)
+                raise FileNotFoundError(
+                    f"[bulk results] No on-disk Tier 1 cache found for archived snapshot mx_cache_suffix={cache_suffix!r}: "
+                    f"{disk_path!r} does not exist. This file is never created automatically - copy/rename "
+                    f"a previously-written default on-disk cache file ({default_path!r}) to this name first."
+                )
+            logger.info(f"[bulk results] Loading on-disk Tier 1 cache for archived snapshot (suffix={cache_suffix!r}): {disk_path}")
+            raw_df, mx1_df, mx2_df, _signature = self._read_mx_cache_file(disk_path)
+            self._apply_mx1_mx2(mx_paths, mx1_df, mx2_df)
+            logger.info(f"[bulk results] Loaded archived snapshot into the in-memory Tier 1 cache. Shape: {raw_df.shape}")
+            return _load_new_snapshot(raw_df, cache_suffix)
+
+        # cache_suffix is None: the live/default cache.
+        needs_refresh = True
+        current_stat = None
+        if cached_suffix is None and os.path.exists(mxs_filepath):
+            current_stat = os.stat(mxs_filepath)
+            current_signature = (current_stat.st_mtime, current_stat.st_size)
+            if current_signature == getattr(self, "_mx_results_cache_signature", None):
+                needs_refresh = False
+
+        if not needs_refresh:
+            logger.info("[bulk results] In-memory Tier 1 cache is fresh; reusing.")
+            return self._mx_results_cache_raw
+
+        disk_path = self._mx_cache_filepath(mx_paths, None)
+        raw_df = None
+        if os.path.exists(mxs_filepath):
+            if current_stat is None:
+                current_stat = os.stat(mxs_filepath)
+            current_signature = (current_stat.st_mtime, current_stat.st_size)
+
+            if os.path.exists(disk_path):
+                try:
+                    disk_raw_df, disk_mx1_df, disk_mx2_df, disk_signature = self._read_mx_cache_file(disk_path)
+                    if disk_signature == current_signature:
+                        logger.info(f"[bulk results] In-memory Tier 1 cache stale/missing; loaded fresh on-disk Tier 1 cache instead of re-scanning .MXS: {disk_path}")
+                        raw_df = disk_raw_df
+                        self._apply_mx1_mx2(mx_paths, disk_mx1_df, disk_mx2_df)
+                    else:
+                        logger.info("[bulk results] On-disk Tier 1 cache is stale (signature mismatch); ignoring it.")
+                except Exception as e:
+                    logger.warning(f"[bulk results] Failed to read on-disk Tier 1 cache ({disk_path}), ignoring it: {e}")
+
+        if raw_df is None:
+            logger.info("[bulk results] In-memory and on-disk Tier 1 caches both stale or missing; refreshing via read_mx_results() ...")
+            raw_df = self.read_mx_results()
+            current_stat = os.stat(mxs_filepath)
+            current_signature = (current_stat.st_mtime, current_stat.st_size)
+            try:
+                self._write_mx_cache_file(disk_path, raw_df, self._mx1_df, self._mx2_df, current_signature)
+                logger.info(f"[bulk results] Wrote on-disk Tier 1 cache: {disk_path}")
+            except Exception as e:
+                logger.warning(f"[bulk results] Failed to write on-disk Tier 1 cache ({disk_path}), continuing without it: {e}")
+
+        self._mx_results_cache_signature = current_signature
+        logger.info(f"[bulk results] In-memory Tier 1 cache refreshed. Shape: {raw_df.shape}")
+        return _load_new_snapshot(raw_df, None)
+
+    def _get_available_mx_channel_props_for_element_type(
+        self, element_type: Enum, cache_suffix: Optional[str] = None
+    ) -> Optional[Set[str]]:
+        """
+        Which result properties actually have an MX1 channel for this element type in the current
+        calculation run - i.e. were actually selected/archived, as opposed to merely being part of the
+        theoretical schema GetResultProperties_from_elementType() returns. Covers both scalar and VEC-named (interior-point) properties alike.
+        
+        :param element_type: The element type (e.g., self.ObjectTypes.Pipe).
+        :type element_type: Enum
+        :param cache_suffix: Forwarded to _get_mx_raw_results_cache() - None for the live cache, or a
+                        name to check against a specific archived snapshot instead.
+        :type cache_suffix: Optional[str]
+        :return: Set of property names (without the "OBJTYPE~*~*~*~" prefix) that have an MX1 channel
+                        for this element type, or None if this element type has no known OBJTYPE mapping
+                        (mapping_for_groups) - callers should treat None as "unknown, don't filter".
+        :rtype: Optional[Set[str]]
+        """
+        object_type_code = mapping_for_groups.get(element_type.name)
+        if not object_type_code or object_type_code == -1:
+            return None
+
+        raw_df = self._get_mx_raw_results_cache(cache_suffix=cache_suffix)
+        prefix = f"{object_type_code}~*~*~*~"
+        return {col[len(prefix):] for col in raw_df.columns if col.startswith(prefix)}
+
+    def _get_mx_scalar_results_for_element_type(
+        self, element_type: Enum, cache_suffix: Optional[str] = None
+    ) -> pd.DataFrame:
+        """
+        Tier 2 of the bulk-results cache: for one element type, all scalar (non-VEC) result
+        properties resolved down to individual tks, built lazily and cached in
+        self._mx_results_cache_by_element_type. VEC-named (interior-point) channels are resolved
+        separately, see _get_mx_vector_results_for_element_type().
+
+        :param element_type: The element type (e.g., self.ObjectTypes.Pipe).
+        :type element_type: Enum
+        :param cache_suffix: Forwarded to _get_mx_raw_results_cache() - None for the live cache, or a
+                        name to resolve against a specific archived snapshot instead.
+        :type cache_suffix: Optional[str]
+        :return: DataFrame with one row per UTC timestamp (matching Tier 1's index) and MultiIndex
+                        columns [(tk, property)], scalar (non-VEC) result properties only.
+        :rtype: pd.DataFrame
+        """
+        raw_df = self._get_mx_raw_results_cache(cache_suffix=cache_suffix)
+
+        cache = getattr(self, "_mx_results_cache_by_element_type", None)
+        if cache is None:
+            cache = {}
+            self._mx_results_cache_by_element_type = cache
+
+        element_type_name = element_type.name
+        if element_type_name in cache:
+            return cache[element_type_name]
+
+        object_type_code = mapping_for_groups.get(element_type_name)
+        if not object_type_code or object_type_code == -1:
+            raise ValueError(
+                f"[bulk results] No MX OBJTYPE code known for element type '{element_type_name}'; "
+                "bulk=True is not supported for this element type. Use bulk=False instead."
+            )
+
+        mx2_tk_rows = self._mx2_df[
+            (self._mx2_df["ObjType"].str.strip() == object_type_code)
+            & (self._mx2_df["AttrType"].str.strip().isin(["tk", "pk"]))
+        ]
+        if mx2_tk_rows.empty:
+            logger.warning(f"[bulk results] No .MX2 tk list found for OBJTYPE '{object_type_code}'.")
+            cache[element_type_name] = pd.DataFrame(index=raw_df.index)
+            return cache[element_type_name]
+        mx2_tks = list(mx2_tk_rows.iloc[0]["Data"])
+
+        # Most non-VEC result channels are numeric (REAL/INT4), but not all of them are - some are CHAR
+        # (e.g. a status/text-valued property). read_mx_results() leaves CHAR scalar values as raw bytes
+        # (unlike MX2's CHAR arrays, which it decodes) - decoded (verbatim, see below) below instead, so
+        # this Tier 2 cache never has to guess a column's type from its values the way a blind
+        # DataFrame-wide .astype(float) downstream used to (that failed *all* properties at once the
+        # moment any one column turned out to be text - see generate_element_results_dataframe()).
+        mx1_datatype_by_sir3s_id = self._mx1_df.set_index("Sir3sID")["DATATYPE"]
+
+        prefix = f"{object_type_code}~*~*~*~"
+        resolved_pieces = []
+        for col in raw_df.columns:
+            if not col.startswith(prefix):
+                continue
+            prop = col[len(prefix):]
+            if "VEC" in prop:
+                continue  # interior-point channel: not resolved here, see docstring
+
+            values = raw_df[col]
+            if len(values) == 0:
+                continue
+            n_items = len(values.iloc[0])
+            if n_items != len(mx2_tks):
+                logger.warning(
+                    f"[bulk results] Column '{col}' has {n_items} value(s) per record but .MX2 lists "
+                    f"{len(mx2_tks)} '{object_type_code}' tk(s); skipping this property."
+                )
+                continue
+
+            col_datatype = mx1_datatype_by_sir3s_id.get(col)
+
+            if col_datatype == "CHAR":
+                # Plain decode, no stripping/normalizing - verified empirically that this matches
+                # GetResultfortimestamp()'s own returned string for the same (tk, prop, timestamp)
+                # exactly, padding/null bytes and all (SIR 3S fixed-width CHAR fields, e.g. an unset
+                # PHI1, decode to something like "\x00           " both ways) - bulk=True has to
+                # reproduce that literally, not "clean it up", to actually match bulk=False's output.
+                rows = [tuple(v.decode("utf-8", errors="replace") for v in row) for row in values]
+                expanded = pd.DataFrame(rows, index=values.index, columns=mx2_tks)
+            elif col_datatype in _KNOWN_MX_NUMERIC_DATATYPES:
+                try:
+                    # np.asarray(..., dtype=...) first, instead of handing pd.DataFrame() the raw
+                    # nested list of tuples directly: pandas' own per-column dtype inference over a
+                    # Python list is ~100x slower than building the 2D float array in one numpy call up
+                    # front (measured: 0.8s vs 0.006s for one 3000 x 1000 column) - same values either
+                    # way, just constructed the fast way.
+                    array = np.asarray(values.tolist(), dtype=np.float64)
+                except (TypeError, ValueError) as e:
+                    # Shouldn't happen for REAL/INT4 (struct.unpack() already guarantees native
+                    # floats/ints) - kept as a defensive fallback so a surprise here degrades to
+                    # "this one property is unavailable" (via the reindex()-fills-missing-with-
+                    # place_holder_value path downstream), not "every scalar property for this element
+                    # type is unavailable", the way this used to fail before.
+                    logger.warning(
+                        f"[bulk results] Column '{col}' is DATATYPE={col_datatype!r} but its values "
+                        f"aren't all numeric ({e}); skipping this property."
+                    )
+                    continue
+                expanded = pd.DataFrame(array, index=values.index, columns=mx2_tks)
+            else:
+                # Anything other than CHAR/REAL/INT4 shouldn't reach here at all: reading raw_df in the
+                # first place already requires _build_mx_record_unpack_format() to have accepted every
+                # channel's DATATYPE (it hard-fails on an unrecognized one - see its own docstring/logs
+                # for *why* that's a whole-file failure, not scoped to one property). This branch exists
+                # so a *future* DATATYPE this module learns to unpack at that stage, but forgets to
+                # classify here, fails the same soft way as the block above instead of crashing every
+                # scalar property for this element type via a bare numeric cast.
+                logger.warning(
+                    f"[bulk results] Column '{col}' has DATATYPE={col_datatype!r}, which "
+                    "_get_mx_scalar_results_for_element_type() doesn't know how to classify as numeric "
+                    "or text; skipping this property."
+                )
+                continue
+
+            expanded.columns = pd.MultiIndex.from_tuples([(tk, prop) for tk in mx2_tks])
+            resolved_pieces.append(expanded)
+
+        resolved = pd.concat(resolved_pieces, axis=1) if resolved_pieces else pd.DataFrame(index=raw_df.index)
+        cache[element_type_name] = resolved
+        logger.info(f"[bulk results] In-memory Tier 2 (scalar) cache built for element type '{element_type_name}'. Shape: {resolved.shape}")
+        return resolved
+
+    def _get_mx_vector_results_for_element_type(
+        self, element_type: Enum, cache_suffix: Optional[str] = None
+    ) -> pd.DataFrame:
+        """
+        Tier 2b of the bulk-results cache: for one element type, all VEC-named (interior-point) result
+        properties resolved down to individual tks, built lazily and cached in
+        self._mx_results_cache_vector_by_element_type. Values are tab-separated strings, matching the
+        convention used elsewhere (e.g. add_interior_points_to_start_end_sequence()).
+
+        Only works for element types where .MX2 provides a per-object segment-length row alongside its
+        tk list - currently just ROHR/Pipe, via "N_OF_POINTS". Element types without such a row return
+        an empty DataFrame; generate_element_results_dataframe(bulk=True) falls back to the existing
+        per-value GetResultfortimestamp() loop for those properties.
+
+        :param element_type: The element type (e.g., self.ObjectTypes.Pipe).
+        :type element_type: Enum
+        :param cache_suffix: Forwarded to _get_mx_raw_results_cache() - None for the live cache, or a
+                        name to resolve against a specific archived snapshot instead.
+        :type cache_suffix: Optional[str]
+        :return: DataFrame with one row per UTC timestamp (matching Tier 1's index) and MultiIndex
+                        columns [(tk, property)], VEC-named result properties only, values as
+                        tab-separated strings of floats. Empty if this element type has no resolvable
+                        VEC properties.
+        :rtype: pd.DataFrame
+        """
+        raw_df = self._get_mx_raw_results_cache(cache_suffix=cache_suffix)
+
+        cache = getattr(self, "_mx_results_cache_vector_by_element_type", None)
+        if cache is None:
+            cache = {}
+            self._mx_results_cache_vector_by_element_type = cache
+
+        element_type_name = element_type.name
+        if element_type_name in cache:
+            return cache[element_type_name]
+
+        object_type_code = mapping_for_groups.get(element_type_name)
+        if not object_type_code or object_type_code == -1:
+            cache[element_type_name] = pd.DataFrame(index=raw_df.index)
+            return cache[element_type_name]
+
+        mx2_tk_rows = self._mx2_df[
+            (self._mx2_df["ObjType"].str.strip() == object_type_code)
+            & (self._mx2_df["AttrType"].str.strip().isin(["tk", "pk"]))
+        ]
+        mx2_len_rows = self._mx2_df[
+            (self._mx2_df["ObjType"].str.strip() == object_type_code)
+            & (self._mx2_df["AttrType"].str.strip() == "N_OF_POINTS")
+        ]
+        if mx2_tk_rows.empty or mx2_len_rows.empty:
+            logger.info(
+                f"[bulk results] No .MX2 per-object segment-length row (N_OF_POINTS) for OBJTYPE "
+                f"'{object_type_code}'; VEC properties for '{element_type_name}' aren't resolvable "
+                "from the MX cache, falling back to GetResultfortimestamp() for those."
+            )
+            cache[element_type_name] = pd.DataFrame(index=raw_df.index)
+            return cache[element_type_name]
+
+        mx2_tks = list(mx2_tk_rows.iloc[0]["Data"])
+        segment_lengths = list(mx2_len_rows.iloc[0]["Data"])
+        if len(segment_lengths) != len(mx2_tks):
+            logger.warning(
+                f"[bulk results] .MX2 N_OF_POINTS has {len(segment_lengths)} entries but the tk list "
+                f"has {len(mx2_tks)} for OBJTYPE '{object_type_code}'; skipping VEC resolution."
+            )
+            cache[element_type_name] = pd.DataFrame(index=raw_df.index)
+            return cache[element_type_name]
+
+        offsets = [0]
+        for length in segment_lengths:
+            offsets.append(offsets[-1] + length)
+
+        prefix = f"{object_type_code}~*~*~*~"
+        resolved_pieces = []
+        for col in raw_df.columns:
+            if not col.startswith(prefix):
+                continue
+            prop = col[len(prefix):]
+            if "VEC" not in prop:
+                continue  # scalar channel, handled by _get_mx_scalar_results_for_element_type()
+
+            flat_values = raw_df[col]
+            if len(flat_values) == 0:
+                continue
+            if len(flat_values.iloc[0]) != offsets[-1]:
+                logger.warning(
+                    f"[bulk results] Column '{col}' has {len(flat_values.iloc[0])} value(s) per record "
+                    f"but .MX2 N_OF_POINTS sums to {offsets[-1]} for OBJTYPE '{object_type_code}'; "
+                    "skipping this property."
+                )
+                continue
+
+            per_object_columns = {}
+            for i, tk in enumerate(mx2_tks):
+                start, length = offsets[i], segment_lengths[i]
+                per_object_columns[(tk, prop)] = flat_values.apply(
+                    lambda flat, start=start, length=length: "\t".join(
+                        _format_sir3s_float(v) for v in flat[start:start + length]
+                    )
+                )
+            resolved_pieces.append(pd.DataFrame(per_object_columns, index=raw_df.index))
+
+        resolved = pd.concat(resolved_pieces, axis=1) if resolved_pieces else pd.DataFrame(index=raw_df.index)
+        cache[element_type_name] = resolved
+        logger.info(f"[bulk results] In-memory Tier 2 (vector) cache built for element type '{element_type_name}'. Shape: {resolved.shape}")
+        return resolved
+
+    def _build_mx_timestamp_label_map(self, utc_index, api_timestamps=None) -> dict:
+        """
+        Maps each UTC pd.Timestamp in utc_index to the corresponding local-time-with-offset timestamp
+        string as returned by self.GetTimeStamps(), matched by parsed instant. Calls
+        self.GetTimeStamps() exactly once, not once per timestamp - unless the caller already has that
+        result (e.g. from its own earlier call, or another call to this method in the same pipeline)
+        and passes it in via api_timestamps, in which case this makes no GetTimeStamps() call at all.
+
+        :param utc_index: UTC-tz-aware timestamps to find matching labels for (e.g. Tier 1's/Tier 2's
+                        DataFrame index).
+        :type utc_index: Iterable[pandas.Timestamp]
+        :param api_timestamps: Pre-fetched self.GetTimeStamps()[0] result, to avoid a redundant
+                        GetTimeStamps() call when the caller already has it. Default: None (fetch it).
+        :type api_timestamps: Optional[Sequence[str]]
+        :return: Mapping of {utc_timestamp: matching self.GetTimeStamps() string}. Entries with no
+                        matching API timestamp are omitted.
+        :rtype: dict
+        """
+        if api_timestamps is None:
+            api_timestamps, _tsStat, _tsMin, _tsMax = self.GetTimeStamps()
+        if not api_timestamps:
+            return {}
+        # pd.to_datetime() on the whole list at once instead of once per string: parsing each string
+        # individually forces pandas to re-guess the datetime format from scratch every single time
+        # (measured: 5.6s for 3000 timestamps, the single biggest cost in a fully-cached bulk=True
+        # call) instead of inferring it once and reusing it. utc=True normalizes every parsed instant
+        # to UTC - api_timestamps can span a DST boundary (mixed +01:00/+02:00 offsets), which a
+        # non-utc batch parse would raise on in a future pandas version; instant equality/hashing
+        # against utc_index (already UTC) is unaffected either way; the *values* stored below are
+        # still the original local-offset strings, unchanged.
+        parsed = pd.to_datetime(list(api_timestamps), utc=True)
+        instant_to_label = dict(zip(parsed, api_timestamps))
+        return {
+            utc_ts: instant_to_label[utc_ts]
+            for utc_ts in utc_index
+            if utc_ts in instant_to_label
+        }
+
     def generate_element_results_dataframe(
         self,
         element_type: Enum,
@@ -269,30 +704,31 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         properties: Optional[List[str]] = None,
         timestamps: Optional[Union[List[str], List[int]]] = None,
         place_holder_value: Optional[float] = 99999.0,
-        drop_full_place_holder_columns: Optional[bool] = True
-        
+        drop_full_place_holder_columns: Optional[bool] = True,
+        bulk: Optional[bool] = False,
+        mx_cache_suffix: Optional[str] = None,
 
     ) -> pd.DataFrame:
 
         """
         Generate a dataframe with RESULT (time-dependent) properties for all devices and timestamps.
 
-        :param element_type: The element type (e.g., self.ObjectTypes.Node). 
+        :param element_type: The element type (e.g., self.ObjectTypes.Node).
         :type element_type: Enum
         :param tks: List of tks of instances of the element type to include. All other tks will be excluded. Use for filtering.
                     Default: None (no filtering)
         :type tks: list[str], optional
-        :param properties: List of RESULT property names to include.  
-                        If properties=None ⇒ includes all available result properties (per element, only if values exist).  
+        :param properties: List of RESULT property names to include.
+                        If properties=None ⇒ includes all available result properties (per element, only if values exist).
                         If properties=[] ⇒ no properties are used.
                         Default: None.
         :type properties: list[str], optional
-        :param timestamps: List of timestamps to include. Can be:  
-                        - List of timestamp strings  
-                            (e.g., ["2025-09-25 00:00:00.000 +02:00", "2025-09-25 00:05:00.000 +02:00"])  
-                        - List of integer indices  
-                            (e.g., [0, 7, -1]) 
-                            where 0 = first timestamp, 7 = eighth timestamp, -1 = last timestamp.  
+        :param timestamps: List of timestamps to include. Can be:
+                        - List of timestamp strings
+                            (e.g., ["2025-09-25 00:00:00.000 +02:00", "2025-09-25 00:05:00.000 +02:00"])
+                        - List of integer indices
+                            (e.g., [0, 7, -1])
+                            where 0 = first timestamp, 7 = eighth timestamp, -1 = last timestamp.
                         Default: None (includes all available timestamps).
         :type timestamps: list[Union[str, int]], optional
         :param place_holder_value: float values to be used if SIR 3S calculations do not return results.
@@ -301,19 +737,45 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         :param drop_full_place_holder_columns: Determine whether columns, that are completley filled with place holder values, get dropped.
                 Default: True
         :type drop_full_place_holder_columns: bool, optional
+        :param bulk: WORK IN PROGRESS. If False (default), retrieve every value via one
+                        GetResultfortimestamp() call each - reliable, but slow for large requests. If
+                        True, result properties are instead retrieved from a cached bulk read of the
+                        model's .MXS result file where possible (see read_mx_results()), falling back
+                        to the GetResultfortimestamp() loop for whatever can't be resolved that way.
+                        Output shape is identical either way; only retrieval speed/cost differs. Only
+                        use bulk=True for genuinely large requests - the cache-building step itself
+                        isn't free.
+        :type bulk: bool, optional
+        :param mx_cache_suffix: WORK IN PROGRESS. Only meaningful when bulk=True (ignored, with a
+                        warning, otherwise). None (default): use the live MX results cache for the
+                        model's current calculation, refreshed automatically whenever the underlying
+                        .MXS file changes. A name: instead load a specific archived snapshot of a past
+                        calculation, previously preserved by copying/renaming the on-disk cache file
+                        ("mxcache.zip", written next to the .MX1 file) to "mxcache.<mx_cache_suffix>.zip".
+                        Loaded unconditionally (no freshness check); raises FileNotFoundError if that
+                        file doesn't exist. Only one calculation's results are ever cached at once, so
+                        switching snapshots replaces whatever was cached before.
+        :type mx_cache_suffix: str, optional
 
-        :return: DataFrame with one row per timestamp and MultiIndex columns:  
-                - Level 0: tk (device ID)  
-                - Level 1: name (device name)  
-                - Level 2: end_nodes (tuple of connected node tks as string)  
-                - Level 3: property (result name)  
+        :return: DataFrame with one row per timestamp and MultiIndex columns:
+                - Level 0: tk (device ID)
+                - Level 1: name (device name)
+                - Level 2: end_nodes (tuple of connected node tks as string)
+                - Level 3: property (result name)
                 Data types: float for scalars, str for vectorized data and literal strings.
         :rtype: pd.DataFrame
 
         :description:
-        Generates a DataFrame containing time-dependent result vectors for all selected devices and timestamps.  
+        Generates a DataFrame containing time-dependent result vectors for all selected devices and timestamps.
         Supports both timestamp strings and index-based selection. Produces a MultiIndex-column DataFrame grouped by device, name, end-nodes, and property.
         """
+
+        # --- Param validity ---
+        if mx_cache_suffix is not None and not bulk:
+            logger.warning(
+                f"[results] mx_cache_suffix={mx_cache_suffix!r} was given but bulk=False; it only "
+                "applies to the MX-based bulk=True retrieval path and is ignored here."
+            )
 
         # --- Validate time stamps ---
         logger.info(f"[results] Generating results dataframe for element type: {element_type}")
@@ -363,13 +825,111 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
             end_nodes_available = True
 
         # --- Retrieve values ---
-        logger.info("[results] Retrieving result values...")
+        logger.info(f"[results] Retrieving result values... (bulk={bulk})")
 
         data_dict = defaultdict(dict)
+        bulk_frames: List[pd.DataFrame] = []
 
+        if bulk:
+            # Fetched once and shared with both _build_mx_timestamp_label_map() calls below (scalar and
+            # vector) instead of each doing its own GetTimeStamps() call - a real, measured COM
+            # round-trip cost (~0.5s/call), not a cheap local lookup.
+            raw_api_timestamps, _tsStat, _tsMin, _tsMax = self.GetTimeStamps()
+
+            available_mx_channel_props = self._get_available_mx_channel_props_for_element_type(
+                element_type, cache_suffix=mx_cache_suffix
+            )
+            if available_mx_channel_props is not None:
+                props_without_mx_channel = [prop for prop in result_props if prop not in available_mx_channel_props]
+            else:
+                props_without_mx_channel = []  # unknown OBJTYPE mapping - don't filter, keep old behavior
+            if props_without_mx_channel:
+                logger.info(
+                    f"[bulk results] {len(props_without_mx_channel)} requested propert"
+                    f"{'y has' if len(props_without_mx_channel) == 1 else 'ies have'} no MX1 channel for "
+                    f"'{element_type.name}' in this calculation run (not selected/archived) - filling "
+                    f"with place_holder_value directly, skipping the API-loop fallback for them: "
+                    f"{props_without_mx_channel}"
+                )
+                ts_labels = [str(ts) for ts in valid_timestamps]
+                placeholder_columns = pd.MultiIndex.from_product([tks, props_without_mx_channel])
+                bulk_frames.append(pd.DataFrame(place_holder_value, index=ts_labels, columns=placeholder_columns))
+
+            props_with_mx_channel = [prop for prop in result_props if prop not in props_without_mx_channel]
+
+            # Scalar (non-VEC) properties: fast MX-based bulk path (Tier 1 + Tier 2 cache).
+            scalar_props = [prop for prop in props_with_mx_channel if prop not in available_result_vector_props]
+            vector_props_all = [prop for prop in props_with_mx_channel if prop in available_result_vector_props]
+            vector_props_remaining = list(vector_props_all)  # default: none resolved from MX yet
+
+            if scalar_props:
+                try:
+                    bulk_df = self._get_mx_scalar_results_for_element_type(element_type, cache_suffix=mx_cache_suffix)
+                    label_map = self._build_mx_timestamp_label_map(bulk_df.index, api_timestamps=raw_api_timestamps)
+                    valid_timestamps_set = set(valid_timestamps)
+                    wanted_utc_ts = [utc_ts for utc_ts, ts_label in label_map.items() if ts_label in valid_timestamps_set]
+
+                    if wanted_utc_ts:
+                        # One vectorized row/column selection instead of a per-cell Python loop: bulk_df's
+                        # columns are a MultiIndex assembled via pd.concat() (not lexsorted), so per-cell
+                        # membership checks/lookups degrade to O(n) each - reindex() does the equivalent
+                        # selection (missing (tk, prop) combos become NaN columns) in one vectorized call.
+                        wanted_columns = pd.MultiIndex.from_product([tks, scalar_props])
+                        scalar_slice = bulk_df.loc[wanted_utc_ts].reindex(columns=wanted_columns)
+                        scalar_slice.index = [label_map[utc_ts] for utc_ts in scalar_slice.index]
+                        # No blanket .astype(float) here - most scalar properties are numeric (already
+                        # float64, from _get_mx_scalar_results_for_element_type()), but some are
+                        # legitimately CHAR-typed text (already decoded to str/NaN there too, same
+                        # module). A DataFrame-wide astype(float) would raise the moment it hit any text
+                        # column, which - caught by the except below - used to drop *every* scalar
+                        # property at once, not just the offending one. .where() works uniformly on
+                        # mixed per-column dtypes: NaN (genuinely missing, or reindex()'s fill for a
+                        # missing (tk, prop) combo) becomes place_holder_value either way, real values
+                        # (numeric or text) pass through untouched.
+                        scalar_slice = scalar_slice.where(scalar_slice.notna(), place_holder_value)
+                        bulk_frames.append(scalar_slice)
+                except Exception as e:
+                    logger.error(f"[results] bulk=True scalar retrieval failed, falling back to none for those properties: {e}")
+
+            # VEC-named (interior-point) properties: fast MX-based bulk path too, where resolvable (see
+            # _get_mx_vector_results_for_element_type() - currently ROHR/Pipe only, via .MX2 N_OF_POINTS).
+            # Whatever isn't resolvable falls through to the API loop below, same as before.
+            if vector_props_all:
+                try:
+                    vector_bulk_df = self._get_mx_vector_results_for_element_type(element_type, cache_suffix=mx_cache_suffix)
+                    available_vec_props = {prop for (_tk, prop) in vector_bulk_df.columns}
+                    resolvable_vector_props = [prop for prop in vector_props_all if prop in available_vec_props]
+
+                    if resolvable_vector_props:
+                        label_map = self._build_mx_timestamp_label_map(vector_bulk_df.index, api_timestamps=raw_api_timestamps)
+                        valid_timestamps_set = set(valid_timestamps)
+                        wanted_utc_ts = [utc_ts for utc_ts, ts_label in label_map.items() if ts_label in valid_timestamps_set]
+
+                        if wanted_utc_ts:
+                            wanted_columns = pd.MultiIndex.from_product([tks, resolvable_vector_props])
+                            vector_slice = vector_bulk_df.loc[wanted_utc_ts].reindex(columns=wanted_columns)
+                            vector_slice.index = [label_map[utc_ts] for utc_ts in vector_slice.index]
+                            # missing (tk, prop) combos become NaN via reindex() - same place_holder_value
+                            # convention the API-loop path below uses for GetResultfortimestamp() returning
+                            # "" for a vector property. .where() is vectorized and works fine on this
+                            # object-dtype (string-valued) frame, same as the scalar branch above.
+                            vector_slice = vector_slice.where(vector_slice.notna(), place_holder_value)
+                            bulk_frames.append(vector_slice)
+
+                        vector_props_remaining = [prop for prop in vector_props_all if prop not in resolvable_vector_props]
+                except Exception as e:
+                    logger.error(f"[results] bulk=True vector retrieval failed, falling back to API for those properties: {e}")
+        else:
+            # bulk=False: every property retrieved the same way, via the loop below.
+            vector_props_remaining = None  # sentinel: loop below iterates result_props, not just vector_props
+
+        # Whatever wasn't resolved from the MX cache above (VEC properties for element types without a
+        # usable .MX2 segment-length row, e.g. anything but ROHR/Pipe right now), or every property for
+        # bulk=False: unchanged per-value GetResultfortimestamp() loop.
+        props_via_api = result_props if vector_props_remaining is None else vector_props_remaining
         for ts in map(str, valid_timestamps):
             for tk in tks:
-                for prop in result_props:
+                for prop in props_via_api:
                     try:
                         value = self.GetResultfortimestamp(timestamp=ts, Tk=tk, property=prop)[0]
                         if value == "":
@@ -387,7 +947,29 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
                     except Exception as e:
                         logger.warning(f"[results] Failed to get result '{prop}' for tk '{tk}' at '{ts}': {e}")
 
-        df = pd.DataFrame(data_dict)
+        # Merge the API-loop's dict-of-dicts frame (if any) with the bulk-resolved frames (if any) in one
+        # vectorized concat, aligned by their shared ts_label index - see bulk_frames comment above.
+        frames_to_concat = list(bulk_frames)
+        if data_dict:
+            frames_to_concat.append(pd.DataFrame(data_dict))
+        df = pd.concat(frames_to_concat, axis=1) if frames_to_concat else pd.DataFrame()
+
+        # Reorder columns to tk-major/property-minor traversal order (matching tks x result_props),
+        # regardless of which path resolved which property. bulk=False already builds data_dict in this
+        # order naturally (the loop below is tk-major already); bulk=True populates data_dict from two
+        # separate vectorized merges (scalar block, then vector block), which otherwise leaves all scalar
+        # columns grouped before all vector columns instead of interleaved per tk - i.e. each pipe's own
+        # columns would end up split apart instead of adjacent.
+        # Membership against a plain Python set of tuples, not `(tk, prop) in df.columns` (a MultiIndex)
+        # directly - the latter's __contains__/get_loc turned out NOT to be reliably O(1) here in
+        # practice (measured 33x slower, and this loop was 57% of one profiled call's total time at a
+        # real 524-tk/82-property scale) - a set's hashing has no such dependency on the MultiIndex's
+        # internal engine state, which a pd.concat()-assembled index (as df's is, from bulk_frames plus
+        # the API-loop's frame) doesn't appear to hit the fast path for.
+        existing_columns = set(df.columns)
+        canonical_column_order = [(tk, prop) for tk in tks for prop in result_props if (tk, prop) in existing_columns]
+        df = df.reindex(columns=canonical_column_order)
+
         if drop_full_place_holder_columns:
             mask_placeholder_all = df.eq(place_holder_value).all()
             amount_of_dropped_cols = int(mask_placeholder_all.sum())
@@ -397,10 +979,12 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         
         
         # --- Add Name, End Nodes and Interior points to column MultiIndex ---
-        col_tuples = []
-        
-        for col in df.columns:
-            tk, prop = col
+        # One GetValue(Name)/GetEndNodes() call per unique tk, not per (tk, prop) column - the same tk
+        # appears in one column per requested property, so looking it up again for each of those is
+        # pure waste (measured: ~23x more COM calls than necessary at a 1000-tk/23-property scale,
+        # ~2.8s of a fully-cached bulk=True call).
+        label_by_tk = {}
+        for tk in df.columns.get_level_values(0).unique():
             try:
                 name = self.GetValue(tk, "Name")[0]
             except Exception as e:
@@ -417,8 +1001,9 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
             else:
                 end_nodes_str = "No end nodes on element type"
 
-            
-            col_tuples.append((tk, name, end_nodes_str, prop))
+            label_by_tk[tk] = (name, end_nodes_str)
+
+        col_tuples = [(tk, label_by_tk[tk][0], label_by_tk[tk][1], prop) for tk, prop in df.columns]
 
         df.columns = pd.MultiIndex.from_tuples(
             col_tuples,
@@ -466,7 +1051,12 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
             logger.error("[rows_to_tuple_row] Dataframe index is not unique. Please provide a dataframe with unique index values.")
             return pd.DataFrame(), {}
         
-        tuple_row = {col: tuple(df[col].tolist()) for col in df.columns}
+        # .to_numpy().T.tolist() once, instead of a per-column df[col].tolist(): 3-6x faster at
+        # realistic tk x property column counts (verified). Must go through .tolist() specifically
+        # (not raw numpy iteration) so values stay native Python types (e.g. float, not numpy.float64),
+        # matching the previous per-column .tolist() behavior exactly.
+        rows_as_lists = df.to_numpy().T.tolist()
+        tuple_row = dict(zip(df.columns, map(tuple, rows_as_lists)))
 
         out = pd.DataFrame([tuple_row])
         out.columns = df.columns
@@ -486,6 +1076,8 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         element_type: str,
         tks: Optional[list[str]] = None,
         timestamps: Optional[Union[List[str], List[int]]] = None,
+        bulk: bool = False,
+        mx_cache_suffix: Optional[str] = None,
     ) -> pd.DataFrame | gpd.GeoDataFrame:
 
         """
@@ -501,6 +1093,12 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         :param timestamps: Timestamps used for obtaining result values.
                     Default: Static.
         :type timestamps: Optional[Union[List[str], List[int]]], optional
+        :param bulk: Whether to use bulk mode for result retrieval.
+                    Default: False.
+        :type bulk: bool, optional
+        :param mx_cache_suffix: Suffix for the cache file used in bulk mode.
+                    Default: None.
+        :type mx_cache_suffix: Optional[str], optional
         :return: DataFrame containing one row per element instance, including model_data, end
                 nodes, geometry, and available static result values. Dict mapping timestamps to tuple indices for result values is also returned.
         :rtype: tuple[pd.DataFrame, dict[str, int]]
@@ -532,6 +1130,8 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
                                                                         ,tks=tks
                                                                         ,properties=result_values_to_obtain
                                                                         ,timestamps=timestamps
+                                                                        ,bulk=bulk
+                                                                        ,mx_cache_suffix=mx_cache_suffix
                                                                         
             )
             if df_results.empty:
@@ -662,67 +1262,62 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
 
         is_multi = isinstance(df_results.columns, pd.MultiIndex)
 
-        pieces = []
+        # A per-column loop building/concatenating one tiny DataFrame (plus its own
+        # pd.MultiIndex.from_tuples() call) per column is a well-known slow pandas pattern at real
+        # tk x property column counts (verified: ~9x speedup from the rewrite below, at 1000 tks x 7
+        # properties). Instead: classify columns first (still respecting original column order for the
+        # final result), batch-parse all real VEC columns' values via one to_numpy() + plain Python
+        # loop (no per-column pandas .apply() overhead, and no stack()/unstack() round-trip - tried
+        # that too, it was both slower AND wrong at this scale), then build the whole output DataFrame
+        # once at the end.
+        candidate_vec_cols = [
+            c for c in df_results.columns if (c if isinstance(c, tuple) else (c,))[-1] in vec_props
+        ]
+        real_vec_col_set = set()
+        if candidate_vec_cols:
+            has_tab = df_results[candidate_vec_cols].apply(self._column_has_vector_values, axis=0)
+            real_vec_col_set = set(has_tab.index[has_tab])
 
+        def _split_start_end_sequence(x):
+            if isinstance(x, str):
+                parts = tuple(float(v) for v in x.split("\t"))
+                if parts:
+                    return (parts[0], parts[-1], parts)
+            return (None, None, ())
+
+        parsed_by_col = {}
+        if real_vec_col_set:
+            ordered_vec_cols = [c for c in df_results.columns if c in real_vec_col_set]
+            arr = df_results[ordered_vec_cols].to_numpy()
+            for j, col_key in enumerate(ordered_vec_cols):
+                parsed_by_col[col_key] = [_split_start_end_sequence(v) for v in arr[:, j]]
+
+        new_cols = {}
         for col_key in df_results.columns:
-
             key = col_key if isinstance(col_key, tuple) else (col_key,)
             prop = key[-1]
             base_key = key[:-1]  # everything except the last level (property name)
-            col = df_results[col_key]
 
-            if prop in vec_props and self._column_has_vector_values(col):
-
-                # Convert tab-separated string → list of values
-                split_lists = col.apply(
-                    lambda x: x.split("\t") if isinstance(x, str) else []
-                )
-
-                # Extract start, end, and full tuple
-                start = split_lists.apply(lambda lst: float(lst[0]) if lst else None)
-                end = split_lists.apply(lambda lst: float(lst[-1]) if lst else None)
-                sequence = split_lists.apply(
-                    lambda lst: tuple(float(x) for x in lst) if lst else ()
-                )
-
-                # Build a DataFrame for these three new columns
-                df_vec = pd.DataFrame(
-                    {
-                        prop + "_start": start,
-                        prop + "_end": end,
-                        prop + "_sequence": sequence
-                    },
-                    index=df_results.index
-                )
-
+            if col_key in real_vec_col_set:
+                triples = parsed_by_col[col_key]
+                start = [t[0] for t in triples]
+                end = [t[1] for t in triples]
+                sequence = [t[2] for t in triples]
                 if is_multi:
-                    df_vec.columns = pd.MultiIndex.from_tuples(
-                        [base_key + (c,) for c in df_vec.columns],
-                        names=df_results.columns.names
-                    )
+                    new_cols[base_key + (prop + "_start",)] = start
+                    new_cols[base_key + (prop + "_end",)] = end
+                    new_cols[base_key + (prop + "_sequence",)] = sequence
                 else:
-                    df_vec.columns = [
-                        f"{prop}_start",
-                        f"{prop}_end",
-                        f"{prop}_sequence"
-                    ]
-
-                pieces.append(df_vec)
-
+                    new_cols[f"{prop}_start"] = start
+                    new_cols[f"{prop}_end"] = end
+                    new_cols[f"{prop}_sequence"] = sequence
             else:
                 # Keep scalar property untouched
-                df_scalar = col.to_frame()
-                if is_multi:
-                    df_scalar.columns = pd.MultiIndex.from_tuples(
-                        [key],
-                        names=df_results.columns.names
-                    )
-                pieces.append(df_scalar)
+                new_cols[key if is_multi else key[0]] = df_results[col_key].tolist()
 
-        if not pieces:
-            return df_results.copy()
-
-        out = pd.concat(pieces, axis=1)
+        out = pd.DataFrame(new_cols, index=df_results.index)
+        if is_multi:
+            out.columns = pd.MultiIndex.from_tuples(list(new_cols.keys()), names=df_results.columns.names)
         return out
 
     def add_interior_points_as_flat_cols(self, df):
@@ -1122,24 +1717,28 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         List[str]
             A list of valid timestamp strings (possibly empty).
         """
+        # Single GetTimeStamps() call covering both the "no timestamps given" and the "validate given
+        # timestamps" cases below (previously two separate calls, one per case, when timestamps was
+        # None - a real, measured cost: ~0.5s per call, this alone was a quarter of one profiled
+        # generate_element_results_dataframe() call's total GetTimeStamps() time).
+        try:
+            simulation_timestamps, tsStat, tsMin, tsMax = self.GetTimeStamps()
+        except Exception as e:
+            logger.error(f"[Resolving Timestamps] Error retrieving timestamps: {e}")
+            return []
+
         # --- Default timestamp resolution ---
         if timestamps is None:
             logger.info("[Resolving Timestamps] No timestamps were given. Checking available simulation timestamps (SIR3S_Model.GetTimeStamps()[0]).")
-            try:
-                simulation_timestamps, tsStat, tsMin, tsMax = self.GetTimeStamps()
-                if simulation_timestamps:
-                    timestamps = simulation_timestamps
-                    logger.info(f"[Resolving Timestamps] {len(timestamps)} simulation timestamp(s) are available.")
-                else:
-                    logger.warning("[Resolving Timestamps] No valid simulation timestamps exist in result data.")
-                    return []
-            except Exception as e:
-                logger.error(f"[Resolving Timestamps] Error retrieving timestamps: {e}")
+            if simulation_timestamps:
+                timestamps = simulation_timestamps
+                logger.info(f"[Resolving Timestamps] {len(timestamps)} simulation timestamp(s) are available.")
+            else:
+                logger.warning("[Resolving Timestamps] No valid simulation timestamps exist in result data.")
                 return []
 
         # --- Validate given timestamps ---
         try:
-            simulation_timestamps, tsStat, tsMin, tsMax = self.GetTimeStamps()
             available_timestamps = list(simulation_timestamps) if simulation_timestamps else []
 
             valid_timestamps = []
@@ -1249,12 +1848,11 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         Build the absolute path to the .MX1 result metadata file of the currently open model.
 
         Derived from the model's working directory (GetWorkingDirectory()) and its model identifier
-        (self.Mid, as passed to OpenModel(), e.g. "M-1-0-1"): the three numbers in Mid become the
-        B/V/BZ subdirectories, and the file itself is named "<Mid>.<dot_resolution>.MX1", e.g.:
+        (self.Mid, e.g. "M-1-0-1"): the three numbers in Mid become the B/V/BZ subdirectories, e.g.:
         "<working_directory>\\B1\\V0\\BZ1\\M-1-0-1.1.MX1"
 
-        TODO before shipping: dot_resolution is currently assumed to always be 1. Confirm where this
-        value actually comes from (it may not always be 1) before relying on this in production.
+        TODO before shipping: dot_resolution is currently assumed to always be 1; confirm where this
+        value actually comes from before relying on this in production.
 
         :param dot_resolution: The dot-resolution segment of the .MX1 filename (the ".Y" from 90-10 on).
                         Default: 1 (current assumption, unverified for all cases).
@@ -1284,6 +1882,157 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
 
         return mx1_filepath
 
+    def _resolve_mx_file_paths(self, mx1_filepath: str) -> dict:
+        """
+        Pure path derivation (no file reads, no existence checks) from an .MX1 filepath: the
+        corresponding .MX2/.MXS/.ZIP paths, dot_resolution, working dir and base name. Factored out of
+        initialize_mx_read_helpers() so callers that only need the paths (e.g. the on-disk Tier 1 cache,
+        which has to know the .MXS path before deciding whether a full MX1/MX2 parse is needed) can
+        reuse the same derivation.
+
+        :param mx1_filepath: Absolute or relative path to an .MX1 file (e.g. "...\\M-1-0-1.1.MX1").
+        :type mx1_filepath: str
+        :return: dict with keys "mx1", "mx2", "mxs", "mxs_zip", "dot_resolution", "work_dir", "base".
+        :rtype: dict
+        """
+        w_d, file_name = os.path.split(mx1_filepath)
+        base, _ext = os.path.splitext(file_name)
+        base, dot_resolution = os.path.splitext(base)
+
+        return {
+            "mx1": mx1_filepath,
+            "mx2": os.path.join(w_d, f"{base}.MX2"),
+            "mxs": os.path.join(w_d, f"{base}{dot_resolution}.MXS"),
+            "mxs_zip": os.path.join(w_d, f"{base}{dot_resolution}.ZIP"),
+            "dot_resolution": dot_resolution,
+            "work_dir": w_d,
+            "base": base,
+        }
+
+    def _mx_cache_filepath(self, mx_paths: dict, cache_suffix: Optional[str]) -> str:
+        """
+        Build the on-disk Tier 1 cache path next to the .MX1 file: "mxcache.zip" by default, or
+        "mxcache.{cache_suffix}.zip" for a named/archived snapshot (see
+        generate_element_results_dataframe()'s mx_cache_suffix param).
+
+        Deliberately excludes the .MX1 base name and dot_resolution - the containing directory already
+        disambiguates by Mid, and dot_resolution is currently hardcoded to 1 everywhere (see
+        get_current_mx1_filepath()'s TODO). TODO before shipping, together with that: once multiple
+        resolutions are supported, this will need a resolution-keyed name to avoid collisions.
+
+        Only the default (cache_suffix=None) file is ever written by this codebase - a suffixed one is
+        expected to be created manually, by copying/renaming a previously-written default cache file.
+
+        :param mx_paths: Result of _resolve_mx_file_paths() (or self._mx_paths).
+        :type mx_paths: dict
+        :param cache_suffix: None for the default/live cache file, or a name for an archived snapshot.
+        :type cache_suffix: Optional[str]
+        :return: Absolute path to the cache file (existence not checked here).
+        :rtype: str
+        """
+        work_dir = mx_paths["work_dir"]
+        suffix_part = "" if cache_suffix is None else f".{cache_suffix}"
+        return os.path.join(work_dir, f"mxcache{suffix_part}.zip")
+
+    def _write_mx_cache_file(
+        self,
+        path: str,
+        raw_df: pd.DataFrame,
+        mx1_df: pd.DataFrame,
+        mx2_df: pd.DataFrame,
+        signature: Tuple[float, int],
+    ) -> None:
+        """
+        Write a Tier 1 cache to disk: a zip file bundling the raw-results dataframe (read_mx_results()'s
+        shape) together with the MX1 and MX2 dataframes it was resolved from, each as its own Feather
+        entry, plus a small meta.json holding ``signature`` (the source .MXS file's (mtime, size), so a
+        later read can verify freshness without re-parsing the .MXS).
+
+        Bundling MX1/MX2 in means a later read - especially of an archived snapshot, see
+        generate_element_results_dataframe()'s mx_cache_suffix param - never has to touch the live
+        .MX1/.MX2 files, so it stays correct even if the model's topology has since changed. See
+        _apply_mx1_mx2().
+
+        Written atomically (temp file + os.replace()) so a concurrent reader never observes a
+        partially-written file.
+
+        :param path: Destination file path.
+        :type path: str
+        :param raw_df: The Tier 1 raw-results dataframe to persist.
+        :type raw_df: pd.DataFrame
+        :param mx1_df: The parsed MX1 dataframe (self._mx1_df) this raw_df was resolved with.
+        :type mx1_df: pd.DataFrame
+        :param mx2_df: The parsed MX2 dataframe (self._mx2_df) this raw_df was resolved with.
+        :type mx2_df: pd.DataFrame
+        :param signature: (mtime, size) of the source .MXS file raw_df was read from.
+        :type signature: Tuple[float, int]
+        """
+        import pyarrow as pa
+        import pyarrow.ipc as pa_ipc
+
+        def _feather_bytes(df: pd.DataFrame) -> bytes:
+            # Feather V2 *is* the Arrow IPC file format (pyarrow.feather.write_feather()/read_table()
+            # are, as of pyarrow 24, a deprecated convenience wrapper around exactly this) - writing via
+            # pyarrow.ipc.new_file() directly avoids that deprecation without changing the file format.
+            table = pa.Table.from_pandas(df)
+            buf = io.BytesIO()
+            with pa_ipc.new_file(buf, table.schema) as writer:
+                writer.write_table(table)
+            return buf.getvalue()
+
+        # mx2_df's "Data" column holds one tuple per row, but the tuples' element type varies row to
+        # row (strings for tk/pk rows, ints for the N_OF_POINTS row) - a single Arrow list type can't
+        # represent that (pyarrow's from_pandas() type inference fails, e.g. trying to convert a tk
+        # string like "5393031835236689087" to int64). JSON-encoding each row's tuple into a plain
+        # string column sidesteps needing one consistent Arrow list type, and round-trips both element
+        # types exactly (JSON distinguishes numbers from strings) without depending on the "DataType"
+        # column to decide how to decode each row.
+        mx2_df_for_storage = mx2_df.reset_index(drop=True).copy()
+        mx2_df_for_storage["Data"] = mx2_df_for_storage["Data"].apply(lambda t: json.dumps(list(t)))
+
+        tmp_path = f"{path}.tmp-{os.getpid()}"
+        try:
+            with zipfile.ZipFile(tmp_path, "w", compression=zipfile.ZIP_DEFLATED) as zf:
+                zf.writestr("raw.feather", _feather_bytes(raw_df.reset_index()))
+                zf.writestr("mx1.feather", _feather_bytes(mx1_df.reset_index(drop=True)))
+                zf.writestr("mx2.feather", _feather_bytes(mx2_df_for_storage))
+                zf.writestr("meta.json", json.dumps({"signature": list(signature)}))
+            os.replace(tmp_path, path)
+        finally:
+            if os.path.exists(tmp_path):
+                os.remove(tmp_path)
+
+    def _read_mx_cache_file(
+        self, path: str
+    ) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, Optional[Tuple[float, int]]]:
+        """
+        Read an on-disk Tier 1 cache zip file back - see _write_mx_cache_file().
+
+        :param path: Cache file path.
+        :type path: str
+        :return: (raw_df, mx1_df, mx2_df, signature) - signature is the embedded (mtime, size) tuple
+                        the file was written with, or None if missing (e.g. hand-crafted meta.json).
+        :rtype: Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, Optional[Tuple[float, int]]]
+        """
+        import pyarrow.ipc as pa_ipc
+
+        def _read_feather_entry(zf: zipfile.ZipFile, name: str) -> pd.DataFrame:
+            return pa_ipc.open_file(io.BytesIO(zf.read(name))).read_all().to_pandas()
+
+        with zipfile.ZipFile(path, "r") as zf:
+            raw_df = _read_feather_entry(zf, "raw.feather").set_index("TIMESTAMP")
+            mx1_df = _read_feather_entry(zf, "mx1.feather")
+            mx2_df = _read_feather_entry(zf, "mx2.feather")
+            meta = json.loads(zf.read("meta.json").decode("utf-8"))
+
+        # Reverse the JSON-encoding _write_mx_cache_file() applies to mx2_df's "Data" column - see its
+        # docstring for why (heterogeneous per-row element types, which a single Arrow list type can't
+        # represent directly).
+        mx2_df["Data"] = mx2_df["Data"].apply(json.loads)
+
+        signature = tuple(meta["signature"]) if "signature" in meta else None
+        return raw_df, mx1_df, mx2_df, signature
+
     def initialize_mx_read_helpers(self, mx1_filepath: str) -> dict:
         """
         Initialize MX read helper state from an MX1 filepath.
@@ -1304,32 +2053,10 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         if not os.path.exists(mx1_filepath):
             raise FileNotFoundError(f"[mx helpers] MX1 file does not exist: {mx1_filepath}")
 
-        w_d, file_name = os.path.split(mx1_filepath)
-        base, _ext = os.path.splitext(file_name)
-        base, dot_resolution = os.path.splitext(base)
-
-        self._mx_paths = {
-            "mx1": mx1_filepath,
-            "mx2": os.path.join(w_d, f"{base}.MX2"),
-            "mxs": os.path.join(w_d, f"{base}{dot_resolution}.MXS"),
-            "mxs_zip": os.path.join(w_d, f"{base}{dot_resolution}.ZIP"),
-            "dot_resolution": dot_resolution,
-            "work_dir": w_d,
-            "base": base,
-        }
-
-        self._mx1_df = self._parse_mx1_to_dataframe(mx1_filepath)
-        self._mx2_df = self._parse_mx2_to_dataframe(self._mx_paths["mx2"])
-        self._mx_record_struct_fmt_string, self._mx1_df = self._build_mx_record_unpack_format(self._mx1_df)
-        self._mx_layout = self._build_mx_record_unpack_layout(self._mx1_df)
-
-        logger.info(
-            "[mx helpers] Initialized. MX1 rows: %d, MX2 rows: %d, non-vector channels: %d, vector channels: %d",
-            len(self._mx1_df.index),
-            len(self._mx2_df.index),
-            len(self._mx_layout["mx_column_names"]),
-            len(self._mx_layout["mx_column_names_vecs"]),
-        )
+        mx_paths = self._resolve_mx_file_paths(mx1_filepath)
+        mx1_df = self._parse_mx1_to_dataframe(mx1_filepath)
+        mx2_df = self._parse_mx2_to_dataframe(mx_paths["mx2"])
+        self._apply_mx1_mx2(mx_paths, mx1_df, mx2_df)
 
         return {
             "paths": self._mx_paths,
@@ -1338,6 +2065,38 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
             "non_vector_channels": len(self._mx_layout["mx_column_names"]),
             "vector_channels": len(self._mx_layout["mx_column_names_vecs"]),
         }
+
+    def _apply_mx1_mx2(self, mx_paths: dict, mx1_df: pd.DataFrame, mx2_df: pd.DataFrame) -> None:
+        """
+        Populate self's MX1/MX2-derived state (self._mx_paths, self._mx1_df, self._mx2_df,
+        self._mx_record_struct_fmt_string, self._mx_layout) from already-available mx1_df/mx2_df
+        dataframes.
+
+        Shared by initialize_mx_read_helpers() (mx1_df/mx2_df freshly parsed from the live .MX1/.MX2
+        files) and _get_mx_raw_results_cache()'s cache-hit paths (mx1_df/mx2_df restored from a cached
+        or archived mxcache.zip instead, without touching the live .MX1/.MX2 files - which is what
+        keeps an archived snapshot correct even after the model's topology has since changed).
+
+        :param mx_paths: Result of _resolve_mx_file_paths().
+        :type mx_paths: dict
+        :param mx1_df: Parsed (or cache-restored) MX1 dataframe.
+        :type mx1_df: pd.DataFrame
+        :param mx2_df: Parsed (or cache-restored) MX2 dataframe.
+        :type mx2_df: pd.DataFrame
+        """
+        self._mx_paths = mx_paths
+        self._mx1_df = mx1_df
+        self._mx2_df = mx2_df
+        self._mx_record_struct_fmt_string, self._mx1_df = self._build_mx_record_unpack_format(self._mx1_df)
+        self._mx_layout = self._build_mx_record_unpack_layout(self._mx1_df)
+
+        logger.info(
+            "[mx helpers] MX1/MX2 state ready. MX1 rows: %d, MX2 rows: %d, non-vector channels: %d, vector channels: %d",
+            len(self._mx1_df.index),
+            len(self._mx2_df.index),
+            len(self._mx_layout["mx_column_names"]),
+            len(self._mx_layout["mx_column_names_vecs"]),
+        )
 
     def _parse_mx1_to_dataframe(self, mx1_filepath: str) -> pd.DataFrame:
         """
@@ -1486,6 +2245,18 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         """
         logger.info("[mx helpers] Building MX record unpack format ...")
 
+        # Detect ALL unrecognized DATATYPEs up front, in one pass, rather than only ever discovering
+        # them one at a time (the loop below still raises on the first one it reaches, same as before -
+        # this is purely a better diagnostic: which channels, not just which type, and all of them at
+        # once instead of a new crash per newly-added unknown type).
+        unknown_datatypes = set(mx1_df["DATATYPE"]) - _KNOWN_MX_DATATYPES
+        if unknown_datatypes:
+            offending = mx1_df[mx1_df["DATATYPE"].isin(unknown_datatypes)][["Sir3sID", "DATATYPE"]]
+            logger.error(
+                f"[mx helpers] {len(unknown_datatypes)} unrecognized MX1 DATATYPE(s) found: "
+                f"{sorted(unknown_datatypes)}. Affected channels:\n{offending.to_string(index=False)}"
+            )
+
         fmt_string = ""
         unpack_idx = []
         idx_unpack = 0
@@ -1625,15 +2396,18 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         TIMD.DTFAK_GROSS) of the currently open model.
 
         These control how often the calculation core archives results: ``output_factor_small`` is the
-        interval (in internal calculation steps) used for time-curve ("Zeitkurven") output, and
-        ``output_factor_large`` is the interval used for numeric displays / longitudinal sections /
-        network-graph coloring. Both end up as literal dot-resolution numbers in the resulting file names
-        (e.g. "M-1-0-1.1.MX1", "M-1-0-1.100.MX1") — see get_current_mx1_filepath(). If they're equal, only
-        one resolution (and one file) exists.
+        interval used for time-curve ("Zeitkurven") output, and ``output_factor_large`` is the interval
+        used for numeric displays / longitudinal sections / network-graph coloring. Both end up as
+        literal dot-resolution numbers in the resulting file names (e.g. "M-1-0-1.1.MX1") — see
+        get_current_mx1_filepath(). If they're equal, only one resolution (and one file) exists.
 
-        This is done by exporting a throwaway SirCalc XML file (via WriteSirCalcXmlFile()) into a
-        temporary directory that is deleted again afterwards; nothing is written into the model's actual
-        working directory and no existing result files are touched.
+        Implemented by exporting a throwaway SirCalc XML file (via WriteSirCalcXmlFile()) into a
+        temporary directory that is deleted again afterwards; no existing result files are touched.
+
+        KNOWN BUG, NOT CURRENTLY CALLED: read_mx_results() no longer calls this - see the TODO note on
+        its ``mx1_filepath`` param. WriteSirCalcXmlFile() was found to leave GetResultfortimestamp()
+        returning stale/frozen values for the rest of the session afterwards (a toolkit-side bug, not
+        fixable from here). Re-enable the call in read_mx_results() once that's fixed.
 
         :return: (output_factor_small, output_factor_large)
         :rtype: Tuple[int, int]
@@ -1714,52 +2488,56 @@ class SIR3S_Model_Dataframes(SIR3S_Model):
         generation/filtering yet. Intended for checking the raw MX read against the legacy PT3S.Mx output.
 
         NOT HANDLED: SIR 3S can also write wall-clock-timestamped archive snapshots
-        ("{base}_{YYYY-MM-DD_HH-MM}_UTC.{res}.MXS", gated by TIMD.JARCH/NARCH/JZEIT) alongside the regular
-        "{base}.{res}.MXS" files. These reuse the same {res}-tagged record layout but aren't derivable
-        from output_factor_small/output_factor_large alone (their name depends on when the calc was run,
-        not on any setting value) and are out of scope here — this function only ever targets the two
+        ("{base}_{YYYY-MM-DD_HH-MM}_UTC.{res}.MXS", gated by TIMD.JARCH/NARCH/JZEIT) alongside the
+        regular "{base}.{res}.MXS" files - out of scope here, this function only targets the two
         deterministic per-resolution files.
 
         :param mx1_filepath: Absolute or relative path to .MX1 file.
-                        Default: None. If not given, the path is resolved automatically for the
-                        currently open model via get_current_mx1_filepath(): the model's currently
-                        configured output_factor_small/output_factor_large (SIR 3S: TIMD.DTFAK_KLEIN /
-                        TIMD.DTFAK_GROSS, see _discover_output_factors()) are looked up first. If they're
-                        equal, only one resolution (and one file) exists and that path is used. If they
-                        differ, two structurally different files exist (different channel sets and time
-                        resolutions - see read_mx_results() call in the tutorials for a worked example)
-                        and this function cannot guess which one you want: a ValueError is raised naming
-                        both candidate paths, and mx1_filepath must be passed explicitly instead.
+                        Default: None. If not given, dot_resolution=1 is assumed and the path is built
+                        via get_current_mx1_filepath(dot_resolution=1) - covers the common case where
+                        only one output resolution exists.
+                        TEMPORARY, TODO before shipping: this used to auto-discover the model's actual
+                        output_factor_small/output_factor_large via _discover_output_factors() instead of
+                        assuming 1/1, and raise if they differed. Disabled for now - see
+                        _discover_output_factors()'s docstring for why. If your model actually has
+                        output_factor_small != output_factor_large, dot_resolution=1 will silently pick
+                        the wrong (or a nonexistent) file - pass mx1_filepath explicitly instead.
         :type mx1_filepath: str, optional
-        :param timestamps: Timestamps to keep, in the same form as the resolved ``valid_timestamps`` used by
-                        generate_element_results_dataframe() (i.e. timestamp strings as returned by
-                        self.GetTimeStamps()). Matching is done on the parsed instant (via pandas), not on the
-                        literal string, so minor formatting differences don't matter.
-                        Every record in the .MXS file still has to be scanned sequentially (its TIMESTAMP field
-                        is read directly from the raw record bytes, without a struct-format unpack of the
-                        remaining channels), but only matching records pay the full per-channel unpack/decode
-                        cost. This is the expensive part for records that are skipped.
+        :param timestamps: Timestamps to keep, in the same form as self.GetTimeStamps()'s strings.
+                        Matching is done on the parsed instant, not the literal string. Every record in
+                        the .MXS file is still scanned sequentially to read its TIMESTAMP field, but only
+                        matching records pay the full per-channel unpack/decode cost.
                         Default: None (keep all TIMESTAMPs found in the file).
         :type timestamps: list[str], optional
-        :return: DataFrame with one row per unique TIMESTAMP (first occurrence kept for duplicate SIR 3S
-                        TIMESTAMPs, e.g. the initial STAT/TIME pair and the final TIME/TMIN/TMAX triple) and one
-                        column per MX channel (Sir3sID: OBJTYPE~NAME1~NAME2~tk~ATTRTYPE). Scalar channels hold
-                        their raw unpacked value (float/int, or bytes for CHAR channels e.g. CVERSO/SNAPSHOTTYPE).
-                        Vector channels (interior points) hold a tuple of raw unpacked values.
+        :return: DataFrame with one row per unique TIMESTAMP (first occurrence kept for duplicates, e.g.
+                        the initial STAT/TIME pair) and one column per MX channel (Sir3sID:
+                        OBJTYPE~NAME1~NAME2~tk~ATTRTYPE). Scalar channels hold their raw unpacked value;
+                        vector channels (interior points) hold a tuple of raw unpacked values.
         :rtype: pd.DataFrame
         """
         if mx1_filepath is None:
-            output_factor_small, output_factor_large = self._discover_output_factors()
-            if output_factor_small != output_factor_large:
-                path_small = self.get_current_mx1_filepath(dot_resolution=output_factor_small)
-                path_large = self.get_current_mx1_filepath(dot_resolution=output_factor_large)
-                raise ValueError(
-                    "[mx read] output_factor_small != output_factor_large "
-                    f"({output_factor_small} != {output_factor_large}, SIR 3S: TIMD.DTFAK_KLEIN/"
-                    "DTFAK_GROSS); two structurally different resolution files exist. "
-                    f"Pass mx1_filepath explicitly to pick one: {path_small!r} or {path_large!r}."
-                )
-            mx1_filepath = self.get_current_mx1_filepath(dot_resolution=output_factor_small)
+            # TODO before shipping: this used to call self._discover_output_factors() here to look up
+            # the model's actual TIMD.DTFAK_KLEIN/DTFAK_GROSS and raise a ValueError (naming both
+            # candidate paths) if they differed - see _discover_output_factors()'s docstring and the
+            # note on the mx1_filepath param above for why that's disabled (WriteSirCalcXmlFile(), which
+            # it calls, was found to break the Toolkit API's own result reading for the rest of the
+            # session). Re-enable this once that toolkit-side issue is fixed:
+            #
+            # output_factor_small, output_factor_large = self._discover_output_factors()
+            # if output_factor_small != output_factor_large:
+            #     path_small = self.get_current_mx1_filepath(dot_resolution=output_factor_small)
+            #     path_large = self.get_current_mx1_filepath(dot_resolution=output_factor_large)
+            #     raise ValueError(
+            #         "[mx read] output_factor_small != output_factor_large "
+            #         f"({output_factor_small} != {output_factor_large}, SIR 3S: TIMD.DTFAK_KLEIN/"
+            #         "DTFAK_GROSS); two structurally different resolution files exist. "
+            #         f"Pass mx1_filepath explicitly to pick one: {path_small!r} or {path_large!r}."
+            #     )
+            # mx1_filepath = self.get_current_mx1_filepath(dot_resolution=output_factor_small)
+            #
+            # For now: assume the common/default case (dot_resolution=1) instead. If that's wrong for
+            # your model, pass mx1_filepath explicitly.
+            mx1_filepath = self.get_current_mx1_filepath(dot_resolution=1)
 
         logger.info(f"[mx read] Reading MX results from: {mx1_filepath}")
 
