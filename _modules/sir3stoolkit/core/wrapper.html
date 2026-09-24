@@ -104,6 +104,9 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span>
 
+<span class="kn">from</span><span class="w"> </span><span class="nn">System</span><span class="w"> </span><span class="kn">import</span> <span class="n">String</span><span class="p">,</span> <span class="n">Array</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">System.Collections.Generic</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span>
+
 <span class="kn">import</span><span class="w"> </span><span class="nn">System</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">System.Reflection</span><span class="w"> </span><span class="kn">import</span> <span class="n">Assembly</span>
 
@@ -2203,9 +2206,38 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">"Error: "</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span><span class="p">,</span> <span class="n">geometrySACH</span><span class="p">,</span> <span class="n">geometryBZ</span><span class="p">,</span> <span class="n">geomCnLnI</span><span class="p">,</span> <span class="n">geomCnLnK</span><span class="p">,</span> <span class="n">geomCnLnI2</span><span class="p">,</span> <span class="n">geomCnLnK2</span></div>
-</div>
 
     
+<div class="viewcode-block" id="SIR3S_Model.GetResultsWithMXProxy">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetResultsWithMXProxy">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">GetResultsWithMXProxy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timestamps</span><span class="p">,</span> <span class="n">sResultsToGet</span><span class="p">):</span>
+        <span class="n">net_timestamps</span> <span class="o">=</span> <span class="n">List</span><span class="p">[</span><span class="n">String</span><span class="p">]()</span>
+        <span class="k">for</span> <span class="n">ts</span> <span class="ow">in</span> <span class="n">timestamps</span><span class="p">:</span>
+            <span class="n">net_timestamps</span><span class="o">.</span><span class="n">Add</span><span class="p">(</span><span class="n">ts</span><span class="p">)</span>
+        <span class="n">result</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">GetResultsWithMXProxy</span><span class="p">(</span><span class="n">net_timestamps</span><span class="p">,</span> <span class="n">sResultsToGet</span><span class="p">)</span>
+        
+        <span class="n">ret_data</span> <span class="o">=</span> <span class="p">{}</span>
+        
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"Error: "</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>   
+            <span class="k">for</span> <span class="n">kv</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+                <span class="n">groups</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="k">for</span> <span class="n">kv2</span> <span class="ow">in</span> <span class="n">kv</span><span class="o">.</span><span class="n">Value</span><span class="p">:</span>
+                    <span class="n">fields</span> <span class="o">=</span> <span class="p">{}</span>
+                    <span class="k">for</span> <span class="n">kv3</span> <span class="ow">in</span> <span class="n">kv2</span><span class="o">.</span><span class="n">Value</span><span class="p">:</span>
+                        <span class="n">value</span> <span class="o">=</span> <span class="n">kv3</span><span class="o">.</span><span class="n">Value</span>
+                        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">Array</span><span class="p">):</span>
+                            <span class="n">value</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+                        <span class="n">fields</span><span class="p">[</span><span class="n">kv3</span><span class="o">.</span><span class="n">Key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+                    <span class="n">groups</span><span class="p">[</span><span class="n">kv2</span><span class="o">.</span><span class="n">Key</span><span class="p">]</span> <span class="o">=</span> <span class="n">fields</span>
+                <span class="n">ret_data</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">kv</span><span class="o">.</span><span class="n">Key</span><span class="p">)]</span> <span class="o">=</span> <span class="n">groups</span>
+        
+        
+        <span class="k">return</span> <span class="n">result</span><span class="p">,</span> <span class="n">ret_data</span></div>
+</div>
+
+        
 
 <div class="viewcode-block" id="SIR3S_View">
 <a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_View">[docs]</a>
