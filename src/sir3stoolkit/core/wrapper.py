@@ -18,6 +18,9 @@ from pathlib import Path
 import sys
 from typing import Optional
 
+from System import String, Array
+from System.Collections.Generic import List
+
 import System
 from System.Reflection import Assembly
 
@@ -1871,6 +1874,32 @@ class SIR3S_Model:
             print("Error: " + error)
         return result, geometrySACH, geometryBZ, geomCnLnI, geomCnLnK, geomCnLnI2, geomCnLnK2
     
+    def GetResultsWithMXProxy(self, timestamps, sResultsToGet):
+        net_timestamps = List[String]()
+        for ts in timestamps:
+            net_timestamps.Add(ts)
+        result, data, error = self.toolkit.GetResultsWithMXProxy(net_timestamps, sResultsToGet)
+        
+        ret_data = {}
+        
+        if not result:
+            print("Error: " + error)
+        else:   
+            for kv in data:
+                groups = {}
+                for kv2 in kv.Value:
+                    fields = {}
+                    for kv3 in kv2.Value:
+                        value = kv3.Value
+                        if isinstance(value, Array):
+                            value = list(value)
+                        fields[kv3.Key] = value
+                    groups[kv2.Key] = fields
+                ret_data[str(kv.Key)] = groups
+        
+        
+        return result, ret_data
+        
 
 class SIR3S_View:
     """
