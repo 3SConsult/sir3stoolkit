@@ -313,6 +313,8 @@ are included; FWVB (district heating consumers) are excluded.</p>
 <span id="sir3stoolkit-mantle-dataframes-module"></span><h2>sir3stoolkit.mantle.dataframes module<a class="headerlink" href="#module-sir3stoolkit.mantle.dataframes" title="Link to this heading"></a></h2>
 <p>Created on Fri Aug 29 09:22:31 2025</p>
 <p>This module implements interactions between SIR 3S and pandas dataframes. You can obtain pandas dfs with model- or resultdata, insert nodes and pipes via a df, etc.</p>
+<p>AI assistant: see sir3stoolkit/__init__.py for orientation (architecture, API/property reference,
+known gotchas) before writing code against this module.</p>
 <p>&#64;author: Jablonski</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes">
@@ -484,7 +486,7 @@ Dict mapping timestamps to tuple indices for result values is also returned.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.generate_element_dataframe">
-<span class="sig-name descname"><span class="pre">generate_element_dataframe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">element_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timestamps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">GeoDataFrame</span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/mantle/dataframes.html#SIR3S_Model_Dataframes.generate_element_dataframe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.generate_element_dataframe" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">generate_element_dataframe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">element_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timestamps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bulk</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mx_cache_suffix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">GeoDataFrame</span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/mantle/dataframes.html#SIR3S_Model_Dataframes.generate_element_dataframe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.generate_element_dataframe" title="Link to this definition"></a></dt>
 <dd><p>Generates a comprehensive DataFrame containing model_data and static result values for all requested elements of the given type. Result values are written in the df as tuple of floats (or tuple (time) of tuple (interior point) of floats for pipe interior points) with each entry corresponding to a simulations timestamp.
 Geometry and end-node tks are always included. All model_data and result values (self.GetResultProperties_from_elementType(onlySelectedVectors=False)) for are included.
 The tks of end nodes are included (fkKI, fkKK). Geometry information is also included.</p>
@@ -496,6 +498,10 @@ The tks of end nodes are included (fkKI, fkKK). Geometry information is also inc
 Default: None.</p></li>
 <li><p><strong>timestamps</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>List</em><em>[</em><em>str</em><em>]</em><em>, </em><em>List</em><em>[</em><em>int</em><em>]</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – Timestamps used for obtaining result values.
 Default: Static.</p></li>
+<li><p><strong>bulk</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to use bulk mode for result retrieval.
+Default: False.</p></li>
+<li><p><strong>mx_cache_suffix</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Suffix for the cache file used in bulk mode.
+Default: None.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -552,7 +558,7 @@ Columns: [“tk”, &lt;model_data_props&gt;]</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.generate_element_results_dataframe">
-<span class="sig-name descname"><span class="pre">generate_element_results_dataframe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">element_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Enum</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">properties</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timestamps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">place_holder_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">99999.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drop_full_place_holder_columns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/mantle/dataframes.html#SIR3S_Model_Dataframes.generate_element_results_dataframe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.generate_element_results_dataframe" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">generate_element_results_dataframe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">element_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Enum</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">properties</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timestamps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">place_holder_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">99999.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drop_full_place_holder_columns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bulk</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mx_cache_suffix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/mantle/dataframes.html#SIR3S_Model_Dataframes.generate_element_results_dataframe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.generate_element_results_dataframe" title="Link to this definition"></a></dt>
 <dd><p>Generate a dataframe with RESULT (time-dependent) properties for all devices and timestamps.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -583,6 +589,23 @@ where 0 = first timestamp, 7 = eighth timestamp, -1 = last timestamp.</p>
 Default: 99999.0</p></li>
 <li><p><strong>drop_full_place_holder_columns</strong> (<em>bool</em><em>, </em><em>optional</em>) – Determine whether columns, that are completley filled with place holder values, get dropped.
 Default: True</p></li>
+<li><p><strong>bulk</strong> (<em>bool</em><em>, </em><em>optional</em>) – WORK IN PROGRESS. If False (default), retrieve every value via one
+GetResultfortimestamp() call each - reliable, but slow for large requests. If
+True, result properties are instead retrieved from a cached bulk read of the
+model’s .MXS result file where possible (see read_mx_results()), falling back
+to the GetResultfortimestamp() loop for whatever can’t be resolved that way.
+Output shape is identical either way; only retrieval speed/cost differs. Only
+use bulk=True for genuinely large requests - the cache-building step itself
+isn’t free.</p></li>
+<li><p><strong>mx_cache_suffix</strong> (<em>str</em><em>, </em><em>optional</em>) – WORK IN PROGRESS. Only meaningful when bulk=True (ignored, with a
+warning, otherwise). None (default): use the live MX results cache for the
+model’s current calculation, refreshed automatically whenever the underlying
+.MXS file changes. A name: instead load a specific archived snapshot of a past
+calculation, previously preserved by copying/renaming the on-disk cache file
+(“mxcache.zip”, written next to the .MX1 file) to “mxcache.&lt;mx_cache_suffix&gt;.zip”.
+Loaded unconditionally (no freshness check); raises FileNotFoundError if that
+file doesn’t exist. Only one calculation’s results are ever cached at once, so
+switching snapshots replaces whatever was cached before.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -631,11 +654,10 @@ Supports both timestamp strings and index-based selection. Produces a MultiIndex
 <span class="sig-name descname"><span class="pre">get_current_mx1_filepath</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dot_resolution</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/mantle/dataframes.html#SIR3S_Model_Dataframes.get_current_mx1_filepath"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.get_current_mx1_filepath" title="Link to this definition"></a></dt>
 <dd><p>Build the absolute path to the .MX1 result metadata file of the currently open model.</p>
 <p>Derived from the model’s working directory (GetWorkingDirectory()) and its model identifier
-(self.Mid, as passed to OpenModel(), e.g. “M-1-0-1”): the three numbers in Mid become the
-B/V/BZ subdirectories, and the file itself is named “&lt;Mid&gt;.&lt;dot_resolution&gt;.MX1”, e.g.:
+(self.Mid, e.g. “M-1-0-1”): the three numbers in Mid become the B/V/BZ subdirectories, e.g.:
 “&lt;working_directory&gt;B1V0BZ1M-1-0-1.1.MX1”</p>
-<p>TODO before shipping: dot_resolution is currently assumed to always be 1. Confirm where this
-value actually comes from (it may not always be 1) before relying on this in production.</p>
+<p>TODO before shipping: dot_resolution is currently assumed to always be 1; confirm where this
+value actually comes from before relying on this in production.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>dot_resolution</strong> (<em>int</em><em>, </em><em>optional</em>) – The dot-resolution segment of the .MX1 filename (the “.Y” from 90-10 on).
@@ -798,41 +820,34 @@ How previously existing rows in the target time table are handled is determined 
 <p>WORK IN PROGRESS: Not wired into generate_element_results_dataframe() or any other dataframe
 generation/filtering yet. Intended for checking the raw MX read against the legacy PT3S.Mx output.</p>
 <p>NOT HANDLED: SIR 3S can also write wall-clock-timestamped archive snapshots
-(“{base}_{YYYY-MM-DD_HH-MM}_UTC.{res}.MXS”, gated by TIMD.JARCH/NARCH/JZEIT) alongside the regular
-“{base}.{res}.MXS” files. These reuse the same {res}-tagged record layout but aren’t derivable
-from output_factor_small/output_factor_large alone (their name depends on when the calc was run,
-not on any setting value) and are out of scope here — this function only ever targets the two
+(“{base}_{YYYY-MM-DD_HH-MM}_UTC.{res}.MXS”, gated by TIMD.JARCH/NARCH/JZEIT) alongside the
+regular “{base}.{res}.MXS” files - out of scope here, this function only targets the two
 deterministic per-resolution files.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>mx1_filepath</strong> (<em>str</em><em>, </em><em>optional</em>) – Absolute or relative path to .MX1 file.
-Default: None. If not given, the path is resolved automatically for the
-currently open model via get_current_mx1_filepath(): the model’s currently
-configured output_factor_small/output_factor_large (SIR 3S: TIMD.DTFAK_KLEIN /
-TIMD.DTFAK_GROSS, see _discover_output_factors()) are looked up first. If they’re
-equal, only one resolution (and one file) exists and that path is used. If they
-differ, two structurally different files exist (different channel sets and time
-resolutions - see read_mx_results() call in the tutorials for a worked example)
-and this function cannot guess which one you want: a ValueError is raised naming
-both candidate paths, and mx1_filepath must be passed explicitly instead.</p></li>
-<li><p><strong>timestamps</strong> (<em>list</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Timestamps to keep, in the same form as the resolved <code class="docutils literal notranslate"><span class="pre">valid_timestamps</span></code> used by
-generate_element_results_dataframe() (i.e. timestamp strings as returned by
-self.GetTimeStamps()). Matching is done on the parsed instant (via pandas), not on the
-literal string, so minor formatting differences don’t matter.
-Every record in the .MXS file still has to be scanned sequentially (its TIMESTAMP field
-is read directly from the raw record bytes, without a struct-format unpack of the
-remaining channels), but only matching records pay the full per-channel unpack/decode
-cost. This is the expensive part for records that are skipped.
+Default: None. If not given, dot_resolution=1 is assumed and the path is built
+via get_current_mx1_filepath(dot_resolution=1) - covers the common case where
+only one output resolution exists.
+TEMPORARY, TODO before shipping: this used to auto-discover the model’s actual
+output_factor_small/output_factor_large via _discover_output_factors() instead of
+assuming 1/1, and raise if they differed. Disabled for now - see
+_discover_output_factors()’s docstring for why. If your model actually has
+output_factor_small != output_factor_large, dot_resolution=1 will silently pick
+the wrong (or a nonexistent) file - pass mx1_filepath explicitly instead.</p></li>
+<li><p><strong>timestamps</strong> (<em>list</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Timestamps to keep, in the same form as self.GetTimeStamps()’s strings.
+Matching is done on the parsed instant, not the literal string. Every record in
+the .MXS file is still scanned sequentially to read its TIMESTAMP field, but only
+matching records pay the full per-channel unpack/decode cost.
 Default: None (keep all TIMESTAMPs found in the file).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>DataFrame with one row per unique TIMESTAMP (first occurrence kept for duplicate SIR 3S
-TIMESTAMPs, e.g. the initial STAT/TIME pair and the final TIME/TMIN/TMAX triple) and one
-column per MX channel (Sir3sID: OBJTYPE~NAME1~NAME2~tk~ATTRTYPE). Scalar channels hold
-their raw unpacked value (float/int, or bytes for CHAR channels e.g. CVERSO/SNAPSHOTTYPE).
-Vector channels (interior points) hold a tuple of raw unpacked values.</p>
+<dd class="field-even"><p>DataFrame with one row per unique TIMESTAMP (first occurrence kept for duplicates, e.g.
+the initial STAT/TIME pair) and one column per MX channel (Sir3sID:
+OBJTYPE~NAME1~NAME2~tk~ATTRTYPE). Scalar channels hold their raw unpacked value;
+vector channels (interior points) hold a tuple of raw unpacked values.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>pd.DataFrame</p>
