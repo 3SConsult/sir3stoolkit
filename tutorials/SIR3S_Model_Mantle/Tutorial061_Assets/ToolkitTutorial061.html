@@ -253,7 +253,7 @@ import logging
 </section>
 <section id="Generate-nx-Graph">
 <h1>Generate nx Graph<a class="headerlink" href="#Generate-nx-Graph" title="Link to this heading"></a></h1>
-<p>We can use the <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.alternative_models.Alternative_Models_SIR3S_Model.SIR_3S_to_nx_graph">SIR_3S_to_nx_graph()</a> method to create a nx graph representing a SIR 3S model.</p>
+<p>We can use the <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.alternative_models.SIR3S_Model_Alternative_Models.SIR_3S_to_nx_graph">SIR_3S_to_nx_graph()</a> method to create a nx graph representing a SIR 3S model.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
@@ -297,6 +297,12 @@ import logging
 <section id="View-generated-Graph">
 <h1>View generated Graph<a class="headerlink" href="#View-generated-Graph" title="Link to this heading"></a></h1>
 <p>As you can see below the graph does not contain any additional properties or result values.</p>
+<p>Note the current limitations of the graph:</p>
+<ul class="simple">
+<li><p>Node ids and the tk attributes in the graph are int64 (e.g. <code class="docutils literal notranslate"><span class="pre">node_attrs[4680103632661687203]</span></code> below), while everywhere else in sir3stoolkit tks are strings - convert with <code class="docutils literal notranslate"><span class="pre">int(tk)</span></code> / <code class="docutils literal notranslate"><span class="pre">str(tk)</span></code> when matching with DataFrames.</p></li>
+<li><p>The graph is an <code class="docutils literal notranslate"><span class="pre">nx.DiGraph</span></code>, which holds only one edge per node pair: elements in parallel between the same two nodes (e.g. several consumers on one supply/return pair, parallel pipes) overwrite each other, so edges can be missing (<a class="reference external" href="https://github.com/3SConsult/sir3stoolkit/issues/25">#25</a>). In this model one of 2458 edge elements is affected; compare <code class="docutils literal notranslate"><span class="pre">G.number_of_edges()</span></code> with the number of edge elements to check your model.</p></li>
+<li><p>The graph needs a calculated model (<a class="reference external" href="https://github.com/3SConsult/sir3stoolkit/issues/26">#26</a>), hence the calculation above.</p></li>
+</ul>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
@@ -412,7 +418,7 @@ True
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../../_images/tutorials_SIR3S_Model_Mantle_Tutorial061_Assets_ToolkitTutorial061_38_0.png" src="../../../_images/tutorials_SIR3S_Model_Mantle_Tutorial061_Assets_ToolkitTutorial061_38_0.png" />
+<img alt="../../../_images/tutorials_SIR3S_Model_Mantle_Tutorial061_Assets_ToolkitTutorial061_39_0.png" src="../../../_images/tutorials_SIR3S_Model_Mantle_Tutorial061_Assets_ToolkitTutorial061_39_0.png" />
 </div>
 </div>
 </section>

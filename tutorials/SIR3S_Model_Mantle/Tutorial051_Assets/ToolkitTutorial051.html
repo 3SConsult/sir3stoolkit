@@ -701,7 +701,7 @@
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for tk in all_tks:
-    if s3s.GetValue(tk, "FkCont")[0] == "5029128874972463118": # Main container
+    if s3s.GetValue(tk, "Fkcont")[0] == "5029128874972463118": # Main container
         if s3s.GetValue(tk, "Kvr")[0] == "1": # Supply/Vorlauf
             good_tks.append(tk)
 </pre></div>
@@ -21817,7 +21817,7 @@
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for tk in all_tks:
-    if s3s.GetValue(tk, "FkCont")[0] == "5029128874972463118":
+    if s3s.GetValue(tk, "Fkcont")[0] == "5029128874972463118":
         if s3s.GetValue(tk, "bz.Irtrenn")[0] == "0": # Rohr nicht getrennt
             good_tks.append(tk)
 </pre></div>
@@ -33446,7 +33446,8 @@
 <p>3 rows × 1572 columns</p>
 </div></div>
 </div>
-<p>As can be seen, the vectorized result values are written as strings with “/” seperators. For better access we can extend these values to a multiindex using <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.add_interior_points_as_multiindex">add_interior_points_as_multiindex()</a>.</p>
+<p>As can be seen, the vectorized result values (one value per interior point) are written as tab-separated strings (vec_format=”str”, the default). For better access we can split them into the columns _start, _end and _sequence (a tuple of all interior point values) using <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.add_interior_points_to_start_end_sequence">add_interior_points_to_start_end_sequence()</a>.
+Alternatively, generate_element_results_dataframe(vec_format=”multiindex”) returns one float column per interior point directly, see <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/examples.html#ttu057">Tutorial 57</a>.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[99]:
 </pre></div>

@@ -264,7 +264,7 @@
    "id": "2b4b6cb5",
    "metadata": {},
    "source": [
-    "We can use the [SIR_3S_to_nx_graph()](https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.alternative_models.Alternative_Models_SIR3S_Model.SIR_3S_to_nx_graph) method to create a nx graph representing a SIR 3S model."
+    "We can use the [SIR_3S_to_nx_graph()](https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.alternative_models.SIR3S_Model_Alternative_Models.SIR_3S_to_nx_graph) method to create a nx graph representing a SIR 3S model."
    ]
   },
   {
@@ -326,6 +326,17 @@
    "metadata": {},
    "source": [
     "As you can see below the graph does not contain any additional properties or result values. "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "nx-graph-notes",
+   "metadata": {},
+   "source": [
+    "Note the current limitations of the graph:\n",
+    "- Node ids and the tk attributes in the graph are int64 (e.g. `node_attrs[4680103632661687203]` below), while everywhere else in sir3stoolkit tks are strings - convert with `int(tk)` / `str(tk)` when matching with DataFrames.\n",
+    "- The graph is an `nx.DiGraph`, which holds only one edge per node pair: elements in parallel between the same two nodes (e.g. several consumers on one supply/return pair, parallel pipes) overwrite each other, so edges can be missing ([#25](https://github.com/3SConsult/sir3stoolkit/issues/25)). In this model one of 2458 edge elements is affected; compare `G.number_of_edges()` with the number of edge elements to check your model.\n",
+    "- The graph needs a calculated model ([#26](https://github.com/3SConsult/sir3stoolkit/issues/26)), hence the calculation above."
    ]
   },
   {
