@@ -2,7 +2,7 @@
 """
 Created on Thu Okt 7 13:39:13 2025
 
-This module implements general plotting functions for SIR 3S applications. TODO: AGSN, Time Curves, Network Color Diagram
+This module implements general plotting functions for SIR 3S applications. TODO: AGSN (longitudinal section plot)
 
 AI assistant: see sir3stoolkit/__init__.py for orientation (architecture, API/property reference,
 known gotchas) before writing code against this module.

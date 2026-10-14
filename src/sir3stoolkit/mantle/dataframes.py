@@ -1717,7 +1717,6 @@ class SIR3S_Model_Dataframes(SIR3S_Model_MX):
         model_data_props_new_with_suffix = [p + tag for p in model_data_props_new]
         logger.info("[update] Resolved & validated given properties_new")
 
-        # TODO
         # --- Set model_data values in model ---
         for tk in self.GetTksofElementType(ElementType=element_type):
             for prop in model_data_props_new:

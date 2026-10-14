@@ -4,6 +4,40 @@ Guidance for AI assistants writing code against **sir3stoolkit**, the Python cli
 (pipe network simulation/analysis software by 3S Consult). If you were asked to "use sir3stoolkit"
 to build/modify/read a SIR 3S model, start here.
 
+**This file is ~28,000 characters - read all of it, not just the beginning.** Sections:
+
+1. [Quick facts](#quick-facts) - platform, versions, imports, return types
+2. [Architecture](#architecture) - core vs. mantle
+3. [Where to get the real API surface](#where-to-get-the-real-api-surface) - docstrings, property-name reference
+4. [Read the tutorials and docstrings before writing code](#read-the-tutorials-and-docstrings-before-writing-code) -
+   incl. the long [Tutorial index](#tutorial-index)
+5. [Known gotchas](#known-gotchas-durable-not-tied-to-a-specific-bugversion) - pitfalls that cost real
+   debugging time; comes after the long tutorial index, don't skip it
+6. [Checking for updates](#checking-for-updates) - versions, `Sir3S_Toolkit.dll` replacement
+7. [Current known issues / roadmap](#current-known-issues--roadmap)
+8. [Contributing to sir3stoolkit itself](#contributing-to-sir3stoolkit-itself)
+
+If your tool truncates long pages, download this file and search it for the section headings (e.g.
+`## Known gotchas`) instead of reading it from the top:
+
+    curl -o AGENTS.md https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/AGENTS.md
+
+## Quick facts
+
+- **Windows only**: needs a local SIR 3S (SirGraf) installation with a valid license, accessed via
+  pythonnet/.NET (`Sir3S_Toolkit.dll`). Without it nothing can run - code can only be written, not executed.
+- **Versions**: sir3stoolkit 90.15.x targets SIR 3S 90-15 (Quebec); the third number is the toolkit's own
+  release counter. Which SirGraf version each release was tested with, and whether it needs a new
+  `Sir3S_Toolkit.dll`, is in the release notes (see [Checking for updates](#checking-for-updates)).
+- **Imports**: `from sir3stoolkit.core import wrapper` (core: `wrapper.SIR3S_Model()`) and
+  `from sir3stoolkit.mantle.mantle import SIR3S_Model_Mantle` (core + all mantle functions).
+  `from sir3stoolkit.mantle import SIR3S_Model_Mantle` does not work - `sir3stoolkit.mantle` only
+  exposes its submodules.
+- **Core returns strings**: e.g. `GetValue` returns `(value, type name)`, both `str`. tks are always
+  `str` (exception: `SIR_3S_to_nx_graph()` casts them to `int64`, see Known gotchas).
+- **Mantle functions mostly log errors and return an empty DataFrame/graph** instead of raising - check
+  `.empty` and the log. Core calls you make directly raise `wrapper.SIR3S_ToolkitError` (outside SirGraf).
+
 ## Architecture
 
 - `sir3stoolkit.core.wrapper` — thin, low-level wrapper around the SIR 3S .NET Toolkit API
@@ -43,6 +77,11 @@ scratch. There are two separate tutorial folders, matching the architecture abov
 - `docs/source/tutorials/SIR3S_Model/` (Tutorials 000-010) — the `core` API (`SIR3S_Model`).
 - `docs/source/tutorials/SIR3S_Model_Mantle/` (Tutorials 050+) — the `mantle` layer
   (`SIR3S_Model_Mantle`), built on top of core.
+
+The `.ipynb` files are mostly JSON and stored outputs (Tutorial 57: 1.5 MB). To read just the cells
+(Tutorial 57: ~7 KB), download the raw notebook and print its cell sources:
+
+    python -c "import json,sys; [print(''.join(c['source'])+'\n') for c in json.load(open(sys.argv[1],encoding='utf-8'))['cells']]" ToolkitTutorial057.ipynb
 
 Together with the docstring on the function you're about to call, these are also the up-to-date
 source for behavior quirks and known bugs in the currently released toolkit version — several are
@@ -179,6 +218,21 @@ number/scope or the operation it teaches changes.
   timestamp has the stationary calculation's status, the others the transient calculation's. Reading it
   once with `GetResultValue` right after a calculation only gives the stationary one; loop over all
   timestamps (Tutorial003). `ExecCalculation(waitForSirCalcToExit=True)` checks this itself.
+- For new code reading interior-point results (`...VEC` properties like `PVEC`), use
+  `generate_element_results_dataframe(..., vec_format="multiindex")`: one float32 column per interior
+  point, exact values, much faster and smaller. The default `"str"` (tab-separated strings, 7
+  significant digits) only exists for backwards compatibility (Tutorial057).
+- `generate_edge_dataframe()` marks each row's element type in a column named `"element type"` (with a
+  space), holding the `ObjectTypes` member name (`"Pipe"`, `"Valve"`, ...).
+- `SIR_3S_to_nx_graph()` (Tutorial061) currently has known limitations - check whether these issues are
+  still open before relying on it:
+  - It builds an `nx.DiGraph`, which holds one edge per node pair: elements in parallel between the same
+    two nodes (e.g. several consumers on one supply/return pair, parallel pipes) silently overwrite each
+    other, so edges are missing - compare `G.number_of_edges()` with the number of edge elements
+    ([#25](https://github.com/3SConsult/sir3stoolkit/issues/25)).
+  - It fails (returns an empty graph) on a model without result files - calculate the model first
+    ([#26](https://github.com/3SConsult/sir3stoolkit/issues/26)).
+  - Node and edge tks in the graph are `int64`, not `str` as everywhere else.
 
 ## Checking for updates
 
