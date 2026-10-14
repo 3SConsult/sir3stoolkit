@@ -272,19 +272,22 @@ NetworkType.Water
 </pre></div></div>
 </div>
 <p>We can check the status of the calculation</p>
-<div class="nbinput nblast docutils container">
+<p>The exit status (EXSTAT) is stored per timestamp: the stationary timestamp holds the status of the stationary calculation, the following timestamps the status of the transient calculation. <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetResultValue">GetResultValue()</a> only returns the value of the current timestamp, which after a calculation is the stationary one. Therefore we check all timestamps using
+<a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetResultforAllTimestamp">GetResultforAllTimestamp()</a>.</p>
+<p>If SirCalc crashes during the transient calculation, the timestamps calculated so far keep their status, but the results end before the end of the simulation time frame (<a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetSimulationTimeFrame">GetSimulationTimeFrame()</a>) and a lock file *_SirCalcIsRunning.tmp remains in the working directory. ExecCalculation(waitForSirCalcToExit=True) checks all of this itself and reports
+problems as errors and warnings (see Tutorial 8).</p>
+<div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>Exit_status = s3s.GetResultValue(s3s.GetTksofElementType(s3s.ObjectTypes.GeneralSection)[0],"EXSTAT")[0]
-</pre></div>
-</div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(Exit_status)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>general_section = s3s.GetTksofElementType(s3s.ObjectTypes.GeneralSection)[0]
+exit_status_per_timestamp = s3s.GetResultforAllTimestamp(Tk=general_section, property="EXSTAT")
+
+for timestamp, exit_status, _ in exit_status_per_timestamp:
+    if exit_status != "0":
+        print(f"{timestamp}: EXSTAT={exit_status}")
+
+print(f"Checked {len(exit_status_per_timestamp)} timestamps from {exit_status_per_timestamp[0][0]} to {exit_status_per_timestamp[-1][0]}")
 </pre></div>
 </div>
 </div>
@@ -293,7 +296,7 @@ NetworkType.Water
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-0
+Checked 11 timestamps from 2026-03-15 22:46:21.000 +01:00 to 2026-03-15 22:56:21.000 +01:00
 </pre></div></div>
 </div>
 <p>German Interpretation:</p>
@@ -404,7 +407,7 @@ re-running notebooks.</p>
 </section>
 <section id="GetResultProperties_from_elementTypes">
 <h3>GetResultProperties_from_elementTypes<a class="headerlink" href="#GetResultProperties_from_elementTypes" title="Link to this heading"></a></h3>
-<p>Similar to non-result values, we use <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetResultProperties_from_elementType">GetResultProperties_from_elementTypes()</a> to create a list of all result properties of the different objects that exist in our model.</p>
+<p>Similar to non-result values, we use <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetResultProperties_from_elementType">GetResultProperties_from_elementType()</a> to create a list of all result properties of the different objects that exist in our model.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>

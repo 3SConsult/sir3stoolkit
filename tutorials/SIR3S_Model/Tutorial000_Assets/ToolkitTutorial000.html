@@ -152,9 +152,32 @@
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2026-09-03 13:51:14,852] INFO in sir3stoolkit.core.wrapper: [Initialization] Using provided SirGraf path: C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2
-[2026-09-03 13:51:14,852] INFO in sir3stoolkit.core.wrapper: [Initialization] Using provided SirGraf path: C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2
-[2026-09-03 13:51:14,899] INFO in sir3stoolkit.core.wrapper: [Initialization] Initializing toolkit with SirGraf path: C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2
+[2026-10-14 14:40:21,347] INFO in sir3stoolkit.core.wrapper: [Initialization] Using provided SirGraf path: C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2
+[2026-10-14 14:40:21,347] INFO in sir3stoolkit.core.wrapper: [Initialization] Using provided SirGraf path: C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2
+[2026-10-14 14:40:21,378] INFO in sir3stoolkit.core.wrapper: [Initialization] Initializing toolkit with SirGraf path: C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2
+[2026-10-14 14:40:21,623] INFO in sir3stoolkit.core.wrapper: [Initialization] Sir3S_Toolkit.dll file version 90.15.10.0 (matches this sir3stoolkit version).
+</pre></div></div>
+</div>
+</section>
+<section id="Sir3S_Toolkit.dll-Version">
+<h2>Sir3S_Toolkit.dll Version<a class="headerlink" href="#Sir3S_Toolkit.dll-Version" title="Link to this heading"></a></h2>
+<p>Some sir3stoolkit versions require replacing the Sir3S_Toolkit.dll in the SirGraf directory with the one shipped in the package (see <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/releases.html">Releases</a>). From sir3stoolkit 90.15.26 on, the DLL carries a file version, so <code class="docutils literal notranslate"><span class="pre">Initialize_Toolkit()</span></code> checks this automatically: it logs the file version of the DLL in the SirGraf directory (see above) and warns if it differs from the DLL shipped with the installed sir3stoolkit version. The file version
+can also be read with <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.Get_Toolkit_Dll_File_Version">Get_Toolkit_Dll_File_Version()</a> - by default from the SirGraf directory, or from any Sir3S_Toolkit.dll path. DLLs before 90.15.26 report 1.0.0.0.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>wrapper.Get_Toolkit_Dll_File_Version()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&#39;90.15.10.0&#39;
 </pre></div></div>
 </div>
 </section>
@@ -163,7 +186,7 @@
 <p>Hardcoding <code class="docutils literal notranslate"><span class="pre">SIR3S_SIRGRAF_DIR</span></code> in every script is repetitive. Instead, the path can be written once to the package’s config file via <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.Write_SirGraf_Config_Path">Write_SirGraf_Config_Path()</a> - after that, <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/modules.html#sir3stoolkit.core.wrapper.Initialize_Toolkit">Initialize_Toolkit()</a> can be called with no argument at all and will resolve the path
 from that config file automatically (see its docstring for the full resolution order). <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.Read_SirGraf_Config_Path">Read_SirGraf_Config_Path()</a> reads back what is currently configured, or <code class="docutils literal notranslate"><span class="pre">None</span></code> if nothing is set yet.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>wrapper.Write_SirGraf_Config_Path(SIR3S_SIRGRAF_DIR)
@@ -175,11 +198,11 @@ from that config file automatically (see its docstring for the full resolution o
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2026-09-03 13:51:15,305] INFO in sir3stoolkit.core.wrapper: [Initialization] Wrote SirGraf path to config file &#39;C:\Users\aUsername\3S\sir3stoolkit\src\sir3stoolkit\config.local.txt&#39;: &#39;C:/3S/SIR 3S/SirGraf-90-15-00-24_Quebec-Upd2&#39;
+[2026-10-14 14:40:21,655] INFO in sir3stoolkit.core.wrapper: [Initialization] Wrote SirGraf path to config file &#39;C:\Users\aUsername\3S\sir3stoolkit\src\sir3stoolkit\config.local.txt&#39;: &#39;C:/3S/SIR 3S/SirGraf-90-15-00-24_Quebec-Upd2&#39;
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>wrapper.Read_SirGraf_Config_Path()
@@ -191,11 +214,11 @@ from that config file automatically (see its docstring for the full resolution o
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2026-09-03 13:51:15,341] INFO in sir3stoolkit.core.wrapper: [Initialization] Using SirGraf path from config &#39;C:\Users\aUsername\3S\sir3stoolkit\src\sir3stoolkit\config.local.txt&#39;: &#39;C:/3S/SIR 3S/SirGraf-90-15-00-24_Quebec-Upd2&#39;
+[2026-10-14 14:40:21,674] INFO in sir3stoolkit.core.wrapper: [Initialization] Using SirGraf path from config &#39;C:\Users\aUsername\3S\sir3stoolkit\src\sir3stoolkit\config.local.txt&#39;: &#39;C:/3S/SIR 3S/SirGraf-90-15-00-24_Quebec-Upd2&#39;
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -205,7 +228,7 @@ from that config file automatically (see its docstring for the full resolution o
 </div>
 <p>With the path persisted, <code class="docutils literal notranslate"><span class="pre">Initialize_Toolkit()</span></code> no longer needs <code class="docutils literal notranslate"><span class="pre">SIR3S_SIRGRAF_DIR</span></code> explicitly:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>wrapper.Initialize_Toolkit()  # basePath omitted - resolved from the config file written above
@@ -217,9 +240,10 @@ from that config file automatically (see its docstring for the full resolution o
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2026-09-03 13:51:15,378] INFO in sir3stoolkit.core.wrapper: [Initialization] Host application is &#39;python.exe&#39;, not &#39;SirGraf.exe&#39;. Toolkit is attempted to be initialized inside a non-SirGraf process ...
-[2026-09-03 13:51:15,392] INFO in sir3stoolkit.core.wrapper: [Initialization] Using SirGraf path from config &#39;C:\Users\aUsername\3S\sir3stoolkit\src\sir3stoolkit\config.local.txt&#39;: C:/3S/SIR 3S/SirGraf-90-15-00-24_Quebec-Upd2
-[2026-09-03 13:51:15,395] INFO in sir3stoolkit.core.wrapper: [Initialization] Initializing toolkit with SirGraf path: C:/3S/SIR 3S/SirGraf-90-15-00-24_Quebec-Upd2
+[2026-10-14 14:40:21,690] INFO in sir3stoolkit.core.wrapper: [Initialization] Host application is &#39;python.exe&#39;, not &#39;SirGraf.exe&#39;. Toolkit is attempted to be initialized inside a non-SirGraf process ...
+[2026-10-14 14:40:21,694] INFO in sir3stoolkit.core.wrapper: [Initialization] Using SirGraf path from config &#39;C:\Users\aUsername\3S\sir3stoolkit\src\sir3stoolkit\config.local.txt&#39;: C:/3S/SIR 3S/SirGraf-90-15-00-24_Quebec-Upd2
+[2026-10-14 14:40:21,696] INFO in sir3stoolkit.core.wrapper: [Initialization] Initializing toolkit with SirGraf path: C:/3S/SIR 3S/SirGraf-90-15-00-24_Quebec-Upd2
+[2026-10-14 14:40:21,707] INFO in sir3stoolkit.core.wrapper: [Initialization] Sir3S_Toolkit.dll file version 90.15.10.0 (matches this sir3stoolkit version).
 </pre></div></div>
 </div>
 </section>
@@ -228,7 +252,7 @@ from that config file automatically (see its docstring for the full resolution o
 <p>The SIR 3S Toolkit contains two classes: <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model">SIR3S_Model</a> (model and data) and <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_View">SIR3S_View</a> (interactive work in SIR Graf using the SIR Graf Python console). All SIR 3S Toolkit basis functionality is accessed via the methods of these classes. In this line of tutorials
 (0-49) we focus on SIR3S_Model.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s = wrapper.SIR3S_Model()
@@ -240,11 +264,11 @@ from that config file automatically (see its docstring for the full resolution o
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2026-09-03 13:51:15,849] INFO in sir3stoolkit.core.wrapper: [Model Class Initialization] Initialization complete
+[2026-10-14 14:40:21,925] INFO in sir3stoolkit.core.wrapper: [Model Class Initialization] Initialization complete
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s_view = wrapper.SIR3S_View()
@@ -256,7 +280,7 @@ from that config file automatically (see its docstring for the full resolution o
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2026-09-03 13:51:16,093] INFO in sir3stoolkit.core.wrapper: Initialization complete
+[2026-10-14 14:40:22,001] INFO in sir3stoolkit.core.wrapper: Initialization complete
 </pre></div></div>
 </div>
 <p><strong>Next</strong>: Tutorial 1: Creating a new or opening an existing SIR 3S Model</p>

@@ -148,7 +148,7 @@
    "metadata": {},
    "outputs": [],
    "source": [
-    "def read_mx1_descriptions(s3s):\n    mx1_path = s3s.get_current_mx1_filepath()\n    if not Path(mx1_path).exists():\n        print(f\"  MX1 not found at {mx1_path}\")\n        return {}\n    root = ET.parse(mx1_path).getroot()\n    descriptions = {}\n    for ch in root.findall(\"XL1\"):\n        objtype = ch.get(\"OBJTYPE\")\n        attrtype = ch.get(\"ATTRTYPE\")\n        if not objtype or not attrtype:\n            continue\n        key = f\"{objtype}~{attrtype}\"\n        descriptions[key] = {\n            \"OBJTYPE\": objtype,\n            \"ATTRTYPE\": attrtype,\n            \"TITLE\": ch.get(\"TITLE\"),\n            \"UNIT\": ch.get(\"UNIT\"),\n            \"DATATYPE\": ch.get(\"DATATYPE\"),\n        }\n    return descriptions"
+    "def read_mx1_descriptions(s3s):\n    mx1_path = s3s._mx_current_mx1_filepath()\n    if not Path(mx1_path).exists():\n        print(f\"  MX1 not found at {mx1_path}\")\n        return {}\n    root = ET.parse(mx1_path).getroot()\n    descriptions = {}\n    for ch in root.findall(\"XL1\"):\n        objtype = ch.get(\"OBJTYPE\")\n        attrtype = ch.get(\"ATTRTYPE\")\n        if not objtype or not attrtype:\n            continue\n        key = f\"{objtype}~{attrtype}\"\n        descriptions[key] = {\n            \"OBJTYPE\": objtype,\n            \"ATTRTYPE\": attrtype,\n            \"TITLE\": ch.get(\"TITLE\"),\n            \"UNIT\": ch.get(\"UNIT\"),\n            \"DATATYPE\": ch.get(\"DATATYPE\"),\n        }\n    return descriptions"
    ]
   },
   {

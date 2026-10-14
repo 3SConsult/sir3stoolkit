@@ -97,7 +97,10 @@
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">clr</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">net</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">namedtuple</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">datetime</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">enum</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">functools</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">inspect</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
@@ -108,25 +111,90 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">System.Collections.Generic</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">System</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">System.Diagnostics</span><span class="w"> </span><span class="kn">import</span> <span class="n">FileVersionInfo</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">System.Reflection</span><span class="w"> </span><span class="kn">import</span> <span class="n">Assembly</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">sir3stoolkit.logging_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">emit_message</span><span class="p">,</span> <span class="n">get_logger</span><span class="p">,</span> <span class="n">get_process_executable_path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sir3stoolkit.logging_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">emit_message</span><span class="p">,</span> <span class="n">get_logger</span><span class="p">,</span> <span class="n">get_process_executable_path</span><span class="p">,</span> <span class="n">is_host_process</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
+
+<div class="viewcode-block" id="SIR3S_ToolkitError">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_ToolkitError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">SIR3S_ToolkitError</span><span class="p">(</span><span class="ne">RuntimeError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Raised when a SIR 3S Toolkit call reports an error (see Set_Raise_On_Error())."""</span></div>
+
+
+
+<span class="c1"># None = automatic: raise outside SirGraf, only log inside SirGraf</span>
+<span class="n">_raise_on_error</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="c1"># &gt;0 while a mantle method is running; mantle handles core errors itself (log and continue)</span>
+<span class="n">_soft_error_depth</span> <span class="o">=</span> <span class="mi">0</span>
+
+
+<div class="viewcode-block" id="Set_Raise_On_Error">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.Set_Raise_On_Error">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">Set_Raise_On_Error</span><span class="p">(</span><span class="n">enabled</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Controls whether errors reported by the SIR 3S Toolkit raise a SIR3S_ToolkitError or are only logged.</span>
+
+<span class="sd">    :param enabled: True to always raise, False to only log (behavior before 90.15.26), None for the default:</span>
+<span class="sd">        raise when running as a standalone Python process, only log when running inside SirGraf.</span>
+<span class="sd">    :type enabled: Optional[bool]</span>
+<span class="sd">    :return: None</span>
+<span class="sd">    :rtype: None</span>
+<span class="sd">    :description: Errors from core calls made inside mantle methods are always only logged, as mantle handles</span>
+<span class="sd">        them itself.</span>
+<span class="sd">    """</span>
+    <span class="k">global</span> <span class="n">_raise_on_error</span>
+    <span class="n">_raise_on_error</span> <span class="o">=</span> <span class="n">enabled</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_should_raise</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">_soft_error_depth</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">if</span> <span class="n">_raise_on_error</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="ow">not</span> <span class="n">is_host_process</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">_raise_on_error</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_soft_errors</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Decorator: core errors inside func are only logged, never raised."""</span>
+    <span class="nd">@functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">inner</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">global</span> <span class="n">_soft_error_depth</span>
+        <span class="n">_soft_error_depth</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="n">_soft_error_depth</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">inner</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_parse_timestamp</span><span class="p">(</span><span class="n">timestamp</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Parse a toolkit timestamp like '2026-04-29 14:30:00.000 +02:00'."""</span>
+    <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">timestamp</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span> <span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2"> %z"</span><span class="p">)</span>
+
+
 <span class="k">def</span><span class="w"> </span><span class="nf">_log_message</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">level</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Route output through module logging with optional explicit level."""</span>
+<span class="w">    </span><span class="sd">"""Route output through module logging with optional explicit level. Raises on errors, see Set_Raise_On_Error()."""</span>
     <span class="k">if</span> <span class="n">level</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">emit_message</span><span class="p">(</span><span class="n">logger</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
-        <span class="k">return</span>
-
-    <span class="n">normalized_level</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">level</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-    <span class="k">if</span> <span class="n">normalized_level</span> <span class="o">==</span> <span class="s2">"error"</span><span class="p">:</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">message</span><span class="p">))</span>
-    <span class="k">elif</span> <span class="n">normalized_level</span> <span class="o">==</span> <span class="s2">"warning"</span><span class="p">:</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">message</span><span class="p">))</span>
+        <span class="n">lower_text</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">message</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="n">is_error</span> <span class="o">=</span> <span class="n">lower_text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"error"</span><span class="p">)</span> <span class="ow">or</span> <span class="n">lower_text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"could not"</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">message</span><span class="p">))</span>
+        <span class="n">normalized_level</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">level</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="n">is_error</span> <span class="o">=</span> <span class="n">normalized_level</span> <span class="o">==</span> <span class="s2">"error"</span>
+        <span class="k">if</span> <span class="n">is_error</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">message</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="n">normalized_level</span> <span class="o">==</span> <span class="s2">"warning"</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">message</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">message</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">is_error</span> <span class="ow">and</span> <span class="n">_should_raise</span><span class="p">():</span>
+        <span class="k">raise</span> <span class="n">SIR3S_ToolkitError</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">message</span><span class="p">))</span>
 
 
 <span class="c1"># Global variables</span>
@@ -355,6 +423,82 @@
     <span class="n">_log_message</span><span class="p">(</span><span class="sa">f</span><span class="s2">"[Initialization] Wrote SirGraf path to config file '</span><span class="si">{</span><span class="n">target_config_file</span><span class="si">}</span><span class="s2">': '</span><span class="si">{</span><span class="n">normalized</span><span class="si">}</span><span class="s2">'"</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="s2">"info"</span><span class="p">)</span></div>
 
 
+
+<span class="n">_TOOLKIT_DLL_NAME</span> <span class="o">=</span> <span class="s2">"Sir3S_Toolkit.dll"</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_version_tuple</span><span class="p">(</span><span class="n">version</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
+    <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">part</span><span class="p">)</span> <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="n">version</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"."</span><span class="p">))</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_bundled_toolkit_dll_path</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""Sir3S_Toolkit.dll shipped with this sir3stoolkit version: the one in the newest lib/&lt;version&gt;/ folder."""</span>
+    <span class="n">lib_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span><span class="o">.</span><span class="n">parents</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="s2">"lib"</span>
+    <span class="n">dlls</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">lib_dir</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="sa">f</span><span class="s2">"*/</span><span class="si">{</span><span class="n">_TOOLKIT_DLL_NAME</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span> <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">p</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"-"</span><span class="p">))]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">dlls</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">dlls</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">p</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"-"</span><span class="p">))))</span>
+
+
+<div class="viewcode-block" id="Get_Toolkit_Dll_File_Version">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.Get_Toolkit_Dll_File_Version">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">Get_Toolkit_Dll_File_Version</span><span class="p">(</span><span class="n">dllPath</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""Read the file version of a Sir3S_Toolkit.dll (Windows: file properties &gt; Details &gt; File version).</span>
+
+<span class="sd">    Sir3S_Toolkit.dll carries a file version from sir3stoolkit 90.15.26 on (file version 90.15.10.0);</span>
+<span class="sd">    earlier DLLs all report 1.0.0.0. The release notes list the file version of the DLL each sir3stoolkit</span>
+<span class="sd">    version needs (column "dll changed + file version"). Initialize_Toolkit() checks this automatically:</span>
+<span class="sd">    it logs the file version of the DLL in the SirGraf directory and warns if it differs from the DLL</span>
+<span class="sd">    shipped with the installed sir3stoolkit version.</span>
+
+<span class="sd">    :param dllPath: Path to a Sir3S_Toolkit.dll, or to a directory containing one. Default: the</span>
+<span class="sd">        Sir3S_Toolkit.dll in the SirGraf directory - the one Initialize_Toolkit() was called with, or,</span>
+<span class="sd">        before that, the one it would resolve (host application, config.local.txt, config.txt).</span>
+<span class="sd">    :type dllPath: Optional[str]</span>
+<span class="sd">    :return: The file version as "major.minor.build.revision", e.g. "90.15.10.0", or None if no</span>
+<span class="sd">        Sir3S_Toolkit.dll was found.</span>
+<span class="sd">    :rtype: Optional[str]</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="n">dllPath</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">dllPath</span> <span class="o">=</span> <span class="n">SIR3S_SIRGRAF_DIR</span> <span class="k">if</span> <span class="n">SIR3S_SIRGRAF_DIR</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">_resolve_base_path</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">dllPath</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">_log_message</span><span class="p">(</span><span class="s2">"[Initialization] No SirGraf directory known; call Initialize_Toolkit() or pass dllPath."</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="s2">"warning"</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">dllPath</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">path</span> <span class="o">/</span> <span class="n">_TOOLKIT_DLL_NAME</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
+        <span class="n">_log_message</span><span class="p">(</span><span class="sa">f</span><span class="s2">"[Initialization] No </span><span class="si">{</span><span class="n">_TOOLKIT_DLL_NAME</span><span class="si">}</span><span class="s2"> found at '</span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">'."</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="s2">"warning"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">info</span> <span class="o">=</span> <span class="n">FileVersionInfo</span><span class="o">.</span><span class="n">GetVersionInfo</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">info</span><span class="o">.</span><span class="n">FileMajorPart</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">info</span><span class="o">.</span><span class="n">FileMinorPart</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">info</span><span class="o">.</span><span class="n">FileBuildPart</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">info</span><span class="o">.</span><span class="n">FilePrivatePart</span><span class="si">}</span><span class="s2">"</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_check_toolkit_dll_version</span><span class="p">(</span><span class="n">sirgraf_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Log the file version of the SirGraf directory's Sir3S_Toolkit.dll; warn if it differs from the</span>
+<span class="sd">    one shipped with this sir3stoolkit version. Never raises - only informs."""</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">bundled_path</span> <span class="o">=</span> <span class="n">_bundled_toolkit_dll_path</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">bundled_path</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">sirgraf_dir</span><span class="p">)</span> <span class="o">/</span> <span class="n">_TOOLKIT_DLL_NAME</span><span class="p">)</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
+            <span class="k">return</span>
+        <span class="n">installed</span> <span class="o">=</span> <span class="n">Get_Toolkit_Dll_File_Version</span><span class="p">(</span><span class="n">sirgraf_dir</span><span class="p">)</span>
+        <span class="n">bundled</span> <span class="o">=</span> <span class="n">Get_Toolkit_Dll_File_Version</span><span class="p">(</span><span class="n">bundled_path</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">installed</span> <span class="o">==</span> <span class="n">bundled</span><span class="p">:</span>
+            <span class="n">_log_message</span><span class="p">(</span><span class="sa">f</span><span class="s2">"[Initialization] </span><span class="si">{</span><span class="n">_TOOLKIT_DLL_NAME</span><span class="si">}</span><span class="s2"> file version </span><span class="si">{</span><span class="n">installed</span><span class="si">}</span><span class="s2"> (matches this sir3stoolkit version)."</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="s2">"info"</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">_version_tuple</span><span class="p">(</span><span class="n">installed</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">_version_tuple</span><span class="p">(</span><span class="n">bundled</span><span class="p">):</span>
+            <span class="n">_log_message</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">"[Initialization] </span><span class="si">{</span><span class="n">_TOOLKIT_DLL_NAME</span><span class="si">}</span><span class="s2"> in the SirGraf directory has file version </span><span class="si">{</span><span class="n">installed</span><span class="si">}</span><span class="s2">, but this "</span>
+                <span class="sa">f</span><span class="s2">"sir3stoolkit version needs </span><span class="si">{</span><span class="n">bundled</span><span class="si">}</span><span class="s2">: replace it with '</span><span class="si">{</span><span class="n">bundled_path</span><span class="si">}</span><span class="s2">' (see the release notes)."</span><span class="p">,</span>
+                <span class="n">level</span><span class="o">=</span><span class="s2">"warning"</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">_log_message</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">"[Initialization] </span><span class="si">{</span><span class="n">_TOOLKIT_DLL_NAME</span><span class="si">}</span><span class="s2"> in the SirGraf directory has file version </span><span class="si">{</span><span class="n">installed</span><span class="si">}</span><span class="s2">, newer than "</span>
+                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">bundled</span><span class="si">}</span><span class="s2"> shipped with this sir3stoolkit version: check for a newer sir3stoolkit version (see the release notes)."</span><span class="p">,</span>
+                <span class="n">level</span><span class="o">=</span><span class="s2">"warning"</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+        <span class="n">_log_message</span><span class="p">(</span><span class="sa">f</span><span class="s2">"[Initialization] Could not check the </span><span class="si">{</span><span class="n">_TOOLKIT_DLL_NAME</span><span class="si">}</span><span class="s2"> file version: </span><span class="si">{</span><span class="n">ex</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="s2">"warning"</span><span class="p">)</span>
+
 <span class="c1"># CAUTION: User should call this function before creating any instances of the classes provided through this library !!!</span>
 <span class="c1">#          Failed to do so will result in incorrect initialization of classes and object model that are key components</span>
 <span class="c1">#          to interact with Sir3S</span>
@@ -401,7 +545,8 @@
         <span class="n">net</span><span class="o">.</span><span class="n">AddReference</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">SIR3S_SIRGRAF_DIR</span><span class="p">,</span> <span class="s2">"Sir3S_Repository.Utilities"</span><span class="p">))</span>
 
         <span class="c1"># THE COMPILED DLL FOR Sir3S_Toolkit SHOULD ALSO BE COPIED TO SIR3S_SIRGRAF_DIR</span>
-        <span class="n">net</span><span class="o">.</span><span class="n">AddReference</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">SIR3S_SIRGRAF_DIR</span><span class="p">,</span> <span class="s2">"Sir3S_Toolkit"</span><span class="p">))</span></div>
+        <span class="n">net</span><span class="o">.</span><span class="n">AddReference</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">SIR3S_SIRGRAF_DIR</span><span class="p">,</span> <span class="s2">"Sir3S_Toolkit"</span><span class="p">))</span>
+        <span class="n">_check_toolkit_dll_version</span><span class="p">(</span><span class="n">SIR3S_SIRGRAF_DIR</span><span class="p">)</span></div>
 
 
 
@@ -414,6 +559,16 @@
 <span class="sd">    over the model for users.</span>
 <span class="sd">    """</span>
 
+    <span class="k">def</span><span class="w"> </span><span class="nf">__init_subclass__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="c1"># Mantle methods handle core errors themselves (log and continue), so core calls made</span>
+        <span class="c1"># inside them must not raise - only core calls made directly by the user do.</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init_subclass__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__module__</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"sir3stoolkit.mantle"</span><span class="p">):</span>
+            <span class="k">return</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">attr</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="nb">vars</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+            <span class="k">if</span> <span class="n">inspect</span><span class="o">.</span><span class="n">isfunction</span><span class="p">(</span><span class="n">attr</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="p">(</span><span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"__"</span><span class="p">)</span> <span class="ow">and</span> <span class="n">name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">"__"</span><span class="p">)):</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">_soft_errors</span><span class="p">(</span><span class="n">attr</span><span class="p">))</span>
+
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># Basic imports to dlls provided by SirGraf</span>
         <span class="c1"># This will only work if Initialize_Toolkit() is called in the same context</span>
@@ -425,7 +580,7 @@
         <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span> <span class="o">=</span> <span class="n">Sir3SToolkit</span><span class="o">.</span><span class="n">CSir3SToolkitFactory</span><span class="o">.</span><span class="n">CreateToolkit</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">SIR3S_SIRGRAF_DIR</span><span class="p">,</span> <span class="sa">r</span><span class="s2">"90-15-00-01"</span><span class="p">)</span>
         <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
-            <span class="n">_log_message</span><span class="p">(</span><span class="s2">"[Model Class Initialization] Error in initializing the toolkit"</span><span class="p">)</span>
+            <span class="n">_log_message</span><span class="p">(</span><span class="s2">"[Model Class Initialization] Error in initializing the toolkit"</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="s2">"error"</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">_log_message</span><span class="p">(</span><span class="s2">"[Model Class Initialization] Initialization complete"</span><span class="p">)</span>
 
@@ -780,15 +935,65 @@
 <span class="sd">        :type waitForSirCalcToExit: bool</span>
 <span class="sd">        :return: None</span>
 <span class="sd">        :rtype: None</span>
-<span class="sd">        :description: This is a wrapper method for ExecCalculation() from toolkit; Watch out for errors for more information. Use Exit_status = instance.GetResultValue(instance.GetTksofElementType(instance.ObjectTypes.GeneralSection)[0],"EXSTAT")[0] afterwards to check status of calculation.</span>
+<span class="sd">        :description: This is a wrapper method for ExecCalculation() from toolkit; Watch out for errors for more information.</span>
+<span class="sd">            If waitForSirCalcToExit is True, the calculation is checked afterwards. Reported as errors: a SirCalc lock file</span>
+<span class="sd">            (*_SirCalcIsRunning.tmp) left in the working directory (SirCalc crashed; a new calculation removes it), no</span>
+<span class="sd">            results, results ending before the end of the simulation time frame (SirCalc crashed during the simulation)</span>
+<span class="sd">            and EXSTAT=3 (bad or invalid results). Reported as warnings: EXSTAT=1 (user</span>
+<span class="sd">            interrupt) and EXSTAT=2 (questionable results). EXSTAT is stored per timestamp, separately for the stationary</span>
+<span class="sd">            and the transient calculation, so it is checked at the stationary and at the last timestamp.</span>
 <span class="sd">        """</span>
         <span class="n">isExecuted</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">ExecCalculation</span><span class="p">(</span><span class="n">waitForSirCalcToExit</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">isExecuted</span><span class="p">:</span>
             <span class="n">_log_message</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Could not start Model Calculation: </span><span class="si">{</span><span class="n">error</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
-                <span class="n">_log_message</span><span class="p">(</span><span class="s2">"Model Calculation is complete"</span><span class="p">)</span></div>
+            <span class="k">return</span>
+        <span class="k">if</span> <span class="n">waitForSirCalcToExit</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_check_calculation_status</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
+            <span class="n">_log_message</span><span class="p">(</span><span class="s2">"Model Calculation is complete"</span><span class="p">)</span></div>
 
+
+    <span class="n">_TRANSIENT_CALCULATION_TYPES</span> <span class="o">=</span> <span class="p">(</span><span class="s2">"LowFreq"</span><span class="p">,</span> <span class="s2">"Quasi_Stat"</span><span class="p">,</span> <span class="s2">"HighFreq_AUTO"</span><span class="p">,</span> <span class="s2">"HighFreq_CHAR"</span><span class="p">,</span> <span class="s2">"Instat_FiniteDiff"</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_check_calculation_status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">working_directory</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetWorkingDirectory</span><span class="p">()</span>
+        <span class="n">lock_files</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">working_directory</span><span class="p">)</span><span class="o">.</span><span class="n">rglob</span><span class="p">(</span><span class="s2">"*_SirCalcIsRunning.tmp"</span><span class="p">))</span> <span class="k">if</span> <span class="n">working_directory</span> <span class="k">else</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">lock_files</span><span class="p">:</span>
+            <span class="n">_log_message</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Error: SirCalc lock file '</span><span class="si">{</span><span class="n">lock_files</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">' still exists after the Model Calculation: SirCalc crashed. "</span>
+                         <span class="s2">"See the SirCalc console output for details."</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="c1"># Read directly from the toolkit: GetTimeStamps() reports no timestamps as an error itself</span>
+        <span class="n">timestamps</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">timestamp_stat</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">GetTimeStamps</span><span class="p">()</span>
+        <span class="n">timestamps</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">timestamps</span><span class="p">)</span>
+        <span class="n">general_sections</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTksofElementType</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="o">.</span><span class="n">GeneralSection</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">timestamps</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">general_sections</span><span class="p">:</span>
+            <span class="n">_log_message</span><span class="p">(</span><span class="s2">"Error: Model Calculation produced no results, SirCalc probably failed. See the SirCalc console output for details."</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">GetCalculationType</span><span class="p">())</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_TRANSIENT_CALCULATION_TYPES</span> <span class="ow">and</span> <span class="n">timestamp_stat</span><span class="p">:</span>
+            <span class="n">_</span><span class="p">,</span> <span class="n">termination_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetSimulationTimeFrame</span><span class="p">()</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">missing</span> <span class="o">=</span> <span class="p">(</span><span class="n">_parse_timestamp</span><span class="p">(</span><span class="n">timestamp_stat</span><span class="p">)</span> <span class="o">+</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">termination_time</span><span class="p">))</span>
+                           <span class="o">-</span> <span class="n">_parse_timestamp</span><span class="p">(</span><span class="n">timestamps</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span>
+            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                <span class="n">missing</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">if</span> <span class="n">missing</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">_log_message</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Error: Model Calculation results end at </span><span class="si">{</span><span class="n">timestamps</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">missing</span><span class="si">:</span><span class="s2">g</span><span class="si">}</span><span class="s2"> s before the end of the simulation "</span>
+                             <span class="s2">"time frame. SirCalc probably crashed during the simulation. See the SirCalc console output for details."</span><span class="p">)</span>
+                <span class="k">return</span>
+
+        <span class="n">checked</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">dict</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">([</span><span class="n">timestamp_stat</span><span class="p">,</span> <span class="n">timestamps</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span> <span class="k">if</span> <span class="n">t</span><span class="p">]</span>
+        <span class="n">exit_statuses</span> <span class="o">=</span> <span class="p">{</span><span class="n">t</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetResultfortimestamp</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">general_sections</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">"EXSTAT"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">checked</span><span class="p">}</span>
+        <span class="k">for</span> <span class="n">timestamp</span><span class="p">,</span> <span class="n">exit_status</span> <span class="ow">in</span> <span class="n">exit_statuses</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">exit_status</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">""</span><span class="p">,</span> <span class="s2">"3"</span><span class="p">):</span>
+                <span class="n">_log_message</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Error: Model Calculation finished with bad or invalid results (EXSTAT=</span><span class="si">{</span><span class="n">exit_status</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="s1">'missing'</span><span class="si">}</span><span class="s2"> at </span><span class="si">{</span><span class="n">timestamp</span><span class="si">}</span><span class="s2">)."</span><span class="p">)</span>
+                <span class="k">return</span>
+        <span class="k">for</span> <span class="n">timestamp</span><span class="p">,</span> <span class="n">exit_status</span> <span class="ow">in</span> <span class="n">exit_statuses</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">exit_status</span> <span class="o">==</span> <span class="s2">"2"</span><span class="p">:</span>
+                <span class="n">_log_message</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Model Calculation finished with questionable results (EXSTAT=2 at </span><span class="si">{</span><span class="n">timestamp</span><span class="si">}</span><span class="s2">)."</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="s2">"warning"</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">exit_status</span> <span class="o">==</span> <span class="s2">"1"</span><span class="p">:</span>
+                <span class="n">_log_message</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Model Calculation was interrupted by the user (EXSTAT=1 at </span><span class="si">{</span><span class="n">timestamp</span><span class="si">}</span><span class="s2">)."</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="s2">"warning"</span><span class="p">)</span>
 
 <div class="viewcode-block" id="SIR3S_Model.GetTimeStamps">
 <a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetTimeStamps">[docs]</a>
@@ -1956,7 +2161,7 @@
 <span class="sd">        """</span> 
         <span class="n">workingDirectory</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">GetWorkingDirectory</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">error</span> <span class="o">!=</span> <span class="s2">""</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">"Error: "</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
+            <span class="n">_log_message</span><span class="p">(</span><span class="s2">"Error: "</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">workingDirectory</span></div>
 
 
@@ -1975,7 +2180,7 @@
 <span class="sd">        """</span> 
         <span class="n">isSet</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">AllocateWorkingDirectory</span><span class="p">(</span><span class="n">strDirectory</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">isSet</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">"Error: "</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
+            <span class="n">_log_message</span><span class="p">(</span><span class="s2">"Error: "</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">isSet</span></div>
 
 
@@ -1993,7 +2198,7 @@
 <span class="sd">        """</span> 
         <span class="n">isSet</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">CreateWorkingDirectory</span><span class="p">(</span><span class="n">strDirectory</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">isSet</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">"Error: "</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
+            <span class="n">_log_message</span><span class="p">(</span><span class="s2">"Error: "</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">isSet</span></div>
 
 
@@ -2012,7 +2217,7 @@
 <span class="sd">        """</span> 
         <span class="n">isSet</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">CopyWorkingDirectory</span><span class="p">(</span><span class="n">strDestinationDirectory</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">isSet</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">"Error: "</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
+            <span class="n">_log_message</span><span class="p">(</span><span class="s2">"Error: "</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">isSet</span></div>
 
 
@@ -2034,7 +2239,7 @@
 <span class="sd">        """</span> 
         <span class="n">dbPath</span><span class="p">,</span> <span class="n">conectionString</span><span class="p">,</span> <span class="n">dbVendor</span><span class="p">,</span> <span class="n">dbName</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">GetDBSourcePath</span><span class="p">()</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">dbPath</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">"Error: "</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
+            <span class="n">_log_message</span><span class="p">(</span><span class="s2">"Error: "</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">dbPath</span><span class="p">,</span> <span class="n">conectionString</span><span class="p">,</span> <span class="n">dbVendor</span><span class="p">,</span> <span class="n">dbName</span></div>
 
 
@@ -2059,7 +2264,7 @@
         <span class="n">calculationType_net</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dotnet_enum</span><span class="p">(</span><span class="n">calculationType</span><span class="p">)</span>
         <span class="n">isSet</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">SetCalculationType</span><span class="p">(</span><span class="n">calculationType_net</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">isSet</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">"Error: "</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
+            <span class="n">_log_message</span><span class="p">(</span><span class="s2">"Error: "</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">isSet</span></div>
 
     
@@ -2075,7 +2280,7 @@
 <span class="sd">        """</span> 
         <span class="n">calcType</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">GetCalculationType</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">error</span> <span class="o">!=</span> <span class="s2">""</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">"Error: "</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
+            <span class="n">_log_message</span><span class="p">(</span><span class="s2">"Error: "</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">calcType</span></div>
 
     
@@ -2088,9 +2293,9 @@
 <span class="sd">        manually edited  before Calculations are executed.</span>
 <span class="sd">        The SirCalc XML Input File should only be edited by people, who know what they are doing. Otherwise your calculation configuration could become deprecated. If you mess up, you can reset to the current SIR 3S model state by reexecuting WriteSirCalcXmlFile().</span>
 <span class="sd">        WARNING: Running this method, will leave stale result data to be accessed with GetResultValue() or similar functions. To fix this close and reopen the model, after running calculations. This is a bug currently investigated: https://github.com/3SConsult/sir3stoolkit/issues/23</span>
-<span class="sd">        </span>
-<span class="sd">        :param saveItInThisDirectory: The Directory Path from where the SirCalc XML File should be saved. Ensure that the directory is writable.</span>
-<span class="sd">                                      If that Path does not exist this Method shall try to create it.</span>
+
+<span class="sd">        :param saveItInThisDirectory: The Working Directory Path to where the SirCalc XML File should be saved. Ensure that the directory is writable.</span>
+<span class="sd">                                      If that Path does not exist this Method shall try to create it. Necessary intermediate dir from working directory head will be created.</span>
 <span class="sd">        :type saveItInThisDirectory: str</span>
 <span class="sd">        :return: The full Path of the generated SirCalc XML Input File if the Operation succeeds; otherwise, an empty string.</span>
 <span class="sd">        :rtype: str</span>
@@ -2098,7 +2303,7 @@
 <span class="sd">        """</span> 
         <span class="n">genXML</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">WriteSirCalcXmlFile</span><span class="p">(</span><span class="n">saveItInThisDirectory</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">error</span> <span class="o">!=</span> <span class="s2">""</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">"Error: "</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
+            <span class="n">_log_message</span><span class="p">(</span><span class="s2">"Error: "</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">genXML</span></div>
 
     
@@ -2124,7 +2329,7 @@
 <span class="sd">        """</span> 
         <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">SetThermalCalculationParemeters</span><span class="p">(</span><span class="n">activateThermalcalculation</span><span class="p">,</span> <span class="n">startWithTempField</span><span class="p">,</span> <span class="n">terminationPrecision</span><span class="p">,</span> <span class="n">transientThermalcalculation</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">error</span> <span class="o">!=</span> <span class="s2">""</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">"Error: "</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span></div>
+            <span class="n">_log_message</span><span class="p">(</span><span class="s2">"Error: "</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span></div>
 
     
 <div class="viewcode-block" id="SIR3S_Model.GetThermalCalculationParemeters">
@@ -2139,7 +2344,7 @@
 <span class="sd">        """</span> 
         <span class="n">activateThermalcalculation</span><span class="p">,</span> <span class="n">startWithTempField</span><span class="p">,</span> <span class="n">terminationPrecision</span><span class="p">,</span> <span class="n">transientThermalcalculation</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">GetThermalCalculationParemeters</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">error</span> <span class="o">!=</span> <span class="s2">""</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">"Error: "</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
+            <span class="n">_log_message</span><span class="p">(</span><span class="s2">"Error: "</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">activateThermalcalculation</span><span class="p">,</span> <span class="n">startWithTempField</span><span class="p">,</span> <span class="n">terminationPrecision</span><span class="p">,</span> <span class="n">transientThermalcalculation</span></div>
 
     
@@ -2159,7 +2364,7 @@
 <span class="sd">        """</span> 
         <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">SetSimulationTimeFrame</span><span class="p">(</span><span class="n">timeStep</span><span class="p">,</span> <span class="n">terminationTime</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">error</span> <span class="o">!=</span> <span class="s2">""</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">"Error: "</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span></div>
+            <span class="n">_log_message</span><span class="p">(</span><span class="s2">"Error: "</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span></div>
 
         
 <div class="viewcode-block" id="SIR3S_Model.GetSimulationTimeFrame">
@@ -2176,7 +2381,7 @@
 <span class="sd">        """</span> 
         <span class="n">timeStep</span><span class="p">,</span> <span class="n">terminationTime</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">GetSimulationTimeFrame</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">error</span> <span class="o">!=</span> <span class="s2">""</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">"Error: "</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
+            <span class="n">_log_message</span><span class="p">(</span><span class="s2">"Error: "</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">timeStep</span><span class="p">,</span> <span class="n">terminationTime</span></div>
 
     
@@ -2204,39 +2409,36 @@
 <span class="sd">        """</span> 
         <span class="n">result</span><span class="p">,</span> <span class="n">geometrySACH</span><span class="p">,</span> <span class="n">geometryBZ</span><span class="p">,</span> <span class="n">geomCnLnI</span><span class="p">,</span> <span class="n">geomCnLnK</span><span class="p">,</span> <span class="n">geomCnLnI2</span><span class="p">,</span> <span class="n">geomCnLnK2</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">GetGeometryData</span><span class="p">(</span><span class="n">elemTk</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">"Error: "</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
+            <span class="n">_log_message</span><span class="p">(</span><span class="s2">"Error: "</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span><span class="p">,</span> <span class="n">geometrySACH</span><span class="p">,</span> <span class="n">geometryBZ</span><span class="p">,</span> <span class="n">geomCnLnI</span><span class="p">,</span> <span class="n">geomCnLnK</span><span class="p">,</span> <span class="n">geomCnLnI2</span><span class="p">,</span> <span class="n">geomCnLnK2</span></div>
-
-    
-<div class="viewcode-block" id="SIR3S_Model.GetResultsWithMXProxy">
-<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetResultsWithMXProxy">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">GetResultsWithMXProxy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timestamps</span><span class="p">,</span> <span class="n">sResultsToGet</span><span class="p">):</span>
-        <span class="n">net_timestamps</span> <span class="o">=</span> <span class="n">List</span><span class="p">[</span><span class="n">String</span><span class="p">]()</span>
-        <span class="k">for</span> <span class="n">ts</span> <span class="ow">in</span> <span class="n">timestamps</span><span class="p">:</span>
-            <span class="n">net_timestamps</span><span class="o">.</span><span class="n">Add</span><span class="p">(</span><span class="n">ts</span><span class="p">)</span>
-        <span class="n">result</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">GetResultsWithMXProxy</span><span class="p">(</span><span class="n">net_timestamps</span><span class="p">,</span> <span class="n">sResultsToGet</span><span class="p">)</span>
-        
-        <span class="n">ret_data</span> <span class="o">=</span> <span class="p">{}</span>
-        
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">"Error: "</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>   
-            <span class="k">for</span> <span class="n">kv</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
-                <span class="n">groups</span> <span class="o">=</span> <span class="p">{}</span>
-                <span class="k">for</span> <span class="n">kv2</span> <span class="ow">in</span> <span class="n">kv</span><span class="o">.</span><span class="n">Value</span><span class="p">:</span>
-                    <span class="n">fields</span> <span class="o">=</span> <span class="p">{}</span>
-                    <span class="k">for</span> <span class="n">kv3</span> <span class="ow">in</span> <span class="n">kv2</span><span class="o">.</span><span class="n">Value</span><span class="p">:</span>
-                        <span class="n">value</span> <span class="o">=</span> <span class="n">kv3</span><span class="o">.</span><span class="n">Value</span>
-                        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">Array</span><span class="p">):</span>
-                            <span class="n">value</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
-                        <span class="n">fields</span><span class="p">[</span><span class="n">kv3</span><span class="o">.</span><span class="n">Key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
-                    <span class="n">groups</span><span class="p">[</span><span class="n">kv2</span><span class="o">.</span><span class="n">Key</span><span class="p">]</span> <span class="o">=</span> <span class="n">fields</span>
-                <span class="n">ret_data</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">kv</span><span class="o">.</span><span class="n">Key</span><span class="p">)]</span> <span class="o">=</span> <span class="n">groups</span>
-        
-        
-        <span class="k">return</span> <span class="n">result</span><span class="p">,</span> <span class="n">ret_data</span></div>
 </div>
 
+    
+    <span class="c1"># Disabled for now: the toolkit DLL in use does not provide GetResultsWithMXProxy() yet.</span>
+    <span class="c1"># def GetResultsWithMXProxy(self, timestamps, sResultsToGet):</span>
+    <span class="c1">#     net_timestamps = List[String]()</span>
+    <span class="c1">#     for ts in timestamps:</span>
+    <span class="c1">#         net_timestamps.Add(ts)</span>
+    <span class="c1">#     result, data, error = self.toolkit.GetResultsWithMXProxy(net_timestamps, sResultsToGet)</span>
+    <span class="c1">#</span>
+    <span class="c1">#     ret_data = {}</span>
+    <span class="c1">#</span>
+    <span class="c1">#     if not result:</span>
+    <span class="c1">#         _log_message("Error: " + error)</span>
+    <span class="c1">#     else:</span>
+    <span class="c1">#         for kv in data:</span>
+    <span class="c1">#             groups = {}</span>
+    <span class="c1">#             for kv2 in kv.Value:</span>
+    <span class="c1">#                 fields = {}</span>
+    <span class="c1">#                 for kv3 in kv2.Value:</span>
+    <span class="c1">#                     value = kv3.Value</span>
+    <span class="c1">#                     if isinstance(value, Array):</span>
+    <span class="c1">#                         value = list(value)</span>
+    <span class="c1">#                     fields[kv3.Key] = value</span>
+    <span class="c1">#                 groups[kv2.Key] = fields</span>
+    <span class="c1">#             ret_data[str(kv.Key)] = groups</span>
+    <span class="c1">#</span>
+    <span class="c1">#     return result, ret_data</span>
         
 
 <div class="viewcode-block" id="SIR3S_View">
@@ -3907,10 +4109,10 @@
 <span class="sd">        """</span>
         <span class="n">result</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">RefreshViews</span><span class="p">()</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">"Error: "</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
+            <span class="n">_log_message</span><span class="p">(</span><span class="s2">"Error: "</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">"Refresh successful"</span><span class="p">)</span></div>
+                <span class="n">_log_message</span><span class="p">(</span><span class="s2">"Refresh successful"</span><span class="p">)</span></div>
 
                 
 
@@ -3933,7 +4135,7 @@
 <span class="sd">        """</span> 
         <span class="n">isSet</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">UnmarkAll</span><span class="p">(</span><span class="n">tkCONT</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">isSet</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">"Error: "</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
+            <span class="n">_log_message</span><span class="p">(</span><span class="s2">"Error: "</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">isSet</span></div>
 
 
@@ -3953,7 +4155,7 @@
 <span class="sd">        """</span> 
         <span class="n">markedElements</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">GetMarkedElements</span><span class="p">(</span><span class="n">tkCONT</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">error</span> <span class="o">!=</span> <span class="s2">""</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">"Error: "</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
+            <span class="n">_log_message</span><span class="p">(</span><span class="s2">"Error: "</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">markedElements</span></div>
 
     
@@ -3971,7 +4173,7 @@
 <span class="sd">        """</span> 
         <span class="n">isSet</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">MarkElement</span><span class="p">(</span><span class="n">tk</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">isSet</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">"Error: "</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
+            <span class="n">_log_message</span><span class="p">(</span><span class="s2">"Error: "</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">isSet</span></div>
 
 
@@ -3989,7 +4191,7 @@
 <span class="sd">        """</span> 
         <span class="n">isSet</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">UnmarkElement</span><span class="p">(</span><span class="n">tk</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">isSet</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">"Error: "</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
+            <span class="n">_log_message</span><span class="p">(</span><span class="s2">"Error: "</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">isSet</span></div>
 
 
@@ -4007,7 +4209,7 @@
 <span class="sd">        """</span> 
         <span class="n">isSet</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">IsElementMarked</span><span class="p">(</span><span class="n">tk</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">error</span> <span class="o">!=</span> <span class="s2">""</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">"Error: "</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
+            <span class="n">_log_message</span><span class="p">(</span><span class="s2">"Error: "</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">isSet</span></div>
 </div>
 

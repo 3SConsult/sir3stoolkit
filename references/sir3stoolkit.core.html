@@ -105,6 +105,31 @@ known gotchas) before writing code against this module.</p>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="sir3stoolkit.core.wrapper.Get_Toolkit_Dll_File_Version">
+<span class="sig-prename descclassname"><span class="pre">sir3stoolkit.core.wrapper.</span></span><span class="sig-name descname"><span class="pre">Get_Toolkit_Dll_File_Version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dllPath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/core/wrapper.html#Get_Toolkit_Dll_File_Version"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.wrapper.Get_Toolkit_Dll_File_Version" title="Link to this definition"></a></dt>
+<dd><p>Read the file version of a Sir3S_Toolkit.dll (Windows: file properties &gt; Details &gt; File version).</p>
+<p>Sir3S_Toolkit.dll carries a file version from sir3stoolkit 90.15.26 on (file version 90.15.10.0);
+earlier DLLs all report 1.0.0.0. The release notes list the file version of the DLL each sir3stoolkit
+version needs (column “dll changed + file version”). Initialize_Toolkit() checks this automatically:
+it logs the file version of the DLL in the SirGraf directory and warns if it differs from the DLL
+shipped with the installed sir3stoolkit version.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dllPath</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – Path to a Sir3S_Toolkit.dll, or to a directory containing one. Default: the
+Sir3S_Toolkit.dll in the SirGraf directory - the one Initialize_Toolkit() was called with, or,
+before that, the one it would resolve (host application, config.local.txt, config.txt).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The file version as “major.minor.build.revision”, e.g. “90.15.10.0”, or None if no
+Sir3S_Toolkit.dll was found.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Optional[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="sir3stoolkit.core.wrapper.Initialize_Toolkit">
 <span class="sig-prename descclassname"><span class="pre">sir3stoolkit.core.wrapper.</span></span><span class="sig-name descname"><span class="pre">Initialize_Toolkit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">basePath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sir3stoolkit/core/wrapper.html#Initialize_Toolkit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.wrapper.Initialize_Toolkit" title="Link to this definition"></a></dt>
 <dd><p>Initialize the SIR 3S Toolkit with the SirGraf installation path.</p>
@@ -628,7 +653,13 @@ on the main UI (SirGraf).</p>
 <dd class="field-odd"><p>None</p>
 </dd>
 <dt class="field-even">Description<span class="colon">:</span></dt>
-<dd class="field-even"><p>This is a wrapper method for ExecCalculation() from toolkit; Watch out for errors for more information. Use Exit_status = instance.GetResultValue(instance.GetTksofElementType(instance.ObjectTypes.GeneralSection)[0],”EXSTAT”)[0] afterwards to check status of calculation.</p>
+<dd class="field-even"><p>This is a wrapper method for ExecCalculation() from toolkit; Watch out for errors for more information.
+If waitForSirCalcToExit is True, the calculation is checked afterwards. Reported as errors: a SirCalc lock file
+(<a href="#id1"><span class="problematic" id="id2">*</span></a>_SirCalcIsRunning.tmp) left in the working directory (SirCalc crashed; a new calculation removes it), no
+results, results ending before the end of the simulation time frame (SirCalc crashed during the simulation)
+and EXSTAT=3 (bad or invalid results). Reported as warnings: EXSTAT=1 (user
+interrupt) and EXSTAT=2 (questionable results). EXSTAT is stored per timestamp, separately for the stationary
+and the transient calculation, so it is checked at the stationary and at the last timestamp.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1217,11 +1248,6 @@ for more information.</p>
 </dd>
 </dl>
 </dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="sir3stoolkit.core.wrapper.SIR3S_Model.GetResultsWithMXProxy">
-<span class="sig-name descname"><span class="pre">GetResultsWithMXProxy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timestamps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sResultsToGet</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sir3stoolkit/core/wrapper.html#SIR3S_Model.GetResultsWithMXProxy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.wrapper.SIR3S_Model.GetResultsWithMXProxy" title="Link to this definition"></a></dt>
-<dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="sir3stoolkit.core.wrapper.SIR3S_Model.GetSimulationTimeFrame">
@@ -1838,8 +1864,8 @@ The SirCalc XML Input File should only be edited by people, who know what they a
 WARNING: Running this method, will leave stale result data to be accessed with GetResultValue() or similar functions. To fix this close and reopen the model, after running calculations. This is a bug currently investigated: <a class="reference external" href="https://github.com/3SConsult/sir3stoolkit/issues/23">https://github.com/3SConsult/sir3stoolkit/issues/23</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>saveItInThisDirectory</strong> (<em>str</em>) – The Directory Path from where the SirCalc XML File should be saved. Ensure that the directory is writable.
-If that Path does not exist this Method shall try to create it.</p>
+<dd class="field-odd"><p><strong>saveItInThisDirectory</strong> (<em>str</em>) – The Working Directory Path to where the SirCalc XML File should be saved. Ensure that the directory is writable.
+If that Path does not exist this Method shall try to create it. Necessary intermediate dir from working directory head will be created.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The full Path of the generated SirCalc XML Input File if the Operation succeeds; otherwise, an empty string.</p>
@@ -1934,6 +1960,13 @@ If that Path does not exist this Method shall try to create it.</p>
 </dl>
 </dd></dl>
 
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="sir3stoolkit.core.wrapper.SIR3S_ToolkitError">
+<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sir3stoolkit.core.wrapper.</span></span><span class="sig-name descname"><span class="pre">SIR3S_ToolkitError</span></span><a class="reference internal" href="../_modules/sir3stoolkit/core/wrapper.html#SIR3S_ToolkitError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.wrapper.SIR3S_ToolkitError" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">RuntimeError</span></code></p>
+<p>Raised when a SIR 3S Toolkit call reports an error (see Set_Raise_On_Error()).</p>
 </dd></dl>
 
 <dl class="py class">
@@ -3432,6 +3465,28 @@ Enter “-1” if yow want to unmark the whole Model</p>
 <span class="sig-name descname"><span class="pre">to_python_enum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dotnet_enum_member</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">py_enum_type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sir3stoolkit/core/wrapper.html#SIR3S_View.to_python_enum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.wrapper.SIR3S_View.to_python_enum" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sir3stoolkit.core.wrapper.Set_Raise_On_Error">
+<span class="sig-prename descclassname"><span class="pre">sir3stoolkit.core.wrapper.</span></span><span class="sig-name descname"><span class="pre">Set_Raise_On_Error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">enabled</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/core/wrapper.html#Set_Raise_On_Error"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.wrapper.Set_Raise_On_Error" title="Link to this definition"></a></dt>
+<dd><p>Controls whether errors reported by the SIR 3S Toolkit raise a SIR3S_ToolkitError or are only logged.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>enabled</strong> (<em>Optional</em><em>[</em><em>bool</em><em>]</em>) – True to always raise, False to only log (behavior before 90.15.26), None for the default:
+raise when running as a standalone Python process, only log when running inside SirGraf.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Description<span class="colon">:</span></dt>
+<dd class="field-even"><p>Errors from core calls made inside mantle methods are always only logged, as mantle handles
+them itself.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">

@@ -62,7 +62,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#sir-3s-90-15-quebec">SIR 3S: 90-15 Quebec</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#sir-3s-90-15-00-24-upd2">SIR 3S: 90-15-00-24-Upd2</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#version-90-15-26-to-be-released">Version 90.15.26 (TO BE RELEASED)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#version-90-15-26">Version 90.15.26</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#version-90-15-25">Version 90.15.25</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#version-90-15-24">Version 90.15.24</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#version-90-15-23">Version 90.15.23</a></li>
@@ -153,131 +153,141 @@
 <li><p><strong>Core updates with DLL changes</strong> - Requires manual replacement of <code class="docutils literal notranslate"><span class="pre">Sir3S_Toolkit.dll</span></code> in the SirGraf directory after pip upgrade (1). The newest version of the <code class="docutils literal notranslate"><span class="pre">Sir3S_Toolkit.dll</span></code> is shipped alongside the updated pure python code (.\lib\).</p></li>
 </ol>
 <p>The release notes indicate whether a version includes changes to the C# side and therefore if (2) is necessary.</p>
+<p>From version 90.15.26 on, <code class="docutils literal notranslate"><span class="pre">Sir3S_Toolkit.dll</span></code> carries a file version (Windows: file properties &gt; Details &gt; File version; earlier DLLs all show 1.0.0.0), listed in the overview below. This makes it possible to check whether the DLL in the SirGraf directory matches the installed sir3stoolkit version: <code class="docutils literal notranslate"><span class="pre">Initialize_Toolkit()</span></code> logs the file version of the DLL in the SirGraf directory and warns if it differs from the DLL shipped with the installed sir3stoolkit version; <code class="docutils literal notranslate"><span class="pre">Get_Toolkit_Dll_File_Version()</span></code> returns it.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sir3stoolkit.core</span><span class="w"> </span><span class="kn">import</span> <span class="n">wrapper</span>
+<span class="n">wrapper</span><span class="o">.</span><span class="n">Get_Toolkit_Dll_File_Version</span><span class="p">(</span><span class="sa">r</span><span class="s2">"C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2"</span><span class="p">)</span>  <span class="c1"># e.g. '90.15.10.0'</span>
+</pre></div>
+</div>
 <section id="sir-3s-90-15-quebec">
 <h2>SIR 3S: 90-15 Quebec<a class="headerlink" href="#sir-3s-90-15-quebec" title="Link to this heading"></a></h2>
 <section id="overview">
 <span id="id1"></span><h3>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h3>
-<p>Below an overview over all Toolkit Versions for SIR 3S 90-15 Quebec is given. It is stated with which specific SIR 3S version the Toolkit version was developed and tested and whether replacing the Sir3S_Toolkit.dll is necessary.</p>
+<p>Below an overview over all Toolkit Versions for SIR 3S 90-15 Quebec is given. It is stated with which specific SIR 3S version the Toolkit version was developed and tested and whether replacing the Sir3S_Toolkit.dll is necessary. From 90.15.26 on, the column “dll changed + file version” also gives the file version of the Sir3S_Toolkit.dll the Toolkit version needs (for versions without DLL changes, the one of the latest version before).</p>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>Toolkit Version</p></th>
 <th class="head"><p>SIR 3S Version</p></th>
-<th class="head"><p>dll changed</p></th>
+<th class="head"><p>dll changed + file version</p></th>
 <th class="head"><p>Release Date</p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>90.15.25</p></td>
+<tr class="row-even"><td><p>90.15.26</p></td>
+<td><p>90-15-00-24-Upd2</p></td>
+<td><p>Yes (90.15.10.0)</p></td>
+<td><p>2026-10-14</p></td>
+</tr>
+<tr class="row-odd"><td><p>90.15.25</p></td>
 <td><p>90-15-00-24-Upd2</p></td>
 <td><p>Yes</p></td>
 <td><p>2026-08-03</p></td>
 </tr>
-<tr class="row-odd"><td><p>90.15.24</p></td>
+<tr class="row-even"><td><p>90.15.24</p></td>
 <td><p>90-15-00-24-Upd2</p></td>
 <td><p>Yes</p></td>
 <td><p>2026-07-02</p></td>
 </tr>
-<tr class="row-even"><td><p>90.15.23</p></td>
+<tr class="row-odd"><td><p>90.15.23</p></td>
 <td><p>90-15-00-24-Upd2</p></td>
 <td><p>Yes</p></td>
 <td><p>2026-06-15</p></td>
 </tr>
-<tr class="row-odd"><td><p>90.15.22</p></td>
+<tr class="row-even"><td><p>90.15.22</p></td>
 <td><p>90-15-00-24-Upd2</p></td>
 <td><p>No</p></td>
 <td><p>2026-06-08</p></td>
 </tr>
-<tr class="row-even"><td><p>90.15.21</p></td>
+<tr class="row-odd"><td><p>90.15.21</p></td>
 <td><p>90-15-00-24-Upd2</p></td>
 <td><p>No</p></td>
 <td><p>2026-06-01</p></td>
 </tr>
-<tr class="row-odd"><td><p>90.15.20</p></td>
+<tr class="row-even"><td><p>90.15.20</p></td>
 <td><p>90-15-00-24-Upd2</p></td>
 <td><p>Yes</p></td>
 <td><p>2026-05-25</p></td>
 </tr>
-<tr class="row-even"><td><p>90.15.19</p></td>
+<tr class="row-odd"><td><p>90.15.19</p></td>
 <td><p>90-15-00-24-Upd2</p></td>
 <td><p>No</p></td>
 <td><p>2026-04-19</p></td>
 </tr>
-<tr class="row-odd"><td><p>90.15.18</p></td>
+<tr class="row-even"><td><p>90.15.18</p></td>
 <td><p>90-15-00-24-Upd2</p></td>
 <td><p>No</p></td>
 <td><p>2026-04-10</p></td>
 </tr>
-<tr class="row-even"><td><p>90.15.17</p></td>
+<tr class="row-odd"><td><p>90.15.17</p></td>
 <td><p>90-15-00-24-Upd2</p></td>
 <td><p>No</p></td>
 <td><p>2026-03-27</p></td>
 </tr>
-<tr class="row-odd"><td><p>90.15.16</p></td>
+<tr class="row-even"><td><p>90.15.16</p></td>
 <td><p>90-15-00-24-Upd2</p></td>
 <td><p>No</p></td>
 <td><p>2026-03-15</p></td>
 </tr>
-<tr class="row-even"><td><p>90.15.15</p></td>
+<tr class="row-odd"><td><p>90.15.15</p></td>
 <td><p>90-15-00-23-Upd2</p></td>
 <td><p>Yes</p></td>
 <td><p>2026-03-03</p></td>
 </tr>
-<tr class="row-odd"><td><p>90.15.14</p></td>
+<tr class="row-even"><td><p>90.15.14</p></td>
 <td><p>90-15-00-22-Upd2</p></td>
 <td><p>No</p></td>
 <td><p>2026-02-25</p></td>
 </tr>
-<tr class="row-even"><td><p>90.15.13</p></td>
+<tr class="row-odd"><td><p>90.15.13</p></td>
 <td><p>90-15-00-22-Upd2</p></td>
 <td><p>No</p></td>
 <td><p>2026-02-20</p></td>
 </tr>
-<tr class="row-odd"><td><p>90.15.12</p></td>
+<tr class="row-even"><td><p>90.15.12</p></td>
 <td><p>90-15-00-22-Upd2</p></td>
 <td><p>Yes</p></td>
 <td><p>2026-02-12</p></td>
 </tr>
-<tr class="row-even"><td><p>90.15.11</p></td>
+<tr class="row-odd"><td><p>90.15.11</p></td>
 <td><p>90-15-00-21-Upd2</p></td>
 <td><p>No</p></td>
 <td><p>2026-02-08</p></td>
 </tr>
-<tr class="row-odd"><td><p>90.15.10</p></td>
+<tr class="row-even"><td><p>90.15.10</p></td>
 <td><p>90-15-00-21-Upd2</p></td>
 <td><p>No</p></td>
 <td><p>2026-02-01</p></td>
 </tr>
-<tr class="row-even"><td><p>90.15.9</p></td>
+<tr class="row-odd"><td><p>90.15.9</p></td>
 <td><p>90-15-00-21-Upd2</p></td>
 <td><p>No</p></td>
 <td><p>2026-01-25</p></td>
 </tr>
-<tr class="row-odd"><td><p>90.15.8</p></td>
+<tr class="row-even"><td><p>90.15.8</p></td>
 <td><p>90-15-00-20-Upd1</p></td>
 <td><p>No</p></td>
 <td><p>2026-01-19</p></td>
 </tr>
-<tr class="row-even"><td><p>90.15.7</p></td>
+<tr class="row-odd"><td><p>90.15.7</p></td>
 <td><p>90-15-00-20-Upd1</p></td>
 <td><p>No</p></td>
 <td><p>2026-01-10</p></td>
 </tr>
-<tr class="row-odd"><td><p>90.15.6</p></td>
+<tr class="row-even"><td><p>90.15.6</p></td>
 <td><p>90-15-00-20-Upd1</p></td>
 <td><p>Yes</p></td>
 <td><p>2026-01-09</p></td>
 </tr>
-<tr class="row-even"><td><p>90.15.5</p></td>
+<tr class="row-odd"><td><p>90.15.5</p></td>
 <td><p>90-15-00-19</p></td>
 <td><p>Yes</p></td>
 <td><p>2025-11-24</p></td>
 </tr>
-<tr class="row-odd"><td><p>90.15.4</p></td>
+<tr class="row-even"><td><p>90.15.4</p></td>
 <td><p>90-15-00-19</p></td>
 <td><p>No</p></td>
 <td><p>2025-10-31</p></td>
 </tr>
-<tr class="row-even"><td><p>90.15.3 (Init)</p></td>
+<tr class="row-odd"><td><p>90.15.3 (Init)</p></td>
 <td><p>90-15-00-15</p></td>
 <td><p>Yes</p></td>
 <td><p>2025-10-09</p></td>
@@ -288,21 +298,58 @@
 </section>
 <section id="sir-3s-90-15-00-24-upd2">
 <h3>SIR 3S: 90-15-00-24-Upd2<a class="headerlink" href="#sir-3s-90-15-00-24-upd2" title="Link to this heading"></a></h3>
-<section id="version-90-15-26-to-be-released">
-<h4>Version 90.15.26 (TO BE RELEASED)<a class="headerlink" href="#version-90-15-26-to-be-released" title="Link to this heading"></a></h4>
+<section id="version-90-15-26">
+<h4>Version 90.15.26<a class="headerlink" href="#version-90-15-26" title="Link to this heading"></a></h4>
 <p>Developed and tested using SIR 3S Version: 90-15-00-24-Upd2</p>
+<section id="c-changes">
+<h5>C# Changes<a class="headerlink" href="#c-changes" title="Link to this heading"></a></h5>
+<ul class="simple">
+<li><p>Sir3S_Toolkit.dll now carries a file version: 90.15.10.0 (earlier DLLs: 1.0.0.0)</p></li>
+<li><p>fixed <a class="reference external" href="https://github.com/3SConsult/sir3stoolkit/issues/24">https://github.com/3SConsult/sir3stoolkit/issues/24</a></p></li>
+</ul>
+</section>
 <section id="python-changes">
 <h5>Python Changes<a class="headerlink" href="#python-changes" title="Link to this heading"></a></h5>
 <ul class="simple">
+<li><p>wrapper.py: new function Get_Toolkit_Dll_File_Version(dllPath=None) reads the file version of a Sir3S_Toolkit.dll (default: the one in the SirGraf directory); Initialize_Toolkit() logs the file version of the DLL in the SirGraf directory and warns if it differs from the DLL shipped with the installed sir3stoolkit version</p></li>
 <li><p>alternative_models.py: fix: SIR_3S_to_pandapipes() gauge to absolute pressure fix</p></li>
+<li><p>dataframes.py: fix: GeoDataFrames are created with the CRS “EPSG:&lt;srid&gt;” instead of “EPSG: &lt;srid&gt;”, which newer pyproj versions (3.8) reject - the conversion to GeoDataFrame failed with “Invalid projection”</p></li>
+<li><p>dataframes.py: fix: undefined name in the model data update (“tk” column check) that raised a NameError</p></li>
+<li><p>core: errors reported by the SIR 3S Toolkit now raise a SIR3S_ToolkitError when running as a standalone Python process (previously only logged, with the call returning e.g. None, ‘-1’ or (‘’, ‘’)); inside SirGraf they are still only logged. Core calls made inside mantle methods are only logged as before. Switch with the new Set_Raise_On_Error(True | False | None)</p></li>
+<li><p>core: all toolkit messages now go through the central logger: errors of the working directory, calculation settings, geometry and SIR3S_View methods were printed instead (and therefore not raised)</p></li>
+<li><p>ExecCalculation(waitForSirCalcToExit=True): checks the calculation afterwards - a SirCalc lock file (<code class="docutils literal notranslate"><span class="pre">*_SirCalcIsRunning.tmp</span></code>) left in the working directory (SirCalc crashed), no results, results ending before the end of the simulation time frame (SirCalc crashed during the simulation) or EXSTAT=3 are reported as errors, EXSTAT=1/2 as warnings. EXSTAT is checked at the stationary and at the last timestamp, as it is stored per timestamp</p></li>
+<li><p>Tutorials 3 and 10: the calculation status (EXSTAT) is checked for all timestamps instead of only the current (stationary) one</p></li>
+<li><p>Tutorial 10: the XML edit example is now a pump trip (pump fails after 40 minutes) instead of flipping the speed table; the result plots compare both calculations</p></li>
+<li><p>dependency check upon module import for every mantle module</p></li>
+<li><p>new internal mantle module mx.py (SIR3S_Model_MX): reads results directly from the result files (.MX1/.MX2/.MXS); only used through generate_element_results_dataframe(bulk=True)</p></li>
+<li><p>MX read: numpy-based, chunked reads of only the requested channels, timestamps and tks - works for very large result files (tested: 80 GB .MXS), much faster than loop-based reads</p></li>
+<li><p>generate_element_results_dataframe(bulk=True): uses the new read; raises MemoryError upfront if the result would not fit into memory; new param vec_format (“str” | “multiindex”); progress/timing logs</p></li>
+<li><p>generate_element_results_dataframe(): numeric results are now float32 instead of float64 (the precision SIR 3S stores results in; no value changes, half the memory)</p></li>
+<li><p>generate_element_results_dataframe(): new param output_factor (bulk=True): None (default) reads the result file without an output factor in its name (“M-1-0-1.MX1”) if it exists, otherwise the DTFAK_GROSS file; a factor (DTFAK_KLEIN or DTFAK_GROSS) reads that file</p></li>
+<li><p>generate_element_results_dataframe(bulk=True): timestamps and properties are validated against the result file read (timestamps index/match its timeline; properties=None gives all properties it holds; requested properties it doesn’t hold are left out with a warning instead of being filled with place_holder_value)</p></li>
+<li><p>bulk=True: the output factors (DTFAK_KLEIN/DTFAK_GROSS) are taken from the names of the existing result files - previously “.1” was assumed; the default reads the most recent calculation’s files; files from an earlier calculation can still be read via output_factor, with a warning</p></li>
+<li><p>new: get_result_file_properties() lists the result properties stored in the result file (with unit, description, and whether they are stored for all or single elements), as read by generate_element_results_dataframe(bulk=True)</p></li>
+<li><p>merge_model_data_and_results(): also accepts results straight from generate_element_results_dataframe(vec_format=”multiindex”) (any number of timestamps), new param place_holder_value</p></li>
+<li><p>generate_element_dataframe() / generate_edge_dataframe(): results built from the interior-point multiindex format directly (faster, also for bulk=False); same output structure, interior-point values now exact float32 instead of parsed 7-digit strings</p></li>
+<li><p>convert_rows_to_single_tuple_row(), generate_element_dataframe(), generate_edge_dataframe(): float32 values in tuples are shown in their shortest representation (e.g. 0.01343678 instead of 0.01343678031116724); add_interior_points_to_start_end_sequence() keeps float32 columns float32</p></li>
+<li><p>generate_element_results_dataframe(): the column MultiIndex stays in column order (lexsorted), so selecting e.g. df.loc[ts, (tk, “PVEC”)] no longer raises pandas’ PerformanceWarning</p></li>
+<li><p>fixed <a class="reference external" href="https://github.com/3SConsult/sir3stoolkit/issues/14">https://github.com/3SConsult/sir3stoolkit/issues/14</a></p></li>
+</ul>
+</section>
+<section id="other-changes">
+<h5>Other Changes<a class="headerlink" href="#other-changes" title="Link to this heading"></a></h5>
+<ul class="simple">
+<li><p>AGENTS.md file: entry point for AI code assistants to provide context when coding with sir3stoolkit. Referenced in README.rst</p></li>
+<li><p>new Tutorial 57: bulk result read, interior-point formats, merging with model data, output factors and time-curve data</p></li>
+<li><p>Tutorials 51, 52, 53, 55, 56, 61, 62, 71, 73, 81: removed unused imports (among them folium and contextily, which aren’t dependencies of sir3stoolkit); Tutorial 62: note that its interactive plots need plotly</p></li>
 </ul>
 </section>
 </section>
 <section id="version-90-15-25">
 <h4>Version 90.15.25<a class="headerlink" href="#version-90-15-25" title="Link to this heading"></a></h4>
 <p>Developed and tested using SIR 3S Version: 90-15-00-24-Upd2</p>
-<section id="c-changes">
-<h5>C# Changes<a class="headerlink" href="#c-changes" title="Link to this heading"></a></h5>
+<section id="id2">
+<h5>C# Changes<a class="headerlink" href="#id2" title="Link to this heading"></a></h5>
 <ul class="simple">
 <li><p>fixed <a class="reference external" href="https://github.com/3SConsult/sir3stoolkit/issues/9">https://github.com/3SConsult/sir3stoolkit/issues/9</a></p></li>
 <li><p>fixed <a class="reference external" href="https://github.com/3SConsult/sir3stoolkit/issues/10">https://github.com/3SConsult/sir3stoolkit/issues/10</a></p></li>
@@ -310,8 +357,8 @@
 <li><p>fixed <a class="reference external" href="https://github.com/3SConsult/sir3stoolkit/issues/16">https://github.com/3SConsult/sir3stoolkit/issues/16</a></p></li>
 </ul>
 </section>
-<section id="id2">
-<h5>Python Changes<a class="headerlink" href="#id2" title="Link to this heading"></a></h5>
+<section id="id3">
+<h5>Python Changes<a class="headerlink" href="#id3" title="Link to this heading"></a></h5>
 <ul class="simple">
 <li><dl class="simple">
 <dt>wrapper.py: new functions</dt><dd><ul>
@@ -345,8 +392,8 @@
 <section id="version-90-15-24">
 <h4>Version 90.15.24<a class="headerlink" href="#version-90-15-24" title="Link to this heading"></a></h4>
 <p>Developed and tested using SIR 3S Version: 90-15-00-24-Upd2</p>
-<section id="id3">
-<h5>C# Changes<a class="headerlink" href="#id3" title="Link to this heading"></a></h5>
+<section id="id4">
+<h5>C# Changes<a class="headerlink" href="#id4" title="Link to this heading"></a></h5>
 <ul class="simple">
 <li><p>New Function: GetReferencesToElement(): This method gets all Elements that are referencing the provided Element Key (pk/tk)</p></li>
 </ul>
@@ -355,8 +402,8 @@
 <section id="version-90-15-23">
 <h4>Version 90.15.23<a class="headerlink" href="#version-90-15-23" title="Link to this heading"></a></h4>
 <p>Developed and tested using SIR 3S Version: 90-15-00-24-Upd2</p>
-<section id="id4">
-<h5>C# Changes<a class="headerlink" href="#id4" title="Link to this heading"></a></h5>
+<section id="id5">
+<h5>C# Changes<a class="headerlink" href="#id5" title="Link to this heading"></a></h5>
 <ul class="simple">
 <li><p>fixed <a class="reference external" href="https://github.com/3SConsult/sir3stoolkit/issues/11">https://github.com/3SConsult/sir3stoolkit/issues/11</a></p></li>
 </ul>
@@ -383,8 +430,8 @@
 <section id="version-90-15-21">
 <h4>Version 90.15.21<a class="headerlink" href="#version-90-15-21" title="Link to this heading"></a></h4>
 <p>Developed and tested using SIR 3S Version: 90-15-00-24-Upd2</p>
-<section id="id5">
-<h5>Changes<a class="headerlink" href="#id5" title="Link to this heading"></a></h5>
+<section id="id6">
+<h5>Changes<a class="headerlink" href="#id6" title="Link to this heading"></a></h5>
 <ul class="simple">
 <li><dl class="simple">
 <dt>dataframes.py:</dt><dd><ul>
@@ -417,8 +464,8 @@
 <section id="version-90-15-20">
 <h4>Version 90.15.20<a class="headerlink" href="#version-90-15-20" title="Link to this heading"></a></h4>
 <p>Developed and tested using SIR 3S Version: 90-15-00-24-Upd2</p>
-<section id="id6">
-<h5>Changes<a class="headerlink" href="#id6" title="Link to this heading"></a></h5>
+<section id="id7">
+<h5>Changes<a class="headerlink" href="#id7" title="Link to this heading"></a></h5>
 <ul class="simple">
 <li><p>plotting.py: plot_pipe_layer(), plot_node_layer() new params: value lables</p></li>
 <li><dl class="simple">
@@ -446,8 +493,8 @@
 </li>
 </ul>
 </section>
-<section id="id7">
-<h5>C# Changes<a class="headerlink" href="#id7" title="Link to this heading"></a></h5>
+<section id="id8">
+<h5>C# Changes<a class="headerlink" href="#id8" title="Link to this heading"></a></h5>
 <ul class="simple">
 <li><p>Model Validation functions: not yet fully wrapped in python</p></li>
 </ul>
@@ -456,8 +503,8 @@
 <section id="version-90-15-19">
 <h4>Version 90.15.19<a class="headerlink" href="#version-90-15-19" title="Link to this heading"></a></h4>
 <p>Developed and tested using SIR 3S Version: 90-15-00-24-Upd2</p>
-<section id="id8">
-<h5>Changes<a class="headerlink" href="#id8" title="Link to this heading"></a></h5>
+<section id="id9">
+<h5>Changes<a class="headerlink" href="#id9" title="Link to this heading"></a></h5>
 <ul class="simple">
 <li><dl class="simple">
 <dt>wrapper.py:</dt><dd><ul>
@@ -482,8 +529,8 @@
 <section id="version-90-15-18">
 <h4>Version 90.15.18<a class="headerlink" href="#version-90-15-18" title="Link to this heading"></a></h4>
 <p>Developed and tested using SIR 3S Version: 90-15-00-24-Upd2</p>
-<section id="id9">
-<h5>Changes<a class="headerlink" href="#id9" title="Link to this heading"></a></h5>
+<section id="id10">
+<h5>Changes<a class="headerlink" href="#id10" title="Link to this heading"></a></h5>
 <ul class="simple">
 <li><dl class="simple">
 <dt>plotting.py:</dt><dd><ul>
@@ -515,8 +562,8 @@
 <section id="version-90-15-17">
 <h4>Version 90.15.17<a class="headerlink" href="#version-90-15-17" title="Link to this heading"></a></h4>
 <p>Developed and tested using SIR 3S Version: 90-15-00-24-Upd2</p>
-<section id="id10">
-<h5>Changes<a class="headerlink" href="#id10" title="Link to this heading"></a></h5>
+<section id="id11">
+<h5>Changes<a class="headerlink" href="#id11" title="Link to this heading"></a></h5>
 <ul class="simple">
 <li><dl class="simple">
 <dt>dataframes.py:</dt><dd><ul>
@@ -546,14 +593,14 @@
 <section id="version-90-15-15">
 <h4>Version 90.15.15<a class="headerlink" href="#version-90-15-15" title="Link to this heading"></a></h4>
 <p>Developed and tested using SIR 3S Version: 90-15-00-23-Upd2</p>
-<section id="id11">
-<h5>C# Changes<a class="headerlink" href="#id11" title="Link to this heading"></a></h5>
+<section id="id12">
+<h5>C# Changes<a class="headerlink" href="#id12" title="Link to this heading"></a></h5>
 <ul class="simple">
 <li><p>Deleting objects: References to the object are reset/handled.</p></li>
 </ul>
 </section>
-<section id="id12">
-<h5>Bug Fixes<a class="headerlink" href="#id12" title="Link to this heading"></a></h5>
+<section id="id13">
+<h5>Bug Fixes<a class="headerlink" href="#id13" title="Link to this heading"></a></h5>
 <ul class="simple">
 <li><dl class="simple">
 <dt>insert_dataframe_into_time_table():</dt><dd><ul>
@@ -573,8 +620,8 @@
 <section id="version-90-15-14">
 <h4>Version 90.15.14<a class="headerlink" href="#version-90-15-14" title="Link to this heading"></a></h4>
 <p>Developed and tested using SIR 3S Version: 90-15-00-22-Upd2</p>
-<section id="id13">
-<h5>Changes<a class="headerlink" href="#id13" title="Link to this heading"></a></h5>
+<section id="id14">
+<h5>Changes<a class="headerlink" href="#id14" title="Link to this heading"></a></h5>
 <ul class="simple">
 <li><dl class="simple">
 <dt>dataframes.py:</dt><dd><ul>
@@ -606,14 +653,14 @@
 </section>
 <section id="version-90-15-13">
 <h4>Version 90.15.13<a class="headerlink" href="#version-90-15-13" title="Link to this heading"></a></h4>
-<section id="id14">
-<h5>Changes<a class="headerlink" href="#id14" title="Link to this heading"></a></h5>
+<section id="id15">
+<h5>Changes<a class="headerlink" href="#id15" title="Link to this heading"></a></h5>
 <ul class="simple">
 <li><p>All time table related functions moved from advanced_operations.py (SIR3S_Model_Advanced_Operations) to dataframes.py (SIR3S_Model_Dataframes)</p></li>
 </ul>
 </section>
-<section id="id15">
-<h5>Bug Fixes<a class="headerlink" href="#id15" title="Link to this heading"></a></h5>
+<section id="id16">
+<h5>Bug Fixes<a class="headerlink" href="#id16" title="Link to this heading"></a></h5>
 <ul class="simple">
 <li><p>dataframes.py: logger(f”{e}””) without except fixed</p></li>
 </ul>
@@ -622,14 +669,14 @@
 <section id="version-90-15-12">
 <h4>Version 90.15.12<a class="headerlink" href="#version-90-15-12" title="Link to this heading"></a></h4>
 <p>Developed and tested using SIR 3S Version: 90-15-00-22-Upd2</p>
-<section id="id16">
-<h5>C# Changes<a class="headerlink" href="#id16" title="Link to this heading"></a></h5>
+<section id="id17">
+<h5>C# Changes<a class="headerlink" href="#id17" title="Link to this heading"></a></h5>
 <ul class="simple">
 <li><p>Fixed Calculation Bug: Could not start Model Calculation: SirCalc Path ‘C:3S ConsultSIR3S-90-15-00-19-QuebecSirCalc-90-15-02-20_QuebecSirCalc.exe’ not found</p></li>
 </ul>
 </section>
-<section id="id17">
-<h5>Bug Fixes<a class="headerlink" href="#id17" title="Link to this heading"></a></h5>
+<section id="id18">
+<h5>Bug Fixes<a class="headerlink" href="#id18" title="Link to this heading"></a></h5>
 <ul class="simple">
 <li><p>insert_dataframe_into_time_table(): internal_ref_time = self.GetTimeStamps()[0][0]</p></li>
 <li><p>dataframes.py: generate_element_dataframe() minor safe guard added</p></li>
@@ -730,8 +777,8 @@
 <section id="version-90-15-7">
 <h4>Version 90.15.7<a class="headerlink" href="#version-90-15-7" title="Link to this heading"></a></h4>
 <p>Developed and tested using SIR 3S Version: 90-15-00-20-Upd1</p>
-<section id="id18">
-<h5>Changes<a class="headerlink" href="#id18" title="Link to this heading"></a></h5>
+<section id="id19">
+<h5>Changes<a class="headerlink" href="#id19" title="Link to this heading"></a></h5>
 <ul class="simple">
 <li><dl class="simple">
 <dt>dataframes.py:</dt><dd><ul>
@@ -751,8 +798,8 @@
 <section id="version-90-15-6">
 <h4>Version 90.15.6<a class="headerlink" href="#version-90-15-6" title="Link to this heading"></a></h4>
 <p>Developed and tested using SIR 3S Version: 90-15-00-20-Upd1</p>
-<section id="id19">
-<h5>C# Changes<a class="headerlink" href="#id19" title="Link to this heading"></a></h5>
+<section id="id20">
+<h5>C# Changes<a class="headerlink" href="#id20" title="Link to this heading"></a></h5>
 <ul class="simple">
 <li><p>Hydraulic Profile related functions added</p></li>
 </ul>
@@ -779,8 +826,8 @@
 </li>
 </ul>
 </section>
-<section id="id20">
-<h5>Changes<a class="headerlink" href="#id20" title="Link to this heading"></a></h5>
+<section id="id21">
+<h5>Changes<a class="headerlink" href="#id21" title="Link to this heading"></a></h5>
 <ul class="simple">
 <li><dl class="simple">
 <dt>mantle sub classes renaming:</dt><dd><ul>
@@ -800,14 +847,14 @@
 <section id="version-90-15-5">
 <h4>Version 90.15.5<a class="headerlink" href="#version-90-15-5" title="Link to this heading"></a></h4>
 <p>Developed and tested using SIR 3S Version: 90-15-00-19</p>
-<section id="id21">
-<h5>C# Changes<a class="headerlink" href="#id21" title="Link to this heading"></a></h5>
+<section id="id22">
+<h5>C# Changes<a class="headerlink" href="#id22" title="Link to this heading"></a></h5>
 <ul class="simple">
 <li><p>Model Repair Class added</p></li>
 </ul>
 </section>
-<section id="id22">
-<h5>Bug Fixes<a class="headerlink" href="#id22" title="Link to this heading"></a></h5>
+<section id="id23">
+<h5>Bug Fixes<a class="headerlink" href="#id23" title="Link to this heading"></a></h5>
 <ul class="simple">
 <li><dl class="simple">
 <dt>dataframes.py:</dt><dd><ul>
@@ -819,8 +866,8 @@
 </li>
 </ul>
 </section>
-<section id="id23">
-<h5>Improvements<a class="headerlink" href="#id23" title="Link to this heading"></a></h5>
+<section id="id24">
+<h5>Improvements<a class="headerlink" href="#id24" title="Link to this heading"></a></h5>
 <ul class="simple">
 <li><dl class="simple">
 <dt>alternative_models.py:</dt><dd><ul>

@@ -306,31 +306,38 @@
    ]
   },
   {
-   "cell_type": "code",
-   "execution_count": 13,
-   "id": "0a372505",
+   "cell_type": "markdown",
+   "id": "49ab8b39",
    "metadata": {},
-   "outputs": [],
    "source": [
-    "Exit_status = s3s.GetResultValue(s3s.GetTksofElementType(s3s.ObjectTypes.GeneralSection)[0],\"EXSTAT\")[0]"
+    "The exit status (EXSTAT) is stored per timestamp: the stationary timestamp holds the status of the stationary calculation, the following timestamps the status of the transient calculation. [GetResultValue()](https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetResultValue) only returns the value of the current timestamp, which after a calculation is the stationary one. Therefore we check all timestamps using [GetResultforAllTimestamp()](https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetResultforAllTimestamp).\n",
+    "\n",
+    "If SirCalc crashes during the transient calculation, the timestamps calculated so far keep their status, but the results end before the end of the simulation time frame ([GetSimulationTimeFrame()](https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetSimulationTimeFrame)) and a lock file *_SirCalcIsRunning.tmp remains in the working directory. ExecCalculation(waitForSirCalcToExit=True) checks all of this itself and reports problems as errors and warnings (see Tutorial 8)."
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 14,
-   "id": "c0ef0a1c",
+   "execution_count": 13,
+   "id": "0a372505",
    "metadata": {},
    "outputs": [
     {
      "name": "stdout",
      "output_type": "stream",
      "text": [
-      "0\n"
+      "Checked 11 timestamps from 2026-03-15 22:46:21.000 +01:00 to 2026-03-15 22:56:21.000 +01:00\n"
      ]
     }
    ],
    "source": [
-    "print(Exit_status)"
+    "general_section = s3s.GetTksofElementType(s3s.ObjectTypes.GeneralSection)[0]\n",
+    "exit_status_per_timestamp = s3s.GetResultforAllTimestamp(Tk=general_section, property=\"EXSTAT\")\n",
+    "\n",
+    "for timestamp, exit_status, _ in exit_status_per_timestamp:\n",
+    "    if exit_status != \"0\":\n",
+    "        print(f\"{timestamp}: EXSTAT={exit_status}\")\n",
+    "\n",
+    "print(f\"Checked {len(exit_status_per_timestamp)} timestamps from {exit_status_per_timestamp[0][0]} to {exit_status_per_timestamp[-1][0]}\")"
    ]
   },
   {
@@ -545,7 +552,7 @@
    "id": "33f66226",
    "metadata": {},
    "source": [
-    "Similar to non-result values, we use [GetResultProperties_from_elementTypes()](https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetResultProperties_from_elementType) to create a list of all result properties of the different objects that exist in our model."
+    "Similar to non-result values, we use [GetResultProperties_from_elementType()](https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetResultProperties_from_elementType) to create a list of all result properties of the different objects that exist in our model."
    ]
   },
   {
@@ -856,7 +863,7 @@
   {
    "cell_type": "code",
    "execution_count": 38,
-   "id": "b3e5f147",
+   "id": "1576448c",
    "metadata": {},
    "outputs": [],
    "source": [
