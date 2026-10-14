@@ -66,18 +66,24 @@ def _configure_edge_dataframe_stubs(s3s_model_dataframes_instance):
             ]
         )
 
-    def fake_results_df(element_type, properties, timestamps, tks=None):
+    def fake_results_df(element_type, properties, timestamps, tks=None, place_holder_value=99999.0, vec_format="str"):
         calls["results"].append(
             {
                 "element_type": element_type,
                 "properties": list(properties),
                 "timestamps": list(timestamps),
                 "tks": None if tks is None else list(tks),
+                "vec_format": vec_format,
             }
         )
-        if element_type == "Pipe":
-            return pd.DataFrame([{"tk": "P1", "JV": 1.1, "PVEC": "1\t2", "MVEC": "3\t4"}])
-        return pd.DataFrame([{"tk": "V1", "JV": 2.2, "PVEC": "5\t6", "MVEC": "7\t8"}])
+        # vec_format="multiindex" results: scalars at interior point -1, interior points 0..n-1
+        tk, values = ("P1", [1.1, 1.0, 2.0, 3.0, 4.0]) if element_type == "Pipe" else ("V1", [2.2, 5.0, 6.0, 7.0, 8.0])
+        columns = pd.MultiIndex.from_tuples(
+            [(tk, "n", "e", "JV", -1), (tk, "n", "e", "PVEC", 0), (tk, "n", "e", "PVEC", 1),
+             (tk, "n", "e", "MVEC", 0), (tk, "n", "e", "MVEC", 1)],
+            names=["tk", "name", "end_nodes", "property", "interior points"],
+        )
+        return pd.DataFrame([values], index=["TS"], columns=columns).astype("float32")
 
     s3s_model_dataframes_instance.GetTksofElementType = (
         lambda ElementType: ["P1"] if ElementType == "Pipe" else ["V1"]
@@ -87,18 +93,6 @@ def _configure_edge_dataframe_stubs(s3s_model_dataframes_instance):
     )
     s3s_model_dataframes_instance.generate_element_model_data_dataframe = fake_model_df
     s3s_model_dataframes_instance.generate_element_results_dataframe = fake_results_df
-    def fake_merge(df_model_data, df_results):
-        if df_results is None or df_results.empty:
-            return df_model_data.copy()
-        right = df_results.copy()
-        if "tk" in right.columns:
-            right["tk"] = right["tk"].map(
-                lambda v: v[0] if isinstance(v, tuple) and len(v) == 1 else v
-            )
-        return df_model_data.merge(right, on="tk", how="outer")
-
-    s3s_model_dataframes_instance.merge_model_data_and_results = fake_merge
-    s3s_model_dataframes_instance.add_interior_points_to_start_end_sequence = lambda df: df
 
     return calls
 
@@ -148,9 +142,11 @@ def test_generate_edge_dataframe_tutorial53_properties_with_timestamp_index(s3s_
     assert not df.empty
     assert set(df["tk"].tolist()) == {"P1", "V1"}
     assert "JV" in df.columns
-    assert "PVEC" in df.columns
-    assert "MVEC" in df.columns
-    assert isinstance(timestamp_to_tuple_index, dict)
+    assert {"PVEC_start", "PVEC_end", "PVEC_sequence", "MVEC_sequence"} <= set(df.columns)
+    assert df.loc[df["tk"] == "P1", "JV"].iloc[0] == (1.1,)  # float32 value, shortest representation
+    assert df.loc[df["tk"] == "V1", "PVEC_sequence"].iloc[0] == ((5.0, 6.0),)
+    assert timestamp_to_tuple_index == {"TS": 0}
+    assert all(call["vec_format"] == "multiindex" for call in calls["results"])
     assert "Fkcont" in calls["model"][0]["properties"]
     assert all(call["timestamps"] == [8] for call in calls["results"])
 

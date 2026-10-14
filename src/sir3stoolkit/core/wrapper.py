@@ -11,7 +11,10 @@ known gotchas) before writing code against this module.
 
 import clr as net
 from collections import namedtuple
+import datetime
 import enum
+import functools
+import inspect
 import numpy as np
 import os
 from pathlib import Path
@@ -22,25 +25,84 @@ from System import String, Array
 from System.Collections.Generic import List
 
 import System
+from System.Diagnostics import FileVersionInfo
 from System.Reflection import Assembly
 
-from sir3stoolkit.logging_utils import emit_message, get_logger, get_process_executable_path
+from sir3stoolkit.logging_utils import emit_message, get_logger, get_process_executable_path, is_host_process
 
 logger = get_logger(__name__)
 
+
+class SIR3S_ToolkitError(RuntimeError):
+    """Raised when a SIR 3S Toolkit call reports an error (see Set_Raise_On_Error())."""
+
+
+# None = automatic: raise outside SirGraf, only log inside SirGraf
+_raise_on_error: Optional[bool] = None
+# >0 while a mantle method is running; mantle handles core errors itself (log and continue)
+_soft_error_depth = 0
+
+
+def Set_Raise_On_Error(enabled: Optional[bool] = None) -> None:
+    """
+    Controls whether errors reported by the SIR 3S Toolkit raise a SIR3S_ToolkitError or are only logged.
+
+    :param enabled: True to always raise, False to only log (behavior before 90.15.26), None for the default:
+        raise when running as a standalone Python process, only log when running inside SirGraf.
+    :type enabled: Optional[bool]
+    :return: None
+    :rtype: None
+    :description: Errors from core calls made inside mantle methods are always only logged, as mantle handles
+        them itself.
+    """
+    global _raise_on_error
+    _raise_on_error = enabled
+
+
+def _should_raise() -> bool:
+    if _soft_error_depth > 0:
+        return False
+    if _raise_on_error is None:
+        return not is_host_process()
+    return _raise_on_error
+
+
+def _soft_errors(func):
+    """Decorator: core errors inside func are only logged, never raised."""
+    @functools.wraps(func)
+    def inner(*args, **kwargs):
+        global _soft_error_depth
+        _soft_error_depth += 1
+        try:
+            return func(*args, **kwargs)
+        finally:
+            _soft_error_depth -= 1
+    return inner
+
+
+def _parse_timestamp(timestamp: str) -> datetime.datetime:
+    """Parse a toolkit timestamp like '2026-04-29 14:30:00.000 +02:00'."""
+    return datetime.datetime.strptime(timestamp.strip(), "%Y-%m-%d %H:%M:%S.%f %z")
+
+
 def _log_message(message, level: Optional[str] = None):
-    """Route output through module logging with optional explicit level."""
+    """Route output through module logging with optional explicit level. Raises on errors, see Set_Raise_On_Error()."""
     if level is None:
         emit_message(logger, message)
-        return
-
-    normalized_level = str(level).strip().lower()
-    if normalized_level == "error":
-        logger.error(str(message))
-    elif normalized_level == "warning":
-        logger.warning(str(message))
+        lower_text = str(message).lower()
+        is_error = lower_text.startswith("error") or lower_text.startswith("could not")
     else:
-        logger.info(str(message))
+        normalized_level = str(level).strip().lower()
+        is_error = normalized_level == "error"
+        if is_error:
+            logger.error(str(message))
+        elif normalized_level == "warning":
+            logger.warning(str(message))
+        else:
+            logger.info(str(message))
+
+    if is_error and _should_raise():
+        raise SIR3S_ToolkitError(str(message))
 
 
 # Global variables
@@ -257,6 +319,79 @@ def Write_SirGraf_Config_Path(basePath: str) -> None:
     target_config_file.write_text(normalized + "\n", encoding="utf-8")
     _log_message(f"[Initialization] Wrote SirGraf path to config file '{target_config_file}': '{normalized}'", level="info")
 
+
+_TOOLKIT_DLL_NAME = "Sir3S_Toolkit.dll"
+
+
+def _version_tuple(version: str) -> tuple:
+    return tuple(int(part) for part in version.split("."))
+
+
+def _bundled_toolkit_dll_path() -> Optional[str]:
+    """Sir3S_Toolkit.dll shipped with this sir3stoolkit version: the one in the newest lib/<version>/ folder."""
+    lib_dir = Path(__file__).resolve().parents[1] / "lib"
+    dlls = [p for p in lib_dir.glob(f"*/{_TOOLKIT_DLL_NAME}") if all(x.isdigit() for x in p.parent.name.split("-"))]
+    if not dlls:
+        return None
+    return str(max(dlls, key=lambda p: tuple(int(x) for x in p.parent.name.split("-"))))
+
+
+def Get_Toolkit_Dll_File_Version(dllPath: Optional[str] = None) -> Optional[str]:
+    """Read the file version of a Sir3S_Toolkit.dll (Windows: file properties > Details > File version).
+
+    Sir3S_Toolkit.dll carries a file version from sir3stoolkit 90.15.26 on (file version 90.15.10.0);
+    earlier DLLs all report 1.0.0.0. The release notes list the file version of the DLL each sir3stoolkit
+    version needs (column "dll changed + file version"). Initialize_Toolkit() checks this automatically:
+    it logs the file version of the DLL in the SirGraf directory and warns if it differs from the DLL
+    shipped with the installed sir3stoolkit version.
+
+    :param dllPath: Path to a Sir3S_Toolkit.dll, or to a directory containing one. Default: the
+        Sir3S_Toolkit.dll in the SirGraf directory - the one Initialize_Toolkit() was called with, or,
+        before that, the one it would resolve (host application, config.local.txt, config.txt).
+    :type dllPath: Optional[str]
+    :return: The file version as "major.minor.build.revision", e.g. "90.15.10.0", or None if no
+        Sir3S_Toolkit.dll was found.
+    :rtype: Optional[str]
+    """
+    if dllPath is None:
+        dllPath = SIR3S_SIRGRAF_DIR if SIR3S_SIRGRAF_DIR is not None else _resolve_base_path(None)
+        if dllPath is None:
+            _log_message("[Initialization] No SirGraf directory known; call Initialize_Toolkit() or pass dllPath.", level="warning")
+            return None
+    path = Path(dllPath)
+    if path.is_dir():
+        path = path / _TOOLKIT_DLL_NAME
+    if not path.is_file():
+        _log_message(f"[Initialization] No {_TOOLKIT_DLL_NAME} found at '{path}'.", level="warning")
+        return None
+    info = FileVersionInfo.GetVersionInfo(str(path))
+    return f"{info.FileMajorPart}.{info.FileMinorPart}.{info.FileBuildPart}.{info.FilePrivatePart}"
+
+
+def _check_toolkit_dll_version(sirgraf_dir: str) -> None:
+    """Log the file version of the SirGraf directory's Sir3S_Toolkit.dll; warn if it differs from the
+    one shipped with this sir3stoolkit version. Never raises - only informs."""
+    try:
+        bundled_path = _bundled_toolkit_dll_path()
+        if bundled_path is None or not (Path(sirgraf_dir) / _TOOLKIT_DLL_NAME).is_file():
+            return
+        installed = Get_Toolkit_Dll_File_Version(sirgraf_dir)
+        bundled = Get_Toolkit_Dll_File_Version(bundled_path)
+        if installed == bundled:
+            _log_message(f"[Initialization] {_TOOLKIT_DLL_NAME} file version {installed} (matches this sir3stoolkit version).", level="info")
+        elif _version_tuple(installed) < _version_tuple(bundled):
+            _log_message(
+                f"[Initialization] {_TOOLKIT_DLL_NAME} in the SirGraf directory has file version {installed}, but this "
+                f"sir3stoolkit version needs {bundled}: replace it with '{bundled_path}' (see the release notes).",
+                level="warning")
+        else:
+            _log_message(
+                f"[Initialization] {_TOOLKIT_DLL_NAME} in the SirGraf directory has file version {installed}, newer than "
+                f"{bundled} shipped with this sir3stoolkit version: check for a newer sir3stoolkit version (see the release notes).",
+                level="warning")
+    except Exception as ex:
+        _log_message(f"[Initialization] Could not check the {_TOOLKIT_DLL_NAME} file version: {ex}", level="warning")
+
 # CAUTION: User should call this function before creating any instances of the classes provided through this library !!!
 #          Failed to do so will result in incorrect initialization of classes and object model that are key components
 #          to interact with Sir3S
@@ -302,6 +437,7 @@ def Initialize_Toolkit(basePath: Optional[str] = None):
 
         # THE COMPILED DLL FOR Sir3S_Toolkit SHOULD ALSO BE COPIED TO SIR3S_SIRGRAF_DIR
         net.AddReference(os.path.join(SIR3S_SIRGRAF_DIR, "Sir3S_Toolkit"))
+        _check_toolkit_dll_version(SIR3S_SIRGRAF_DIR)
 
 
 class SIR3S_Model:
@@ -310,6 +446,16 @@ class SIR3S_Model:
     This can be used independently or by using inside python console plugin to give better control
     over the model for users.
     """
+
+    def __init_subclass__(cls, **kwargs):
+        # Mantle methods handle core errors themselves (log and continue), so core calls made
+        # inside them must not raise - only core calls made directly by the user do.
+        super().__init_subclass__(**kwargs)
+        if not cls.__module__.startswith("sir3stoolkit.mantle"):
+            return
+        for name, attr in list(vars(cls).items()):
+            if inspect.isfunction(attr) and not (name.startswith("__") and name.endswith("__")):
+                setattr(cls, name, _soft_errors(attr))
 
     def __init__(self):
         # Basic imports to dlls provided by SirGraf
@@ -322,7 +468,7 @@ class SIR3S_Model:
         if (self.toolkit is None):
             self.toolkit = Sir3SToolkit.CSir3SToolkitFactory.CreateToolkit(None, SIR3S_SIRGRAF_DIR, r"90-15-00-01")
         if (self.toolkit is None):
-            _log_message("[Model Class Initialization] Error in initializing the toolkit")
+            _log_message("[Model Class Initialization] Error in initializing the toolkit", level="error")
         else:
             _log_message("[Model Class Initialization] Initialization complete")
 
@@ -636,14 +782,64 @@ class SIR3S_Model:
         :type waitForSirCalcToExit: bool
         :return: None
         :rtype: None
-        :description: This is a wrapper method for ExecCalculation() from toolkit; Watch out for errors for more information. Use Exit_status = instance.GetResultValue(instance.GetTksofElementType(instance.ObjectTypes.GeneralSection)[0],"EXSTAT")[0] afterwards to check status of calculation.
+        :description: This is a wrapper method for ExecCalculation() from toolkit; Watch out for errors for more information.
+            If waitForSirCalcToExit is True, the calculation is checked afterwards. Reported as errors: a SirCalc lock file
+            (*_SirCalcIsRunning.tmp) left in the working directory (SirCalc crashed; a new calculation removes it), no
+            results, results ending before the end of the simulation time frame (SirCalc crashed during the simulation)
+            and EXSTAT=3 (bad or invalid results). Reported as warnings: EXSTAT=1 (user
+            interrupt) and EXSTAT=2 (questionable results). EXSTAT is stored per timestamp, separately for the stationary
+            and the transient calculation, so it is checked at the stationary and at the last timestamp.
         """
         isExecuted, error = self.toolkit.ExecCalculation(waitForSirCalcToExit)
         if not isExecuted:
             _log_message(f"Could not start Model Calculation: {error}")
-        else:
-            if self.outputComments:
-                _log_message("Model Calculation is complete")
+            return
+        if waitForSirCalcToExit:
+            self._check_calculation_status()
+        if self.outputComments:
+            _log_message("Model Calculation is complete")
+
+    _TRANSIENT_CALCULATION_TYPES = ("LowFreq", "Quasi_Stat", "HighFreq_AUTO", "HighFreq_CHAR", "Instat_FiniteDiff")
+
+    def _check_calculation_status(self):
+        working_directory = self.GetWorkingDirectory()
+        lock_files = sorted(Path(working_directory).rglob("*_SirCalcIsRunning.tmp")) if working_directory else []
+        if lock_files:
+            _log_message(f"Error: SirCalc lock file '{lock_files[0]}' still exists after the Model Calculation: SirCalc crashed. "
+                         "See the SirCalc console output for details.")
+            return
+
+        # Read directly from the toolkit: GetTimeStamps() reports no timestamps as an error itself
+        timestamps, _, timestamp_stat, _, _ = self.toolkit.GetTimeStamps()
+        timestamps = list(timestamps)
+        general_sections = self.GetTksofElementType(self.ObjectTypes.GeneralSection)
+        if not timestamps or not general_sections:
+            _log_message("Error: Model Calculation produced no results, SirCalc probably failed. See the SirCalc console output for details.")
+            return
+
+        if str(self.GetCalculationType()) in self._TRANSIENT_CALCULATION_TYPES and timestamp_stat:
+            _, termination_time = self.GetSimulationTimeFrame()
+            try:
+                missing = (_parse_timestamp(timestamp_stat) + datetime.timedelta(seconds=float(termination_time))
+                           - _parse_timestamp(timestamps[-1])).total_seconds()
+            except ValueError:
+                missing = 0
+            if missing > 0:
+                _log_message(f"Error: Model Calculation results end at {timestamps[-1]}, {missing:g} s before the end of the simulation "
+                             "time frame. SirCalc probably crashed during the simulation. See the SirCalc console output for details.")
+                return
+
+        checked = [t for t in dict.fromkeys([timestamp_stat, timestamps[-1]]) if t]
+        exit_statuses = {t: self.GetResultfortimestamp(t, general_sections[0], "EXSTAT")[0] for t in checked}
+        for timestamp, exit_status in exit_statuses.items():
+            if exit_status in ("", "3"):
+                _log_message(f"Error: Model Calculation finished with bad or invalid results (EXSTAT={exit_status or 'missing'} at {timestamp}).")
+                return
+        for timestamp, exit_status in exit_statuses.items():
+            if exit_status == "2":
+                _log_message(f"Model Calculation finished with questionable results (EXSTAT=2 at {timestamp}).", level="warning")
+            elif exit_status == "1":
+                _log_message(f"Model Calculation was interrupted by the user (EXSTAT=1 at {timestamp}).", level="warning")
 
     def GetTimeStamps(self) -> tuple[list, str, str, str]:
         """
@@ -1659,7 +1855,7 @@ class SIR3S_Model:
         """ 
         workingDirectory, error = self.toolkit.GetWorkingDirectory()
         if error != "":
-            print("Error: " + error)
+            _log_message("Error: " + error)
         return workingDirectory
 
     def AllocateWorkingDirectory(self, strDirectory) -> bool:
@@ -1675,7 +1871,7 @@ class SIR3S_Model:
         """ 
         isSet, error = self.toolkit.AllocateWorkingDirectory(strDirectory)
         if not isSet:
-            print("Error: " + error)
+            _log_message("Error: " + error)
         return isSet
 
     def CreateWorkingDirectory(self, strDirectory) -> bool:
@@ -1690,7 +1886,7 @@ class SIR3S_Model:
         """ 
         isSet, error = self.toolkit.CreateWorkingDirectory(strDirectory)
         if not isSet:
-            print("Error: " + error)
+            _log_message("Error: " + error)
         return isSet
 
     def CopyWorkingDirectory(self, strDestinationDirectory) -> bool:
@@ -1706,7 +1902,7 @@ class SIR3S_Model:
         """ 
         isSet, error = self.toolkit.CopyWorkingDirectory(strDestinationDirectory)
         if not isSet:
-            print("Error: " + error)
+            _log_message("Error: " + error)
         return isSet
 
     def GetDBSourcePath(self) -> tuple[str, str, str, str]:
@@ -1725,7 +1921,7 @@ class SIR3S_Model:
         """ 
         dbPath, conectionString, dbVendor, dbName, error = self.toolkit.GetDBSourcePath()
         if not dbPath:
-            print("Error: " + error)
+            _log_message("Error: " + error)
         return dbPath, conectionString, dbVendor, dbName
 
         
@@ -1747,7 +1943,7 @@ class SIR3S_Model:
         calculationType_net = self.to_dotnet_enum(calculationType)
         isSet, error = self.toolkit.SetCalculationType(calculationType_net)
         if not isSet:
-            print("Error: " + error)
+            _log_message("Error: " + error)
         return isSet
     
     def GetCalculationType(self):
@@ -1760,7 +1956,7 @@ class SIR3S_Model:
         """ 
         calcType, error = self.toolkit.GetCalculationType()
         if error != "":
-            print("Error: " + error)
+            _log_message("Error: " + error)
         return calcType
     
     def WriteSirCalcXmlFile(self, saveItInThisDirectory) -> str:
@@ -1770,9 +1966,9 @@ class SIR3S_Model:
         manually edited  before Calculations are executed.
         The SirCalc XML Input File should only be edited by people, who know what they are doing. Otherwise your calculation configuration could become deprecated. If you mess up, you can reset to the current SIR 3S model state by reexecuting WriteSirCalcXmlFile().
         WARNING: Running this method, will leave stale result data to be accessed with GetResultValue() or similar functions. To fix this close and reopen the model, after running calculations. This is a bug currently investigated: https://github.com/3SConsult/sir3stoolkit/issues/23
-        
-        :param saveItInThisDirectory: The Directory Path from where the SirCalc XML File should be saved. Ensure that the directory is writable.
-                                      If that Path does not exist this Method shall try to create it.
+
+        :param saveItInThisDirectory: The Working Directory Path to where the SirCalc XML File should be saved. Ensure that the directory is writable.
+                                      If that Path does not exist this Method shall try to create it. Necessary intermediate dir from working directory head will be created.
         :type saveItInThisDirectory: str
         :return: The full Path of the generated SirCalc XML Input File if the Operation succeeds; otherwise, an empty string.
         :rtype: str
@@ -1780,7 +1976,7 @@ class SIR3S_Model:
         """ 
         genXML, error = self.toolkit.WriteSirCalcXmlFile(saveItInThisDirectory)
         if error != "":
-            print("Error: " + error)
+            _log_message("Error: " + error)
         return genXML
     
     def SetThermalCalculationParemeters(self, activateThermalcalculation, startWithTempField, terminationPrecision, transientThermalcalculation):
@@ -1803,7 +1999,7 @@ class SIR3S_Model:
         """ 
         error = self.toolkit.SetThermalCalculationParemeters(activateThermalcalculation, startWithTempField, terminationPrecision, transientThermalcalculation)
         if error != "":
-            print("Error: " + error)
+            _log_message("Error: " + error)
     
     def GetThermalCalculationParemeters(self):
         """
@@ -1815,7 +2011,7 @@ class SIR3S_Model:
         """ 
         activateThermalcalculation, startWithTempField, terminationPrecision, transientThermalcalculation, error = self.toolkit.GetThermalCalculationParemeters()
         if error != "":
-            print("Error: " + error)
+            _log_message("Error: " + error)
         return activateThermalcalculation, startWithTempField, terminationPrecision, transientThermalcalculation
     
     def SetSimulationTimeFrame(self, timeStep, terminationTime):
@@ -1832,7 +2028,7 @@ class SIR3S_Model:
         """ 
         error = self.toolkit.SetSimulationTimeFrame(timeStep, terminationTime)
         if error != "":
-            print("Error: " + error)
+            _log_message("Error: " + error)
         
     def GetSimulationTimeFrame(self):
         """
@@ -1846,7 +2042,7 @@ class SIR3S_Model:
         """ 
         timeStep, terminationTime, error = self.toolkit.GetSimulationTimeFrame()
         if error != "":
-            print("Error: " + error)
+            _log_message("Error: " + error)
         return timeStep, terminationTime
     
 
@@ -1871,34 +2067,34 @@ class SIR3S_Model:
         """ 
         result, geometrySACH, geometryBZ, geomCnLnI, geomCnLnK, geomCnLnI2, geomCnLnK2, error = self.toolkit.GetGeometryData(elemTk)
         if not result:
-            print("Error: " + error)
+            _log_message("Error: " + error)
         return result, geometrySACH, geometryBZ, geomCnLnI, geomCnLnK, geomCnLnI2, geomCnLnK2
     
-    def GetResultsWithMXProxy(self, timestamps, sResultsToGet):
-        net_timestamps = List[String]()
-        for ts in timestamps:
-            net_timestamps.Add(ts)
-        result, data, error = self.toolkit.GetResultsWithMXProxy(net_timestamps, sResultsToGet)
-        
-        ret_data = {}
-        
-        if not result:
-            print("Error: " + error)
-        else:   
-            for kv in data:
-                groups = {}
-                for kv2 in kv.Value:
-                    fields = {}
-                    for kv3 in kv2.Value:
-                        value = kv3.Value
-                        if isinstance(value, Array):
-                            value = list(value)
-                        fields[kv3.Key] = value
-                    groups[kv2.Key] = fields
-                ret_data[str(kv.Key)] = groups
-        
-        
-        return result, ret_data
+    # Disabled for now: the toolkit DLL in use does not provide GetResultsWithMXProxy() yet.
+    # def GetResultsWithMXProxy(self, timestamps, sResultsToGet):
+    #     net_timestamps = List[String]()
+    #     for ts in timestamps:
+    #         net_timestamps.Add(ts)
+    #     result, data, error = self.toolkit.GetResultsWithMXProxy(net_timestamps, sResultsToGet)
+    #
+    #     ret_data = {}
+    #
+    #     if not result:
+    #         _log_message("Error: " + error)
+    #     else:
+    #         for kv in data:
+    #             groups = {}
+    #             for kv2 in kv.Value:
+    #                 fields = {}
+    #                 for kv3 in kv2.Value:
+    #                     value = kv3.Value
+    #                     if isinstance(value, Array):
+    #                         value = list(value)
+    #                     fields[kv3.Key] = value
+    #                 groups[kv2.Key] = fields
+    #             ret_data[str(kv.Key)] = groups
+    #
+    #     return result, ret_data
         
 
 class SIR3S_View:
@@ -3406,10 +3602,10 @@ class SIR3S_View:
         """
         result, error = self.toolkit.RefreshViews()
         if not result:
-            print("Error: " + error)
+            _log_message("Error: " + error)
         else:
             if self.outputComments:
-                print("Refresh successful")
+                _log_message("Refresh successful")
                 
 
     ## Changes for https://github.com/3SConsult/sir3stoolkit/issues/10
@@ -3429,7 +3625,7 @@ class SIR3S_View:
         """ 
         isSet, error = self.toolkit.UnmarkAll(tkCONT)
         if not isSet:
-            print("Error: " + error)
+            _log_message("Error: " + error)
         return isSet
 
     def GetMarkedElements(self, tkCONT):
@@ -3446,7 +3642,7 @@ class SIR3S_View:
         """ 
         markedElements, error = self.toolkit.GetMarkedElements(tkCONT)
         if error != "":
-            print("Error: " + error)
+            _log_message("Error: " + error)
         return markedElements
     
     def MarkElement(self, tk) -> bool:
@@ -3461,7 +3657,7 @@ class SIR3S_View:
         """ 
         isSet, error = self.toolkit.MarkElement(tk)
         if not isSet:
-            print("Error: " + error)
+            _log_message("Error: " + error)
         return isSet
 
     def UnmarkElement(self, tk) -> bool:
@@ -3476,7 +3672,7 @@ class SIR3S_View:
         """ 
         isSet, error = self.toolkit.UnmarkElement(tk)
         if not isSet:
-            print("Error: " + error)
+            _log_message("Error: " + error)
         return isSet
 
     def IsElementMarked(self, tk) -> bool:
@@ -3491,7 +3687,7 @@ class SIR3S_View:
         """ 
         isSet, error = self.toolkit.IsElementMarked(tk)
         if error != "":
-            print("Error: " + error)
+            _log_message("Error: " + error)
         return isSet
 
 

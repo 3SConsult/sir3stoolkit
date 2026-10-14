@@ -14,6 +14,9 @@ to build/modify/read a SIR 3S model, start here.
   when one exists for what you need; they handle validation/batching the core API doesn't.
 - Everything is a method on (a subclass of) `SIR3S_Model` — instantiate once via
   `wrapper.Initialize_Toolkit(sirgraf_dir)` then `model = wrapper.SIR3S_Model()`, `model.OpenModel(...)`.
+- The `src/sir3stoolkit/mcp/` folder in the GitHub repository is an unfinished MCP server draft: it
+  is not usable, not part of the pip package, and not a way to drive SIR 3S - don't try to use or fix
+  it; write Python against `core`/`mantle` instead.
 
 ## Where to get the real API surface
 
@@ -59,7 +62,8 @@ number/scope or the operation it teaches changes.
 **`SIR3S_Model/` — core API**
 
 - **[000](https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/docs/source/tutorials/SIR3S_Model/Tutorial000_Assets/ToolkitTutorial000.ipynb)** ([docs page](https://github.com/3SConsult/sir3stoolkit/blob/main/docs/source/examples.rst#L20-L28)) How to import and initialize the toolkit against a SirGraf installation, including persisting
-  the install path so you don't have to pass it every time. — `Initialize_Toolkit`,
+  the install path so you don't have to pass it every time, and checking the file version of the
+  Sir3S_Toolkit.dll in it. — `Initialize_Toolkit`, `Get_Toolkit_Dll_File_Version`,
   `Write_SirGraf_Config_Path`, `Read_SirGraf_Config_Path`, `SIR3S_Model()`, `SIR3S_View()`.
 - **[001](https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/docs/source/tutorials/SIR3S_Model/Tutorial001_Assets/ToolkitTutorial001.ipynb)** ([docs page](https://github.com/3SConsult/sir3stoolkit/blob/main/docs/source/examples.rst#L29-L37)) How to create a brand-new SIR 3S model or open an existing one. — `AllowSirMessageBox`,
   `NewModel`, `GetNetworkType`, `CloseModel`, `OpenModel`, `OpenModelXml`.
@@ -86,8 +90,9 @@ number/scope or the operation it teaches changes.
   `InsertElement` + group assignment via `SetValue` (for higher-level group operations, see mantle
   Tutorial081).
 - **[008](https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/docs/source/tutorials/SIR3S_Model/Tutorial008_Assets/ToolkitTutorial008.ipynb)** ([docs page](https://github.com/3SConsult/sir3stoolkit/blob/main/docs/source/examples.rst#L92-L100)) Grab-bag of things that don't fit the other tutorials: hydraulic-profile data, the log file
-  location, suppressing console output, suppressing SIR DB popups. — `GetHydraulicProfileObjectString`,
-  `GetCourseOfHydraulicProfile`, `SetLogFilePath`, `EnableOrDisableOutputComments`,
+  location, raising vs. only logging toolkit errors, suppressing console output, suppressing SIR DB
+  popups. — `GetHydraulicProfileObjectString`, `GetCourseOfHydraulicProfile`, `SetLogFilePath`,
+  `Set_Raise_On_Error` (`SIR3S_ToolkitError`), `EnableOrDisableOutputComments`,
   `AllowSirMessageBox` (see Known gotchas above for why this one matters for unattended runs).
 - **[009](https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/docs/source/tutorials/SIR3S_Model/Tutorial009_Assets/ToolkitTutorial009.ipynb)** ([docs page](https://github.com/3SConsult/sir3stoolkit/blob/main/docs/source/examples.rst#L101-L109)) How to run SIR 3S's own model-validation check for errors/inconsistencies before calculating.
   — `ExecuteModelValidation`.
@@ -118,16 +123,21 @@ number/scope or the operation it teaches changes.
   `plot_node_layer`, `plot_pipe_layer`.
 - **[056](https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/docs/source/tutorials/SIR3S_Model_Mantle/Tutorial056_Assets/ToolkitTutorial056.ipynb)** ([docs page](https://github.com/3SConsult/sir3stoolkit/blob/main/docs/source/examples.rst#L185-L193)) How to look up standard nominal-diameter (DN) tables as a DataFrame. —
   `get_dataframes_from_nominal_diameter_tables`.
-- **[061](https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/docs/source/tutorials/SIR3S_Model_Mantle/Tutorial061_Assets/ToolkitTutorial061.ipynb)** ([docs page](https://github.com/3SConsult/sir3stoolkit/blob/main/docs/source/examples.rst#L194-L202)) How to export a model as a networkx graph, for graph-based analysis. — `SIR_3S_to_nx_graph`,
+- **[057](https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/docs/source/tutorials/SIR3S_Model_Mantle/Tutorial057_Assets/ToolkitTutorial057.ipynb)** ([docs page](https://github.com/3SConsult/sir3stoolkit/blob/main/docs/source/examples.rst#L194-L202)) How to read results quickly straight from the result files (bulk=True) instead of one API call per
+  value, incl. the interior-point formats (str/multiindex) and merging them with model data, and how to read
+  the time-curve result file of a model with two output factors. — `generate_element_results_dataframe`
+  (`bulk`, `vec_format`, `output_factor`), `get_result_file_properties`, `merge_model_data_and_results`,
+  `add_interior_points_to_start_end_sequence`, `convert_rows_to_single_tuple_row`.
+- **[061](https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/docs/source/tutorials/SIR3S_Model_Mantle/Tutorial061_Assets/ToolkitTutorial061.ipynb)** ([docs page](https://github.com/3SConsult/sir3stoolkit/blob/main/docs/source/examples.rst#L203-L211)) How to export a model as a networkx graph, for graph-based analysis. — `SIR_3S_to_nx_graph`,
   `add_properties_to_graph`.
-- **[062](https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/docs/source/tutorials/SIR3S_Model_Mantle/Tutorial062_Assets/ToolkitTutorial062.ipynb)** ([docs page](https://github.com/3SConsult/sir3stoolkit/blob/main/docs/source/examples.rst#L203-L211)) How to export a model as a pandapipes network, e.g. to cross-check against SIR 3S's own
+- **[062](https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/docs/source/tutorials/SIR3S_Model_Mantle/Tutorial062_Assets/ToolkitTutorial062.ipynb)** ([docs page](https://github.com/3SConsult/sir3stoolkit/blob/main/docs/source/examples.rst#L212-L220)) How to export a model as a pandapipes network, e.g. to cross-check against SIR 3S's own
   results. — `SIR_3S_to_pandapipes`.
-- **[071](https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/docs/source/tutorials/SIR3S_Model_Mantle/Tutorial071_Assets/ToolkitTutorial071.ipynb)** ([docs page](https://github.com/3SConsult/sir3stoolkit/blob/main/docs/source/examples.rst#L212-L220)) How to plot a result property's value over time for one or more elements. — `plot_time_curves`.
-- **[072](https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/docs/source/tutorials/SIR3S_Model_Mantle/Tutorial072_Assets/ToolkitTutorial072.ipynb)** ([docs page](https://github.com/3SConsult/sir3stoolkit/blob/main/docs/source/examples.rst#L221-L229)) WORK IN PROGRESS - how to plot values along a longitudinal section (a path through the
+- **[071](https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/docs/source/tutorials/SIR3S_Model_Mantle/Tutorial071_Assets/ToolkitTutorial071.ipynb)** ([docs page](https://github.com/3SConsult/sir3stoolkit/blob/main/docs/source/examples.rst#L221-L229)) How to plot a result property's value over time for one or more elements. — `plot_time_curves`.
+- **[072](https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/docs/source/tutorials/SIR3S_Model_Mantle/Tutorial072_Assets/ToolkitTutorial072.ipynb)** ([docs page](https://github.com/3SConsult/sir3stoolkit/blob/main/docs/source/examples.rst#L230-L238)) WORK IN PROGRESS - how to plot values along a longitudinal section (a path through the
   network). — `generate_longitudinal_section_dataframes`, `add_interior_points_as_multiindex`.
-- **[073](https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/docs/source/tutorials/SIR3S_Model_Mantle/Tutorial073_Assets/ToolkitTutorial073.ipynb)** ([docs page](https://github.com/3SConsult/sir3stoolkit/blob/main/docs/source/examples.rst#L230-L238)) How to plot a network-wide color-coded map of a result property (a network color depiction).
+- **[073](https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/docs/source/tutorials/SIR3S_Model_Mantle/Tutorial073_Assets/ToolkitTutorial073.ipynb)** ([docs page](https://github.com/3SConsult/sir3stoolkit/blob/main/docs/source/examples.rst#L239-L247)) How to plot a network-wide color-coded map of a result property (a network color depiction).
   — `plot_node_layer`, `plot_pipe_layer`.
-- **[081](https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/docs/source/tutorials/SIR3S_Model_Mantle/Tutorial081_Assets/ToolkitTutorial081.ipynb)** ([docs page](https://github.com/3SConsult/sir3stoolkit/blob/main/docs/source/examples.rst#L239-L246)) How to add, remove, or wholesale replace a group's elements. — `get_tks_of_group_elements`,
+- **[081](https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/docs/source/tutorials/SIR3S_Model_Mantle/Tutorial081_Assets/ToolkitTutorial081.ipynb)** ([docs page](https://github.com/3SConsult/sir3stoolkit/blob/main/docs/source/examples.rst#L248-L255)) How to add, remove, or wholesale replace a group's elements. — `get_tks_of_group_elements`,
   `remove_elements_from_group`, `add_elements_to_group`, `add_element_types_to_tk_list`,
   `set_group_elements`.
 
@@ -138,6 +148,15 @@ number/scope or the operation it teaches changes.
   hangs waiting for a click that will never come. Another typical pop-up is model is currently used by another process(read only access). Call `AllowSirMessageBox(bAllow=False)` beforehand
   to suppress these (see Tutorial008); note this also means missing out on deeper error messages, so
   it's not recommended for normal interactive use. If you should provide Code for the user to run, do not use this option unless explicitly stated by user or pop up issues arise. This is mainly useful if you should open the model while the user has the model open in his own UI.
+- **Errors while initializing the toolkit can come from an outdated `Sir3S_Toolkit.dll`** in the
+  SirGraf directory (some sir3stoolkit versions need it replaced, see "Checking for updates" below) -
+  e.g. `wrapper.SIR3S_Model()` failing with "Could not find .NET enum ...", or newer methods missing
+  on the toolkit object. Before debugging further, check the `Initialize_Toolkit()` log: it warns if the
+  DLL's file version differs from the one the installed sir3stoolkit ships with
+  (`wrapper.Get_Toolkit_Dll_File_Version()` returns it; DLLs before sir3stoolkit 90.15.26 report
+  `1.0.0.0`). The fix is copying `lib/<newest version>/Sir3S_Toolkit.dll` from the installed package
+  into the SirGraf directory - tell the user rather than doing it unasked (it modifies their SIR 3S
+  installation).
 - **`SaveChanges()` commits immediately and permanently**, independent of whether you later call
   `CloseModel(saveChangesBeforeClosing=False)`. Don't call it on exploratory/throwaway edits.
 - `AddNewPipe`'s `dn` parameter is a **string** (e.g. `'100'`); `AddNewConnectingElement`'s `dn`
@@ -147,6 +166,19 @@ number/scope or the operation it teaches changes.
   missing, importing the relevant mantle module raises one combined, actionable `ImportError` naming
   what to `pip install` — read that message rather than debugging the underlying traceback.
 - SetValue always takes Value as str regardless of the underlying field's type.
+- `GetValue` formats decimal numbers with the Windows/.NET culture: `'1,25'` under e.g. `de-DE`, `'1.25'`
+  under `en-US` - while `GetResultValue` uses a dot (`'6.002027'`) even under `de-DE`. So
+  `float(GetValue(...)[0])` fails on comma locales; replace the comma before converting. `SetValue`
+  accepts both `'1.25'` and `'1,25'`.
+- Outside SirGraf, errors reported by the toolkit raise `wrapper.SIR3S_ToolkitError` (inside SirGraf,
+  and for core calls made inside mantle methods, they are only logged and the call returns e.g.
+  `None`/`'-1'`/`('', '')`). See `Set_Raise_On_Error` (Tutorial008). Not every invalid input is reported as an
+  error by the toolkit, though - check what was actually stored (`GetValue`) and run
+  `ExecuteModelValidation` before trusting a model built from scratch.
+- The calculation status `EXSTAT` (GeneralSection result) is stored per timestamp - the stationary
+  timestamp has the stationary calculation's status, the others the transient calculation's. Reading it
+  once with `GetResultValue` right after a calculation only gives the stationary one; loop over all
+  timestamps (Tutorial003). `ExecCalculation(waitForSirCalcToExit=True)` checks this itself.
 
 ## Checking for updates
 
@@ -161,10 +193,16 @@ PyPI and tell them if they differ:
 If they differ, check `docs/source/releases.rst`'s version-overview table
 (https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/docs/source/releases.rst) for whether
 upgrading also needs a manual `Sir3S_Toolkit.dll` replacement in the SirGraf directory. The table's
-`dll changed` column is a per-version delta, not cumulative - OR that column across *every* version
-strictly between the installed and target version, not just the target's own row (e.g. 90.15.19 ->
-90.15.21 needs a DLL update because .20 says "Yes", even though the logic can't stop at just
-checking .21's row).
+`dll changed + file version` column is a per-version delta, not cumulative - OR that column across
+*every* version strictly between the installed and target version, not just the target's own row
+(e.g. 90.15.19 -> 90.15.21 needs a DLL update because .20 says "Yes", even though the logic can't
+stop at just checking .21's row).
+From 90.15.26 on, `Sir3S_Toolkit.dll` carries a file version (90.15.26: `90.15.10.0`; all earlier DLLs
+report `1.0.0.0`), and that column also states it. So the DLL actually installed can be checked
+directly instead of inferred: `wrapper.Get_Toolkit_Dll_File_Version()` returns the file version of the
+DLL in the SirGraf directory (or of any DLL path passed); `Initialize_Toolkit()` logs it and warns if it
+differs from the DLL shipped with the installed sir3stoolkit version (`lib/<version>/` in the package).
+If that warning appears, the DLL needs replacing (or sir3stoolkit upgrading) before trusting results.
 A new mantle dependency being required isn't reliably flagged in the changelog text - instead of
 parsing prose for it, just try the actual import; a missing one raises a clear, actionable combined
 `ImportError` naming what to `pip install` (see the dependency gotcha above).

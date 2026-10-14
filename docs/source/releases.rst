@@ -19,6 +19,13 @@ There are two types of updates:
 
 The release notes indicate whether a version includes changes to the C# side and therefore if (2) is necessary. 
 
+From version 90.15.26 on, ``Sir3S_Toolkit.dll`` carries a file version (Windows: file properties > Details > File version; earlier DLLs all show 1.0.0.0), listed in the overview below. This makes it possible to check whether the DLL in the SirGraf directory matches the installed sir3stoolkit version: ``Initialize_Toolkit()`` logs the file version of the DLL in the SirGraf directory and warns if it differs from the DLL shipped with the installed sir3stoolkit version; ``Get_Toolkit_Dll_File_Version()`` returns it.
+
+.. code-block:: python
+
+   from sir3stoolkit.core import wrapper
+   wrapper.Get_Toolkit_Dll_File_Version(r"C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2")  # e.g. '90.15.10.0'
+
 SIR 3S: 90-15 Quebec
 --------------------
 
@@ -27,72 +34,109 @@ SIR 3S: 90-15 Quebec
 Overview
 ^^^^^^^^
 
-Below an overview over all Toolkit Versions for SIR 3S 90-15 Quebec is given. It is stated with which specific SIR 3S version the Toolkit version was developed and tested and whether replacing the Sir3S_Toolkit.dll is necessary.
+Below an overview over all Toolkit Versions for SIR 3S 90-15 Quebec is given. It is stated with which specific SIR 3S version the Toolkit version was developed and tested and whether replacing the Sir3S_Toolkit.dll is necessary. From 90.15.26 on, the column "dll changed + file version" also gives the file version of the Sir3S_Toolkit.dll the Toolkit version needs (for versions without DLL changes, the one of the latest version before).
 
-+----------------+---------------------------+-------------+--------------+
-| Toolkit Version| SIR 3S Version            | dll changed | Release Date |
-+================+===========================+=============+==============+
-| 90.15.25       | 90-15-00-24-Upd2          | Yes         | 2026-08-03   |
-+----------------+---------------------------+-------------+--------------+
-| 90.15.24       | 90-15-00-24-Upd2          | Yes         | 2026-07-02   |
-+----------------+---------------------------+-------------+--------------+
-| 90.15.23       | 90-15-00-24-Upd2          | Yes         | 2026-06-15   |
-+----------------+---------------------------+-------------+--------------+
-| 90.15.22       | 90-15-00-24-Upd2          | No          | 2026-06-08   |
-+----------------+---------------------------+-------------+--------------+
-| 90.15.21       | 90-15-00-24-Upd2          | No          | 2026-06-01   |
-+----------------+---------------------------+-------------+--------------+
-| 90.15.20       | 90-15-00-24-Upd2          | Yes         | 2026-05-25   |
-+----------------+---------------------------+-------------+--------------+
-| 90.15.19       | 90-15-00-24-Upd2          | No          | 2026-04-19   |
-+----------------+---------------------------+-------------+--------------+
-| 90.15.18       | 90-15-00-24-Upd2          | No          | 2026-04-10   |
-+----------------+---------------------------+-------------+--------------+
-| 90.15.17       | 90-15-00-24-Upd2          | No          | 2026-03-27   |
-+----------------+---------------------------+-------------+--------------+
-| 90.15.16       | 90-15-00-24-Upd2          | No          | 2026-03-15   |
-+----------------+---------------------------+-------------+--------------+
-| 90.15.15       | 90-15-00-23-Upd2          | Yes         | 2026-03-03   |
-+----------------+---------------------------+-------------+--------------+
-| 90.15.14       | 90-15-00-22-Upd2          | No          | 2026-02-25   |
-+----------------+---------------------------+-------------+--------------+
-| 90.15.13       | 90-15-00-22-Upd2          | No          | 2026-02-20   |
-+----------------+---------------------------+-------------+--------------+
-| 90.15.12       | 90-15-00-22-Upd2          | Yes         | 2026-02-12   |
-+----------------+---------------------------+-------------+--------------+
-| 90.15.11       | 90-15-00-21-Upd2          | No          | 2026-02-08   |
-+----------------+---------------------------+-------------+--------------+
-| 90.15.10       | 90-15-00-21-Upd2          | No          | 2026-02-01   |
-+----------------+---------------------------+-------------+--------------+
-| 90.15.9        | 90-15-00-21-Upd2          | No          | 2026-01-25   |
-+----------------+---------------------------+-------------+--------------+
-| 90.15.8        | 90-15-00-20-Upd1          | No          | 2026-01-19   |
-+----------------+---------------------------+-------------+--------------+
-| 90.15.7        | 90-15-00-20-Upd1          | No          | 2026-01-10   |
-+----------------+---------------------------+-------------+--------------+
-| 90.15.6        | 90-15-00-20-Upd1          | Yes         | 2026-01-09   |
-+----------------+---------------------------+-------------+--------------+
-| 90.15.5        | 90-15-00-19               | Yes         | 2025-11-24   |
-+----------------+---------------------------+-------------+--------------+
-| 90.15.4        | 90-15-00-19               | No          | 2025-10-31   |
-+----------------+---------------------------+-------------+--------------+
-| 90.15.3 (Init) | 90-15-00-15               | Yes         | 2025-10-09   |
-+----------------+---------------------------+-------------+--------------+
++----------------+---------------------------+----------------------------+--------------+
+| Toolkit Version| SIR 3S Version            | dll changed + file version | Release Date |
++================+===========================+============================+==============+
+| 90.15.26       | 90-15-00-24-Upd2          | Yes (90.15.10.0)           | 2026-10-14   |
++----------------+---------------------------+----------------------------+--------------+
+| 90.15.25       | 90-15-00-24-Upd2          | Yes                        | 2026-08-03   |
++----------------+---------------------------+----------------------------+--------------+
+| 90.15.24       | 90-15-00-24-Upd2          | Yes                        | 2026-07-02   |
++----------------+---------------------------+----------------------------+--------------+
+| 90.15.23       | 90-15-00-24-Upd2          | Yes                        | 2026-06-15   |
++----------------+---------------------------+----------------------------+--------------+
+| 90.15.22       | 90-15-00-24-Upd2          | No                         | 2026-06-08   |
++----------------+---------------------------+----------------------------+--------------+
+| 90.15.21       | 90-15-00-24-Upd2          | No                         | 2026-06-01   |
++----------------+---------------------------+----------------------------+--------------+
+| 90.15.20       | 90-15-00-24-Upd2          | Yes                        | 2026-05-25   |
++----------------+---------------------------+----------------------------+--------------+
+| 90.15.19       | 90-15-00-24-Upd2          | No                         | 2026-04-19   |
++----------------+---------------------------+----------------------------+--------------+
+| 90.15.18       | 90-15-00-24-Upd2          | No                         | 2026-04-10   |
++----------------+---------------------------+----------------------------+--------------+
+| 90.15.17       | 90-15-00-24-Upd2          | No                         | 2026-03-27   |
++----------------+---------------------------+----------------------------+--------------+
+| 90.15.16       | 90-15-00-24-Upd2          | No                         | 2026-03-15   |
++----------------+---------------------------+----------------------------+--------------+
+| 90.15.15       | 90-15-00-23-Upd2          | Yes                        | 2026-03-03   |
++----------------+---------------------------+----------------------------+--------------+
+| 90.15.14       | 90-15-00-22-Upd2          | No                         | 2026-02-25   |
++----------------+---------------------------+----------------------------+--------------+
+| 90.15.13       | 90-15-00-22-Upd2          | No                         | 2026-02-20   |
++----------------+---------------------------+----------------------------+--------------+
+| 90.15.12       | 90-15-00-22-Upd2          | Yes                        | 2026-02-12   |
++----------------+---------------------------+----------------------------+--------------+
+| 90.15.11       | 90-15-00-21-Upd2          | No                         | 2026-02-08   |
++----------------+---------------------------+----------------------------+--------------+
+| 90.15.10       | 90-15-00-21-Upd2          | No                         | 2026-02-01   |
++----------------+---------------------------+----------------------------+--------------+
+| 90.15.9        | 90-15-00-21-Upd2          | No                         | 2026-01-25   |
++----------------+---------------------------+----------------------------+--------------+
+| 90.15.8        | 90-15-00-20-Upd1          | No                         | 2026-01-19   |
++----------------+---------------------------+----------------------------+--------------+
+| 90.15.7        | 90-15-00-20-Upd1          | No                         | 2026-01-10   |
++----------------+---------------------------+----------------------------+--------------+
+| 90.15.6        | 90-15-00-20-Upd1          | Yes                        | 2026-01-09   |
++----------------+---------------------------+----------------------------+--------------+
+| 90.15.5        | 90-15-00-19               | Yes                        | 2025-11-24   |
++----------------+---------------------------+----------------------------+--------------+
+| 90.15.4        | 90-15-00-19               | No                         | 2025-10-31   |
++----------------+---------------------------+----------------------------+--------------+
+| 90.15.3 (Init) | 90-15-00-15               | Yes                        | 2025-10-09   |
++----------------+---------------------------+----------------------------+--------------+
 
 Below the release history with all changes is given in detail.
 
 SIR 3S: 90-15-00-24-Upd2
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-Version 90.15.26 (TO BE RELEASED)
-"""""""""""""""""""""""""""""""""
+Version 90.15.26
+""""""""""""""""
 
 Developed and tested using SIR 3S Version: 90-15-00-24-Upd2
+
+C# Changes
+~~~~~~~~~~
+
+- Sir3S_Toolkit.dll now carries a file version: 90.15.10.0 (earlier DLLs: 1.0.0.0)
+- fixed https://github.com/3SConsult/sir3stoolkit/issues/24
 
 Python Changes
 ~~~~~~~~~~~~~~
 
+- wrapper.py: new function Get_Toolkit_Dll_File_Version(dllPath=None) reads the file version of a Sir3S_Toolkit.dll (default: the one in the SirGraf directory); Initialize_Toolkit() logs the file version of the DLL in the SirGraf directory and warns if it differs from the DLL shipped with the installed sir3stoolkit version
 - alternative_models.py: fix: SIR_3S_to_pandapipes() gauge to absolute pressure fix
+- dataframes.py: fix: GeoDataFrames are created with the CRS "EPSG:<srid>" instead of "EPSG: <srid>", which newer pyproj versions (3.8) reject - the conversion to GeoDataFrame failed with "Invalid projection"
+- dataframes.py: fix: undefined name in the model data update ("tk" column check) that raised a NameError
+- core: errors reported by the SIR 3S Toolkit now raise a SIR3S_ToolkitError when running as a standalone Python process (previously only logged, with the call returning e.g. None, '-1' or ('', '')); inside SirGraf they are still only logged. Core calls made inside mantle methods are only logged as before. Switch with the new Set_Raise_On_Error(True | False | None)
+- core: all toolkit messages now go through the central logger: errors of the working directory, calculation settings, geometry and SIR3S_View methods were printed instead (and therefore not raised)
+- ExecCalculation(waitForSirCalcToExit=True): checks the calculation afterwards - a SirCalc lock file (``*_SirCalcIsRunning.tmp``) left in the working directory (SirCalc crashed), no results, results ending before the end of the simulation time frame (SirCalc crashed during the simulation) or EXSTAT=3 are reported as errors, EXSTAT=1/2 as warnings. EXSTAT is checked at the stationary and at the last timestamp, as it is stored per timestamp
+- Tutorials 3 and 10: the calculation status (EXSTAT) is checked for all timestamps instead of only the current (stationary) one
+- Tutorial 10: the XML edit example is now a pump trip (pump fails after 40 minutes) instead of flipping the speed table; the result plots compare both calculations
+- dependency check upon module import for every mantle module
+- new internal mantle module mx.py (SIR3S_Model_MX): reads results directly from the result files (.MX1/.MX2/.MXS); only used through generate_element_results_dataframe(bulk=True)
+- MX read: numpy-based, chunked reads of only the requested channels, timestamps and tks - works for very large result files (tested: 80 GB .MXS), much faster than loop-based reads
+- generate_element_results_dataframe(bulk=True): uses the new read; raises MemoryError upfront if the result would not fit into memory; new param vec_format ("str" | "multiindex"); progress/timing logs
+- generate_element_results_dataframe(): numeric results are now float32 instead of float64 (the precision SIR 3S stores results in; no value changes, half the memory)
+- generate_element_results_dataframe(): new param output_factor (bulk=True): None (default) reads the result file without an output factor in its name ("M-1-0-1.MX1") if it exists, otherwise the DTFAK_GROSS file; a factor (DTFAK_KLEIN or DTFAK_GROSS) reads that file
+- generate_element_results_dataframe(bulk=True): timestamps and properties are validated against the result file read (timestamps index/match its timeline; properties=None gives all properties it holds; requested properties it doesn't hold are left out with a warning instead of being filled with place_holder_value)
+- bulk=True: the output factors (DTFAK_KLEIN/DTFAK_GROSS) are taken from the names of the existing result files - previously ".1" was assumed; the default reads the most recent calculation's files; files from an earlier calculation can still be read via output_factor, with a warning
+- new: get_result_file_properties() lists the result properties stored in the result file (with unit, description, and whether they are stored for all or single elements), as read by generate_element_results_dataframe(bulk=True)
+- merge_model_data_and_results(): also accepts results straight from generate_element_results_dataframe(vec_format="multiindex") (any number of timestamps), new param place_holder_value
+- generate_element_dataframe() / generate_edge_dataframe(): results built from the interior-point multiindex format directly (faster, also for bulk=False); same output structure, interior-point values now exact float32 instead of parsed 7-digit strings
+- convert_rows_to_single_tuple_row(), generate_element_dataframe(), generate_edge_dataframe(): float32 values in tuples are shown in their shortest representation (e.g. 0.01343678 instead of 0.01343678031116724); add_interior_points_to_start_end_sequence() keeps float32 columns float32
+- generate_element_results_dataframe(): the column MultiIndex stays in column order (lexsorted), so selecting e.g. df.loc[ts, (tk, "PVEC")] no longer raises pandas' PerformanceWarning
+- fixed https://github.com/3SConsult/sir3stoolkit/issues/14
+
+Other Changes
+~~~~~~~~~~~~~
+
+- AGENTS.md file: entry point for AI code assistants to provide context when coding with sir3stoolkit. Referenced in README.rst
+- new Tutorial 57: bulk result read, interior-point formats, merging with model data, output factors and time-curve data
+- Tutorials 51, 52, 53, 55, 56, 61, 62, 71, 73, 81: removed unused imports (among them folium and contextily, which aren't dependencies of sir3stoolkit); Tutorial 62: note that its interactive plots need plotly
 
 Version 90.15.25
 """"""""""""""""

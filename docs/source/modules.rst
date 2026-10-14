@@ -12,6 +12,8 @@ Core Functions
 - :func:`sir3stoolkit.core.wrapper.Initialize_Toolkit`
 - :func:`sir3stoolkit.core.wrapper.Read_SirGraf_Config_Path`
 - :func:`sir3stoolkit.core.wrapper.Write_SirGraf_Config_Path`
+- :func:`sir3stoolkit.core.wrapper.Get_Toolkit_Dll_File_Version`
+- :func:`sir3stoolkit.core.wrapper.Set_Raise_On_Error`
 - :func:`sir3stoolkit.core.wrapper.create_dotnet_enum`
 
 Core Methods: SIR3S_Model
@@ -169,6 +171,7 @@ Mantle Methods: SIR3S_Model_Dataframes
 
 - :meth:`sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.generate_element_model_data_dataframe`
 - :meth:`sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.generate_element_results_dataframe`
+- :meth:`sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.get_result_file_properties`
 - :meth:`sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.convert_rows_to_single_tuple_row`
 - :meth:`sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.generate_element_dataframe`
 - :meth:`sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.add_interior_points_as_multiindex`

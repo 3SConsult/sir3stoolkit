@@ -94,7 +94,7 @@ View: `Notebook <tutorials/SIR3S_Model/Tutorial007_Assets/ToolkitTutorial007.htm
 Tutorial 8: Miscellaneous
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This Tutorial demonstrates miscellaneous functions of the SIR3S_Model() class that cannot be assigned to one of the previous Tutorial topics. Including: GetHydraulicProfileObjectString(), GetCourseOfHydraulicProfile(), SetLogFilePath(), EnableOrDisableOutputComments(), AllowSirMessageBox()
+This Tutorial demonstrates miscellaneous functions of the SIR3S_Model() class that cannot be assigned to one of the previous Tutorial topics. Including: GetHydraulicProfileObjectString(), GetCourseOfHydraulicProfile(), SetLogFilePath(), Set_Raise_On_Error(), EnableOrDisableOutputComments(), AllowSirMessageBox()
 
 View: `Notebook <tutorials/SIR3S_Model/Tutorial008_Assets/ToolkitTutorial008.html>`_ | Download: `ZIP archive <https://github.com/3SConsult/sir3stoolkit/releases/download/tutorial_assets/Tutorial008_Assets.zip>`_.
 
@@ -190,6 +190,15 @@ Tutorial 56:  Nominal Diamter Tables
 The Tutorial demonstrates how to view nominal diameter tables (Nennweitentabellen) and include their data in df_pipes.
 
 View: `Notebook <tutorials/SIR3S_Model_Mantle/Tutorial056_Assets/ToolkitTutorial056.html>`_  | Download: :download:`Notebook <tutorials/SIR3S_Model_Mantle/Tutorial056_Assets/ToolkitTutorial056.ipynb>`.
+
+.. _Ttu057:
+
+Tutorial 57: Bulk Result Read, Output Factors, and Time Curve Data
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This example demonstrates how to read calculation results quickly with generate_element_results_dataframe(bulk=True): instead of one Toolkit API call per value, the values are read directly from the result files (.MX1/.MX2/.MXS). It covers the bulk read and its memory limits, the two formats for interior-point results (str and multiindex) and how to merge them with model data, and output factors: which result file is read, how to check its contents with get_result_file_properties(), and how to read the time-curve data of the small output factor directly.
+
+View: `Notebook <tutorials/SIR3S_Model_Mantle/Tutorial057_Assets/ToolkitTutorial057.html>`_  | Download: :download:`Notebook <tutorials/SIR3S_Model_Mantle/Tutorial057_Assets/ToolkitTutorial057.ipynb>`.
 
 .. _Ttu061:
 
