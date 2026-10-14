@@ -249,7 +249,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model_MX):
                         out.append(float(val.replace(",", ".")))
                     else:
                         out.append(val)
-                df[col] = pd.Series(out)
+                df[col] = pd.Series(out, index=df.index)
             else:
                 df[col] = s_str
 

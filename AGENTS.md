@@ -32,7 +32,9 @@ If your tool truncates long pages, download this file and search it for the sect
 - **Imports**: `from sir3stoolkit.core import wrapper` (core: `wrapper.SIR3S_Model()`) and
   `from sir3stoolkit.mantle.mantle import SIR3S_Model_Mantle` (core + all mantle functions).
   `from sir3stoolkit.mantle import SIR3S_Model_Mantle` does not work - `sir3stoolkit.mantle` only
-  exposes its submodules.
+  exposes its submodules. The tutorials often instantiate a single mantle class instead (e.g.
+  `SIR3S_Model_Dataframes` from `sir3stoolkit.mantle.dataframes`, `SIR3S_Model_Alternative_Models` from
+  `sir3stoolkit.mantle.alternative_models`) - that works too; `SIR3S_Model_Mantle` combines all of them.
 - **Core returns strings**: e.g. `GetValue` returns `(value, type name)`, both `str`. tks are always
   `str` (exception: `SIR_3S_to_nx_graph()` casts them to `int64`, see Known gotchas).
 - **Mantle functions mostly log errors and return an empty DataFrame/graph** instead of raising - check
@@ -205,6 +207,9 @@ number/scope or the operation it teaches changes.
   missing, importing the relevant mantle module raises one combined, actionable `ImportError` naming
   what to `pip install` — read that message rather than debugging the underlying traceback.
 - SetValue always takes Value as str regardless of the underlying field's type.
+- Property names: core `GetValue` ignores case (`"FkCont"` and `"Fkcont"` both work), but mantle
+  functions match the names in `properties=[...]` exactly and leave out unknown ones with a warning
+  (`"FkCont"` is dropped). Always use the exact spelling from the generated reference (`Fkcont`).
 - `GetValue` formats decimal numbers with the Windows/.NET culture: `'1,25'` under e.g. `de-DE`, `'1.25'`
   under `en-US` - while `GetResultValue` uses a dot (`'6.002027'`) even under `de-DE`. So
   `float(GetValue(...)[0])` fails on comma locales; replace the comma before converting. `SetValue`
