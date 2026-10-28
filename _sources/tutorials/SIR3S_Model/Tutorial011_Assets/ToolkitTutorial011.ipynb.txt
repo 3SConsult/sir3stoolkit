@@ -1,0 +1,408 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "id": "5556432f",
+   "metadata": {},
+   "source": [
+    "# Tutorial 11: Fetching Geometry data(Technical and view)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "c9397791",
+   "metadata": {},
+   "source": [
+    "This tutorial demonstrates how to use Geometry related functions\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "a1affc3c-90c0-4590-ae08-28b6d5799dba",
+   "metadata": {},
+   "source": [
+    "## SIR 3S Installation"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "id": "99b10f8f-1537-4ce9-8a6d-b6954b23a51c",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "SIR3S_SIRGRAF_DIR = r\"C:\\Users\\giriyan\\Work_Content\\SIR3S\\SirGraf-90-15-00-24_Quebec-Upd2\" #change to local path"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "d6773e12",
+   "metadata": {},
+   "source": [
+    "## Imports"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "0c29ae20",
+   "metadata": {},
+   "source": [
+    "Note: The SIR 3S Toolkit requires the Sir3S_Toolkit.dll included in SIR 3S installations (version Quebec and higher)."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "id": "4552a777",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import sir3stoolkit"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "29743e38",
+   "metadata": {},
+   "source": [
+    "The core of sir3stoolkit is a Python wrapper around basic functionality of SIR 3S, offering a low-level access to the creation, modification and simulation of SIR 3S models. In the future pure python subpackages may be added."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "id": "ff2227b3",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from sir3stoolkit.core import wrapper"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "id": "a5910232",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "<module 'sir3stoolkit' from 'C:\\\\Users\\\\giriyan\\\\Work_Content\\\\SIR3S\\\\Common\\\\Python312\\\\Lib\\\\site-packages\\\\sir3stoolkit\\\\__init__.py'>"
+      ]
+     },
+     "execution_count": 4,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "sir3stoolkit"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "b05c8cae",
+   "metadata": {},
+   "source": [
+    "The Toolkit has to be initialized with reference to a SIR 3S (SirGraf) installation using [Initialize_Toolkit()](https://3sconsult.github.io/sir3stoolkit/modules.html#sir3stoolkit.core.wrapper.Initialize_Toolkit)."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "id": "7540fe7b",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "[2026-10-28 11:51:07,234] INFO in sir3stoolkit.core.wrapper: [Initialization] Using provided SirGraf path: C:\\Users\\giriyan\\Work_Content\\SIR3S\\SirGraf-90-15-00-24_Quebec-Upd2\n",
+      "[2026-10-28 11:51:07,234] INFO in sir3stoolkit.core.wrapper: [Initialization] Using provided SirGraf path: C:\\Users\\giriyan\\Work_Content\\SIR3S\\SirGraf-90-15-00-24_Quebec-Upd2\n",
+      "[2026-10-28 11:51:07,261] INFO in sir3stoolkit.core.wrapper: [Initialization] Initializing toolkit with SirGraf path: C:\\Users\\giriyan\\Work_Content\\SIR3S\\SirGraf-90-15-00-24_Quebec-Upd2\n",
+      "[2026-10-28 11:51:07,797] WARNING in sir3stoolkit.core.wrapper: [Initialization] Sir3S_Toolkit.dll in the SirGraf directory has file version 90.15.11.0, newer than 90.15.10.0 shipped with this sir3stoolkit version: check for a newer sir3stoolkit version (see the release notes).\n"
+     ]
+    }
+   ],
+   "source": [
+    "wrapper.Initialize_Toolkit(SIR3S_SIRGRAF_DIR)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "id": "0326346a-c4de-4f1a-8f68-e403d5d6a069",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "[2026-10-28 11:51:09,908] INFO in sir3stoolkit.core.wrapper: [Model Class Initialization] Initialization complete\n"
+     ]
+    }
+   ],
+   "source": [
+    "s3s = wrapper.SIR3S_Model()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "id": "c1ff708f-c573-41a7-8416-42f6574bc74a",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "dbFilePath = r\"C:\\Users\\giriyan\\Work_Content\\Git_repos\\ReleaseRepo\\TestPythonSir3SToolkit\\TestModels\\Example3.db3\""
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "id": "09f930a2-30cc-4c0f-b92e-8e00cd950e87",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "[2026-10-28 11:51:28,969] INFO in sir3stoolkit.core.wrapper: Model is open for further operation\n"
+     ]
+    }
+   ],
+   "source": [
+    "s3s.OpenModel(dbName=dbFilePath, \n",
+    "              providerType=s3s.ProviderTypes.SQLite, \n",
+    "              Mid=\"M-1-0-1\", \n",
+    "              saveCurrentlyOpenModel=False, \n",
+    "              namedInstance=\"\", \n",
+    "              userID=\"\", \n",
+    "              password=\"\",\n",
+    "              NewWD=\"\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "id": "d77d8488-f0a5-4ec2-b656-58b4c70c82b9",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "pipe_type=s3s.ObjectTypes.Pipe"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "id": "4a47d3ca-f590-46ca-ab04-7f07978a19ed",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "pipeTKs = s3s.GetTksofElementType(pipe_type)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "107ab2bc-6e00-42a8-b615-86d63a1deae0",
+   "metadata": {},
+   "source": [
+    "# Geometry data functions"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "a055fa32-1f87-49c8-9272-00972d2c4623",
+   "metadata": {},
+   "source": [
+    "Below cells showcase how to fetch View Geometry Information"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 22,
+   "id": "247e5aae-7381-4f9a-bf2e-aed6e78fb4b0",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "ret = s3s.SetTechnicalToViewGeometry(pipeTKs[0])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 28,
+   "id": "833cf86a-c410-4b16-bf92-9bf1b6c98645",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "ret, geometryView, geomCnLnI, geomCnLnK, geomCnLnI2, geomCnLnK2 = s3s.GetViewGeometryInformation(pipeTKs[0])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 29,
+   "id": "d8b86a16-1139-449b-9e8f-4c59f868175c",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Tk: 5442010239090746007, GeometryView: [{\"X\":713620.26780707901,\"Y\":5578828.4187539397,\"Z\":0},{\"X\":713602.29459953599,\"Y\":5578860.1056798697,\"Z\":0}],    \n"
+     ]
+    }
+   ],
+   "source": [
+    "print(f\"Tk: {pipeTKs[0]}, GeometryView: {geometryView}, {geomCnLnI} {geomCnLnK} {geomCnLnI2} {geomCnLnK2}\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "c544c818-caef-45a3-b905-658838dcb4c2",
+   "metadata": {},
+   "source": [
+    "Below cells showcase how to set View Geometry Information"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 30,
+   "id": "346037ce-49b5-4241-8dcb-8b39c33b6450",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "ret = s3s.SetViewGeometryInformation(pipeTKs[0], 'LINESTRING (1 1 1, 2 2 2)', \"\", \"\", \"\", \"\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 31,
+   "id": "323e019c-bb42-4e6a-a4c5-061b9a565eed",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "ret, geometryView1, geomCnLnI, geomCnLnK, geomCnLnI2, geomCnLnK2 = s3s.GetViewGeometryInformation(pipeTKs[0])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 32,
+   "id": "a446191f-7ff9-45f6-be6c-9a46942e1114",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Tk: 5442010239090746007, GeometryView: [{\"X\":713620.26780707901,\"Y\":5578828.4187539397,\"Z\":0},{\"X\":713602.29459953599,\"Y\":5578860.1056798697,\"Z\":0}],    \n"
+     ]
+    }
+   ],
+   "source": [
+    "print(f\"Tk: {pipeTKs[0]}, GeometryView: {geometryView1}, {geomCnLnI} {geomCnLnK} {geomCnLnI2} {geomCnLnK2}\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "ab6d9911-628c-4dd2-b1ad-fd089c6d9638",
+   "metadata": {},
+   "source": [
+    "Below cells showcase usage of function of SetViewToTechnicalGeometry()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 17,
+   "id": "f864cfde-5c29-47bf-b3da-a6d229dd4485",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "ret = s3s.SetViewToTechnicalGeometry(pipeTKs[0])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 18,
+   "id": "1c4b5001-50e0-4c76-a06d-dad491ba35f9",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "ret, geometryView, geomCnLnI, geomCnLnK, geomCnLnI2, geomCnLnK2 = s3s.GetViewGeometryInformation(pipeTKs[0])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 19,
+   "id": "098c2286-3eab-4167-a889-4ad930d38817",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Tk: 5442010239090746007, GeometryView: [{\"X\":713620.26780707901,\"Y\":5578828.4187539397,\"Z\":0},{\"X\":713602.29459953599,\"Y\":5578860.1056798697,\"Z\":0}],    \n"
+     ]
+    }
+   ],
+   "source": [
+    "print(f\"Tk: {pipeTKs[0]}, GeometryView: {geometryView}, {geomCnLnI} {geomCnLnK} {geomCnLnI2} {geomCnLnK2}\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 20,
+   "id": "edae70b5-5abe-4af1-bbea-02b659f8f1fd",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "geomInfo = s3s.GetGeometryInformation(pipeTKs[0])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 21,
+   "id": "5c6bfb4f-3e2e-4898-ab16-837e5aeea466",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Tk: 5442010239090746007, GeometryInfo: LINESTRING (713620.267807079 5578828.41875394, 713602.294599536 5578860.10567987)\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(f\"Tk: {pipeTKs[0]}, GeometryInfo: {geomInfo}\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "9c642f94-3340-434b-87b5-e905fa9b98b5",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "SIR3S Python",
+   "language": "python",
+   "name": "sir3spy"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.12.5"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}

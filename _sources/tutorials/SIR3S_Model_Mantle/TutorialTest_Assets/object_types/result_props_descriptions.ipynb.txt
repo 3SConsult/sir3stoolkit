@@ -89,7 +89,9 @@
    "metadata": {},
    "outputs": [],
    "source": [
-    "import xml.etree.ElementTree as ET\nimport json\nfrom pathlib import Path"
+    "import xml.etree.ElementTree as ET\n",
+    "import json\n",
+    "from pathlib import Path"
    ]
   },
   {
@@ -120,7 +122,15 @@
     }
    ],
    "source": [
-    "network_files = [\n    (\"Water\", \"./result_props_Water.db3\"),\n    (\"Gas\", \"./result_props_Gas.db3\"),\n    (\"DistrictHeating\", \"./result_props_DistrictHeating.db3\"),\n]\n\noutput_dir = (Path.cwd().resolve() / \"./output/.\").resolve()\noutput_dir.mkdir(parents=True, exist_ok=True)\nnetwork_files"
+    "network_files = [\n",
+    "    (\"Water\", \"./result_props_Water.db3\"),\n",
+    "    (\"Gas\", \"./result_props_Gas.db3\"),\n",
+    "    (\"DistrictHeating\", \"./result_props_DistrictHeating.db3\"),\n",
+    "]\n",
+    "\n",
+    "output_dir = (Path.cwd().resolve() / \"./output/.\").resolve()\n",
+    "output_dir.mkdir(parents=True, exist_ok=True)\n",
+    "network_files"
    ]
   },
   {
@@ -128,7 +138,9 @@
    "id": "76cf7036",
    "metadata": {},
    "source": [
-    "## 1) Per network: open, insert every possible object type, calculate, read `.MX1`\n\nInserting every `ObjectTypes` member with a bare `InsertElement(type, \"-1\")` (no endpoints/container/position wiring) is expected to fail for many types (connecting elements need two nodes, table rows need a parent, etc.) - each attempt is wrapped so a failure just means that type is skipped, not that the run aborts. The existing base topology in each `result_props_<Network>.db3` is what lets the calculation actually run afterward."
+    "## 1) Per network: open, insert every possible object type, calculate, read `.MX1`\n",
+    "\n",
+    "Inserting every `ObjectTypes` member with a bare `InsertElement(type, \"-1\")` (no endpoints/container/position wiring) is expected to fail for many types (connecting elements need two nodes, table rows need a parent, etc.) - each attempt is wrapped so a failure just means that type is skipped, not that the run aborts. The existing base topology in each `result_props_<Network>.db3` is what lets the calculation actually run afterward."
    ]
   },
   {
@@ -138,7 +150,24 @@
    "metadata": {},
    "outputs": [],
    "source": [
-    "def insert_all_object_types(s3s):\n    inserted, failed = [], []\n    s3s.StartTransaction(\"Insert every possible object type\")\n    for i in range(0, 150):\n        try:\n            object_type = s3s.ObjectTypes(i)\n        except Exception:\n            continue\n        try:\n            tk = s3s.InsertElement(object_type, \"-1\")\n            if tk and tk != \"-1\":\n                inserted.append(object_type.name)\n            else:\n                failed.append(object_type.name)\n        except Exception:\n            failed.append(object_type.name)\n    s3s.EndTransaction()\n    return inserted, failed"
+    "def insert_all_object_types(s3s):\n",
+    "    inserted, failed = [], []\n",
+    "    s3s.StartTransaction(\"Insert every possible object type\")\n",
+    "    for i in range(0, 150):\n",
+    "        try:\n",
+    "            object_type = s3s.ObjectTypes(i)\n",
+    "        except Exception:\n",
+    "            continue\n",
+    "        try:\n",
+    "            tk = s3s.InsertElement(object_type, \"-1\")\n",
+    "            if tk and tk != \"-1\":\n",
+    "                inserted.append(object_type.name)\n",
+    "            else:\n",
+    "                failed.append(object_type.name)\n",
+    "        except Exception:\n",
+    "            failed.append(object_type.name)\n",
+    "    s3s.EndTransaction()\n",
+    "    return inserted, failed"
    ]
   },
   {
@@ -148,7 +177,27 @@
    "metadata": {},
    "outputs": [],
    "source": [
-    "def read_mx1_descriptions(s3s):\n    mx1_path = s3s._mx_current_mx1_filepath()\n    if not Path(mx1_path).exists():\n        print(f\"  MX1 not found at {mx1_path}\")\n        return {}\n    root = ET.parse(mx1_path).getroot()\n    descriptions = {}\n    for ch in root.findall(\"XL1\"):\n        objtype = ch.get(\"OBJTYPE\")\n        attrtype = ch.get(\"ATTRTYPE\")\n        if not objtype or not attrtype:\n            continue\n        key = f\"{objtype}~{attrtype}\"\n        descriptions[key] = {\n            \"OBJTYPE\": objtype,\n            \"ATTRTYPE\": attrtype,\n            \"TITLE\": ch.get(\"TITLE\"),\n            \"UNIT\": ch.get(\"UNIT\"),\n            \"DATATYPE\": ch.get(\"DATATYPE\"),\n        }\n    return descriptions"
+    "def read_mx1_descriptions(s3s):\n",
+    "    mx1_path = s3s._mx_current_mx1_filepath()\n",
+    "    if not Path(mx1_path).exists():\n",
+    "        print(f\"  MX1 not found at {mx1_path}\")\n",
+    "        return {}\n",
+    "    root = ET.parse(mx1_path).getroot()\n",
+    "    descriptions = {}\n",
+    "    for ch in root.findall(\"XL1\"):\n",
+    "        objtype = ch.get(\"OBJTYPE\")\n",
+    "        attrtype = ch.get(\"ATTRTYPE\")\n",
+    "        if not objtype or not attrtype:\n",
+    "            continue\n",
+    "        key = f\"{objtype}~{attrtype}\"\n",
+    "        descriptions[key] = {\n",
+    "            \"OBJTYPE\": objtype,\n",
+    "            \"ATTRTYPE\": attrtype,\n",
+    "            \"TITLE\": ch.get(\"TITLE\"),\n",
+    "            \"UNIT\": ch.get(\"UNIT\"),\n",
+    "            \"DATATYPE\": ch.get(\"DATATYPE\"),\n",
+    "        }\n",
+    "    return descriptions"
    ]
   },
   {
@@ -158,7 +207,8 @@
    "metadata": {},
    "outputs": [],
    "source": [
-    "s3s.AllowSirMessageBox(bAllow=False)  # avoid blocking popups during unattended batch insertion\ns3s.EnableOrDisableOutputComments(outputComments=False)  # ~150 InsertElement calls would otherwise spam output"
+    "s3s.AllowSirMessageBox(bAllow=False)  # avoid blocking popups during unattended batch insertion\n",
+    "s3s.EnableOrDisableOutputComments(outputComments=False)  # ~150 InsertElement calls would otherwise spam output"
    ]
   },
   {
@@ -264,7 +314,33 @@
     }
    ],
    "source": [
-    "all_descriptions = {}\nper_network_summary = {}\n\nfor network_name, db_path in network_files:\n    print(f\"=== {network_name} ===\")\n    s3s.OpenModel(dbName=db_path, providerType=s3s.ProviderTypes.SQLite, Mid=\"M-1-0-1\",\n                  saveCurrentlyOpenModel=False, namedInstance=\"\", userID=\"\", password=\"\")\n\n    inserted, failed = insert_all_object_types(s3s)\n    print(f\"  inserted {len(inserted)} object types, {len(failed)} not insertable this way\")\n    s3s.SaveChanges()\n\n    try:\n        s3s.ExecCalculation(waitForSirCalcToExit=True)\n    except Exception as e:\n        print(f\"  ExecCalculation raised: {e}\")\n\n    net_descriptions = read_mx1_descriptions(s3s)\n    print(f\"  {len(net_descriptions)} result-property channels described in .MX1\")\n    per_network_summary[network_name] = len(net_descriptions)\n\n    for key, val in net_descriptions.items():\n        all_descriptions.setdefault(key, val)\n\n    s3s.CloseModel(saveChangesBeforeClosing=False)\n\nper_network_summary, len(all_descriptions)"
+    "all_descriptions = {}\n",
+    "per_network_summary = {}\n",
+    "\n",
+    "for network_name, db_path in network_files:\n",
+    "    print(f\"=== {network_name} ===\")\n",
+    "    s3s.OpenModel(dbName=db_path, providerType=s3s.ProviderTypes.SQLite, Mid=\"M-1-0-1\",\n",
+    "                  saveCurrentlyOpenModel=False, namedInstance=\"\", userID=\"\", password=\"\", NewWD=\"\")\n",
+    "\n",
+    "    inserted, failed = insert_all_object_types(s3s)\n",
+    "    print(f\"  inserted {len(inserted)} object types, {len(failed)} not insertable this way\")\n",
+    "    s3s.SaveChanges()\n",
+    "\n",
+    "    try:\n",
+    "        s3s.ExecCalculation(waitForSirCalcToExit=True)\n",
+    "    except Exception as e:\n",
+    "        print(f\"  ExecCalculation raised: {e}\")\n",
+    "\n",
+    "    net_descriptions = read_mx1_descriptions(s3s)\n",
+    "    print(f\"  {len(net_descriptions)} result-property channels described in .MX1\")\n",
+    "    per_network_summary[network_name] = len(net_descriptions)\n",
+    "\n",
+    "    for key, val in net_descriptions.items():\n",
+    "        all_descriptions.setdefault(key, val)\n",
+    "\n",
+    "    s3s.CloseModel(saveChangesBeforeClosing=False)\n",
+    "\n",
+    "per_network_summary, len(all_descriptions)"
    ]
   },
   {
@@ -272,7 +348,16 @@
    "id": "be615d76",
    "metadata": {},
    "source": [
-    "## Manual additions: FS / DSI / DSK\n\n`FS`, `DSI`, `DSK` appear as result properties (via `GetResultProperties_from_elementType()`) on 8 connecting-element types (`DPRG`, `KLAP`, `MREG`, `PREG`, `REGV`, `ROHR`, `SIVE`, `VENT`) but never showed up in any `.MX1` this notebook read - not even Tutorial051's model, a real, successfully-calculated network (checked separately, outside this notebook). They're also absent from `DPKT`, the calc engine's own registered-datapoint catalog. Whatever SIR 3S setting/condition emits them, none of the three test networks here (nor Tutorial051) trigger it, so they can't be sourced automatically the way everything else in this map is. Added by hand from domain knowledge instead:\n\n- `FS`: dynamische axiale Last\n- `DSI`: dynamische Stützkraft Knoten I\n- `DSK`: dynamische Stützkraft Knoten K\n- Unit for all three: `[N|kN|MN]`\n\nApplied identically to all 8 object types below, since they always co-occur together (same 8 types for all three properties) - strong signal they're gated by the same single feature/flag."
+    "## Manual additions: FS / DSI / DSK\n",
+    "\n",
+    "`FS`, `DSI`, `DSK` appear as result properties (via `GetResultProperties_from_elementType()`) on 8 connecting-element types (`DPRG`, `KLAP`, `MREG`, `PREG`, `REGV`, `ROHR`, `SIVE`, `VENT`) but never showed up in any `.MX1` this notebook read - not even Tutorial051's model, a real, successfully-calculated network (checked separately, outside this notebook). They're also absent from `DPKT`, the calc engine's own registered-datapoint catalog. Whatever SIR 3S setting/condition emits them, none of the three test networks here (nor Tutorial051) trigger it, so they can't be sourced automatically the way everything else in this map is. Added by hand from domain knowledge instead:\n",
+    "\n",
+    "- `FS`: dynamische axiale Last\n",
+    "- `DSI`: dynamische Stützkraft Knoten I\n",
+    "- `DSK`: dynamische Stützkraft Knoten K\n",
+    "- Unit for all three: `[N|kN|MN]`\n",
+    "\n",
+    "Applied identically to all 8 object types below, since they always co-occur together (same 8 types for all three properties) - strong signal they're gated by the same single feature/flag."
    ]
   },
   {
@@ -290,7 +375,31 @@
     }
    ],
    "source": [
-    "MANUAL_ENTRIES = {\n    \"TITLE\": {\n        \"FS\": \"dynamische axiale Last\",\n        \"DSI\": \"dynamische St\\u00fctzkraft Knoten I\",\n        \"DSK\": \"dynamische St\\u00fctzkraft Knoten K\",\n    },\n    \"UNIT\": \"[N|kN|MN]\",\n}\nMANUAL_OBJTYPES = [\"DPRG\", \"KLAP\", \"MREG\", \"PREG\", \"REGV\", \"ROHR\", \"SIVE\", \"VENT\"]\n\nmanual_added = 0\nfor objtype in MANUAL_OBJTYPES:\n    for attrtype, title in MANUAL_ENTRIES[\"TITLE\"].items():\n        key = f\"{objtype}~{attrtype}\"\n        all_descriptions[key] = {\n            \"OBJTYPE\": objtype,\n            \"ATTRTYPE\": attrtype,\n            \"TITLE\": title,\n            \"UNIT\": MANUAL_ENTRIES[\"UNIT\"],\n            \"DATATYPE\": None,\n            \"SOURCE\": \"manual\",\n        }\n        manual_added += 1\n\nprint(f\"Added {manual_added} manual entries. Total descriptions: {len(all_descriptions)}\")"
+    "MANUAL_ENTRIES = {\n",
+    "    \"TITLE\": {\n",
+    "        \"FS\": \"dynamische axiale Last\",\n",
+    "        \"DSI\": \"dynamische St\\u00fctzkraft Knoten I\",\n",
+    "        \"DSK\": \"dynamische St\\u00fctzkraft Knoten K\",\n",
+    "    },\n",
+    "    \"UNIT\": \"[N|kN|MN]\",\n",
+    "}\n",
+    "MANUAL_OBJTYPES = [\"DPRG\", \"KLAP\", \"MREG\", \"PREG\", \"REGV\", \"ROHR\", \"SIVE\", \"VENT\"]\n",
+    "\n",
+    "manual_added = 0\n",
+    "for objtype in MANUAL_OBJTYPES:\n",
+    "    for attrtype, title in MANUAL_ENTRIES[\"TITLE\"].items():\n",
+    "        key = f\"{objtype}~{attrtype}\"\n",
+    "        all_descriptions[key] = {\n",
+    "            \"OBJTYPE\": objtype,\n",
+    "            \"ATTRTYPE\": attrtype,\n",
+    "            \"TITLE\": title,\n",
+    "            \"UNIT\": MANUAL_ENTRIES[\"UNIT\"],\n",
+    "            \"DATATYPE\": None,\n",
+    "            \"SOURCE\": \"manual\",\n",
+    "        }\n",
+    "        manual_added += 1\n",
+    "\n",
+    "print(f\"Added {manual_added} manual entries. Total descriptions: {len(all_descriptions)}\")"
    ]
   },
   {
@@ -316,7 +425,10 @@
     }
    ],
    "source": [
-    "out_path = output_dir / \"result_property_descriptions.json\"\nwith open(out_path, \"w\", encoding=\"utf-8\") as f:\n    json.dump(all_descriptions, f, indent=2, ensure_ascii=False)\nprint(f\"Wrote {len(all_descriptions)} descriptions to {out_path}\")"
+    "out_path = output_dir / \"result_property_descriptions.json\"\n",
+    "with open(out_path, \"w\", encoding=\"utf-8\") as f:\n",
+    "    json.dump(all_descriptions, f, indent=2, ensure_ascii=False)\n",
+    "print(f\"Wrote {len(all_descriptions)} descriptions to {out_path}\")"
    ]
   },
   {
@@ -365,7 +477,25 @@
    ]
   }
  ],
- "metadata": {},
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.12.4"
+  }
+ },
  "nbformat": 4,
  "nbformat_minor": 5
 }

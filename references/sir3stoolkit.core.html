@@ -699,6 +699,26 @@ and the transient calculation, so it is checked at the stationary and at the las
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="sir3stoolkit.core.wrapper.SIR3S_Model.FixElement">
+<span class="sig-name descname"><span class="pre">FixElement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">elemTk</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sir3stoolkit/core/wrapper.html#SIR3S_Model.FixElement"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.wrapper.SIR3S_Model.FixElement" title="Link to this definition"></a></dt>
+<dd><p>Sets the o the technical Data part of the Geomety of the Element to its View Geometry.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>elemTk</strong> (<em>str</em>) – The Element’s Key</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Returns a boolean result, True if the operation was successful; otherwise, False</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+<dt class="field-even">Description<span class="colon">:</span></dt>
+<dd class="field-even"><p>This is a wrapper method for FixElement() from toolkit</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="sir3stoolkit.core.wrapper.SIR3S_Model.GetCalculationType">
 <span class="sig-name descname"><span class="pre">GetCalculationType</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sir3stoolkit/core/wrapper.html#SIR3S_Model.GetCalculationType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.wrapper.SIR3S_Model.GetCalculationType" title="Link to this definition"></a></dt>
 <dd><p>Gets the current Type of Calculation to be performed.</p>
@@ -1392,6 +1412,33 @@ Type name [string/float/double/int/bool] of that Property as a tuple of value an
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="sir3stoolkit.core.wrapper.SIR3S_Model.GetViewGeometryInformation">
+<span class="sig-name descname"><span class="pre">GetViewGeometryInformation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">elemTk</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sir3stoolkit/core/wrapper.html#SIR3S_Model.GetViewGeometryInformation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.wrapper.SIR3S_Model.GetViewGeometryInformation" title="Link to this definition"></a></dt>
+<dd><p>Retrieves the WKB Geometry Data if an Element (Technical Data Part, OS Data Part, and eventually connection Lines).
+All Geometries returned are JSON formattted Strings.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>elemTk</strong> (<em>str</em>) – The Key (PK/TK) representing the element for which Geometry Data is requested.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Returns a boolean result, geometryView, geomCnLnI, geomCnLnK, geomCnLnI2, geomCnLnK2 as a tuple
+Boolean result - True if the operation was successful; otherwise, False.
+geometryView - Receives the OS Data Part of the Geometry, if the operation is successful.
+geomCnLnI - Receives the Geometry for the connection line (I) to the Upstream Node if there is any.
+geomCnLnK - Receives the Geometry for the connection line (K) to the Downstream Node if there is any.
+geomCnLnI2 - Receives the Geometry for the second connection line (I2) to the Upstream Node if there is any. (HeatExchanger only)
+geomCnLnK2 - Receives the Geometry for the second connection line (K2) to the Downstream Node if there is any.(HeatExchanger only)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple[bool, str, str, str, str, str]</p>
+</dd>
+<dt class="field-even">Description<span class="colon">:</span></dt>
+<dd class="field-even"><p>This is a wrapper method for GetViewGeometryInformation() from toolkit</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="sir3stoolkit.core.wrapper.SIR3S_Model.GetWorkingDirectory">
 <span class="sig-name descname"><span class="pre">GetWorkingDirectory</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/core/wrapper.html#SIR3S_Model.GetWorkingDirectory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.wrapper.SIR3S_Model.GetWorkingDirectory" title="Link to this definition"></a></dt>
 <dd><p>Get the working directory currently assigned to the open model. The current User should have SIR 3S Adminitrator Role.</p>
@@ -1483,7 +1530,7 @@ authentication is required.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="sir3stoolkit.core.wrapper.SIR3S_Model.OpenModel">
-<span class="sig-name descname"><span class="pre">OpenModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dbName</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">providerType</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Mid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">saveCurrentlyOpenModel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">namedInstance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">userID</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sir3stoolkit/core/wrapper.html#SIR3S_Model.OpenModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.wrapper.SIR3S_Model.OpenModel" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">OpenModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dbName</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">providerType</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Mid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">saveCurrentlyOpenModel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">namedInstance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">userID</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">NewWD</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sir3stoolkit/core/wrapper.html#SIR3S_Model.OpenModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.wrapper.SIR3S_Model.OpenModel" title="Link to this definition"></a></dt>
 <dd><p>Opens a model from a database file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1497,6 +1544,11 @@ authentication is required.</p></li>
 authentication is required.</p></li>
 <li><p><strong>password</strong> (<em>str</em>) – Password for authentication, only needed for ORACLE and for SQLServer only if SQLServer
 authentication is required.</p></li>
+<li><p><strong>NewWD</strong> (<em>str</em>) – The new Working Directory for the Model.
+It should create a new WD, set the model WD reference to it and then open.
+Ideally the user can name the dir freely apart from start “WD”.
+If the model already has an assigned WD, we create new WD anyway and set the reference to this newly created WD and then open.
+If NewWD is identical to the currently assigned WD reference, we dont change anything just open the model with that WD.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -1513,13 +1565,17 @@ authentication is required.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="sir3stoolkit.core.wrapper.SIR3S_Model.OpenModelXml">
-<span class="sig-name descname"><span class="pre">OpenModelXml</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">SaveCurrentModel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sir3stoolkit/core/wrapper.html#SIR3S_Model.OpenModelXml"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.wrapper.SIR3S_Model.OpenModelXml" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">OpenModelXml</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">SaveCurrentModel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">NewWD</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sir3stoolkit/core/wrapper.html#SIR3S_Model.OpenModelXml"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.wrapper.SIR3S_Model.OpenModelXml" title="Link to this definition"></a></dt>
 <dd><p>Opens a model from an XML file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>Path</strong> (<em>str</em>) – Path to XML file.</p></li>
 <li><p><strong>SaveCurrentModel</strong> (<em>bool</em>) – Do you want to save the current model before closing it?</p></li>
+<li><p><strong>NewWD</strong> (<em>str</em>) – The new Working Directory for the Model. It should create a new WD, set the model WD reference to it and then open.
+Ideally the user can name the dir freely apart from start “WD”.
+If the model already has an assigned WD, we create new WD anyway and set the reference to this newly created WD and then open.
+If NewWD is identical to the currently assigned WD reference, we dont change anything just open the model with that WD.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -1756,6 +1812,26 @@ the position on which the object is placed in the view.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="sir3stoolkit.core.wrapper.SIR3S_Model.SetTechnicalToViewGeometry">
+<span class="sig-name descname"><span class="pre">SetTechnicalToViewGeometry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">elemTk</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sir3stoolkit/core/wrapper.html#SIR3S_Model.SetTechnicalToViewGeometry"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.wrapper.SIR3S_Model.SetTechnicalToViewGeometry" title="Link to this definition"></a></dt>
+<dd><p>Sets the o the technical Data part of the Geomety of the Element to its View Geometry.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>elemTk</strong> (<em>str</em>) – The Element’s Key</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Returns a boolean result, True if the operation was successful; otherwise, False</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+<dt class="field-even">Description<span class="colon">:</span></dt>
+<dd class="field-even"><p>This is a wrapper method for SetTechnicalToViewGeometry() from toolkit</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="sir3stoolkit.core.wrapper.SIR3S_Model.SetThermalCalculationParemeters">
 <span class="sig-name descname"><span class="pre">SetThermalCalculationParemeters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">activateThermalcalculation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">startWithTempField</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">terminationPrecision</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transientThermalcalculation</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sir3stoolkit/core/wrapper.html#SIR3S_Model.SetThermalCalculationParemeters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.wrapper.SIR3S_Model.SetThermalCalculationParemeters" title="Link to this definition"></a></dt>
 <dd><p>Change thermal Calculation Parameters</p>
@@ -1802,6 +1878,56 @@ For more Precisions, please refer to the SirCalc Documentation.</p></li>
 </dd>
 <dt class="field-even">Description<span class="colon">:</span></dt>
 <dd class="field-even"><p>This is a wrapper method for SetValue() from toolkit; Watch out for error message for more information.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sir3stoolkit.core.wrapper.SIR3S_Model.SetViewGeometryInformation">
+<span class="sig-name descname"><span class="pre">SetViewGeometryInformation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">elemTk</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometryView</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geomCnLnI</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geomCnLnK</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geomCnLnI2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geomCnLnK2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sir3stoolkit/core/wrapper.html#SIR3S_Model.SetViewGeometryInformation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.wrapper.SIR3S_Model.SetViewGeometryInformation" title="Link to this definition"></a></dt>
+<dd><p>Sets the View geometry Information for the specified Element.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>elemTk</strong> (<em>str</em>) – The Key (PK/TK) representing the element for which View Geometry Data should be set.</p></li>
+<li><p><strong>geometryView</strong> (<em>str</em>) – WKT formatted String for Geometry BZ value to apply to the element.
+‘LINESTRING (x1 y1 z1, … xn yn zn)’ for lines and ‘POINT (x y z)’ for points.
+It may also be a JSON formatted String for a list of POINT3D objects, e.g. ‘[{“X”:x1,”Y”:y1,”Z”:z1}, … {“X”:xn,”Y”:yn,”Z”:zn}]’ for lines
+and ‘[{“X”:x,”Y”:y,”Z”:z}]’ for points.</p></li>
+<li><p><strong>geomCnLnI</strong> (<em>str</em>) – Primary connection line I geometry value.</p></li>
+<li><p><strong>geomCnLnK</strong> (<em>str</em>) – Primary connection line K geometry value.</p></li>
+<li><p><strong>geomCnLnI2</strong> (<em>str</em>) – Secondary connection line I geometry value.</p></li>
+<li><p><strong>geomCnLnK2</strong> (<em>str</em>) – Secondary connection line K geometry value.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Returns a boolean result, True if the operation was successful; otherwise, False</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+<dt class="field-even">Description<span class="colon">:</span></dt>
+<dd class="field-even"><p>This is a wrapper method for SetViewGeometryInformation() from toolkit</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sir3stoolkit.core.wrapper.SIR3S_Model.SetViewToTechnicalGeometry">
+<span class="sig-name descname"><span class="pre">SetViewToTechnicalGeometry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">elemTk</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sir3stoolkit/core/wrapper.html#SIR3S_Model.SetViewToTechnicalGeometry"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.wrapper.SIR3S_Model.SetViewToTechnicalGeometry" title="Link to this definition"></a></dt>
+<dd><p>Sets the View Geometry to the technical Data part of the Geomety of the Element.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>elemTk</strong> (<em>str</em>) – The Element’s Key</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Returns a boolean result, True if the operation was successful; otherwise, False</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+<dt class="field-even">Description<span class="colon">:</span></dt>
+<dd class="field-even"><p>This is a wrapper method for SetViewToTechnicalGeometry() from toolkit</p>
 </dd>
 </dl>
 </dd></dl>

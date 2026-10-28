@@ -838,7 +838,7 @@
 
 <div class="viewcode-block" id="SIR3S_Model.OpenModelXml">
 <a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.OpenModelXml">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">OpenModelXml</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">SaveCurrentModel</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">OpenModelXml</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">SaveCurrentModel</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">NewWD</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Opens a model from an XML file.</span>
 
@@ -846,12 +846,17 @@
 <span class="sd">        :type Path: str</span>
 <span class="sd">        :param SaveCurrentModel: Do you want to save the current model before closing it?</span>
 <span class="sd">        :type SaveCurrentModel: bool</span>
+<span class="sd">        :param NewWD: The new Working Directory for the Model. It should create a new WD, set the model WD reference to it and then open.</span>
+<span class="sd">                      Ideally the user can name the dir freely apart from start "WD".</span>
+<span class="sd">                      If the model already has an assigned WD, we create new WD anyway and set the reference to this newly created WD and then open.</span>
+<span class="sd">                      If NewWD is identical to the currently assigned WD reference, we dont change anything just open the model with that WD.</span>
+<span class="sd">        :type NewWD: str</span>
 <span class="sd">        :return: None</span>
 <span class="sd">        :rtype: None</span>
 <span class="sd">        :description: This is a wrapper method for OpenModelXml() from toolkit; Watch out for error message</span>
 <span class="sd">            for more information.</span>
 <span class="sd">        """</span>
-        <span class="n">result</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">OpenModelXml</span><span class="p">(</span><span class="n">Path</span><span class="p">,</span> <span class="n">SaveCurrentModel</span><span class="p">)</span>
+        <span class="n">result</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">OpenModelXml</span><span class="p">(</span><span class="n">Path</span><span class="p">,</span> <span class="n">SaveCurrentModel</span><span class="p">,</span> <span class="n">NewWD</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">Mid</span> <span class="o">=</span> <span class="s2">"M-1-0-1"</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">xmlFile</span> <span class="o">=</span> <span class="n">Path</span>
@@ -865,7 +870,7 @@
 <div class="viewcode-block" id="SIR3S_Model.OpenModel">
 <a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.OpenModel">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">OpenModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dbName</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">providerType</span><span class="p">,</span> <span class="n">Mid</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">saveCurrentlyOpenModel</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">namedInstance</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-                  <span class="n">userID</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">password</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+                  <span class="n">userID</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">password</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">NewWD</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Opens a model from a database file.</span>
 
@@ -885,13 +890,19 @@
 <span class="sd">        :param password: Password for authentication, only needed for ORACLE and for SQLServer only if SQLServer</span>
 <span class="sd">            authentication is required.</span>
 <span class="sd">        :type password: str</span>
+<span class="sd">        :param NewWD: The new Working Directory for the Model.</span>
+<span class="sd">                      It should create a new WD, set the model WD reference to it and then open.</span>
+<span class="sd">                      Ideally the user can name the dir freely apart from start "WD".</span>
+<span class="sd">                      If the model already has an assigned WD, we create new WD anyway and set the reference to this newly created WD and then open.</span>
+<span class="sd">                      If NewWD is identical to the currently assigned WD reference, we dont change anything just open the model with that WD.</span>
+<span class="sd">        :type NewWD: str</span>
 <span class="sd">        :return: None</span>
 <span class="sd">        :rtype: None</span>
 <span class="sd">        :description: This is a wrapper method for OpenModel() from toolkit; Watch out for errors for more information.</span>
 <span class="sd">        """</span>
         <span class="n">providerType_net</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dotnet_enum</span><span class="p">(</span><span class="n">providerType</span><span class="p">)</span>
         <span class="n">result</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">OpenModel</span><span class="p">(</span><span class="n">dbName</span><span class="p">,</span> <span class="n">providerType_net</span><span class="p">,</span> <span class="n">Mid</span><span class="p">,</span> <span class="n">saveCurrentlyOpenModel</span><span class="p">,</span>
-                                               <span class="n">namedInstance</span><span class="p">,</span> <span class="n">userID</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+                                               <span class="n">namedInstance</span><span class="p">,</span> <span class="n">userID</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">NewWD</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputComments</span><span class="p">:</span>
                 <span class="n">_log_message</span><span class="p">(</span><span class="s2">"Model is open for further operation"</span><span class="p">)</span>
@@ -2411,6 +2422,118 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
             <span class="n">_log_message</span><span class="p">(</span><span class="s2">"Error: "</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span><span class="p">,</span> <span class="n">geometrySACH</span><span class="p">,</span> <span class="n">geometryBZ</span><span class="p">,</span> <span class="n">geomCnLnI</span><span class="p">,</span> <span class="n">geomCnLnK</span><span class="p">,</span> <span class="n">geomCnLnI2</span><span class="p">,</span> <span class="n">geomCnLnK2</span></div>
+
+    
+    <span class="c1">## Changes for https://github.com/3SConsult/sir3stoolkit/issues/21</span>
+    
+<div class="viewcode-block" id="SIR3S_Model.SetTechnicalToViewGeometry">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.SetTechnicalToViewGeometry">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">SetTechnicalToViewGeometry</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">elemTk</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Sets the o the technical Data part of the Geomety of the Element to its View Geometry.</span>
+
+<span class="sd">        :param elemTk: The Element's Key</span>
+<span class="sd">        :type elemTk: str</span>
+<span class="sd">        :return: Returns a boolean result, True if the operation was successful; otherwise, False</span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        :description: This is a wrapper method for SetTechnicalToViewGeometry() from toolkit</span>
+<span class="sd">        """</span> 
+        <span class="n">result</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">SetTechnicalToViewGeometry</span><span class="p">(</span><span class="n">elemTk</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
+            <span class="n">_log_message</span><span class="p">(</span><span class="s2">"Error: "</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+
+    
+<div class="viewcode-block" id="SIR3S_Model.SetViewToTechnicalGeometry">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.SetViewToTechnicalGeometry">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">SetViewToTechnicalGeometry</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">elemTk</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Sets the View Geometry to the technical Data part of the Geomety of the Element.</span>
+
+<span class="sd">        :param elemTk: The Element's Key</span>
+<span class="sd">        :type elemTk: str</span>
+<span class="sd">        :return: Returns a boolean result, True if the operation was successful; otherwise, False</span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        :description: This is a wrapper method for SetViewToTechnicalGeometry() from toolkit</span>
+<span class="sd">        """</span> 
+        <span class="n">result</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">SetViewToTechnicalGeometry</span><span class="p">(</span><span class="n">elemTk</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
+            <span class="n">_log_message</span><span class="p">(</span><span class="s2">"Error: "</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+
+    
+<div class="viewcode-block" id="SIR3S_Model.GetViewGeometryInformation">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetViewGeometryInformation">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">GetViewGeometryInformation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">elemTk</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Retrieves the WKB Geometry Data if an Element (Technical Data Part, OS Data Part, and eventually connection Lines).</span>
+<span class="sd">        All Geometries returned are JSON formattted Strings.</span>
+<span class="sd">        </span>
+<span class="sd">        :param elemTk: The Key (PK/TK) representing the element for which Geometry Data is requested.</span>
+<span class="sd">        :type elemTk: str</span>
+<span class="sd">        :return: Returns a boolean result, geometryView, geomCnLnI, geomCnLnK, geomCnLnI2, geomCnLnK2 as a tuple</span>
+<span class="sd">                 Boolean result - True if the operation was successful; otherwise, False.</span>
+<span class="sd">                 geometryView - Receives the OS Data Part of the Geometry, if the operation is successful.</span>
+<span class="sd">                 geomCnLnI - Receives the Geometry for the connection line (I) to the Upstream Node if there is any.</span>
+<span class="sd">                 geomCnLnK - Receives the Geometry for the connection line (K) to the Downstream Node if there is any.</span>
+<span class="sd">                 geomCnLnI2 - Receives the Geometry for the second connection line (I2) to the Upstream Node if there is any. (HeatExchanger only)</span>
+<span class="sd">                 geomCnLnK2 - Receives the Geometry for the second connection line (K2) to the Downstream Node if there is any.(HeatExchanger only)</span>
+<span class="sd">        :rtype: tuple[bool, str, str, str, str, str]</span>
+<span class="sd">        :description: This is a wrapper method for GetViewGeometryInformation() from toolkit</span>
+<span class="sd">        """</span>
+        <span class="n">result</span><span class="p">,</span> <span class="n">geometryView</span><span class="p">,</span> <span class="n">geomCnLnI</span><span class="p">,</span> <span class="n">geomCnLnK</span><span class="p">,</span> <span class="n">geomCnLnI2</span><span class="p">,</span> <span class="n">geomCnLnK2</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">GetViewGeometryInformation</span><span class="p">(</span><span class="n">elemTk</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
+            <span class="n">_log_message</span><span class="p">(</span><span class="s2">"Error: "</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span><span class="p">,</span> <span class="n">geometryView</span><span class="p">,</span> <span class="n">geomCnLnI</span><span class="p">,</span> <span class="n">geomCnLnK</span><span class="p">,</span> <span class="n">geomCnLnI2</span><span class="p">,</span> <span class="n">geomCnLnK2</span></div>
+
+    
+<div class="viewcode-block" id="SIR3S_Model.SetViewGeometryInformation">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.SetViewGeometryInformation">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">SetViewGeometryInformation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">elemTk</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">geometryView</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">geomCnLnI</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">geomCnLnK</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">geomCnLnI2</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">geomCnLnK2</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Sets the View geometry Information for the specified Element.</span>
+
+<span class="sd">        :param elemTk: The Key (PK/TK) representing the element for which View Geometry Data should be set.</span>
+<span class="sd">        :type elemTk: str</span>
+<span class="sd">        :param geometryView: WKT formatted String for Geometry BZ value to apply to the element.</span>
+<span class="sd">                             'LINESTRING (x1 y1 z1, ... xn yn zn)' for lines and 'POINT (x y z)' for points.</span>
+<span class="sd">                             It may also be a JSON formatted String for a list of POINT3D objects, e.g. '[{"X":x1,"Y":y1,"Z":z1}, ... {"X":xn,"Y":yn,"Z":zn}]' for lines </span>
+<span class="sd">                             and '[{"X":x,"Y":y,"Z":z}]' for points.</span>
+<span class="sd">        :type geometryView: str</span>
+<span class="sd">        :param geomCnLnI: Primary connection line I geometry value.</span>
+<span class="sd">        :type geomCnLnI: str</span>
+<span class="sd">        :param geomCnLnK: Primary connection line K geometry value.</span>
+<span class="sd">        :type geomCnLnK: str</span>
+<span class="sd">        :param geomCnLnI2: Secondary connection line I geometry value.</span>
+<span class="sd">        :type geomCnLnI2: str</span>
+<span class="sd">        :param geomCnLnK2: Secondary connection line K geometry value.</span>
+<span class="sd">        :type geomCnLnK2: str</span>
+<span class="sd">        :return: Returns a boolean result, True if the operation was successful; otherwise, False</span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        :description: This is a wrapper method for SetViewGeometryInformation() from toolkit</span>
+<span class="sd">        """</span> 
+        <span class="n">result</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">SetViewGeometryInformation</span><span class="p">(</span><span class="n">elemTk</span><span class="p">,</span> <span class="n">geometryView</span><span class="p">,</span> <span class="n">geomCnLnI</span><span class="p">,</span> <span class="n">geomCnLnK</span><span class="p">,</span> <span class="n">geomCnLnI2</span><span class="p">,</span> <span class="n">geomCnLnK2</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
+            <span class="n">_log_message</span><span class="p">(</span><span class="s2">"Error: "</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+
+    
+<div class="viewcode-block" id="SIR3S_Model.FixElement">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.FixElement">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">FixElement</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">elemTk</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Sets the o the technical Data part of the Geomety of the Element to its View Geometry.</span>
+
+<span class="sd">        :param elemTk: The Element's Key</span>
+<span class="sd">        :type elemTk: str</span>
+<span class="sd">        :return: Returns a boolean result, True if the operation was successful; otherwise, False</span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        :description: This is a wrapper method for FixElement() from toolkit</span>
+<span class="sd">        """</span> 
+        <span class="n">result</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">FixElement</span><span class="p">(</span><span class="n">elemTk</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
+            <span class="n">_log_message</span><span class="p">(</span><span class="s2">"Error: "</span> <span class="o">+</span> <span class="n">error</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span></div>
 </div>
 
     

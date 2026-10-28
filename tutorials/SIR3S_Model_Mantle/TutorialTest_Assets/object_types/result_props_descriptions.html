@@ -97,7 +97,7 @@ turned out to add nothing not already covered by the other three), inserts every
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-none notranslate"><div class="highlight"><pre><span></span>from sir3stoolkit.core import wrapper
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sir3stoolkit.core import wrapper
 </pre></div>
 </div>
 </div>
@@ -105,7 +105,7 @@ turned out to add nothing not already covered by the other three), inserts every
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-none notranslate"><div class="highlight"><pre><span></span>wrapper.Initialize_Toolkit(r"C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2")
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>wrapper.Initialize_Toolkit(r"C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2")
 </pre></div>
 </div>
 </div>
@@ -123,7 +123,7 @@ turned out to add nothing not already covered by the other three), inserts every
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-none notranslate"><div class="highlight"><pre><span></span>from sir3stoolkit.mantle.dataframes import SIR3S_Model_Dataframes
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sir3stoolkit.mantle.dataframes import SIR3S_Model_Dataframes
 </pre></div>
 </div>
 </div>
@@ -131,7 +131,7 @@ turned out to add nothing not already covered by the other three), inserts every
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-none notranslate"><div class="highlight"><pre><span></span>s3s = SIR3S_Model_Dataframes()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s = SIR3S_Model_Dataframes()
 </pre></div>
 </div>
 </div>
@@ -147,7 +147,7 @@ turned out to add nothing not already covered by the other three), inserts every
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-none notranslate"><div class="highlight"><pre><span></span>import xml.etree.ElementTree as ET
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import xml.etree.ElementTree as ET
 import json
 from pathlib import Path
 </pre></div>
@@ -160,7 +160,7 @@ from pathlib import Path
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-none notranslate"><div class="highlight"><pre><span></span>network_files = [
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>network_files = [
     ("Water", "./result_props_Water.db3"),
     ("Gas", "./result_props_Gas.db3"),
     ("DistrictHeating", "./result_props_DistrictHeating.db3"),
@@ -191,7 +191,7 @@ network_files
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-none notranslate"><div class="highlight"><pre><span></span>def insert_all_object_types(s3s):
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def insert_all_object_types(s3s):
     inserted, failed = [], []
     s3s.StartTransaction("Insert every possible object type")
     for i in range(0, 150):
@@ -216,7 +216,7 @@ network_files
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-none notranslate"><div class="highlight"><pre><span></span>def read_mx1_descriptions(s3s):
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def read_mx1_descriptions(s3s):
     mx1_path = s3s._mx_current_mx1_filepath()
     if not Path(mx1_path).exists():
         print(f"  MX1 not found at {mx1_path}")
@@ -244,7 +244,7 @@ network_files
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-none notranslate"><div class="highlight"><pre><span></span>s3s.AllowSirMessageBox(bAllow=False)  # avoid blocking popups during unattended batch insertion
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.AllowSirMessageBox(bAllow=False)  # avoid blocking popups during unattended batch insertion
 s3s.EnableOrDisableOutputComments(outputComments=False)  # ~150 InsertElement calls would otherwise spam output
 </pre></div>
 </div>
@@ -253,13 +253,13 @@ s3s.EnableOrDisableOutputComments(outputComments=False)  # ~150 InsertElement ca
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-none notranslate"><div class="highlight"><pre><span></span>all_descriptions = {}
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>all_descriptions = {}
 per_network_summary = {}
 
 for network_name, db_path in network_files:
     print(f"=== {network_name} ===")
     s3s.OpenModel(dbName=db_path, providerType=s3s.ProviderTypes.SQLite, Mid="M-1-0-1",
-                  saveCurrentlyOpenModel=False, namedInstance="", userID="", password="")
+                  saveCurrentlyOpenModel=False, namedInstance="", userID="", password="", NewWD="")
 
     inserted, failed = insert_all_object_types(s3s)
     print(f"  inserted {len(inserted)} object types, {len(failed)} not insertable this way")
@@ -400,7 +400,7 @@ setting/condition emits them, none of the three test networks here (nor Tutorial
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-none notranslate"><div class="highlight"><pre><span></span>MANUAL_ENTRIES = {
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>MANUAL_ENTRIES = {
     "TITLE": {
         "FS": "dynamische axiale Last",
         "DSI": "dynamische St\u00fctzkraft Knoten I",
@@ -443,7 +443,7 @@ Added 24 manual entries. Total descriptions: 776
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
-<div class="input_area highlight-none notranslate"><div class="highlight"><pre><span></span>out_path = output_dir / "result_property_descriptions.json"
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>out_path = output_dir / "result_property_descriptions.json"
 with open(out_path, "w", encoding="utf-8") as f:
     json.dump(all_descriptions, f, indent=2, ensure_ascii=False)
 print(f"Wrote {len(all_descriptions)} descriptions to {out_path}")
@@ -462,7 +462,7 @@ Wrote 776 descriptions to C:\Users\aUsername\3S\sir3stoolkit\docs\source\tutoria
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
-<div class="input_area highlight-none notranslate"><div class="highlight"><pre><span></span>dict(list(all_descriptions.items())[:5])
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dict(list(all_descriptions.items())[:5])
 </pre></div>
 </div>
 </div>
