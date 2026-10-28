@@ -3,7 +3,8 @@ Object Types, Properties, and Result Value Types
 
 .. note:: Aggregated global view across configured network types.
    The below sections lists all table names from self.ObjectTypes_TableNames, along with their properties, result properties, and respective object type from self.ObjectTypes (needed for toolkit operations like self.InsertElement(), self.GetPropertiesOfElementType()).
-   Result properties additionally list a Description and Standard Physical Unit where known, sourced from SIR 3S's own .MX1 output plus a handful of manual additions (see result_props_descriptions.ipynb). Both are in German, as embedded in SIR 3S itself.
+   Result properties additionally list a Description and Standard Physical Unit where known, sourced from SIR 3S's own .MX1 output plus a handful of manual additions (see result_props_descriptions.ipynb). Both are in German, as embedded in SIR 3S itself. 
+   Use :meth:`sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.get_result_file_properties` to check what physical units were actually used in your local calculation, which can deviate from the standard physical units here.
 
 AGSN
 ^^^^
