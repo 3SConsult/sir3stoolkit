@@ -694,7 +694,7 @@ class SIR3S_Model:
         else:
             _log_message(f"Error: {error}")
 
-    def OpenModelXml(self, Path: str, SaveCurrentModel: bool):
+    def OpenModelXml(self, Path: str, SaveCurrentModel: bool, NewWD: str):
         """
         Opens a model from an XML file.
 
@@ -702,12 +702,17 @@ class SIR3S_Model:
         :type Path: str
         :param SaveCurrentModel: Do you want to save the current model before closing it?
         :type SaveCurrentModel: bool
+        :param NewWD: The new Working Directory for the Model. It should create a new WD, set the model WD reference to it and then open.
+                      Ideally the user can name the dir freely apart from start "WD".
+                      If the model already has an assigned WD, we create new WD anyway and set the reference to this newly created WD and then open.
+                      If NewWD is identical to the currently assigned WD reference, we dont change anything just open the model with that WD.
+        :type NewWD: str
         :return: None
         :rtype: None
         :description: This is a wrapper method for OpenModelXml() from toolkit; Watch out for error message
             for more information.
         """
-        result, error = self.toolkit.OpenModelXml(Path, SaveCurrentModel)
+        result, error = self.toolkit.OpenModelXml(Path, SaveCurrentModel, NewWD)
         if result:
             self.Mid = "M-1-0-1"
             self.xmlFile = Path
@@ -718,7 +723,7 @@ class SIR3S_Model:
             _log_message("Error while opening the model," + error)
 
     def OpenModel(self, dbName: str, providerType, Mid: str, saveCurrentlyOpenModel: bool, namedInstance: str,
-                  userID: str, password: str):
+                  userID: str, password: str, NewWD: str):
         """
         Opens a model from a database file.
 
@@ -738,13 +743,19 @@ class SIR3S_Model:
         :param password: Password for authentication, only needed for ORACLE and for SQLServer only if SQLServer
             authentication is required.
         :type password: str
+        :param NewWD: The new Working Directory for the Model.
+                      It should create a new WD, set the model WD reference to it and then open.
+                      Ideally the user can name the dir freely apart from start "WD".
+                      If the model already has an assigned WD, we create new WD anyway and set the reference to this newly created WD and then open.
+                      If NewWD is identical to the currently assigned WD reference, we dont change anything just open the model with that WD.
+        :type NewWD: str
         :return: None
         :rtype: None
         :description: This is a wrapper method for OpenModel() from toolkit; Watch out for errors for more information.
         """
         providerType_net = self.to_dotnet_enum(providerType)
         result, error = self.toolkit.OpenModel(dbName, providerType_net, Mid, saveCurrentlyOpenModel,
-                                               namedInstance, userID, password)
+                                               namedInstance, userID, password, NewWD)
         if result:
             if self.outputComments:
                 _log_message("Model is open for further operation")
@@ -2069,6 +2080,103 @@ class SIR3S_Model:
         if not result:
             _log_message("Error: " + error)
         return result, geometrySACH, geometryBZ, geomCnLnI, geomCnLnK, geomCnLnI2, geomCnLnK2
+    
+    ## Changes for https://github.com/3SConsult/sir3stoolkit/issues/21
+    
+    def SetTechnicalToViewGeometry(self, elemTk: str):
+        """
+        Sets the o the technical Data part of the Geomety of the Element to its View Geometry.
+
+        :param elemTk: The Element's Key
+        :type elemTk: str
+        :return: Returns a boolean result, True if the operation was successful; otherwise, False
+        :rtype: bool
+        :description: This is a wrapper method for SetTechnicalToViewGeometry() from toolkit
+        """ 
+        result, error = self.toolkit.SetTechnicalToViewGeometry(elemTk)
+        if not result:
+            _log_message("Error: " + error)
+        return result
+    
+    def SetViewToTechnicalGeometry(self, elemTk: str):
+        """
+        Sets the View Geometry to the technical Data part of the Geomety of the Element.
+
+        :param elemTk: The Element's Key
+        :type elemTk: str
+        :return: Returns a boolean result, True if the operation was successful; otherwise, False
+        :rtype: bool
+        :description: This is a wrapper method for SetViewToTechnicalGeometry() from toolkit
+        """ 
+        result, error = self.toolkit.SetViewToTechnicalGeometry(elemTk)
+        if not result:
+            _log_message("Error: " + error)
+        return result
+    
+    def GetViewGeometryInformation(self, elemTk: str):
+        """
+        Retrieves the WKB Geometry Data if an Element (Technical Data Part, OS Data Part, and eventually connection Lines).
+        All Geometries returned are JSON formattted Strings.
+        
+        :param elemTk: The Key (PK/TK) representing the element for which Geometry Data is requested.
+        :type elemTk: str
+        :return: Returns a boolean result, geometryView, geomCnLnI, geomCnLnK, geomCnLnI2, geomCnLnK2 as a tuple
+                 Boolean result - True if the operation was successful; otherwise, False.
+                 geometryView - Receives the OS Data Part of the Geometry, if the operation is successful.
+                 geomCnLnI - Receives the Geometry for the connection line (I) to the Upstream Node if there is any.
+                 geomCnLnK - Receives the Geometry for the connection line (K) to the Downstream Node if there is any.
+                 geomCnLnI2 - Receives the Geometry for the second connection line (I2) to the Upstream Node if there is any. (HeatExchanger only)
+                 geomCnLnK2 - Receives the Geometry for the second connection line (K2) to the Downstream Node if there is any.(HeatExchanger only)
+        :rtype: tuple[bool, str, str, str, str, str]
+        :description: This is a wrapper method for GetViewGeometryInformation() from toolkit
+        """
+        result, geometryView, geomCnLnI, geomCnLnK, geomCnLnI2, geomCnLnK2, error = self.toolkit.GetViewGeometryInformation(elemTk)
+        if not result:
+            _log_message("Error: " + error)
+        return result, geometryView, geomCnLnI, geomCnLnK, geomCnLnI2, geomCnLnK2
+    
+    def SetViewGeometryInformation(self, elemTk: str, geometryView: str, geomCnLnI: str, geomCnLnK: str, geomCnLnI2: str, geomCnLnK2: str):
+        """
+        Sets the View geometry Information for the specified Element.
+
+        :param elemTk: The Key (PK/TK) representing the element for which View Geometry Data should be set.
+        :type elemTk: str
+        :param geometryView: WKT formatted String for Geometry BZ value to apply to the element.
+                             'LINESTRING (x1 y1 z1, ... xn yn zn)' for lines and 'POINT (x y z)' for points.
+                             It may also be a JSON formatted String for a list of POINT3D objects, e.g. '[{"X":x1,"Y":y1,"Z":z1}, ... {"X":xn,"Y":yn,"Z":zn}]' for lines 
+                             and '[{"X":x,"Y":y,"Z":z}]' for points.
+        :type geometryView: str
+        :param geomCnLnI: Primary connection line I geometry value.
+        :type geomCnLnI: str
+        :param geomCnLnK: Primary connection line K geometry value.
+        :type geomCnLnK: str
+        :param geomCnLnI2: Secondary connection line I geometry value.
+        :type geomCnLnI2: str
+        :param geomCnLnK2: Secondary connection line K geometry value.
+        :type geomCnLnK2: str
+        :return: Returns a boolean result, True if the operation was successful; otherwise, False
+        :rtype: bool
+        :description: This is a wrapper method for SetViewGeometryInformation() from toolkit
+        """ 
+        result, error = self.toolkit.SetViewGeometryInformation(elemTk, geometryView, geomCnLnI, geomCnLnK, geomCnLnI2, geomCnLnK2)
+        if not result:
+            _log_message("Error: " + error)
+        return result
+    
+    def FixElement(self, elemTk: str):
+        """
+        Sets the o the technical Data part of the Geomety of the Element to its View Geometry.
+
+        :param elemTk: The Element's Key
+        :type elemTk: str
+        :return: Returns a boolean result, True if the operation was successful; otherwise, False
+        :rtype: bool
+        :description: This is a wrapper method for FixElement() from toolkit
+        """ 
+        result, error = self.toolkit.FixElement(elemTk)
+        if not result:
+            _log_message("Error: " + error)
+        return result
     
     # Disabled for now: the toolkit DLL in use does not provide GetResultsWithMXProxy() yet.
     # def GetResultsWithMXProxy(self, timestamps, sResultsToGet):
