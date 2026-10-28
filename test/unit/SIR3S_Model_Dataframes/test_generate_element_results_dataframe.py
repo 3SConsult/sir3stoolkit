@@ -151,3 +151,25 @@ def test_generate_element_results_dataframe_excludes_unknown_property(s3s_model_
 
     assert "not found in model_data or result properties" in caplog.text
     assert set(df.columns.get_level_values("property")) == {"DTTR"}
+
+
+def test_generate_element_results_dataframe_without_name_and_end_nodes(s3s_model_dataframes_instance):
+    _configure_results_dataframe_stubs(s3s_model_dataframes_instance)
+
+    def no_lookup(*args, **kwargs):
+        raise AssertionError("no name/end-node lookup expected for include_name_and_end_nodes=False")
+    s3s_model_dataframes_instance.GetValue = no_lookup
+    s3s_model_dataframes_instance.GetEndNodes = no_lookup
+    s3s_model_dataframes_instance._SIR3S_Model_Dataframes__is_get_endnodes_applicable = no_lookup
+
+    df = s3s_model_dataframes_instance.generate_element_results_dataframe(
+        element_type=DummyObjectTypes.Pipe,
+        properties=["DTTR", "MVEC"],
+        timestamps=["TS1", "TS2"],
+        include_name_and_end_nodes=False,
+    )
+
+    assert df.columns.names == ["tk", "property"]
+    assert list(df.columns) == [("P1", "DTTR"), ("P1", "MVEC"), ("P2", "DTTR"), ("P2", "MVEC")]
+    assert df.loc["TS1", ("P1", "DTTR")] == 12.5
+    assert df.loc["TS2", ("P2", "MVEC")] == "10\t11\t12"

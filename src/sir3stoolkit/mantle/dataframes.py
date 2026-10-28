@@ -381,37 +381,38 @@ class SIR3S_Model_Dataframes(SIR3S_Model_MX):
         return df
 
     @staticmethod
-    def _add_name_and_end_node_levels(df: pd.DataFrame, label_by_tk: dict, props: Optional[List[str]] = None) -> pd.DataFrame:
+    def _add_name_and_end_node_levels(df: pd.DataFrame, label_by_tk: Optional[dict], props: Optional[List[str]] = None) -> pd.DataFrame:
         """
-        (tk, property[, interior points]) columns → (tk, name, end_nodes, property[, interior points]).
+        (tk, property[, interior points]) columns → (tk, name, end_nodes, property[, interior points]),
+        or with label_by_tk=None just rebuilt as (tk, property[, interior points]).
 
         The levels are built in column order (tk, name, end_nodes as they appear, property in the order of
         props, interior points ascending) instead of alphabetically, so the column index stays lexsorted
         for the tk-major / property-minor column order and selecting e.g. df.loc[ts, (tk, "PVEC")] (after
         dropping name/end_nodes) doesn't raise pandas' "indexing past lexsort depth" PerformanceWarning.
+        Name/end_nodes are looked up once per element and mapped to the columns via the tk codes (a
+        model can have millions of columns but only one label per element).
         """
-        names = ["tk", "name", "end_nodes", "property"]
-        if df.columns.nlevels > 2:
-            names.append("interior points")
-        tk_values = df.columns.get_level_values(0)
+        tk_codes, tk_uniques = pd.factorize(df.columns.get_level_values(0), use_na_sentinel=False)
+        levels, codes, names = [pd.Index(tk_uniques)], [tk_codes], ["tk"]
+        if label_by_tk is not None:
+            for j, name in ((0, "name"), (1, "end_nodes")):
+                label_codes, label_uniques = pd.factorize(pd.Index([label_by_tk[tk][j] for tk in tk_uniques]),
+                                                          use_na_sentinel=False)
+                levels.append(pd.Index(label_uniques))
+                codes.append(label_codes[tk_codes])
+                names.append(name)
         prop_values = df.columns.get_level_values(1)
-        arrays = [tk_values,
-                  pd.Index([label_by_tk[tk][0] for tk in tk_values]),
-                  pd.Index([label_by_tk[tk][1] for tk in tk_values]),
-                  prop_values]
+        present = set(pd.unique(prop_values))
+        order = list(dict.fromkeys(([p for p in props if p in present] if props else []) + list(pd.unique(prop_values))))
+        levels.append(pd.Index(order))
+        codes.append(levels[-1].get_indexer(prop_values))
+        names.append("property")
         if df.columns.nlevels > 2:
-            arrays.append(df.columns.get_level_values(2))
-        levels, codes = [], []
-        for i, values in enumerate(arrays):
-            if i == 3 and props:
-                order = list(dict.fromkeys([p for p in props if p in set(values)] + list(pd.unique(values))))
-                level = pd.Index(order)
-            elif i == 4:
-                level = pd.Index(sorted(pd.unique(values)))
-            else:
-                level = pd.Index(pd.unique(values))
-            levels.append(level)
-            codes.append(level.get_indexer(values))
+            point_values = df.columns.get_level_values(2)
+            levels.append(pd.Index(sorted(pd.unique(point_values))))
+            codes.append(levels[-1].get_indexer(point_values))
+            names.append("interior points")
         df.columns = pd.MultiIndex(levels=levels, codes=codes, names=names, verify_integrity=False)
         return df
 
@@ -426,6 +427,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model_MX):
         bulk: Optional[bool] = False,
         vec_format: str = "str",
         output_factor: Optional[int] = None,
+        include_name_and_end_nodes: bool = True,
     ) -> pd.DataFrame:
 
         """
@@ -492,11 +494,18 @@ class SIR3S_Model_Dataframes(SIR3S_Model_MX):
                         calculation, so values can be assigned to the wrong elements if the network
                         changed in between).
         :type output_factor: int, optional
+        :param include_name_and_end_nodes: If True (default), the column MultiIndex has the levels name
+                        and end_nodes, looked up via the Toolkit API (two calls per element - for models
+                        with many elements this can take longer than reading the results with bulk=True).
+                        If False, these levels are left out (columns: tk, property[, interior points]) and
+                        no lookups are made; get names/end nodes from
+                        generate_element_model_data_dataframe() instead if needed.
+        :type include_name_and_end_nodes: bool, optional
 
         :return: DataFrame with one row per timestamp and MultiIndex columns:
                 - Level 0: tk (device ID)
-                - Level 1: name (device name)
-                - Level 2: end_nodes (tuple of connected node tks as string)
+                - Level 1: name (device name) - only for include_name_and_end_nodes=True
+                - Level 2: end_nodes (tuple of connected node tks as string) - only for include_name_and_end_nodes=True
                 - Level 3: property (result name)
                 - Level 4: interior points (only for vec_format="multiindex")
                 Data types: float32 for numeric values (the precision SIR 3S stores results in), str for vectorized data (vec_format="str") and literal strings.
@@ -554,7 +563,6 @@ class SIR3S_Model_Dataframes(SIR3S_Model_MX):
             logger.error(f"[results] Error determining result properties: {e}")
             return pd.DataFrame()
 
-        end_nodes_available = self.__is_get_endnodes_applicable(element_type=element_type)
         logger.info(f"[results] {len(ts_labels):,} timestamp(s), {len(tks):,} element(s), {len(result_props)} "
                     f"propert{'y' if len(result_props) == 1 else 'ies'} resolved ({time.perf_counter() - t_phase:.1f} s).")
 
@@ -641,7 +649,10 @@ class SIR3S_Model_Dataframes(SIR3S_Model_MX):
         logger.info(f"[results] DataFrame assembled ({time.perf_counter() - t_phase:.1f} s).")
 
         # --- Add Name and End Nodes to column MultiIndex ---
-        label_by_tk = self._result_column_labels(df.columns.get_level_values(0).unique(), end_nodes_available)
+        label_by_tk = None
+        if include_name_and_end_nodes:
+            end_nodes_available = self.__is_get_endnodes_applicable(element_type=element_type)
+            label_by_tk = self._result_column_labels(df.columns.get_level_values(0).unique(), end_nodes_available)
         df = self._add_name_and_end_node_levels(df, label_by_tk, result_props)
 
         logger.info(f"[results] Done. Shape: {df.shape} ({time.perf_counter() - t_start:.1f} s in total)")
@@ -735,6 +746,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model_MX):
         Generates a comprehensive DataFrame containing model_data and static result values for all requested elements of the given type. Result values are written in the df as tuple of floats (or tuple (time) of tuple (interior point) of floats for pipe interior points) with each entry corresponding to a simulations timestamp. 
         Geometry and end-node tks are always included. All model_data and result values (self.GetResultProperties_from_elementType(onlySelectedVectors=False)) for are included.
         The tks of end nodes are included (fkKI, fkKK). Geometry information is also included.
+        If you want to include non-static timestamps, explicitly provide them via the `timestamps` parameter.
 
         :param element_type: The element type (e.g., self.ObjectTypes.Node, self.ObjectTypes.Pipe).
         :type element_type: Enum
@@ -782,6 +794,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model_MX):
                                                                         ,place_holder_value=place_holder_value
                                                                         ,bulk=bulk
                                                                         ,vec_format="multiindex"
+                                                                        ,include_name_and_end_nodes=False  # merged on tk only
             )
             if df_results.empty:
                 logger.error(f"[generate_element_dataframe] Obtained results dataframe is empty.")
@@ -1237,6 +1250,7 @@ class SIR3S_Model_Dataframes(SIR3S_Model_MX):
                         tks=tks_to_use,
                         place_holder_value=place_holder_value,
                         vec_format="multiindex",
+                        include_name_and_end_nodes=False,  # merged on tk only
                     )
                     if df_results.empty or df_results.shape[1] == 0:
                         df = df_model.copy()
@@ -1344,7 +1358,9 @@ class SIR3S_Model_Dataframes(SIR3S_Model_MX):
                 - vec_format="str" results, prepared with add_interior_points_to_start_end_sequence()
                   and convert_rows_to_single_tuple_row() (one row).
                 Either way, every result property becomes a tuple over the timestamps, and interior-point
-                (VEC) properties become <prop>_start, <prop>_end and <prop>_sequence.
+                (VEC) properties become <prop>_start, <prop>_end and <prop>_sequence. Results with or
+                without the name/end_nodes column levels (include_name_and_end_nodes) are accepted; df_results
+                itself isn't modified.
         :type df_results: pd.DataFrame
         :param place_holder_value: Only for vec_format="multiindex" results: the place_holder_value they were
                 generated with (timestamps where an interior-point property is missing give None / ()).
@@ -1365,7 +1381,12 @@ class SIR3S_Model_Dataframes(SIR3S_Model_MX):
                 logger.error( "[merge] Aborting merge: df_results contains multiple timestamps.Please provide a single timestamp.")
                 return pd.DataFrame()
 
-            df_results.columns = df_results.columns.droplevel([1, 2])
+            # name/end_nodes levels only exist with include_name_and_end_nodes=True; shallow copy so the
+            # caller's DataFrame keeps its columns
+            df_results = df_results.copy(deep=False)
+            drop_levels = [level for level in ("name", "end_nodes") if level in (df_results.columns.names or [])]
+            if drop_levels:
+                df_results.columns = df_results.columns.droplevel(drop_levels)
             df_results = df_results.T.unstack(level=0).T
             df_results = df_results.droplevel(0, axis=0)
             df = df_model_data.merge(on="tk",

@@ -120,7 +120,7 @@ def test_sir3s_to_pandapipes_builds_network_elements(monkeypatch, s3s_model_alte
             ]
         )
 
-    def _results_df(element_type, properties, timestamps):
+    def _results_df(element_type, properties, timestamps, include_name_and_end_nodes=True):
         cols = pd.MultiIndex.from_tuples(
             [
                 ("1", "SourceNode", "No end nodes on element type", "PH"),
@@ -132,7 +132,10 @@ def test_sir3s_to_pandapipes_builds_network_elements(monkeypatch, s3s_model_alte
             ],
             names=["tk", "name", "end_nodes", "property"],
         )
-        return pd.DataFrame([[5.0, 80.0, 2.0, 4.0, 70.0, -1.5]], index=["TS1"], columns=cols)
+        df = pd.DataFrame([[5.0, 80.0, 2.0, 4.0, 70.0, -1.5]], index=["TS1"], columns=cols)
+        if not include_name_and_end_nodes:  # as the real function: no name/end_nodes levels
+            df.columns = df.columns.droplevel(["name", "end_nodes"])
+        return df
 
     s3s_model_alternative_models_instance.generate_element_model_data_dataframe = _model_df
     s3s_model_alternative_models_instance.generate_element_results_dataframe = _results_df

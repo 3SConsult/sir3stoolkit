@@ -80,9 +80,13 @@ def test_add_properties_to_graph_updates_edge_attributes_for_pipe(s3s_model_alte
         [(10, "Pipe 10", "('N1', 'N2', '-1', '-1')", "DTTR")],
         names=["tk", "name", "end_nodes", "property"],
     )
-    s3s_model_alternative_models_instance.generate_element_results_dataframe = (
-        lambda element_type, properties, timestamps: pd.DataFrame([[15.5]], index=["STAT"], columns=cols)
-    )
+    def _results(element_type, properties, timestamps, include_name_and_end_nodes=True):
+        df = pd.DataFrame([[15.5]], index=["STAT"], columns=cols)
+        if not include_name_and_end_nodes:  # as the real function: no name/end_nodes levels
+            df.columns = df.columns.droplevel(["name", "end_nodes"])
+        return df
+
+    s3s_model_alternative_models_instance.generate_element_results_dataframe = _results
 
     graph = nx.DiGraph()
     graph.add_edge(1, 2, tk=10, **{"element type": "Pipe"})
