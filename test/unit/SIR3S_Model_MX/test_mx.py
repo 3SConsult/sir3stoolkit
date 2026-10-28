@@ -507,6 +507,11 @@ def test_bulk_results_dataframe_filters_and_multiindex(s3s, caplog):
     assert list(df.columns.get_level_values("property")) == ["QMAV", "PVEC"]
     assert df.iloc[0, 0] == _value(3, "QMAV", 2) and df.iloc[0, 1] == _value(3, "PVEC", 5)
     assert set(df.dtypes) == {np.dtype("float32")}
+    bare = s3s.generate_element_results_dataframe(
+        s3s.ObjectTypes.Pipe, tks=["1003"], properties=["QMAV", "PVEC"], timestamps=[-1],
+        bulk=True, vec_format="multiindex", include_name_and_end_nodes=False)
+    assert bare.columns.names == ["tk", "property", "interior points"]
+    assert bare.to_numpy().tolist() == df.to_numpy().tolist()
 
 
 def test_bulk_results_dataframe_errors(s3s, caplog):

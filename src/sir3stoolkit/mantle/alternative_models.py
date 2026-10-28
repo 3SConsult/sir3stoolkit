@@ -51,8 +51,8 @@ class SIR3S_Model_Alternative_Models(SIR3S_Model_Dataframes):
 
         # --- Nodes/Junctions ---
         df_nodes_model_data = self.generate_element_model_data_dataframe(element_type=self.ObjectTypes.Node, properties=['Name', 'Zkor', 'QmEin', 'bz.PhEin', 'Ktyp'], geometry=True)
-        df_nodes_results = self.generate_element_results_dataframe(element_type=self.ObjectTypes.Node, properties=['PH', 'T', 'QM'], timestamps=self.GetTimeStamps()[0])
-        df_nodes_results.columns = df_nodes_results.columns.droplevel([1, 2])
+        df_nodes_results = self.generate_element_results_dataframe(element_type=self.ObjectTypes.Node, properties=['PH', 'T', 'QM'], timestamps=self.GetTimeStamps()[0],
+                                                                   include_name_and_end_nodes=False)  # columns: tk, property
         df_nodes_results = df_nodes_results.T.unstack(level=0).T
         df_nodes_results = df_nodes_results.droplevel(0, axis=0)
         df_nodes = df_nodes_model_data.merge(on="tk",
@@ -297,10 +297,10 @@ class SIR3S_Model_Alternative_Models(SIR3S_Model_Dataframes):
             df_results = self.generate_element_results_dataframe(
                 element_type=self.get_object_type_enum(element_type),
                 properties=result_props,
-                timestamps=[timestamp_for_values]
+                timestamps=[timestamp_for_values],
+                include_name_and_end_nodes=False,  # columns: tk, property
             )
             
-            df_results.columns = df_results.columns.droplevel([1, 2])
             df_results = df_results.T.unstack(level=0).T
             df_results = df_results.droplevel(0, axis=0)
             df = df_model_data.merge(on="tk",

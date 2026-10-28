@@ -4,7 +4,7 @@ Guidance for AI assistants writing code against **sir3stoolkit**, the Python cli
 (pipe network simulation/analysis software by 3S Consult). If you were asked to "use sir3stoolkit"
 to build/modify/read a SIR 3S model, start here.
 
-**This file is ~28,000 characters - read all of it, not just the beginning.** Sections:
+**This file is ~29,000 characters - read all of it, not just the beginning.** Sections:
 
 1. [Quick facts](#quick-facts) - platform, versions, imports, return types
 2. [Architecture](#architecture) - core vs. mantle
@@ -167,7 +167,8 @@ number/scope or the operation it teaches changes.
 - **[057](https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/docs/source/tutorials/SIR3S_Model_Mantle/Tutorial057_Assets/ToolkitTutorial057.ipynb)** ([docs page](https://github.com/3SConsult/sir3stoolkit/blob/main/docs/source/examples.rst#L194-L202)) How to read results quickly straight from the result files (bulk=True) instead of one API call per
   value, incl. the interior-point formats (str/multiindex) and merging them with model data, and how to read
   the time-curve result file of a model with two output factors. — `generate_element_results_dataframe`
-  (`bulk`, `vec_format`, `output_factor`), `get_result_file_properties`, `merge_model_data_and_results`,
+  (`bulk`, `vec_format`, `output_factor`, `include_name_and_end_nodes`), `get_result_file_properties`,
+  `merge_model_data_and_results`,
   `add_interior_points_to_start_end_sequence`, `convert_rows_to_single_tuple_row`.
 - **[061](https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/docs/source/tutorials/SIR3S_Model_Mantle/Tutorial061_Assets/ToolkitTutorial061.ipynb)** ([docs page](https://github.com/3SConsult/sir3stoolkit/blob/main/docs/source/examples.rst#L203-L211)) How to export a model as a networkx graph, for graph-based analysis. — `SIR_3S_to_nx_graph`,
   `add_properties_to_graph`.
@@ -227,6 +228,10 @@ number/scope or the operation it teaches changes.
   `generate_element_results_dataframe(..., vec_format="multiindex")`: one float32 column per interior
   point, exact values, much faster and smaller. The default `"str"` (tab-separated strings, 7
   significant digits) only exists for backwards compatibility (Tutorial057).
+- `generate_element_results_dataframe(..., include_name_and_end_nodes=False)` leaves out the `name`/
+  `end_nodes` column levels (columns: `tk`, `property`[, `interior points`]). Use it whenever you don't need
+  them, especially on large models: they cost two API calls per element (~8 s for 68,000 pipes), while the
+  `bulk=True` read itself takes ~0.1 s. `merge_model_data_and_results()` accepts results with or without them.
 - `generate_edge_dataframe()` marks each row's element type in a column named `"element type"` (with a
   space), holding the `ObjectTypes` member name (`"Pipe"`, `"Valve"`, ...).
 - `SIR_3S_to_nx_graph()` (Tutorial061) currently has known limitations - check whether these issues are

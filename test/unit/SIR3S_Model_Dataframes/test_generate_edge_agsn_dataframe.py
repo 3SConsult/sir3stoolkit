@@ -66,7 +66,8 @@ def _configure_edge_dataframe_stubs(s3s_model_dataframes_instance):
             ]
         )
 
-    def fake_results_df(element_type, properties, timestamps, tks=None, place_holder_value=99999.0, vec_format="str"):
+    def fake_results_df(element_type, properties, timestamps, tks=None, place_holder_value=99999.0, vec_format="str",
+                        include_name_and_end_nodes=True):
         calls["results"].append(
             {
                 "element_type": element_type,
@@ -74,6 +75,7 @@ def _configure_edge_dataframe_stubs(s3s_model_dataframes_instance):
                 "timestamps": list(timestamps),
                 "tks": None if tks is None else list(tks),
                 "vec_format": vec_format,
+                "include_name_and_end_nodes": include_name_and_end_nodes,
             }
         )
         # vec_format="multiindex" results: scalars at interior point -1, interior points 0..n-1
@@ -83,7 +85,10 @@ def _configure_edge_dataframe_stubs(s3s_model_dataframes_instance):
              (tk, "n", "e", "MVEC", 0), (tk, "n", "e", "MVEC", 1)],
             names=["tk", "name", "end_nodes", "property", "interior points"],
         )
-        return pd.DataFrame([values], index=["TS"], columns=columns).astype("float32")
+        df = pd.DataFrame([values], index=["TS"], columns=columns).astype("float32")
+        if not include_name_and_end_nodes:  # as the real function: no name/end_nodes levels
+            df.columns = df.columns.droplevel(["name", "end_nodes"])
+        return df
 
     s3s_model_dataframes_instance.GetTksofElementType = (
         lambda ElementType: ["P1"] if ElementType == "Pipe" else ["V1"]
@@ -147,6 +152,7 @@ def test_generate_edge_dataframe_tutorial53_properties_with_timestamp_index(s3s_
     assert df.loc[df["tk"] == "V1", "PVEC_sequence"].iloc[0] == ((5.0, 6.0),)
     assert timestamp_to_tuple_index == {"TS": 0}
     assert all(call["vec_format"] == "multiindex" for call in calls["results"])
+    assert all(call["include_name_and_end_nodes"] is False for call in calls["results"])  # no label lookups
     assert "Fkcont" in calls["model"][0]["properties"]
     assert all(call["timestamps"] == [8] for call in calls["results"])
 

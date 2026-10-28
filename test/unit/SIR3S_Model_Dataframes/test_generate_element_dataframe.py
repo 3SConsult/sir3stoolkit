@@ -56,7 +56,7 @@ def _configure_element_dataframe_stubs(s3s_model_dataframes_instance):
         return model_df.copy()
 
     def fake_generate_results(element_type, tks, properties, timestamps, place_holder_value=99999.0, bulk=False,
-                              vec_format="str"):
+                              vec_format="str", include_name_and_end_nodes=True):
         calls["results"].append(
             {
                 "element_type": element_type,
@@ -65,11 +65,15 @@ def _configure_element_dataframe_stubs(s3s_model_dataframes_instance):
                 "timestamps": timestamps,
                 "bulk": bulk,
                 "vec_format": vec_format,
+                "include_name_and_end_nodes": include_name_and_end_nodes,
             }
         )
         if timestamps == ["NOT_A_TIMESTAMP"]:
             return pd.DataFrame()
-        return results_df.copy()
+        df = results_df.copy()
+        if not include_name_and_end_nodes:  # as the real function: no name/end_nodes levels
+            df.columns = df.columns.droplevel(["name", "end_nodes"])
+        return df
 
     s3s_model_dataframes_instance.generate_element_model_data_dataframe = fake_generate_model_data
     s3s_model_dataframes_instance.generate_element_results_dataframe = fake_generate_results
@@ -90,6 +94,7 @@ def test_generate_element_dataframe_uses_static_timestamp_by_default(s3s_model_d
     assert "DTTR" in df.columns
     assert calls["results"][0]["timestamps"] == ["STATIC_TS"]
     assert calls["results"][0]["vec_format"] == "multiindex"
+    assert calls["results"][0]["include_name_and_end_nodes"] is False  # no label lookups
     assert timestamp_to_tuple_index == {"STATIC_TS": 0, "TS2": 1}
 
 
@@ -216,3 +221,27 @@ def test_tuples_show_float32_values_in_shortest_representation(s3s_model_datafra
     assert out["a"].iloc[0] == (0.01343678, 4.2914047)
     assert all(np.float32(v) == w for v, w in zip(out["a"].iloc[0], df["a"]))  # same float32 values
     assert out["b"].iloc[0] == ("x", "y") and mapping == {"t1": 0, "t2": 1}
+
+
+def test_name_and_end_node_levels_per_element_mapping_matches_per_column_labels():
+    from sir3stoolkit.mantle.dataframes import SIR3S_Model_Dataframes
+    cols = pd.MultiIndex.from_tuples([("T9", "QMAV", -1), ("T9", "PVEC", 0), ("T1", "QMAV", -1),
+                                      ("T5", "QMAV", -1), ("T5", "PVEC", 0), ("T5", "PVEC", 1)],
+                                     names=["tk", "property", "interior points"])
+    df = pd.DataFrame([range(6)], index=["ts"], columns=cols, dtype=float)
+    labels = {"T9": ("Same", "e9"), "T1": ("Other", "e1"), "T5": ("Same", "e5")}  # two tks share a name
+    out = SIR3S_Model_Dataframes._add_name_and_end_node_levels(df.copy(), labels, ["QMAV", "PVEC"])
+    assert list(out.columns) == [(tk, labels[tk][0], labels[tk][1], p, ip) for tk, p, ip in cols]
+    assert list(out.columns.levels[1]) == ["Same", "Other"]  # one level entry per distinct name, in column order
+    assert out.columns._lexsort_depth == out.columns.nlevels  # codes sorted: fast selection, no PerformanceWarning
+
+
+def test_name_and_end_node_levels_none_keeps_tk_property_levels_lexsorted():
+    from sir3stoolkit.mantle.dataframes import SIR3S_Model_Dataframes
+    cols = pd.MultiIndex.from_tuples([("T9", "QMAV", -1), ("T9", "PVEC", 0), ("T1", "QMAV", -1)],
+                                     names=["tk", "property", "interior points"])
+    df = pd.DataFrame([[1.0, 2.0, 3.0]], index=["ts"], columns=cols)
+    out = SIR3S_Model_Dataframes._add_name_and_end_node_levels(df, None, ["QMAV", "PVEC"])
+    assert out.columns.names == ["tk", "property", "interior points"]
+    assert list(out.columns) == list(cols)
+    assert out.columns._lexsort_depth == out.columns.nlevels  # codes sorted: fast selection, no PerformanceWarning
