@@ -39,6 +39,8 @@ Below an overview over all Toolkit Versions for SIR 3S 90-15 Quebec is given. It
 +----------------+---------------------------+----------------------------+--------------+
 | Toolkit Version| SIR 3S Version            | dll changed + file version | Release Date |
 +================+===========================+============================+==============+
+| 90.15.27       | 90-15-00-24-Upd2          | TBD                        | TBD          |
++----------------+---------------------------+----------------------------+--------------+
 | 90.15.26       | 90-15-00-24-Upd2          | Yes (90.15.10.0)           | 2026-10-14   |
 +----------------+---------------------------+----------------------------+--------------+
 | 90.15.25       | 90-15-00-24-Upd2          | Yes                        | 2026-08-03   |
@@ -92,6 +94,31 @@ Below the release history with all changes is given in detail.
 
 SIR 3S: 90-15-00-24-Upd2
 ^^^^^^^^^^^^^^^^^^^^^^^^
+
+Version 90.15.27 (TO BE RELEASED)
+"""""""""""""""""""""""""""""""""
+
+Developed and tested using SIR 3S Version: 90-15-00-24-Upd2
+
+Python Changes
+~~~~~~~~~~~~~~
+
+- generate_element_results_dataframe(): new param include_name_and_end_nodes (default True): False leaves out the name/end_nodes column levels (columns: tk, property[, interior points]) and saves the two Toolkit API calls per element they cost (~8 s for 68,000 pipes, while the bulk=True read itself takes ~0.1 s)
+- generate_element_results_dataframe(): building the column MultiIndex is much faster for many columns (property level built once, name/end_nodes mapped per element instead of per column) - same output; e.g. 68,000 pipes with all 75 result properties: 65 s -> 11.5 s
+- merge_model_data_and_results(): also accepts vec_format="str" results without the name/end_nodes levels (they were dropped by position before), and no longer modifies the passed df_results
+- generate_element_dataframe() / generate_edge_dataframe(), SIR_3S_to_pandapipes(), add_properties_to_graph(): request their results without name/end_nodes (they only need the tk) - faster for large models, same output
+- generate_element_model_data_dataframe(): the converted values are assigned by position (pd.Series(..., index=df.index)) instead of relying on the DataFrame's default index
+- plotting.py: module docstring TODO updated (only the AGSN longitudinal section plot is missing)
+
+Other Changes
+~~~~~~~~~~~~~
+
+- AGENTS.md: overview of the sections and how to read them selectively, "Quick facts" block (platform, versions, imports, return types, error handling), how to read the tutorial notebooks without their JSON overhead, new gotchas (exact property-name spelling in mantle, the "element type" column, current limitations of SIR_3S_to_nx_graph() with https://github.com/3SConsult/sir3stoolkit/issues/25 and https://github.com/3SConsult/sir3stoolkit/issues/26, vec_format="multiindex" and include_name_and_end_nodes=False for new code)
+- Tutorial 51: vector results described correctly as tab-separated strings, link to add_interior_points_to_start_end_sequence(), property name spelled Fkcont
+- Tutorial 53: the column is named "element type"
+- Tutorial 61: note on the current limitations of the nx graph (int64 tks, parallel edges, needs a calculated model); fixed link to SIR_3S_to_nx_graph()
+- Tutorial 62: fixed link to SIR_3S_to_pandapipes()
+- Object types reference: note on the physical units of result properties
 
 Version 90.15.26
 """"""""""""""""
