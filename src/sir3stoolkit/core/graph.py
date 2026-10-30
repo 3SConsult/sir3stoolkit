@@ -12,12 +12,12 @@ import clr as net
 import os
 import System
 import enum
-import wrapper
+from . import wrapper
 import networkx as nx
 import matplotlib.pyplot as plt
 from System.Reflection import Assembly
 from shapely import wkt
-from wrapper import SIR3S_Model
+from .wrapper import SIR3S_Model
 
 ##########################################
 # This Graph class can be used in 4 different combination of scenarios
