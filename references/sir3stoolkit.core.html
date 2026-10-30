@@ -89,8 +89,293 @@
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
 </section>
-<section id="sir3stoolkit-core-graph-module">
-<h2>sir3stoolkit.core.graph module<a class="headerlink" href="#sir3stoolkit-core-graph-module" title="Link to this heading"></a></h2>
+<section id="module-sir3stoolkit.core.graph">
+<span id="sir3stoolkit-core-graph-module"></span><h2>sir3stoolkit.core.graph module<a class="headerlink" href="#module-sir3stoolkit.core.graph" title="Link to this heading"></a></h2>
+<p>Created on Tue Feb 24, 2026</p>
+<p>AI assistant: see sir3stoolkit/__init__.py for orientation (architecture, API/property reference,
+known gotchas) before writing code against this module.</p>
+<p>&#64;author: Nischal Giriyan</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="sir3stoolkit.core.graph.Graph_Model">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sir3stoolkit.core.graph.</span></span><span class="sig-name descname"><span class="pre">Graph_Model</span></span><a class="reference internal" href="../_modules/sir3stoolkit/core/graph.html#Graph_Model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.graph.Graph_Model" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sir3stoolkit.core.wrapper.SIR3S_Model" title="sir3stoolkit.core.wrapper.SIR3S_Model"><code class="xref py py-class docutils literal notranslate"><span class="pre">SIR3S_Model</span></code></a></p>
+<p>Class definition of Graph_Model() wrapper to access functionalities provided by SIR3S software.
+This can be used independently or by using inside python console plugin to give better control
+over the graph of the object model for the users.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="sir3stoolkit.core.graph.Graph_Model.AddNewGraphLink">
+<span class="sig-name descname"><span class="pre">AddNewGraphLink</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">from_node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">GraphLink_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kvr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iCont</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sir3stoolkit/core/graph.html#Graph_Model.AddNewGraphLink"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.graph.Graph_Model.AddNewGraphLink" title="Link to this definition"></a></dt>
+<dd><p>This function adds a new link to the graph object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – Graph link name</p></li>
+<li><p><strong>from_node</strong> (<em>str</em>) – From node name of the link</p></li>
+<li><p><strong>to_node</strong> (<em>str</em>) – To node name of the link</p></li>
+<li><p><strong>GraphLink_type</strong> (<em>GraphLinkType</em>) – Graph link type</p></li>
+<li><p><strong>kvr</strong> (<em>int</em>) – SL/RL Flag. Should be 0 (undefined), 1 (SL) or 2 (RL)</p></li>
+<li><p><strong>iCont</strong> (<em>int</em>) – iCont integer value</p></li>
+<li><p><strong>weight</strong> (<em>np.float64</em>) – Weight of the link</p></li>
+<li><p><strong>status</strong> (<em>int</em>) – Status of the function</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Returns an integer to indicate status of AddNewGraphLink()</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+<dt class="field-even">Description<span class="colon">:</span></dt>
+<dd class="field-even"><p>This is a wrapper method for AddNewGraphLink() from toolkit.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sir3stoolkit.core.graph.Graph_Model.AddNewGraphNode">
+<span class="sig-name descname"><span class="pre">AddNewGraphNode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">GraphNode_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kvr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iCont</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sir3stoolkit/core/graph.html#Graph_Model.AddNewGraphNode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.graph.Graph_Model.AddNewGraphNode" title="Link to this definition"></a></dt>
+<dd><p>This function adds a new node to the graph object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – Graph node name</p></li>
+<li><p><strong>GraphNode_type</strong> (<em>GraphNodeType</em>) – Graph node type</p></li>
+<li><p><strong>kvr</strong> (<em>int</em>) – SL/RL Flag. Should be 0 (undefined), 1 (SL) or 2 (RL)</p></li>
+<li><p><strong>iCont</strong> (<em>int</em>) – iCont integer value</p></li>
+<li><p><strong>weight</strong> (<em>np.float64</em>) – Weight of the node</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Returns an integer to indicate status of AddNewGraphNode()</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+<dt class="field-even">Description<span class="colon">:</span></dt>
+<dd class="field-even"><p>This is a wrapper method for AddNewGraphNode() from toolkit.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sir3stoolkit.core.graph.Graph_Model.CreateDecompositionParameters">
+<span class="sig-name descname"><span class="pre">CreateDecompositionParameters</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sir3stoolkit/core/graph.html#Graph_Model.CreateDecompositionParameters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.graph.Graph_Model.CreateDecompositionParameters" title="Link to this definition"></a></dt>
+<dd><p>Creates a decomposition parameter for executing graph algorithms</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Returns an decomposition parameters object of type decomposition_parameters_t</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>decomposition_parameters_t</p>
+</dd>
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>This is a wrapper method for CreateDecompositionParameters() from toolkit.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sir3stoolkit.core.graph.Graph_Model.CreateNewGraph">
+<span class="sig-name descname"><span class="pre">CreateNewGraph</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sir3stoolkit/core/graph.html#Graph_Model.CreateNewGraph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.graph.Graph_Model.CreateNewGraph" title="Link to this definition"></a></dt>
+<dd><p>Creates a new empty graph</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Returns an Graph object of type IGraphOM</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>IGraphOM</p>
+</dd>
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>This is a wrapper method for CreateNewGraph() from toolkit.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sir3stoolkit.core.graph.Graph_Model.DeleteGraphLink">
+<span class="sig-name descname"><span class="pre">DeleteGraphLink</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">link</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sir3stoolkit/core/graph.html#Graph_Model.DeleteGraphLink"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.graph.Graph_Model.DeleteGraphLink" title="Link to this definition"></a></dt>
+<dd><p>This function deletes a link from the graph object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>link</strong> (<em>ISLink</em>) – Link to be deleted</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Description<span class="colon">:</span></dt>
+<dd class="field-even"><p>This is a wrapper method for DeleteGraphLink() from toolkit.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sir3stoolkit.core.graph.Graph_Model.DeleteGraphNode">
+<span class="sig-name descname"><span class="pre">DeleteGraphNode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sir3stoolkit/core/graph.html#Graph_Model.DeleteGraphNode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.graph.Graph_Model.DeleteGraphNode" title="Link to this definition"></a></dt>
+<dd><p>This function deletes a node from the graph object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>node</strong> (<em>ISNode</em>) – Node to be deleted</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Description<span class="colon">:</span></dt>
+<dd class="field-even"><p>This is a wrapper method for DeleteGraphNode() from toolkit.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sir3stoolkit.core.graph.Graph_Model.ExecuteAlgorithm">
+<span class="sig-name descname"><span class="pre">ExecuteAlgorithm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">decomp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">option</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sir3stoolkit/core/graph.html#Graph_Model.ExecuteAlgorithm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.graph.Graph_Model.ExecuteAlgorithm" title="Link to this definition"></a></dt>
+<dd><p>This function executes graph algorithm as per the parameters set in decomposition object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>decomp</strong> (<em>decomposition_parameters_t</em>) – Decomposition parameters</p></li>
+<li><p><strong>option</strong> (<em>GraphCalcMode</em>) – Object to inform which algorithm to execute(object type GraphCalcMode)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Returns an integer to indicate status of ExecuteAlgorithm()</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+<dt class="field-even">Description<span class="colon">:</span></dt>
+<dd class="field-even"><p>This is a wrapper method for ExecuteAlgorithm() from toolkit.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sir3stoolkit.core.graph.Graph_Model.GetGraphFromObjectModel">
+<span class="sig-name descname"><span class="pre">GetGraphFromObjectModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">clone</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sir3stoolkit/core/graph.html#Graph_Model.GetGraphFromObjectModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.graph.Graph_Model.GetGraphFromObjectModel" title="Link to this definition"></a></dt>
+<dd><p>Fetches graph from the object model that is already open</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>clone</strong> (<em>bool</em>) – Boolean parameter to understand whether to clone the graph before returning or give direct access to graph; Default value is True(to be cloned)</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Returns an Graph object of type IGraphOM</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>IGraphOM</p>
+</dd>
+<dt class="field-even">Description<span class="colon">:</span></dt>
+<dd class="field-even"><p>This is a wrapper method for GetGraphFromObjectModel() from toolkit.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sir3stoolkit.core.graph.Graph_Model.GetMinimumSpanningITree">
+<span class="sig-name descname"><span class="pre">GetMinimumSpanningITree</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sir3stoolkit/core/graph.html#Graph_Model.GetMinimumSpanningITree"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.graph.Graph_Model.GetMinimumSpanningITree" title="Link to this definition"></a></dt>
+<dd><p>This function executes minimum spanning tree algorithm on the graph</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Returns minimum spanning tree of object type ITree</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>ITree</p>
+</dd>
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>This is a wrapper method for GetMinimumSpanningITree() from toolkit.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sir3stoolkit.core.graph.Graph_Model.GetNumOfComponents">
+<span class="sig-name descname"><span class="pre">GetNumOfComponents</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sir3stoolkit/core/graph.html#Graph_Model.GetNumOfComponents"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.graph.Graph_Model.GetNumOfComponents" title="Link to this definition"></a></dt>
+<dd><p>This function calculates and returns number of components in the graph object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Returns number of components in the graph object</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>This is a wrapper method for GetNumOfComponents() from toolkit.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sir3stoolkit.core.graph.Graph_Model.Visualize_graph">
+<span class="sig-name descname"><span class="pre">Visualize_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">show_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'gray'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'red'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sir3stoolkit/core/graph.html#Graph_Model.Visualize_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.graph.Graph_Model.Visualize_graph" title="Link to this definition"></a></dt>
+<dd><p>This function draws the graph network using matplotlib.pyplot</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>show_ids</strong> (<em>bool</em>) – True if user wants the Tk of Node and Link to be displayed on top of them for reference. This might clutter the visualization; Default value is False</p></li>
+<li><p><strong>edge_color</strong> (<em>str</em>) – Color in which links/edges to be represented in the plot; Default is Gray</p></li>
+<li><p><strong>node_color</strong> (<em>str</em>) – Color in which nodes to be represented in the plot; Default is Red</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Returns True if able to successfully visulize the graph, False otherwise</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+<dt class="field-even">Description<span class="colon">:</span></dt>
+<dd class="field-even"><p>This functon only exists in Python and not in .NET; This helps in quick visualization of the graph with their geometric properties</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sir3stoolkit.core.graph.Graph_Model.export_Graph_Data">
+<span class="sig-name descname"><span class="pre">export_Graph_Data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sir3stoolkit/core/graph.html#Graph_Model.export_Graph_Data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.graph.Graph_Model.export_Graph_Data" title="Link to this definition"></a></dt>
+<dd><p>Exports graph data(node and links) of existing graph under this class instance; This is helpful mainly for visualization</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Returns graph data</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>GraphData</p>
+</dd>
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>This is a wrapper method for ExportGraph() from toolkit.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sir3stoolkit.core.graph.Graph_Model.safe_load_wkt">
+<span class="sig-name descname"><span class="pre">safe_load_wkt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wkt_string</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sir3stoolkit/core/graph.html#Graph_Model.safe_load_wkt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.graph.Graph_Model.safe_load_wkt" title="Link to this definition"></a></dt>
+<dd><p>This function helps safe loading of geometry from a WKT string</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>wkt_string</strong> (<em>str</em>) – WKT string</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Returns geometry object if everything is okay, otherwise None</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Geometry object</p>
+</dd>
+<dt class="field-even">Description<span class="colon">:</span></dt>
+<dd class="field-even"><p>This is a helper function at Python level for visualization</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sir3stoolkit.core.graph.Graph_Model.to_dotnet_enum">
+<span class="sig-name descname"><span class="pre">to_dotnet_enum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">py_enum_member</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sir3stoolkit/core/graph.html#Graph_Model.to_dotnet_enum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.graph.Graph_Model.to_dotnet_enum" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </section>
 <section id="module-sir3stoolkit.core.wrapper">
 <span id="sir3stoolkit-core-wrapper-module"></span><h2>sir3stoolkit.core.wrapper module<a class="headerlink" href="#module-sir3stoolkit.core.wrapper" title="Link to this heading"></a></h2>

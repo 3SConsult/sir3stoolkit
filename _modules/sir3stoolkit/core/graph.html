@@ -1,0 +1,513 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>sir3stoolkit.core.graph &mdash; sir3stoolkit  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=9c3e77be" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=f281be69"></script>
+      <script>let toggleHintShow = 'Click to show';</script>
+      <script>let toggleHintHide = 'Click to hide';</script>
+      <script>let toggleOpenOnPrint = 'true';</script>
+      <script src="../../../_static/togglebutton.js?v=b8b12719"></script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            sir3stoolkit
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../releases.html">Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developers.html">For Developers</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">sir3stoolkit</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">sir3stoolkit.core.graph</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for sir3stoolkit.core.graph</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">"""</span>
+<span class="sd">Created on Tue Feb 24, 2026</span>
+
+<span class="sd">AI assistant: see sir3stoolkit/__init__.py for orientation (architecture, API/property reference,</span>
+<span class="sd">known gotchas) before writing code against this module.</span>
+
+<span class="sd">@author: Nischal Giriyan</span>
+<span class="sd">"""</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">clr</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">net</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">System</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">enum</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">wrapper</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">networkx</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nx</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">System.Reflection</span><span class="w"> </span><span class="kn">import</span> <span class="n">Assembly</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">shapely</span><span class="w"> </span><span class="kn">import</span> <span class="n">wkt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.wrapper</span><span class="w"> </span><span class="kn">import</span> <span class="n">SIR3S_Model</span>
+
+<span class="c1">##########################################</span>
+<span class="c1"># This Graph class can be used in 4 different combination of scenarios</span>
+<span class="c1"># 1. In the context of SirGraf</span>
+<span class="c1">#    a. With graph from an existing model</span>
+<span class="c1">#    b. With new empty graph</span>
+<span class="c1"># 2. In the context outside SirGraf(Like Jupyter notebook) </span>
+<span class="c1">#    c. With graph from an existing model</span>
+<span class="c1">#    d. With new empty graph </span>
+
+
+<span class="c1">##########################################</span>
+<div class="viewcode-block" id="Graph_Model">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.graph.Graph_Model">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Graph_Model</span><span class="p">(</span><span class="n">SIR3S_Model</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Class definition of Graph_Model() wrapper to access functionalities provided by SIR3S software.</span>
+<span class="sd">    This can be used independently or by using inside python console plugin to give better control</span>
+<span class="sd">    over the graph of the object model for the users.</span>
+<span class="sd">    """</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        
+        <span class="c1"># --- Runs init from SIR3S_Model ---</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        
+        <span class="c1"># --- Additional setup specific to Graph_Model ---</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">GraphCalcMode</span> <span class="o">=</span> <span class="n">wrapper</span><span class="o">.</span><span class="n">create_dotnet_enum</span><span class="p">(</span><span class="s2">"GraphCalcMode"</span><span class="p">,</span> <span class="s2">"GraphCalcMode"</span><span class="p">,</span> <span class="s2">"Sir3S_Repository.Interfaces.dll"</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dotnet_enum_type_GraphCalcMode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_dotnet_enum</span><span class="p">(</span><span class="s2">"GraphCalcMode"</span><span class="p">,</span> <span class="s2">"Sir3S_Repository.Interfaces.dll"</span><span class="p">)</span>
+
+        <span class="c1"># Create a registry of enums so that enums in parent class are also available through this class</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_enum_map</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">GraphCalcMode</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dotnet_enum_type_GraphCalcMode</span><span class="p">,</span>
+    <span class="p">}</span>
+        
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">"ObjectTypes"</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_enum_map</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypes</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_dotnet_enum</span><span class="p">(</span>
+                <span class="s2">"Sir3SObjectTypes"</span><span class="p">,</span> <span class="s2">"Sir3S_Repository.Interfaces.dll"</span>
+            <span class="p">)</span>
+        
+<div class="viewcode-block" id="Graph_Model.to_dotnet_enum">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.graph.Graph_Model.to_dotnet_enum">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_dotnet_enum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">py_enum_member</span><span class="p">):</span>
+        <span class="c1"># Extract the type of Enum</span>
+        <span class="n">enum_type</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">py_enum_member</span><span class="p">)</span>
+        
+        <span class="c1"># Check if it's an Enum member</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">py_enum_member</span><span class="p">,</span> <span class="n">enum</span><span class="o">.</span><span class="n">Enum</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Expected Enum member, got </span><span class="si">{</span><span class="n">enum_type</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+        <span class="c1"># Use the integer value of Python enum member to create .NET enum</span>
+        <span class="k">if</span> <span class="n">enum_type</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_enum_map</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">System</span><span class="o">.</span><span class="n">Enum</span><span class="o">.</span><span class="n">ToObject</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_enum_map</span><span class="p">[</span><span class="n">enum_type</span><span class="p">],</span>
+                <span class="n">py_enum_member</span><span class="o">.</span><span class="n">value</span>
+            <span class="p">)</span>
+
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Unknown enum type </span><span class="si">{</span><span class="n">enum_type</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="Graph_Model.GetGraphFromObjectModel">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.graph.Graph_Model.GetGraphFromObjectModel">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">GetGraphFromObjectModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">clone</span><span class="p">:</span><span class="nb">bool</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Fetches graph from the object model that is already open</span>
+
+<span class="sd">        :param clone: Boolean parameter to understand whether to clone the graph before returning or give direct access to graph; Default value is True(to be cloned)</span>
+<span class="sd">        :type clone: bool</span>
+<span class="sd">        :return: Returns an Graph object of type IGraphOM</span>
+<span class="sd">        :rtype: IGraphOM</span>
+<span class="sd">        :description: This is a wrapper method for GetGraphFromObjectModel() from toolkit.</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">GetGraphFromObjectModel</span><span class="p">(</span><span class="n">clone</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span></div>
+
+        
+<div class="viewcode-block" id="Graph_Model.CreateNewGraph">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.graph.Graph_Model.CreateNewGraph">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">CreateNewGraph</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Creates a new empty graph</span>
+
+<span class="sd">        :return: Returns an Graph object of type IGraphOM</span>
+<span class="sd">        :rtype: IGraphOM</span>
+<span class="sd">        :description: This is a wrapper method for CreateNewGraph() from toolkit.</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">CreateNewGraph</span><span class="p">()</span></div>
+
+        
+<div class="viewcode-block" id="Graph_Model.CreateDecompositionParameters">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.graph.Graph_Model.CreateDecompositionParameters">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">CreateDecompositionParameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Creates a decomposition parameter for executing graph algorithms</span>
+
+<span class="sd">        :return: Returns an decomposition parameters object of type decomposition_parameters_t</span>
+<span class="sd">        :rtype: decomposition_parameters_t</span>
+<span class="sd">        :description: This is a wrapper method for CreateDecompositionParameters() from toolkit.</span>
+<span class="sd">        """</span>
+        <span class="n">decomp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">CreateDecompositionParameters</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">decomp</span>    </div>
+
+
+<div class="viewcode-block" id="Graph_Model.ExecuteAlgorithm">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.graph.Graph_Model.ExecuteAlgorithm">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">ExecuteAlgorithm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">decomp</span><span class="p">,</span> <span class="n">option</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        This function executes graph algorithm as per the parameters set in decomposition object</span>
+
+<span class="sd">        :param decomp: Decomposition parameters</span>
+<span class="sd">        :type decomp: decomposition_parameters_t</span>
+<span class="sd">        :param option: Object to inform which algorithm to execute(object type GraphCalcMode)</span>
+<span class="sd">        :type option: GraphCalcMode</span>
+<span class="sd">        :return: Returns an integer to indicate status of ExecuteAlgorithm()</span>
+<span class="sd">        :rtype: int</span>
+<span class="sd">        :description: This is a wrapper method for ExecuteAlgorithm() from toolkit.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">graph</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="n">GraphCalcMode_net</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dotnet_enum</span><span class="p">(</span><span class="n">option</span><span class="p">)</span>
+            <span class="n">ret_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">ExecuteAlgorithm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="p">,</span> <span class="n">decomp</span><span class="p">,</span> <span class="n">GraphCalcMode_net</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"Graph is not set to execute algorithm"</span><span class="p">)</span>
+            <span class="n">ret_value</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+
+        <span class="k">return</span> <span class="n">ret_value</span></div>
+
+    
+<div class="viewcode-block" id="Graph_Model.AddNewGraphNode">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.graph.Graph_Model.AddNewGraphNode">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">AddNewGraphNode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">GraphNode_type</span><span class="p">,</span> <span class="n">kvr</span><span class="p">,</span> <span class="n">iCont</span><span class="p">,</span> <span class="n">weight</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        This function adds a new node to the graph object</span>
+
+<span class="sd">        :param name: Graph node name</span>
+<span class="sd">        :type name: str</span>
+<span class="sd">        :param GraphNode_type: Graph node type</span>
+<span class="sd">        :type GraphNode_type: GraphNodeType</span>
+<span class="sd">        :param kvr: SL/RL Flag. Should be 0 (undefined), 1 (SL) or 2 (RL)</span>
+<span class="sd">        :type kvr: int</span>
+<span class="sd">        :param iCont: iCont integer value</span>
+<span class="sd">        :type iCont: int</span>
+<span class="sd">        :param weight: Weight of the node</span>
+<span class="sd">        :type weight: np.float64</span>
+<span class="sd">        :return: Returns an integer to indicate status of AddNewGraphNode()</span>
+<span class="sd">        :rtype: int</span>
+<span class="sd">        :description: This is a wrapper method for AddNewGraphNode() from toolkit.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">graph</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="n">ret_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">AddNewGraphNode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">GraphNode_type</span><span class="p">,</span> <span class="n">kvr</span><span class="p">,</span> <span class="n">iCont</span><span class="p">,</span> <span class="n">weight</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"Graph is not valid to add any new node"</span><span class="p">)</span>
+            <span class="n">ret_value</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        
+        <span class="k">return</span> <span class="n">ret_value</span></div>
+
+    
+<div class="viewcode-block" id="Graph_Model.AddNewGraphLink">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.graph.Graph_Model.AddNewGraphLink">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">AddNewGraphLink</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">from_node</span><span class="p">,</span> <span class="n">to_node</span><span class="p">,</span> <span class="n">GraphLink_type</span><span class="p">,</span> <span class="n">kvr</span><span class="p">,</span> <span class="n">iCont</span><span class="p">,</span> <span class="n">weight</span><span class="p">,</span> <span class="n">status</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        This function adds a new link to the graph object</span>
+
+<span class="sd">        :param name: Graph link name</span>
+<span class="sd">        :type name: str</span>
+<span class="sd">        :param from_node: From node name of the link</span>
+<span class="sd">        :type from_node: str</span>
+<span class="sd">        :param to_node: To node name of the link</span>
+<span class="sd">        :type to_node: str</span>
+<span class="sd">        :param GraphLink_type: Graph link type</span>
+<span class="sd">        :type GraphLink_type: GraphLinkType</span>
+<span class="sd">        :param kvr: SL/RL Flag. Should be 0 (undefined), 1 (SL) or 2 (RL)</span>
+<span class="sd">        :type kvr: int</span>
+<span class="sd">        :param iCont: iCont integer value</span>
+<span class="sd">        :type iCont: int</span>
+<span class="sd">        :param weight: Weight of the link</span>
+<span class="sd">        :type weight: np.float64</span>
+<span class="sd">        :param status: Status of the function</span>
+<span class="sd">        :type status: int</span>
+<span class="sd">        :return: Returns an integer to indicate status of AddNewGraphLink()</span>
+<span class="sd">        :rtype: int</span>
+<span class="sd">        :description: This is a wrapper method for AddNewGraphLink() from toolkit.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">graph</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="n">ret_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">AddNewGraphLink</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">from_node</span><span class="p">,</span> <span class="n">to_node</span><span class="p">,</span> <span class="n">GraphLink_type</span><span class="p">,</span> <span class="n">kvr</span><span class="p">,</span> <span class="n">iCont</span><span class="p">,</span> <span class="n">weight</span><span class="p">,</span> <span class="n">status</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"Graph is not valid to add any new link"</span><span class="p">)</span>
+            <span class="n">ret_value</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        
+        <span class="k">return</span> <span class="n">ret_value</span></div>
+
+    
+<div class="viewcode-block" id="Graph_Model.DeleteGraphNode">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.graph.Graph_Model.DeleteGraphNode">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">DeleteGraphNode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        This function deletes a node from the graph object</span>
+
+<span class="sd">        :param node: Node to be deleted</span>
+<span class="sd">        :type node: ISNode</span>
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+<span class="sd">        :description: This is a wrapper method for DeleteGraphNode() from toolkit.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">graph</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">DeleteGraphNode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"Graph is not valid to delete the node"</span><span class="p">)</span></div>
+
+            
+<div class="viewcode-block" id="Graph_Model.DeleteGraphLink">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.graph.Graph_Model.DeleteGraphLink">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">DeleteGraphLink</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">link</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        This function deletes a link from the graph object</span>
+
+<span class="sd">        :param link: Link to be deleted</span>
+<span class="sd">        :type link: ISLink</span>
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+<span class="sd">        :description: This is a wrapper method for DeleteGraphLink() from toolkit.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">graph</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">DeleteGraphLink</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="p">,</span> <span class="n">link</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"Graph is not valid to delete the link"</span><span class="p">)</span></div>
+
+        
+<div class="viewcode-block" id="Graph_Model.GetMinimumSpanningITree">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.graph.Graph_Model.GetMinimumSpanningITree">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">GetMinimumSpanningITree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        This function executes minimum spanning tree algorithm on the graph</span>
+
+<span class="sd">        :return: Returns minimum spanning tree of object type ITree</span>
+<span class="sd">        :rtype: ITree</span>
+<span class="sd">        :description: This is a wrapper method for GetMinimumSpanningITree() from toolkit.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">graph</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="n">tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">GetMinimumSpanningITree</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"Graph is not valid to calculate minimum spanning ITree"</span><span class="p">)</span>
+            <span class="n">tree</span> <span class="o">=</span> <span class="kc">None</span>
+            
+        <span class="k">return</span> <span class="n">tree</span></div>
+
+    
+<div class="viewcode-block" id="Graph_Model.GetNumOfComponents">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.graph.Graph_Model.GetNumOfComponents">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">GetNumOfComponents</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        This function calculates and returns number of components in the graph object</span>
+
+<span class="sd">        :return: Returns number of components in the graph object</span>
+<span class="sd">        :rtype: int</span>
+<span class="sd">        :description: This is a wrapper method for GetNumOfComponents() from toolkit.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">graph</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="n">comp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">GetNumOfComponents</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"Graph is not valid to fetch number of components"</span><span class="p">)</span>
+            <span class="n">comp</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+            
+        <span class="k">return</span> <span class="n">comp</span></div>
+
+
+<div class="viewcode-block" id="Graph_Model.Visualize_graph">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.graph.Graph_Model.Visualize_graph">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">Visualize_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">show_ids</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">edge_color</span><span class="o">=</span><span class="s2">"gray"</span><span class="p">,</span> <span class="n">node_color</span><span class="o">=</span><span class="s2">"red"</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        This function draws the graph network using matplotlib.pyplot</span>
+
+<span class="sd">        :param show_ids: True if user wants the Tk of Node and Link to be displayed on top of them for reference. This might clutter the visualization; Default value is False</span>
+<span class="sd">        :type show_ids: bool</span>
+<span class="sd">        :param edge_color: Color in which links/edges to be represented in the plot; Default is Gray</span>
+<span class="sd">        :type edge_color: str</span>
+<span class="sd">        :param node_color: Color in which nodes to be represented in the plot; Default is Red</span>
+<span class="sd">        :type node_color: str</span>
+<span class="sd">        :return: Returns True if able to successfully visulize the graph, False otherwise</span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        :description: This functon only exists in Python and not in .NET; This helps in quick visualization of the graph with their geometric properties</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"Graph is empty, nothing to visualize"</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">ExportGraph</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="p">)</span>
+        
+        <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+        
+        <span class="c1"># draw edges</span>
+        <span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">Edges</span><span class="p">:</span>
+            <span class="n">edge_id</span> <span class="o">=</span> <span class="n">edge</span><span class="o">.</span><span class="n">Item1</span>
+            <span class="n">from_id</span> <span class="o">=</span> <span class="n">edge</span><span class="o">.</span><span class="n">Item2</span>
+            <span class="n">to_id</span> <span class="o">=</span> <span class="n">edge</span><span class="o">.</span><span class="n">Item3</span>
+            <span class="n">weight</span> <span class="o">=</span> <span class="n">edge</span><span class="o">.</span><span class="n">Item4</span>
+            
+            <span class="n">wkt_string_edge</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetGeometryInformation</span><span class="p">(</span><span class="n">edge_id</span><span class="p">)</span>
+            
+            <span class="n">edge_geom</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">safe_load_wkt</span><span class="p">(</span><span class="n">wkt_string_edge</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">edge_geom</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">edge_geom</span><span class="o">.</span><span class="n">is_empty</span><span class="p">:</span>
+                <span class="k">continue</span>
+            
+            <span class="k">if</span> <span class="n">edge_geom</span><span class="o">.</span><span class="n">geom_type</span> <span class="o">==</span> <span class="s2">"LineString"</span><span class="p">:</span>
+                <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">edge_geom</span><span class="o">.</span><span class="n">xy</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">edge_color</span><span class="p">)</span>
+                
+        <span class="c1"># draw nodes</span>
+        <span class="k">for</span> <span class="n">node_id</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">Nodes</span><span class="p">:</span>
+            <span class="n">wkt_string_node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetGeometryInformation</span><span class="p">(</span><span class="n">node_id</span><span class="p">)</span>
+            <span class="n">node_geom</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">safe_load_wkt</span><span class="p">(</span><span class="n">wkt_string_node</span><span class="p">)</span>    
+            
+            <span class="k">if</span> <span class="n">node_geom</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">node_geom</span><span class="o">.</span><span class="n">is_empty</span><span class="p">:</span>
+                <span class="k">continue</span>
+        
+            <span class="k">if</span> <span class="n">node_geom</span><span class="o">.</span><span class="n">geom_type</span> <span class="o">==</span> <span class="s2">"Point"</span><span class="p">:</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">node_geom</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">node_geom</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">node_color</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+                
+                <span class="k">if</span> <span class="n">show_ids</span><span class="p">:</span>
+                    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">node_geom</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">node_geom</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">node_id</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+                    
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">"Water Network (Real Geometry from WKT)"</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s2">"equal"</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+    
+<div class="viewcode-block" id="Graph_Model.export_Graph_Data">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.graph.Graph_Model.export_Graph_Data">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">export_Graph_Data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Exports graph data(node and links) of existing graph under this class instance; This is helpful mainly for visualization</span>
+
+<span class="sd">        :return: Returns graph data</span>
+<span class="sd">        :rtype: GraphData</span>
+<span class="sd">        :description: This is a wrapper method for ExportGraph() from toolkit.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"Graph is empty, nothing to export"</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">ExportGraph</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">data</span></div>
+
+
+<div class="viewcode-block" id="Graph_Model.safe_load_wkt">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.core.html#sir3stoolkit.core.graph.Graph_Model.safe_load_wkt">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">safe_load_wkt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wkt_string</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        This function helps safe loading of geometry from a WKT string</span>
+
+<span class="sd">        :param wkt_string: WKT string</span>
+<span class="sd">        :type wkt_string: str</span>
+<span class="sd">        :return: Returns geometry object if everything is okay, otherwise None</span>
+<span class="sd">        :rtype: Geometry object</span>
+<span class="sd">        :description: This is a helper function at Python level for visualization</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="n">wkt_string</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">wkt_string</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">wkt_string</span> <span class="o">=</span> <span class="n">wkt_string</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">wkt_string</span> <span class="o">==</span> <span class="s2">""</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">wkt</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">wkt_string</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025 - 2026 3S Consult GmbH.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
