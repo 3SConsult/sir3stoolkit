@@ -694,7 +694,7 @@ class SIR3S_Model:
         else:
             _log_message(f"Error: {error}")
 
-    def OpenModelXml(self, Path: str, SaveCurrentModel: bool, NewWD: str):
+    def OpenModelXml(self, Path: str, SaveCurrentModel: bool):
         """
         Opens a model from an XML file.
 
@@ -702,17 +702,13 @@ class SIR3S_Model:
         :type Path: str
         :param SaveCurrentModel: Do you want to save the current model before closing it?
         :type SaveCurrentModel: bool
-        :param NewWD: The new Working Directory for the Model. It should create a new WD, set the model WD reference to it and then open.
-                      Ideally the user can name the dir freely apart from start "WD".
-                      If the model already has an assigned WD, we create new WD anyway and set the reference to this newly created WD and then open.
-                      If NewWD is identical to the currently assigned WD reference, we dont change anything just open the model with that WD.
-        :type NewWD: str
         :return: None
         :rtype: None
         :description: This is a wrapper method for OpenModelXml() from toolkit; Watch out for error message
             for more information.
         """
-        result, error = self.toolkit.OpenModelXml(Path, SaveCurrentModel, NewWD)
+        # NewWD="": keep the model's working directory (the toolkit's NewWD isn't exposed yet)
+        result, error = self.toolkit.OpenModelXml(Path, SaveCurrentModel, "")
         if result:
             self.Mid = "M-1-0-1"
             self.xmlFile = Path
@@ -723,7 +719,7 @@ class SIR3S_Model:
             _log_message("Error while opening the model," + error)
 
     def OpenModel(self, dbName: str, providerType, Mid: str, saveCurrentlyOpenModel: bool, namedInstance: str,
-                  userID: str, password: str, NewWD: str):
+                  userID: str, password: str):
         """
         Opens a model from a database file.
 
@@ -743,19 +739,15 @@ class SIR3S_Model:
         :param password: Password for authentication, only needed for ORACLE and for SQLServer only if SQLServer
             authentication is required.
         :type password: str
-        :param NewWD: The new Working Directory for the Model.
-                      It should create a new WD, set the model WD reference to it and then open.
-                      Ideally the user can name the dir freely apart from start "WD".
-                      If the model already has an assigned WD, we create new WD anyway and set the reference to this newly created WD and then open.
-                      If NewWD is identical to the currently assigned WD reference, we dont change anything just open the model with that WD.
-        :type NewWD: str
         :return: None
         :rtype: None
         :description: This is a wrapper method for OpenModel() from toolkit; Watch out for errors for more information.
         """
         providerType_net = self.to_dotnet_enum(providerType)
+        # NewWD="": keep the model's working directory (the toolkit's NewWD isn't exposed yet: with a new one,
+        # the session still reads results from the previous working directory until the model is reopened)
         result, error = self.toolkit.OpenModel(dbName, providerType_net, Mid, saveCurrentlyOpenModel,
-                                               namedInstance, userID, password, NewWD)
+                                               namedInstance, userID, password, "")
         if result:
             if self.outputComments:
                 _log_message("Model is open for further operation")
