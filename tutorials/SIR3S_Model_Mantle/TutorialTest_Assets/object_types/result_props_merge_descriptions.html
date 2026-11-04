@@ -89,8 +89,8 @@
              
   <section id="Merge-Result-Property-Descriptions-into-the-Object-Types-RST-Reference">
 <h1>Merge Result-Property Descriptions into the Object-Types RST Reference<a class="headerlink" href="#Merge-Result-Property-Descriptions-into-the-Object-Types-RST-Reference" title="Link to this heading"></a></h1>
-<p>Pure text processing, no Toolkit calls needed - merges <code class="docutils literal notranslate"><span class="pre">result_property_descriptions.json</span></code> (from <code class="docutils literal notranslate"><span class="pre">result_props_descriptions.ipynb</span></code>) into <code class="docutils literal notranslate"><span class="pre">object_types_props_results_snippet_global_mapped.rst</span></code> (from <code class="docutils literal notranslate"><span class="pre">object_types.ipynb</span></code>), widening every “Result Properties” table from one column (Name) to three (Name, Description, Standard Physical Unit). Writes a new file here in <code class="docutils literal notranslate"><span class="pre">output/</span></code> - does not touch <code class="docutils literal notranslate"><span class="pre">docs/source/object_types_props_results_snippet_global_mapped.rst</span></code> itself; that gets copied over
-manually once reviewed.</p>
+<p>Pure text processing, no Toolkit calls needed - merges <code class="docutils literal notranslate"><span class="pre">result_property_descriptions.json</span></code> (from <code class="docutils literal notranslate"><span class="pre">result_props_descriptions.ipynb</span></code>) into <code class="docutils literal notranslate"><span class="pre">object_types_props_results_snippet_global_mapped.rst</span></code> (from <code class="docutils literal notranslate"><span class="pre">object_types.ipynb</span></code>), widening every “Result Properties” table from one column (Name) to three (Name, Description, Standard Physical Unit). Also adds an element category label (with the toolkit method to create the element) under every object type’s heading, from
+<code class="docutils literal notranslate"><span class="pre">object_type_categories.json</span></code> (from <code class="docutils literal notranslate"><span class="pre">object_types_categories.ipynb</span></code>). Writes a new file here in <code class="docutils literal notranslate"><span class="pre">output/</span></code> - does not touch <code class="docutils literal notranslate"><span class="pre">docs/source/object_types_props_results_snippet_global_mapped.rst</span></code> itself; that gets copied over manually once reviewed.</p>
 <section id="Load-inputs">
 <h2>Load inputs<a class="headerlink" href="#Load-inputs" title="Link to this heading"></a></h2>
 <div class="nbinput docutils container">
@@ -117,7 +117,7 @@ len(rst_text), len(desc_map)
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-(141640, 776)
+(141643, 776)
 </pre></div></div>
 </div>
 </section>
@@ -219,7 +219,7 @@ len(new_rst_text)
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-184542
+184545
 </pre></div></div>
 </div>
 </section>
@@ -234,7 +234,10 @@ len(new_rst_text)
 NEW_NOTE_TAIL = (
     "Result properties additionally list a Description and Standard Physical Unit where known, "
     "sourced from SIR 3S's own .MX1 output plus a handful of manual additions (see "
-    "result_props_descriptions.ipynb). Both are in German, as embedded in SIR 3S itself."
+    "result_props_descriptions.ipynb). Both are in German, as embedded in SIR 3S itself.\n"
+    "   Use :meth:`sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.get_result_file_properties` "
+    "to check what physical units were actually used in your local calculation, which can deviate "
+    "from the standard physical units here."
 )
 
 assert OLD_NOTE_TAIL in new_rst_text, "Expected preamble sentence not found - has the source note changed?"
@@ -252,10 +255,131 @@ Preamble note updated.
 </pre></div></div>
 </div>
 </section>
+<section id="Add-element-category-labels">
+<h2>Add element category labels<a class="headerlink" href="#Add-element-category-labels" title="Link to this heading"></a></h2>
+<p>Adds an <code class="docutils literal notranslate"><span class="pre">Element</span> <span class="pre">Category:</span> <span class="pre">...</span></code> line under every <code class="docutils literal notranslate"><span class="pre">Object</span> <span class="pre">Type:</span> <span class="pre">``...`</span></code>` line, from`object_type_categories.json<code class="docutils literal notranslate"><span class="pre">,</span> <span class="pre">linking</span> <span class="pre">the</span> <span class="pre">toolkit</span> <span class="pre">method(s)</span> <span class="pre">to</span> <span class="pre">create</span> <span class="pre">the</span> <span class="pre">element</span> <span class="pre">with</span> <span class="pre">where</span> <span class="pre">one</span> <span class="pre">exists.</span> <span class="pre">Tables</span> <span class="pre">and</span> <span class="pre">table</span> <span class="pre">rows</span> <span class="pre">refer</span> <span class="pre">to</span> <span class="pre">each</span> <span class="pre">other</span> <span class="pre">by</span> <span class="pre">table</span> <span class="pre">code,</span> <span class="pre">since</span> <span class="pre">that's</span> <span class="pre">what</span> <span class="pre">the</span> <span class="pre">section</span> <span class="pre">headings</span> <span class="pre">are.</span> <span class="pre">Fails</span> <span class="pre">if</span> <span class="pre">any</span> <span class="pre">object-type</span> <span class="pre">section</span> <span class="pre">has</span> <span class="pre">no</span> <span class="pre">category</span> <span class="pre">or</span> <span class="pre">any</span> <span class="pre">category</span> <span class="pre">has</span> <span class="pre">no</span> <span class="pre">section,</span> <span class="pre">so</span> <span class="pre">this</span> <span class="pre">step</span> <span class="pre">can't</span> <span class="pre">silently</span> <span class="pre">fall</span> <span class="pre">out</span> <span class="pre">of</span> <span class="pre">sync</span> <span class="pre">with</span></code>object_types.ipynb`.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>categories = json.loads((output_dir / "object_type_categories.json").read_text(encoding="utf-8"))
+
+CATEGORY_LABELS = {
+    "node": "Node",
+    "connecting_element": "Connecting element (two end nodes)",
+    "four_end_node_element": "Connecting element with four end nodes",
+    "bypass_element": "Bypass element (one end node)",
+    "table": "Table",
+    "table_row": "Table row",
+    "signal_model_element": "Signal model element",
+    "signal_model_connection": "Signal model connection line",
+    "graphical_object": "Graphical object",
+    "container_or_block": "Container or block element",
+    "attached_element": "Element attached to another network element",
+    "sub_record": "Sub-record of another element",
+    "settings": "Model-wide settings",
+    "reference_data": "Reference data (referenced by other elements)",
+    "not_insertable": "Not insertable (no SIR 3S table behind this object type)",
+    "unknown": "Unknown",
+}
+
+def meth(qualified_name):
+    # shown with its class (SIR3S_Model/SIR3S_View), so it's clear which one to call it on
+    return f":meth:`{qualified_name} &lt;sir3stoolkit.core.wrapper.{qualified_name}&gt;`"
+
+def table_code(object_type_name):
+    return f"``{categories[object_type_name]['table_name'] or object_type_name}``"
+
+def build_category_line(object_type_name):
+    entry = categories[object_type_name]
+    label = CATEGORY_LABELS[entry["category"]]
+    if "row_type" in entry:
+        label += f" (rows: {table_code(entry['row_type'])})"
+    if "table_type" in entry:
+        label += f" of {table_code(entry['table_type'])}"
+    if entry["create_with"]:
+        label += " - create with " + ", ".join(meth(m) for m in entry["create_with"])
+    if entry["category"] == "table":
+        label += f", add rows with {meth('SIR3S_Model.AddTableRow')}"
+    if entry["category"] == "four_end_node_element":
+        label += f", read its end nodes with {meth('SIR3S_Model.GetEndNodes')}"
+    return f"Element Category: {label}"
+
+build_category_line("Pipe"), build_category_line("PipeTable")
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(&#39;Element Category: Connecting element (two end nodes) - create with :meth:`SIR3S_Model.AddNewPipe &lt;sir3stoolkit.core.wrapper.SIR3S_Model.AddNewPipe&gt;`&#39;,
+ &#39;Element Category: Table (rows: ``DTRO_ROWD``) - create with :meth:`SIR3S_Model.InsertElement &lt;sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement&gt;`, add rows with :meth:`SIR3S_Model.AddTableRow &lt;sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow&gt;`&#39;)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>object_type_line_pat = re.compile(r"^Object Type: ``(?P&lt;name&gt;[^`]+)``\r?\n", re.MULTILINE)
+labelled = []
+
+def add_category_line(m):
+    labelled.append(m.group("name"))
+    return m.group(0) + "\n" + build_category_line(m.group("name")) + "\n"
+
+new_rst_text = object_type_line_pat.sub(add_category_line, new_rst_text)
+
+assert len(labelled) == len(set(labelled)), "An object type has more than one section"
+assert set(labelled) == set(categories), (
+    f"Sections without category: {sorted(set(labelled) - set(categories))}, "
+    f"categories without section: {sorted(set(categories) - set(labelled))}"
+)
+print(f"{len(labelled)} object-type sections labelled")
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+149 object-type sections labelled
+</pre></div></div>
+</div>
+<p>Also mentions the labels in the preamble note, right after the sentence added in the previous step.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>NOTE_ANCHOR = "which can deviate from the standard physical units here."
+CATEGORY_NOTE = (
+    "\n   Each object type lists its element category - determined via the Toolkit API where possible, by hand "
+    "otherwise, Unknown where neither was certain - and the toolkit method to create it, where one was shown to "
+    "create a real instance of it (see object_types_categories.ipynb)."
+)
+
+assert new_rst_text.count(NOTE_ANCHOR) == 1, "Expected preamble sentence not found - has the note changed?"
+new_rst_text = new_rst_text.replace(NOTE_ANCHOR, NOTE_ANCHOR + CATEGORY_NOTE, 1)
+print("Preamble note extended.")
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Preamble note extended.
+</pre></div></div>
+</div>
+</section>
 <section id="Save">
 <h2>Save<a class="headerlink" href="#Save" title="Link to this heading"></a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>out_path = output_dir / "object_types_props_results_snippet_global_mapped_with_descriptions.rst"

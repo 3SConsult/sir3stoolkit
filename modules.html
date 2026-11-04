@@ -6179,11 +6179,13 @@ Eg. [(‘KNOT’, ‘5428054456958551597’),</p>
 <p>Aggregated global view across configured network types.
 The below sections lists all table names from self.ObjectTypes_TableNames, along with their properties, result properties, and respective object type from self.ObjectTypes (needed for toolkit operations like self.InsertElement(), self.GetPropertiesOfElementType()).
 Result properties additionally list a Description and Standard Physical Unit where known, sourced from SIR 3S’s own .MX1 output plus a handful of manual additions (see result_props_descriptions.ipynb). Both are in German, as embedded in SIR 3S itself.
-Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.get_result_file_properties" title="sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.get_result_file_properties"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.get_result_file_properties()</span></code></a> to check what physical units were actually used in your local calculation, which can deviate from the standard physical units here.</p>
+Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.get_result_file_properties" title="sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.get_result_file_properties"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.get_result_file_properties()</span></code></a> to check what physical units were actually used in your local calculation, which can deviate from the standard physical units here.
+Each object type lists its Object Category - determined via the Toolkit API where possible, by hand otherwise, Unknown where neither was certain - and the toolkit method to create it, where one was shown to create a real instance of it (see object_types_categories.ipynb).</p>
 </div>
 <section id="agsn">
 <h3>AGSN<a class="headerlink" href="#agsn" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">AGSN_HydraulicProfile</span></code></p>
+<p>Object Category: Unknown</p>
 <section id="properties">
 <h4>Properties<a class="headerlink" href="#properties" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -6231,6 +6233,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="allg">
 <h3>ALLG<a class="headerlink" href="#allg" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">GeneralSection</span></code></p>
+<p>Object Category: Model-wide settings</p>
 <section id="id5">
 <h4>Properties<a class="headerlink" href="#id5" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -6513,6 +6516,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="antp">
 <h3>ANTP<a class="headerlink" href="#antp" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">DrivePowerTable</span></code></p>
+<p>Object Category: Table (rows: <code class="docutils literal notranslate"><span class="pre">ANTP_ROWS</span></code>) - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement" title="sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.InsertElement</span></code></a>, add rows with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddTableRow</span></code></a></p>
 <section id="id7">
 <h4>Properties<a class="headerlink" href="#id7" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -6554,6 +6558,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="antp-rows">
 <h3>ANTP_ROWS<a class="headerlink" href="#antp-rows" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">DrivePowerTable_Row</span></code></p>
+<p>Object Category: Table row of <code class="docutils literal notranslate"><span class="pre">ANTP</span></code> - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddTableRow</span></code></a></p>
 <section id="id9">
 <h4>Properties<a class="headerlink" href="#id9" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -6592,6 +6597,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="arrw">
 <h3>ARRW<a class="headerlink" href="#arrw" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">Arrow</span></code></p>
+<p>Object Category: Graphical object</p>
 <section id="id11">
 <h4>Properties<a class="headerlink" href="#id11" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -6651,6 +6657,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="atmo">
 <h3>ATMO<a class="headerlink" href="#atmo" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">Atmosphere</span></code></p>
+<p>Object Category: Model-wide settings</p>
 <section id="id13">
 <h4>Properties<a class="headerlink" href="#id13" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -6695,6 +6702,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="avos">
 <h3>AVOS<a class="headerlink" href="#avos" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">CrossSectionTable</span></code></p>
+<p>Object Category: Table (rows: <code class="docutils literal notranslate"><span class="pre">AVOS_ROWS</span></code>) - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement" title="sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.InsertElement</span></code></a>, add rows with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddTableRow</span></code></a></p>
 <section id="id15">
 <h4>Properties<a class="headerlink" href="#id15" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -6736,6 +6744,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="avos-rows">
 <h3>AVOS_ROWS<a class="headerlink" href="#avos-rows" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">CrossSectionTable_Row</span></code></p>
+<p>Object Category: Table row of <code class="docutils literal notranslate"><span class="pre">AVOS</span></code> - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddTableRow</span></code></a></p>
 <section id="id17">
 <h4>Properties<a class="headerlink" href="#id17" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -6774,6 +6783,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="beve">
 <h3>BEVE<a class="headerlink" href="#beve" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">VentValve</span></code></p>
+<p>Object Category: Bypass element (one end node) - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddNewBypassElement" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddNewBypassElement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddNewBypassElement</span></code></a></p>
 <section id="id19">
 <h4>Properties<a class="headerlink" href="#id19" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -6949,6 +6959,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="bewi">
 <h3>BEWI<a class="headerlink" href="#bewi" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">VentilatedPressureAirVessel</span></code></p>
+<p>Object Category: Bypass element (one end node) - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddNewBypassElement" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddNewBypassElement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddNewBypassElement</span></code></a></p>
 <section id="id21">
 <h4>Properties<a class="headerlink" href="#id21" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -7132,6 +7143,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="bref">
 <h3>BREF<a class="headerlink" href="#bref" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">SwitchInBlock</span></code></p>
+<p>Object Category: Container or block element</p>
 <section id="id23">
 <h4>Properties<a class="headerlink" href="#id23" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -7188,6 +7200,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="circ">
 <h3>CIRC<a class="headerlink" href="#circ" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">Circle</span></code></p>
+<p>Object Category: Graphical object</p>
 <section id="id25">
 <h4>Properties<a class="headerlink" href="#id25" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -7250,6 +7263,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="cont">
 <h3>CONT<a class="headerlink" href="#cont" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">ObjectContainerSymbol</span></code></p>
+<p>Object Category: Container or block element</p>
 <section id="id27">
 <h4>Properties<a class="headerlink" href="#id27" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -7330,6 +7344,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="crgl">
 <h3>CRGL<a class="headerlink" href="#crgl" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">ControlEngineeringNexus</span></code></p>
+<p>Object Category: Signal model connection line</p>
 <section id="id29">
 <h4>Properties<a class="headerlink" href="#id29" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -7371,6 +7386,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="dpgr">
 <h3>DPGR<a class="headerlink" href="#dpgr" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">DPGR_DataPointGroup</span></code></p>
+<p>Object Category: Reference data (referenced by other elements)</p>
 <section id="id31">
 <h4>Properties<a class="headerlink" href="#id31" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -7433,6 +7449,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="dpgr-dpkt">
 <h3>DPGR_DPKT<a class="headerlink" href="#dpgr-dpkt" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">DPGR_DPKT_DatapointDpgrConnection</span></code></p>
+<p>Object Category: Sub-record of another element</p>
 <section id="id33">
 <h4>Properties<a class="headerlink" href="#id33" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -7471,6 +7488,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="dpkt">
 <h3>DPKT<a class="headerlink" href="#dpkt" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">DPKT_Datapoint</span></code></p>
+<p>Object Category: Reference data (referenced by other elements)</p>
 <section id="id35">
 <h4>Properties<a class="headerlink" href="#id35" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -7620,6 +7638,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="dprg">
 <h3>DPRG<a class="headerlink" href="#dprg" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">DifferentialRegulator</span></code></p>
+<p>Object Category: Connecting element (two end nodes) - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddNewConnectingElement" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddNewConnectingElement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddNewConnectingElement</span></code></a></p>
 <section id="id37">
 <h4>Properties<a class="headerlink" href="#id37" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -7804,6 +7823,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="dtro">
 <h3>DTRO<a class="headerlink" href="#dtro" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">PipeTable</span></code></p>
+<p>Object Category: Table (rows: <code class="docutils literal notranslate"><span class="pre">DTRO_ROWD</span></code>) - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement" title="sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.InsertElement</span></code></a>, add rows with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddTableRow</span></code></a></p>
 <section id="id39">
 <h4>Properties<a class="headerlink" href="#id39" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -7851,6 +7871,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="dtro-rowd">
 <h3>DTRO_ROWD<a class="headerlink" href="#dtro-rowd" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">PipeTable_Row</span></code></p>
+<p>Object Category: Table row of <code class="docutils literal notranslate"><span class="pre">DTRO</span></code> - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddTableRow</span></code></a></p>
 <section id="id41">
 <h4>Properties<a class="headerlink" href="#id41" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -7919,6 +7940,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="ebes">
 <h3>EBES<a class="headerlink" href="#ebes" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">EBES_FeederGroups</span></code></p>
+<p>Object Category: Unknown</p>
 <section id="id43">
 <h4>Properties<a class="headerlink" href="#id43" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -7972,6 +7994,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="elementquery">
 <h3>ELEMENTQUERY<a class="headerlink" href="#elementquery" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">ElementQuery</span></code></p>
+<p>Object Category: Unknown</p>
 <section id="id45">
 <h4>Properties<a class="headerlink" href="#id45" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -8013,6 +8036,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="error-no-mapping-rart-controlmode">
 <h3>ERROR_NO_MAPPING__RART_ControlMode<a class="headerlink" href="#error-no-mapping-rart-controlmode" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">RART_ControlMode</span></code></p>
+<p>Object Category: Not insertable (no SIR 3S table behind this object type)</p>
 <section id="id47">
 <h4>Properties<a class="headerlink" href="#id47" title="Link to this heading"></a></h4>
 <p>No properties found.</p>
@@ -8025,6 +8049,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="error-no-mapping-sirgraf">
 <h3>ERROR_NO_MAPPING__SIRGRAF<a class="headerlink" href="#error-no-mapping-sirgraf" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">SIRGRAF</span></code></p>
+<p>Object Category: Model-wide settings</p>
 <section id="id49">
 <h4>Properties<a class="headerlink" href="#id49" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -8177,6 +8202,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="error-no-mapping-unknown">
 <h3>ERROR_NO_MAPPING__Unknown<a class="headerlink" href="#error-no-mapping-unknown" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">Unknown</span></code></p>
+<p>Object Category: Not insertable (no SIR 3S table behind this object type)</p>
 <section id="id51">
 <h4>Properties<a class="headerlink" href="#id51" title="Link to this heading"></a></h4>
 <p>No properties found.</p>
@@ -8189,6 +8215,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="etam">
 <h3>ETAM<a class="headerlink" href="#etam" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">DriveEfficiencyTable</span></code></p>
+<p>Object Category: Table (rows: <code class="docutils literal notranslate"><span class="pre">ETAM_ROWS</span></code>) - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement" title="sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.InsertElement</span></code></a>, add rows with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddTableRow</span></code></a></p>
 <section id="id53">
 <h4>Properties<a class="headerlink" href="#id53" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -8230,6 +8257,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="etam-rows">
 <h3>ETAM_ROWS<a class="headerlink" href="#etam-rows" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">DriveEfficiencyTable_Row</span></code></p>
+<p>Object Category: Table row of <code class="docutils literal notranslate"><span class="pre">ETAM</span></code> - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddTableRow</span></code></a></p>
 <section id="id55">
 <h4>Properties<a class="headerlink" href="#id55" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -8268,6 +8296,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="etar">
 <h3>ETAR<a class="headerlink" href="#etar" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">EnergyRecoveryTable</span></code></p>
+<p>Object Category: Table (rows: <code class="docutils literal notranslate"><span class="pre">ETAR_ROWS</span></code>) - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement" title="sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.InsertElement</span></code></a>, add rows with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddTableRow</span></code></a></p>
 <section id="id57">
 <h4>Properties<a class="headerlink" href="#id57" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -8309,6 +8338,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="etar-rows">
 <h3>ETAR_ROWS<a class="headerlink" href="#etar-rows" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">EnergyRecoveryTable_Row</span></code></p>
+<p>Object Category: Table row of <code class="docutils literal notranslate"><span class="pre">ETAR</span></code> - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddTableRow</span></code></a></p>
 <section id="id59">
 <h4>Properties<a class="headerlink" href="#id59" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -8347,6 +8377,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="etau">
 <h3>ETAU<a class="headerlink" href="#etau" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">EfficiencyConverterTable</span></code></p>
+<p>Object Category: Table (rows: <code class="docutils literal notranslate"><span class="pre">ETAU_ROWS</span></code>) - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement" title="sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.InsertElement</span></code></a>, add rows with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddTableRow</span></code></a></p>
 <section id="id61">
 <h4>Properties<a class="headerlink" href="#id61" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -8388,6 +8419,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="etau-rows">
 <h3>ETAU_ROWS<a class="headerlink" href="#etau-rows" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">EfficiencyConverterTable_Row</span></code></p>
+<p>Object Category: Table row of <code class="docutils literal notranslate"><span class="pre">ETAU</span></code> - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddTableRow</span></code></a></p>
 <section id="id63">
 <h4>Properties<a class="headerlink" href="#id63" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -8426,6 +8458,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="fknl">
 <h3>FKNL<a class="headerlink" href="#fknl" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">FreeDuct</span></code></p>
+<p>Object Category: Unknown</p>
 <section id="id65">
 <h4>Properties<a class="headerlink" href="#id65" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -8554,6 +8587,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="fqps">
 <h3>FQPS<a class="headerlink" href="#fqps" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">FluidQualityParamSet</span></code></p>
+<p>Object Category: Reference data (referenced by other elements)</p>
 <section id="id67">
 <h4>Properties<a class="headerlink" href="#id67" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -8751,6 +8785,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="fqps-bz">
 <h3>FQPS_BZ<a class="headerlink" href="#fqps-bz" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">FluidQualityParamSet_OS</span></code></p>
+<p>Object Category: Sub-record of another element</p>
 <section id="id69">
 <h4>Properties<a class="headerlink" href="#id69" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -8816,6 +8851,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="fstf">
 <h3>FSTF<a class="headerlink" href="#fstf" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">FluidThermalPropertyGroup</span></code></p>
+<p>Object Category: Reference data (referenced by other elements)</p>
 <section id="id71">
 <h4>Properties<a class="headerlink" href="#id71" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -8902,6 +8938,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="fwbz">
 <h3>FWBZ<a class="headerlink" href="#fwbz" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">FWBZ_DistrictHeatingReferenceValues</span></code></p>
+<p>Object Category: Unknown</p>
 <section id="id73">
 <h4>Properties<a class="headerlink" href="#id73" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -8958,6 +8995,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="fwea">
 <h3>FWEA<a class="headerlink" href="#fwea" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">HeatFeederConsumerStation</span></code></p>
+<p>Object Category: Connecting element (two end nodes) - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddNewConnectingElement" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddNewConnectingElement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddNewConnectingElement</span></code></a></p>
 <section id="id75">
 <h4>Properties<a class="headerlink" href="#id75" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -9514,6 +9552,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="fwes">
 <h3>FWES<a class="headerlink" href="#fwes" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">DistrictHeatingFeeder</span></code></p>
+<p>Object Category: Connecting element (two end nodes) - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddNewConnectingElement" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddNewConnectingElement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddNewConnectingElement</span></code></a></p>
 <section id="id77">
 <h4>Properties<a class="headerlink" href="#id77" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -9707,6 +9746,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="fwvb">
 <h3>FWVB<a class="headerlink" href="#fwvb" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">DistrictHeatingConsumer</span></code></p>
+<p>Object Category: Connecting element (two end nodes) - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddNewConnectingElement" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddNewConnectingElement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddNewConnectingElement</span></code></a></p>
 <section id="id79">
 <h4>Properties<a class="headerlink" href="#id79" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -10045,6 +10085,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="fwwu">
 <h3>FWWU<a class="headerlink" href="#fwwu" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">HeatExchanger</span></code></p>
+<p>Object Category: Connecting element with four end nodes - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement" title="sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.InsertElement</span></code></a>, read its end nodes with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetEndNodes" title="sir3stoolkit.core.wrapper.SIR3S_Model.GetEndNodes"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.GetEndNodes</span></code></a></p>
 <section id="id81">
 <h4>Properties<a class="headerlink" href="#id81" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -10307,6 +10348,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="gkmp">
 <h3>GKMP<a class="headerlink" href="#gkmp" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">GasComponent</span></code></p>
+<p>Object Category: Reference data (referenced by other elements)</p>
 <section id="id83">
 <h4>Properties<a class="headerlink" href="#id83" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -10405,6 +10447,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="gmix">
 <h3>GMIX<a class="headerlink" href="#gmix" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">GasMixture</span></code></p>
+<p>Object Category: Reference data (referenced by other elements)</p>
 <section id="id85">
 <h4>Properties<a class="headerlink" href="#id85" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -10578,6 +10621,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="grav">
 <h3>GRAV<a class="headerlink" href="#grav" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">Gravitation</span></code></p>
+<p>Object Category: Model-wide settings</p>
 <section id="id87">
 <h4>Properties<a class="headerlink" href="#id87" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -10619,6 +10663,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="gtxt">
 <h3>GTXT<a class="headerlink" href="#gtxt" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">Text</span></code></p>
+<p>Object Category: Graphical object - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_View.AddNewText" title="sir3stoolkit.core.wrapper.SIR3S_View.AddNewText"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_View.AddNewText</span></code></a></p>
 <section id="id89">
 <h4>Properties<a class="headerlink" href="#id89" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -10684,6 +10729,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="gvwk">
 <h3>GVWK<a class="headerlink" href="#gvwk" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">HeaterCooler</span></code></p>
+<p>Object Category: Connecting element (two end nodes) - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddNewConnectingElement" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddNewConnectingElement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddNewConnectingElement</span></code></a></p>
 <section id="id91">
 <h4>Properties<a class="headerlink" href="#id91" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -10817,6 +10863,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="haus">
 <h3>HAUS<a class="headerlink" href="#haus" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">House</span></code></p>
+<p>Object Category: Element attached to another network element - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_View.AddNewHouse" title="sir3stoolkit.core.wrapper.SIR3S_View.AddNewHouse"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_View.AddNewHouse</span></code></a></p>
 <section id="id93">
 <h4>Properties<a class="headerlink" href="#id93" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -10900,6 +10947,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="hydr">
 <h3>HYDR<a class="headerlink" href="#hydr" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">Hydrant</span></code></p>
+<p>Object Category: Element attached to another network element - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_View.AddNewHydrant" title="sir3stoolkit.core.wrapper.SIR3S_View.AddNewHydrant"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_View.AddNewHydrant</span></code></a></p>
 <section id="id95">
 <h4>Properties<a class="headerlink" href="#id95" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -11061,6 +11109,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="klap">
 <h3>KLAP<a class="headerlink" href="#klap" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">FlapValve</span></code></p>
+<p>Object Category: Connecting element (two end nodes) - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddNewConnectingElement" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddNewConnectingElement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddNewConnectingElement</span></code></a></p>
 <section id="id97">
 <h4>Properties<a class="headerlink" href="#id97" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -11224,6 +11273,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="knot">
 <h3>KNOT<a class="headerlink" href="#knot" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">Node</span></code></p>
+<p>Object Category: Node - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddNewNode" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddNewNode"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddNewNode</span></code></a></p>
 <section id="id99">
 <h4>Properties<a class="headerlink" href="#id99" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -11656,6 +11706,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="komk">
 <h3>KOMK<a class="headerlink" href="#komk" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">CompressorTable</span></code></p>
+<p>Object Category: Table (rows: <code class="docutils literal notranslate"><span class="pre">KOMK_ROWS</span></code>) - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement" title="sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.InsertElement</span></code></a>, add rows with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddTableRow</span></code></a></p>
 <section id="id101">
 <h4>Properties<a class="headerlink" href="#id101" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -11718,6 +11769,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="komk-rows">
 <h3>KOMK_ROWS<a class="headerlink" href="#komk-rows" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">CompressorTable_Row</span></code></p>
+<p>Object Category: Table row of <code class="docutils literal notranslate"><span class="pre">KOMK</span></code> - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddTableRow</span></code></a></p>
 <section id="id103">
 <h4>Properties<a class="headerlink" href="#id103" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -11765,6 +11817,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="komp">
 <h3>KOMP<a class="headerlink" href="#komp" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">Compressor</span></code></p>
+<p>Object Category: Connecting element (two end nodes) - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddNewConnectingElement" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddNewConnectingElement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddNewConnectingElement</span></code></a></p>
 <section id="id105">
 <h4>Properties<a class="headerlink" href="#id105" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -11981,6 +12034,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="layr">
 <h3>LAYR<a class="headerlink" href="#layr" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">LAYR_Layer</span></code></p>
+<p>Object Category: Unknown</p>
 <section id="id107">
 <h4>Properties<a class="headerlink" href="#id107" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -12028,6 +12082,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="lfkt">
 <h3>LFKT<a class="headerlink" href="#lfkt" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">LoadFactorTable</span></code></p>
+<p>Object Category: Table (rows: <code class="docutils literal notranslate"><span class="pre">LFKT_ROWT</span></code>) - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement" title="sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.InsertElement</span></code></a>, add rows with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddTableRow</span></code></a></p>
 <section id="id109">
 <h4>Properties<a class="headerlink" href="#id109" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -12114,6 +12169,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="lfkt-rowt">
 <h3>LFKT_ROWT<a class="headerlink" href="#lfkt-rowt" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">LoadFactorTable_Row</span></code></p>
+<p>Object Category: Table row of <code class="docutils literal notranslate"><span class="pre">LFKT</span></code> - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddTableRow</span></code></a></p>
 <section id="id111">
 <h4>Properties<a class="headerlink" href="#id111" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -12155,6 +12211,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="ltgr">
 <h3>LTGR<a class="headerlink" href="#ltgr" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">PipeGroup</span></code></p>
+<p>Object Category: Reference data (referenced by other elements)</p>
 <section id="id113">
 <h4>Properties<a class="headerlink" href="#id113" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -12199,6 +12256,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="mreg">
 <h3>MREG<a class="headerlink" href="#mreg" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">FlowControlUnit</span></code></p>
+<p>Object Category: Connecting element (two end nodes) - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddNewConnectingElement" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddNewConnectingElement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddNewConnectingElement</span></code></a></p>
 <section id="id115">
 <h4>Properties<a class="headerlink" href="#id115" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -12398,6 +12456,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="nrcv">
 <h3>NRCV<a class="headerlink" href="#nrcv" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">NumericalDisplay</span></code></p>
+<p>Object Category: Graphical object - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_View.AddNewNumericalDisplay" title="sir3stoolkit.core.wrapper.SIR3S_View.AddNewNumericalDisplay"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_View.AddNewNumericalDisplay</span></code></a></p>
 <section id="id117">
 <h4>Properties<a class="headerlink" href="#id117" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -12514,6 +12573,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="nsch">
 <h3>NSCH<a class="headerlink" href="#nsch" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">NetValve</span></code></p>
+<p>Object Category: Element attached to another network element - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_View.AddNewValveOnPipe" title="sir3stoolkit.core.wrapper.SIR3S_View.AddNewValveOnPipe"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_View.AddNewValveOnPipe</span></code></a></p>
 <section id="id119">
 <h4>Properties<a class="headerlink" href="#id119" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -12602,6 +12662,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="obeh">
 <h3>OBEH<a class="headerlink" href="#obeh" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">OpenContainer</span></code></p>
+<p>Object Category: Bypass element (one end node) - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddNewBypassElement" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddNewBypassElement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddNewBypassElement</span></code></a></p>
 <section id="id121">
 <h4>Properties<a class="headerlink" href="#id121" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -12788,6 +12849,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="oval">
 <h3>OVAL<a class="headerlink" href="#oval" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">Oval</span></code></p>
+<p>Object Category: Graphical object</p>
 <section id="id123">
 <h4>Properties<a class="headerlink" href="#id123" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -12841,6 +12903,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="pari">
 <h3>PARI<a class="headerlink" href="#pari" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">CalcPari</span></code></p>
+<p>Object Category: Unknown</p>
 <section id="id125">
 <h4>Properties<a class="headerlink" href="#id125" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -12903,6 +12966,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="parz">
 <h3>PARZ<a class="headerlink" href="#parz" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">PARZ_TransientCalculationParameters</span></code></p>
+<p>Object Category: Model-wide settings</p>
 <section id="id127">
 <h4>Properties<a class="headerlink" href="#id127" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -12956,6 +13020,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="pgrp">
 <h3>PGRP<a class="headerlink" href="#pgrp" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">PumpGroup</span></code></p>
+<p>Object Category: Unknown</p>
 <section id="id129">
 <h4>Properties<a class="headerlink" href="#id129" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -13148,6 +13213,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="pgrp-pump">
 <h3>PGRP_PUMP<a class="headerlink" href="#pgrp-pump" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">PumpOfPumpGroup</span></code></p>
+<p>Object Category: Sub-record of another element</p>
 <section id="id131">
 <h4>Properties<a class="headerlink" href="#id131" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -13212,6 +13278,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="phi1">
 <h3>PHI1<a class="headerlink" href="#phi1" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">ValveLiftTable</span></code></p>
+<p>Object Category: Table (rows: <code class="docutils literal notranslate"><span class="pre">PHI1_ROWT</span></code>) - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement" title="sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.InsertElement</span></code></a>, add rows with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddTableRow</span></code></a></p>
 <section id="id133">
 <h4>Properties<a class="headerlink" href="#id133" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -13270,6 +13337,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="phi1-rowt">
 <h3>PHI1_ROWT<a class="headerlink" href="#phi1-rowt" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">ValveLiftTable_Row</span></code></p>
+<p>Object Category: Table row of <code class="docutils literal notranslate"><span class="pre">PHI1</span></code> - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddTableRow</span></code></a></p>
 <section id="id135">
 <h4>Properties<a class="headerlink" href="#id135" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -13311,6 +13379,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="phi2">
 <h3>PHI2<a class="headerlink" href="#phi2" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">VentOpenCloseTable</span></code></p>
+<p>Object Category: Table (rows: <code class="docutils literal notranslate"><span class="pre">PHI2_ROWS</span></code>) - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement" title="sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.InsertElement</span></code></a>, add rows with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddTableRow</span></code></a></p>
 <section id="id137">
 <h4>Properties<a class="headerlink" href="#id137" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -13352,6 +13421,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="phi2-rows">
 <h3>PHI2_ROWS<a class="headerlink" href="#phi2-rows" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">VentOpenCloseTable_Row</span></code></p>
+<p>Object Category: Table row of <code class="docutils literal notranslate"><span class="pre">PHI2</span></code> - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddTableRow</span></code></a></p>
 <section id="id139">
 <h4>Properties<a class="headerlink" href="#id139" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -13393,6 +13463,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="phiv">
 <h3>PHIV<a class="headerlink" href="#phiv" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">NonReturnValvesTable</span></code></p>
+<p>Object Category: Table (rows: <code class="docutils literal notranslate"><span class="pre">PHIV_ROWS</span></code>) - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement" title="sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.InsertElement</span></code></a>, add rows with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddTableRow</span></code></a></p>
 <section id="id141">
 <h4>Properties<a class="headerlink" href="#id141" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -13431,6 +13502,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="phiv-rows">
 <h3>PHIV_ROWS<a class="headerlink" href="#phiv-rows" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">NonReturnValvesTable_Row</span></code></p>
+<p>Object Category: Table row of <code class="docutils literal notranslate"><span class="pre">PHIV</span></code> - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddTableRow</span></code></a></p>
 <section id="id143">
 <h4>Properties<a class="headerlink" href="#id143" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -13469,6 +13541,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="phtr">
 <h3>PHTR<a class="headerlink" href="#phtr" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">PhaseSeparation</span></code></p>
+<p>Object Category: Connecting element (two end nodes) - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddNewConnectingElement" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddNewConnectingElement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddNewConnectingElement</span></code></a></p>
 <section id="id145">
 <h4>Properties<a class="headerlink" href="#id145" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -13596,6 +13669,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="plyg">
 <h3>PLYG<a class="headerlink" href="#plyg" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">Polygon</span></code></p>
+<p>Object Category: Graphical object</p>
 <section id="id147">
 <h4>Properties<a class="headerlink" href="#id147" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -13658,6 +13732,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="poly">
 <h3>POLY<a class="headerlink" href="#poly" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">Polyline</span></code></p>
+<p>Object Category: Graphical object</p>
 <section id="id149">
 <h4>Properties<a class="headerlink" href="#id149" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -13711,6 +13786,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="preg">
 <h3>PREG<a class="headerlink" href="#preg" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">PressureRegulator</span></code></p>
+<p>Object Category: Connecting element (two end nodes) - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddNewConnectingElement" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddNewConnectingElement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddNewConnectingElement</span></code></a></p>
 <section id="id151">
 <h4>Properties<a class="headerlink" href="#id151" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -13896,6 +13972,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="pumd">
 <h3>PUMD<a class="headerlink" href="#pumd" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">PumpSpeedTable</span></code></p>
+<p>Object Category: Table (rows: <code class="docutils literal notranslate"><span class="pre">PUMD_ROWT</span></code>) - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement" title="sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.InsertElement</span></code></a>, add rows with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddTableRow</span></code></a></p>
 <section id="id153">
 <h4>Properties<a class="headerlink" href="#id153" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -13954,6 +14031,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="pumd-rowt">
 <h3>PUMD_ROWT<a class="headerlink" href="#pumd-rowt" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">PumpSpeedTable_Row</span></code></p>
+<p>Object Category: Table row of <code class="docutils literal notranslate"><span class="pre">PUMD</span></code> - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddTableRow</span></code></a></p>
 <section id="id155">
 <h4>Properties<a class="headerlink" href="#id155" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -13995,6 +14073,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="pumk">
 <h3>PUMK<a class="headerlink" href="#pumk" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">PumpCharTable</span></code></p>
+<p>Object Category: Table (rows: <code class="docutils literal notranslate"><span class="pre">PUMK_ROWS</span></code>) - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement" title="sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.InsertElement</span></code></a>, add rows with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddTableRow</span></code></a></p>
 <section id="id157">
 <h4>Properties<a class="headerlink" href="#id157" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -14045,6 +14124,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="pumk-rows">
 <h3>PUMK_ROWS<a class="headerlink" href="#pumk-rows" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">PumpCharTable_Row</span></code></p>
+<p>Object Category: Table row of <code class="docutils literal notranslate"><span class="pre">PUMK</span></code> - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddTableRow</span></code></a></p>
 <section id="id159">
 <h4>Properties<a class="headerlink" href="#id159" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -14092,6 +14172,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="pump">
 <h3>PUMP<a class="headerlink" href="#pump" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">Pump</span></code></p>
+<p>Object Category: Connecting element (two end nodes) - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddNewConnectingElement" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddNewConnectingElement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddNewConnectingElement</span></code></a></p>
 <section id="id161">
 <h4>Properties<a class="headerlink" href="#id161" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -14627,6 +14708,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="pvar">
 <h3>PVAR<a class="headerlink" href="#pvar" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">VarPressureTable</span></code></p>
+<p>Object Category: Table (rows: <code class="docutils literal notranslate"><span class="pre">PVAR_ROWT</span></code>) - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement" title="sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.InsertElement</span></code></a>, add rows with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddTableRow</span></code></a></p>
 <section id="id163">
 <h4>Properties<a class="headerlink" href="#id163" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -14685,6 +14767,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="pvar-rowt">
 <h3>PVAR_ROWT<a class="headerlink" href="#pvar-rowt" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">VarPressureTable_Row</span></code></p>
+<p>Object Category: Table row of <code class="docutils literal notranslate"><span class="pre">PVAR</span></code> - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddTableRow</span></code></a></p>
 <section id="id165">
 <h4>Properties<a class="headerlink" href="#id165" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -14726,6 +14809,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="pzon">
 <h3>PZON<a class="headerlink" href="#pzon" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">PressureZone</span></code></p>
+<p>Object Category: Reference data (referenced by other elements)</p>
 <section id="id167">
 <h4>Properties<a class="headerlink" href="#id167" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -14788,6 +14872,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="qvar">
 <h3>QVAR<a class="headerlink" href="#qvar" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">VarFlowTable</span></code></p>
+<p>Object Category: Table (rows: <code class="docutils literal notranslate"><span class="pre">QVAR_ROWT</span></code>) - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement" title="sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.InsertElement</span></code></a>, add rows with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddTableRow</span></code></a></p>
 <section id="id169">
 <h4>Properties<a class="headerlink" href="#id169" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -14874,6 +14959,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="qvar-rowt">
 <h3>QVAR_ROWT<a class="headerlink" href="#qvar-rowt" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">VarFlowTable_Row</span></code></p>
+<p>Object Category: Table row of <code class="docutils literal notranslate"><span class="pre">QVAR</span></code> - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddTableRow</span></code></a></p>
 <section id="id171">
 <h4>Properties<a class="headerlink" href="#id171" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -14915,6 +15001,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="radd">
 <h3>RADD<a class="headerlink" href="#radd" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">SummingPoint</span></code></p>
+<p>Object Category: Signal model element</p>
 <section id="id173">
 <h4>Properties<a class="headerlink" href="#id173" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -15008,6 +15095,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="rart">
 <h3>RART<a class="headerlink" href="#rart" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">ControlMode</span></code></p>
+<p>Object Category: Unknown</p>
 <section id="id175">
 <h4>Properties<a class="headerlink" href="#id175" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -15107,6 +15195,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="rcpl">
 <h3>RCPL<a class="headerlink" href="#rcpl" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">ControlPointTable</span></code></p>
+<p>Object Category: Table (rows: <code class="docutils literal notranslate"><span class="pre">RCPL_ROWT</span></code>) - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement" title="sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.InsertElement</span></code></a>, add rows with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddTableRow</span></code></a></p>
 <section id="id177">
 <h4>Properties<a class="headerlink" href="#id177" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -15177,6 +15266,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="rcpl-rowt">
 <h3>RCPL_ROWT<a class="headerlink" href="#rcpl-rowt" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">ControlPointTable_Row</span></code></p>
+<p>Object Category: Table row of <code class="docutils literal notranslate"><span class="pre">RCPL</span></code> - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddTableRow</span></code></a></p>
 <section id="id179">
 <h4>Properties<a class="headerlink" href="#id179" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -15246,6 +15336,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="rdiv">
 <h3>RDIV<a class="headerlink" href="#rdiv" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">Divider</span></code></p>
+<p>Object Category: Signal model element</p>
 <section id="id181">
 <h4>Properties<a class="headerlink" href="#id181" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -15342,6 +15433,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="rect">
 <h3>RECT<a class="headerlink" href="#rect" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">Rectangle</span></code></p>
+<p>Object Category: Graphical object</p>
 <section id="id183">
 <h4>Properties<a class="headerlink" href="#id183" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -15404,6 +15496,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="regp">
 <h3>REGP<a class="headerlink" href="#regp" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">REGP_ControlParameters</span></code></p>
+<p>Object Category: Model-wide settings</p>
 <section id="id185">
 <h4>Properties<a class="headerlink" href="#id185" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -15442,6 +15535,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="regv">
 <h3>REGV<a class="headerlink" href="#regv" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">ControlValve</span></code></p>
+<p>Object Category: Connecting element (two end nodes) - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddNewConnectingElement" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddNewConnectingElement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddNewConnectingElement</span></code></a></p>
 <section id="id187">
 <h4>Properties<a class="headerlink" href="#id187" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -15622,6 +15716,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="rfkt">
 <h3>RFKT<a class="headerlink" href="#rfkt" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">FunctionGenerator</span></code></p>
+<p>Object Category: Signal model element</p>
 <section id="id189">
 <h4>Properties<a class="headerlink" href="#id189" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -15718,6 +15813,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="rhys">
 <h3>RHYS<a class="headerlink" href="#rhys" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">Histeresis</span></code></p>
+<p>Object Category: Signal model element</p>
 <section id="id191">
 <h4>Properties<a class="headerlink" href="#id191" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -15821,6 +15917,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="rint">
 <h3>RINT<a class="headerlink" href="#rint" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">Integrator</span></code></p>
+<p>Object Category: Signal model element</p>
 <section id="id193">
 <h4>Properties<a class="headerlink" href="#id193" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -15910,6 +16007,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="rlsr">
 <h3>RLSR<a class="headerlink" href="#rlsr" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">LogicalStorage</span></code></p>
+<p>Object Category: Signal model element</p>
 <section id="id195">
 <h4>Properties<a class="headerlink" href="#id195" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -16000,6 +16098,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="rlvg">
 <h3>RLVG<a class="headerlink" href="#rlvg" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">LogicalComparison</span></code></p>
+<p>Object Category: Signal model element</p>
 <section id="id197">
 <h4>Properties<a class="headerlink" href="#id197" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -16093,6 +16192,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="rmes">
 <h3>RMES<a class="headerlink" href="#rmes" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">Transmitter</span></code></p>
+<p>Object Category: Signal model element</p>
 <section id="id199">
 <h4>Properties<a class="headerlink" href="#id199" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -16210,6 +16310,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="rmes-dpts">
 <h3>RMES_DPTS<a class="headerlink" href="#rmes-dpts" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">RMES_DPTS_RmesInternalDataPoint</span></code></p>
+<p>Object Category: Sub-record of another element</p>
 <section id="id201">
 <h4>Properties<a class="headerlink" href="#id201" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -16272,6 +16373,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="rmma">
 <h3>RMMA<a class="headerlink" href="#rmma" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">MinMaxSelection</span></code></p>
+<p>Object Category: Signal model element</p>
 <section id="id203">
 <h4>Properties<a class="headerlink" href="#id203" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -16365,6 +16467,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="rmul">
 <h3>RMUL<a class="headerlink" href="#rmul" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">Multiplier</span></code></p>
+<p>Object Category: Signal model element</p>
 <section id="id205">
 <h4>Properties<a class="headerlink" href="#id205" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -16465,6 +16568,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="rohr">
 <h3>ROHR<a class="headerlink" href="#rohr" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">Pipe</span></code></p>
+<p>Object Category: Connecting element (two end nodes) - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddNewPipe" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddNewPipe"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddNewPipe</span></code></a></p>
 <section id="id207">
 <h4>Properties<a class="headerlink" href="#id207" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -16960,6 +17064,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="rohr-vrtx">
 <h3>ROHR_VRTX<a class="headerlink" href="#rohr-vrtx" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">PipeVertex</span></code></p>
+<p>Object Category: Sub-record of another element</p>
 <section id="id209">
 <h4>Properties<a class="headerlink" href="#id209" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -17065,6 +17170,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="rpfl">
 <h3>RPFL<a class="headerlink" href="#rpfl" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">DirectionalArrow</span></code></p>
+<p>Object Category: Graphical object - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_View.AddNewDirectionalArrow" title="sir3stoolkit.core.wrapper.SIR3S_View.AddNewDirectionalArrow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_View.AddNewDirectionalArrow</span></code></a></p>
 <section id="id211">
 <h4>Properties<a class="headerlink" href="#id211" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -17139,6 +17245,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="rpid">
 <h3>RPID<a class="headerlink" href="#rpid" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">PidController</span></code></p>
+<p>Object Category: Signal model element</p>
 <section id="id213">
 <h4>Properties<a class="headerlink" href="#id213" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -17269,6 +17376,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="rpt1">
 <h3>RPT1<a class="headerlink" href="#rpt1" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">Pt1Controller</span></code></p>
+<p>Object Category: Signal model element</p>
 <section id="id215">
 <h4>Properties<a class="headerlink" href="#id215" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -17358,6 +17466,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="rrct">
 <h3>RRCT<a class="headerlink" href="#rrct" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">RoundRectangle</span></code></p>
+<p>Object Category: Graphical object</p>
 <section id="id217">
 <h4>Properties<a class="headerlink" href="#id217" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -17420,6 +17529,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="rslw">
 <h3>RSLW<a class="headerlink" href="#rslw" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">SetpointDevice</span></code></p>
+<p>Object Category: Signal model element</p>
 <section id="id219">
 <h4>Properties<a class="headerlink" href="#id219" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -17559,6 +17669,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="rste">
 <h3>RSTE<a class="headerlink" href="#rste" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">ControlVariableConverterRSTE</span></code></p>
+<p>Object Category: Signal model element</p>
 <section id="id221">
 <h4>Properties<a class="headerlink" href="#id221" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -17825,6 +17936,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="rstn">
 <h3>RSTN<a class="headerlink" href="#rstn" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">ControlVariableConverter</span></code></p>
+<p>Object Category: Signal model element</p>
 <section id="id223">
 <h4>Properties<a class="headerlink" href="#id223" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -18058,6 +18170,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="rtot">
 <h3>RTOT<a class="headerlink" href="#rtot" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">DeadTimeElement</span></code></p>
+<p>Object Category: Signal model element</p>
 <section id="id225">
 <h4>Properties<a class="headerlink" href="#id225" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -18144,6 +18257,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="rues">
 <h3>RUES<a class="headerlink" href="#rues" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">TransitionSymbol</span></code></p>
+<p>Object Category: Signal model element</p>
 <section id="id227">
 <h4>Properties<a class="headerlink" href="#id227" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -18212,6 +18326,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="sive">
 <h3>SIVE<a class="headerlink" href="#sive" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">SafetyValve</span></code></p>
+<p>Object Category: Connecting element (two end nodes) - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddNewConnectingElement" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddNewConnectingElement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddNewConnectingElement</span></code></a></p>
 <section id="id229">
 <h4>Properties<a class="headerlink" href="#id229" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -18378,6 +18493,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="soko">
 <h3>SOKO<a class="headerlink" href="#soko" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">SolarCollector</span></code></p>
+<p>Object Category: Reference data (referenced by other elements)</p>
 <section id="id231">
 <h4>Properties<a class="headerlink" href="#id231" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -18518,6 +18634,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="splz">
 <h3>SPLZ<a class="headerlink" href="#splz" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">SPLZ_TimeSeries</span></code></p>
+<p>Object Category: Unknown</p>
 <section id="id233">
 <h4>Properties<a class="headerlink" href="#id233" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -18553,6 +18670,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="srat">
 <h3>SRAT<a class="headerlink" href="#srat" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">DamageRatesTable</span></code></p>
+<p>Object Category: Table (rows: <code class="docutils literal notranslate"><span class="pre">SRAT_ROWS</span></code>) - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement" title="sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.InsertElement</span></code></a>, add rows with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddTableRow</span></code></a></p>
 <section id="id235">
 <h4>Properties<a class="headerlink" href="#id235" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -18594,6 +18712,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="srat-rows">
 <h3>SRAT_ROWS<a class="headerlink" href="#srat-rows" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">DamageRatesTable_Row</span></code></p>
+<p>Object Category: Table row of <code class="docutils literal notranslate"><span class="pre">SRAT</span></code> - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddTableRow</span></code></a></p>
 <section id="id237">
 <h4>Properties<a class="headerlink" href="#id237" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -18635,6 +18754,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="stof">
 <h3>STOF<a class="headerlink" href="#stof" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">ThermophysPropTable</span></code></p>
+<p>Object Category: Table (rows: <code class="docutils literal notranslate"><span class="pre">STOF_ROWS</span></code>) - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement" title="sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.InsertElement</span></code></a>, add rows with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddTableRow</span></code></a></p>
 <section id="id239">
 <h4>Properties<a class="headerlink" href="#id239" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -18676,6 +18796,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="stof-rows">
 <h3>STOF_ROWS<a class="headerlink" href="#stof-rows" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">ThermophysPropTable_Row</span></code></p>
+<p>Object Category: Table row of <code class="docutils literal notranslate"><span class="pre">STOF</span></code> - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddTableRow</span></code></a></p>
 <section id="id241">
 <h4>Properties<a class="headerlink" href="#id241" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -18726,6 +18847,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="strasse">
 <h3>STRASSE<a class="headerlink" href="#strasse" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">Street</span></code></p>
+<p>Object Category: Reference data (referenced by other elements) - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_View.AddNewStreet" title="sir3stoolkit.core.wrapper.SIR3S_View.AddNewStreet"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_View.AddNewStreet</span></code></a></p>
 <section id="id243">
 <h4>Properties<a class="headerlink" href="#id243" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -18773,6 +18895,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="stro">
 <h3>STRO<a class="headerlink" href="#stro" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">StandPipe</span></code></p>
+<p>Object Category: Bypass element (one end node) - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddNewBypassElement" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddNewBypassElement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddNewBypassElement</span></code></a></p>
 <section id="id245">
 <h4>Properties<a class="headerlink" href="#id245" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -18931,6 +19054,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="swvt">
 <h3>SWVT<a class="headerlink" href="#swvt" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">MeasuredVariableTable</span></code></p>
+<p>Object Category: Table (rows: <code class="docutils literal notranslate"><span class="pre">SWVT_ROWT</span></code>) - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement" title="sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.InsertElement</span></code></a>, add rows with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddTableRow</span></code></a></p>
 <section id="id247">
 <h4>Properties<a class="headerlink" href="#id247" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -18989,6 +19113,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="swvt-rowt">
 <h3>SWVT_ROWT<a class="headerlink" href="#swvt-rowt" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">MeasuredVariableTable_Row</span></code></p>
+<p>Object Category: Table row of <code class="docutils literal notranslate"><span class="pre">SWVT</span></code> - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddTableRow</span></code></a></p>
 <section id="id249">
 <h4>Properties<a class="headerlink" href="#id249" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -19030,6 +19155,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="tevt">
 <h3>TEVT<a class="headerlink" href="#tevt" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">TemperatureTable</span></code></p>
+<p>Object Category: Table (rows: <code class="docutils literal notranslate"><span class="pre">TEVT_ROWT</span></code>) - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement" title="sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.InsertElement</span></code></a>, add rows with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddTableRow</span></code></a></p>
 <section id="id251">
 <h4>Properties<a class="headerlink" href="#id251" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -19088,6 +19214,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="tevt-rowt">
 <h3>TEVT_ROWT<a class="headerlink" href="#tevt-rowt" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">TemperatureTable_Row</span></code></p>
+<p>Object Category: Table row of <code class="docutils literal notranslate"><span class="pre">TEVT</span></code> - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddTableRow</span></code></a></p>
 <section id="id253">
 <h4>Properties<a class="headerlink" href="#id253" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -19129,6 +19256,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="tfkt">
 <h3>TFKT<a class="headerlink" href="#tfkt" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">FunctionTable</span></code></p>
+<p>Object Category: Table (rows: <code class="docutils literal notranslate"><span class="pre">TFKT_ROWS</span></code>) - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement" title="sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.InsertElement</span></code></a>, add rows with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddTableRow</span></code></a></p>
 <section id="id255">
 <h4>Properties<a class="headerlink" href="#id255" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -19170,6 +19298,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="tfkt-rows">
 <h3>TFKT_ROWS<a class="headerlink" href="#tfkt-rows" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">FunctionTable_Row</span></code></p>
+<p>Object Category: Table row of <code class="docutils literal notranslate"><span class="pre">TFKT</span></code> - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddTableRow</span></code></a></p>
 <section id="id257">
 <h4>Properties<a class="headerlink" href="#id257" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -19208,6 +19337,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="trft">
 <h3>TRFT<a class="headerlink" href="#trft" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">ReturnTemperaturTable</span></code></p>
+<p>Object Category: Table (rows: <code class="docutils literal notranslate"><span class="pre">TRFT_ROWS</span></code>) - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement" title="sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.InsertElement</span></code></a>, add rows with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddTableRow</span></code></a></p>
 <section id="id259">
 <h4>Properties<a class="headerlink" href="#id259" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -19249,6 +19379,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="trft-rows">
 <h3>TRFT_ROWS<a class="headerlink" href="#trft-rows" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">ReturnTemperaturTable_Row</span></code></p>
+<p>Object Category: Table row of <code class="docutils literal notranslate"><span class="pre">TRFT</span></code> - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddTableRow</span></code></a></p>
 <section id="id261">
 <h4>Properties<a class="headerlink" href="#id261" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -19287,6 +19418,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="trva">
 <h3>TRVA<a class="headerlink" href="#trva" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">TransportVariable</span></code></p>
+<p>Object Category: Unknown</p>
 <section id="id263">
 <h4>Properties<a class="headerlink" href="#id263" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -19358,6 +19490,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="usch">
 <h3>USCH<a class="headerlink" href="#usch" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">USCH_UserDefinedProperties</span></code></p>
+<p>Object Category: Unknown</p>
 <section id="id265">
 <h4>Properties<a class="headerlink" href="#id265" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -19399,6 +19532,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="utmp">
 <h3>UTMP<a class="headerlink" href="#utmp" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">EnvironmentTemp</span></code></p>
+<p>Object Category: Reference data (referenced by other elements)</p>
 <section id="id267">
 <h4>Properties<a class="headerlink" href="#id267" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -19449,6 +19583,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="vara">
 <h3>VARA<a class="headerlink" href="#vara" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">VARA_ColorScale</span></code></p>
+<p>Object Category: Table (rows: <code class="docutils literal notranslate"><span class="pre">VARA_ROWS</span></code>) - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement" title="sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.InsertElement</span></code></a>, add rows with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddTableRow</span></code></a></p>
 <section id="id269">
 <h4>Properties<a class="headerlink" href="#id269" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -19487,6 +19622,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="vara-rows">
 <h3>VARA_ROWS<a class="headerlink" href="#vara-rows" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">VARA_ROWS_WidthOrScale</span></code></p>
+<p>Object Category: Table row of <code class="docutils literal notranslate"><span class="pre">VARA</span></code> - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddTableRow</span></code></a></p>
 <section id="id271">
 <h4>Properties<a class="headerlink" href="#id271" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -19585,6 +19721,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="vent">
 <h3>VENT<a class="headerlink" href="#vent" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">Valve</span></code></p>
+<p>Object Category: Connecting element (two end nodes) - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddNewConnectingElement" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddNewConnectingElement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddNewConnectingElement</span></code></a></p>
 <section id="id273">
 <h4>Properties<a class="headerlink" href="#id273" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -19839,6 +19976,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="verb">
 <h3>VERB<a class="headerlink" href="#verb" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">Demand</span></code></p>
+<p>Object Category: Element attached to another network element - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_View.AddNewCustomer" title="sir3stoolkit.core.wrapper.SIR3S_View.AddNewCustomer"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_View.AddNewCustomer</span></code></a></p>
 <section id="id275">
 <h4>Properties<a class="headerlink" href="#id275" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -20012,6 +20150,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="vkno">
 <h3>VKNO<a class="headerlink" href="#vkno" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">BlockConnectionNode</span></code></p>
+<p>Object Category: Container or block element</p>
 <section id="id277">
 <h4>Properties<a class="headerlink" href="#id277" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -20065,6 +20204,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="vrct">
 <h3>VRCT<a class="headerlink" href="#vrct" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">VRCT_ViewRectangle</span></code></p>
+<p>Object Category: Unknown</p>
 <section id="id279">
 <h4>Properties<a class="headerlink" href="#id279" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -20109,6 +20249,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="wblz">
 <h3>WBLZ<a class="headerlink" href="#wblz" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">WBLZ_ThermalBalance</span></code></p>
+<p>Object Category: Unknown</p>
 <section id="id281">
 <h4>Properties<a class="headerlink" href="#id281" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -20212,6 +20353,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="wevt">
 <h3>WEVT<a class="headerlink" href="#wevt" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">ThermalOutputTable</span></code></p>
+<p>Object Category: Table (rows: <code class="docutils literal notranslate"><span class="pre">WEVT_ROWT</span></code>) - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement" title="sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.InsertElement</span></code></a>, add rows with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddTableRow</span></code></a></p>
 <section id="id283">
 <h4>Properties<a class="headerlink" href="#id283" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -20270,6 +20412,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="wevt-rowt">
 <h3>WEVT_ROWT<a class="headerlink" href="#wevt-rowt" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">ThermalOutputTable_Row</span></code></p>
+<p>Object Category: Table row of <code class="docutils literal notranslate"><span class="pre">WEVT</span></code> - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddTableRow</span></code></a></p>
 <section id="id285">
 <h4>Properties<a class="headerlink" href="#id285" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -20311,6 +20454,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="wind">
 <h3>WIND<a class="headerlink" href="#wind" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">AirVessel</span></code></p>
+<p>Object Category: Bypass element (one end node) - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddNewBypassElement" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddNewBypassElement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddNewBypassElement</span></code></a></p>
 <section id="id287">
 <h4>Properties<a class="headerlink" href="#id287" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -20489,6 +20633,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="wttr">
 <h3>WTTR<a class="headerlink" href="#wttr" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">WeatherDataTable</span></code></p>
+<p>Object Category: Table (rows: <code class="docutils literal notranslate"><span class="pre">WTTR_ROWT</span></code>) - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement" title="sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.InsertElement</span></code></a>, add rows with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddTableRow</span></code></a></p>
 <section id="id289">
 <h4>Properties<a class="headerlink" href="#id289" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -20571,6 +20716,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="wttr-rowt">
 <h3>WTTR_ROWT<a class="headerlink" href="#wttr-rowt" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">WeatherDataTable_Row</span></code></p>
+<p>Object Category: Table row of <code class="docutils literal notranslate"><span class="pre">WTTR</span></code> - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddTableRow</span></code></a></p>
 <section id="id291">
 <h4>Properties<a class="headerlink" href="#id291" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -20621,6 +20767,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="zep1">
 <h3>ZEP1<a class="headerlink" href="#zep1" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">RegulatorsTable</span></code></p>
+<p>Object Category: Table (rows: <code class="docutils literal notranslate"><span class="pre">ZEP1_ROWS</span></code>) - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement" title="sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.InsertElement</span></code></a>, add rows with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddTableRow</span></code></a></p>
 <section id="id293">
 <h4>Properties<a class="headerlink" href="#id293" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -20668,6 +20815,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="zep1-rows">
 <h3>ZEP1_ROWS<a class="headerlink" href="#zep1-rows" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">RegulatorsTable_Row</span></code></p>
+<p>Object Category: Table row of <code class="docutils literal notranslate"><span class="pre">ZEP1</span></code> - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddTableRow</span></code></a></p>
 <section id="id295">
 <h4>Properties<a class="headerlink" href="#id295" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -20709,6 +20857,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="zep2">
 <h3>ZEP2<a class="headerlink" href="#zep2" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">CharacteristicLossTable</span></code></p>
+<p>Object Category: Table (rows: <code class="docutils literal notranslate"><span class="pre">ZEP2_ROWS</span></code>) - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement" title="sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.InsertElement</span></code></a>, add rows with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddTableRow</span></code></a></p>
 <section id="id297">
 <h4>Properties<a class="headerlink" href="#id297" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
@@ -20756,6 +20905,7 @@ Use <a class="reference internal" href="references/sir3stoolkit.mantle.html#sir3
 <section id="zep2-rows">
 <h3>ZEP2_ROWS<a class="headerlink" href="#zep2-rows" title="Link to this heading"></a></h3>
 <p>Object Type: <code class="docutils literal notranslate"><span class="pre">CharacteristicLossTable_Row</span></code></p>
+<p>Object Category: Table row of <code class="docutils literal notranslate"><span class="pre">ZEP2</span></code> - create with <a class="reference internal" href="references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow" title="sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SIR3S_Model.AddTableRow</span></code></a></p>
 <section id="id299">
 <h4>Properties<a class="headerlink" href="#id299" title="Link to this heading"></a></h4>
 <table class="docutils align-default">
