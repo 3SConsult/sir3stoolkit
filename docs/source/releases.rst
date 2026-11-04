@@ -103,6 +103,7 @@ Developed and tested using SIR 3S Version: 90-15-00-24-Upd2
 Python Changes
 ~~~~~~~~~~~~~~
 
+- generate_element_results_dataframe(bulk=True): fix: text (CHAR) results are decoded with the encoding the .MX1 declares (Windows-1252) instead of UTF-8 - non-ASCII characters such as umlauts came back as U+FFFD ("X�Y" instead of "XÜY") and differed from bulk=False; fixed https://github.com/3SConsult/sir3stoolkit/issues/29
 - generate_element_results_dataframe(): new param include_name_and_end_nodes (default True): False leaves out the name/end_nodes column levels (columns: tk, property[, interior points]) and saves the two Toolkit API calls per element they cost (~8 s for 68,000 pipes, while the bulk=True read itself takes ~0.1 s)
 - generate_element_results_dataframe(): building the column MultiIndex is much faster for many columns (property level built once, name/end_nodes mapped per element instead of per column) - same output; e.g. 68,000 pipes with all 75 result properties: 65 s -> 11.5 s
 - merge_model_data_and_results(): also accepts vec_format="str" results without the name/end_nodes levels (they were dropped by position before), and no longer modifies the passed df_results

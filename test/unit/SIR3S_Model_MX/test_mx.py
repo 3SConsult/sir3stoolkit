@@ -565,3 +565,49 @@ def test_str_merge_needs_a_single_row(s3s):
     assert s3s.merge_model_data_and_results(pd.DataFrame({"tk": TKS}), df).empty  # 3 timestamps
     out, mapping = s3s.convert_rows_to_single_tuple_row(pd.concat([df, df]))  # index not unique
     assert out.empty and mapping == {}
+
+
+# --- issue #29: text in the result files is Windows-1252 (as the .MX1 declares), not UTF-8 ---------
+
+def _overwrite_char_item(mxs_path, f, channel, record, item, data):
+    """Write data (bytes, item_length long) as item `item` of CHAR channel `channel` in record `record`."""
+    with open(mxs_path, "r+b") as fh:
+        fh.seek(record * f.record_length + channel.offset + item * channel.item_length)
+        fh.write(data)
+
+
+def test_char_values_decoded_as_declared_windows_1252(mx, mx1):
+    f = mx._mx_open_file(mx1)
+    assert f.encoding.lower() == "windows-1252"  # from <?xml ... encoding="Windows-1252"?>
+    channel = f.channels["ROHR~*~*~*~STAT"]
+    signature = os.stat(f.mxs_path)
+    _overwrite_char_item(f.mxs_path, f, channel, 2, 0, "XÜY".encode("windows-1252") + b" ")  # 58 DC 59 20
+    _overwrite_char_item(f.mxs_path, f, channel, 2, 1, b"\x9d\x81  ")  # bytes Windows-1252 doesn't define
+    os.utime(f.mxs_path, ns=(signature.st_atime_ns, signature.st_mtime_ns))
+    f = mx._mx_open_file(mx1)
+    raw = mx._mx_read(f, [channel.sir3s_id], records=[2])[channel.sir3s_id]
+    assert list(SIR3S_Model_MX._mx_decode_char(raw, channel, encoding=f.encoding)[0]) == ["XÜY ", "\x9d\x81  ", "\x00   "]
+    # the path generate_element_results_dataframe(bulk=True) takes
+    layout = mx._mx_object_layout(f, "ROHR")
+    df = _frame(mx, f, layout, ["1001", "1002"], ["STAT"], [2])
+    assert df[("1001", "STAT")].iloc[0] == "XÜY " and df[("1002", "STAT")].iloc[0] == "\x9d\x81  "
+
+
+def test_mx1_encoding_declaration_and_fallback(mx, mx1, tmp_path):
+    assert SIR3S_Model_MX._mx_mx1_encoding(mx1).lower() == "windows-1252"
+    no_decl = tmp_path / "plain.MX1"
+    no_decl.write_text("<DocumentElement></DocumentElement>", encoding="ascii")
+    assert SIR3S_Model_MX._mx_mx1_encoding(str(no_decl)) == "windows-1252"
+    unknown = tmp_path / "unknown.MX1"
+    unknown.write_text('<?xml version="1.0" encoding="no-such-codec"?><DocumentElement/>', encoding="ascii")
+    assert SIR3S_Model_MX._mx_mx1_encoding(str(unknown)) == "windows-1252"
+
+
+def test_mx2_non_ascii_bytes_do_not_raise(tmp_path):
+    path = tmp_path / "M-1-0-1.MX2"
+    with open(path, "wb") as f:
+        payload = "ÄÖÜ".encode("windows-1252").ljust(20) + b"\x9d".ljust(20)
+        f.write(struct.pack("12s12s4si28xi", b"ROHR".ljust(12), b"tk".ljust(12), b"CHAR", 20, len(payload)))
+        f.write(payload)
+    df = SIR3S_Model_MX._mx_parse_mx2(str(path), "windows-1252")
+    assert df.iloc[0]["Data"] == ("ÄÖÜ", "\x9d")

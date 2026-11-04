@@ -17,6 +17,7 @@ known gotchas) before writing code against this module.
 """
 from __future__ import annotations
 
+import codecs
 import ctypes
 import os
 import re
@@ -42,6 +43,24 @@ from sir3stoolkit.logging_utils import get_logger
 from sir3stoolkit.mantle.advanced_operations import mapping_for_groups
 
 logger = get_logger(__name__)
+
+# Encoding of text in the result files when the .MX1 declares none; SIR 3S declares Windows-1252.
+_MX_DEFAULT_ENCODING = "windows-1252"
+
+
+def _mx_undefined_bytes_as_latin1(error: UnicodeDecodeError):
+    """Codec error handler: a byte the encoding doesn't define (Windows-1252: 0x81, 0x8D, 0x8F, 0x90,
+    0x9D) becomes the character with the same code point (as in Latin-1), so decoding never fails -
+    e.g. for the meaningless bytes in the TMIN/TMAX snapshot of a text channel."""
+    return "".join(chr(b) for b in error.object[error.start:error.end]), error.end
+
+
+codecs.register_error("sir3s_mx_latin1", _mx_undefined_bytes_as_latin1)
+
+
+def _mx_decode(data: bytes, encoding: str = _MX_DEFAULT_ENCODING) -> str:
+    """Text bytes from the result files (.MX2/.MXS) in the encoding the .MX1 declares."""
+    return data.decode(encoding, errors="sir3s_mx_latin1")
 
 
 class SIR3S_Model_MX(SIR3S_Model):
@@ -120,6 +139,8 @@ class SIR3S_Model_MX(SIR3S_Model):
         # Properties written only for individual objects (channel OBJTYPE~NAME1~NAME2~tk~ATTRTYPE, e.g.
         # selected for a time curve), not for the whole element type: {property: {tk: channel}}.
         single_channels: Dict[str, Dict[str, "SIR3S_Model_MX._MxChannel"]] = field(default_factory=dict)
+        # encoding of the CHAR values (from the .MX1, see _MxFile.encoding)
+        encoding: str = _MX_DEFAULT_ENCODING
 
         @property
         def readable_props(self) -> List[str]:
@@ -148,6 +169,8 @@ class SIR3S_Model_MX(SIR3S_Model):
         signature: Tuple[float, int]
         n_records: int
         version: str = ""
+        # encoding of text in the .MX2/.MXS, as the .MX1 declares it (SIR 3S: Windows-1252)
+        encoding: str = _MX_DEFAULT_ENCODING
         records: Optional[pd.DataFrame] = None
         mx2_df: Optional[pd.DataFrame] = None
         layouts: Dict[str, "SIR3S_Model_MX._MxLayout"] = field(default_factory=dict)
@@ -519,7 +542,24 @@ class SIR3S_Model_MX(SIR3S_Model):
         return df
 
     @staticmethod
-    def _mx_parse_mx2(mx2_filepath: str) -> pd.DataFrame:
+    def _mx_mx1_encoding(mx1_filepath: str) -> str:
+        """Encoding declared in the .MX1's XML declaration (<?xml ... encoding="Windows-1252"?>), which
+        SIR 3S also uses for text in the .MX2/.MXS; Windows-1252 if none (or an unknown one) is declared."""
+        with open(mx1_filepath, "rb") as f:
+            head = f.read(256)
+        match = re.search(rb"<\?xml[^>]*encoding\s*=\s*[\"']([A-Za-z0-9._:-]+)[\"']", head)
+        if not match:
+            return _MX_DEFAULT_ENCODING
+        name = match.group(1).decode("ascii")
+        try:
+            codecs.lookup(name)
+        except LookupError:
+            logger.warning(f"[mx] Unknown encoding {name!r} declared in {mx1_filepath}; using {_MX_DEFAULT_ENCODING}.")
+            return _MX_DEFAULT_ENCODING
+        return name
+
+    @staticmethod
+    def _mx_parse_mx2(mx2_filepath: str, encoding: str = _MX_DEFAULT_ENCODING) -> pd.DataFrame:
         """One row per .MX2 block (ObjType, AttrType, DataType, ..., Data: tuple of values; CHAR decoded
         and right-stripped, REAL skipped) - e.g. the tk list and N_OF_POINTS per element type."""
         if not os.path.exists(mx2_filepath):
@@ -534,13 +574,13 @@ class SIR3S_Model_MX(SIR3S_Model):
                         logger.warning(f"[mx] Unexpected trailing .MX2 bytes: {len(header)}")
                     break
                 obj_type, attr_type, data_type, type_length, data_length = struct.unpack("12s12s4si28xi", header)
-                obj_type = obj_type.decode("utf-8").rstrip()
-                attr_type = attr_type.decode("utf-8").rstrip()
-                data_type = data_type.decode("utf-8").rstrip()
+                obj_type = _mx_decode(obj_type, encoding).rstrip()
+                attr_type = _mx_decode(attr_type, encoding).rstrip()
+                data_type = _mx_decode(data_type, encoding).rstrip()
                 n_items = int(data_length // type_length)
                 data_bytes = f.read(data_length)
                 if data_type == "CHAR":
-                    data = tuple(item.decode("utf-8").rstrip()
+                    data = tuple(_mx_decode(item, encoding).rstrip()
                                  for item in struct.unpack(f"{type_length}s" * n_items, data_bytes))
                 elif data_type == "INT4":
                     data = struct.unpack("i" * n_items, data_bytes)
@@ -624,7 +664,8 @@ class SIR3S_Model_MX(SIR3S_Model):
 
         mx_file = self._MxFile(mx1_path=mx1_filepath, mx2_path=mx2, mxs_path=mxs, mx1_df=mx1_df,
                                record_length=record_length, channels=channels,
-                               signature=(stat.st_mtime, stat.st_size), n_records=n_records)
+                               signature=(stat.st_mtime, stat.st_size), n_records=n_records,
+                               encoding=self._mx_mx1_encoding(mx1_filepath))
         self._mx_read_record_index(mx_file)
         logger.info(f"[mx] {os.path.basename(mxs)}: {len(channels)} channels, {n_records} records of "
                     f"{record_length:,} bytes ({stat.st_size / 1024**3:.2f} GiB).")
@@ -660,7 +701,7 @@ class SIR3S_Model_MX(SIR3S_Model):
             raise ValueError("[mx] .MX1 has no ALLG TIMESTAMP/SNAPSHOTTYPE channel.")
         ts_id, st_id = allg["TIMESTAMP"].sir3s_id, allg["SNAPSHOTTYPE"].sir3s_id
         arrays = self._mx_read(mx_file, [ts_id, st_id])
-        decode = lambda row: bytes(row).decode("utf-8", errors="replace").strip("\x00 ")
+        decode = lambda row: _mx_decode(bytes(row), mx_file.encoding).strip("\x00 ")
         raw = [decode(row) for row in arrays[ts_id]]
         timestamps = pd.to_datetime(raw, utc=True, errors="coerce")
         mx_file.records = pd.DataFrame({"snapshot_type": [decode(row) for row in arrays[st_id]], "timestamp": timestamps,
@@ -693,7 +734,7 @@ class SIR3S_Model_MX(SIR3S_Model):
         channels = {c.attrtype: c for c in mx_file.channels.values()
                     if c.objtype == objtype and c.is_element_type_channel}
         if channels and mx_file.mx2_df is None:
-            mx_file.mx2_df = self._mx_parse_mx2(mx_file.mx2_path)
+            mx_file.mx2_df = self._mx_parse_mx2(mx_file.mx2_path, mx_file.encoding)
         mx2 = mx_file.mx2_df if channels else None
         rows = mx2[mx2["ObjType"] == objtype] if mx2 is not None and not mx2.empty else None
         tk_rows = rows[rows["AttrType"].isin(["tk", "pk"])] if rows is not None else None
@@ -701,7 +742,7 @@ class SIR3S_Model_MX(SIR3S_Model):
         if channels and not tks:
             logger.warning(f"[mx] No .MX2 tk list found for OBJTYPE '{objtype}'.")
 
-        layout = self._MxLayout(objtype=objtype, tks=tks)
+        layout = self._MxLayout(objtype=objtype, tks=tks, encoding=mx_file.encoding)
         len_rows = rows[rows["AttrType"] == "N_OF_POINTS"] if rows is not None else None
         if len_rows is not None and not len_rows.empty and len(len_rows.iloc[0]["Data"]) == len(tks):
             layout.segment_offsets = np.concatenate([[0], np.cumsum(np.asarray(len_rows.iloc[0]["Data"], dtype=np.int64))])
@@ -849,15 +890,16 @@ class SIR3S_Model_MX(SIR3S_Model):
 
     @staticmethod
     def _mx_decode_char(raw: np.ndarray, channel: "SIR3S_Model_MX._MxChannel",
-                        items: Optional[Sequence[int]] = None) -> np.ndarray:
+                        items: Optional[Sequence[int]] = None, encoding: str = _MX_DEFAULT_ENCODING) -> np.ndarray:
         """Decode CHAR raw bytes into strings, one per item, verbatim (fixed-width padding and null bytes
-        are kept - that matches what the SIR 3S Toolkit API returns for the same value)."""
+        are kept - that matches what the SIR 3S Toolkit API returns for the same value). encoding: the
+        one the .MX1 declares (SIR 3S: Windows-1252, e.g. "\u00dc" is the single byte 0xDC)."""
         width = channel.item_length
         positions = range(raw.shape[1] // width) if items is None else items
         out = np.empty((raw.shape[0], len(positions)), dtype=object)
         for r in range(raw.shape[0]):
             row = raw[r].tobytes()
-            out[r] = [row[p * width:(p + 1) * width].decode("utf-8", errors="replace") for p in positions]
+            out[r] = [_mx_decode(row[p * width:(p + 1) * width], encoding) for p in positions]
         return out
 
     # --- result frames --------------------------------------------------------------------------
@@ -1033,7 +1075,8 @@ class SIR3S_Model_MX(SIR3S_Model):
                 if channel.datatype == "CHAR":
                     obj[:, dest] = ph
                     if present.any():
-                        obj[:, dest[present]] = self._mx_decode_char(arrays[channel.sir3s_id], channel, tk_pos[present])
+                        obj[:, dest[present]] = self._mx_decode_char(arrays[channel.sir3s_id], channel, tk_pos[present],
+                                                                     plan.layout.encoding)
                 else:
                     values = arrays[channel.sir3s_id]
                     if g["identity"]:
@@ -1059,7 +1102,8 @@ class SIR3S_Model_MX(SIR3S_Model):
                     if channel is None:
                         target[:, d] = ph
                     elif channel.datatype == "CHAR":
-                        target[:, d] = self._mx_decode_char(arrays[channel.sir3s_id], channel)[:, 0]
+                        target[:, d] = self._mx_decode_char(arrays[channel.sir3s_id], channel,
+                                                            encoding=plan.layout.encoding)[:, 0]
                     else:
                         target[:, d] = arrays[channel.sir3s_id][:, 0]
 
