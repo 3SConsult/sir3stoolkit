@@ -110,6 +110,8 @@ Python Changes
 - generate_element_dataframe() / generate_edge_dataframe(), SIR_3S_to_pandapipes(), add_properties_to_graph(): request their results without name/end_nodes (they only need the tk) - faster for large models, same output
 - generate_element_model_data_dataframe(): the converted values are assigned by position (pd.Series(..., index=df.index)) instead of relying on the DataFrame's default index
 - plotting.py: module docstring TODO updated (only the AGSN longitudinal section plot is missing)
+- new: get_object_type_reference() looks up an element type in the object type reference shipped with the package: table code, object category, toolkit method(s) to create it, network types, properties (value types) and result properties (German description, standard unit)
+- SIR3S_View.AddNewHouse(): numberSuffix is a str (type hint/docstring said int, with which the call failed)
 
 Other Changes
 ~~~~~~~~~~~~~
@@ -120,6 +122,8 @@ Other Changes
 - Tutorial 61: note on the current limitations of the nx graph (int64 tks, parallel edges, needs a calculated model); fixed link to SIR_3S_to_nx_graph()
 - Tutorial 62: fixed link to SIR_3S_to_pandapipes()
 - Object types reference: note on the physical units of result properties
+- Object types reference: each object type lists its Object Category and, where one was shown to create a real instance, the toolkit method to create it (Unknown where not determined); heading underline fixed
+- Tutorial 51: new section on get_object_type_reference()
 
 Version 90.15.26
 """"""""""""""""

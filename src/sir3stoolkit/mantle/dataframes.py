@@ -12,10 +12,14 @@ known gotchas) before writing code against this module.
 from __future__ import annotations
 
 import re
+import copy
+import json
 import logging
 import sys
 import os
 import time
+from functools import lru_cache
+from pathlib import Path
 from typing import Dict, List, Optional, Union
 from enum import Enum
 from typing import List, Tuple, Any, Set
@@ -41,6 +45,13 @@ logger = get_logger(__name__)
 
 # API loops (GetResultfortimestamp(), name/end-node lookups) with at least this many calls log their progress.
 _API_PROGRESS_LOG_MIN_CALLS = 1000
+
+
+@lru_cache(maxsize=1)
+def _load_object_type_reference() -> dict:
+    """The object type reference shipped with the package, see get_object_type_reference()."""
+    with open(Path(__file__).with_name("object_type_reference.json"), encoding="utf-8") as f:
+        return json.load(f)
 
 
 class SIR3S_Model_Dataframes(SIR3S_Model_MX):
@@ -1345,6 +1356,37 @@ class SIR3S_Model_Dataframes(SIR3S_Model_MX):
         logger.info(f"[results] {self._mx_describe_file(mx_file.mx1_path, output_factor)}: {len(df)} result properties of "
                     f"{df['objtype'].nunique()} element type(s), {n_timestamps} timestamps.")
         return df
+
+    def get_object_type_reference(self, element_type: Enum) -> dict:
+        """
+        Look up an element type in the object type reference shipped with the package - the same content as the
+        "Object Types, Properties, and Result Value Types" section of the API documentation. Needs no open model.
+        The reference's notice is logged on every call.
+
+        :param element_type: Element type, e.g. self.ObjectTypes.Pipe.
+        :type element_type: Enum
+        :return: Dict with
+                - table_name: table code (e.g. "ROHR"), None if the element type has none
+                - category: object category, e.g. "connecting_element", "bypass_element", "table",
+                  "signal_model_element", or "unknown" where it wasn't determined
+                - create_with: toolkit methods shown to create a real instance of the element type
+                  (e.g. ["SIR3S_Model.AddNewPipe"], ["SIR3S_View.AddNewHouse"]); [] if none is known
+                - row_type (tables) / table_type (table rows): the matching row/table element type
+                - insertable_in: network types the element type can be inserted into
+                - properties: property name -> value type (e.g. {"DN": "String", ...})
+                - result_properties: result property name -> {"description", "unit"} (German, None where unknown)
+                Empty dict if the element type isn't in the reference.
+        :rtype: dict
+        :description: A snapshot of SIR 3S 90-15. For the installed SIR 3S version, GetPropertiesofElementType()
+                and GetResultProperties_from_elementType() remain authoritative.
+        """
+        reference = _load_object_type_reference()
+        logger.info("[object type reference] " + " ".join(reference["notice"]))
+        name = getattr(element_type, "name", element_type)
+        if name not in reference["object_types"]:
+            logger.error(f"[object type reference] element type {element_type} is not in the object type reference.")
+            return {}
+        return copy.deepcopy(reference["object_types"][name])
 
     def merge_model_data_and_results(self, df_model_data, df_results, place_holder_value: float = 99999.0):
         """
