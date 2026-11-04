@@ -89,8 +89,8 @@
              
   <section id="Merge-Result-Property-Descriptions-into-the-Object-Types-RST-Reference">
 <h1>Merge Result-Property Descriptions into the Object-Types RST Reference<a class="headerlink" href="#Merge-Result-Property-Descriptions-into-the-Object-Types-RST-Reference" title="Link to this heading"></a></h1>
-<p>Pure text processing, no Toolkit calls needed - merges <code class="docutils literal notranslate"><span class="pre">result_property_descriptions.json</span></code> (from <code class="docutils literal notranslate"><span class="pre">result_props_descriptions.ipynb</span></code>) into <code class="docutils literal notranslate"><span class="pre">object_types_props_results_snippet_global_mapped.rst</span></code> (from <code class="docutils literal notranslate"><span class="pre">object_types.ipynb</span></code>), widening every “Result Properties” table from one column (Name) to three (Name, Description, Standard Physical Unit). Also adds an element category label (with the toolkit method to create the element) under every object type’s heading, from
-<code class="docutils literal notranslate"><span class="pre">object_type_categories.json</span></code> (from <code class="docutils literal notranslate"><span class="pre">object_types_categories.ipynb</span></code>). Writes a new file here in <code class="docutils literal notranslate"><span class="pre">output/</span></code> - does not touch <code class="docutils literal notranslate"><span class="pre">docs/source/object_types_props_results_snippet_global_mapped.rst</span></code> itself; that gets copied over manually once reviewed.</p>
+<p>Pure text processing, no Toolkit calls needed - merges <code class="docutils literal notranslate"><span class="pre">result_property_descriptions.json</span></code> (from <code class="docutils literal notranslate"><span class="pre">result_props_descriptions.ipynb</span></code>) into <code class="docutils literal notranslate"><span class="pre">object_types_props_results_snippet_global_mapped.rst</span></code> (from <code class="docutils literal notranslate"><span class="pre">object_types.ipynb</span></code>), widening every “Result Properties” table from one column (Name) to three (Name, Description, Standard Physical Unit). Also adds an object category label (with the toolkit method to create the element) under every object type’s heading, from
+<code class="docutils literal notranslate"><span class="pre">object_type_categories.json</span></code> (from <code class="docutils literal notranslate"><span class="pre">object_types_categories.ipynb</span></code>). The same content is also written as <code class="docutils literal notranslate"><span class="pre">object_type_reference.json</span></code> (copied to <code class="docutils literal notranslate"><span class="pre">src/sir3stoolkit/mantle/</span></code> manually, like the RST; queried with <code class="docutils literal notranslate"><span class="pre">SIR3S_Model_Dataframes.get_object_type_reference()</span></code>). Writes a new file here in <code class="docutils literal notranslate"><span class="pre">output/</span></code> - does not touch <code class="docutils literal notranslate"><span class="pre">docs/source/object_types_props_results_snippet_global_mapped.rst</span></code> itself; that gets copied over manually once reviewed.</p>
 <section id="Load-inputs">
 <h2>Load inputs<a class="headerlink" href="#Load-inputs" title="Link to this heading"></a></h2>
 <div class="nbinput docutils container">
@@ -255,9 +255,9 @@ Preamble note updated.
 </pre></div></div>
 </div>
 </section>
-<section id="Add-element-category-labels">
-<h2>Add element category labels<a class="headerlink" href="#Add-element-category-labels" title="Link to this heading"></a></h2>
-<p>Adds an <code class="docutils literal notranslate"><span class="pre">Element</span> <span class="pre">Category:</span> <span class="pre">...</span></code> line under every <code class="docutils literal notranslate"><span class="pre">Object</span> <span class="pre">Type:</span> <span class="pre">``...`</span></code>` line, from`object_type_categories.json<code class="docutils literal notranslate"><span class="pre">,</span> <span class="pre">linking</span> <span class="pre">the</span> <span class="pre">toolkit</span> <span class="pre">method(s)</span> <span class="pre">to</span> <span class="pre">create</span> <span class="pre">the</span> <span class="pre">element</span> <span class="pre">with</span> <span class="pre">where</span> <span class="pre">one</span> <span class="pre">exists.</span> <span class="pre">Tables</span> <span class="pre">and</span> <span class="pre">table</span> <span class="pre">rows</span> <span class="pre">refer</span> <span class="pre">to</span> <span class="pre">each</span> <span class="pre">other</span> <span class="pre">by</span> <span class="pre">table</span> <span class="pre">code,</span> <span class="pre">since</span> <span class="pre">that's</span> <span class="pre">what</span> <span class="pre">the</span> <span class="pre">section</span> <span class="pre">headings</span> <span class="pre">are.</span> <span class="pre">Fails</span> <span class="pre">if</span> <span class="pre">any</span> <span class="pre">object-type</span> <span class="pre">section</span> <span class="pre">has</span> <span class="pre">no</span> <span class="pre">category</span> <span class="pre">or</span> <span class="pre">any</span> <span class="pre">category</span> <span class="pre">has</span> <span class="pre">no</span> <span class="pre">section,</span> <span class="pre">so</span> <span class="pre">this</span> <span class="pre">step</span> <span class="pre">can't</span> <span class="pre">silently</span> <span class="pre">fall</span> <span class="pre">out</span> <span class="pre">of</span> <span class="pre">sync</span> <span class="pre">with</span></code>object_types.ipynb`.</p>
+<section id="Add-object-category-labels">
+<h2>Add object category labels<a class="headerlink" href="#Add-object-category-labels" title="Link to this heading"></a></h2>
+<p>Adds an <code class="docutils literal notranslate"><span class="pre">Object</span> <span class="pre">Category:</span> <span class="pre">...</span></code> line under every <code class="docutils literal notranslate"><span class="pre">Object</span> <span class="pre">Type:</span> <span class="pre">``...`</span></code>` line, from`object_type_categories.json<code class="docutils literal notranslate"><span class="pre">,</span> <span class="pre">linking</span> <span class="pre">the</span> <span class="pre">toolkit</span> <span class="pre">method(s)</span> <span class="pre">to</span> <span class="pre">create</span> <span class="pre">the</span> <span class="pre">element</span> <span class="pre">with</span> <span class="pre">where</span> <span class="pre">one</span> <span class="pre">exists.</span> <span class="pre">Tables</span> <span class="pre">and</span> <span class="pre">table</span> <span class="pre">rows</span> <span class="pre">refer</span> <span class="pre">to</span> <span class="pre">each</span> <span class="pre">other</span> <span class="pre">by</span> <span class="pre">table</span> <span class="pre">code,</span> <span class="pre">since</span> <span class="pre">that's</span> <span class="pre">what</span> <span class="pre">the</span> <span class="pre">section</span> <span class="pre">headings</span> <span class="pre">are.</span> <span class="pre">Fails</span> <span class="pre">if</span> <span class="pre">any</span> <span class="pre">object-type</span> <span class="pre">section</span> <span class="pre">has</span> <span class="pre">no</span> <span class="pre">category</span> <span class="pre">or</span> <span class="pre">any</span> <span class="pre">category</span> <span class="pre">has</span> <span class="pre">no</span> <span class="pre">section,</span> <span class="pre">so</span> <span class="pre">this</span> <span class="pre">step</span> <span class="pre">can't</span> <span class="pre">silently</span> <span class="pre">fall</span> <span class="pre">out</span> <span class="pre">of</span> <span class="pre">sync</span> <span class="pre">with</span></code>object_types.ipynb`.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
@@ -303,7 +303,7 @@ def build_category_line(object_type_name):
         label += f", add rows with {meth('SIR3S_Model.AddTableRow')}"
     if entry["category"] == "four_end_node_element":
         label += f", read its end nodes with {meth('SIR3S_Model.GetEndNodes')}"
-    return f"Element Category: {label}"
+    return f"Object Category: {label}"
 
 build_category_line("Pipe"), build_category_line("PipeTable")
 </pre></div>
@@ -315,8 +315,8 @@ build_category_line("Pipe"), build_category_line("PipeTable")
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-(&#39;Element Category: Connecting element (two end nodes) - create with :meth:`SIR3S_Model.AddNewPipe &lt;sir3stoolkit.core.wrapper.SIR3S_Model.AddNewPipe&gt;`&#39;,
- &#39;Element Category: Table (rows: ``DTRO_ROWD``) - create with :meth:`SIR3S_Model.InsertElement &lt;sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement&gt;`, add rows with :meth:`SIR3S_Model.AddTableRow &lt;sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow&gt;`&#39;)
+(&#39;Object Category: Connecting element (two end nodes) - create with :meth:`SIR3S_Model.AddNewPipe &lt;sir3stoolkit.core.wrapper.SIR3S_Model.AddNewPipe&gt;`&#39;,
+ &#39;Object Category: Table (rows: ``DTRO_ROWD``) - create with :meth:`SIR3S_Model.InsertElement &lt;sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement&gt;`, add rows with :meth:`SIR3S_Model.AddTableRow &lt;sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow&gt;`&#39;)
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
@@ -356,7 +356,7 @@ print(f"{len(labelled)} object-type sections labelled")
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>NOTE_ANCHOR = "which can deviate from the standard physical units here."
 CATEGORY_NOTE = (
-    "\n   Each object type lists its element category - determined via the Toolkit API where possible, by hand "
+    "\n   Each object type lists its Object Category - determined via the Toolkit API where possible, by hand "
     "otherwise, Unknown where neither was certain - and the toolkit method to create it, where one was shown to "
     "create a real instance of it (see object_types_categories.ipynb)."
 )
@@ -394,6 +394,76 @@ print(f"Wrote {out_path}")
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Wrote C:\Users\aUsername\3S\sir3stoolkit\docs\source\tutorials\SIR3S_Model_Mantle\TutorialTest_Assets\object_types\output\object_types_props_results_snippet_global_mapped_with_descriptions.rst
+</pre></div></div>
+</div>
+</section>
+<section id="Write-the-object-type-reference-(JSON)">
+<h2>Write the object type reference (JSON)<a class="headerlink" href="#Write-the-object-type-reference-(JSON)" title="Link to this heading"></a></h2>
+<p>The same content as the RST, per <code class="docutils literal notranslate"><span class="pre">ObjectTypes</span></code> member name: <code class="docutils literal notranslate"><span class="pre">table_name</span></code> (<code class="docutils literal notranslate"><span class="pre">None</span></code> for the three types without one), <code class="docutils literal notranslate"><span class="pre">category</span></code>, <code class="docutils literal notranslate"><span class="pre">create_with</span></code>, <code class="docutils literal notranslate"><span class="pre">row_type</span></code>/<code class="docutils literal notranslate"><span class="pre">table_type</span></code> (tables and their rows), <code class="docutils literal notranslate"><span class="pre">insertable_in</span></code>, <code class="docutils literal notranslate"><span class="pre">properties</span></code> (name -&gt; value type) and <code class="docutils literal notranslate"><span class="pre">result_properties</span></code> (name -&gt; <code class="docutils literal notranslate"><span class="pre">description</span></code>/<code class="docutils literal notranslate"><span class="pre">unit</span></code>, <code class="docutils literal notranslate"><span class="pre">None</span></code> where unknown). Properties and result-property names are read back from the source RST’s tables, so the JSON can’t list anything the RST doesn’t. JSON has no comments, so
+the RST’s preamble note goes in as data: <code class="docutils literal notranslate"><span class="pre">{&quot;notice&quot;:</span> <span class="pre">[...],</span> <span class="pre">&quot;object_types&quot;:</span> <span class="pre">{...}}</span></code>, the notice taken from the RST itself (<code class="docutils literal notranslate"><span class="pre">:meth:</span></code> markup reduced to the plain name).</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>section_pat = re.compile(r"^Object Type: ``(?P&lt;name&gt;[^`]+)``\n(?P&lt;body&gt;.*?)(?=^[^\n]+\n\^{3,}\n|\Z)",
+                         re.MULTILINE | re.DOTALL)
+# value types can contain a backtick themselves (dictionary`2, nullable`1)
+property_row_pat = re.compile(r"^   \* - ``([^`]+)``\n     - ``(.+)``$", re.MULTILINE)
+result_row_pat = re.compile(r"^   \* - ``([^`]+)``", re.MULTILINE)
+
+def description_and_unit(table_name, result_property):
+    entry = desc_map.get(f"{table_name}~{result_property}") or {}
+    return {"description": (entry.get("TITLE") or "").strip() or None,
+            "unit": (entry.get("UNIT") or "").strip() or None}
+
+reference = {}
+for m in section_pat.finditer(rst_text):
+    name = m.group("name")
+    properties_text, _, results_text = m.group("body").partition("Result Properties\n")
+    entry = {key: value for key, value in categories[name].items() if key != "source"}
+    entry["properties"] = dict(property_row_pat.findall(properties_text))
+    entry["result_properties"] = {p: description_and_unit(entry["table_name"], p)
+                                  for p in result_row_pat.findall(results_text)}
+    reference[name] = entry
+
+assert set(reference) == set(categories), sorted(set(reference) ^ set(categories))
+n_properties = sum(len(e["properties"]) for e in reference.values())
+n_results = sum(len(e["result_properties"]) for e in reference.values())
+assert n_results == rows_total, (n_results, rows_total)
+print(f"{len(reference)} object types, {n_properties} properties, {n_results} result properties")
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+149 object types, 2588 properties, 840 result properties
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>note_match = re.search(r"^\.\. note:: (?P&lt;first&gt;.*)\n(?P&lt;rest&gt;(?:   .*\n)*)", new_rst_text, re.MULTILINE)
+notice = [note_match.group("first")] + [line.strip() for line in note_match.group("rest").splitlines()]
+notice = [re.sub(r":meth:`([^`]+)`", r"\1", line) for line in notice]
+
+reference_path = output_dir / "object_type_reference.json"
+reference_json = {"notice": notice, "object_types": dict(sorted(reference.items()))}
+reference_path.write_text(json.dumps(reference_json, indent=1, ensure_ascii=False) + "\n",
+                          encoding="utf-8")
+print(f"Wrote {reference_path}")
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Wrote C:\Users\aUsername\3S\sir3stoolkit\docs\source\tutorials\SIR3S_Model_Mantle\TutorialTest_Assets\object_types\output\object_type_reference.json
 </pre></div></div>
 </div>
 </section>

@@ -98,10 +98,14 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">copy</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">lru_cache</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Set</span>
@@ -127,6 +131,13 @@
 
 <span class="c1"># API loops (GetResultfortimestamp(), name/end-node lookups) with at least this many calls log their progress.</span>
 <span class="n">_API_PROGRESS_LOG_MIN_CALLS</span> <span class="o">=</span> <span class="mi">1000</span>
+
+
+<span class="nd">@lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_load_object_type_reference</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""The object type reference shipped with the package, see get_object_type_reference()."""</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">with_name</span><span class="p">(</span><span class="s2">"object_type_reference.json"</span><span class="p">),</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="SIR3S_Model_Dataframes">
@@ -1462,6 +1473,40 @@
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"[results] </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_mx_describe_file</span><span class="p">(</span><span class="n">mx_file</span><span class="o">.</span><span class="n">mx1_path</span><span class="p">,</span><span class="w"> </span><span class="n">output_factor</span><span class="p">)</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="si">}</span><span class="s2"> result properties of "</span>
                     <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">'objtype'</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span><span class="si">}</span><span class="s2"> element type(s), </span><span class="si">{</span><span class="n">n_timestamps</span><span class="si">}</span><span class="s2"> timestamps."</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">df</span></div>
+
+
+<div class="viewcode-block" id="SIR3S_Model_Dataframes.get_object_type_reference">
+<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.get_object_type_reference">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_object_type_reference</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element_type</span><span class="p">:</span> <span class="n">Enum</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Look up an element type in the object type reference shipped with the package - the same content as the</span>
+<span class="sd">        "Object Types, Properties, and Result Value Types" section of the API documentation. Needs no open model.</span>
+<span class="sd">        The reference's notice is logged on every call.</span>
+
+<span class="sd">        :param element_type: Element type, e.g. self.ObjectTypes.Pipe.</span>
+<span class="sd">        :type element_type: Enum</span>
+<span class="sd">        :return: Dict with</span>
+<span class="sd">                - table_name: table code (e.g. "ROHR"), None if the element type has none</span>
+<span class="sd">                - category: object category, e.g. "connecting_element", "bypass_element", "table",</span>
+<span class="sd">                  "signal_model_element", or "unknown" where it wasn't determined</span>
+<span class="sd">                - create_with: toolkit methods shown to create a real instance of the element type</span>
+<span class="sd">                  (e.g. ["SIR3S_Model.AddNewPipe"], ["SIR3S_View.AddNewHouse"]); [] if none is known</span>
+<span class="sd">                - row_type (tables) / table_type (table rows): the matching row/table element type</span>
+<span class="sd">                - insertable_in: network types the element type can be inserted into</span>
+<span class="sd">                - properties: property name -&gt; value type (e.g. {"DN": "String", ...})</span>
+<span class="sd">                - result_properties: result property name -&gt; {"description", "unit"} (German, None where unknown)</span>
+<span class="sd">                Empty dict if the element type isn't in the reference.</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        :description: A snapshot of SIR 3S 90-15. For the installed SIR 3S version, GetPropertiesofElementType()</span>
+<span class="sd">                and GetResultProperties_from_elementType() remain authoritative.</span>
+<span class="sd">        """</span>
+        <span class="n">reference</span> <span class="o">=</span> <span class="n">_load_object_type_reference</span><span class="p">()</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"[object type reference] "</span> <span class="o">+</span> <span class="s2">" "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">reference</span><span class="p">[</span><span class="s2">"notice"</span><span class="p">]))</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">element_type</span><span class="p">,</span> <span class="s2">"name"</span><span class="p">,</span> <span class="n">element_type</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">reference</span><span class="p">[</span><span class="s2">"object_types"</span><span class="p">]:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">"[object type reference] element type </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2"> is not in the object type reference."</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">{}</span>
+        <span class="k">return</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">reference</span><span class="p">[</span><span class="s2">"object_types"</span><span class="p">][</span><span class="n">name</span><span class="p">])</span></div>
 
 
 <div class="viewcode-block" id="SIR3S_Model_Dataframes.merge_model_data_and_results">
