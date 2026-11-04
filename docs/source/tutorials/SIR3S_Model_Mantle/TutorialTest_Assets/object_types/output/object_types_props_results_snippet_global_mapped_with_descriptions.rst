@@ -1,13 +1,17 @@
 Object Types, Properties, and Result Value Types
----------------------------------------------
+------------------------------------------------
 
 .. note:: Aggregated global view across configured network types.
    The below sections lists all table names from self.ObjectTypes_TableNames, along with their properties, result properties, and respective object type from self.ObjectTypes (needed for toolkit operations like self.InsertElement(), self.GetPropertiesOfElementType()).
    Result properties additionally list a Description and Standard Physical Unit where known, sourced from SIR 3S's own .MX1 output plus a handful of manual additions (see result_props_descriptions.ipynb). Both are in German, as embedded in SIR 3S itself.
+   Use :meth:`sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.get_result_file_properties` to check what physical units were actually used in your local calculation, which can deviate from the standard physical units here.
+   Each object type lists its element category - determined via the Toolkit API where possible, by hand otherwise, Unknown where neither was certain - and the toolkit method to create it, where one was shown to create a real instance of it (see object_types_categories.ipynb).
 
 AGSN
 ^^^^
 Object Type: ``AGSN_HydraulicProfile``
+
+Element Category: Unknown
 
 
 Properties
@@ -45,6 +49,8 @@ No result properties found.
 ALLG
 ^^^^
 Object Type: ``GeneralSection``
+
+Element Category: Model-wide settings
 
 
 Properties
@@ -253,6 +259,8 @@ ANTP
 ^^^^
 Object Type: ``DrivePowerTable``
 
+Element Category: Table (rows: ``ANTP_ROWS``) - create with :meth:`SIR3S_Model.InsertElement <sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement>`, add rows with :meth:`SIR3S_Model.AddTableRow <sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow>`
+
 
 Properties
 """"""""""
@@ -286,6 +294,8 @@ ANTP_ROWS
 ^^^^^^^^^
 Object Type: ``DrivePowerTable_Row``
 
+Element Category: Table row of ``ANTP`` - create with :meth:`SIR3S_Model.AddTableRow <sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow>`
+
 
 Properties
 """"""""""
@@ -316,6 +326,8 @@ No result properties found.
 ARRW
 ^^^^
 Object Type: ``Arrow``
+
+Element Category: Graphical object
 
 
 Properties
@@ -362,6 +374,8 @@ ATMO
 ^^^^
 Object Type: ``Atmosphere``
 
+Element Category: Model-wide settings
+
 
 Properties
 """"""""""
@@ -397,6 +411,8 @@ AVOS
 ^^^^
 Object Type: ``CrossSectionTable``
 
+Element Category: Table (rows: ``AVOS_ROWS``) - create with :meth:`SIR3S_Model.InsertElement <sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement>`, add rows with :meth:`SIR3S_Model.AddTableRow <sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow>`
+
 
 Properties
 """"""""""
@@ -430,6 +446,8 @@ AVOS_ROWS
 ^^^^^^^^^
 Object Type: ``CrossSectionTable_Row``
 
+Element Category: Table row of ``AVOS`` - create with :meth:`SIR3S_Model.AddTableRow <sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow>`
+
 
 Properties
 """"""""""
@@ -460,6 +478,8 @@ No result properties found.
 BEVE
 ^^^^
 Object Type: ``VentValve``
+
+Element Category: Bypass element (one end node) - create with :meth:`SIR3S_Model.AddNewBypassElement <sir3stoolkit.core.wrapper.SIR3S_Model.AddNewBypassElement>`
 
 
 Properties
@@ -586,6 +606,8 @@ Result Properties
 BEWI
 ^^^^
 Object Type: ``VentilatedPressureAirVessel``
+
+Element Category: Bypass element (one end node) - create with :meth:`SIR3S_Model.AddNewBypassElement <sir3stoolkit.core.wrapper.SIR3S_Model.AddNewBypassElement>`
 
 
 Properties
@@ -719,6 +741,8 @@ BREF
 ^^^^
 Object Type: ``SwitchInBlock``
 
+Element Category: Container or block element
+
 
 Properties
 """"""""""
@@ -761,6 +785,8 @@ No result properties found.
 CIRC
 ^^^^
 Object Type: ``Circle``
+
+Element Category: Graphical object
 
 
 Properties
@@ -808,6 +834,8 @@ No result properties found.
 CONT
 ^^^^
 Object Type: ``ObjectContainerSymbol``
+
+Element Category: Container or block element
 
 
 Properties
@@ -868,6 +896,8 @@ CRGL
 ^^^^
 Object Type: ``ControlEngineeringNexus``
 
+Element Category: Signal model connection line
+
 
 Properties
 """"""""""
@@ -900,6 +930,8 @@ No result properties found.
 DPGR
 ^^^^
 Object Type: ``DPGR_DataPointGroup``
+
+Element Category: Reference data (referenced by other elements)
 
 
 Properties
@@ -948,6 +980,8 @@ DPGR_DPKT
 ^^^^^^^^^
 Object Type: ``DPGR_DPKT_DatapointDpgrConnection``
 
+Element Category: Sub-record of another element
+
 
 Properties
 """"""""""
@@ -978,6 +1012,8 @@ No result properties found.
 DPKT
 ^^^^
 Object Type: ``DPKT_Datapoint``
+
+Element Category: Reference data (referenced by other elements)
 
 
 Properties
@@ -1083,6 +1119,8 @@ No result properties found.
 DPRG
 ^^^^
 Object Type: ``DifferentialRegulator``
+
+Element Category: Connecting element (two end nodes) - create with :meth:`SIR3S_Model.AddNewConnectingElement <sir3stoolkit.core.wrapper.SIR3S_Model.AddNewConnectingElement>`
 
 
 Properties
@@ -1218,6 +1256,8 @@ DTRO
 ^^^^
 Object Type: ``PipeTable``
 
+Element Category: Table (rows: ``DTRO_ROWD``) - create with :meth:`SIR3S_Model.InsertElement <sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement>`, add rows with :meth:`SIR3S_Model.AddTableRow <sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow>`
+
 
 Properties
 """"""""""
@@ -1254,6 +1294,8 @@ No result properties found.
 DTRO_ROWD
 ^^^^^^^^^
 Object Type: ``PipeTable_Row``
+
+Element Category: Table row of ``DTRO`` - create with :meth:`SIR3S_Model.AddTableRow <sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow>`
 
 
 Properties
@@ -1306,6 +1348,8 @@ EBES
 ^^^^
 Object Type: ``EBES_FeederGroups``
 
+Element Category: Unknown
+
 
 Properties
 """"""""""
@@ -1347,6 +1391,8 @@ ELEMENTQUERY
 ^^^^^^^^^^^^
 Object Type: ``ElementQuery``
 
+Element Category: Unknown
+
 
 Properties
 """"""""""
@@ -1380,6 +1426,8 @@ ERROR_NO_MAPPING__RART_ControlMode
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Object Type: ``RART_ControlMode``
 
+Element Category: Not insertable (no SIR 3S table behind this object type)
+
 
 Properties
 """"""""""
@@ -1394,6 +1442,8 @@ No result properties found.
 ERROR_NO_MAPPING__SIRGRAF
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 Object Type: ``SIRGRAF``
+
+Element Category: Model-wide settings
 
 
 Properties
@@ -1502,6 +1552,8 @@ ERROR_NO_MAPPING__Unknown
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 Object Type: ``Unknown``
 
+Element Category: Not insertable (no SIR 3S table behind this object type)
+
 
 Properties
 """"""""""
@@ -1516,6 +1568,8 @@ No result properties found.
 ETAM
 ^^^^
 Object Type: ``DriveEfficiencyTable``
+
+Element Category: Table (rows: ``ETAM_ROWS``) - create with :meth:`SIR3S_Model.InsertElement <sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement>`, add rows with :meth:`SIR3S_Model.AddTableRow <sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow>`
 
 
 Properties
@@ -1550,6 +1604,8 @@ ETAM_ROWS
 ^^^^^^^^^
 Object Type: ``DriveEfficiencyTable_Row``
 
+Element Category: Table row of ``ETAM`` - create with :meth:`SIR3S_Model.AddTableRow <sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow>`
+
 
 Properties
 """"""""""
@@ -1580,6 +1636,8 @@ No result properties found.
 ETAR
 ^^^^
 Object Type: ``EnergyRecoveryTable``
+
+Element Category: Table (rows: ``ETAR_ROWS``) - create with :meth:`SIR3S_Model.InsertElement <sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement>`, add rows with :meth:`SIR3S_Model.AddTableRow <sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow>`
 
 
 Properties
@@ -1614,6 +1672,8 @@ ETAR_ROWS
 ^^^^^^^^^
 Object Type: ``EnergyRecoveryTable_Row``
 
+Element Category: Table row of ``ETAR`` - create with :meth:`SIR3S_Model.AddTableRow <sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow>`
+
 
 Properties
 """"""""""
@@ -1644,6 +1704,8 @@ No result properties found.
 ETAU
 ^^^^
 Object Type: ``EfficiencyConverterTable``
+
+Element Category: Table (rows: ``ETAU_ROWS``) - create with :meth:`SIR3S_Model.InsertElement <sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement>`, add rows with :meth:`SIR3S_Model.AddTableRow <sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow>`
 
 
 Properties
@@ -1678,6 +1740,8 @@ ETAU_ROWS
 ^^^^^^^^^
 Object Type: ``EfficiencyConverterTable_Row``
 
+Element Category: Table row of ``ETAU`` - create with :meth:`SIR3S_Model.AddTableRow <sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow>`
+
 
 Properties
 """"""""""
@@ -1708,6 +1772,8 @@ No result properties found.
 FKNL
 ^^^^
 Object Type: ``FreeDuct``
+
+Element Category: Unknown
 
 
 Properties
@@ -1800,6 +1866,8 @@ Result Properties
 FQPS
 ^^^^
 Object Type: ``FluidQualityParamSet``
+
+Element Category: Reference data (referenced by other elements)
 
 
 Properties
@@ -1941,6 +2009,8 @@ FQPS_BZ
 ^^^^^^^
 Object Type: ``FluidQualityParamSet_OS``
 
+Element Category: Sub-record of another element
+
 
 Properties
 """"""""""
@@ -1989,6 +2059,8 @@ No result properties found.
 FSTF
 ^^^^
 Object Type: ``FluidThermalPropertyGroup``
+
+Element Category: Reference data (referenced by other elements)
 
 
 Properties
@@ -2053,6 +2125,8 @@ FWBZ
 ^^^^
 Object Type: ``FWBZ_DistrictHeatingReferenceValues``
 
+Element Category: Unknown
+
 
 Properties
 """"""""""
@@ -2095,6 +2169,8 @@ No result properties found.
 FWEA
 ^^^^
 Object Type: ``HeatFeederConsumerStation``
+
+Element Category: Connecting element (two end nodes) - create with :meth:`SIR3S_Model.AddNewConnectingElement <sir3stoolkit.core.wrapper.SIR3S_Model.AddNewConnectingElement>`
 
 
 Properties
@@ -2487,6 +2563,8 @@ FWES
 ^^^^
 Object Type: ``DistrictHeatingFeeder``
 
+Element Category: Connecting element (two end nodes) - create with :meth:`SIR3S_Model.AddNewConnectingElement <sir3stoolkit.core.wrapper.SIR3S_Model.AddNewConnectingElement>`
+
 
 Properties
 """"""""""
@@ -2626,6 +2704,8 @@ Result Properties
 FWVB
 ^^^^
 Object Type: ``DistrictHeatingConsumer``
+
+Element Category: Connecting element (two end nodes) - create with :meth:`SIR3S_Model.AddNewConnectingElement <sir3stoolkit.core.wrapper.SIR3S_Model.AddNewConnectingElement>`
 
 
 Properties
@@ -2869,6 +2949,8 @@ FWWU
 ^^^^
 Object Type: ``HeatExchanger``
 
+Element Category: Connecting element with four end nodes - create with :meth:`SIR3S_Model.InsertElement <sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement>`, read its end nodes with :meth:`SIR3S_Model.GetEndNodes <sir3stoolkit.core.wrapper.SIR3S_Model.GetEndNodes>`
+
 
 Properties
 """"""""""
@@ -3057,6 +3139,8 @@ GKMP
 ^^^^
 Object Type: ``GasComponent``
 
+Element Category: Reference data (referenced by other elements)
+
 
 Properties
 """"""""""
@@ -3127,6 +3211,8 @@ No result properties found.
 GMIX
 ^^^^
 Object Type: ``GasMixture``
+
+Element Category: Reference data (referenced by other elements)
 
 
 Properties
@@ -3249,6 +3335,8 @@ GRAV
 ^^^^
 Object Type: ``Gravitation``
 
+Element Category: Model-wide settings
+
 
 Properties
 """"""""""
@@ -3281,6 +3369,8 @@ No result properties found.
 GTXT
 ^^^^
 Object Type: ``Text``
+
+Element Category: Graphical object - create with :meth:`SIR3S_View.AddNewText <sir3stoolkit.core.wrapper.SIR3S_View.AddNewText>`
 
 
 Properties
@@ -3330,6 +3420,8 @@ No result properties found.
 GVWK
 ^^^^
 Object Type: ``HeaterCooler``
+
+Element Category: Connecting element (two end nodes) - create with :meth:`SIR3S_Model.AddNewConnectingElement <sir3stoolkit.core.wrapper.SIR3S_Model.AddNewConnectingElement>`
 
 
 Properties
@@ -3428,6 +3520,8 @@ HAUS
 ^^^^
 Object Type: ``House``
 
+Element Category: Element attached to another network element - create with :meth:`SIR3S_View.AddNewHouse <sir3stoolkit.core.wrapper.SIR3S_View.AddNewHouse>`
+
 
 Properties
 """"""""""
@@ -3488,6 +3582,8 @@ No result properties found.
 HYDR
 ^^^^
 Object Type: ``Hydrant``
+
+Element Category: Element attached to another network element - create with :meth:`SIR3S_View.AddNewHydrant <sir3stoolkit.core.wrapper.SIR3S_View.AddNewHydrant>`
 
 
 Properties
@@ -3604,6 +3700,8 @@ Result Properties
 KLAP
 ^^^^
 Object Type: ``FlapValve``
+
+Element Category: Connecting element (two end nodes) - create with :meth:`SIR3S_Model.AddNewConnectingElement <sir3stoolkit.core.wrapper.SIR3S_Model.AddNewConnectingElement>`
 
 
 Properties
@@ -3723,6 +3821,8 @@ Result Properties
 KNOT
 ^^^^
 Object Type: ``Node``
+
+Element Category: Node - create with :meth:`SIR3S_Model.AddNewNode <sir3stoolkit.core.wrapper.SIR3S_Model.AddNewNode>`
 
 
 Properties
@@ -4041,6 +4141,8 @@ KOMK
 ^^^^
 Object Type: ``CompressorTable``
 
+Element Category: Table (rows: ``KOMK_ROWS``) - create with :meth:`SIR3S_Model.InsertElement <sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement>`, add rows with :meth:`SIR3S_Model.AddTableRow <sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow>`
+
 
 Properties
 """"""""""
@@ -4088,6 +4190,8 @@ KOMK_ROWS
 ^^^^^^^^^
 Object Type: ``CompressorTable_Row``
 
+Element Category: Table row of ``KOMK`` - create with :meth:`SIR3S_Model.AddTableRow <sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow>`
+
 
 Properties
 """"""""""
@@ -4124,6 +4228,8 @@ No result properties found.
 KOMP
 ^^^^
 Object Type: ``Compressor``
+
+Element Category: Connecting element (two end nodes) - create with :meth:`SIR3S_Model.AddNewConnectingElement <sir3stoolkit.core.wrapper.SIR3S_Model.AddNewConnectingElement>`
 
 
 Properties
@@ -4281,6 +4387,8 @@ LAYR
 ^^^^
 Object Type: ``LAYR_Layer``
 
+Element Category: Unknown
+
 
 Properties
 """"""""""
@@ -4317,6 +4425,8 @@ No result properties found.
 LFKT
 ^^^^
 Object Type: ``LoadFactorTable``
+
+Element Category: Table (rows: ``LFKT_ROWT``) - create with :meth:`SIR3S_Model.InsertElement <sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement>`, add rows with :meth:`SIR3S_Model.AddTableRow <sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow>`
 
 
 Properties
@@ -4383,6 +4493,8 @@ LFKT_ROWT
 ^^^^^^^^^
 Object Type: ``LoadFactorTable_Row``
 
+Element Category: Table row of ``LFKT`` - create with :meth:`SIR3S_Model.AddTableRow <sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow>`
+
 
 Properties
 """"""""""
@@ -4415,6 +4527,8 @@ No result properties found.
 LTGR
 ^^^^
 Object Type: ``PipeGroup``
+
+Element Category: Reference data (referenced by other elements)
 
 
 Properties
@@ -4450,6 +4564,8 @@ No result properties found.
 MREG
 ^^^^
 Object Type: ``FlowControlUnit``
+
+Element Category: Connecting element (two end nodes) - create with :meth:`SIR3S_Model.AddNewConnectingElement <sir3stoolkit.core.wrapper.SIR3S_Model.AddNewConnectingElement>`
 
 
 Properties
@@ -4596,6 +4712,8 @@ NRCV
 ^^^^
 Object Type: ``NumericalDisplay``
 
+Element Category: Graphical object - create with :meth:`SIR3S_View.AddNewNumericalDisplay <sir3stoolkit.core.wrapper.SIR3S_View.AddNewNumericalDisplay>`
+
 
 Properties
 """"""""""
@@ -4679,6 +4797,8 @@ NSCH
 ^^^^
 Object Type: ``NetValve``
 
+Element Category: Element attached to another network element - create with :meth:`SIR3S_View.AddNewValveOnPipe <sir3stoolkit.core.wrapper.SIR3S_View.AddNewValveOnPipe>`
+
 
 Properties
 """"""""""
@@ -4742,6 +4862,8 @@ Result Properties
 OBEH
 ^^^^
 Object Type: ``OpenContainer``
+
+Element Category: Bypass element (one end node) - create with :meth:`SIR3S_Model.AddNewBypassElement <sir3stoolkit.core.wrapper.SIR3S_Model.AddNewBypassElement>`
 
 
 Properties
@@ -4877,6 +4999,8 @@ OVAL
 ^^^^
 Object Type: ``Oval``
 
+Element Category: Graphical object
+
 
 Properties
 """"""""""
@@ -4917,6 +5041,8 @@ No result properties found.
 PARI
 ^^^^
 Object Type: ``CalcPari``
+
+Element Category: Unknown
 
 
 Properties
@@ -4965,6 +5091,8 @@ PARZ
 ^^^^
 Object Type: ``PARZ_TransientCalculationParameters``
 
+Element Category: Model-wide settings
+
 
 Properties
 """"""""""
@@ -5005,6 +5133,8 @@ No result properties found.
 PGRP
 ^^^^
 Object Type: ``PumpGroup``
+
+Element Category: Unknown
 
 
 Properties
@@ -5145,6 +5275,8 @@ PGRP_PUMP
 ^^^^^^^^^
 Object Type: ``PumpOfPumpGroup``
 
+Element Category: Sub-record of another element
+
 
 Properties
 """"""""""
@@ -5193,6 +5325,8 @@ PHI1
 ^^^^
 Object Type: ``ValveLiftTable``
 
+Element Category: Table (rows: ``PHI1_ROWT``) - create with :meth:`SIR3S_Model.InsertElement <sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement>`, add rows with :meth:`SIR3S_Model.AddTableRow <sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow>`
+
 
 Properties
 """"""""""
@@ -5237,6 +5371,8 @@ PHI1_ROWT
 ^^^^^^^^^
 Object Type: ``ValveLiftTable_Row``
 
+Element Category: Table row of ``PHI1`` - create with :meth:`SIR3S_Model.AddTableRow <sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow>`
+
 
 Properties
 """"""""""
@@ -5269,6 +5405,8 @@ No result properties found.
 PHI2
 ^^^^
 Object Type: ``VentOpenCloseTable``
+
+Element Category: Table (rows: ``PHI2_ROWS``) - create with :meth:`SIR3S_Model.InsertElement <sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement>`, add rows with :meth:`SIR3S_Model.AddTableRow <sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow>`
 
 
 Properties
@@ -5303,6 +5441,8 @@ PHI2_ROWS
 ^^^^^^^^^
 Object Type: ``VentOpenCloseTable_Row``
 
+Element Category: Table row of ``PHI2`` - create with :meth:`SIR3S_Model.AddTableRow <sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow>`
+
 
 Properties
 """"""""""
@@ -5336,6 +5476,8 @@ PHIV
 ^^^^
 Object Type: ``NonReturnValvesTable``
 
+Element Category: Table (rows: ``PHIV_ROWS``) - create with :meth:`SIR3S_Model.InsertElement <sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement>`, add rows with :meth:`SIR3S_Model.AddTableRow <sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow>`
+
 
 Properties
 """"""""""
@@ -5367,6 +5509,8 @@ PHIV_ROWS
 ^^^^^^^^^
 Object Type: ``NonReturnValvesTable_Row``
 
+Element Category: Table row of ``PHIV`` - create with :meth:`SIR3S_Model.AddTableRow <sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow>`
+
 
 Properties
 """"""""""
@@ -5397,6 +5541,8 @@ No result properties found.
 PHTR
 ^^^^
 Object Type: ``PhaseSeparation``
+
+Element Category: Connecting element (two end nodes) - create with :meth:`SIR3S_Model.AddNewConnectingElement <sir3stoolkit.core.wrapper.SIR3S_Model.AddNewConnectingElement>`
 
 
 Properties
@@ -5491,6 +5637,8 @@ PLYG
 ^^^^
 Object Type: ``Polygon``
 
+Element Category: Graphical object
+
 
 Properties
 """"""""""
@@ -5538,6 +5686,8 @@ POLY
 ^^^^
 Object Type: ``Polyline``
 
+Element Category: Graphical object
+
 
 Properties
 """"""""""
@@ -5578,6 +5728,8 @@ No result properties found.
 PREG
 ^^^^
 Object Type: ``PressureRegulator``
+
+Element Category: Connecting element (two end nodes) - create with :meth:`SIR3S_Model.AddNewConnectingElement <sir3stoolkit.core.wrapper.SIR3S_Model.AddNewConnectingElement>`
 
 
 Properties
@@ -5714,6 +5866,8 @@ PUMD
 ^^^^
 Object Type: ``PumpSpeedTable``
 
+Element Category: Table (rows: ``PUMD_ROWT``) - create with :meth:`SIR3S_Model.InsertElement <sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement>`, add rows with :meth:`SIR3S_Model.AddTableRow <sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow>`
+
 
 Properties
 """"""""""
@@ -5758,6 +5912,8 @@ PUMD_ROWT
 ^^^^^^^^^
 Object Type: ``PumpSpeedTable_Row``
 
+Element Category: Table row of ``PUMD`` - create with :meth:`SIR3S_Model.AddTableRow <sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow>`
+
 
 Properties
 """"""""""
@@ -5790,6 +5946,8 @@ No result properties found.
 PUMK
 ^^^^
 Object Type: ``PumpCharTable``
+
+Element Category: Table (rows: ``PUMK_ROWS``) - create with :meth:`SIR3S_Model.InsertElement <sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement>`, add rows with :meth:`SIR3S_Model.AddTableRow <sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow>`
 
 
 Properties
@@ -5830,6 +5988,8 @@ PUMK_ROWS
 ^^^^^^^^^
 Object Type: ``PumpCharTable_Row``
 
+Element Category: Table row of ``PUMK`` - create with :meth:`SIR3S_Model.AddTableRow <sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow>`
+
 
 Properties
 """"""""""
@@ -5866,6 +6026,8 @@ No result properties found.
 PUMP
 ^^^^
 Object Type: ``Pump``
+
+Element Category: Connecting element (two end nodes) - create with :meth:`SIR3S_Model.AddNewConnectingElement <sir3stoolkit.core.wrapper.SIR3S_Model.AddNewConnectingElement>`
 
 
 Properties
@@ -6240,6 +6402,8 @@ PVAR
 ^^^^
 Object Type: ``VarPressureTable``
 
+Element Category: Table (rows: ``PVAR_ROWT``) - create with :meth:`SIR3S_Model.InsertElement <sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement>`, add rows with :meth:`SIR3S_Model.AddTableRow <sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow>`
+
 
 Properties
 """"""""""
@@ -6284,6 +6448,8 @@ PVAR_ROWT
 ^^^^^^^^^
 Object Type: ``VarPressureTable_Row``
 
+Element Category: Table row of ``PVAR`` - create with :meth:`SIR3S_Model.AddTableRow <sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow>`
+
 
 Properties
 """"""""""
@@ -6316,6 +6482,8 @@ No result properties found.
 PZON
 ^^^^
 Object Type: ``PressureZone``
+
+Element Category: Reference data (referenced by other elements)
 
 
 Properties
@@ -6363,6 +6531,8 @@ No result properties found.
 QVAR
 ^^^^
 Object Type: ``VarFlowTable``
+
+Element Category: Table (rows: ``QVAR_ROWT``) - create with :meth:`SIR3S_Model.InsertElement <sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement>`, add rows with :meth:`SIR3S_Model.AddTableRow <sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow>`
 
 
 Properties
@@ -6429,6 +6599,8 @@ QVAR_ROWT
 ^^^^^^^^^
 Object Type: ``VarFlowTable_Row``
 
+Element Category: Table row of ``QVAR`` - create with :meth:`SIR3S_Model.AddTableRow <sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow>`
+
 
 Properties
 """"""""""
@@ -6461,6 +6633,8 @@ No result properties found.
 RADD
 ^^^^
 Object Type: ``SummingPoint``
+
+Element Category: Signal model element
 
 
 Properties
@@ -6529,6 +6703,8 @@ Result Properties
 RART
 ^^^^
 Object Type: ``ControlMode``
+
+Element Category: Unknown
 
 
 Properties
@@ -6602,6 +6778,8 @@ RCPL
 ^^^^
 Object Type: ``ControlPointTable``
 
+Element Category: Table (rows: ``RCPL_ROWT``) - create with :meth:`SIR3S_Model.InsertElement <sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement>`, add rows with :meth:`SIR3S_Model.AddTableRow <sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow>`
+
 
 Properties
 """"""""""
@@ -6655,6 +6833,8 @@ RCPL_ROWT
 ^^^^^^^^^
 Object Type: ``ControlPointTable_Row``
 
+Element Category: Table row of ``RCPL`` - create with :meth:`SIR3S_Model.AddTableRow <sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow>`
+
 
 Properties
 """"""""""
@@ -6706,6 +6886,8 @@ Result Properties
 RDIV
 ^^^^
 Object Type: ``Divider``
+
+Element Category: Signal model element
 
 
 Properties
@@ -6777,6 +6959,8 @@ RECT
 ^^^^
 Object Type: ``Rectangle``
 
+Element Category: Graphical object
+
 
 Properties
 """"""""""
@@ -6824,6 +7008,8 @@ REGP
 ^^^^
 Object Type: ``REGP_ControlParameters``
 
+Element Category: Model-wide settings
+
 
 Properties
 """"""""""
@@ -6854,6 +7040,8 @@ No result properties found.
 REGV
 ^^^^
 Object Type: ``ControlValve``
+
+Element Category: Connecting element (two end nodes) - create with :meth:`SIR3S_Model.AddNewConnectingElement <sir3stoolkit.core.wrapper.SIR3S_Model.AddNewConnectingElement>`
 
 
 Properties
@@ -6987,6 +7175,8 @@ RFKT
 ^^^^
 Object Type: ``FunctionGenerator``
 
+Element Category: Signal model element
+
 
 Properties
 """"""""""
@@ -7056,6 +7246,8 @@ Result Properties
 RHYS
 ^^^^
 Object Type: ``Histeresis``
+
+Element Category: Signal model element
 
 
 Properties
@@ -7132,6 +7324,8 @@ RINT
 ^^^^
 Object Type: ``Integrator``
 
+Element Category: Signal model element
+
 
 Properties
 """"""""""
@@ -7196,6 +7390,8 @@ Result Properties
 RLSR
 ^^^^
 Object Type: ``LogicalStorage``
+
+Element Category: Signal model element
 
 
 Properties
@@ -7262,6 +7458,8 @@ Result Properties
 RLVG
 ^^^^
 Object Type: ``LogicalComparison``
+
+Element Category: Signal model element
 
 
 Properties
@@ -7330,6 +7528,8 @@ Result Properties
 RMES
 ^^^^
 Object Type: ``Transmitter``
+
+Element Category: Signal model element
 
 
 Properties
@@ -7415,6 +7615,8 @@ RMES_DPTS
 ^^^^^^^^^
 Object Type: ``RMES_DPTS_RmesInternalDataPoint``
 
+Element Category: Sub-record of another element
+
 
 Properties
 """"""""""
@@ -7461,6 +7663,8 @@ No result properties found.
 RMMA
 ^^^^
 Object Type: ``MinMaxSelection``
+
+Element Category: Signal model element
 
 
 Properties
@@ -7529,6 +7733,8 @@ Result Properties
 RMUL
 ^^^^
 Object Type: ``Multiplier``
+
+Element Category: Signal model element
 
 
 Properties
@@ -7602,6 +7808,8 @@ Result Properties
 ROHR
 ^^^^
 Object Type: ``Pipe``
+
+Element Category: Connecting element (two end nodes) - create with :meth:`SIR3S_Model.AddNewPipe <sir3stoolkit.core.wrapper.SIR3S_Model.AddNewPipe>`
 
 
 Properties
@@ -7965,6 +8173,8 @@ ROHR_VRTX
 ^^^^^^^^^
 Object Type: ``PipeVertex``
 
+Element Category: Sub-record of another element
+
 
 Properties
 """"""""""
@@ -8044,6 +8254,8 @@ RPFL
 ^^^^
 Object Type: ``DirectionalArrow``
 
+Element Category: Graphical object - create with :meth:`SIR3S_View.AddNewDirectionalArrow <sir3stoolkit.core.wrapper.SIR3S_View.AddNewDirectionalArrow>`
+
 
 Properties
 """"""""""
@@ -8098,6 +8310,8 @@ No result properties found.
 RPID
 ^^^^
 Object Type: ``PidController``
+
+Element Category: Signal model element
 
 
 Properties
@@ -8193,6 +8407,8 @@ RPT1
 ^^^^
 Object Type: ``Pt1Controller``
 
+Element Category: Signal model element
+
 
 Properties
 """"""""""
@@ -8258,6 +8474,8 @@ RRCT
 ^^^^
 Object Type: ``RoundRectangle``
 
+Element Category: Graphical object
+
 
 Properties
 """"""""""
@@ -8304,6 +8522,8 @@ No result properties found.
 RSLW
 ^^^^
 Object Type: ``SetpointDevice``
+
+Element Category: Signal model element
 
 
 Properties
@@ -8405,6 +8625,8 @@ Result Properties
 RSTE
 ^^^^
 Object Type: ``ControlVariableConverterRSTE``
+
+Element Category: Signal model element
 
 
 Properties
@@ -8592,6 +8814,8 @@ RSTN
 ^^^^
 Object Type: ``ControlVariableConverter``
 
+Element Category: Signal model element
+
 
 Properties
 """"""""""
@@ -8756,6 +8980,8 @@ RTOT
 ^^^^
 Object Type: ``DeadTimeElement``
 
+Element Category: Signal model element
+
 
 Properties
 """"""""""
@@ -8819,6 +9045,8 @@ RUES
 ^^^^
 Object Type: ``TransitionSymbol``
 
+Element Category: Signal model element
+
 
 Properties
 """"""""""
@@ -8869,6 +9097,8 @@ No result properties found.
 SIVE
 ^^^^
 Object Type: ``SafetyValve``
+
+Element Category: Connecting element (two end nodes) - create with :meth:`SIR3S_Model.AddNewConnectingElement <sir3stoolkit.core.wrapper.SIR3S_Model.AddNewConnectingElement>`
 
 
 Properties
@@ -8991,6 +9221,8 @@ SOKO
 ^^^^
 Object Type: ``SolarCollector``
 
+Element Category: Reference data (referenced by other elements)
+
 
 Properties
 """"""""""
@@ -9090,6 +9322,8 @@ SPLZ
 ^^^^
 Object Type: ``SPLZ_TimeSeries``
 
+Element Category: Unknown
+
 
 Properties
 """"""""""
@@ -9118,6 +9352,8 @@ No result properties found.
 SRAT
 ^^^^
 Object Type: ``DamageRatesTable``
+
+Element Category: Table (rows: ``SRAT_ROWS``) - create with :meth:`SIR3S_Model.InsertElement <sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement>`, add rows with :meth:`SIR3S_Model.AddTableRow <sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow>`
 
 
 Properties
@@ -9152,6 +9388,8 @@ SRAT_ROWS
 ^^^^^^^^^
 Object Type: ``DamageRatesTable_Row``
 
+Element Category: Table row of ``SRAT`` - create with :meth:`SIR3S_Model.AddTableRow <sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow>`
+
 
 Properties
 """"""""""
@@ -9185,6 +9423,8 @@ STOF
 ^^^^
 Object Type: ``ThermophysPropTable``
 
+Element Category: Table (rows: ``STOF_ROWS``) - create with :meth:`SIR3S_Model.InsertElement <sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement>`, add rows with :meth:`SIR3S_Model.AddTableRow <sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow>`
+
 
 Properties
 """"""""""
@@ -9217,6 +9457,8 @@ No result properties found.
 STOF_ROWS
 ^^^^^^^^^
 Object Type: ``ThermophysPropTable_Row``
+
+Element Category: Table row of ``STOF`` - create with :meth:`SIR3S_Model.AddTableRow <sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow>`
 
 
 Properties
@@ -9257,6 +9499,8 @@ STRASSE
 ^^^^^^^
 Object Type: ``Street``
 
+Element Category: Reference data (referenced by other elements) - create with :meth:`SIR3S_View.AddNewStreet <sir3stoolkit.core.wrapper.SIR3S_View.AddNewStreet>`
+
 
 Properties
 """"""""""
@@ -9293,6 +9537,8 @@ No result properties found.
 STRO
 ^^^^
 Object Type: ``StandPipe``
+
+Element Category: Bypass element (one end node) - create with :meth:`SIR3S_Model.AddNewBypassElement <sir3stoolkit.core.wrapper.SIR3S_Model.AddNewBypassElement>`
 
 
 Properties
@@ -9408,6 +9654,8 @@ SWVT
 ^^^^
 Object Type: ``MeasuredVariableTable``
 
+Element Category: Table (rows: ``SWVT_ROWT``) - create with :meth:`SIR3S_Model.InsertElement <sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement>`, add rows with :meth:`SIR3S_Model.AddTableRow <sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow>`
+
 
 Properties
 """"""""""
@@ -9452,6 +9700,8 @@ SWVT_ROWT
 ^^^^^^^^^
 Object Type: ``MeasuredVariableTable_Row``
 
+Element Category: Table row of ``SWVT`` - create with :meth:`SIR3S_Model.AddTableRow <sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow>`
+
 
 Properties
 """"""""""
@@ -9484,6 +9734,8 @@ No result properties found.
 TEVT
 ^^^^
 Object Type: ``TemperatureTable``
+
+Element Category: Table (rows: ``TEVT_ROWT``) - create with :meth:`SIR3S_Model.InsertElement <sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement>`, add rows with :meth:`SIR3S_Model.AddTableRow <sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow>`
 
 
 Properties
@@ -9529,6 +9781,8 @@ TEVT_ROWT
 ^^^^^^^^^
 Object Type: ``TemperatureTable_Row``
 
+Element Category: Table row of ``TEVT`` - create with :meth:`SIR3S_Model.AddTableRow <sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow>`
+
 
 Properties
 """"""""""
@@ -9561,6 +9815,8 @@ No result properties found.
 TFKT
 ^^^^
 Object Type: ``FunctionTable``
+
+Element Category: Table (rows: ``TFKT_ROWS``) - create with :meth:`SIR3S_Model.InsertElement <sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement>`, add rows with :meth:`SIR3S_Model.AddTableRow <sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow>`
 
 
 Properties
@@ -9595,6 +9851,8 @@ TFKT_ROWS
 ^^^^^^^^^
 Object Type: ``FunctionTable_Row``
 
+Element Category: Table row of ``TFKT`` - create with :meth:`SIR3S_Model.AddTableRow <sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow>`
+
 
 Properties
 """"""""""
@@ -9625,6 +9883,8 @@ No result properties found.
 TRFT
 ^^^^
 Object Type: ``ReturnTemperaturTable``
+
+Element Category: Table (rows: ``TRFT_ROWS``) - create with :meth:`SIR3S_Model.InsertElement <sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement>`, add rows with :meth:`SIR3S_Model.AddTableRow <sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow>`
 
 
 Properties
@@ -9659,6 +9919,8 @@ TRFT_ROWS
 ^^^^^^^^^
 Object Type: ``ReturnTemperaturTable_Row``
 
+Element Category: Table row of ``TRFT`` - create with :meth:`SIR3S_Model.AddTableRow <sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow>`
+
 
 Properties
 """"""""""
@@ -9689,6 +9951,8 @@ No result properties found.
 TRVA
 ^^^^
 Object Type: ``TransportVariable``
+
+Element Category: Unknown
 
 
 Properties
@@ -9743,6 +10007,8 @@ USCH
 ^^^^
 Object Type: ``USCH_UserDefinedProperties``
 
+Element Category: Unknown
+
 
 Properties
 """"""""""
@@ -9775,6 +10041,8 @@ No result properties found.
 UTMP
 ^^^^
 Object Type: ``EnvironmentTemp``
+
+Element Category: Reference data (referenced by other elements)
 
 
 Properties
@@ -9815,6 +10083,8 @@ VARA
 ^^^^
 Object Type: ``VARA_ColorScale``
 
+Element Category: Table (rows: ``VARA_ROWS``) - create with :meth:`SIR3S_Model.InsertElement <sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement>`, add rows with :meth:`SIR3S_Model.AddTableRow <sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow>`
+
 
 Properties
 """"""""""
@@ -9845,6 +10115,8 @@ No result properties found.
 VARA_ROWS
 ^^^^^^^^^
 Object Type: ``VARA_ROWS_WidthOrScale``
+
+Element Category: Table row of ``VARA`` - create with :meth:`SIR3S_Model.AddTableRow <sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow>`
 
 
 Properties
@@ -9916,6 +10188,8 @@ No result properties found.
 VENT
 ^^^^
 Object Type: ``Valve``
+
+Element Category: Connecting element (two end nodes) - create with :meth:`SIR3S_Model.AddNewConnectingElement <sir3stoolkit.core.wrapper.SIR3S_Model.AddNewConnectingElement>`
 
 
 Properties
@@ -10100,6 +10374,8 @@ VERB
 ^^^^
 Object Type: ``Demand``
 
+Element Category: Element attached to another network element - create with :meth:`SIR3S_View.AddNewCustomer <sir3stoolkit.core.wrapper.SIR3S_View.AddNewCustomer>`
+
 
 Properties
 """"""""""
@@ -10221,6 +10497,8 @@ VKNO
 ^^^^
 Object Type: ``BlockConnectionNode``
 
+Element Category: Container or block element
+
 
 Properties
 """"""""""
@@ -10262,6 +10540,8 @@ VRCT
 ^^^^
 Object Type: ``VRCT_ViewRectangle``
 
+Element Category: Unknown
+
 
 Properties
 """"""""""
@@ -10296,6 +10576,8 @@ No result properties found.
 WBLZ
 ^^^^
 Object Type: ``WBLZ_ThermalBalance``
+
+Element Category: Unknown
 
 
 Properties
@@ -10374,6 +10656,8 @@ WEVT
 ^^^^
 Object Type: ``ThermalOutputTable``
 
+Element Category: Table (rows: ``WEVT_ROWT``) - create with :meth:`SIR3S_Model.InsertElement <sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement>`, add rows with :meth:`SIR3S_Model.AddTableRow <sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow>`
+
 
 Properties
 """"""""""
@@ -10418,6 +10702,8 @@ WEVT_ROWT
 ^^^^^^^^^
 Object Type: ``ThermalOutputTable_Row``
 
+Element Category: Table row of ``WEVT`` - create with :meth:`SIR3S_Model.AddTableRow <sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow>`
+
 
 Properties
 """"""""""
@@ -10450,6 +10736,8 @@ No result properties found.
 WIND
 ^^^^
 Object Type: ``AirVessel``
+
+Element Category: Bypass element (one end node) - create with :meth:`SIR3S_Model.AddNewBypassElement <sir3stoolkit.core.wrapper.SIR3S_Model.AddNewBypassElement>`
 
 
 Properties
@@ -10579,6 +10867,8 @@ WTTR
 ^^^^
 Object Type: ``WeatherDataTable``
 
+Element Category: Table (rows: ``WTTR_ROWT``) - create with :meth:`SIR3S_Model.InsertElement <sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement>`, add rows with :meth:`SIR3S_Model.AddTableRow <sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow>`
+
 
 Properties
 """"""""""
@@ -10640,6 +10930,8 @@ WTTR_ROWT
 ^^^^^^^^^
 Object Type: ``WeatherDataTable_Row``
 
+Element Category: Table row of ``WTTR`` - create with :meth:`SIR3S_Model.AddTableRow <sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow>`
+
 
 Properties
 """"""""""
@@ -10679,6 +10971,8 @@ ZEP1
 ^^^^
 Object Type: ``RegulatorsTable``
 
+Element Category: Table (rows: ``ZEP1_ROWS``) - create with :meth:`SIR3S_Model.InsertElement <sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement>`, add rows with :meth:`SIR3S_Model.AddTableRow <sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow>`
+
 
 Properties
 """"""""""
@@ -10716,6 +11010,8 @@ ZEP1_ROWS
 ^^^^^^^^^
 Object Type: ``RegulatorsTable_Row``
 
+Element Category: Table row of ``ZEP1`` - create with :meth:`SIR3S_Model.AddTableRow <sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow>`
+
 
 Properties
 """"""""""
@@ -10748,6 +11044,8 @@ No result properties found.
 ZEP2
 ^^^^
 Object Type: ``CharacteristicLossTable``
+
+Element Category: Table (rows: ``ZEP2_ROWS``) - create with :meth:`SIR3S_Model.InsertElement <sir3stoolkit.core.wrapper.SIR3S_Model.InsertElement>`, add rows with :meth:`SIR3S_Model.AddTableRow <sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow>`
 
 
 Properties
@@ -10785,6 +11083,8 @@ No result properties found.
 ZEP2_ROWS
 ^^^^^^^^^
 Object Type: ``CharacteristicLossTable_Row``
+
+Element Category: Table row of ``ZEP2`` - create with :meth:`SIR3S_Model.AddTableRow <sir3stoolkit.core.wrapper.SIR3S_Model.AddTableRow>`
 
 
 Properties
