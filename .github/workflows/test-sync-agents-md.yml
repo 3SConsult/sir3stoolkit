@@ -5,7 +5,9 @@ on:
   pull_request:
     paths:
       - 'AGENTS.md'
+      - 'ai/**'
       - 'src/sir3stoolkit/AGENTS.md'
+      - 'docs/source/tutorials/**/*.ipynb'
       - '.github/actions/sync-agents-md/**'
       - '.github/workflows/test-sync-agents-md.yml'
 
@@ -15,25 +17,40 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
       # --- without version: plain copy ---------------------------------------------------------
 
       - name: Corrupt the packaged copy, so a real fix is required
         shell: pwsh
-        run: "'stale content - should be overwritten by the action' | Set-Content -Path src\\sir3stoolkit\\AGENTS.md"
+        run: |
+          'stale content - should be overwritten by the action' | Set-Content -Path src\sir3stoolkit\AGENTS.md
+          New-Item -ItemType Directory -Force src\sir3stoolkit\ai | Out-Null
+          'stale file - should be removed by the action' | Set-Content -Path src\sir3stoolkit\ai\stale.md
 
       - name: Run the action under test (no version)
         uses: ./.github/actions/sync-agents-md
 
-      - name: Assert the packaged copy now matches the repo-root file exactly
+      - name: Assert the packaged copies match the repo files exactly, tutorials exported, no stale files
         shell: pwsh
         run: |
-          $root = Get-FileHash -Algorithm SHA256 "AGENTS.md"
-          $packaged = Get-FileHash -Algorithm SHA256 "src\sir3stoolkit\AGENTS.md"
-          if ($root.Hash -ne $packaged.Hash) {
-            Write-Error "src/sir3stoolkit/AGENTS.md does not match AGENTS.md after running the sync action."
-            exit 1
+          $errors = @()
+          foreach ($f in @('AGENTS.md', 'ai\tutorials.md', 'ai\updates-and-issues.md')) {
+            $root = Get-FileHash -Algorithm SHA256 $f
+            $packaged = Get-FileHash -Algorithm SHA256 "src\sir3stoolkit\$f"
+            if ($root.Hash -ne $packaged.Hash) { $errors += "src/sir3stoolkit/$f does not match $f" }
           }
-          Write-Host "OK: src/sir3stoolkit/AGENTS.md matches AGENTS.md."
+          if (Test-Path src\sir3stoolkit\ai\stale.md) { $errors += "stale file in src/sir3stoolkit/ai was not removed" }
+          $notebooks = @(Get-ChildItem docs\source\tutorials\*\Tutorial???_Assets\ToolkitTutorial???.ipynb)
+          $exported = @(Get-ChildItem src\sir3stoolkit\ai\tutorials\ToolkitTutorial???.md)
+          if ($notebooks.Count -eq 0 -or $exported.Count -ne $notebooks.Count) {
+            $errors += "exported $($exported.Count) tutorials for $($notebooks.Count) notebooks"
+          }
+          if ($errors) { $errors | ForEach-Object { Write-Error $_ }; exit 1 }
+          Write-Host "OK: plain copies match, $($exported.Count) tutorials exported."
 
       # --- with version (as in release.yml): links pointed at the release tag ----------------------
 
@@ -46,20 +63,22 @@ jobs:
         with:
           version: '90.15.999'
 
-      - name: Assert the packaged copy links to the tag, except releases.rst and CONTRIBUTING.md
+      - name: Assert the packaged guide links to the tag, except releases.rst and CONTRIBUTING.md
         shell: pwsh
         run: |
-          $text = Get-Content -Path "src\sir3stoolkit\AGENTS.md" -Raw -Encoding utf8
           $errors = @()
-          if ($text -notmatch 'ships with the installed sir3stoolkit 90\.15\.999') { $errors += "note below the title is missing" }
-          if ($text -notmatch 'sir3stoolkit/v90\.15\.999/') { $errors += "no raw links to the tag" }
-          if ($text -notmatch 'sir3stoolkit/blob/v90\.15\.999/') { $errors += "no blob links to the tag" }
-          $leftover = [regex]::Matches($text, '3SConsult/sir3stoolkit/(?:blob/)?main/[^\s)>`]*') |
-            ForEach-Object Value | Where-Object { $_ -notmatch 'main/(docs/source/releases\.rst|CONTRIBUTING\.md)' }
-          if ($leftover) { $errors += "links still on main: $($leftover -join ', ')" }
-          if ($text -notmatch 'sir3stoolkit/main/docs/source/releases\.rst') { $errors += "releases.rst link no longer on main" }
-          if ($errors) {
-            $errors | ForEach-Object { Write-Error $_ }
-            exit 1
+          foreach ($f in @('AGENTS.md', 'ai\tutorials.md', 'ai\updates-and-issues.md')) {
+            $text = Get-Content -Path "src\sir3stoolkit\$f" -Raw -Encoding utf8
+            if ($text -notmatch 'ships with the installed sir3stoolkit 90\.15\.999') { $errors += "${f}: note below the title is missing" }
+            $leftover = [regex]::Matches($text, '3SConsult/sir3stoolkit/(?:blob/)?main/[^\s)>`]*') |
+              ForEach-Object Value | Where-Object { $_ -notmatch 'main/(docs/source/releases\.rst|CONTRIBUTING\.md)' }
+            if ($leftover) { $errors += "${f}: links still on main: $($leftover -join ', ')" }
           }
-          Write-Host "OK: packaged copy links point at v90.15.999 (releases.rst/CONTRIBUTING.md stay on main)."
+          $agents = Get-Content -Path src\sir3stoolkit\AGENTS.md -Raw -Encoding utf8
+          $tutorials = Get-Content -Path src\sir3stoolkit\ai\tutorials.md -Raw -Encoding utf8
+          $updates = Get-Content -Path src\sir3stoolkit\ai\updates-and-issues.md -Raw -Encoding utf8
+          if ($agents -notmatch 'sir3stoolkit/v90\.15\.999/') { $errors += "AGENTS.md: no raw links to the tag" }
+          if ($tutorials -notmatch 'sir3stoolkit/blob/v90\.15\.999/') { $errors += "ai/tutorials.md: no blob links to the tag" }
+          if ($updates -notmatch 'sir3stoolkit/main/docs/source/releases\.rst') { $errors += "releases.rst link no longer on main" }
+          if ($errors) { $errors | ForEach-Object { Write-Error $_ }; exit 1 }
+          Write-Host "OK: packaged guide links point at v90.15.999 (releases.rst/CONTRIBUTING.md stay on main)."

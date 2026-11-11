@@ -4,19 +4,20 @@ Created on Weg Sep 01 14:04:43 2025
 
 This module implements the generation of SIR 3S models in alternative model formats such as pandapipes or nx-Graphs.
 
-AI assistant: see sir3stoolkit/__init__.py for orientation (architecture, API/property reference,
-known gotchas) before writing code against this module.
+AI assistant: before writing code against this module, read the guide for AI assistants - AGENTS.md
+next to the installed sir3stoolkit/__init__.py (Initialize_Toolkit() logs its path for AI assistants).
+Without the installed package: https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/AGENTS.md
 
 @author: Jablonski
 """
 
-from typing import List, Optional, Union
+from enum import Enum
+from typing import List, Optional
 
 from sir3stoolkit.dependency_check import require_packages
 require_packages(__name__, "pandapipes", "pandas", "shapely", "networkx")
 
 import pandapipes as pp
-import pandas as pd
 from shapely import wkt
 from shapely.geometry.base import BaseGeometry
 import networkx as nx
@@ -31,7 +32,7 @@ class SIR3S_Model_Alternative_Models(SIR3S_Model_Dataframes):
     """
     This class is supposed to extend the Dataframes class that extends the general SIR3S_Model class with the possibility of using alternative District Heating models such as pandapipes.
     """
-    def SIR_3S_to_pandapipes(self):
+    def SIR_3S_to_pandapipes(self) -> pp.pandapipesNet:
         """
         Converts the currently open SIR 3S network into a pandapipes network.
 
@@ -130,7 +131,7 @@ class SIR3S_Model_Alternative_Models(SIR3S_Model_Dataframes):
 
         return net
     
-    def SIR_3S_to_nx_graph(self):
+    def SIR_3S_to_nx_graph(self) -> nx.DiGraph:
         """
         Build a directed NetworkX graph from SIR 3S model.
 
@@ -383,7 +384,7 @@ class SIR3S_Model_Alternative_Models(SIR3S_Model_Dataframes):
         )
         return G
     
-    def get_object_type_enum(self, element_type: str):
+    def get_object_type_enum(self, element_type: str) -> Optional[Enum]:
         """
         Return the enum member from self.ObjectTypes corresponding to the given element_type string.
 

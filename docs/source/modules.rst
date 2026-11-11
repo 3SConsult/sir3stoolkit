@@ -216,6 +216,19 @@ Mantle Methods: SIR3S_Model_Advanced_Operations
 - :meth:`sir3stoolkit.mantle.advanced_operations.SIR3S_Model_Advanced_Operations.get_tks_of_group_elements`
 - :meth:`sir3stoolkit.mantle.advanced_operations.SIR3S_Model_Advanced_Operations.get_element_type_from_tk`
 
+AI Assistant Functions
+^^^^^^^^^^^^^^^^^^^^^^
+
+Command line: ``python -m sir3stoolkit ai-setup``, see :ref:`ai-assistants-label`.
+
+- :func:`sir3stoolkit.ai_guide.get_ai_guide_path`
+- :func:`sir3stoolkit.ai_guide.get_ai_guide_url`
+- :func:`sir3stoolkit.ai_guide.get_ai_guide_location`
+- :func:`sir3stoolkit.ai_guide.ai_setup`
+- :func:`sir3stoolkit.ai_guide.is_ai_agent`
+- :func:`sir3stoolkit.ai_guide.get_ai_hint`
+- :func:`sir3stoolkit.ai_guide.log_ai_hint_once`
+
 Utility Functions
 ^^^^^^^^^^^^^^^^^
 
@@ -256,6 +269,14 @@ Mantle
    :undoc-members:
    :show-inheritance:
    
+AI Assistants
+-------------
+
+.. automodule:: sir3stoolkit.ai_guide
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Utilities
 ---------
 

@@ -1,12 +1,14 @@
 name: Sync AGENTS.md into package
 description: >
-  Copies the repo-root AGENTS.md into src/sir3stoolkit/AGENTS.md so it's included in the
-  wheel via package-data. Must run as a step in a job that already checked out the repo -
+  Copies the guide for AI assistants - the repo-root AGENTS.md and the ai/ folder -
+  into src/sir3stoolkit/ so it's included in the wheel via package-data, and exports the cell sources of every
+  tutorial notebook to src/sir3stoolkit/ai/tutorials/ToolkitTutorialNNN.md (readable without the notebooks'
+  JSON and outputs, offline). Must run as a step in a job that already checked out the repo and set up Python -
   it operates on the current working directory's files, it does not check out anything itself.
-  With `version`, the packaged copy's GitHub links are pointed from main to the release tag
-  v<version> (except releases.rst and CONTRIBUTING.md, which must stay on main), and a note
-  saying so is added below the title - so an AI reading the installed package's copy gets the
-  docs, tutorials and references of exactly the installed version.
+  With `version`, the packaged guide's GitHub links are pointed from main to the release tag v<version>
+  (except releases.rst and CONTRIBUTING.md, which must stay on main), and a note saying so is added below the
+  title of each file - so an AI reading the installed package's copy gets the docs, tutorials and references
+  of exactly the installed version. The logic is in sync_agent_docs.py next to this file.
 
 inputs:
   version:
@@ -17,35 +19,10 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Copy AGENTS.md into src/sir3stoolkit/
+    - name: Copy AGENTS.md and ai/ into src/sir3stoolkit/, export the tutorials
       shell: pwsh
       env:
         VERSION: ${{ inputs.version }}
-      run: |
-        if (-not $env:VERSION) {
-          Copy-Item -Path "AGENTS.md" -Destination "src\sir3stoolkit\AGENTS.md" -Force
-          exit 0
-        }
-
-        $text = Get-Content -Path "AGENTS.md" -Raw -Encoding utf8
-        $tag = "v$($env:VERSION)"
-
-        # raw.githubusercontent.com/3SConsult/sir3stoolkit/main/... and github.com/3SConsult/sir3stoolkit/blob/main/...
-        $pattern = '(3SConsult/sir3stoolkit/(?:blob/)?)main/(?!docs/source/releases\.rst|CONTRIBUTING\.md)'
-        $count = [regex]::Matches($text, $pattern).Count
-        if ($count -eq 0) {
-          Write-Error "No GitHub links to main found in AGENTS.md - did the link format change? Adjust the pattern in this action."
-          exit 1
-        }
-        $text = [regex]::Replace($text, $pattern, ('${1}' + $tag + '/'))
-
-        # Note below the title line
-        $nl = if ($text.Contains("`r`n")) { "`r`n" } else { "`n" }
-        $note = ('> **This copy ships with the installed sir3stoolkit {0}.** Its GitHub links point at the release tag ' +
-                 '`{1}` - the docs, tutorials and references of exactly this version. Only the links to `releases.rst` and ' +
-                 '`CONTRIBUTING.md` point at `main` (newer releases, current development state).') -f $env:VERSION, $tag
-        $i = $text.IndexOf($nl) + $nl.Length
-        $text = $text.Substring(0, $i) + $nl + $note + $nl + $text.Substring($i)
-
-        Set-Content -Path "src\sir3stoolkit\AGENTS.md" -Value $text -NoNewline -Encoding utf8
-        Write-Host "Pointed $count GitHub links from main to $tag."
+        SCRIPT: ${{ github.action_path }}/sync_agent_docs.py
+      # one token (--version=...), so an empty version isn't dropped when passed to a native command
+      run: python "$env:SCRIPT" "--version=$env:VERSION"

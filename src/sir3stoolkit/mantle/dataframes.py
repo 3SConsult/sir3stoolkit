@@ -4,8 +4,9 @@ Created on Fri Aug 29 09:22:31 2025
 
 This module implements interactions between SIR 3S and pandas dataframes. You can obtain pandas dfs with model- or resultdata, insert nodes and pipes via a df, etc.
 
-AI assistant: see sir3stoolkit/__init__.py for orientation (architecture, API/property reference,
-known gotchas) before writing code against this module.
+AI assistant: before writing code against this module, read the guide for AI assistants - AGENTS.md
+next to the installed sir3stoolkit/__init__.py (Initialize_Toolkit() logs its path for AI assistants).
+Without the installed package: https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/AGENTS.md
 
 @author: Jablonski
 """

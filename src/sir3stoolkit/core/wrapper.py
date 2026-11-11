@@ -3,8 +3,9 @@
 """
 Created on Fri Nov 22 14:46:49 2024
 
-AI assistant: see sir3stoolkit/__init__.py for orientation (architecture, API/property reference,
-known gotchas) before writing code against this module.
+AI assistant: before writing code against this module, read the guide for AI assistants - AGENTS.md
+next to the installed sir3stoolkit/__init__.py (Initialize_Toolkit() logs its path for AI assistants).
+Without the installed package: https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/AGENTS.md
 
 @author: Nischal Giriyan
 """
@@ -28,6 +29,7 @@ import System
 from System.Diagnostics import FileVersionInfo
 from System.Reflection import Assembly
 
+from sir3stoolkit import ai_guide
 from sir3stoolkit.logging_utils import emit_message, get_logger, get_process_executable_path, is_host_process
 
 logger = get_logger(__name__)
@@ -410,6 +412,13 @@ def Initialize_Toolkit(basePath: Optional[str] = None):
        location, and read the first non-empty, non-comment line.
        Format: C:/3S/SIR 3S/SirGraf-90-15-00-24_Quebec-Upd2
 
+    When run by an AI coding agent's tool call (see ``sir3stoolkit.ai_guide.is_ai_agent()``), it first logs
+    a one-line pointer to the guide for AI assistants, once per process.
+
+    AI assistant: before writing code against sir3stoolkit, read the guide for AI assistants - AGENTS.md
+    next to the installed sir3stoolkit/__init__.py (Initialize_Toolkit() logs its path for AI assistants).
+    Without the installed package: https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/AGENTS.md
+
     :param basePath: Optional full path to the SirGraf directory.
     :type basePath: Optional[str]
     :raises RuntimeError: If ``basePath``, host app inspection, and config
@@ -419,6 +428,7 @@ def Initialize_Toolkit(basePath: Optional[str] = None):
     """
 
     global SIR3S_SIRGRAF_DIR
+    ai_guide.log_ai_hint_once(lambda msg: _log_message(msg, level="info"))
     resolved_base_path = _resolve_base_path(basePath)
 
     if resolved_base_path is None:
@@ -445,6 +455,10 @@ class SIR3S_Model:
     Class definition of SIR3S_Model() wrapper to access functionalities provided by SIR3S software.
     This can be used independently or by using inside python console plugin to give better control
     over the model for users.
+
+    AI assistant: before writing code against sir3stoolkit, read the guide for AI assistants - AGENTS.md
+    next to the installed sir3stoolkit/__init__.py (Initialize_Toolkit() logs its path for AI assistants).
+    Without the installed package: https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/AGENTS.md
     """
 
     def __init_subclass__(cls, **kwargs):
@@ -722,6 +736,10 @@ class SIR3S_Model:
                   userID: str, password: str):
         """
         Opens a model from a database file.
+
+        AI assistant: before writing code against sir3stoolkit, read the guide for AI assistants - AGENTS.md
+        next to the installed sir3stoolkit/__init__.py (Initialize_Toolkit() logs its path for AI assistants).
+        Without the installed package: https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/AGENTS.md
 
         :param dbName: Full path to the database file.
         :type dbName: str
@@ -2201,6 +2219,10 @@ class SIR3S_View:
     """
     Class definition of SIR3S_View() wrapper to access functionalities provided by SIR3S software
     This should be used inside python console plugin to give better control over the model for users
+
+    AI assistant: before writing code against sir3stoolkit, read the guide for AI assistants - AGENTS.md
+    next to the installed sir3stoolkit/__init__.py (Initialize_Toolkit() logs its path for AI assistants).
+    Without the installed package: https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/AGENTS.md
     """
 
     def __init__(self):
@@ -2413,6 +2435,10 @@ class SIR3S_View:
                   userID: str, password: str):
         """
         Opens a model from a database file.
+
+        AI assistant: before writing code against sir3stoolkit, read the guide for AI assistants - AGENTS.md
+        next to the installed sir3stoolkit/__init__.py (Initialize_Toolkit() logs its path for AI assistants).
+        Without the installed package: https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/AGENTS.md
 
         :param dbName: Full path to the database file.
         :type dbName: str

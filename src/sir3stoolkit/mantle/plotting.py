@@ -4,8 +4,9 @@ Created on Thu Okt 7 13:39:13 2025
 
 This module implements general plotting functions for SIR 3S applications. TODO: AGSN (longitudinal section plot)
 
-AI assistant: see sir3stoolkit/__init__.py for orientation (architecture, API/property reference,
-known gotchas) before writing code against this module.
+AI assistant: before writing code against this module, read the guide for AI assistants - AGENTS.md
+next to the installed sir3stoolkit/__init__.py (Initialize_Toolkit() logs its path for AI assistants).
+Without the installed package: https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/AGENTS.md
 
 @author: Jablonski
 
@@ -13,8 +14,7 @@ known gotchas) before writing code against this module.
 from __future__ import annotations
 
 from collections import OrderedDict
-import re
-from typing import Dict, Tuple, Optional
+from typing import Any, Callable, Collection, Dict, Literal, Optional, Sequence, Tuple
 
 from sir3stoolkit.dependency_check import require_packages
 require_packages(__name__, "matplotlib", "pandas", "shapely")
@@ -25,12 +25,12 @@ import matplotlib.colors as mcolors
 import matplotlib.patches as mpatches
 from matplotlib.collections import LineCollection
 import pandas as pd
-import matplotlib.pyplot as plt
-import matplotlib.colors as mcolors
-import matplotlib.patches as mpatches
 import matplotlib.dates as mdates
 import matplotlib.ticker as mticker
 from shapely.geometry import Point, LineString, MultiLineString
+from shapely.geometry.base import BaseGeometry
+from matplotlib.axes import Axes
+from matplotlib.figure import Figure
 
 from sir3stoolkit.logging_utils import get_logger
 
@@ -42,14 +42,14 @@ class SIR3S_Model_Plotting(SIR3S_Model):
     
     def plot_pipe_layer(
         self,
-        ax=None,
-        gdf=None,
+        ax: Optional[Axes] = None,
+        gdf: Optional[pd.DataFrame] = None,
         *,
         width_scaling_col: str | None = None,
         color_mixing_col: str | None = None,
         attribute: str | None = None,
         # visual params
-        colors=('darkgreen', 'magenta'),
+        colors: tuple[str, str] = ('darkgreen', 'magenta'),
         legend_fmt: str | None = None,
         legend_values: list[float] | None = None,
         # independent norms
@@ -65,7 +65,7 @@ class SIR3S_Model_Plotting(SIR3S_Model):
         value_label_fmt: str = "{:.4f}",
         value_label_fontsize: float = 8.0,
         value_label_offset: tuple[float, float] = (2.0, 2.0),
-    ):
+    ) -> Optional[list[mpatches.Patch]]:
         """
         Plot line geometries with separate width and color scaling.
 
@@ -237,14 +237,14 @@ class SIR3S_Model_Plotting(SIR3S_Model):
 
     def plot_node_layer(
         self,
-        ax=None,
-        gdf=None,
+        ax: Optional[Axes] = None,
+        gdf: Optional[pd.DataFrame] = None,
         *,
         size_scaling_col: str | None = None,
         color_mixing_col: str | None = None,
         attribute: str | None = None,
         # visual params
-        colors=('darkgreen', 'magenta'),
+        colors: tuple[str, str] = ('darkgreen', 'magenta'),
         legend_fmt: str | None = None,
         legend_values: list[float] | None = None,
         # independent norms
@@ -261,7 +261,7 @@ class SIR3S_Model_Plotting(SIR3S_Model):
         value_label_fmt: str = "{:.4f}",
         value_label_fontsize: float = 8.0,
         value_label_offset: tuple[float, float] = (2.0, 2.0),
-    ):
+    ) -> Optional[list[mpatches.Patch]]:
         """
         Plot point nodes with separate size and color scaling.
 
@@ -401,35 +401,35 @@ class SIR3S_Model_Plotting(SIR3S_Model):
     def plot_time_curves(
         self,
         df: pd.DataFrame,
-        start=None,
-        end=None,
-        properties=None,
-        axis_labels=None,
-        ylims=None,
-        tks_per_property=None,
-        y_label_ticks=None,
-        y_grid_ticks=None,
-        x_label_ticks=None,
-        x_grid_ticks=None,
-        figsize=(20, 14),
-        axis_offset=60,
-        linestyles=None,
-        legend=True,
-        legend_fontsize=8,
-        legend_loc="upper left",
-        legend_coords=(0.67, 0.33),
-        legend_in_figure=True,
-        missing="skip",
-        normalize=str.upper,
-        aliases=None,
-        title_prefix="",
-        show_title=True,
-        rotate_xticks=0,
-        grid=True,
-        grid_style="--",
-        grid_alpha=0.3,
-        logger=None,
-    ):
+        start: Any = None,
+        end: Any = None,
+        properties: Optional[Sequence[str]] = None,
+        axis_labels: Optional[Sequence[str]] = None,
+        ylims: Optional[Sequence[Optional[tuple[float, float]]]] = None,
+        tks_per_property: Optional[Sequence[Optional[Collection[str]]]] = None,
+        y_label_ticks: Optional[Sequence[int]] = None,
+        y_grid_ticks: Optional[int] = None,
+        x_label_ticks: Optional[int] = None,
+        x_grid_ticks: Optional[int] = None,
+        figsize: tuple[float, float] = (20, 14),
+        axis_offset: float = 60,
+        linestyles: Optional[Sequence[str]] = None,
+        legend: bool = True,
+        legend_fontsize: float = 8,
+        legend_loc: str = "upper left",
+        legend_coords: tuple[float, float] = (0.67, 0.33),
+        legend_in_figure: bool = True,
+        missing: Literal["skip", "warn", "error"] = "skip",
+        normalize: Callable[[str], str] = str.upper,
+        aliases: Optional[Dict[str, str]] = None,
+        title_prefix: str = "",
+        show_title: bool = True,
+        rotate_xticks: float = 0,
+        grid: bool = True,
+        grid_style: str = "--",
+        grid_alpha: float = 0.3,
+        logger: Any = None,
+    ) -> Tuple[Figure, list[Axes], list[str]]:
         """
         Plot multiple properties using multiple y-axes (all on the left).
         Optionally restrict which TKs are plotted for each property.
@@ -829,7 +829,7 @@ class SIR3S_Model_Plotting(SIR3S_Model):
 
 
 
-    def __to_2d_geom(self, geom):
+    def __to_2d_geom(self, geom: Optional[BaseGeometry]) -> Optional[BaseGeometry]:
         """
         Drop Z/M and return a 2D Shapely geometry.
         Works for Point, LineString, MultiLineString.
