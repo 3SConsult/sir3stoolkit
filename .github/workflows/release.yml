@@ -7,18 +7,23 @@ name: Release
 #                (gh-pages root; the development docs in dev/ are kept). Only runs if publishing worked,
 #                so the release docs are never ahead of PyPI.
 #
-# Manual run (Actions tab -> Release -> Run workflow, with an existing tag): verify + docs only, no
-# upload. For rebuilding the release docs, e.g. for a tag on a commit that predates this workflow:
-# a tag push runs the workflow file of the tagged commit, so such tags trigger nothing by themselves.
+# Manual run (Actions tab -> Release -> Run workflow): verify + docs only, never uploads to PyPI.
+#   ref = main     - documentation hotfix right after a release: deploys the docs fixed on main as
+#                    release docs, as long as src/ and pyproject.toml are unchanged since the release tag
+#                    (the tag of the version in pyproject.toml). Otherwise make a new release instead.
+#   ref = v<x.y.z> - rebuilds the release docs of a tag, e.g. of a tag on a commit that predates this
+#                    workflow (a tag push runs the workflow file of the tagged commit, so it doesn't
+#                    trigger this workflow).
 
 on:
   push:
     tags: ['v*']
   workflow_dispatch:
     inputs:
-      tag:
-        description: 'Existing release tag to rebuild the release docs from (e.g. v90.15.26). Does not publish to PyPI.'
+      ref:
+        description: 'main (docs hotfix after a release) or an existing release tag (e.g. v90.15.26). Does not publish to PyPI.'
         required: true
+        default: main
 
 permissions:
   contents: write
@@ -27,13 +32,13 @@ jobs:
   verify:
     runs-on: ubuntu-latest
     outputs:
-      tag: ${{ steps.check.outputs.tag }}
+      sha: ${{ steps.check.outputs.sha }}
       version: ${{ steps.check.outputs.version }}
     steps:
-      - name: Check out the tagged commit (full history, to check it is on main)
+      - name: Check out the commit to release (full history and tags, for the checks below)
         uses: actions/checkout@v4
         with:
-          ref: ${{ inputs.tag || github.ref }}
+          ref: ${{ inputs.ref || github.ref }}
           fetch-depth: 0
 
       - name: Set up Python
@@ -41,23 +46,37 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Check tag against pyproject.toml version and main
+      - name: Check version, tag and main
         id: check
         shell: bash
         env:
-          TAG: ${{ inputs.tag || github.ref_name }}
+          EVENT: ${{ github.event_name }}
+          PUSHED_TAG: ${{ github.ref_name }}
         run: |
           VERSION=$(python -c "import tomllib; print(tomllib.load(open('pyproject.toml', 'rb'))['project']['version'])")
-          if [ "$TAG" != "v$VERSION" ]; then
-            echo "::error::Tag $TAG does not match the version in pyproject.toml ($VERSION) - expected tag v$VERSION."
+          TAG="v$VERSION"
+          if [ "$EVENT" = "push" ] && [ "$PUSHED_TAG" != "$TAG" ]; then
+            echo "::error::Tag $PUSHED_TAG does not match the version in pyproject.toml ($VERSION) - expected tag $TAG."
             exit 1
           fi
           if ! git merge-base --is-ancestor HEAD origin/main; then
-            echo "::error::The commit of tag $TAG is not on main. Releases are only made from main."
+            echo "::error::This commit is not on main. Releases are only made from main."
             exit 1
           fi
-          echo "Tag $TAG matches pyproject.toml version $VERSION and is on main."
-          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          if [ "$EVENT" = "workflow_dispatch" ]; then
+            if ! git rev-parse -q --verify "refs/tags/$TAG" > /dev/null; then
+              echo "::error::pyproject.toml has version $VERSION, but there is no tag $TAG - release it by pushing the tag instead."
+              exit 1
+            fi
+            if ! git diff --quiet "$TAG" HEAD -- src pyproject.toml; then
+              echo "::error::src/ or pyproject.toml changed since $TAG - the release docs would describe unreleased code. Make a new release instead. Changed files:"
+              git diff --name-only "$TAG" HEAD -- src pyproject.toml
+              exit 1
+            fi
+            echo "Docs-only release build: code unchanged since $TAG."
+          fi
+          echo "Version $VERSION ($TAG) verified."
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
   publish:
@@ -88,8 +107,10 @@ jobs:
           # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
-      - name: Sync AGENTS.md into the package (shipped in the wheel via package-data)
+      - name: Sync AGENTS.md into the package (shipped in the wheel via package-data, links pointed at this release's tag)
         uses: ./.github/actions/sync-agents-md
+        with:
+          version: ${{ needs.verify.outputs.version }}
 
       - name: Build package using pyproject.toml
         run: python -m build
@@ -117,10 +138,10 @@ jobs:
       cancel-in-progress: false
 
     steps:
-      - name: Check out the tagged commit
+      - name: Check out the verified commit
         uses: actions/checkout@v4
         with:
-          ref: ${{ needs.verify.outputs.tag }}
+          ref: ${{ needs.verify.outputs.sha }}
 
       - name: Set up Python
         uses: actions/setup-python@v5

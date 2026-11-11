@@ -11,8 +11,9 @@ AI assistant writing code against this package? Quick orientation:
 - ``GetValue``/``SetValue``/``GetResultValue`` take opaque property-name strings and OBJTYPE
   codes; see the generated reference at
   https://3sconsult.github.io/sir3stoolkit/object_types_props_results_snippet_global_mapped.html
-- Full guide, known gotchas, docs/tutorial links:
-  https://github.com/3SConsult/sir3stoolkit/blob/main/AGENTS.md
+- Full guide, known gotchas, docs/tutorial links: ``AGENTS.md`` next to this file (its links point at
+  this installed version), or https://github.com/3SConsult/sir3stoolkit/blob/main/AGENTS.md (links
+  point at the development state on GitHub, which can be ahead of the installed version).
 """
 
 from . import core

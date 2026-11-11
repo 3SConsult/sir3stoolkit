@@ -15,11 +15,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # --- without version: plain copy ---------------------------------------------------------
+
       - name: Corrupt the packaged copy, so a real fix is required
         shell: pwsh
         run: "'stale content - should be overwritten by the action' | Set-Content -Path src\\sir3stoolkit\\AGENTS.md"
 
-      - name: Run the action under test
+      - name: Run the action under test (no version)
         uses: ./.github/actions/sync-agents-md
 
       - name: Assert the packaged copy now matches the repo-root file exactly
@@ -32,3 +34,32 @@ jobs:
             exit 1
           }
           Write-Host "OK: src/sir3stoolkit/AGENTS.md matches AGENTS.md."
+
+      # --- with version (as in release.yml): links pointed at the release tag ----------------------
+
+      - name: Corrupt the packaged copy again
+        shell: pwsh
+        run: "'stale content - should be overwritten by the action' | Set-Content -Path src\\sir3stoolkit\\AGENTS.md"
+
+      - name: Run the action under test (version 90.15.999)
+        uses: ./.github/actions/sync-agents-md
+        with:
+          version: '90.15.999'
+
+      - name: Assert the packaged copy links to the tag, except releases.rst and CONTRIBUTING.md
+        shell: pwsh
+        run: |
+          $text = Get-Content -Path "src\sir3stoolkit\AGENTS.md" -Raw -Encoding utf8
+          $errors = @()
+          if ($text -notmatch 'ships with the installed sir3stoolkit 90\.15\.999') { $errors += "note below the title is missing" }
+          if ($text -notmatch 'sir3stoolkit/v90\.15\.999/') { $errors += "no raw links to the tag" }
+          if ($text -notmatch 'sir3stoolkit/blob/v90\.15\.999/') { $errors += "no blob links to the tag" }
+          $leftover = [regex]::Matches($text, '3SConsult/sir3stoolkit/(?:blob/)?main/[^\s)>`]*') |
+            ForEach-Object Value | Where-Object { $_ -notmatch 'main/(docs/source/releases\.rst|CONTRIBUTING\.md)' }
+          if ($leftover) { $errors += "links still on main: $($leftover -join ', ')" }
+          if ($text -notmatch 'sir3stoolkit/main/docs/source/releases\.rst') { $errors += "releases.rst link no longer on main" }
+          if ($errors) {
+            $errors | ForEach-Object { Write-Error $_ }
+            exit 1
+          }
+          Write-Host "OK: packaged copy links point at v90.15.999 (releases.rst/CONTRIBUTING.md stay on main)."
