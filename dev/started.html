@@ -59,6 +59,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#what-is-the-sir-3s-toolkit">What is the SIR 3S Toolkit?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#what-is-the-difference-between-sir-3s-toolkit-and-pt3s">What is the difference between SIR 3S Toolkit and PT3S?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#using-an-ai-coding-assistant">Using an AI coding assistant</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#contact">Contact</a></li>
 </ul>
 </li>
@@ -172,6 +173,20 @@ python.exe<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> 
 </div>
 </li>
 </ol>
+</section>
+<section id="using-an-ai-coding-assistant">
+<span id="ai-assistants-label"></span><h2>Using an AI coding assistant<a class="headerlink" href="#using-an-ai-coding-assistant" title="Link to this heading"></a></h2>
+<p>The SIR 3S Toolkit ships a guide for AI coding assistants (e.g. Claude Code, GitHub Copilot, Cursor, Codex): <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> plus the files in <code class="docutils literal notranslate"><span class="pre">ai/</span></code> inside the installed package (next to <code class="docutils literal notranslate"><span class="pre">sir3stoolkit/__init__.py</span></code>). It matches the installed version and covers the architecture, where the API and property-name reference is, the tutorials - including the code of every tutorial as plain text (<code class="docutils literal notranslate"><span class="pre">ai/tutorials/ToolkitTutorialNNN.md</span></code>), readable without downloading the notebooks - and known pitfalls. With it, an assistant writes working code against the Toolkit instead of guessing its API.</p>
+<p>How an assistant finds it:</p>
+<ul>
+<li><p><strong>Automatically:</strong> when an AI assistant runs a script that calls <code class="docutils literal notranslate"><span class="pre">Initialize_Toolkit()</span></code>, the path of the guide is logged (only if the process was started by an AI assistant; <code class="docutils literal notranslate"><span class="pre">SIR3STOOLKIT_AI_HINT=0</span></code> hides the line, <code class="docutils literal notranslate"><span class="pre">=1</span></code> shows it for an assistant that isn’t detected). The docstrings point to the guide as well.</p></li>
+<li><p><strong>Before writing any code (optional, per project):</strong> in the project folder, run - with the Python of the environment the Toolkit is installed in (e.g. <code class="docutils literal notranslate"><span class="pre">C:/3S/Common/Python312/python.exe</span></code>):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>sir3stoolkit<span class="w"> </span>ai-setup
+</pre></div>
+</div>
+<p>This adds a short, marked block pointing to the guide to the project’s <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> (created if missing) and, if the project has one, to its <code class="docutils literal notranslate"><span class="pre">CLAUDE.md</span></code> (Claude Code doesn’t read <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> then). AI assistants load these files at the start of every session. Re-running it updates the block, <code class="docutils literal notranslate"><span class="pre">--remove</span></code> removes it again; the rest of the files stays as it is.</p>
+</li>
+</ul>
 </section>
 <section id="contact">
 <h2>Contact<a class="headerlink" href="#contact" title="Link to this heading"></a></h2>

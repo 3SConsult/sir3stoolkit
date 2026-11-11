@@ -328,6 +328,11 @@
 <li><p>plotting.py: module docstring TODO updated (only the AGSN longitudinal section plot is missing)</p></li>
 <li><p>new: get_object_type_reference() looks up an element type in the object type reference shipped with the package: table code, object category, toolkit method(s) to create it, network types, properties (value types) and result properties (German description, standard unit)</p></li>
 <li><p>SIR3S_View.AddNewHouse(): numberSuffix is a str (type hint/docstring said int, with which the call failed)</p></li>
+<li><p>new: <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">sir3stoolkit</span> <span class="pre">ai-setup</span></code> adds a pointer to the guide for AI assistants (AGENTS.md shipped with the installed package) to a project’s AGENTS.md (and CLAUDE.md, if there is one), so AI coding agents read it before writing code; Python API in the new module sir3stoolkit.ai_guide</p></li>
+<li><p>Initialize_Toolkit(): when run by an AI coding agent (detected via AI_AGENT and agent-specific environment variables, override: SIR3STOOLKIT_AI_HINT=0/1), first logs the path of the guide for AI assistants (AGENTS.md of the installed package), once per process</p></li>
+<li><p>py.typed: the package is marked as typed (PEP 561), so type checkers and IDEs use its type hints</p></li>
+<li><p>type hints: plotting.py (plot_pipe_layer(), plot_node_layer(), plot_time_curves()) and alternative_models.py (SIR_3S_to_pandapipes(), SIR_3S_to_nx_graph(), get_object_type_enum()) are fully annotated</p></li>
+<li><p>docstrings: the pointers for AI assistants in the module docstrings, Initialize_Toolkit(), SIR3S_Model, SIR3S_View, OpenModel() and SIR3S_Model_Mantle point directly to AGENTS.md next to the installed package, plus its GitHub URL for assistants without the package; fixed link to the object types reference in the package docstring</p></li>
 </ul>
 </section>
 <section id="other-changes">
@@ -341,6 +346,9 @@
 <li><p>Object types reference: note on the physical units of result properties</p></li>
 <li><p>Object types reference: each object type lists its Object Category and, where one was shown to create a real instance, the toolkit method to create it (Unknown where not determined); heading underline fixed</p></li>
 <li><p>Tutorial 51: new section on get_object_type_reference()</p></li>
+<li><p>Guide for AI assistants split into a core AGENTS.md (quick facts, architecture, API reference, tutorial topics, gotchas; ~13,000 instead of ~29,000 characters) and files read when needed: ai/tutorials.md (full tutorial index), ai/updates-and-issues.md (checking for updates, known issues)</p></li>
+<li><p>The installed package contains the whole guide (AGENTS.md, ai/) with links to this version’s tag, plus the cell sources of every tutorial as plain markdown (ai/tutorials/ToolkitTutorialNNN.md, outputs left out) - readable offline</p></li>
+<li><p>Getting Started: new section “Using an AI coding assistant”</p></li>
 </ul>
 </section>
 </section>

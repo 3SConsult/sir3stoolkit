@@ -99,19 +99,20 @@
 
 <span class="sd">This module implements the generation of SIR 3S models in alternative model formats such as pandapipes or nx-Graphs.</span>
 
-<span class="sd">AI assistant: see sir3stoolkit/__init__.py for orientation (architecture, API/property reference,</span>
-<span class="sd">known gotchas) before writing code against this module.</span>
+<span class="sd">AI assistant: before writing code against this module, read the guide for AI assistants - AGENTS.md</span>
+<span class="sd">next to the installed sir3stoolkit/__init__.py (Initialize_Toolkit() logs its path for AI assistants).</span>
+<span class="sd">Without the installed package: https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/AGENTS.md</span>
 
 <span class="sd">@author: Jablonski</span>
 <span class="sd">"""</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">sir3stoolkit.dependency_check</span><span class="w"> </span><span class="kn">import</span> <span class="n">require_packages</span>
 <span class="n">require_packages</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="s2">"pandapipes"</span><span class="p">,</span> <span class="s2">"pandas"</span><span class="p">,</span> <span class="s2">"shapely"</span><span class="p">,</span> <span class="s2">"networkx"</span><span class="p">)</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandapipes</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pp</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">shapely</span><span class="w"> </span><span class="kn">import</span> <span class="n">wkt</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">shapely.geometry.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseGeometry</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">networkx</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nx</span>
@@ -130,7 +131,7 @@
 <span class="sd">    """</span>
 <div class="viewcode-block" id="SIR3S_Model_Alternative_Models.SIR_3S_to_pandapipes">
 <a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.alternative_models.SIR3S_Model_Alternative_Models.SIR_3S_to_pandapipes">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">SIR_3S_to_pandapipes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">SIR_3S_to_pandapipes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pp</span><span class="o">.</span><span class="n">pandapipesNet</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Converts the currently open SIR 3S network into a pandapipes network.</span>
 
@@ -232,7 +233,7 @@
     
 <div class="viewcode-block" id="SIR3S_Model_Alternative_Models.SIR_3S_to_nx_graph">
 <a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.alternative_models.SIR3S_Model_Alternative_Models.SIR_3S_to_nx_graph">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">SIR_3S_to_nx_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">SIR_3S_to_nx_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Build a directed NetworkX graph from SIR 3S model.</span>
 
@@ -491,7 +492,7 @@
     
 <div class="viewcode-block" id="SIR3S_Model_Alternative_Models.get_object_type_enum">
 <a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.alternative_models.SIR3S_Model_Alternative_Models.get_object_type_enum">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">get_object_type_enum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_object_type_enum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Enum</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Return the enum member from self.ObjectTypes corresponding to the given element_type string.</span>
 

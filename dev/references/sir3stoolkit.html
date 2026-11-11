@@ -432,6 +432,144 @@
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
 </section>
+<section id="module-sir3stoolkit.ai_guide">
+<span id="sir3stoolkit-ai-guide-module"></span><h2>sir3stoolkit.ai_guide module<a class="headerlink" href="#module-sir3stoolkit.ai_guide" title="Link to this heading"></a></h2>
+<p>The guide for AI assistants that ships with sir3stoolkit: where it is, and making it findable.</p>
+<p>AI assistant: before writing code against sir3stoolkit, read the guide for AI assistants - AGENTS.md next to
+the installed sir3stoolkit/__init__.py (Initialize_Toolkit() logs its path when run by an AI assistant).
+Without the installed package: <a class="reference external" href="https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/AGENTS.md">https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/AGENTS.md</a></p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#sir3stoolkit.ai_guide.get_ai_guide_path" title="sir3stoolkit.ai_guide.get_ai_guide_path"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_ai_guide_path()</span></code></a> / <a class="reference internal" href="#sir3stoolkit.ai_guide.get_ai_guide_url" title="sir3stoolkit.ai_guide.get_ai_guide_url"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_ai_guide_url()</span></code></a>: where the guide (<code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> plus the files in
+<code class="docutils literal notranslate"><span class="pre">ai/</span></code> next to it) of the installed version is.</p></li>
+<li><p><a class="reference internal" href="#sir3stoolkit.ai_guide.is_ai_agent" title="sir3stoolkit.ai_guide.is_ai_agent"><code class="xref py py-func docutils literal notranslate"><span class="pre">is_ai_agent()</span></code></a>: whether the current process was started by an AI coding agent’s tool call - then
+<code class="docutils literal notranslate"><span class="pre">Initialize_Toolkit()</span></code> logs the path of the guide (<a class="reference internal" href="#sir3stoolkit.ai_guide.log_ai_hint_once" title="sir3stoolkit.ai_guide.log_ai_hint_once"><code class="xref py py-func docutils literal notranslate"><span class="pre">log_ai_hint_once()</span></code></a>).</p></li>
+<li><p><a class="reference internal" href="#sir3stoolkit.ai_guide.ai_setup" title="sir3stoolkit.ai_guide.ai_setup"><code class="xref py py-func docutils literal notranslate"><span class="pre">ai_setup()</span></code></a>: adds a short pointer to the guide to a project’s <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> (and <code class="docutils literal notranslate"><span class="pre">CLAUDE.md</span></code>),
+which AI coding agents load automatically. Command line: <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">sir3stoolkit</span> <span class="pre">ai-setup</span></code>.</p></li>
+</ul>
+<dl class="py data">
+<dt class="sig sig-object py" id="sir3stoolkit.ai_guide.HINT_ENV_VAR">
+<span class="sig-prename descclassname"><span class="pre">sir3stoolkit.ai_guide.</span></span><span class="sig-name descname"><span class="pre">HINT_ENV_VAR</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SIR3STOOLKIT_AI_HINT'</span></span><a class="headerlink" href="#sir3stoolkit.ai_guide.HINT_ENV_VAR" title="Link to this definition"></a></dt>
+<dd><p><code class="docutils literal notranslate"><span class="pre">1</span></code> always shows the hint, <code class="docutils literal notranslate"><span class="pre">0</span></code> never.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Environment variable overriding <a class="reference internal" href="#sir3stoolkit.ai_guide.is_ai_agent" title="sir3stoolkit.ai_guide.is_ai_agent"><code class="xref py py-func docutils literal notranslate"><span class="pre">is_ai_agent()</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sir3stoolkit.ai_guide.ai_setup">
+<span class="sig-prename descclassname"><span class="pre">sir3stoolkit.ai_guide.</span></span><span class="sig-name descname"><span class="pre">ai_setup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">PathLike</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'.'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remove</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/ai_guide.html#ai_setup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.ai_guide.ai_setup" title="Link to this definition"></a></dt>
+<dd><p>Adds a short pointer to the guide for AI assistants to a project’s <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> - and to its
+<code class="docutils literal notranslate"><span class="pre">CLAUDE.md</span></code>, if it has one (Claude Code doesn’t read <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> then) - so AI coding agents working
+in the project read the guide before writing code against sir3stoolkit.</p>
+<p>The pointer is a block between <code class="docutils literal notranslate"><span class="pre">&lt;!--</span> <span class="pre">BEGIN</span> <span class="pre">sir3stoolkit</span> <span class="pre">...</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;!--</span> <span class="pre">END</span> <span class="pre">sir3stoolkit</span> <span class="pre">--&gt;</span></code>; running
+this again updates the block, the rest of the files stays as it is. <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> is created if missing.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>project_dir</strong> (<em>str</em><em> | </em><em>os.PathLike</em>) – The project’s root folder. Default: the current folder.</p></li>
+<li><p><strong>remove</strong> (<em>bool</em>) – True removes the block again (a file that contained nothing else is deleted).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Per file changed or checked: <code class="docutils literal notranslate"><span class="pre">&quot;created&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;updated&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;unchanged&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;removed&quot;</span></code> or
+<code class="docutils literal notranslate"><span class="pre">&quot;removed</span> <span class="pre">(file</span> <span class="pre">deleted,</span> <span class="pre">was</span> <span class="pre">empty)&quot;</span></code>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict[str, str]</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If <code class="docutils literal notranslate"><span class="pre">project_dir</span></code> is the folder of sir3stoolkit’s own guide (its repository or the
+installed package folder) - the block would point at the file it is in.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sir3stoolkit.ai_guide.get_ai_guide_location">
+<span class="sig-prename descclassname"><span class="pre">sir3stoolkit.ai_guide.</span></span><span class="sig-name descname"><span class="pre">get_ai_guide_location</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/ai_guide.html#get_ai_guide_location"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.ai_guide.get_ai_guide_location" title="Link to this definition"></a></dt>
+<dd><p>Returns where the guide for AI assistants is: the path from <a class="reference internal" href="#sir3stoolkit.ai_guide.get_ai_guide_path" title="sir3stoolkit.ai_guide.get_ai_guide_path"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_ai_guide_path()</span></code></a>, otherwise the URL
+from <a class="reference internal" href="#sir3stoolkit.ai_guide.get_ai_guide_url" title="sir3stoolkit.ai_guide.get_ai_guide_url"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_ai_guide_url()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sir3stoolkit.ai_guide.get_ai_guide_path">
+<span class="sig-prename descclassname"><span class="pre">sir3stoolkit.ai_guide.</span></span><span class="sig-name descname"><span class="pre">get_ai_guide_path</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Path</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/ai_guide.html#get_ai_guide_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.ai_guide.get_ai_guide_path" title="Link to this definition"></a></dt>
+<dd><p>Returns the path of the guide for AI assistants (<code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code>) of the installed sir3stoolkit.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> shipped in the installed package (its links point at the installed version);
+for an editable install of a repository checkout, the repository’s <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code>; None if neither
+exists (then see <a class="reference internal" href="#sir3stoolkit.ai_guide.get_ai_guide_url" title="sir3stoolkit.ai_guide.get_ai_guide_url"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_ai_guide_url()</span></code></a>).</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Optional[pathlib.Path]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sir3stoolkit.ai_guide.get_ai_guide_url">
+<span class="sig-prename descclassname"><span class="pre">sir3stoolkit.ai_guide.</span></span><span class="sig-name descname"><span class="pre">get_ai_guide_url</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/ai_guide.html#get_ai_guide_url"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.ai_guide.get_ai_guide_url" title="Link to this definition"></a></dt>
+<dd><p>Returns the GitHub URL of the guide for AI assistants (<code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code>) of the installed version.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The raw URL of <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> at the release tag of the installed version, or on <code class="docutils literal notranslate"><span class="pre">main</span></code> for
+a development version.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sir3stoolkit.ai_guide.get_ai_hint">
+<span class="sig-prename descclassname"><span class="pre">sir3stoolkit.ai_guide.</span></span><span class="sig-name descname"><span class="pre">get_ai_hint</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/ai_guide.html#get_ai_hint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.ai_guide.get_ai_hint" title="Link to this definition"></a></dt>
+<dd><p>Returns the one-line pointer to the guide that <a class="reference internal" href="#sir3stoolkit.ai_guide.log_ai_hint_once" title="sir3stoolkit.ai_guide.log_ai_hint_once"><code class="xref py py-func docutils literal notranslate"><span class="pre">log_ai_hint_once()</span></code></a> logs.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sir3stoolkit.ai_guide.is_ai_agent">
+<span class="sig-prename descclassname"><span class="pre">sir3stoolkit.ai_guide.</span></span><span class="sig-name descname"><span class="pre">is_ai_agent</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/ai_guide.html#is_ai_agent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.ai_guide.is_ai_agent" title="Link to this definition"></a></dt>
+<dd><p>Returns whether the current process was most likely started by an AI coding agent’s tool call.</p>
+<p>Checks environment variables that AI coding agents set for the commands they run: <code class="docutils literal notranslate"><span class="pre">AI_AGENT</span></code> (the
+emerging cross-tool convention, set e.g. by Claude Code and GitHub Copilot) and agent-specific ones
+(Claude Code, Codex, Gemini CLI, Cursor, GitHub Copilot, opencode, Cline). Variables also set in
+terminals a human uses (e.g. <code class="docutils literal notranslate"><span class="pre">CLAUDECODE</span></code>) are not used. <code class="docutils literal notranslate"><span class="pre">SIR3STOOLKIT_AI_HINT=1</span></code> / <code class="docutils literal notranslate"><span class="pre">=0</span></code>
+overrides the detection, e.g. for an agent that isn’t detected.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sir3stoolkit.ai_guide.log_ai_hint_once">
+<span class="sig-prename descclassname"><span class="pre">sir3stoolkit.ai_guide.</span></span><span class="sig-name descname"><span class="pre">log_ai_hint_once</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/ai_guide.html#log_ai_hint_once"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.ai_guide.log_ai_hint_once" title="Link to this definition"></a></dt>
+<dd><p>Logs the pointer to the guide (<a class="reference internal" href="#sir3stoolkit.ai_guide.get_ai_hint" title="sir3stoolkit.ai_guide.get_ai_hint"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_ai_hint()</span></code></a>) with <code class="docutils literal notranslate"><span class="pre">log</span></code>, once per process and only if
+<a class="reference internal" href="#sir3stoolkit.ai_guide.is_ai_agent" title="sir3stoolkit.ai_guide.is_ai_agent"><code class="xref py py-func docutils literal notranslate"><span class="pre">is_ai_agent()</span></code></a> is True.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>log</strong> – Callable taking the message, e.g. a logger’s <code class="docutils literal notranslate"><span class="pre">info</span></code>.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if the hint was logged by this call.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
 <section id="module-sir3stoolkit.dependency_check">
 <span id="sir3stoolkit-dependency-check-module"></span><h2>sir3stoolkit.dependency_check module<a class="headerlink" href="#module-sir3stoolkit.dependency_check" title="Link to this heading"></a></h2>
 <p>Shared helper for sir3stoolkit’s optional (“mantle”) third-party dependencies.</p>
@@ -502,7 +640,11 @@ match their PyPI/pip distribution name - true for every package sir3stoolkit’s
 <section id="module-sir3stoolkit">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-sir3stoolkit" title="Link to this heading"></a></h2>
 <p>sir3stoolkit: Python client for SIR 3S (pipe network simulation/analysis software, 3S Consult).</p>
-<p>AI assistant writing code against this package? Quick orientation:
+<p>AI assistant writing code against this package? Read the guide for AI assistants of the installed
+version first: <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> next to this file (links pointing at this version; more files, incl. the
+code of every tutorial as plain text, in <code class="docutils literal notranslate"><span class="pre">ai/</span></code> next to it). Initialize_Toolkit() logs its path.
+Without the installed package: <a class="reference external" href="https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/AGENTS.md">https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/AGENTS.md</a>
+(development state on GitHub, which can be ahead of the released version). Quick orientation until then:
 - <code class="docutils literal notranslate"><span class="pre">core.wrapper</span></code>: thin low-level wrapper around the SIR 3S .NET Toolkit API (<code class="docutils literal notranslate"><span class="pre">SIR3S_Model</span></code>:</p>
 <blockquote>
 <div><p><code class="docutils literal notranslate"><span class="pre">OpenModel</span></code>, <code class="docutils literal notranslate"><span class="pre">GetValue</span></code>/<code class="docutils literal notranslate"><span class="pre">SetValue</span></code>, <code class="docutils literal notranslate"><span class="pre">ExecCalculation</span></code>, <code class="docutils literal notranslate"><span class="pre">GetResultValue</span></code>, …).</p>
@@ -514,10 +656,9 @@ plotting, alternative-model export) - prefer these when one exists for what you 
 (<code class="docutils literal notranslate"><span class="pre">help(...)</span></code>) rather than guessing.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">GetValue</span></code>/<code class="docutils literal notranslate"><span class="pre">SetValue</span></code>/<code class="docutils literal notranslate"><span class="pre">GetResultValue</span></code> take opaque property-name strings and OBJTYPE
 codes; see the generated reference at
-<a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/object_types_props_results_snippet_global_mapped.html">https://3sconsult.github.io/sir3stoolkit/object_types_props_results_snippet_global_mapped.html</a></p></li>
-<li><p>Full guide, known gotchas, docs/tutorial links: <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> next to this file (its links point at
-this installed version), or <a class="reference external" href="https://github.com/3SConsult/sir3stoolkit/blob/main/AGENTS.md">https://github.com/3SConsult/sir3stoolkit/blob/main/AGENTS.md</a> (links
-point at the development state on GitHub, which can be ahead of the installed version).</p></li>
+<a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/object_types_props_results_snippet_global_mapped_with_descriptions.html">https://3sconsult.github.io/sir3stoolkit/object_types_props_results_snippet_global_mapped_with_descriptions.html</a>
+- the same reference ships with the package: <code class="docutils literal notranslate"><span class="pre">SIR3S_Model_Dataframes.get_object_type_reference()</span></code>
+looks up one element type without an open model (<code class="docutils literal notranslate"><span class="pre">mantle/object_type_reference.json</span></code> for all).</p></li>
 </ul>
 </section>
 </section>

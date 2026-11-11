@@ -1,0 +1,406 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>sir3stoolkit.ai_guide &mdash; sir3stoolkit  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=9c3e77be" />
+
+  
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+      <script>let toggleHintShow = 'Click to show';</script>
+      <script>let toggleHintHide = 'Click to hide';</script>
+      <script>let toggleOpenOnPrint = 'true';</script>
+      <script src="../../_static/togglebutton.js?v=b8b12719"></script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            sir3stoolkit
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../releases.html">Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developers.html">For Developers</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">sir3stoolkit</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">sir3stoolkit.ai_guide</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+  <div class="admonition warning">
+    <p class="admonition-title">Development version</p>
+    <p>
+      This documentation reflects the current state of the <code>main</code> branch and may describe
+      features that are not yet released on PyPI. For the documentation of the released version, see
+      <a href="https://3sconsult.github.io/sir3stoolkit/">https://3sconsult.github.io/sir3stoolkit/</a>.
+    </p>
+  </div>
+  
+           <div itemprop="articleBody">
+             
+  <h1>Source code for sir3stoolkit.ai_guide</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">"""</span>
+<span class="sd">The guide for AI assistants that ships with sir3stoolkit: where it is, and making it findable.</span>
+
+<span class="sd">AI assistant: before writing code against sir3stoolkit, read the guide for AI assistants - AGENTS.md next to</span>
+<span class="sd">the installed sir3stoolkit/__init__.py (Initialize_Toolkit() logs its path when run by an AI assistant).</span>
+<span class="sd">Without the installed package: https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/AGENTS.md</span>
+
+<span class="sd">- :func:`get_ai_guide_path` / :func:`get_ai_guide_url`: where the guide (``AGENTS.md`` plus the files in</span>
+<span class="sd">  ``ai/`` next to it) of the installed version is.</span>
+<span class="sd">- :func:`is_ai_agent`: whether the current process was started by an AI coding agent's tool call - then</span>
+<span class="sd">  ``Initialize_Toolkit()`` logs the path of the guide (:func:`log_ai_hint_once`).</span>
+<span class="sd">- :func:`ai_setup`: adds a short pointer to the guide to a project's ``AGENTS.md`` (and ``CLAUDE.md``),</span>
+<span class="sd">  which AI coding agents load automatically. Command line: ``python -m sir3stoolkit ai-setup``.</span>
+<span class="sd">"""</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">importlib.metadata</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span>
+
+<span class="n">_PACKAGE_DIR</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span>
+<span class="n">_GITHUB_RAW</span> <span class="o">=</span> <span class="s2">"https://raw.githubusercontent.com/3SConsult/sir3stoolkit/</span><span class="si">{ref}</span><span class="s2">/AGENTS.md"</span>
+
+<span class="n">HINT_ENV_VAR</span> <span class="o">=</span> <span class="s2">"SIR3STOOLKIT_AI_HINT"</span>
+<span class="sd">"""Environment variable overriding :func:`is_ai_agent`: ``1`` always shows the hint, ``0`` never."""</span>
+
+<span class="c1"># Environment variables AI coding agents set in the shell their tool calls run in. Only variables set for</span>
+<span class="c1"># the agent's own commands - not for terminals a human uses: CLAUDECODE (also set in VS Code terminals of</span>
+<span class="c1"># the Claude Code extension), CURSOR_TRACE_ID (every Cursor terminal), CI (Cursor sets it too) and generic</span>
+<span class="c1"># COPILOT_* prefixes are deliberately not used. Value None: any non-empty value.</span>
+<span class="c1"># AI_AGENT is the emerging cross-tool convention (https://github.com/agentsmd/agents.md/issues/136), checked</span>
+<span class="c1"># separately: any non-empty value except 0/false/no/off.</span>
+<span class="n">_AGENT_ENV_VARS</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">"CLAUDE_CODE_CHILD_SESSION"</span><span class="p">:</span> <span class="s2">"1"</span><span class="p">,</span>  <span class="c1"># Claude Code: Bash/PowerShell tool commands (v2.1.172+)</span>
+    <span class="s2">"CODEX_THREAD_ID"</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>           <span class="c1"># OpenAI Codex CLI</span>
+    <span class="s2">"CODEX_SANDBOX"</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>             <span class="c1"># OpenAI Codex CLI</span>
+    <span class="s2">"CODEX_CI"</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>                  <span class="c1"># OpenAI Codex</span>
+    <span class="s2">"GEMINI_CLI"</span><span class="p">:</span> <span class="s2">"1"</span><span class="p">,</span>                 <span class="c1"># Gemini CLI</span>
+    <span class="s2">"CURSOR_AGENT"</span><span class="p">:</span> <span class="s2">"1"</span><span class="p">,</span>               <span class="c1"># Cursor agent terminal / cursor-agent CLI</span>
+    <span class="s2">"COPILOT_AGENT"</span><span class="p">:</span> <span class="s2">"1"</span><span class="p">,</span>              <span class="c1"># GitHub Copilot agent mode in VS Code</span>
+    <span class="s2">"COPILOT_CLI"</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>               <span class="c1"># GitHub Copilot CLI</span>
+    <span class="s2">"OPENCODE"</span><span class="p">:</span> <span class="s2">"1"</span><span class="p">,</span>                   <span class="c1"># opencode</span>
+    <span class="s2">"OPENCODE_CLIENT"</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>           <span class="c1"># opencode</span>
+    <span class="s2">"CLINE_ACTIVE"</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>              <span class="c1"># Cline</span>
+<span class="p">}</span>
+<span class="n">_FALSE_VALUES</span> <span class="o">=</span> <span class="p">(</span><span class="s2">"0"</span><span class="p">,</span> <span class="s2">"false"</span><span class="p">,</span> <span class="s2">"no"</span><span class="p">,</span> <span class="s2">"off"</span><span class="p">)</span>
+
+<span class="n">_BLOCK_BEGIN</span> <span class="o">=</span> <span class="s2">"&lt;!-- BEGIN sir3stoolkit - written by `python -m sir3stoolkit ai-setup`, re-run it to update --&gt;"</span>
+<span class="n">_BLOCK_END</span> <span class="o">=</span> <span class="s2">"&lt;!-- END sir3stoolkit --&gt;"</span>
+<span class="n">_BLOCK_RE</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">"&lt;!-- BEGIN sir3stoolkit\b.*?&lt;!-- END sir3stoolkit --&gt;"</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">DOTALL</span><span class="p">)</span>
+<span class="n">_BLOCK_BODY</span> <span class="o">=</span> <span class="s2">"""## sir3stoolkit (SIR 3S)</span>
+
+<span class="s2">This project uses sir3stoolkit, the Python client for the SIR 3S pipe network simulation software</span>
+<span class="s2">(3S Consult). Before writing or changing code that uses it, read sir3stoolkit's own guide for AI</span>
+<span class="s2">assistants completely - a separate file, not this one: `AGENTS.md` in the installed sir3stoolkit</span>
+<span class="s2">package folder (next to `sir3stoolkit/__init__.py`), matching the installed version. With this</span>
+<span class="s2">project's Python interpreter,</span>
+<span class="s2">`python -c "import os, sir3stoolkit; print(os.path.join(os.path.dirname(sir3stoolkit.__file__), 'AGENTS.md'))"`</span>
+<span class="s2">prints its path; `Initialize_Toolkit()` also logs it when run by an AI assistant."""</span>
+
+<span class="n">_hint_logged</span> <span class="o">=</span> <span class="kc">False</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_installed_version</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">importlib</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">version</span><span class="p">(</span><span class="s2">"sir3stoolkit"</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">importlib</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">PackageNotFoundError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+
+<div class="viewcode-block" id="get_ai_guide_path">
+<a class="viewcode-back" href="../../references/sir3stoolkit.html#sir3stoolkit.ai_guide.get_ai_guide_path">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_ai_guide_path</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Path</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Returns the path of the guide for AI assistants (``AGENTS.md``) of the installed sir3stoolkit.</span>
+
+<span class="sd">    :return: The ``AGENTS.md`` shipped in the installed package (its links point at the installed version);</span>
+<span class="sd">        for an editable install of a repository checkout, the repository's ``AGENTS.md``; None if neither</span>
+<span class="sd">        exists (then see :func:`get_ai_guide_url`).</span>
+<span class="sd">    :rtype: Optional[pathlib.Path]</span>
+<span class="sd">    """</span>
+    <span class="n">packaged</span> <span class="o">=</span> <span class="n">_PACKAGE_DIR</span> <span class="o">/</span> <span class="s2">"AGENTS.md"</span>
+    <span class="k">if</span> <span class="n">packaged</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
+        <span class="k">return</span> <span class="n">packaged</span>
+    <span class="c1"># editable install: &lt;repo&gt;/src/sir3stoolkit</span>
+    <span class="n">repo_root</span> <span class="o">=</span> <span class="n">_PACKAGE_DIR</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span>
+    <span class="k">if</span> <span class="n">_PACKAGE_DIR</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">"src"</span> <span class="ow">and</span> <span class="p">(</span><span class="n">repo_root</span> <span class="o">/</span> <span class="s2">"pyproject.toml"</span><span class="p">)</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
+        <span class="n">candidate</span> <span class="o">=</span> <span class="n">repo_root</span> <span class="o">/</span> <span class="s2">"AGENTS.md"</span>
+        <span class="k">if</span> <span class="n">candidate</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
+            <span class="k">return</span> <span class="n">candidate</span>
+    <span class="k">return</span> <span class="kc">None</span></div>
+
+
+
+<div class="viewcode-block" id="get_ai_guide_url">
+<a class="viewcode-back" href="../../references/sir3stoolkit.html#sir3stoolkit.ai_guide.get_ai_guide_url">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_ai_guide_url</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Returns the GitHub URL of the guide for AI assistants (``AGENTS.md``) of the installed version.</span>
+
+<span class="sd">    :return: The raw URL of ``AGENTS.md`` at the release tag of the installed version, or on ``main`` for</span>
+<span class="sd">        a development version.</span>
+<span class="sd">    :rtype: str</span>
+<span class="sd">    """</span>
+    <span class="n">version</span> <span class="o">=</span> <span class="n">_installed_version</span><span class="p">()</span>
+    <span class="n">ref</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"v</span><span class="si">{</span><span class="n">version</span><span class="si">}</span><span class="s2">"</span> <span class="k">if</span> <span class="n">version</span> <span class="ow">and</span> <span class="n">re</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span><span class="sa">r</span><span class="s2">"\d+\.\d+\.\d+"</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span> <span class="k">else</span> <span class="s2">"main"</span>
+    <span class="k">return</span> <span class="n">_GITHUB_RAW</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ref</span><span class="o">=</span><span class="n">ref</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_ai_guide_location">
+<a class="viewcode-back" href="../../references/sir3stoolkit.html#sir3stoolkit.ai_guide.get_ai_guide_location">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_ai_guide_location</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Returns where the guide for AI assistants is: the path from :func:`get_ai_guide_path`, otherwise the URL</span>
+<span class="sd">    from :func:`get_ai_guide_url`.</span>
+
+<span class="sd">    :rtype: str</span>
+<span class="sd">    """</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">get_ai_guide_path</span><span class="p">()</span>
+    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="k">if</span> <span class="n">path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">get_ai_guide_url</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="is_ai_agent">
+<a class="viewcode-back" href="../../references/sir3stoolkit.html#sir3stoolkit.ai_guide.is_ai_agent">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">is_ai_agent</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Returns whether the current process was most likely started by an AI coding agent's tool call.</span>
+
+<span class="sd">    Checks environment variables that AI coding agents set for the commands they run: ``AI_AGENT`` (the</span>
+<span class="sd">    emerging cross-tool convention, set e.g. by Claude Code and GitHub Copilot) and agent-specific ones</span>
+<span class="sd">    (Claude Code, Codex, Gemini CLI, Cursor, GitHub Copilot, opencode, Cline). Variables also set in</span>
+<span class="sd">    terminals a human uses (e.g. ``CLAUDECODE``) are not used. ``SIR3STOOLKIT_AI_HINT=1`` / ``=0``</span>
+<span class="sd">    overrides the detection, e.g. for an agent that isn't detected.</span>
+
+<span class="sd">    :rtype: bool</span>
+<span class="sd">    """</span>
+    <span class="n">override</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">HINT_ENV_VAR</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">override</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"1"</span><span class="p">,</span> <span class="s2">"true"</span><span class="p">,</span> <span class="s2">"yes"</span><span class="p">,</span> <span class="s2">"on"</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">if</span> <span class="n">override</span> <span class="ow">in</span> <span class="n">_FALSE_VALUES</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="n">ai_agent</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"AI_AGENT"</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">ai_agent</span> <span class="ow">and</span> <span class="n">ai_agent</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_FALSE_VALUES</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">expected</span> <span class="ow">in</span> <span class="n">_AGENT_ENV_VARS</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">and</span> <span class="p">(</span><span class="n">expected</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">value</span> <span class="o">==</span> <span class="n">expected</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="kc">False</span></div>
+
+
+
+<div class="viewcode-block" id="get_ai_hint">
+<a class="viewcode-back" href="../../references/sir3stoolkit.html#sir3stoolkit.ai_guide.get_ai_hint">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_ai_hint</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Returns the one-line pointer to the guide that :func:`log_ai_hint_once` logs."""</span>
+    <span class="k">return</span> <span class="p">(</span><span class="s2">"AI assistant detected: before writing code against sir3stoolkit, read the guide for AI assistants "</span>
+            <span class="sa">f</span><span class="s2">"of the installed version completely: </span><span class="si">{</span><span class="n">get_ai_guide_location</span><span class="p">()</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">HINT_ENV_VAR</span><span class="si">}</span><span class="s2">=0 hides this line)."</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="log_ai_hint_once">
+<a class="viewcode-back" href="../../references/sir3stoolkit.html#sir3stoolkit.ai_guide.log_ai_hint_once">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">log_ai_hint_once</span><span class="p">(</span><span class="n">log</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Logs the pointer to the guide (:func:`get_ai_hint`) with ``log``, once per process and only if</span>
+<span class="sd">    :func:`is_ai_agent` is True.</span>
+
+<span class="sd">    :param log: Callable taking the message, e.g. a logger's ``info``.</span>
+<span class="sd">    :return: True if the hint was logged by this call.</span>
+<span class="sd">    :rtype: bool</span>
+<span class="sd">    """</span>
+    <span class="k">global</span> <span class="n">_hint_logged</span>
+    <span class="k">if</span> <span class="n">_hint_logged</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">is_ai_agent</span><span class="p">():</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="n">_hint_logged</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">log</span><span class="p">(</span><span class="n">get_ai_hint</span><span class="p">())</span>
+    <span class="k">return</span> <span class="kc">True</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_read_text</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""Returns (text, newline) of an existing file, keeping its line endings."""</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">"r"</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">""</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">text</span><span class="p">,</span> <span class="p">(</span><span class="s2">"</span><span class="se">\r\n</span><span class="s2">"</span> <span class="k">if</span> <span class="s2">"</span><span class="se">\r\n</span><span class="s2">"</span> <span class="ow">in</span> <span class="n">text</span> <span class="k">else</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_write_text</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">"w"</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">""</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_block</span><span class="p">(</span><span class="n">newline</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">newline</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">_BLOCK_BEGIN</span><span class="p">,</span> <span class="o">*</span><span class="n">_BLOCK_BODY</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">),</span> <span class="n">_BLOCK_END</span><span class="p">])</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_add_block</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+        <span class="n">_write_text</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">_block</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span> <span class="o">+</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s2">"created"</span>
+    <span class="n">text</span><span class="p">,</span> <span class="n">nl</span> <span class="o">=</span> <span class="n">_read_text</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="n">block</span> <span class="o">=</span> <span class="n">_block</span><span class="p">(</span><span class="n">nl</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">_BLOCK_RE</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+        <span class="n">new_text</span> <span class="o">=</span> <span class="n">_BLOCK_RE</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="n">block</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">new_text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">"</span><span class="se">\r\n</span><span class="s2">"</span><span class="p">)</span> <span class="o">+</span> <span class="n">nl</span> <span class="o">+</span> <span class="n">nl</span> <span class="o">+</span> <span class="n">block</span> <span class="o">+</span> <span class="n">nl</span> <span class="k">if</span> <span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">else</span> <span class="n">block</span> <span class="o">+</span> <span class="n">nl</span>
+    <span class="k">if</span> <span class="n">new_text</span> <span class="o">==</span> <span class="n">text</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">"unchanged"</span>
+    <span class="n">_write_text</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">new_text</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s2">"updated"</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_remove_block</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
+        <span class="k">return</span> <span class="s2">"unchanged"</span>
+    <span class="n">text</span><span class="p">,</span> <span class="n">nl</span> <span class="o">=</span> <span class="n">_read_text</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">_BLOCK_RE</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">"unchanged"</span>
+    <span class="n">new_text</span> <span class="o">=</span> <span class="n">_BLOCK_RE</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">""</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">new_text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">"(\r?\n){3,}"</span><span class="p">,</span> <span class="n">nl</span> <span class="o">+</span> <span class="n">nl</span><span class="p">,</span> <span class="n">new_text</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">"</span><span class="se">\r\n</span><span class="s2">"</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">new_text</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
+        <span class="n">path</span><span class="o">.</span><span class="n">unlink</span><span class="p">()</span>  <span class="c1"># only contained the block, e.g. created by ai_setup()</span>
+        <span class="k">return</span> <span class="s2">"removed (file deleted, was empty)"</span>
+    <span class="n">_write_text</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">new_text</span> <span class="o">+</span> <span class="n">nl</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s2">"removed"</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_claude_md_files</span><span class="p">(</span><span class="n">project_dir</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Path</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""CLAUDE.md files of the project that need the block: Claude Code doesn't read AGENTS.md when a CLAUDE.md</span>
+<span class="sd">    exists, unless it imports it (``@AGENTS.md``)."""</span>
+    <span class="n">files</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="p">(</span><span class="n">project_dir</span> <span class="o">/</span> <span class="s2">"CLAUDE.md"</span><span class="p">,</span> <span class="n">project_dir</span> <span class="o">/</span> <span class="s2">".claude"</span> <span class="o">/</span> <span class="s2">"CLAUDE.md"</span><span class="p">)</span> <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">is_file</span><span class="p">()]</span>
+    <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">"(^|\s)@(\./)?AGENTS\.md\b"</span><span class="p">,</span> <span class="n">_read_text</span><span class="p">(</span><span class="n">p</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">files</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[]</span>
+    <span class="k">return</span> <span class="n">files</span>
+
+
+<div class="viewcode-block" id="ai_setup">
+<a class="viewcode-back" href="../../references/sir3stoolkit.html#sir3stoolkit.ai_guide.ai_setup">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">ai_setup</span><span class="p">(</span><span class="n">project_dir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">os</span><span class="o">.</span><span class="n">PathLike</span> <span class="o">=</span> <span class="s2">"."</span><span class="p">,</span> <span class="n">remove</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Adds a short pointer to the guide for AI assistants to a project's ``AGENTS.md`` - and to its</span>
+<span class="sd">    ``CLAUDE.md``, if it has one (Claude Code doesn't read ``AGENTS.md`` then) - so AI coding agents working</span>
+<span class="sd">    in the project read the guide before writing code against sir3stoolkit.</span>
+
+<span class="sd">    The pointer is a block between ``&lt;!-- BEGIN sir3stoolkit ...`` and ``&lt;!-- END sir3stoolkit --&gt;``; running</span>
+<span class="sd">    this again updates the block, the rest of the files stays as it is. ``AGENTS.md`` is created if missing.</span>
+
+<span class="sd">    :param project_dir: The project's root folder. Default: the current folder.</span>
+<span class="sd">    :type project_dir: str | os.PathLike</span>
+<span class="sd">    :param remove: True removes the block again (a file that contained nothing else is deleted).</span>
+<span class="sd">    :type remove: bool</span>
+<span class="sd">    :return: Per file changed or checked: ``"created"``, ``"updated"``, ``"unchanged"``, ``"removed"`` or</span>
+<span class="sd">        ``"removed (file deleted, was empty)"``.</span>
+<span class="sd">    :rtype: dict[str, str]</span>
+<span class="sd">    :raises ValueError: If ``project_dir`` is the folder of sir3stoolkit's own guide (its repository or the</span>
+<span class="sd">        installed package folder) - the block would point at the file it is in.</span>
+<span class="sd">    """</span>
+    <span class="n">project</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">project_dir</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">project</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+        <span class="k">raise</span> <span class="ne">NotADirectoryError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Project folder not found: </span><span class="si">{</span><span class="n">project</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="n">guide</span> <span class="o">=</span> <span class="n">get_ai_guide_path</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">remove</span> <span class="ow">and</span> <span class="n">guide</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">guide</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span> <span class="o">==</span> <span class="p">(</span><span class="n">project</span> <span class="o">/</span> <span class="s2">"AGENTS.md"</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">():</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">project</span><span class="si">}</span><span class="s2"> holds sir3stoolkit's own guide (</span><span class="si">{</span><span class="n">guide</span><span class="si">}</span><span class="s2">) - run ai-setup in the folder of a "</span>
+                         <span class="s2">"project that uses sir3stoolkit instead."</span><span class="p">)</span>
+    <span class="n">results</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">remove</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="p">(</span><span class="n">project</span> <span class="o">/</span> <span class="s2">"AGENTS.md"</span><span class="p">,</span> <span class="n">project</span> <span class="o">/</span> <span class="s2">"CLAUDE.md"</span><span class="p">,</span> <span class="n">project</span> <span class="o">/</span> <span class="s2">".claude"</span> <span class="o">/</span> <span class="s2">"CLAUDE.md"</span><span class="p">):</span>
+            <span class="n">results</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">)]</span> <span class="o">=</span> <span class="n">_remove_block</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">results</span>
+    <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="p">[</span><span class="n">project</span> <span class="o">/</span> <span class="s2">"AGENTS.md"</span><span class="p">,</span> <span class="o">*</span><span class="n">_claude_md_files</span><span class="p">(</span><span class="n">project</span><span class="p">)]:</span>
+        <span class="n">results</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">)]</span> <span class="o">=</span> <span class="n">_add_block</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">results</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025 - 2026 3S Consult GmbH.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

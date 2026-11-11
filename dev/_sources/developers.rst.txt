@@ -224,8 +224,9 @@ We currently use the following workflows:
        branch: https://3sconsult.github.io/sir3stoolkit/ (with a "Released version" banner; ``dev/`` is kept). A manual run only deploys the
        documentation, it does not publish - see :ref:`release-label`.
    * - ``.github/workflows/test-sync-agents-md.yml``
-     - Pull request changing ``AGENTS.md`` or the ``sync-agents-md`` action, or a manual run
-     - Tests that the ``sync-agents-md`` action copies the repository-root ``AGENTS.md`` into the package.
+     - Pull request changing ``AGENTS.md``, ``ai/``, a tutorial notebook or the ``sync-agents-md`` action, or a manual run
+     - Tests that the ``sync-agents-md`` action copies the guide for AI assistants (repository-root ``AGENTS.md`` and ``ai/``) into the
+       package, exports the tutorials' cell sources and, with a version, points the links at the release tag.
 
 Anonymization Setup for Pre-Commit Hook
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -406,7 +407,7 @@ A new version is released to PyPI and gets its release documentation by tagging 
 
 4. **Document Changes:** In `sir3stoolkit/docs/source/releases.rst` add a new row to the release table with the new version number, corresponding SIR 3S version number, release date, and whether the `Sir3S_Toolkit.dll` was changed. Also below under the corresponding SIR 3S version number insert a new section and describe the changes made in detail.
 
-5. **Update AGENTS.md if a structural change happened:** If this release adds/renames/removes a public function, adds a new tutorial, or changes the core/mantle module layout, update `sir3stoolkit/AGENTS.md` at the repo root to match (e.g. its Tutorial index entries, the function lists there, the Architecture section). Not needed for a release with no such changes (bug fixes, internal-only changes, etc.).
+5. **Update the guide for AI assistants if a structural change happened:** If this release adds/renames/removes a public function, adds a new tutorial, or changes the core/mantle module layout, update the guide at the repo root to match: ``AGENTS.md`` (core: e.g. the Architecture section, the tutorial topics, gotchas) and ``ai/tutorials.md`` (the full tutorial index: entries, function lists). Not needed for a release with no such changes (bug fixes, internal-only changes, etc.). Only edit the repo-root files - the release build copies them into the package (``.github/actions/sync-agents-md``).
 
 6. **Update Version Number:** In `sir3stoolkit/pyproject.toml` update the version number
 
