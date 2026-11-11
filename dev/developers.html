@@ -1,0 +1,513 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For Developers &mdash; sir3stoolkit  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=9c3e77be" />
+
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=f281be69"></script>
+      <script>let toggleHintShow = 'Click to show';</script>
+      <script>let toggleHintHide = 'Click to hide';</script>
+      <script>let toggleOpenOnPrint = 'true';</script>
+      <script src="_static/togglebutton.js?v=b8b12719"></script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Releases" href="releases.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            sir3stoolkit
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="releases.html">Releases</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">For Developers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#editable-install-local-configuration">Editable Install Local Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#setting-up-git-on-your-computer">Setting Up Git on Your Computer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#working-with-github">Working with GitHub</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#cloning-the-github-repository">Cloning the GitHub Repository</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#general-github-version-control-procedure">General GitHub Version Control Procedure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#get-the-latest-version-from-github">Get the Latest Version from GitHub</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#commit-your-changes-to-the-github-repository">Commit Your Changes to the GitHub Repository</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#collection-of-useful-git-commands">Collection of Useful Git Commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#github-workflows">GitHub Workflows</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#releasing-a-new-version">Releasing a New Version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#anonymization-setup-for-pre-commit-hook">Anonymization Setup for Pre-Commit Hook</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#step-1-locate-the-pre-commit-hook">Step 1: Locate the Pre-Commit Hook</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-2-edit-the-pre-commit-hook">Step 2: Edit the Pre-Commit Hook</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-3-create-the-names-file">Step 3: Create the Names File</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-4-verify-the-setup">Step 4: Verify the Setup</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#troubleshooting">Troubleshooting</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#running-test-suites">Running Test Suites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#generating-the-documentation">Generating the Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#release-a-new-version-to-pypi">Release a New Version to PyPI</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">sir3stoolkit</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">For Developers</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/developers.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+  <div class="admonition warning">
+    <p class="admonition-title">Development version</p>
+    <p>
+      This documentation reflects the current state of the <code>main</code> branch and may describe
+      features that are not yet released on PyPI. For the documentation of the released version, see
+      <a href="https://3sconsult.github.io/sir3stoolkit/">https://3sconsult.github.io/sir3stoolkit/</a>.
+    </p>
+  </div>
+  
+           <div itemprop="articleBody">
+             
+  <section id="for-developers">
+<h1>For Developers<a class="headerlink" href="#for-developers" title="Link to this heading"></a></h1>
+<p>Welcome to the Developers page! This section provides resources and instructions for developers who want to contribute to Sir3SToolkit-Documentation.</p>
+<ul class="simple">
+<li><p><strong>Toolkit Contact</strong>: If you encounter an issue with the Toolkit that should be fixed or have an idea for enhancement, feel free to create an new entry on our <a class="reference external" href="https://github.com/3SConsult/sir3stoolkit/issues">GitHub forum</a>. Please include the Toolkit and SirGraf version you are using and, if available, the Jupyter Notebook you are working with.</p></li>
+<li><p><strong>Documentation Contact</strong>: For additional information regarding this documentation, and contribution inquiries, please contact <a class="reference external" href="mailto:sir3stoolkit&#37;&#52;&#48;3sconsult&#46;de">sir3stoolkit<span>&#64;</span>3sconsult<span>&#46;</span>de</a>.</p></li>
+<li><p><strong>GitHub Repository:</strong> <a class="reference external" href="https://github.com/3SConsult/sir3stoolkit">GitHub Repository</a>.</p></li>
+<li><p><strong>PyPI Page:</strong> <a class="reference external" href="https://pypi.org/project/sir3stoolkit/">PyPI Page</a>.</p></li>
+</ul>
+<section id="editable-install-local-configuration">
+<h2>Editable Install Local Configuration<a class="headerlink" href="#editable-install-local-configuration" title="Link to this heading"></a></h2>
+<p>When working with an editable install (<code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-e</span> <span class="pre">.</span></code>), avoid editing the shared file <code class="docutils literal notranslate"><span class="pre">src/sir3stoolkit/config.txt</span></code> for your local SirGraf path. Instead, use the local override file <code class="docutils literal notranslate"><span class="pre">src/sir3stoolkit/config.local.txt</span></code>.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">config.local.txt</span></code> is read before <code class="docutils literal notranslate"><span class="pre">config.txt</span></code> by <code class="docutils literal notranslate"><span class="pre">Initialize_Toolkit()</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">config.local.txt</span></code> is ignored by Git (see <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code>), so each developer can keep an individual local path without creating merge conflicts.</p></li>
+</ul>
+<p>Create <code class="docutils literal notranslate"><span class="pre">src/sir3stoolkit/config.local.txt</span></code> with one line containing your local SirGraf directory, for example:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>C:/3S/SIR 3S/SirGraf-90-15-00-24_Quebec-Upd2
+</pre></div>
+</div>
+</section>
+<section id="setting-up-git-on-your-computer">
+<h2>Setting Up Git on Your Computer<a class="headerlink" href="#setting-up-git-on-your-computer" title="Link to this heading"></a></h2>
+<p>Follow these steps to install and configure Git:</p>
+<ol class="arabic">
+<li><p><strong>Download Git:</strong> Visit the <a class="reference external" href="https://git-scm.com/downloads">official Git website</a> and download the version that is compatible with your operating system.</p></li>
+<li><p><strong>Install Git:</strong> Launch the downloaded installer and follow the setup wizard to complete the installation.</p></li>
+<li><p><strong>Configure Your GitHub Username:</strong> Open your terminal or command prompt and enter the following command, replacing “Your Name” with your actual GitHub username:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>user.name<span class="w"> </span><span class="s2">"Your Name"</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Configure Your GitHub Email:</strong> Similarly, set your GitHub email using the following command, replacing <code class="docutils literal notranslate"><span class="pre">your.email&#64;example.com</span></code> with your actual email:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>user.email<span class="w"> </span><span class="s2">"your.email@example.com"</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you’re pushing your first commit to GitHub, you might be prompted to authenticate your GitHub account. This usually involves entering your GitHub account credentials in a browser dialogue window that pops up. This is a standard security measure to ensure you have the necessary permissions to push to the repository.</p>
+</div>
+</section>
+<section id="working-with-github">
+<h2>Working with GitHub<a class="headerlink" href="#working-with-github" title="Link to this heading"></a></h2>
+<section id="cloning-the-github-repository">
+<span id="cloning-github-label"></span><h3>Cloning the GitHub Repository<a class="headerlink" href="#cloning-the-github-repository" title="Link to this heading"></a></h3>
+<p>To clone a GitHub repository to your local folder, follow these steps:</p>
+<ol class="arabic">
+<li><p><strong>Navigate to the Parent Directory of Your Project:</strong> Use the <code class="docutils literal notranslate"><span class="pre">cd</span></code> command followed by the path to the parent directory of your project (This is the directory that should contain your project folder).</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span><span class="s2">"C:\Users\User\3S"</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Clone the GitHub Repository:</strong> Use the <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span></code> command followed by the URL of the repository.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/3SConsult/sir3stoolkit
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+<section id="general-github-version-control-procedure">
+<h3>General GitHub Version Control Procedure<a class="headerlink" href="#general-github-version-control-procedure" title="Link to this heading"></a></h3>
+<p>These instructions lay out the different steps of the GitHub procedure around contributing to SIR 3S Toolkit. Especially due to the GitHub repository currentley sitting on only one branch (main), following these basic rules is crucial. As soon as SIR 3S Toolkit has a higher amount of frequent contributors, a more suitable system with multiple branches will be implemented.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Before following each step for the first time, read their instructions fully including notes like this one. If an unexpected problem occurs, you can search the <a class="reference internal" href="#command-collection-label"><span class="std std-ref">Collection of Useful Git Commands</span></a> for a solution.</p>
+</div>
+<p>Follow these steps every time you contribute to SIR 3S Toolkit:</p>
+<ol class="arabic simple">
+<li><p><strong>Get the Latest Version from GitHub</strong>: <a class="reference internal" href="#get-latest-version-label"><span class="std std-ref">Get the Latest Version from GitHub</span></a></p></li>
+<li><p><strong>Edit SIR 3S Toolkit</strong>: Now you can edit the entire SIR 3S Toolkit project locally. Please ensure, that nobody else is working on the project simultaneously in the same sourcefiles, because this could cause problems, when trying to commit.</p></li>
+<li><p><strong>Commit Your Changes to the GitHub Repository</strong>: <a class="reference internal" href="#commit-changes-label"><span class="std std-ref">Commit Your Changes to the GitHub Repository</span></a></p></li>
+</ol>
+</section>
+<section id="get-the-latest-version-from-github">
+<span id="get-latest-version-label"></span><h3>Get the Latest Version from GitHub<a class="headerlink" href="#get-the-latest-version-from-github" title="Link to this heading"></a></h3>
+<p>To fetch the latest changes from the origin and merge them into your current branch, follow these steps:</p>
+<ol class="arabic">
+<li><p><strong>Navigate to project directory:</strong> Use the <code class="docutils literal notranslate"><span class="pre">cd</span></code> command followed by the path to the directory of your project (This directory should contain an invisible .git folder).</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span><span class="s2">"C:\Users\User\sir3stoolkit"</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Pull the latest changes from the origin</strong>: Use the <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">pull</span></code> command.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>pull<span class="w"> </span>origin<span class="w"> </span>master
+</pre></div>
+</div>
+<p>For a more detailed updating process, follow steps 2 and 3 instead.</p>
+</li>
+</ol>
+<ol class="arabic" start="2">
+<li><p><strong>Fetch the latest changes from the origin:</strong> Use the <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">fetch</span> <span class="pre">origin</span></code> command.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>fetch<span class="w"> </span>origin
+</pre></div>
+</div>
+</li>
+<li><p><strong>Merge the fetched changes into your current branch:</strong> Use the <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">merge</span> <span class="pre">origin/master</span></code> command.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>merge<span class="w"> </span>origin/master
+</pre></div>
+</div>
+</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you made local changes to files that were also edited by a remote commit, make a local copy of your project directory and use <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">reset</span> <span class="pre">--hard</span> <span class="pre">origin/master</span></code>. Afterwards you can paste you local changes back in. Just make sure that the remote changes to these files were not important or manually include them in your files.</p>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>reset<span class="w"> </span>--hard<span class="w"> </span>origin/master
+</pre></div>
+</div>
+</section>
+<section id="commit-your-changes-to-the-github-repository">
+<span id="commit-changes-label"></span><h3>Commit Your Changes to the GitHub Repository<a class="headerlink" href="#commit-your-changes-to-the-github-repository" title="Link to this heading"></a></h3>
+<p>To commit your changes to the GitHub repository, follow these steps:</p>
+<ol class="arabic">
+<li><p><strong>Navigate to project directory:</strong> Use the <code class="docutils literal notranslate"><span class="pre">cd</span></code> command followed by the path to the directory of your project (This directory should contain an invisible .git folder).</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span><span class="s2">"C:\Users\User\3S\sir3stoolkti"</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Add files to the staging area:</strong> Use the <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">add</span></code> command followed by the name of the file. Use <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">add</span> <span class="pre">.</span></code> to add all files.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>add<span class="w"> </span>.
+</pre></div>
+</div>
+</li>
+<li><p><strong>Create a new commit with a descriptive message:</strong> Use the <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">commit</span> <span class="pre">-m</span> <span class="pre">&quot;commit_message&quot;</span></code> command.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">"commit_message"</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Push your commit to the GitHub Repository:</strong> Use the <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">push</span> <span class="pre">origin</span> <span class="pre">master</span></code> command.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>master
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+<section id="collection-of-useful-git-commands">
+<span id="command-collection-label"></span><h3>Collection of Useful Git Commands<a class="headerlink" href="#collection-of-useful-git-commands" title="Link to this heading"></a></h3>
+<p>To discard all local changes and set your local HEAD to the master, use:</p>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>reset<span class="w"> </span>--hard<span class="w"> </span>origin/master
+</pre></div>
+</div>
+</div></blockquote>
+<p>To discard all remote changes and force push local HEAD to the master, use:</p>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>master<span class="w"> </span>--force
+</pre></div>
+</div>
+</div></blockquote>
+<p>To uncommit commited but not yet pushed changes of the previous commit without changing local files (move HEAD pointer back by one commit), use:</p>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>reset<span class="w"> </span>--soft<span class="w"> </span>HEAD~1
+</pre></div>
+</div>
+</div></blockquote>
+<p>To revert all changes caused by a commit, use:</p>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>revert<span class="w"> </span>commitID
+</pre></div>
+</div>
+</div></blockquote>
+<p>To load a branch locally, use:</p>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>checkout<span class="w"> </span>&lt;branchname&gt;
+</pre></div>
+</div>
+</div></blockquote>
+</section>
+<section id="github-workflows">
+<span id="github-workflow-label"></span><h3>GitHub Workflows<a class="headerlink" href="#github-workflows" title="Link to this heading"></a></h3>
+<p>Our GitHub repository uses workflows to facilitate certain processes by automating tasks. Workflows are defined using YAML files and are stored in the <cite>.github/workflows</cite> directory of our repository.</p>
+<p>We currently use the following workflows:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Name</strong></p></th>
+<th class="head"><p><strong>Triggers</strong></p></th>
+<th class="head"><p><strong>Tasks</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">.github/workflows/docs-dev.yml</span></code></p></td>
+<td><p>Push to <code class="docutils literal notranslate"><span class="pre">main</span></code></p></td>
+<td><p>Builds the Sphinx documentation (including API docs via <code class="docutils literal notranslate"><span class="pre">sphinx-apidoc</span></code>) of the current development state and deploys it to the
+<code class="docutils literal notranslate"><span class="pre">dev/</span></code> folder of the <code class="docutils literal notranslate"><span class="pre">gh-pages</span></code> branch: <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/dev/">https://3sconsult.github.io/sir3stoolkit/dev/</a> (with a “Development version” banner).</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">.github/workflows/release.yml</span></code></p></td>
+<td><p>Push of a tag <code class="docutils literal notranslate"><span class="pre">v&lt;version&gt;</span></code>, or a manual run with an existing tag</p></td>
+<td><p>Checks that the tag matches the version in <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> and that its commit is on <code class="docutils literal notranslate"><span class="pre">main</span></code>, builds the package and publishes it to
+<strong>TestPyPI</strong> and <strong>PyPI</strong> using <code class="docutils literal notranslate"><span class="pre">twine</span></code>, then builds the documentation from the tag and deploys it to the root of the <code class="docutils literal notranslate"><span class="pre">gh-pages</span></code>
+branch: <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/">https://3sconsult.github.io/sir3stoolkit/</a> (with a “Released version” banner; <code class="docutils literal notranslate"><span class="pre">dev/</span></code> is kept). A manual run only rebuilds the
+documentation, it does not publish.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">.github/workflows/test-sync-agents-md.yml</span></code></p></td>
+<td><p>Pull request changing <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> or the <code class="docutils literal notranslate"><span class="pre">sync-agents-md</span></code> action, or a manual run</p></td>
+<td><p>Tests that the <code class="docutils literal notranslate"><span class="pre">sync-agents-md</span></code> action copies the repository-root <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> into the package.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="releasing-a-new-version">
+<span id="release-label"></span><h3>Releasing a New Version<a class="headerlink" href="#releasing-a-new-version" title="Link to this heading"></a></h3>
+<p>Pushes to <code class="docutils literal notranslate"><span class="pre">main</span></code> only update the development documentation. A release - PyPI upload and release documentation - is made by tagging a
+commit on <code class="docutils literal notranslate"><span class="pre">main</span></code> with its version:</p>
+<ol class="arabic">
+<li><p>Set the new version in <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> (e.g. <code class="docutils literal notranslate"><span class="pre">version</span> <span class="pre">=</span> <span class="pre">&quot;90.15.27&quot;</span></code>), update <code class="docutils literal notranslate"><span class="pre">releases.rst</span></code>, commit and push to <code class="docutils literal notranslate"><span class="pre">main</span></code>.</p></li>
+<li><p>Tag that commit and push the tag:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>tag<span class="w"> </span>v90.15.27
+git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>v90.15.27
+</pre></div>
+</div>
+</li>
+</ol>
+<p>The <code class="docutils literal notranslate"><span class="pre">release.yml</span></code> workflow then publishes to PyPI and deploys the release documentation. If the tag does not match the version in
+<code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code>, nothing is published.</p>
+</section>
+<section id="anonymization-setup-for-pre-commit-hook">
+<h3>Anonymization Setup for Pre-Commit Hook<a class="headerlink" href="#anonymization-setup-for-pre-commit-hook" title="Link to this heading"></a></h3>
+<p>This guide explains how to set up the anonymization script as a Git pre-commit hook. It ensures that sensitive names in Jupyter notebooks are replaced before committing to the repository.</p>
+<section id="step-1-locate-the-pre-commit-hook">
+<h4>Step 1: Locate the Pre-Commit Hook<a class="headerlink" href="#step-1-locate-the-pre-commit-hook" title="Link to this heading"></a></h4>
+<p>Navigate to the Git hooks directory of your local repository:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">your_repo_root</span><span class="o">&gt;/.</span><span class="n">git</span><span class="o">/</span><span class="n">hooks</span><span class="o">/</span>
+</pre></div>
+</div>
+<p>You will find a file named <code class="docutils literal notranslate"><span class="pre">pre-commit.sample</span></code>. Rename it to <code class="docutils literal notranslate"><span class="pre">pre-commit</span></code> (without any file extension). Other contents of the file can be deleted, if not needed by the user for other purposes:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mv</span> <span class="n">pre</span><span class="o">-</span><span class="n">commit</span><span class="o">.</span><span class="n">sample</span> <span class="n">pre</span><span class="o">-</span><span class="n">commit</span>
+</pre></div>
+</div>
+</section>
+<section id="step-2-edit-the-pre-commit-hook">
+<h4>Step 2: Edit the Pre-Commit Hook<a class="headerlink" href="#step-2-edit-the-pre-commit-hook" title="Link to this heading"></a></h4>
+<p>Open the <code class="docutils literal notranslate"><span class="pre">pre-commit</span></code> file in a text editor and replace its contents with the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/sh
+
+staged_notebooks="$(git diff --cached --name-only --diff-filter=ACMR -- '*.ipynb')"
+
+echo "🔒 Running anonymization script..."
+"C:/Users/&lt;your_username&gt;/AppData/Local/anaconda3/python.exe" "docs/source/anonymize_notebooks.py"
+
+if [ $? -ne 0 ]; then
+   echo "❌ Anonymization failed. Commit aborted."
+   exit 1
+fi
+
+# Re-stage only notebooks that were already staged before running this hook
+echo "$staged_notebooks" | grep '\.ipynb$' | while read -r file; do
+   [ -z "$file" ] &amp;&amp; continue
+   git add "$file"
+done
+</pre></div>
+</div>
+<p>Replace <code class="docutils literal notranslate"><span class="pre">&lt;your_username&gt;</span></code> with your actual Windows username or adjust the Python path to match your local installation.</p>
+<p>Only notebooks that were staged before <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">commit</span></code> are re-staged by this hook. Unstaged notebook changes stay unstaged.</p>
+</section>
+<section id="step-3-create-the-names-file">
+<h4>Step 3: Create the Names File<a class="headerlink" href="#step-3-create-the-names-file" title="Link to this heading"></a></h4>
+<p>In the same directory as <code class="docutils literal notranslate"><span class="pre">anonymize_notebooks.py</span></code> (<code class="docutils literal notranslate"><span class="pre">docs/source/</span></code>), create a file named <code class="docutils literal notranslate"><span class="pre">names_to_anonymize.txt</span></code>. Add one name per line that should be anonymized:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Müller</span>
+<span class="n">Schmidt</span>
+</pre></div>
+</div>
+</section>
+<section id="step-4-verify-the-setup">
+<h4>Step 4: Verify the Setup<a class="headerlink" href="#step-4-verify-the-setup" title="Link to this heading"></a></h4>
+<p>Make a small change in a Jupyter notebook that contains one of the names listed. Then run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">add</span> <span class="o">.</span>
+<span class="n">git</span> <span class="n">commit</span> <span class="o">-</span><span class="n">m</span> <span class="s2">"Test anonymization"</span>
+</pre></div>
+</div>
+<p>You should see output indicating that the anonymization script ran and which names were replaced.</p>
+</section>
+<section id="troubleshooting">
+<h4>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>If you see an error like <code class="docutils literal notranslate"><span class="pre">Python</span> <span class="pre">not</span> <span class="pre">found</span></code>, verify that the Python path in the hook is correct.</p></li>
+<li><p>Ensure that <code class="docutils literal notranslate"><span class="pre">names_to_anonymize.txt</span></code> exists and is in the correct directory.</p></li>
+<li><p>The hook must be named <code class="docutils literal notranslate"><span class="pre">pre-commit</span></code> with no file extension.</p></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="running-test-suites">
+<span id="running-tests-label"></span><h2>Running Test Suites<a class="headerlink" href="#running-test-suites" title="Link to this heading"></a></h2>
+<p>The repository uses <code class="docutils literal notranslate"><span class="pre">pytest</span></code> for automated tests.</p>
+<p>Before running tests, navigate to the repository root:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span><span class="s2">"C:\Users\User\3S\sir3stoolkit"</span>
+</pre></div>
+</div>
+<p>Run all default tests (unit/integration tests configured in <code class="docutils literal notranslate"><span class="pre">test/</span></code>):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pytest
+</pre></div>
+</div>
+<p>Run only the unit tests:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pytest<span class="w"> </span>test/unit<span class="w"> </span>-q
+</pre></div>
+</div>
+<p>Run a specific test file:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pytest<span class="w"> </span>test/unit/test_core_wrapper_init.py<span class="w"> </span>-q
+</pre></div>
+</div>
+<p>Notebook execution tests are implemented in
+<code class="docutils literal notranslate"><span class="pre">test/notebooks/test_run_tutorial_notebooks.py</span></code> and are <strong>opt-in</strong>.
+By default, they are skipped to keep regular test runs fast and stable.</p>
+<p>To run the full suite including notebook tests:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">$env</span>:SIR3S_RUN_NOTEBOOKS<span class="o">=</span><span class="s2">"1"</span><span class="p">;</span><span class="w"> </span>pytest<span class="w"> </span>-vv<span class="w"> </span>-rA<span class="w"> </span><span class="c1"># -s for notebook output # powershell</span>
+</pre></div>
+</div>
+</section>
+<section id="generating-the-documentation">
+<h2>Generating the Documentation<a class="headerlink" href="#generating-the-documentation" title="Link to this heading"></a></h2>
+<p>The Toolkit documentation is edited in sir3stoolkit/docs/source on the main branch.</p>
+<p>If you want to edit the documentation yourself, you have to install sphinx and sphinx related python packages.</p>
+<p>You find all necssary packages in the dev and sphinx optional project dependencies in <cite>pyproject.toml&lt;https://github.com/3SConsult/sir3stoolkit/blob/main/pyproject.toml&gt;</cite></p>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>sphinx<span class="w"> </span>nbsphinx<span class="w"> </span>sphinx_copybutton<span class="w"> </span>sphinx-rtd-theme<span class="w"> </span>sphinx-togglebutton
+</pre></div>
+</div>
+</div></blockquote>
+<p>To generate documentation, follow these steps:</p>
+<ol class="arabic simple">
+<li><p><strong>Edit the documentation:</strong> Make your changes on the rst files in the sir3stoolkit/docs/source.</p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Our GitHub Workflow sphinx.yaml automatically builds and deploys the documentation. If you do not need to view a local build of your changes, you can jump to step 4.</p>
+</div>
+<ol class="arabic" start="2">
+<li><p><strong>Navigate to the sir3stoolkit directory:</strong> Use the <code class="docutils literal notranslate"><span class="pre">cd</span></code> command.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span><span class="s2">"C:\Users\User\3S\sir3stoolkit"</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Make an HTML build:</strong> Use <code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">-m</span> <span class="pre">sphinx.cmd.build</span> <span class="pre">-b</span> <span class="pre">html</span> <span class="pre">.</span> <span class="pre">/_build/html</span></code> (for python env)  or <code class="docutils literal notranslate"><span class="pre">.\make.bat</span> <span class="pre">html</span></code> (for conda env (recommended to use conda shell)).</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>-m<span class="w"> </span>sphinx.cmd.build<span class="w"> </span>-b<span class="w"> </span>html<span class="w"> </span>.<span class="w"> </span>/_build/html
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>.<span class="se">\m</span>ake.bat<span class="w"> </span>html
+</pre></div>
+</div>
+</li>
+<li><p><strong>Commit the changes.</strong> Commit all files from sir3stoolkit to GitHub (<a class="reference internal" href="#commit-changes-label"><span class="std std-ref">Commit Your Changes to the GitHub Repository</span></a>).</p></li>
+</ol>
+<p>The new documentation can be found at <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/index.html">https://3sconsult.github.io/sir3stoolkit/index.html</a></p>
+</section>
+<section id="release-a-new-version-to-pypi">
+<h2>Release a New Version to PyPI<a class="headerlink" href="#release-a-new-version-to-pypi" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p><strong>Run tests:</strong> Before releasing a new version, ensure that all tests pass. Run the test suite using <code class="docutils literal notranslate"><span class="pre">pytest</span></code> as described in <a class="reference internal" href="#running-tests-label"><span class="std std-ref">Running Test Suites</span></a>.</p></li>
+<li><p><strong>Determine new version number:</strong> The Toolkit version numbers are formatted as 90.XX.YY with XX being the SIR 3S version number (15 for Quebec), which rarely changes, and YY being the Toolkit version number. The Toolkit version number YY is incremented with every new release of the Toolkit. For example, if the current version is 90.15.23, the next version would be 90.15.24.</p></li>
+<li><p><strong>Add Changed dll:</strong> If changes were made to the <cite>Sir3S_Toolkit.dll</cite>, add a new folder named the new version number in <cite>sir3stoolkit/src/sir3stoolkit/lib</cite> and insert the new dll.</p></li>
+<li><p><strong>Document Changes:</strong> In <cite>sir3stoolkit/docs/source/releases.rst</cite> add a new row to the release table with the new version number, corresponding SIR 3S version number, release date, and whether the <cite>Sir3S_Toolkit.dll</cite> was changed. Also below under the corresponding SIR 3S version number insert a new section and describe the changes made in detail.</p></li>
+<li><p><strong>Update AGENTS.md if a structural change happened:</strong> If this release adds/renames/removes a public function, adds a new tutorial, or changes the core/mantle module layout, update <cite>sir3stoolkit/AGENTS.md</cite> at the repo root to match (e.g. its Tutorial index entries, the function lists there, the Architecture section). Not needed for a release with no such changes (bug fixes, internal-only changes, etc.).</p></li>
+<li><p><strong>Update Version Number:</strong> In <cite>sir3stoolkit/pyproject.toml</cite> update the version number</p></li>
+<li><p><strong>Commit to GitHub</strong>: With the version number in <cite>sir3stoolkit/pyproject.toml</cite> changed, the commit will trigger an automatic workflow, that will release the new version to PyPI. For convenience use the version number as commit message.</p></li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="releases.html" class="btn btn-neutral float-left" title="Releases" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025 - 2026 3S Consult GmbH.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

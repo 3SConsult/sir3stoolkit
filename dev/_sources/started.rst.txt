@@ -1,0 +1,100 @@
+Getting Started
+===============
+
+This guide is your first step towards understanding and utilizing the SIR 3S Toolkit.
+
+.. note::
+    In order to use the SIR 3S Toolkit, access to SIR 3S models and a licensed SIR 3S version are necessary.
+
+What is the SIR 3S Toolkit?
+---------------------------
+
+**SIR 3S Toolkit** is a Python package that provides a programming interface for SIR 3S - 
+a software for the simulation, analysis and optimization of flow processes in gas/water/heat supply networks, 
+plants, pipelines and caverns.
+
+While SIR 3S itself provides a graphical user interface (GUI) based application that is primarily operated through manual user input, 
+the SIR 3S Toolkit adds a powerful layer of automation and programmability. It enables users to interact with SIR 3S models through 
+Python code, making it possible to develop custom workflows, perform batch calculations, and integrate SIR 3S into larger analytical 
+or operational pipelines.
+
+At its core, the package wraps basic functionality of SIR 3S, offering a low-level access to the creation, modification and calculation of SIR 3S models. 
+A variety of method operations — such as Get, Set, Add, Delete, and Insert — are available to directly manipulate model components.
+This gives you a variety of opportunities, e.g.:
+
+.. image:: _static/images/Toolkit_structure_core_mantle.png
+   :alt: Toolkit Structure
+   :align: right
+   :width: 200px
+
+* You can build models solely from scratch, defining nodes, pipes, and more, flexibly adapted to your available data sources, thus extending SIR 3S's built-in import tools.
+
+* The analysis of model data and simulation results can leverage the entire Python data science ecosystem, enabling powerful insights using tools like pandas, NetworkX, SciPy, and others.
+
+On top of this core, higher-level functionality is provided in the so-called mantle, enabling more powerful and intuitive interactions with SIR 3S models. 
+
+What is the difference between SIR 3S Toolkit and PT3S?
+-------------------------------------------------------
+
+Since SIR 3S already offers `PT3S <https://github.com/3SConsult/PT3S>`_ as a Python package for accessing model data, you might wonder: why use the SIR 3S Toolkit if you're already working with PT3S?
+
+PT3S provides powerful access to a model's database and calculation results by reading .mx and .db3 files via SQL directly. However, it operates from the outside — offering read-only access to exposed data structures. What it doesn't offer is a straightforward way to create, modify, or interact with core SIR 3S objects like nodes, pipes, and more.
+
+That's where the SIR 3S Toolkit comes in. It goes beyond file access and interacts directly with the internal structure of a SIR 3S model, enabling full programmatic control over model creation, editing, and analysis.
+ 
+The most important PT3S functionalities have been reimplemented in the SIR 3S Toolkit. Some Python-3S functionalities are still unique to PT3S, but will be implemented in the SIR 3S Toolkit in the future.
+Therefore if you have used PT3S until now, it is recommended to switch over to the SIR 3S Toolkit, that already has a lot of features that PT3S lacks.
+Furthermore the SIR 3S Toolkit will be continuously updated and improved, while **PT3S will not receive any more updates**.
+
+.. _installing-toolkit-label: 
+
+Installation
+------------
+
+To install the SIR 3S Toolkit, follow these steps:
+
+1. **Obtain SIR 3S:** The SIR 3S Toolkit requires an installed SIR 3S version of 90-15 Quebec or higher, which includes the ``Sir3S_Toolkit.dll``.
+
+2. **Determine SIR 3S Toolkit version**: Every Toolkit version is developed and tested with a certain SIR 3S version. Therefore you need to :ref:`look up <overview>` the newest Toolkit version compatible with your SIR 3S version.
+
+3. **Install the SIR 3S Toolkit via pip in SIR 3S Environment:** Open a cmd and enter the following commands to install the SIR 3S Toolkit in the Python environment in the ``Common`` folder of your SIR 3S installation:
+
+   .. code-block:: bash
+
+       cd "C:/3S/Common/Python312" # change to your local path
+       python.exe -m pip install sir3stoolkit==90.15.XX # change to version that is optimal for you
+   
+   .. code-block:: bash
+
+       cd "C:/3S/Common/Python312" # change to your local path
+       python.exe -m pip install sir3stoolkit # newest version
+
+
+4. **Optional: Install the SIR 3S Toolkit via pip in another Python environment:** Open a cmd in the desired Python environment (e.g. Anaconda Python installation) and enter the following commands to install the SIR 3S Toolkit:
+
+   .. code-block:: bash
+
+       pip install sir3stoolkit
+
+5. **Optional: Install mantle dependencies:** The mantle of the sir3stoolkit contains many additional functions. To reduce the dependencies required for the core installation, they have to be installed seperately if needed. Open a cmd in the desired Python environment (e.g. Anaconda Python installation) and enter the following commands to install mantle dependencies of the SIR 3S Toolkit:
+
+   .. code-block:: bash
+
+       pip install sir3stoolkit[mantle]
+
+6. **Optional: Install in editable mode (for contributors):** If you want to use the newest version of the SIR 3S Toolkit available on `GitHub Repository <https://github.com/3SConsult/sir3stoolkit>`_, enter the folling into a cmd.
+
+   .. code-block:: bash
+
+       cd "C:/Users/User/3S"
+       git clone https://github.com/3SConsult/sir3stoolkit
+       cd "C:/Users/User/3S/sir3stoolkit"
+       python.exe -m pip install -e .
+       
+Contact
+-------
+If you'd like to report a bug or suggest an improvement for the SIR 3S Toolkit, please `open a new issue on GitHub <https://github.com/3SConsult/sir3stoolkit/issues>`_. Describe the situation in detail — whether it's a bug you encountered or a feature you'd like to see improved. Provide the SIR Graf, SIR Calc and SIR 3S Toolkit versions you used. Feel free to attach images or other relevant materials to help us better understand your request.
+
+For other requests, please contact us at `sir3stoolkit@3sconsult.de <mailto:sir3stoolkit@3sconsult.de>`_.
+
+To learn how the SIR 3S Toolkit is used in practice, take a look at the :doc:`examples` page.

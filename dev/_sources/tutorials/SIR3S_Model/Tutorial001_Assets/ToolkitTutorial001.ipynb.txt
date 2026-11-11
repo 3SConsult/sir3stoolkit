@@ -1,0 +1,756 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "id": "5556432f",
+   "metadata": {},
+   "source": [
+    "# Tutorial 1: Creating a new or opening an existing SIR 3S model"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "8899e69a",
+   "metadata": {},
+   "source": [
+    "This tutorial demonstrates how to create new SIR 3S models or open already existing ones."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "77ac1cdf-540c-4d8c-96b6-0ee06321129a",
+   "metadata": {},
+   "source": [
+    "## SIR 3S Installation"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "id": "8d723092-c5fb-4b72-8ce1-28b9d5b5cc3c",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2026-11-04T11:42:58.702504Z",
+     "iopub.status.busy": "2026-11-04T11:42:58.701987Z",
+     "iopub.status.idle": "2026-11-04T11:42:58.719101Z",
+     "shell.execute_reply": "2026-11-04T11:42:58.717455Z"
+    }
+   },
+   "outputs": [],
+   "source": [
+    "SIR3S_SIRGRAF_DIR = r\"C:\\3S\\SIR 3S\\SirGraf-90-15-00-24_Quebec-Upd2\" #change to local path"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "7887be8d",
+   "metadata": {},
+   "source": [
+    "## Imports"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "bbfb80b5",
+   "metadata": {},
+   "source": [
+    "Note: The SIR 3S Toolkit requires the Sir3S_Toolkit.dll included in SIR 3S installations (version Quebec and higher)."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "id": "48372080",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2026-11-04T11:42:58.724663Z",
+     "iopub.status.busy": "2026-11-04T11:42:58.724663Z",
+     "iopub.status.idle": "2026-11-04T11:42:59.817251Z",
+     "shell.execute_reply": "2026-11-04T11:42:59.817251Z"
+    }
+   },
+   "outputs": [],
+   "source": [
+    "import sir3stoolkit"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "e12d61e9",
+   "metadata": {},
+   "source": [
+    "The core of sir3stoolkit is a Python wrapper around basic functionality of SIR 3S, offering a low-level access to the creation, modification and simulation of SIR 3S models. In the future pure python subpackages may be added."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "id": "f1baf699",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2026-11-04T11:42:59.822076Z",
+     "iopub.status.busy": "2026-11-04T11:42:59.819344Z",
+     "iopub.status.idle": "2026-11-04T11:42:59.825710Z",
+     "shell.execute_reply": "2026-11-04T11:42:59.825202Z"
+    }
+   },
+   "outputs": [],
+   "source": [
+    "from sir3stoolkit.core import wrapper"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "id": "89da1276",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2026-11-04T11:42:59.827718Z",
+     "iopub.status.busy": "2026-11-04T11:42:59.827718Z",
+     "iopub.status.idle": "2026-11-04T11:42:59.834079Z",
+     "shell.execute_reply": "2026-11-04T11:42:59.834079Z"
+    }
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "<module 'sir3stoolkit' from 'C:\\\\Users\\\\aUsername\\\\3S\\\\sir3stoolkit\\\\src\\\\sir3stoolkit\\\\__init__.py'>"
+      ]
+     },
+     "execution_count": 4,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "sir3stoolkit"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "6d982834",
+   "metadata": {},
+   "source": [
+    "The [wrapper package](https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.Initialize_Toolkit) has to be initialized with reference to a SIR 3S (SIR Graf) installation."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "id": "817b0ebf",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2026-11-04T11:42:59.835525Z",
+     "iopub.status.busy": "2026-11-04T11:42:59.835525Z",
+     "iopub.status.idle": "2026-11-04T11:42:59.981565Z",
+     "shell.execute_reply": "2026-11-04T11:42:59.981058Z"
+    }
+   },
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "[2026-11-04 12:42:59,837] INFO in sir3stoolkit.core.wrapper: [Initialization] Using provided SirGraf path: C:\\3S\\SIR 3S\\SirGraf-90-15-00-24_Quebec-Upd2\n",
+      "[2026-11-04 12:42:59,837] INFO in sir3stoolkit.core.wrapper: [Initialization] Using provided SirGraf path: C:\\3S\\SIR 3S\\SirGraf-90-15-00-24_Quebec-Upd2\n",
+      "[2026-11-04 12:42:59,858] INFO in sir3stoolkit.core.wrapper: [Initialization] Initializing toolkit with SirGraf path: C:\\3S\\SIR 3S\\SirGraf-90-15-00-24_Quebec-Upd2\n",
+      "[2026-11-04 12:42:59,978] INFO in sir3stoolkit.core.wrapper: [Initialization] Sir3S_Toolkit.dll file version 90.15.11.0 (matches this sir3stoolkit version).\n"
+     ]
+    }
+   ],
+   "source": [
+    "wrapper.Initialize_Toolkit(SIR3S_SIRGRAF_DIR)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "0352dd43",
+   "metadata": {},
+   "source": [
+    "## Initialization"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "e14ffe06",
+   "metadata": {},
+   "source": [
+    "The SIR 3S Toolkit contains two classes: [SIR3S_Model](https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model) (model and data) and [SIR3S_View](https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_View) (depiction in SIR Graf). All SIR 3S Toolkit functionality is accessed via the methods of these classes."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "id": "7e40a5af",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2026-11-04T11:42:59.985179Z",
+     "iopub.status.busy": "2026-11-04T11:42:59.983715Z",
+     "iopub.status.idle": "2026-11-04T11:43:00.202604Z",
+     "shell.execute_reply": "2026-11-04T11:43:00.202266Z"
+    }
+   },
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "[2026-11-04 12:43:00,157] INFO in sir3stoolkit.core.wrapper: [Model Class Initialization] Initialization complete\n"
+     ]
+    }
+   ],
+   "source": [
+    "s3s = wrapper.SIR3S_Model()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "id": "3770c93f",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2026-11-04T11:43:00.206459Z",
+     "iopub.status.busy": "2026-11-04T11:43:00.204945Z",
+     "iopub.status.idle": "2026-11-04T11:43:00.249310Z",
+     "shell.execute_reply": "2026-11-04T11:43:00.248037Z"
+    }
+   },
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "[2026-11-04 12:43:00,207] INFO in sir3stoolkit.core.wrapper: Initialization complete\n"
+     ]
+    }
+   ],
+   "source": [
+    "s3s_view = wrapper.SIR3S_View()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "b21a7ab7",
+   "metadata": {},
+   "source": [
+    "## Create a new model (database)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "b2ddafce",
+   "metadata": {},
+   "source": [
+    "First we can check the different network types that can be created with SIR 3S. For simplicity we just create a network with type undefined."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "id": "decf716b",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2026-11-04T11:43:00.253190Z",
+     "iopub.status.busy": "2026-11-04T11:43:00.253190Z",
+     "iopub.status.idle": "2026-11-04T11:43:00.257425Z",
+     "shell.execute_reply": "2026-11-04T11:43:00.257425Z"
+    }
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "['DistrictHeating', 'Gas', 'Steam', 'Undefined', 'Water']\n"
+     ]
+    }
+   ],
+   "source": [
+    "network_types = [item for item in dir(s3s.NetworkType) if not (item.startswith('__') and item.endswith('__'))]\n",
+    "print(network_types)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "c837828c",
+   "metadata": {},
+   "source": [
+    "We are using the [NewModel()](https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.NewModel) function of SIR3S_Model() to create a new db3 file (a SQLite model database)."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "id": "28f84fbf",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2026-11-04T11:43:00.260465Z",
+     "iopub.status.busy": "2026-11-04T11:43:00.260465Z",
+     "iopub.status.idle": "2026-11-04T11:43:00.263347Z",
+     "shell.execute_reply": "2026-11-04T11:43:00.263347Z"
+    }
+   },
+   "outputs": [],
+   "source": [
+    "dbFilePath=r\"Toolkit_Tutorial1_NewModel.db3\""
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "e9592b76",
+   "metadata": {},
+   "source": [
+    "If the SQLite model database does not exist it is created. The so called WDir of the model database is also created if the model database does not exist."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "id": "d4cf11d2",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2026-11-04T11:43:00.265487Z",
+     "iopub.status.busy": "2026-11-04T11:43:00.265487Z",
+     "iopub.status.idle": "2026-11-04T11:43:00.271009Z",
+     "shell.execute_reply": "2026-11-04T11:43:00.270770Z"
+    }
+   },
+   "outputs": [],
+   "source": [
+    "s3s.AllowSirMessageBox(bAllow=False) # If you encounter problems with a message box popping up when opening the model, this surpresses this"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "id": "de952a07",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2026-11-04T11:43:00.274049Z",
+     "iopub.status.busy": "2026-11-04T11:43:00.274049Z",
+     "iopub.status.idle": "2026-11-04T11:43:07.985621Z",
+     "shell.execute_reply": "2026-11-04T11:43:07.985621Z"
+    }
+   },
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "[2026-11-04 12:43:07,981] INFO in sir3stoolkit.core.wrapper: New model is created with the model identifier: M-1-0-1\n"
+     ]
+    }
+   ],
+   "source": [
+    "s3s.NewModel(dbName=dbFilePath,\n",
+    "             providerType=s3s.ProviderTypes.SQLite, \n",
+    "             namedInstance=\"\", \n",
+    "             netType=s3s.NetworkType.Water,\n",
+    "             modelDescription=\"Tutorial New Model\",\n",
+    "             userID=\"\", \n",
+    "             password=\"\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "b9b93bdc",
+   "metadata": {},
+   "source": [
+    "Now a new model in the database has been created and is opened. All SIR 3S Toolkit operations now apply to this model until the model is closed or another one is opened."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "4935b83e",
+   "metadata": {},
+   "source": [
+    "To check whether the modle is responsive, we can use the [GetNetworkType()](https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetNetworkType) function."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "id": "4de889e5",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2026-11-04T11:43:07.985621Z",
+     "iopub.status.busy": "2026-11-04T11:43:07.985621Z",
+     "iopub.status.idle": "2026-11-04T11:43:07.993869Z",
+     "shell.execute_reply": "2026-11-04T11:43:07.993869Z"
+    }
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "NetworkType.Water\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(s3s.GetNetworkType()) "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "33901161-eb2e-4fe5-b762-fdb75e379b65",
+   "metadata": {},
+   "source": [
+    "As no changes have been made, we close the model without saving changes using the [CloseModel()](https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_View.CloseModel) function."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "id": "d5309d04-4b75-4988-b42c-d49b65aea840",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2026-11-04T11:43:07.996924Z",
+     "iopub.status.busy": "2026-11-04T11:43:07.996924Z",
+     "iopub.status.idle": "2026-11-04T11:43:08.187551Z",
+     "shell.execute_reply": "2026-11-04T11:43:08.187551Z"
+    }
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "True"
+      ]
+     },
+     "execution_count": 13,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "s3s.CloseModel(saveChangesBeforeClosing=False)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "34309a14",
+   "metadata": {},
+   "source": [
+    "## Open an exisiting model"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "f69fa9d5",
+   "metadata": {},
+   "source": [
+    "We use the function [OpenModel()](https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.OpenModel) to open an existing SIR 3S model via the SIR 3S Toolkit."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "id": "5f62eef6",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2026-11-04T11:43:08.191448Z",
+     "iopub.status.busy": "2026-11-04T11:43:08.191448Z",
+     "iopub.status.idle": "2026-11-04T11:43:08.195878Z",
+     "shell.execute_reply": "2026-11-04T11:43:08.195361Z"
+    }
+   },
+   "outputs": [],
+   "source": [
+    "dbFilePath = r\"Toolkit_Tutorial1_OpenModel.db3\""
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 15,
+   "id": "e984b61e",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2026-11-04T11:43:08.200451Z",
+     "iopub.status.busy": "2026-11-04T11:43:08.199379Z",
+     "iopub.status.idle": "2026-11-04T11:43:11.726498Z",
+     "shell.execute_reply": "2026-11-04T11:43:11.726498Z"
+    }
+   },
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "[2026-11-04 12:43:11,723] INFO in sir3stoolkit.core.wrapper: Model is open for further operation\n"
+     ]
+    }
+   ],
+   "source": [
+    "s3s.OpenModel(dbName=dbFilePath, \n",
+    "              providerType=s3s.ProviderTypes.SQLite, \n",
+    "              Mid=\"M-1-0-1\", \n",
+    "              saveCurrentlyOpenModel=False, \n",
+    "              namedInstance=\"\", \n",
+    "              userID=\"\", \n",
+    "              password=\"\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "e2490549",
+   "metadata": {},
+   "source": [
+    "Now the model has been opened and the previous one has been closed without saving it. All SIR 3S Toolkit operations now apply to this model until another one is opened."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 16,
+   "id": "8e3adb92",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2026-11-04T11:43:11.729847Z",
+     "iopub.status.busy": "2026-11-04T11:43:11.729847Z",
+     "iopub.status.idle": "2026-11-04T11:43:11.734399Z",
+     "shell.execute_reply": "2026-11-04T11:43:11.734399Z"
+    }
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "NetworkType.DistrictHeating\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(s3s.GetNetworkType()) # to check that the correct model is responsive, model we are trying to open was created with type District Heating"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "304b4f0e-7104-41aa-8aca-70d7e65fcda0",
+   "metadata": {},
+   "source": [
+    "As no changes have been made, we close the model without saving changes using the [CloseModel()](https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_View.CloseModel) function."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 17,
+   "id": "b95d1305-ec1f-4eec-bcac-3ae4855c1aca",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2026-11-04T11:43:11.737107Z",
+     "iopub.status.busy": "2026-11-04T11:43:11.737107Z",
+     "iopub.status.idle": "2026-11-04T11:43:11.933617Z",
+     "shell.execute_reply": "2026-11-04T11:43:11.933617Z"
+    }
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "True"
+      ]
+     },
+     "execution_count": 17,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "s3s.CloseModel(saveChangesBeforeClosing=False)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "66e594c8",
+   "metadata": {},
+   "source": [
+    "## Open an existing XML Model"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "d68fccff",
+   "metadata": {},
+   "source": [
+    "We use the function [OpenModelXml](https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.OpenModelXml) to open an existing SIR 3S model in XML format via the SIR 3S Toolkit."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "2d82f984",
+   "metadata": {},
+   "source": [
+    "This XML SIR 3S file has to be exported via SIR 3S (SIR Graf) based on the .db3 file opened above."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 18,
+   "id": "840d3323",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2026-11-04T11:43:11.938258Z",
+     "iopub.status.busy": "2026-11-04T11:43:11.937005Z",
+     "iopub.status.idle": "2026-11-04T11:43:11.941591Z",
+     "shell.execute_reply": "2026-11-04T11:43:11.941072Z"
+    }
+   },
+   "outputs": [],
+   "source": [
+    "xmlFilePath=r\".\\Toolkit_Tutorial1_OpenModel_XML.xml\""
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 19,
+   "id": "1f427b45",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2026-11-04T11:43:11.944476Z",
+     "iopub.status.busy": "2026-11-04T11:43:11.944476Z",
+     "iopub.status.idle": "2026-11-04T11:43:11.951077Z",
+     "shell.execute_reply": "2026-11-04T11:43:11.950567Z"
+    }
+   },
+   "outputs": [],
+   "source": [
+    "s3s.AllowSirMessageBox(bAllow=False) # If you encounter problems with a message box popping up when opening the model, this surpresses this"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "aa522638",
+   "metadata": {},
+   "source": [
+    "The so called WDir of the model is also created if it does not exist."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 20,
+   "id": "7341b853",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2026-11-04T11:43:11.955528Z",
+     "iopub.status.busy": "2026-11-04T11:43:11.953073Z",
+     "iopub.status.idle": "2026-11-04T11:43:12.969230Z",
+     "shell.execute_reply": "2026-11-04T11:43:12.968566Z"
+    }
+   },
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "[2026-11-04 12:43:12,965] INFO in sir3stoolkit.core.wrapper: Model is open for further operation\n"
+     ]
+    }
+   ],
+   "source": [
+    "s3s.OpenModelXml(xmlFilePath, False)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 21,
+   "id": "27a1d883",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2026-11-04T11:43:12.973772Z",
+     "iopub.status.busy": "2026-11-04T11:43:12.972267Z",
+     "iopub.status.idle": "2026-11-04T11:43:12.977238Z",
+     "shell.execute_reply": "2026-11-04T11:43:12.977238Z"
+    }
+   },
+   "outputs": [],
+   "source": [
+    "s3s.AllowSirMessageBox(bAllow=True) # Turn message boxes back on"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 22,
+   "id": "03150b87",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2026-11-04T11:43:12.981142Z",
+     "iopub.status.busy": "2026-11-04T11:43:12.981142Z",
+     "iopub.status.idle": "2026-11-04T11:43:12.985147Z",
+     "shell.execute_reply": "2026-11-04T11:43:12.985147Z"
+    }
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "NetworkType.DistrictHeating\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(s3s.GetNetworkType()) # to check that the correct model is responsive, model we are trying to open was created with type District Heating"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 23,
+   "id": "edb49eb3",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2026-11-04T11:43:12.989106Z",
+     "iopub.status.busy": "2026-11-04T11:43:12.987639Z",
+     "iopub.status.idle": "2026-11-04T11:43:13.143740Z",
+     "shell.execute_reply": "2026-11-04T11:43:13.143214Z"
+    }
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "True"
+      ]
+     },
+     "execution_count": 23,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "s3s.CloseModel(saveChangesBeforeClosing=False)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "f6b99294-84ba-4c38-a1fe-a7e4c49a6ac5",
+   "metadata": {},
+   "source": [
+    "__Next:__ Tutorial 2: Accessing and modifying model data"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "base",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.11.8"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}

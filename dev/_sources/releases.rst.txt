@@ -1,0 +1,569 @@
+Releases
+========
+
+The SIR 3S Toolkit python package often receives updates including bug fixes or new functionalities.
+
+There are two types of updates:
+
+1. **Python-only updates** - Install via:
+
+   .. code-block:: bash
+
+      pip install --upgrade sir3stoolkit
+
+   .. code-block:: bash
+
+      pip install --upgrade sir3stoolkit==90.15.12 # for specific version
+
+2. **Core updates with DLL changes** - Requires manual replacement of ``Sir3S_Toolkit.dll`` in the SirGraf directory after pip upgrade (1). The newest version of the ``Sir3S_Toolkit.dll`` is shipped alongside the updated pure python code (.\\lib\\).
+
+The release notes indicate whether a version includes changes to the C# side and therefore if (2) is necessary. 
+
+From version 90.15.26 on, ``Sir3S_Toolkit.dll`` carries a file version (Windows: file properties > Details > File version; earlier DLLs all show 1.0.0.0), listed in the overview below. This makes it possible to check whether the DLL in the SirGraf directory matches the installed sir3stoolkit version: ``Initialize_Toolkit()`` logs the file version of the DLL in the SirGraf directory and warns if it differs from the DLL shipped with the installed sir3stoolkit version; ``Get_Toolkit_Dll_File_Version()`` returns it.
+
+.. code-block:: python
+
+   from sir3stoolkit.core import wrapper
+   wrapper.Get_Toolkit_Dll_File_Version(r"C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2")  # e.g. '90.15.10.0'
+
+SIR 3S: 90-15 Quebec
+--------------------
+
+.. _Overview:
+
+Overview
+^^^^^^^^
+
+Below an overview over all Toolkit Versions for SIR 3S 90-15 Quebec is given. It is stated with which specific SIR 3S version the Toolkit version was developed and tested and whether replacing the Sir3S_Toolkit.dll is necessary. From 90.15.26 on, the column "dll changed + file version" also gives the file version of the Sir3S_Toolkit.dll the Toolkit version needs (for versions without DLL changes, the one of the latest version before).
+
++----------------+---------------------------+----------------------------+--------------+
+| Toolkit Version| SIR 3S Version            | dll changed + file version | Release Date |
++================+===========================+============================+==============+
+| 90.15.27       | 90-15-00-24-Upd2          | Yes (90.15.11.0)           | TBD          |
++----------------+---------------------------+----------------------------+--------------+
+| 90.15.26       | 90-15-00-24-Upd2          | Yes (90.15.10.0)           | 2026-10-14   |
++----------------+---------------------------+----------------------------+--------------+
+| 90.15.25       | 90-15-00-24-Upd2          | Yes                        | 2026-08-03   |
++----------------+---------------------------+----------------------------+--------------+
+| 90.15.24       | 90-15-00-24-Upd2          | Yes                        | 2026-07-02   |
++----------------+---------------------------+----------------------------+--------------+
+| 90.15.23       | 90-15-00-24-Upd2          | Yes                        | 2026-06-15   |
++----------------+---------------------------+----------------------------+--------------+
+| 90.15.22       | 90-15-00-24-Upd2          | No                         | 2026-06-08   |
++----------------+---------------------------+----------------------------+--------------+
+| 90.15.21       | 90-15-00-24-Upd2          | No                         | 2026-06-01   |
++----------------+---------------------------+----------------------------+--------------+
+| 90.15.20       | 90-15-00-24-Upd2          | Yes                        | 2026-05-25   |
++----------------+---------------------------+----------------------------+--------------+
+| 90.15.19       | 90-15-00-24-Upd2          | No                         | 2026-04-19   |
++----------------+---------------------------+----------------------------+--------------+
+| 90.15.18       | 90-15-00-24-Upd2          | No                         | 2026-04-10   |
++----------------+---------------------------+----------------------------+--------------+
+| 90.15.17       | 90-15-00-24-Upd2          | No                         | 2026-03-27   |
++----------------+---------------------------+----------------------------+--------------+
+| 90.15.16       | 90-15-00-24-Upd2          | No                         | 2026-03-15   |
++----------------+---------------------------+----------------------------+--------------+
+| 90.15.15       | 90-15-00-23-Upd2          | Yes                        | 2026-03-03   |
++----------------+---------------------------+----------------------------+--------------+
+| 90.15.14       | 90-15-00-22-Upd2          | No                         | 2026-02-25   |
++----------------+---------------------------+----------------------------+--------------+
+| 90.15.13       | 90-15-00-22-Upd2          | No                         | 2026-02-20   |
++----------------+---------------------------+----------------------------+--------------+
+| 90.15.12       | 90-15-00-22-Upd2          | Yes                        | 2026-02-12   |
++----------------+---------------------------+----------------------------+--------------+
+| 90.15.11       | 90-15-00-21-Upd2          | No                         | 2026-02-08   |
++----------------+---------------------------+----------------------------+--------------+
+| 90.15.10       | 90-15-00-21-Upd2          | No                         | 2026-02-01   |
++----------------+---------------------------+----------------------------+--------------+
+| 90.15.9        | 90-15-00-21-Upd2          | No                         | 2026-01-25   |
++----------------+---------------------------+----------------------------+--------------+
+| 90.15.8        | 90-15-00-20-Upd1          | No                         | 2026-01-19   |
++----------------+---------------------------+----------------------------+--------------+
+| 90.15.7        | 90-15-00-20-Upd1          | No                         | 2026-01-10   |
++----------------+---------------------------+----------------------------+--------------+
+| 90.15.6        | 90-15-00-20-Upd1          | Yes                        | 2026-01-09   |
++----------------+---------------------------+----------------------------+--------------+
+| 90.15.5        | 90-15-00-19               | Yes                        | 2025-11-24   |
++----------------+---------------------------+----------------------------+--------------+
+| 90.15.4        | 90-15-00-19               | No                         | 2025-10-31   |
++----------------+---------------------------+----------------------------+--------------+
+| 90.15.3 (Init) | 90-15-00-15               | Yes                        | 2025-10-09   |
++----------------+---------------------------+----------------------------+--------------+
+
+Below the release history with all changes is given in detail.
+
+SIR 3S: 90-15-00-24-Upd2
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+Version 90.15.27 (TO BE RELEASED)
+"""""""""""""""""""""""""""""""""
+
+Developed and tested using SIR 3S Version: 90-15-00-24-Upd2
+
+Python Changes
+~~~~~~~~~~~~~~
+
+- generate_element_results_dataframe(bulk=True): fix: text (CHAR) results are decoded with the encoding the .MX1 declares (Windows-1252) instead of UTF-8 - non-ASCII characters such as umlauts came back as U+FFFD ("X�Y" instead of "XÜY") and differed from bulk=False; fixed https://github.com/3SConsult/sir3stoolkit/issues/29
+- generate_element_results_dataframe(): new param include_name_and_end_nodes (default True): False leaves out the name/end_nodes column levels (columns: tk, property[, interior points]) and saves the two Toolkit API calls per element they cost (~8 s for 68,000 pipes, while the bulk=True read itself takes ~0.1 s)
+- generate_element_results_dataframe(): building the column MultiIndex is much faster for many columns (property level built once, name/end_nodes mapped per element instead of per column) - same output; e.g. 68,000 pipes with all 75 result properties: 65 s -> 11.5 s
+- merge_model_data_and_results(): also accepts vec_format="str" results without the name/end_nodes levels (they were dropped by position before), and no longer modifies the passed df_results
+- generate_element_dataframe() / generate_edge_dataframe(), SIR_3S_to_pandapipes(), add_properties_to_graph(): request their results without name/end_nodes (they only need the tk) - faster for large models, same output
+- generate_element_model_data_dataframe(): the converted values are assigned by position (pd.Series(..., index=df.index)) instead of relying on the DataFrame's default index
+- plotting.py: module docstring TODO updated (only the AGSN longitudinal section plot is missing)
+- new: get_object_type_reference() looks up an element type in the object type reference shipped with the package: table code, object category, toolkit method(s) to create it, network types, properties (value types) and result properties (German description, standard unit)
+- SIR3S_View.AddNewHouse(): numberSuffix is a str (type hint/docstring said int, with which the call failed)
+
+Other Changes
+~~~~~~~~~~~~~
+
+- AGENTS.md: overview of the sections and how to read them selectively, "Quick facts" block (platform, versions, imports, return types, error handling), how to read the tutorial notebooks without their JSON overhead, new gotchas (exact property-name spelling in mantle, the "element type" column, current limitations of SIR_3S_to_nx_graph() with https://github.com/3SConsult/sir3stoolkit/issues/25 and https://github.com/3SConsult/sir3stoolkit/issues/26, vec_format="multiindex" and include_name_and_end_nodes=False for new code)
+- Tutorial 51: vector results described correctly as tab-separated strings, link to add_interior_points_to_start_end_sequence(), property name spelled Fkcont
+- Tutorial 53: the column is named "element type"
+- Tutorial 61: note on the current limitations of the nx graph (int64 tks, parallel edges, needs a calculated model); fixed link to SIR_3S_to_nx_graph()
+- Tutorial 62: fixed link to SIR_3S_to_pandapipes()
+- Object types reference: note on the physical units of result properties
+- Object types reference: each object type lists its Object Category and, where one was shown to create a real instance, the toolkit method to create it (Unknown where not determined); heading underline fixed
+- Tutorial 51: new section on get_object_type_reference()
+
+Version 90.15.26
+""""""""""""""""
+
+Developed and tested using SIR 3S Version: 90-15-00-24-Upd2
+
+C# Changes
+~~~~~~~~~~
+
+- Sir3S_Toolkit.dll now carries a file version: 90.15.10.0 (earlier DLLs: 1.0.0.0)
+- fixed https://github.com/3SConsult/sir3stoolkit/issues/24
+
+Python Changes
+~~~~~~~~~~~~~~
+
+- wrapper.py: new function Get_Toolkit_Dll_File_Version(dllPath=None) reads the file version of a Sir3S_Toolkit.dll (default: the one in the SirGraf directory); Initialize_Toolkit() logs the file version of the DLL in the SirGraf directory and warns if it differs from the DLL shipped with the installed sir3stoolkit version
+- alternative_models.py: fix: SIR_3S_to_pandapipes() gauge to absolute pressure fix
+- dataframes.py: fix: GeoDataFrames are created with the CRS "EPSG:<srid>" instead of "EPSG: <srid>", which newer pyproj versions (3.8) reject - the conversion to GeoDataFrame failed with "Invalid projection"
+- dataframes.py: fix: undefined name in the model data update ("tk" column check) that raised a NameError
+- core: errors reported by the SIR 3S Toolkit now raise a SIR3S_ToolkitError when running as a standalone Python process (previously only logged, with the call returning e.g. None, '-1' or ('', '')); inside SirGraf they are still only logged. Core calls made inside mantle methods are only logged as before. Switch with the new Set_Raise_On_Error(True | False | None)
+- core: all toolkit messages now go through the central logger: errors of the working directory, calculation settings, geometry and SIR3S_View methods were printed instead (and therefore not raised)
+- ExecCalculation(waitForSirCalcToExit=True): checks the calculation afterwards - a SirCalc lock file (``*_SirCalcIsRunning.tmp``) left in the working directory (SirCalc crashed), no results, results ending before the end of the simulation time frame (SirCalc crashed during the simulation) or EXSTAT=3 are reported as errors, EXSTAT=1/2 as warnings. EXSTAT is checked at the stationary and at the last timestamp, as it is stored per timestamp
+- Tutorials 3 and 10: the calculation status (EXSTAT) is checked for all timestamps instead of only the current (stationary) one
+- Tutorial 10: the XML edit example is now a pump trip (pump fails after 40 minutes) instead of flipping the speed table; the result plots compare both calculations
+- dependency check upon module import for every mantle module
+- new internal mantle module mx.py (SIR3S_Model_MX): reads results directly from the result files (.MX1/.MX2/.MXS); only used through generate_element_results_dataframe(bulk=True)
+- MX read: numpy-based, chunked reads of only the requested channels, timestamps and tks - works for very large result files (tested: 80 GB .MXS), much faster than loop-based reads
+- generate_element_results_dataframe(bulk=True): uses the new read; raises MemoryError upfront if the result would not fit into memory; new param vec_format ("str" | "multiindex"); progress/timing logs
+- generate_element_results_dataframe(): numeric results are now float32 instead of float64 (the precision SIR 3S stores results in; no value changes, half the memory)
+- generate_element_results_dataframe(): new param output_factor (bulk=True): None (default) reads the result file without an output factor in its name ("M-1-0-1.MX1") if it exists, otherwise the DTFAK_GROSS file; a factor (DTFAK_KLEIN or DTFAK_GROSS) reads that file
+- generate_element_results_dataframe(bulk=True): timestamps and properties are validated against the result file read (timestamps index/match its timeline; properties=None gives all properties it holds; requested properties it doesn't hold are left out with a warning instead of being filled with place_holder_value)
+- bulk=True: the output factors (DTFAK_KLEIN/DTFAK_GROSS) are taken from the names of the existing result files - previously ".1" was assumed; the default reads the most recent calculation's files; files from an earlier calculation can still be read via output_factor, with a warning
+- new: get_result_file_properties() lists the result properties stored in the result file (with unit, description, and whether they are stored for all or single elements), as read by generate_element_results_dataframe(bulk=True)
+- merge_model_data_and_results(): also accepts results straight from generate_element_results_dataframe(vec_format="multiindex") (any number of timestamps), new param place_holder_value
+- generate_element_dataframe() / generate_edge_dataframe(): results built from the interior-point multiindex format directly (faster, also for bulk=False); same output structure, interior-point values now exact float32 instead of parsed 7-digit strings
+- convert_rows_to_single_tuple_row(), generate_element_dataframe(), generate_edge_dataframe(): float32 values in tuples are shown in their shortest representation (e.g. 0.01343678 instead of 0.01343678031116724); add_interior_points_to_start_end_sequence() keeps float32 columns float32
+- generate_element_results_dataframe(): the column MultiIndex stays in column order (lexsorted), so selecting e.g. df.loc[ts, (tk, "PVEC")] no longer raises pandas' PerformanceWarning
+- fixed https://github.com/3SConsult/sir3stoolkit/issues/14
+
+Other Changes
+~~~~~~~~~~~~~
+
+- AGENTS.md file: entry point for AI code assistants to provide context when coding with sir3stoolkit. Referenced in README.rst
+- new Tutorial 57: bulk result read, interior-point formats, merging with model data, output factors and time-curve data
+- Tutorials 51, 52, 53, 55, 56, 61, 62, 71, 73, 81: removed unused imports (among them folium and contextily, which aren't dependencies of sir3stoolkit); Tutorial 62: note that its interactive plots need plotly
+
+Version 90.15.25
+""""""""""""""""
+
+Developed and tested using SIR 3S Version: 90-15-00-24-Upd2
+
+C# Changes
+~~~~~~~~~~
+- fixed https://github.com/3SConsult/sir3stoolkit/issues/9
+- fixed https://github.com/3SConsult/sir3stoolkit/issues/10
+- fixed https://github.com/3SConsult/sir3stoolkit/issues/12
+- fixed https://github.com/3SConsult/sir3stoolkit/issues/16
+
+Python Changes
+~~~~~~~~~~~~~~
+
+- wrapper.py: new functions
+   - Read_SirGraf_Config_Path(): reads the SirGraf config path from config.txt
+   - Write_SirGraf_Config_Path(basePath): writes the SirGraf config path to config.txt
+   - GetWorkingDirectory(): get the working directory currently assigned to the open model
+   - AllocateWorkingDirectory(strDirectory): assign the SIR 3S working Directory to an existing Directory
+   - CreateWorkingDirectory(strDirectory): just Create a SIR 3S Working Directory if it doesnt exist yet and assign it
+   - CopyWorkingDirectory(strDestinationDirectory): copies the contents of the current SIR 3S working Directory to the specified Destination Directory
+   - GetDBSourcePath(): retrieves the Database Source Path along with Connection Details
+   - SetCalculationType(calculationType): sets the Calculation Type for the Model
+   - GetCalculationType(): gets the current Type of Calculation to be performed
+   - WriteSirCalcXmlFile(saveItInThisDirectory): writes the SirCalc XML Input File before any Calculations are performed
+   - SetThermalCalculationParemeters(activateThermalcalculation, startWithTempField, terminationPrecision, transientThermalcalculation): change thermal Calculation Parameters
+   - GetThermalCalculationParemeters(): gets the current thermal Calculation Parameters
+   - SetSimulationTimeFrame(timeStep, terminationTime): sets the Simulation Time Frame for non-stationary Calculations
+   - GetSimulationTimeFrame(): retrieves the current Simulation time frame Parameters, including the time step and termination time
+   - GetGeometryData(elemTk): retrieves the WKB Geometry Data if an Element (Technical Data Part, OS Data Part, and eventually connection Lines)
+   - UnmarkAll(tkCONT): unmarks all Elements within the Container with TK = tkCONT
+   - GetMarkedElements(tkCONT): retrieves a list of all Elements marked within the Container with TK = tkCONT
+   - MarkElement(tk): marks an element AND ALL its connection Lines
+   - UnmarkElement(tk): unmarks the Element and ALL its Connection Lines
+   - IsElementMarked(tk): determines whether the specified element (OR any of its Connection Lines) is marked based on the provided Key
+
+Version 90.15.24
+""""""""""""""""
+
+Developed and tested using SIR 3S Version: 90-15-00-24-Upd2
+
+C# Changes
+~~~~~~~~~~
+
+- New Function: GetReferencesToElement(): This method gets all Elements that are referencing the provided Element Key (pk/tk)
+
+Version 90.15.23
+""""""""""""""""
+
+Developed and tested using SIR 3S Version: 90-15-00-24-Upd2
+
+C# Changes
+~~~~~~~~~~
+
+- fixed https://github.com/3SConsult/sir3stoolkit/issues/11
+
+Version 90.15.22
+""""""""""""""""
+
+Developed and tested using SIR 3S Version: 90-15-00-24-Upd2
+
+Changes
+~~~~~~~
+
+- dataframes.py: 
+   - generate_element_dataframe() and generate_edge_dataframe() now return df with result values as Tuple, with each entry corresponding to a simluation timestamp. 
+   - Additionally they return a mapping from timestamps to tuple idx. With new param timestamps for generate_edge_dataframe(), and timestamp changed to timestamps (list) as param for generate_element_dataframe().
+   - generate_edge_dataframe() has new param tks for filtering 
+
+Version 90.15.21
+""""""""""""""""
+
+Developed and tested using SIR 3S Version: 90-15-00-24-Upd2
+
+Changes
+~~~~~~~
+
+- dataframes.py:
+   - insert_dataframe_into_time_table():
+      - new param keep added to control whether old target time deltas without source counterpart are retained (keep=True) or deleted (keep=False)
+      - overwrite/keep behavior now follows a consistent action matrix for matching, old-only, and new-only deltas (keep, insert, overwrite, delete)
+      - duplicate input timestamps are resolved deterministically by keeping the row with the lower numeric value in value_col
+      - additional validation and logging added for empty input dataframes and invalid/missing date/time/value columns
+      - function now returns the updated dataframe from get_dataframe_from_time_table() including operation flags
+   - get_dataframe_from_time_table():
+      - new optional param flag_mapping added
+      - when flag_mapping is provided, return dataframe includes new column operation_flag (mapped by time delta, fallback: "unmapped")
+
+Version 90.15.20
+""""""""""""""""
+
+Developed and tested using SIR 3S Version: 90-15-00-24-Upd2
+
+Changes
+~~~~~~~
+
+- plotting.py: plot_pipe_layer(), plot_node_layer() new params: value lables
+- new centralized logging module: logging_utils.py: 
+   - all module loggers are now created via ``get_logger(__name__)`` for consistent setup
+   - if external handlers exist, they handle all output (no duplicate fallback output)
+   - if no external handlers exist and toolkit runs inside SirGraf host process, logs are emitted via host-aware fallback print
+   - if no external handlers exist outside host process, logs are emitted via standard Python logging fallback
+   - wrapper and mantle modules were aligned to use this shared behavior
+- config.txt/wrapper.py Sir Calc path formatting changed to prevent issues in Syntax Check of SIR 3S Python console
+- dataframes.py: 
+   - generate_element_results_dataframe(): str result values are now included in output df, instead of being detected as non-numeric and left out
+   - _resolve_given_timestamps(): logging now outputs all timestamps used for result retrieval, not just the number of valid timestamps
+   - generate_edge_dataframe(): now takes a single timestamp instead of timestamps list. As this function can only process a single timestamp for result values, having a list of them as param is highly confusing.
+   - insert_dataframe_into_time_table(): As long as timestamps match, existing rows are kept and only values are updated. From the first differing timestamp onward, old rows are replaced row-by-row. new param: overwrite (=True for old behavior)
+   - get_dataframe_from_time_table(): new col tk in return df, removed param time_col (always "Zeit [s]" as index)
+
+C# Changes
+~~~~~~~~~~
+
+- Model Validation functions: not yet fully wrapped in python
+
+Version 90.15.19
+""""""""""""""""
+
+Developed and tested using SIR 3S Version: 90-15-00-24-Upd2
+
+Changes
+~~~~~~~
+
+- wrapper.py:
+   - Initialize_Toolkit() path resolution updated:
+      - if basePath is provided, it is used first
+      - otherwise, if the host process binary is SirGraf.exe, its directory is used as SirGraf base path
+      - otherwise, config.local.txt in sir3stoolkit is checked (only needed by devs) first and config.txt is used as fallback. 
+- dataframes.py: new function: delete_elements_in_dataframe(): deletes elements in SIR 3S model based on tk col in given dataframe
+- add_properties_to_graph(): fixed if no props are given
+
+Version 90.15.18
+""""""""""""""""
+
+Developed and tested using SIR 3S Version: 90-15-00-24-Upd2
+
+Changes
+~~~~~~~
+
+- plotting.py:
+   - plot_node/pipe_layer() functions now work with both 2d and 3d geometry, the z-coord is stripped if present
+   - plot_pipe_layer(): all identical DN values now handled correctley 
+
+- dataframes.py:
+   - insert_dataframe_into_time_table(): time and day col are checked before import to prevent unexpected behaviour
+   - generate_edge_dataframe():
+      - additional properties can be requested with new param properties
+      - edge-type dataframes are concatenated with aligned union of columns, so missing properties per type stay empty (NaN) instead of failing concat
+      - for column "L": if an edge type does not provide "L", it is created with value 0
+
+Version 90.15.17
+""""""""""""""""
+
+Developed and tested using SIR 3S Version: 90-15-00-24-Upd2
+
+Changes
+~~~~~~~
+
+- dataframes.py:
+   - new function: get_dataframes_from_nominal_diameter_tables()
+   - generate_element_model_data_dataframe() new param: resolve_references: Determine whether references to tables such as Nominal Diameter Tables (Nennweitentabelle) should be resolved or left just as a reference. WORK IN PROGRESS. Works just for Nominal Diameter Tables for Pipes.
+                     
+Version 90.15.16
+""""""""""""""""
+
+Developed and tested using SIR 3S Version: 90-15-00-24-Upd2
+
+Bug Fixes
+~~~~~~~~~
+- dataframes.py: get_dataframe_from_time_table() fixed importing float-valued time tables from SIR Graf
+- dll files now included under src/sir3stoolkit/lib/ in every PyPI release
+
+SIR 3S: 90-15-00-23-Upd2
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+Version 90.15.15
+""""""""""""""""
+
+Developed and tested using SIR 3S Version: 90-15-00-23-Upd2
+
+C# Changes
+~~~~~~~~~~
+- Deleting objects: References to the object are reset/handled.
+
+Bug Fixes
+~~~~~~~~~
+- insert_dataframe_into_time_table():
+   - Now works in addition with s3s.ObjectTypes.ThermalOutputTable" and s3s.ObjectTypes.TemperatureTable
+   - ","-"." formatting issue for milliseconds Fixed
+   - previous entries in table are deleted properly
+
+SIR 3S: 90-15-00-22-Upd2
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+Version 90.15.14
+""""""""""""""""
+
+Developed and tested using SIR 3S Version: 90-15-00-22-Upd2
+
+Changes
+~~~~~~~
+
+- dataframes.py:
+   - new function: add_interior_points_to_start_end_sequence(): turn column of a vectorized propertry in three columns: property_start(float), propertry_end(float), propertry_sequence(Tuple: start, ..., end)
+   - generate_element_dataframe():
+      - uses add_interior_points_to_start_end_sequence() to format vectorized result dataframe
+      - new param: timestamp to determine for which timestamp result values should be obtained
+      - end nodes only attempted to return if they are defined for element type: removes unnessesary warning 
+   - generate_element_result_dataframe():
+      - new param: drop_full_place_holder_columns:  Determine whether columns, that are completley filled with place holder values, get dropped.
+   - deleted generate_pipe_vector_dataframe() and generate_longitudinal_section_vector_dataframes(), since handeling vectorized data is now built into lower level functions, therefore generate_element_dataframe(self.ObjectTypes.Pipe) also returns vectorized results.
+   - generate_longitudinal_section_dataframes(): instead of lists of dataframes a list of size-2-tuples with Supply and Return is returned.
+
+Version 90.15.13
+""""""""""""""""
+
+Changes
+~~~~~~~
+
+- All time table related functions moved from advanced_operations.py (SIR3S_Model_Advanced_Operations) to dataframes.py (SIR3S_Model_Dataframes)
+
+Bug Fixes
+~~~~~~~~~
+
+- dataframes.py: logger(f"{e}"") without except fixed
+
+Version 90.15.12
+""""""""""""""""
+
+Developed and tested using SIR 3S Version: 90-15-00-22-Upd2
+
+C# Changes
+~~~~~~~~~~
+- Fixed Calculation Bug: Could not start Model Calculation: SirCalc Path 'C:\3S Consult\SIR3S-90-15-00-19-Quebec\SirCalc-90-15-02-20_Quebec\SirCalc.exe' not found
+
+Bug Fixes
+~~~~~~~~~
+- insert_dataframe_into_time_table(): internal_ref_time = self.GetTimeStamps()[0][0]
+- dataframes.py: generate_element_dataframe() minor safe guard added
+
+Version 90.15.11
+""""""""""""""""
+
+Developed and tested using SIR 3S Version: 90-15-00-21-Upd2
+
+- advanced_operations.py:
+   - new function:
+      - get_dataframes_from_time_table_type()
+   - changed functions: 
+      - insert_dataframe_into_measured_variable_table() changed to insert_dataframe_into_time_table()
+      - get_dataframe_from_measured_variable_table() changed to get_dataframe_from_time_table()
+
+SIR 3S: 90-15-00-21-Upd2
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+Version 90.15.10
+""""""""""""""""
+
+Developed and tested using SIR 3S Version: 90-15-00-21-Upd2
+
+- advanced_operations.py:
+   - new functions: 
+      - insert_dataframe_into_measured_variable_table()
+      - get_dataframe_from_measured_variable_table()
+
+Version 90.15.9
+"""""""""""""""
+
+Developed and tested using SIR 3S Version: 90-15-00-21-Upd2
+
+- advanced_operations.py: new module with new class SIR3S_Model_Advanced_Operations()
+   - new functions: 
+      - set_group_elements()
+      - add_elements_to_group()
+      - remove_elements_from_group()
+      - add_element_types_to_tk_list()
+      - get_tks_of_group_elements()
+      - get_element_type_from_tk()
+
+SIR 3S: 90-15-00-20-Upd1
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+Version 90.15.8
+"""""""""""""""
+
+Developed and tested using SIR 3S Version: 90-15-00-20-Upd1
+
+- plotting.py  
+   - new function: plot_time_curves()
+
+- Fix: SIR_3S_to_nx_graph(): generate_hydraulic_edge_dataframe() renamed to generate_edge_dataframe() + datatype fix
+
+Version 90.15.7
+"""""""""""""""
+
+Developed and tested using SIR 3S Version: 90-15-00-20-Upd1
+
+Changes
+~~~~~~~
+- dataframes.py: 
+   - metadata renamed to model_data
+   - hydraulic_edge renamed to edge
+   - add_interior_points_to_results_dataframe renamed to add_interior_points_as_multiindex()
+   - new function: add_interior_points_as_flat_cols()
+   - new function: generate_longitudinal_section_vector_dataframes()
+   - new function: generate_pipe_vector_dataframe()
+
+Version 90.15.6
+"""""""""""""""
+
+Developed and tested using SIR 3S Version: 90-15-00-20-Upd1
+
+C# Changes
+~~~~~~~~~~
+
+- Hydraulic Profile related functions added
+
+Improvements
+~~~~~~~~~~~~
+
+- dataframes.py
+   - generate_element_results_dataframe() returns float values instead of object type
+   - new method: add_interior_points_to_results_dataframe() to transform result df into vectorized result df with additonal multi index
+   - new method: generate_element_dataframe() to generate basic dfs with metadata and result values of components
+   - new method: generate_longitudinal_section_dataframes() to generate dfs for longitudinal sections
+
+- plotting.py
+   - plot_pipe_layer() and plot_node_layer() introduced as new functions for network color depictions
+
+Changes
+~~~~~~~
+
+- mantle sub classes renaming:
+   - from Alternative_Models_SIR3S_Model to SIR3S_Model_Alternative_Models
+   - from Dataframes_SIR3S_Model to SIR3S_Model_Dataframes
+   - from Plotting_SIR3S_Model to SIR3S_Model_Plotting
+
+SIR 3S: 90-15-00-19
+^^^^^^^^^^^^^^^^^^^
+
+Version 90.15.5
+"""""""""""""""
+
+Developed and tested using SIR 3S Version: 90-15-00-19
+
+C# Changes
+~~~~~~~~~~
+
+- Model Repair Class added
+
+Bug Fixes
+~~~~~~~~~~
+
+- dataframes.py: 
+   - logger.error(f"[metadata] Error occured while filtering with filter_container_tks.") no longer triggers unwarranted
+   - logger.info(f"[metadata] {len(used_cols)} non-empty end node columns were created.") no longer triggers unwarranted
+
+Improvements
+~~~~~~~~~~~~
+
+- alternative_models.py: 
+   - SIR_3S_to_nx_graph() now created minimal graph with additional properties
+   - add_properties_to_graph() new function for user defined addition of properties (metadata and result) to nx Graph
+- dataframes.py:
+   - generate_element_metadata_dataframe(geometry=True) returns gpd.GeoDataFrame instead of pd.DataFrame
+   - generate_element_metadata_dataframe() and generate_element_result_dataframe() now have paramter tks to give a list which tks of the element type to include.
+   - new function get_EPSG() returns tuple of SRID, SRID2, SRIDSTRING for crs
+   - new function generate_hydraulic_edge_dataframe() returns a pandas dataframe containing all hydraulic edges of a model (eg. pipes, valves, compressors, etc.)
+
+Version 90.15.4
+"""""""""""""""
+
+Developed and tested using SIR 3S Version: 90-15-00-19
+- Implementation of Higher level functions (mantle):
+   - alternative_models.py
+      - nx graphs
+      - pandapipes
+   - dataframes.py
+      - metadata dfs 
+      - result dfs
+   - mantle.py: collector for above modules
+- Mantle Import fixed: mantle dependencies no longer needed, when importing sir3stoolkit
+
+SIR 3S: 90-15-00-15
+^^^^^^^^^^^^^^^^^^^
+
+Version 90.15.3 (Initial Release)
+"""""""""""""""""""""""""""""""""
+
+Developed and tested using SIR 3S Version: 90-15-00-15
+
+- First official public release of the SIR 3S Toolkit
+- Introduced core wrapping API for SIR 3S object model (nodes, pipes, etc.)
+- Compatible with SIR 3S 90-15 Quebec (requires Sir3S_Toolkit.dll)
+- Included example workflows and basic simulation access

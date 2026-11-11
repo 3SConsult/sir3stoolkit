@@ -1,0 +1,422 @@
+For Developers
+==============
+
+Welcome to the Developers page! This section provides resources and instructions for developers who want to contribute to Sir3SToolkit-Documentation. 
+
+- **Toolkit Contact**: If you encounter an issue with the Toolkit that should be fixed or have an idea for enhancement, feel free to create an new entry on our `GitHub forum <https://github.com/3SConsult/sir3stoolkit/issues>`_. Please include the Toolkit and SirGraf version you are using and, if available, the Jupyter Notebook you are working with.
+
+- **Documentation Contact**: For additional information regarding this documentation, and contribution inquiries, please contact `sir3stoolkit@3sconsult.de <mailto:sir3stoolkit@3sconsult.de>`_.
+
+- **GitHub Repository:** `GitHub Repository <https://github.com/3SConsult/sir3stoolkit>`_.
+
+- **PyPI Page:** `PyPI Page <https://pypi.org/project/sir3stoolkit/>`_.
+
+Editable Install Local Configuration
+------------------------------------
+
+When working with an editable install (``pip install -e .``), avoid editing the shared file ``src/sir3stoolkit/config.txt`` for your local SirGraf path. Instead, use the local override file ``src/sir3stoolkit/config.local.txt``.
+
+- ``config.local.txt`` is read before ``config.txt`` by ``Initialize_Toolkit()``.
+- ``config.local.txt`` is ignored by Git (see ``.gitignore``), so each developer can keep an individual local path without creating merge conflicts.
+
+Create ``src/sir3stoolkit/config.local.txt`` with one line containing your local SirGraf directory, for example:
+
+.. code-block:: text
+
+   C:/3S/SIR 3S/SirGraf-90-15-00-24_Quebec-Upd2
+
+Setting Up Git on Your Computer
+-------------------------------
+
+Follow these steps to install and configure Git:
+
+1. **Download Git:** Visit the `official Git website <https://git-scm.com/downloads>`_ and download the version that is compatible with your operating system.
+
+2. **Install Git:** Launch the downloaded installer and follow the setup wizard to complete the installation.
+
+3. **Configure Your GitHub Username:** Open your terminal or command prompt and enter the following command, replacing "Your Name" with your actual GitHub username:
+
+   .. code-block:: bash
+
+      git config --global user.name "Your Name"
+
+4. **Configure Your GitHub Email:** Similarly, set your GitHub email using the following command, replacing ``your.email@example.com`` with your actual email:
+
+   .. code-block:: bash
+
+      git config --global user.email "your.email@example.com"
+
+.. note::
+
+   If you're pushing your first commit to GitHub, you might be prompted to authenticate your GitHub account. This usually involves entering your GitHub account credentials in a browser dialogue window that pops up. This is a standard security measure to ensure you have the necessary permissions to push to the repository.
+
+Working with GitHub
+-------------------
+
+.. _cloning-github-label: 
+
+Cloning the GitHub Repository
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To clone a GitHub repository to your local folder, follow these steps:
+
+1. **Navigate to the Parent Directory of Your Project:** Use the ``cd`` command followed by the path to the parent directory of your project (This is the directory that should contain your project folder).
+
+   .. code-block:: bash
+
+      cd "C:\Users\User\3S"
+
+2. **Clone the GitHub Repository:** Use the ``git clone`` command followed by the URL of the repository.
+
+   .. code-block:: bash
+
+      git clone https://github.com/3SConsult/sir3stoolkit
+
+
+General GitHub Version Control Procedure
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+These instructions lay out the different steps of the GitHub procedure around contributing to SIR 3S Toolkit. Especially due to the GitHub repository currentley sitting on only one branch (main), following these basic rules is crucial. As soon as SIR 3S Toolkit has a higher amount of frequent contributors, a more suitable system with multiple branches will be implemented.
+
+.. note::
+    Before following each step for the first time, read their instructions fully including notes like this one. If an unexpected problem occurs, you can search the :ref:`command-collection-label` for a solution.
+
+Follow these steps every time you contribute to SIR 3S Toolkit:
+
+1. **Get the Latest Version from GitHub**: :ref:`get-latest-version-label`
+
+2. **Edit SIR 3S Toolkit**: Now you can edit the entire SIR 3S Toolkit project locally. Please ensure, that nobody else is working on the project simultaneously in the same sourcefiles, because this could cause problems, when trying to commit.
+
+3. **Commit Your Changes to the GitHub Repository**: :ref:`commit-changes-label`
+
+.. _get-latest-version-label:
+
+Get the Latest Version from GitHub
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To fetch the latest changes from the origin and merge them into your current branch, follow these steps:
+
+1. **Navigate to project directory:** Use the ``cd`` command followed by the path to the directory of your project (This directory should contain an invisible .git folder).
+
+   .. code-block:: bash
+
+      cd "C:\Users\User\sir3stoolkit"
+      
+2. **Pull the latest changes from the origin**: Use the ``git pull`` command. 
+
+   .. code-block:: bash
+
+      git pull origin master
+        
+   For a more detailed updating process, follow steps 2 and 3 instead.
+        
+2. **Fetch the latest changes from the origin:** Use the ``git fetch origin`` command.
+
+   .. code-block:: bash
+
+      git fetch origin
+
+3. **Merge the fetched changes into your current branch:** Use the ``git merge origin/master`` command.
+
+   .. code-block:: bash
+
+      git merge origin/master
+
+.. note::
+    If you made local changes to files that were also edited by a remote commit, make a local copy of your project directory and use ``git reset --hard origin/master``. Afterwards you can paste you local changes back in. Just make sure that the remote changes to these files were not important or manually include them in your files.
+
+.. code-block:: bash
+
+   git reset --hard origin/master  
+
+.. _commit-changes-label:
+
+Commit Your Changes to the GitHub Repository
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To commit your changes to the GitHub repository, follow these steps:
+
+1. **Navigate to project directory:** Use the ``cd`` command followed by the path to the directory of your project (This directory should contain an invisible .git folder).
+
+   .. code-block:: bash
+
+      cd "C:\Users\User\3S\sir3stoolkti"
+
+2. **Add files to the staging area:** Use the ``git add`` command followed by the name of the file. Use ``git add .`` to add all files.
+
+   .. code-block:: bash
+
+      git add .
+
+3. **Create a new commit with a descriptive message:** Use the ``git commit -m "commit_message"`` command.
+
+   .. code-block:: bash
+
+      git commit -m "commit_message"
+
+4. **Push your commit to the GitHub Repository:** Use the ``git push origin master`` command.
+
+   .. code-block:: bash
+
+      git push origin master
+
+.. .. note::
+    If you want to push multiple commits back to back, keep in mind that the SIR 3S Toolkit GitHub repository uses :ref:`github-workflow-label` that might require you to fetch after committing to certain directories. Because workflows can automatically author commits, so fetching ensures you have the latest changes. Alternatively you can check the :ref:`current-workflow-label` utilised by the GitHub Repository and whether the might be triggered by your commit.
+
+.. _command-collection-label:
+
+Collection of Useful Git Commands
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To discard all local changes and set your local HEAD to the master, use:
+
+   .. code-block:: bash
+
+      git reset --hard origin/master
+
+To discard all remote changes and force push local HEAD to the master, use:
+
+   .. code-block:: bash
+
+      git push origin master --force
+           
+To uncommit commited but not yet pushed changes of the previous commit without changing local files (move HEAD pointer back by one commit), use:
+
+   .. code-block:: bash
+
+      git reset --soft HEAD~1
+
+To revert all changes caused by a commit, use:
+
+   .. code-block:: bash
+
+      git revert commitID
+      
+To load a branch locally, use:
+
+   .. code-block:: bash
+
+      git checkout <branchname>
+
+.. _github-workflow-label:
+
+GitHub Workflows
+~~~~~~~~~~~~~~~~
+
+Our GitHub repository uses workflows to facilitate certain processes by automating tasks. Workflows are defined using YAML files and are stored in the `.github/workflows` directory of our repository.
+
+We currently use the following workflows:
+
+.. list-table:: 
+   :header-rows: 1
+
+   * - **Name**
+     - **Triggers**
+     - **Tasks**
+   * - ``.github/workflows/docs-dev.yml``
+     - Push to ``main``
+     - Builds the Sphinx documentation (including API docs via ``sphinx-apidoc``) of the current development state and deploys it to the
+       ``dev/`` folder of the ``gh-pages`` branch: https://3sconsult.github.io/sir3stoolkit/dev/ (with a "Development version" banner).
+   * - ``.github/workflows/release.yml``
+     - Push of a tag ``v<version>``, or a manual run with an existing tag
+     - Checks that the tag matches the version in ``pyproject.toml`` and that its commit is on ``main``, builds the package and publishes it to
+       **TestPyPI** and **PyPI** using ``twine``, then builds the documentation from the tag and deploys it to the root of the ``gh-pages``
+       branch: https://3sconsult.github.io/sir3stoolkit/ (with a "Released version" banner; ``dev/`` is kept). A manual run only rebuilds the
+       documentation, it does not publish.
+   * - ``.github/workflows/test-sync-agents-md.yml``
+     - Pull request changing ``AGENTS.md`` or the ``sync-agents-md`` action, or a manual run
+     - Tests that the ``sync-agents-md`` action copies the repository-root ``AGENTS.md`` into the package.
+
+.. _release-label:
+
+Releasing a New Version
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Pushes to ``main`` only update the development documentation. A release - PyPI upload and release documentation - is made by tagging a
+commit on ``main`` with its version:
+
+1. Set the new version in ``pyproject.toml`` (e.g. ``version = "90.15.27"``), update ``releases.rst``, commit and push to ``main``.
+2. Tag that commit and push the tag:
+
+   .. code-block:: bash
+
+      git tag v90.15.27
+      git push origin v90.15.27
+
+The ``release.yml`` workflow then publishes to PyPI and deploys the release documentation. If the tag does not match the version in
+``pyproject.toml``, nothing is published.
+
+Anonymization Setup for Pre-Commit Hook
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This guide explains how to set up the anonymization script as a Git pre-commit hook. It ensures that sensitive names in Jupyter notebooks are replaced before committing to the repository.
+
+Step 1: Locate the Pre-Commit Hook
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Navigate to the Git hooks directory of your local repository:
+
+::
+
+    <your_repo_root>/.git/hooks/
+
+You will find a file named ``pre-commit.sample``. Rename it to ``pre-commit`` (without any file extension). Other contents of the file can be deleted, if not needed by the user for other purposes:
+
+::
+
+    mv pre-commit.sample pre-commit
+
+Step 2: Edit the Pre-Commit Hook
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Open the ``pre-commit`` file in a text editor and replace its contents with the following:
+
+::
+
+         #!/bin/sh
+
+         staged_notebooks="$(git diff --cached --name-only --diff-filter=ACMR -- '*.ipynb')"
+
+         echo "🔒 Running anonymization script..."
+         "C:/Users/<your_username>/AppData/Local/anaconda3/python.exe" "docs/source/anonymize_notebooks.py"
+
+         if [ $? -ne 0 ]; then
+            echo "❌ Anonymization failed. Commit aborted."
+            exit 1
+         fi
+
+         # Re-stage only notebooks that were already staged before running this hook
+         echo "$staged_notebooks" | grep '\.ipynb$' | while read -r file; do
+            [ -z "$file" ] && continue
+            git add "$file"
+         done
+
+
+Replace ``<your_username>`` with your actual Windows username or adjust the Python path to match your local installation.
+
+Only notebooks that were staged before ``git commit`` are re-staged by this hook. Unstaged notebook changes stay unstaged.
+
+Step 3: Create the Names File
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+In the same directory as ``anonymize_notebooks.py`` (``docs/source/``), create a file named ``names_to_anonymize.txt``. Add one name per line that should be anonymized:
+
+::
+
+    Müller
+    Schmidt
+
+Step 4: Verify the Setup
+^^^^^^^^^^^^^^^^^^^^^^^^
+Make a small change in a Jupyter notebook that contains one of the names listed. Then run:
+
+::
+
+    git add .
+    git commit -m "Test anonymization"
+
+You should see output indicating that the anonymization script ran and which names were replaced.
+
+Troubleshooting
+^^^^^^^^^^^^^^^
+- If you see an error like ``Python not found``, verify that the Python path in the hook is correct.
+- Ensure that ``names_to_anonymize.txt`` exists and is in the correct directory.
+- The hook must be named ``pre-commit`` with no file extension.
+
+
+.. _running-tests-label:
+
+Running Test Suites
+-------------------
+
+The repository uses ``pytest`` for automated tests.
+
+Before running tests, navigate to the repository root:
+
+.. code-block:: bash
+
+   cd "C:\Users\User\3S\sir3stoolkit"
+
+Run all default tests (unit/integration tests configured in ``test/``):
+
+.. code-block:: bash
+
+   pytest
+
+Run only the unit tests:
+
+.. code-block:: bash
+
+   pytest test/unit -q
+
+Run a specific test file:
+
+.. code-block:: bash
+
+   pytest test/unit/test_core_wrapper_init.py -q
+
+Notebook execution tests are implemented in
+``test/notebooks/test_run_tutorial_notebooks.py`` and are **opt-in**.
+By default, they are skipped to keep regular test runs fast and stable.
+
+To run the full suite including notebook tests:
+
+.. code-block:: bash
+
+   $env:SIR3S_RUN_NOTEBOOKS="1"; pytest -vv -rA # -s for notebook output # powershell
+
+
+Generating the Documentation
+----------------------------
+
+
+The Toolkit documentation is edited in sir3stoolkit/docs/source on the main branch.
+
+If you want to edit the documentation yourself, you have to install sphinx and sphinx related python packages.
+
+You find all necssary packages in the dev and sphinx optional project dependencies in `pyproject.toml<https://github.com/3SConsult/sir3stoolkit/blob/main/pyproject.toml>`
+
+   .. code-block:: bash
+
+      pip install sphinx nbsphinx sphinx_copybutton sphinx-rtd-theme sphinx-togglebutton
+
+To generate documentation, follow these steps:
+
+1. **Edit the documentation:** Make your changes on the rst files in the sir3stoolkit/docs/source.
+
+.. note:: Our GitHub Workflow sphinx.yaml automatically builds and deploys the documentation. If you do not need to view a local build of your changes, you can jump to step 4.
+
+2. **Navigate to the sir3stoolkit directory:** Use the ``cd`` command.
+
+   .. code-block:: bash
+
+      cd "C:\Users\User\3S\sir3stoolkit"
+
+3. **Make an HTML build:** Use ``python3 -m sphinx.cmd.build -b html . /_build/html`` (for python env)  or ``.\make.bat html`` (for conda env (recommended to use conda shell)).
+
+   .. code-block:: bash
+
+      python3 -m sphinx.cmd.build -b html . /_build/html
+   
+   .. code-block:: bash
+
+      .\make.bat html
+
+
+4. **Commit the changes.** Commit all files from sir3stoolkit to GitHub (:ref:`commit-changes-label`).
+
+The new documentation can be found at `https://3sconsult.github.io/sir3stoolkit/index.html <https://3sconsult.github.io/sir3stoolkit/index.html>`_
+
+Release a New Version to PyPI
+-----------------------------
+
+1. **Run tests:** Before releasing a new version, ensure that all tests pass. Run the test suite using ``pytest`` as described in :ref:`running-tests-label`.
+
+2. **Determine new version number:** The Toolkit version numbers are formatted as 90.XX.YY with XX being the SIR 3S version number (15 for Quebec), which rarely changes, and YY being the Toolkit version number. The Toolkit version number YY is incremented with every new release of the Toolkit. For example, if the current version is 90.15.23, the next version would be 90.15.24.
+
+3. **Add Changed dll:** If changes were made to the `Sir3S_Toolkit.dll`, add a new folder named the new version number in `sir3stoolkit/src/sir3stoolkit/lib` and insert the new dll.
+
+4. **Document Changes:** In `sir3stoolkit/docs/source/releases.rst` add a new row to the release table with the new version number, corresponding SIR 3S version number, release date, and whether the `Sir3S_Toolkit.dll` was changed. Also below under the corresponding SIR 3S version number insert a new section and describe the changes made in detail.
+
+5. **Update AGENTS.md if a structural change happened:** If this release adds/renames/removes a public function, adds a new tutorial, or changes the core/mantle module layout, update `sir3stoolkit/AGENTS.md` at the repo root to match (e.g. its Tutorial index entries, the function lists there, the Architecture section). Not needed for a release with no such changes (bug fixes, internal-only changes, etc.).
+
+6. **Update Version Number:** In `sir3stoolkit/pyproject.toml` update the version number
+
+7. **Commit to GitHub**: With the version number in `sir3stoolkit/pyproject.toml` changed, the commit will trigger an automatic workflow, that will release the new version to PyPI. For convenience use the version number as commit message.
