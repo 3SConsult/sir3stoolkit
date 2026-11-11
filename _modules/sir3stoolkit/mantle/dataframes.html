@@ -98,14 +98,10 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">copy</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">lru_cache</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Set</span>
@@ -131,13 +127,6 @@
 
 <span class="c1"># API loops (GetResultfortimestamp(), name/end-node lookups) with at least this many calls log their progress.</span>
 <span class="n">_API_PROGRESS_LOG_MIN_CALLS</span> <span class="o">=</span> <span class="mi">1000</span>
-
-
-<span class="nd">@lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">_load_object_type_reference</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""The object type reference shipped with the package, see get_object_type_reference()."""</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">with_name</span><span class="p">(</span><span class="s2">"object_type_reference.json"</span><span class="p">),</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="SIR3S_Model_Dataframes">
@@ -350,7 +339,7 @@
                         <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">","</span><span class="p">,</span> <span class="s2">"."</span><span class="p">)))</span>
                     <span class="k">else</span><span class="p">:</span>
                         <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
-                <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+                <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">s_str</span>
 
@@ -483,38 +472,37 @@
         <span class="k">return</span> <span class="n">df</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">_add_name_and_end_node_levels</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">label_by_tk</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">],</span> <span class="n">props</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_add_name_and_end_node_levels</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">label_by_tk</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">props</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">"""</span>
-<span class="sd">        (tk, property[, interior points]) columns → (tk, name, end_nodes, property[, interior points]),</span>
-<span class="sd">        or with label_by_tk=None just rebuilt as (tk, property[, interior points]).</span>
+<span class="sd">        (tk, property[, interior points]) columns → (tk, name, end_nodes, property[, interior points]).</span>
 
 <span class="sd">        The levels are built in column order (tk, name, end_nodes as they appear, property in the order of</span>
 <span class="sd">        props, interior points ascending) instead of alphabetically, so the column index stays lexsorted</span>
 <span class="sd">        for the tk-major / property-minor column order and selecting e.g. df.loc[ts, (tk, "PVEC")] (after</span>
 <span class="sd">        dropping name/end_nodes) doesn't raise pandas' "indexing past lexsort depth" PerformanceWarning.</span>
-<span class="sd">        Name/end_nodes are looked up once per element and mapped to the columns via the tk codes (a</span>
-<span class="sd">        model can have millions of columns but only one label per element).</span>
 <span class="sd">        """</span>
-        <span class="n">tk_codes</span><span class="p">,</span> <span class="n">tk_uniques</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">factorize</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">get_level_values</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">use_na_sentinel</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-        <span class="n">levels</span><span class="p">,</span> <span class="n">codes</span><span class="p">,</span> <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">(</span><span class="n">tk_uniques</span><span class="p">)],</span> <span class="p">[</span><span class="n">tk_codes</span><span class="p">],</span> <span class="p">[</span><span class="s2">"tk"</span><span class="p">]</span>
-        <span class="k">if</span> <span class="n">label_by_tk</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="s2">"name"</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">"end_nodes"</span><span class="p">)):</span>
-                <span class="n">label_codes</span><span class="p">,</span> <span class="n">label_uniques</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">factorize</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">([</span><span class="n">label_by_tk</span><span class="p">[</span><span class="n">tk</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="k">for</span> <span class="n">tk</span> <span class="ow">in</span> <span class="n">tk_uniques</span><span class="p">]),</span>
-                                                          <span class="n">use_na_sentinel</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-                <span class="n">levels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">(</span><span class="n">label_uniques</span><span class="p">))</span>
-                <span class="n">codes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">label_codes</span><span class="p">[</span><span class="n">tk_codes</span><span class="p">])</span>
-                <span class="n">names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
-        <span class="n">prop_values</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">get_level_values</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-        <span class="n">present</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">prop_values</span><span class="p">))</span>
-        <span class="n">order</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">dict</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">(([</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">props</span> <span class="k">if</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">present</span><span class="p">]</span> <span class="k">if</span> <span class="n">props</span> <span class="k">else</span> <span class="p">[])</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">prop_values</span><span class="p">))))</span>
-        <span class="n">levels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">(</span><span class="n">order</span><span class="p">))</span>
-        <span class="n">codes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">levels</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">get_indexer</span><span class="p">(</span><span class="n">prop_values</span><span class="p">))</span>
-        <span class="n">names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">"property"</span><span class="p">)</span>
+        <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"tk"</span><span class="p">,</span> <span class="s2">"name"</span><span class="p">,</span> <span class="s2">"end_nodes"</span><span class="p">,</span> <span class="s2">"property"</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">nlevels</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
-            <span class="n">point_values</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">get_level_values</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-            <span class="n">levels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">point_values</span><span class="p">))))</span>
-            <span class="n">codes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">levels</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">get_indexer</span><span class="p">(</span><span class="n">point_values</span><span class="p">))</span>
             <span class="n">names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">"interior points"</span><span class="p">)</span>
+        <span class="n">tk_values</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">get_level_values</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">prop_values</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">get_level_values</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">arrays</span> <span class="o">=</span> <span class="p">[</span><span class="n">tk_values</span><span class="p">,</span>
+                  <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">([</span><span class="n">label_by_tk</span><span class="p">[</span><span class="n">tk</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">tk</span> <span class="ow">in</span> <span class="n">tk_values</span><span class="p">]),</span>
+                  <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">([</span><span class="n">label_by_tk</span><span class="p">[</span><span class="n">tk</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">tk</span> <span class="ow">in</span> <span class="n">tk_values</span><span class="p">]),</span>
+                  <span class="n">prop_values</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">nlevels</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">arrays</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">get_level_values</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+        <span class="n">levels</span><span class="p">,</span> <span class="n">codes</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">values</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">arrays</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">3</span> <span class="ow">and</span> <span class="n">props</span><span class="p">:</span>
+                <span class="n">order</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">dict</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">([</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">props</span> <span class="k">if</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">values</span><span class="p">)]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">values</span><span class="p">))))</span>
+                <span class="n">level</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">(</span><span class="n">order</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+                <span class="n">level</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">values</span><span class="p">)))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">level</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">values</span><span class="p">))</span>
+            <span class="n">levels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">level</span><span class="p">)</span>
+            <span class="n">codes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">level</span><span class="o">.</span><span class="n">get_indexer</span><span class="p">(</span><span class="n">values</span><span class="p">))</span>
         <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">MultiIndex</span><span class="p">(</span><span class="n">levels</span><span class="o">=</span><span class="n">levels</span><span class="p">,</span> <span class="n">codes</span><span class="o">=</span><span class="n">codes</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="n">names</span><span class="p">,</span> <span class="n">verify_integrity</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">df</span>
 
@@ -531,7 +519,6 @@
         <span class="n">bulk</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">vec_format</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"str"</span><span class="p">,</span>
         <span class="n">output_factor</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">include_name_and_end_nodes</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
 
 <span class="w">        </span><span class="sd">"""</span>
@@ -598,18 +585,11 @@
 <span class="sd">                        calculation, so values can be assigned to the wrong elements if the network</span>
 <span class="sd">                        changed in between).</span>
 <span class="sd">        :type output_factor: int, optional</span>
-<span class="sd">        :param include_name_and_end_nodes: If True (default), the column MultiIndex has the levels name</span>
-<span class="sd">                        and end_nodes, looked up via the Toolkit API (two calls per element - for models</span>
-<span class="sd">                        with many elements this can take longer than reading the results with bulk=True).</span>
-<span class="sd">                        If False, these levels are left out (columns: tk, property[, interior points]) and</span>
-<span class="sd">                        no lookups are made; get names/end nodes from</span>
-<span class="sd">                        generate_element_model_data_dataframe() instead if needed.</span>
-<span class="sd">        :type include_name_and_end_nodes: bool, optional</span>
 
 <span class="sd">        :return: DataFrame with one row per timestamp and MultiIndex columns:</span>
 <span class="sd">                - Level 0: tk (device ID)</span>
-<span class="sd">                - Level 1: name (device name) - only for include_name_and_end_nodes=True</span>
-<span class="sd">                - Level 2: end_nodes (tuple of connected node tks as string) - only for include_name_and_end_nodes=True</span>
+<span class="sd">                - Level 1: name (device name)</span>
+<span class="sd">                - Level 2: end_nodes (tuple of connected node tks as string)</span>
 <span class="sd">                - Level 3: property (result name)</span>
 <span class="sd">                - Level 4: interior points (only for vec_format="multiindex")</span>
 <span class="sd">                Data types: float32 for numeric values (the precision SIR 3S stores results in), str for vectorized data (vec_format="str") and literal strings.</span>
@@ -667,6 +647,7 @@
             <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">"[results] Error determining result properties: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
 
+        <span class="n">end_nodes_available</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__is_get_endnodes_applicable</span><span class="p">(</span><span class="n">element_type</span><span class="o">=</span><span class="n">element_type</span><span class="p">)</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"[results] </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">ts_labels</span><span class="p">)</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2"> timestamp(s), </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">tks</span><span class="p">)</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2"> element(s), </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">result_props</span><span class="p">)</span><span class="si">}</span><span class="s2"> "</span>
                     <span class="sa">f</span><span class="s2">"propert</span><span class="si">{</span><span class="s1">'y'</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">result_props</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">'ies'</span><span class="si">}</span><span class="s2"> resolved (</span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t_phase</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> s)."</span><span class="p">)</span>
 
@@ -753,10 +734,7 @@
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"[results] DataFrame assembled (</span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t_phase</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> s)."</span><span class="p">)</span>
 
         <span class="c1"># --- Add Name and End Nodes to column MultiIndex ---</span>
-        <span class="n">label_by_tk</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="k">if</span> <span class="n">include_name_and_end_nodes</span><span class="p">:</span>
-            <span class="n">end_nodes_available</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__is_get_endnodes_applicable</span><span class="p">(</span><span class="n">element_type</span><span class="o">=</span><span class="n">element_type</span><span class="p">)</span>
-            <span class="n">label_by_tk</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result_column_labels</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">get_level_values</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">unique</span><span class="p">(),</span> <span class="n">end_nodes_available</span><span class="p">)</span>
+        <span class="n">label_by_tk</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result_column_labels</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">get_level_values</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">unique</span><span class="p">(),</span> <span class="n">end_nodes_available</span><span class="p">)</span>
         <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_add_name_and_end_node_levels</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">label_by_tk</span><span class="p">,</span> <span class="n">result_props</span><span class="p">)</span>
 
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"[results] Done. Shape: </span><span class="si">{</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t_start</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> s in total)"</span><span class="p">)</span>
@@ -856,7 +834,6 @@
 <span class="sd">        Generates a comprehensive DataFrame containing model_data and static result values for all requested elements of the given type. Result values are written in the df as tuple of floats (or tuple (time) of tuple (interior point) of floats for pipe interior points) with each entry corresponding to a simulations timestamp. </span>
 <span class="sd">        Geometry and end-node tks are always included. All model_data and result values (self.GetResultProperties_from_elementType(onlySelectedVectors=False)) for are included.</span>
 <span class="sd">        The tks of end nodes are included (fkKI, fkKK). Geometry information is also included.</span>
-<span class="sd">        If you want to include non-static timestamps, explicitly provide them via the `timestamps` parameter.</span>
 
 <span class="sd">        :param element_type: The element type (e.g., self.ObjectTypes.Node, self.ObjectTypes.Pipe).</span>
 <span class="sd">        :type element_type: Enum</span>
@@ -904,7 +881,6 @@
                                                                         <span class="p">,</span><span class="n">place_holder_value</span><span class="o">=</span><span class="n">place_holder_value</span>
                                                                         <span class="p">,</span><span class="n">bulk</span><span class="o">=</span><span class="n">bulk</span>
                                                                         <span class="p">,</span><span class="n">vec_format</span><span class="o">=</span><span class="s2">"multiindex"</span>
-                                                                        <span class="p">,</span><span class="n">include_name_and_end_nodes</span><span class="o">=</span><span class="kc">False</span>  <span class="c1"># merged on tk only</span>
             <span class="p">)</span>
             <span class="k">if</span> <span class="n">df_results</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
                 <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">"[generate_element_dataframe] Obtained results dataframe is empty."</span><span class="p">)</span>
@@ -1375,7 +1351,6 @@
                         <span class="n">tks</span><span class="o">=</span><span class="n">tks_to_use</span><span class="p">,</span>
                         <span class="n">place_holder_value</span><span class="o">=</span><span class="n">place_holder_value</span><span class="p">,</span>
                         <span class="n">vec_format</span><span class="o">=</span><span class="s2">"multiindex"</span><span class="p">,</span>
-                        <span class="n">include_name_and_end_nodes</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>  <span class="c1"># merged on tk only</span>
                     <span class="p">)</span>
                     <span class="k">if</span> <span class="n">df_results</span><span class="o">.</span><span class="n">empty</span> <span class="ow">or</span> <span class="n">df_results</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                         <span class="n">df</span> <span class="o">=</span> <span class="n">df_model</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -1475,40 +1450,6 @@
         <span class="k">return</span> <span class="n">df</span></div>
 
 
-<div class="viewcode-block" id="SIR3S_Model_Dataframes.get_object_type_reference">
-<a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.get_object_type_reference">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">get_object_type_reference</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element_type</span><span class="p">:</span> <span class="n">Enum</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""</span>
-<span class="sd">        Look up an element type in the object type reference shipped with the package - the same content as the</span>
-<span class="sd">        "Object Types, Properties, and Result Value Types" section of the API documentation. Needs no open model.</span>
-<span class="sd">        The reference's notice is logged on every call.</span>
-
-<span class="sd">        :param element_type: Element type, e.g. self.ObjectTypes.Pipe.</span>
-<span class="sd">        :type element_type: Enum</span>
-<span class="sd">        :return: Dict with</span>
-<span class="sd">                - table_name: table code (e.g. "ROHR"), None if the element type has none</span>
-<span class="sd">                - category: object category, e.g. "connecting_element", "bypass_element", "table",</span>
-<span class="sd">                  "signal_model_element", or "unknown" where it wasn't determined</span>
-<span class="sd">                - create_with: toolkit methods shown to create a real instance of the element type</span>
-<span class="sd">                  (e.g. ["SIR3S_Model.AddNewPipe"], ["SIR3S_View.AddNewHouse"]); [] if none is known</span>
-<span class="sd">                - row_type (tables) / table_type (table rows): the matching row/table element type</span>
-<span class="sd">                - insertable_in: network types the element type can be inserted into</span>
-<span class="sd">                - properties: property name -&gt; value type (e.g. {"DN": "String", ...})</span>
-<span class="sd">                - result_properties: result property name -&gt; {"description", "unit"} (German, None where unknown)</span>
-<span class="sd">                Empty dict if the element type isn't in the reference.</span>
-<span class="sd">        :rtype: dict</span>
-<span class="sd">        :description: A snapshot of SIR 3S 90-15. For the installed SIR 3S version, GetPropertiesofElementType()</span>
-<span class="sd">                and GetResultProperties_from_elementType() remain authoritative.</span>
-<span class="sd">        """</span>
-        <span class="n">reference</span> <span class="o">=</span> <span class="n">_load_object_type_reference</span><span class="p">()</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"[object type reference] "</span> <span class="o">+</span> <span class="s2">" "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">reference</span><span class="p">[</span><span class="s2">"notice"</span><span class="p">]))</span>
-        <span class="n">name</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">element_type</span><span class="p">,</span> <span class="s2">"name"</span><span class="p">,</span> <span class="n">element_type</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">reference</span><span class="p">[</span><span class="s2">"object_types"</span><span class="p">]:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">"[object type reference] element type </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2"> is not in the object type reference."</span><span class="p">)</span>
-            <span class="k">return</span> <span class="p">{}</span>
-        <span class="k">return</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">reference</span><span class="p">[</span><span class="s2">"object_types"</span><span class="p">][</span><span class="n">name</span><span class="p">])</span></div>
-
-
 <div class="viewcode-block" id="SIR3S_Model_Dataframes.merge_model_data_and_results">
 <a class="viewcode-back" href="../../../references/sir3stoolkit.mantle.html#sir3stoolkit.mantle.dataframes.SIR3S_Model_Dataframes.merge_model_data_and_results">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">merge_model_data_and_results</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df_model_data</span><span class="p">,</span> <span class="n">df_results</span><span class="p">,</span> <span class="n">place_holder_value</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">99999.0</span><span class="p">):</span>
@@ -1523,9 +1464,7 @@
 <span class="sd">                - vec_format="str" results, prepared with add_interior_points_to_start_end_sequence()</span>
 <span class="sd">                  and convert_rows_to_single_tuple_row() (one row).</span>
 <span class="sd">                Either way, every result property becomes a tuple over the timestamps, and interior-point</span>
-<span class="sd">                (VEC) properties become &lt;prop&gt;_start, &lt;prop&gt;_end and &lt;prop&gt;_sequence. Results with or</span>
-<span class="sd">                without the name/end_nodes column levels (include_name_and_end_nodes) are accepted; df_results</span>
-<span class="sd">                itself isn't modified.</span>
+<span class="sd">                (VEC) properties become &lt;prop&gt;_start, &lt;prop&gt;_end and &lt;prop&gt;_sequence.</span>
 <span class="sd">        :type df_results: pd.DataFrame</span>
 <span class="sd">        :param place_holder_value: Only for vec_format="multiindex" results: the place_holder_value they were</span>
 <span class="sd">                generated with (timestamps where an interior-point property is missing give None / ()).</span>
@@ -1546,12 +1485,7 @@
                 <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span> <span class="s2">"[merge] Aborting merge: df_results contains multiple timestamps.Please provide a single timestamp."</span><span class="p">)</span>
                 <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
 
-            <span class="c1"># name/end_nodes levels only exist with include_name_and_end_nodes=True; shallow copy so the</span>
-            <span class="c1"># caller's DataFrame keeps its columns</span>
-            <span class="n">df_results</span> <span class="o">=</span> <span class="n">df_results</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">deep</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-            <span class="n">drop_levels</span> <span class="o">=</span> <span class="p">[</span><span class="n">level</span> <span class="k">for</span> <span class="n">level</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"name"</span><span class="p">,</span> <span class="s2">"end_nodes"</span><span class="p">)</span> <span class="k">if</span> <span class="n">level</span> <span class="ow">in</span> <span class="p">(</span><span class="n">df_results</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">names</span> <span class="ow">or</span> <span class="p">[])]</span>
-            <span class="k">if</span> <span class="n">drop_levels</span><span class="p">:</span>
-                <span class="n">df_results</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">df_results</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">droplevel</span><span class="p">(</span><span class="n">drop_levels</span><span class="p">)</span>
+            <span class="n">df_results</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">df_results</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">droplevel</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
             <span class="n">df_results</span> <span class="o">=</span> <span class="n">df_results</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">unstack</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
             <span class="n">df_results</span> <span class="o">=</span> <span class="n">df_results</span><span class="o">.</span><span class="n">droplevel</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
             <span class="n">df</span> <span class="o">=</span> <span class="n">df_model_data</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">on</span><span class="o">=</span><span class="s2">"tk"</span><span class="p">,</span>
@@ -1910,6 +1844,7 @@
         <span class="n">model_data_props_new_with_suffix</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="o">+</span> <span class="n">tag</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">model_data_props_new</span><span class="p">]</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"[update] Resolved &amp; validated given properties_new"</span><span class="p">)</span>
 
+        <span class="c1"># TODO</span>
         <span class="c1"># --- Set model_data values in model ---</span>
         <span class="k">for</span> <span class="n">tk</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTksofElementType</span><span class="p">(</span><span class="n">ElementType</span><span class="o">=</span><span class="n">element_type</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">model_data_props_new</span><span class="p">:</span>
