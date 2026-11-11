@@ -218,33 +218,14 @@ We currently use the following workflows:
      - Builds the Sphinx documentation (including API docs via ``sphinx-apidoc``) of the current development state and deploys it to the
        ``dev/`` folder of the ``gh-pages`` branch: https://3sconsult.github.io/sir3stoolkit/dev/ (with a "Development version" banner).
    * - ``.github/workflows/release.yml``
-     - Push of a tag ``v<version>``, or a manual run with an existing tag
+     - Push of a tag ``v<version>``, or a manual run with ``main`` or an existing tag
      - Checks that the tag matches the version in ``pyproject.toml`` and that its commit is on ``main``, builds the package and publishes it to
        **TestPyPI** and **PyPI** using ``twine``, then builds the documentation from the tag and deploys it to the root of the ``gh-pages``
-       branch: https://3sconsult.github.io/sir3stoolkit/ (with a "Released version" banner; ``dev/`` is kept). A manual run only rebuilds the
-       documentation, it does not publish.
+       branch: https://3sconsult.github.io/sir3stoolkit/ (with a "Released version" banner; ``dev/`` is kept). A manual run only deploys the
+       documentation, it does not publish - see :ref:`release-label`.
    * - ``.github/workflows/test-sync-agents-md.yml``
      - Pull request changing ``AGENTS.md`` or the ``sync-agents-md`` action, or a manual run
      - Tests that the ``sync-agents-md`` action copies the repository-root ``AGENTS.md`` into the package.
-
-.. _release-label:
-
-Releasing a New Version
-~~~~~~~~~~~~~~~~~~~~~~~
-
-Pushes to ``main`` only update the development documentation. A release - PyPI upload and release documentation - is made by tagging a
-commit on ``main`` with its version:
-
-1. Set the new version in ``pyproject.toml`` (e.g. ``version = "90.15.27"``), update ``releases.rst``, commit and push to ``main``.
-2. Tag that commit and push the tag:
-
-   .. code-block:: bash
-
-      git tag v90.15.27
-      git push origin v90.15.27
-
-The ``release.yml`` workflow then publishes to PyPI and deploys the release documentation. If the tag does not match the version in
-``pyproject.toml``, nothing is published.
 
 Anonymization Setup for Pre-Commit Hook
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -381,7 +362,7 @@ To generate documentation, follow these steps:
 
 1. **Edit the documentation:** Make your changes on the rst files in the sir3stoolkit/docs/source.
 
-.. note:: Our GitHub Workflow sphinx.yaml automatically builds and deploys the documentation. If you do not need to view a local build of your changes, you can jump to step 4.
+.. note:: Our GitHub Workflow docs-dev.yml automatically builds and deploys the development documentation on every push to ``main``. If you do not need to view a local build of your changes, you can jump to step 4.
 
 2. **Navigate to the sir3stoolkit directory:** Use the ``cd`` command.
 
@@ -402,10 +383,20 @@ To generate documentation, follow these steps:
 
 4. **Commit the changes.** Commit all files from sir3stoolkit to GitHub (:ref:`commit-changes-label`).
 
-The new documentation can be found at `https://3sconsult.github.io/sir3stoolkit/index.html <https://3sconsult.github.io/sir3stoolkit/index.html>`_
+The new documentation can be found at `https://3sconsult.github.io/sir3stoolkit/dev/index.html <https://3sconsult.github.io/sir3stoolkit/dev/index.html>`_. The release documentation at `https://3sconsult.github.io/sir3stoolkit/index.html <https://3sconsult.github.io/sir3stoolkit/index.html>`_ is only updated by a release (:ref:`release-label`).
 
-Release a New Version to PyPI
------------------------------
+.. _release-label:
+
+Release a New Version
+---------------------
+
+There are two versions of the documentation:
+
+* https://3sconsult.github.io/sir3stoolkit/ - the **release documentation**, matching the current version on PyPI. Only changed by a release
+  (or a documentation hotfix, see step 10).
+* https://3sconsult.github.io/sir3stoolkit/dev/ - the **development documentation**, updated on every push to ``main``.
+
+A new version is released to PyPI and gets its release documentation by tagging a commit on ``main`` with its version (steps 7-9):
 
 1. **Run tests:** Before releasing a new version, ensure that all tests pass. Run the test suite using ``pytest`` as described in :ref:`running-tests-label`.
 
@@ -419,4 +410,15 @@ Release a New Version to PyPI
 
 6. **Update Version Number:** In `sir3stoolkit/pyproject.toml` update the version number
 
-7. **Commit to GitHub**: With the version number in `sir3stoolkit/pyproject.toml` changed, the commit will trigger an automatic workflow, that will release the new version to PyPI. For convenience use the version number as commit message.
+7. **Commit to GitHub**: Commit and push to ``main``. For convenience use the version number as commit message. This alone does not release anything - it only updates the development documentation.
+
+8. **Tag the release commit:** Tag that commit with ``v`` + the version number and push the tag. A tag is only a label on an existing commit - it is not committed, and pushing it pushes no commits:
+
+   .. code-block:: bash
+
+      git tag v90.15.27
+      git push origin v90.15.27
+
+9. **Automatic release:** The pushed tag triggers the ``release.yml`` workflow (GitHub Actions tab). It checks that the tag matches the version in ``pyproject.toml`` and that its commit is on ``main``, publishes the new version to TestPyPI and PyPI and, only if that worked, deploys the release documentation. If a check fails, nothing is published.
+
+10. **Documentation hotfixes after the release (optional):** Fix the documentation on ``main`` and push - the fix first appears in the development documentation. To take it over into the release documentation, start the release workflow manually: GitHub Actions tab -> *Release* -> *Run workflow* with ``ref`` = ``main``. This only deploys the documentation, nothing is published to PyPI. It is refused if ``src/`` or ``pyproject.toml`` changed since the release tag, since the release documentation would then describe unreleased code - make a new release instead.

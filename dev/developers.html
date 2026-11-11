@@ -68,7 +68,6 @@
 <li class="toctree-l3"><a class="reference internal" href="#commit-your-changes-to-the-github-repository">Commit Your Changes to the GitHub Repository</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#collection-of-useful-git-commands">Collection of Useful Git Commands</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#github-workflows">GitHub Workflows</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#releasing-a-new-version">Releasing a New Version</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#anonymization-setup-for-pre-commit-hook">Anonymization Setup for Pre-Commit Hook</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#step-1-locate-the-pre-commit-hook">Step 1: Locate the Pre-Commit Hook</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#step-2-edit-the-pre-commit-hook">Step 2: Edit the Pre-Commit Hook</a></li>
@@ -81,7 +80,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#running-test-suites">Running Test Suites</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#generating-the-documentation">Generating the Documentation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#release-a-new-version-to-pypi">Release a New Version to PyPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#release-a-new-version">Release a New Version</a></li>
 </ul>
 </li>
 </ul>
@@ -307,11 +306,11 @@
 <code class="docutils literal notranslate"><span class="pre">dev/</span></code> folder of the <code class="docutils literal notranslate"><span class="pre">gh-pages</span></code> branch: <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/dev/">https://3sconsult.github.io/sir3stoolkit/dev/</a> (with a “Development version” banner).</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">.github/workflows/release.yml</span></code></p></td>
-<td><p>Push of a tag <code class="docutils literal notranslate"><span class="pre">v&lt;version&gt;</span></code>, or a manual run with an existing tag</p></td>
+<td><p>Push of a tag <code class="docutils literal notranslate"><span class="pre">v&lt;version&gt;</span></code>, or a manual run with <code class="docutils literal notranslate"><span class="pre">main</span></code> or an existing tag</p></td>
 <td><p>Checks that the tag matches the version in <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> and that its commit is on <code class="docutils literal notranslate"><span class="pre">main</span></code>, builds the package and publishes it to
 <strong>TestPyPI</strong> and <strong>PyPI</strong> using <code class="docutils literal notranslate"><span class="pre">twine</span></code>, then builds the documentation from the tag and deploys it to the root of the <code class="docutils literal notranslate"><span class="pre">gh-pages</span></code>
-branch: <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/">https://3sconsult.github.io/sir3stoolkit/</a> (with a “Released version” banner; <code class="docutils literal notranslate"><span class="pre">dev/</span></code> is kept). A manual run only rebuilds the
-documentation, it does not publish.</p></td>
+branch: <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/">https://3sconsult.github.io/sir3stoolkit/</a> (with a “Released version” banner; <code class="docutils literal notranslate"><span class="pre">dev/</span></code> is kept). A manual run only deploys the
+documentation, it does not publish - see <a class="reference internal" href="#release-label"><span class="std std-ref">Release a New Version</span></a>.</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">.github/workflows/test-sync-agents-md.yml</span></code></p></td>
 <td><p>Pull request changing <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> or the <code class="docutils literal notranslate"><span class="pre">sync-agents-md</span></code> action, or a manual run</p></td>
@@ -319,22 +318,6 @@ documentation, it does not publish.</p></td>
 </tr>
 </tbody>
 </table>
-</section>
-<section id="releasing-a-new-version">
-<span id="release-label"></span><h3>Releasing a New Version<a class="headerlink" href="#releasing-a-new-version" title="Link to this heading"></a></h3>
-<p>Pushes to <code class="docutils literal notranslate"><span class="pre">main</span></code> only update the development documentation. A release - PyPI upload and release documentation - is made by tagging a
-commit on <code class="docutils literal notranslate"><span class="pre">main</span></code> with its version:</p>
-<ol class="arabic">
-<li><p>Set the new version in <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> (e.g. <code class="docutils literal notranslate"><span class="pre">version</span> <span class="pre">=</span> <span class="pre">&quot;90.15.27&quot;</span></code>), update <code class="docutils literal notranslate"><span class="pre">releases.rst</span></code>, commit and push to <code class="docutils literal notranslate"><span class="pre">main</span></code>.</p></li>
-<li><p>Tag that commit and push the tag:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>tag<span class="w"> </span>v90.15.27
-git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>v90.15.27
-</pre></div>
-</div>
-</li>
-</ol>
-<p>The <code class="docutils literal notranslate"><span class="pre">release.yml</span></code> workflow then publishes to PyPI and deploys the release documentation. If the tag does not match the version in
-<code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code>, nothing is published.</p>
 </section>
 <section id="anonymization-setup-for-pre-commit-hook">
 <h3>Anonymization Setup for Pre-Commit Hook<a class="headerlink" href="#anonymization-setup-for-pre-commit-hook" title="Link to this heading"></a></h3>
@@ -445,7 +428,7 @@ By default, they are skipped to keep regular test runs fast and stable.</p>
 </ol>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Our GitHub Workflow sphinx.yaml automatically builds and deploys the documentation. If you do not need to view a local build of your changes, you can jump to step 4.</p>
+<p>Our GitHub Workflow docs-dev.yml automatically builds and deploys the development documentation on every push to <code class="docutils literal notranslate"><span class="pre">main</span></code>. If you do not need to view a local build of your changes, you can jump to step 4.</p>
 </div>
 <ol class="arabic" start="2">
 <li><p><strong>Navigate to the sir3stoolkit directory:</strong> Use the <code class="docutils literal notranslate"><span class="pre">cd</span></code> command.</p>
@@ -463,18 +446,33 @@ By default, they are skipped to keep regular test runs fast and stable.</p>
 </li>
 <li><p><strong>Commit the changes.</strong> Commit all files from sir3stoolkit to GitHub (<a class="reference internal" href="#commit-changes-label"><span class="std std-ref">Commit Your Changes to the GitHub Repository</span></a>).</p></li>
 </ol>
-<p>The new documentation can be found at <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/index.html">https://3sconsult.github.io/sir3stoolkit/index.html</a></p>
+<p>The new documentation can be found at <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/dev/index.html">https://3sconsult.github.io/sir3stoolkit/dev/index.html</a>. The release documentation at <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/index.html">https://3sconsult.github.io/sir3stoolkit/index.html</a> is only updated by a release (<a class="reference internal" href="#release-label"><span class="std std-ref">Release a New Version</span></a>).</p>
 </section>
-<section id="release-a-new-version-to-pypi">
-<h2>Release a New Version to PyPI<a class="headerlink" href="#release-a-new-version-to-pypi" title="Link to this heading"></a></h2>
-<ol class="arabic simple">
+<section id="release-a-new-version">
+<span id="release-label"></span><h2>Release a New Version<a class="headerlink" href="#release-a-new-version" title="Link to this heading"></a></h2>
+<p>There are two versions of the documentation:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/">https://3sconsult.github.io/sir3stoolkit/</a> - the <strong>release documentation</strong>, matching the current version on PyPI. Only changed by a release
+(or a documentation hotfix, see step 10).</p></li>
+<li><p><a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/dev/">https://3sconsult.github.io/sir3stoolkit/dev/</a> - the <strong>development documentation</strong>, updated on every push to <code class="docutils literal notranslate"><span class="pre">main</span></code>.</p></li>
+</ul>
+<p>A new version is released to PyPI and gets its release documentation by tagging a commit on <code class="docutils literal notranslate"><span class="pre">main</span></code> with its version (steps 7-9):</p>
+<ol class="arabic">
 <li><p><strong>Run tests:</strong> Before releasing a new version, ensure that all tests pass. Run the test suite using <code class="docutils literal notranslate"><span class="pre">pytest</span></code> as described in <a class="reference internal" href="#running-tests-label"><span class="std std-ref">Running Test Suites</span></a>.</p></li>
 <li><p><strong>Determine new version number:</strong> The Toolkit version numbers are formatted as 90.XX.YY with XX being the SIR 3S version number (15 for Quebec), which rarely changes, and YY being the Toolkit version number. The Toolkit version number YY is incremented with every new release of the Toolkit. For example, if the current version is 90.15.23, the next version would be 90.15.24.</p></li>
 <li><p><strong>Add Changed dll:</strong> If changes were made to the <cite>Sir3S_Toolkit.dll</cite>, add a new folder named the new version number in <cite>sir3stoolkit/src/sir3stoolkit/lib</cite> and insert the new dll.</p></li>
 <li><p><strong>Document Changes:</strong> In <cite>sir3stoolkit/docs/source/releases.rst</cite> add a new row to the release table with the new version number, corresponding SIR 3S version number, release date, and whether the <cite>Sir3S_Toolkit.dll</cite> was changed. Also below under the corresponding SIR 3S version number insert a new section and describe the changes made in detail.</p></li>
 <li><p><strong>Update AGENTS.md if a structural change happened:</strong> If this release adds/renames/removes a public function, adds a new tutorial, or changes the core/mantle module layout, update <cite>sir3stoolkit/AGENTS.md</cite> at the repo root to match (e.g. its Tutorial index entries, the function lists there, the Architecture section). Not needed for a release with no such changes (bug fixes, internal-only changes, etc.).</p></li>
 <li><p><strong>Update Version Number:</strong> In <cite>sir3stoolkit/pyproject.toml</cite> update the version number</p></li>
-<li><p><strong>Commit to GitHub</strong>: With the version number in <cite>sir3stoolkit/pyproject.toml</cite> changed, the commit will trigger an automatic workflow, that will release the new version to PyPI. For convenience use the version number as commit message.</p></li>
+<li><p><strong>Commit to GitHub</strong>: Commit and push to <code class="docutils literal notranslate"><span class="pre">main</span></code>. For convenience use the version number as commit message. This alone does not release anything - it only updates the development documentation.</p></li>
+<li><p><strong>Tag the release commit:</strong> Tag that commit with <code class="docutils literal notranslate"><span class="pre">v</span></code> + the version number and push the tag. A tag is only a label on an existing commit - it is not committed, and pushing it pushes no commits:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>tag<span class="w"> </span>v90.15.27
+git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>v90.15.27
+</pre></div>
+</div>
+</li>
+<li><p><strong>Automatic release:</strong> The pushed tag triggers the <code class="docutils literal notranslate"><span class="pre">release.yml</span></code> workflow (GitHub Actions tab). It checks that the tag matches the version in <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> and that its commit is on <code class="docutils literal notranslate"><span class="pre">main</span></code>, publishes the new version to TestPyPI and PyPI and, only if that worked, deploys the release documentation. If a check fails, nothing is published.</p></li>
+<li><p><strong>Documentation hotfixes after the release (optional):</strong> Fix the documentation on <code class="docutils literal notranslate"><span class="pre">main</span></code> and push - the fix first appears in the development documentation. To take it over into the release documentation, start the release workflow manually: GitHub Actions tab -&gt; <em>Release</em> -&gt; <em>Run workflow</em> with <code class="docutils literal notranslate"><span class="pre">ref</span></code> = <code class="docutils literal notranslate"><span class="pre">main</span></code>. This only deploys the documentation, nothing is published to PyPI. It is refused if <code class="docutils literal notranslate"><span class="pre">src/</span></code> or <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> changed since the release tag, since the release documentation would then describe unreleased code - make a new release instead.</p></li>
 </ol>
 </section>
 </section>
