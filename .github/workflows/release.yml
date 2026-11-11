@@ -1,0 +1,170 @@
+name: Release
+
+# Push of a version tag (e.g. v90.15.27) on a commit of main:
+#   1. verify  - the tag matches the version in pyproject.toml and its commit is on main
+#   2. publish - build the package and upload it to TestPyPI and PyPI
+#   3. docs    - build the docs from the tag and deploy them to https://3sconsult.github.io/sir3stoolkit/
+#                (gh-pages root; the development docs in dev/ are kept). Only runs if publishing worked,
+#                so the release docs are never ahead of PyPI.
+#
+# Manual run (Actions tab -> Release -> Run workflow, with an existing tag): verify + docs only, no
+# upload. For rebuilding the release docs, e.g. for a tag on a commit that predates this workflow:
+# a tag push runs the workflow file of the tagged commit, so such tags trigger nothing by themselves.
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Existing release tag to rebuild the release docs from (e.g. v90.15.26). Does not publish to PyPI.'
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.check.outputs.tag }}
+      version: ${{ steps.check.outputs.version }}
+    steps:
+      - name: Check out the tagged commit (full history, to check it is on main)
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.tag || github.ref }}
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Check tag against pyproject.toml version and main
+        id: check
+        shell: bash
+        env:
+          TAG: ${{ inputs.tag || github.ref_name }}
+        run: |
+          VERSION=$(python -c "import tomllib; print(tomllib.load(open('pyproject.toml', 'rb'))['project']['version'])")
+          if [ "$TAG" != "v$VERSION" ]; then
+            echo "::error::Tag $TAG does not match the version in pyproject.toml ($VERSION) - expected tag v$VERSION."
+            exit 1
+          fi
+          if ! git merge-base --is-ancestor HEAD origin/main; then
+            echo "::error::The commit of tag $TAG is not on main. Releases are only made from main."
+            exit 1
+          fi
+          echo "Tag $TAG matches pyproject.toml version $VERSION and is on main."
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+  publish:
+    needs: verify
+    if: github.event_name == 'push'
+    runs-on: windows-latest
+    steps:
+      - name: Check out the tagged commit
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install build tools and dev dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install build twine
+          pip install .[dev]
+
+      - name: Lint with flake8
+        shell: bash  # bash stops at the first failing command; pwsh (Windows default) only checks the last one
+        run: |
+          # stop the build if there are Python syntax errors or undefined names
+          # (docs/ excluded: its code snippets are excerpts that use names defined elsewhere, e.g. s3s)
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics --extend-exclude=docs
+          # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+      - name: Sync AGENTS.md into the package (shipped in the wheel via package-data)
+        uses: ./.github/actions/sync-agents-md
+
+      - name: Build package using pyproject.toml
+        run: python -m build
+
+      - name: Publish to TestPyPI
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.MF3S_TEST_PYPI_TOKEN }}
+        run: twine upload --repository-url https://test.pypi.org/legacy/ dist/*
+
+      - name: Publish to PyPI
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.MF3S_PYPI_TOKEN }}
+        run: twine upload --repository-url https://upload.pypi.org/legacy/ dist/*
+
+  docs:
+    needs: [verify, publish]
+    # publish is skipped on manual runs - run anyway then, but never after a failed upload
+    if: ${{ !cancelled() && needs.verify.result == 'success' && needs.publish.result != 'failure' }}
+    runs-on: ubuntu-latest
+    # docs-dev.yml deploys to gh-pages too - never let both push at the same time.
+    concurrency:
+      group: gh-pages-deploy
+      cancel-in-progress: false
+
+    steps:
+      - name: Check out the tagged commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.verify.outputs.tag }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Upgrade pip and install project with dev dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install .[dev,sphinx,mantle]
+
+      - name: Install Pandoc
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pandoc
+
+      - name: Generate rst files with sphinx-apidoc
+        run: sphinx-apidoc -o docs/source/references src/sir3stoolkit
+
+      # docs_channel=release shows the "Released version" banner (docs/source/_templates/layout.html).
+      - name: Build Sphinx documentation
+        env:
+          VERSION: ${{ needs.verify.outputs.version }}
+        run: sphinx-build -b html -A docs_channel=release -A "docs_version=$VERSION" docs/source docs/build/html
+
+      # The root deploy replaces everything on gh-pages - carry the current dev/ docs over into it.
+      - name: Check out the current dev/ folder of gh-pages
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: _gh_pages
+          sparse-checkout: dev
+
+      - name: Carry dev/ over into the release build
+        run: |
+          if [ -d _gh_pages/dev ]; then
+            cp -r _gh_pages/dev docs/build/html/dev
+          else
+            echo "gh-pages has no dev/ folder yet - nothing to carry over."
+          fi
+
+      - name: Deploy to the gh-pages root
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs/build/html
+          publish_branch: gh-pages

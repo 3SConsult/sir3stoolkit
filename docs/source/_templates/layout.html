@@ -1,0 +1,28 @@
+{% extends "!layout.html" %}
+
+{#- Version banner. docs_channel/docs_version are passed by the GitHub workflows via sphinx-build -A:
+    "dev" from .github/workflows/docs-dev.yml, "release" from .github/workflows/release.yml.
+    Local builds pass nothing and show no banner. -#}
+{% block document %}
+  {%- if docs_channel == "dev" %}
+  <div class="admonition warning">
+    <p class="admonition-title">Development version</p>
+    <p>
+      This documentation reflects the current state of the <code>main</code> branch and may describe
+      features that are not yet released on PyPI. For the documentation of the released version, see
+      <a href="https://3sconsult.github.io/sir3stoolkit/">https://3sconsult.github.io/sir3stoolkit/</a>.
+    </p>
+  </div>
+  {%- elif docs_channel == "release" %}
+  <div class="admonition note">
+    <p class="admonition-title">Released version {{ docs_version }}</p>
+    <p>
+      This documentation matches sir3stoolkit {{ docs_version }}, the current release on PyPI
+      (<code>pip install sir3stoolkit</code>). For the development state of the <code>main</code> branch,
+      which may contain unreleased changes, see
+      <a href="https://3sconsult.github.io/sir3stoolkit/dev/">https://3sconsult.github.io/sir3stoolkit/dev/</a>.
+    </p>
+  </div>
+  {%- endif %}
+  {{ super() }}
+{% endblock %}

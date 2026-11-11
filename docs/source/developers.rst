@@ -213,12 +213,38 @@ We currently use the following workflows:
    * - **Name**
      - **Triggers**
      - **Tasks**
-   * - `.github/workflows/publish-testpypi.yml`
-     - Push to `main` with changes in:<br>• `pyproject.toml`<br>• `setup.py`<br>• `requirements.txt`<br>• `src/**`<br>• the workflow file itself<br>Or push of a tag starting with `v`
-     - Builds the Python package using `pyproject.toml`, installs dev dependencies, and publishes to **TestPyPI** and **PyPI** using `twine`.
-   * - `.github/workflows/deploy-docs.yml` *(assumed name)*
-     - Push to `main`
-     - Builds Sphinx documentation (including API docs via `sphinx-apidoc`) and deploys it to the `gh-pages` branch using `peaceiris/actions-gh-pages`. 
+   * - ``.github/workflows/docs-dev.yml``
+     - Push to ``main``
+     - Builds the Sphinx documentation (including API docs via ``sphinx-apidoc``) of the current development state and deploys it to the
+       ``dev/`` folder of the ``gh-pages`` branch: https://3sconsult.github.io/sir3stoolkit/dev/ (with a "Development version" banner).
+   * - ``.github/workflows/release.yml``
+     - Push of a tag ``v<version>``, or a manual run with an existing tag
+     - Checks that the tag matches the version in ``pyproject.toml`` and that its commit is on ``main``, builds the package and publishes it to
+       **TestPyPI** and **PyPI** using ``twine``, then builds the documentation from the tag and deploys it to the root of the ``gh-pages``
+       branch: https://3sconsult.github.io/sir3stoolkit/ (with a "Released version" banner; ``dev/`` is kept). A manual run only rebuilds the
+       documentation, it does not publish.
+   * - ``.github/workflows/test-sync-agents-md.yml``
+     - Pull request changing ``AGENTS.md`` or the ``sync-agents-md`` action, or a manual run
+     - Tests that the ``sync-agents-md`` action copies the repository-root ``AGENTS.md`` into the package.
+
+.. _release-label:
+
+Releasing a New Version
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Pushes to ``main`` only update the development documentation. A release - PyPI upload and release documentation - is made by tagging a
+commit on ``main`` with its version:
+
+1. Set the new version in ``pyproject.toml`` (e.g. ``version = "90.15.27"``), update ``releases.rst``, commit and push to ``main``.
+2. Tag that commit and push the tag:
+
+   .. code-block:: bash
+
+      git tag v90.15.27
+      git push origin v90.15.27
+
+The ``release.yml`` workflow then publishes to PyPI and deploys the release documentation. If the tag does not match the version in
+``pyproject.toml``, nothing is published.
 
 Anonymization Setup for Pre-Commit Hook
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
