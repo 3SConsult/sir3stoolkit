@@ -1,12 +1,28 @@
 name: Sync AGENTS.md into package
 description: >
-  Copies the repo-root AGENTS.md into src/sir3stoolkit/AGENTS.md so it's included in the
-  wheel via package-data. Must run as a step in a job that already checked out the repo -
+  Copies the guide for AI assistants - the repo-root AGENTS.md and the ai/ folder -
+  into src/sir3stoolkit/ so it's included in the wheel via package-data, and exports the cell sources of every
+  tutorial notebook to src/sir3stoolkit/ai/tutorials/ToolkitTutorialNNN.md (readable without the notebooks'
+  JSON and outputs, offline). Must run as a step in a job that already checked out the repo and set up Python -
   it operates on the current working directory's files, it does not check out anything itself.
+  With `version`, the packaged guide's GitHub links are pointed from main to the release tag v<version>
+  (except releases.rst and CONTRIBUTING.md, which must stay on main), and a note saying so is added below the
+  title of each file - so an AI reading the installed package's copy gets the docs, tutorials and references
+  of exactly the installed version. The logic is in sync_agent_docs.py next to this file.
+
+inputs:
+  version:
+    description: 'Release version (e.g. 90.15.27). Empty: plain copy, links unchanged.'
+    required: false
+    default: ''
 
 runs:
   using: composite
   steps:
-    - name: Copy AGENTS.md into src/sir3stoolkit/
+    - name: Copy AGENTS.md and ai/ into src/sir3stoolkit/, export the tutorials
       shell: pwsh
-      run: Copy-Item -Path "AGENTS.md" -Destination "src\sir3stoolkit\AGENTS.md" -Force
+      env:
+        VERSION: ${{ inputs.version }}
+        SCRIPT: ${{ github.action_path }}/sync_agent_docs.py
+      # one token (--version=...), so an empty version isn't dropped when passed to a native command
+      run: python "$env:SCRIPT" "--version=$env:VERSION"

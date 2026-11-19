@@ -1,4 +1,8 @@
-name: Build and Deploy Sphinx Docs to GitHub Pages
+name: Development docs
+
+# Every push to main: build the docs of the current development state and deploy them to
+# https://3sconsult.github.io/sir3stoolkit/dev/ (gh-pages branch, folder dev/ - nothing else on
+# gh-pages is touched). The release docs at the root are deployed by release.yml.
 
 on:
   push:
@@ -8,8 +12,12 @@ permissions:
   contents: write
 
 jobs:
-  build:
+  docs:
     runs-on: ubuntu-latest
+    # release.yml deploys to gh-pages too - never let both push at the same time.
+    concurrency:
+      group: gh-pages-deploy
+      cancel-in-progress: false
 
     steps:
       - name: Check out repository
@@ -31,16 +39,16 @@ jobs:
           sudo apt-get install -y pandoc
 
       - name: Generate rst files with sphinx-apidoc
-        run: |
-          sphinx-apidoc -o docs/source/references src/sir3stoolkit
+        run: sphinx-apidoc -o docs/source/references src/sir3stoolkit
 
+      # docs_channel=dev shows the "Development version" banner (docs/source/_templates/layout.html).
       - name: Build Sphinx documentation
-        run: |
-          sphinx-build -b html docs/source docs/build/html
+        run: sphinx-build -b html -A docs_channel=dev docs/source docs/build/html
 
-      - name: Deploy to GitHub Pages
+      - name: Deploy to gh-pages/dev/
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./docs/build/html
           publish_branch: gh-pages
+          destination_dir: dev

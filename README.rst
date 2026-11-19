@@ -36,7 +36,7 @@ This layered architecture of the SIR 3S Toolkit ensures both flexibility and ext
 
 Note: This package is a client toolkit for the proprietary SIR 3S software. A valid license for SIR 3S is required to use this package in production.
 
-**Using an AI assistant to write code against this package?** See `AGENTS.md <https://github.com/3SConsult/sir3stoolkit/blob/main/AGENTS.md>`_ for architecture, the authoritative API/property reference, and known gotchas.
+**Using an AI assistant to write code against this package?** The package ships a guide for AI assistants (`AGENTS.md <https://github.com/3SConsult/sir3stoolkit/blob/main/AGENTS.md>`_: architecture, the authoritative API/property reference, tutorials incl. their code as plain text, known gotchas), next to the installed ``sir3stoolkit/__init__.py``. ``Initialize_Toolkit()`` logs its path when run by an AI assistant; to make assistants read it before writing any code, run ``python -m sir3stoolkit ai-setup`` in your project folder once - see `Using an AI coding assistant <https://3sconsult.github.io/sir3stoolkit/started.html#using-an-ai-coding-assistant>`_.
 
 Features
 --------

@@ -90,7 +90,27 @@ To install the SIR 3S Toolkit, follow these steps:
        git clone https://github.com/3SConsult/sir3stoolkit
        cd "C:/Users/User/3S/sir3stoolkit"
        python.exe -m pip install -e .
-       
+
+
+.. _ai-assistants-label:
+
+Using an AI coding assistant
+----------------------------
+
+The SIR 3S Toolkit ships a guide for AI coding assistants (e.g. Claude Code, GitHub Copilot, Cursor, Codex): ``AGENTS.md`` plus the files in ``ai/`` inside the installed package (next to ``sir3stoolkit/__init__.py``). It matches the installed version and covers the architecture, where the API and property-name reference is, the tutorials - including the code of every tutorial as plain text (``ai/tutorials/ToolkitTutorialNNN.md``), readable without downloading the notebooks - and known pitfalls. With it, an assistant writes working code against the Toolkit instead of guessing its API.
+
+How an assistant finds it:
+
+* **Automatically:** when an AI assistant runs a script that calls ``Initialize_Toolkit()``, the path of the guide is logged (only if the process was started by an AI assistant; ``SIR3STOOLKIT_AI_HINT=0`` hides the line, ``=1`` shows it for an assistant that isn't detected). The docstrings point to the guide as well.
+
+* **Before writing any code (optional, per project):** in the project folder, run - with the Python of the environment the Toolkit is installed in (e.g. ``C:/3S/Common/Python312/python.exe``):
+
+  .. code-block:: bash
+
+      python -m sir3stoolkit ai-setup
+
+  This adds a short, marked block pointing to the guide to the project's ``AGENTS.md`` (created if missing) and, if the project has one, to its ``CLAUDE.md`` (Claude Code doesn't read ``AGENTS.md`` then). AI assistants load these files at the start of every session. Re-running it updates the block, ``--remove`` removes it again; the rest of the files stays as it is.
+
 Contact
 -------
 If you'd like to report a bug or suggest an improvement for the SIR 3S Toolkit, please `open a new issue on GitHub <https://github.com/3SConsult/sir3stoolkit/issues>`_. Describe the situation in detail — whether it's a bug you encountered or a feature you'd like to see improved. Provide the SIR Graf, SIR Calc and SIR 3S Toolkit versions you used. Feel free to attach images or other relevant materials to help us better understand your request.

@@ -4,23 +4,21 @@ Guidance for AI assistants writing code against **sir3stoolkit**, the Python cli
 (pipe network simulation/analysis software by 3S Consult). If you were asked to "use sir3stoolkit"
 to build/modify/read a SIR 3S model, start here.
 
-**This file is ~29,000 characters - read all of it, not just the beginning.** Sections:
+**This file is the core of the guide - read all of it before writing code.** It is followed by
+files in [`ai/`](ai/), read when needed:
 
-1. [Quick facts](#quick-facts) - platform, versions, imports, return types
-2. [Architecture](#architecture) - core vs. mantle
-3. [Where to get the real API surface](#where-to-get-the-real-api-surface) - docstrings, property-name reference
-4. [Read the tutorials and docstrings before writing code](#read-the-tutorials-and-docstrings-before-writing-code) -
-   incl. the long [Tutorial index](#tutorial-index)
-5. [Known gotchas](#known-gotchas-durable-not-tied-to-a-specific-bugversion) - pitfalls that cost real
-   debugging time; comes after the long tutorial index, don't skip it
-6. [Checking for updates](#checking-for-updates) - versions, `Sir3S_Toolkit.dll` replacement
-7. [Current known issues / roadmap](#current-known-issues--roadmap)
-8. [Contributing to sir3stoolkit itself](#contributing-to-sir3stoolkit-itself)
+- [`ai/tutorials.md`](ai/tutorials.md) - the full tutorial index (links, goals, functions per
+  tutorial). Read it before writing code for a workflow - the [Tutorials](#tutorials) section below
+  only lists topics.
+- [`ai/updates-and-issues.md`](ai/updates-and-issues.md) - checking for updates (incl. whether a
+  `Sir3S_Toolkit.dll` replacement is needed) and the known issues on GitHub. Read it when the user
+  asks about updating, or when behavior looks like a genuine bug.
 
-If your tool truncates long pages, download this file and search it for the section headings (e.g.
-`## Known gotchas`) instead of reading it from the top:
-
-    curl -o AGENTS.md https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/AGENTS.md
+Sections: [Quick facts](#quick-facts) · [Architecture](#architecture) ·
+[Where to get the real API surface](#where-to-get-the-real-api-surface) · [Tutorials](#tutorials) ·
+[Known gotchas](#known-gotchas-durable-not-tied-to-a-specific-bugversion) ·
+[Making this guide findable](#making-this-guide-findable-in-the-users-project) ·
+[Contributing](#contributing-to-sir3stoolkit-itself)
 
 ## Quick facts
 
@@ -28,7 +26,7 @@ If your tool truncates long pages, download this file and search it for the sect
   pythonnet/.NET (`Sir3S_Toolkit.dll`). Without it nothing can run - code can only be written, not executed.
 - **Versions**: sir3stoolkit 90.15.x targets SIR 3S 90-15 (Quebec); the third number is the toolkit's own
   release counter. Which SirGraf version each release was tested with, and whether it needs a new
-  `Sir3S_Toolkit.dll`, is in the release notes (see [Checking for updates](#checking-for-updates)).
+  `Sir3S_Toolkit.dll`, is in the release notes (see [`ai/updates-and-issues.md`](ai/updates-and-issues.md)).
 - **Imports**: `from sir3stoolkit.core import wrapper` (core: `wrapper.SIR3S_Model()`) and
   `from sir3stoolkit.mantle.mantle import SIR3S_Model_Mantle` (core + all mantle functions).
   `from sir3stoolkit.mantle import SIR3S_Model_Mantle` does not work - `sir3stoolkit.mantle` only
@@ -70,118 +68,46 @@ https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/docs/source/object
 (machine-generated from the toolkit's own `ObjectTypes_TableNames`/`GetPropertiesofElementType()`/
 `GetResultProperties_from_elementType()` — authoritative for the installed SIR 3S version).
 
-## Read the tutorials and docstrings before writing code
+The same reference ships with the package and can be queried per element type, without an open model:
+`SIR3S_Model_Dataframes.get_object_type_reference(s3s.ObjectTypes.Pipe)` (Tutorial051) returns `table_name`
+(`"ROHR"`), `category` (connecting element, bypass element, table, signal model element, ... or
+`"unknown"`), `create_with` (only methods shown to create a real instance of the type, e.g.
+`["SIR3S_Model.AddNewPipe"]`, `["SIR3S_View.AddNewHouse"]` - `[]` means none is known, not that
+`InsertElement` works), `insertable_in` (network types), `properties` (name → value type) and
+`result_properties` (name → German `description`/`unit`). To query across all element types, read the
+JSON itself (`{"notice": [...], "object_types": {...}}`, keyed by `ObjectTypes` member name):
+`mantle/object_type_reference.json` in the installed package, or
+https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/src/sir3stoolkit/mantle/object_type_reference.json.
+Same caveat as the RST: at runtime, `GetPropertiesofElementType()`/`GetResultProperties_from_elementType()`
+remain authoritative for the installed SIR 3S version.
 
-The tutorial notebooks under `docs/source/tutorials/` (also rendered in the docs site) are worked,
-runnable examples of realistic multi-step workflows — start there rather than composing calls from
-scratch. There are two separate tutorial folders, matching the architecture above:
+## Tutorials
 
-- `docs/source/tutorials/SIR3S_Model/` (Tutorials 000-010) — the `core` API (`SIR3S_Model`).
-- `docs/source/tutorials/SIR3S_Model_Mantle/` (Tutorials 050+) — the `mantle` layer
-  (`SIR3S_Model_Mantle`), built on top of core.
+The tutorial notebooks are worked, runnable examples of realistic multi-step workflows — start there
+rather than composing calls from scratch, and read the docstring of each function you call: both are
+the up-to-date source for behavior quirks and known bugs (this guide deliberately doesn't duplicate
+them).
 
-The `.ipynb` files are mostly JSON and stored outputs (Tutorial 57: 1.5 MB). To read just the cells
-(Tutorial 57: ~7 KB), download the raw notebook and print its cell sources:
+**In the installed package, the code of every tutorial is next to this file as plain text:
+`ai/tutorials/ToolkitTutorialNNN.md` (e.g. `ai/tutorials/ToolkitTutorial057.md`; markdown and code cells,
+outputs left out) - of exactly the installed version, no download needed. Read these** instead of
+fetching the notebooks. (A repository checkout has only the notebooks, see
+[`ai/tutorials.md`](ai/tutorials.md).)
 
-    python -c "import json,sys; [print(''.join(c['source'])+'\n') for c in json.load(open(sys.argv[1],encoding='utf-8'))['cells']]" ToolkitTutorial057.ipynb
+Topics, to match against the user's goal - the functions each tutorial uses are in
+[`ai/tutorials.md`](ai/tutorials.md):
 
-Together with the docstring on the function you're about to call, these are also the up-to-date
-source for behavior quirks and known bugs in the currently released toolkit version — several are
-called out directly at the point they matter (a note in a tutorial cell, or in a function's own
-docstring). Read both before assuming standard behavior; don't rely on this file for that, since bugs
-noted here would go stale fast and duplicate what's already maintained at the source.
-
-### Tutorial index
-
-Each entry links the raw notebook plus its docs-page source (`examples.rst`, line-ranged to that
-tutorial's section - the same file for every entry, just a different range), then leads with the
-operation/goal the tutorial teaches (match this against what the user actually asked for - they'll
-describe a goal, not a function name) followed by the functions it calls, in order of first use (not
-exhaustive of what's available). Low-maintenance to keep current - re-derive if a tutorial's
-number/scope or the operation it teaches changes.
-
-**`SIR3S_Model/` — core API**
-
-- **[000](https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/docs/source/tutorials/SIR3S_Model/Tutorial000_Assets/ToolkitTutorial000.ipynb)** ([docs page](https://github.com/3SConsult/sir3stoolkit/blob/main/docs/source/examples.rst#L20-L28)) How to import and initialize the toolkit against a SirGraf installation, including persisting
-  the install path so you don't have to pass it every time, and checking the file version of the
-  Sir3S_Toolkit.dll in it. — `Initialize_Toolkit`, `Get_Toolkit_Dll_File_Version`,
-  `Write_SirGraf_Config_Path`, `Read_SirGraf_Config_Path`, `SIR3S_Model()`, `SIR3S_View()`.
-- **[001](https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/docs/source/tutorials/SIR3S_Model/Tutorial001_Assets/ToolkitTutorial001.ipynb)** ([docs page](https://github.com/3SConsult/sir3stoolkit/blob/main/docs/source/examples.rst#L29-L37)) How to create a brand-new SIR 3S model or open an existing one. — `AllowSirMessageBox`,
-  `NewModel`, `GetNetworkType`, `CloseModel`, `OpenModel`, `OpenModelXml`.
-- **[002](https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/docs/source/tutorials/SIR3S_Model/Tutorial002_Assets/ToolkitTutorial002.ipynb)** ([docs page](https://github.com/3SConsult/sir3stoolkit/blob/main/docs/source/examples.rst#L38-L46)) How to read and change any element's data by its tk (topological key) - properties, geometry,
-  saving changes. — `GetTksofElementType`, `GetTkFromIDReference`, `GetObjectTypeof_Key`,
-  `GetPropertiesofElementType`, `GetValue`, `GetGeometryInformation`, `GetGeometryData`, `SetValue`,
-  `SetGeometryInformation`, `SaveChanges`, `CloseModel`.
-- **[003](https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/docs/source/tutorials/SIR3S_Model/Tutorial003_Assets/ToolkitTutorial003.ipynb)** ([docs page](https://github.com/3SConsult/sir3stoolkit/blob/main/docs/source/examples.rst#L47-L55)) How to run a calculation and read its results - single values, all timestamps, min/max over
-  time. — `ExecCalculation`, `GetResultValue`, `GetResultProperties_from_elementType`,
-  `GetResultProperties_from_elementKey`, `GetCurrentTimeStamp`, `GetTimeStamps`,
-  `SetCurrentTimeStamp`, `GetResultfortimestamp`, `GetResultforAllTimestamp`, `GetMinResult`,
-  `GetMaxResult`, `GetMinResult_for_timestamp`, `GetMaxResult_for_timestamp`.
-- **[004](https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/docs/source/tutorials/SIR3S_Model/Tutorial004_Assets/ToolkitTutorial004.ipynb)** ([docs page](https://github.com/3SConsult/sir3stoolkit/blob/main/docs/source/examples.rst#L56-L64)) How to make multiple changes to a model safely, grouped into one undoable
-  Transaction/EditSession. — `StartTransaction`, `EndTransaction`, `StartEditSession`,
-  `EndEditSession`, `RefreshViews`.
-- **[005](https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/docs/source/tutorials/SIR3S_Model/Tutorial005_Assets/ToolkitTutorial005.ipynb)** ([docs page](https://github.com/3SConsult/sir3stoolkit/blob/main/docs/source/examples.rst#L65-L73)) How to add new elements (nodes, pipes, valves, ...) to a model and connect them to each other.
-  — `InsertElement`, `ConnectConnectingElementWithNodes`, `ConnectBypassElementWithNode`,
-  `GetMainContainer`, `IsMainContainer`, `GetNumberOfElements`, `DeleteElement`, `AddNewNode`,
-  `AddNewPipe`, `AddNewConnectingElement`, `AddNewBypassElement`, `GetEndNodes`, `GetElementInfo`.
-- **[006](https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/docs/source/tutorials/SIR3S_Model/Tutorial006_Assets/ToolkitTutorial006.ipynb)** ([docs page](https://github.com/3SConsult/sir3stoolkit/blob/main/docs/source/examples.rst#L74-L82)) How to read a SIR 3S table (e.g. a characteristic curve) into Python and add rows to it. —
-  `GetTableRows`, `AddTableRow` (for time tables specifically, see mantle Tutorial054's
-  `insert_dataframe_into_time_table`/`get_dataframes_from_time_table_type`).
-- **[007](https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/docs/source/tutorials/SIR3S_Model/Tutorial007_Assets/ToolkitTutorial007.ipynb)** ([docs page](https://github.com/3SConsult/sir3stoolkit/blob/main/docs/source/examples.rst#L83-L91)) How to move elements between groups, or assign a newly created element straight to a group. —
-  `InsertElement` + group assignment via `SetValue` (for higher-level group operations, see mantle
-  Tutorial081).
-- **[008](https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/docs/source/tutorials/SIR3S_Model/Tutorial008_Assets/ToolkitTutorial008.ipynb)** ([docs page](https://github.com/3SConsult/sir3stoolkit/blob/main/docs/source/examples.rst#L92-L100)) Grab-bag of things that don't fit the other tutorials: hydraulic-profile data, the log file
-  location, raising vs. only logging toolkit errors, suppressing console output, suppressing SIR DB
-  popups. — `GetHydraulicProfileObjectString`, `GetCourseOfHydraulicProfile`, `SetLogFilePath`,
-  `Set_Raise_On_Error` (`SIR3S_ToolkitError`), `EnableOrDisableOutputComments`,
-  `AllowSirMessageBox` (see Known gotchas above for why this one matters for unattended runs).
-- **[009](https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/docs/source/tutorials/SIR3S_Model/Tutorial009_Assets/ToolkitTutorial009.ipynb)** ([docs page](https://github.com/3SConsult/sir3stoolkit/blob/main/docs/source/examples.rst#L101-L109)) How to run SIR 3S's own model-validation check for errors/inconsistencies before calculating.
-  — `ExecuteModelValidation`.
-- **[010](https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/docs/source/tutorials/SIR3S_Model/Tutorial010_Assets/ToolkitTutorial010.ipynb)** ([docs page](https://github.com/3SConsult/sir3stoolkit/blob/main/docs/source/examples.rst#L110-L118)) How to configure a calculation (type, time frame, thermal settings, working directory) and
-  inspect/edit the generated XML calc file. — `GetDBSourcePath`, `GetWorkingDirectory`,
-  `AllocateWorkingDirectory`, `CreateWorkingDirectory`, `GetCalculationType`, `SetCalculationType`,
-  `GetSimulationTimeFrame`, `SetSimulationTimeFrame`, `GetThermalCalculationParemeters`,
-  `SetThermalCalculationParemeters`, `WriteSirCalcXmlFile`, `CopyWorkingDirectory`.
-
-**`SIR3S_Model_Mantle/` — mantle layer**
-
-- **[050](https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/docs/source/tutorials/SIR3S_Model_Mantle/Tutorial050_Assets/ToolkitTutorial050.ipynb)** ([docs page](https://github.com/3SConsult/sir3stoolkit/blob/main/docs/source/examples.rst#L131-L139)) How to initialize the mantle layer (the pandas-DataFrame-based API) on top of core. —
-  `SIR3S_Model_Dataframes()`/`SIR3S_Model_Mantle()`.
-- **[051](https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/docs/source/tutorials/SIR3S_Model_Mantle/Tutorial051_Assets/ToolkitTutorial051.ipynb)** ([docs page](https://github.com/3SConsult/sir3stoolkit/blob/main/docs/source/examples.rst#L140-L148)) How to build a pandas DataFrame of model data or calculation results for one element type
-  (nodes, pipes, ...), by hand, property by property. — `generate_element_model_data_dataframe`,
-  `generate_element_results_dataframe`, `add_interior_points_to_start_end_sequence`,
-  `convert_rows_to_single_tuple_row`.
-- **[052](https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/docs/source/tutorials/SIR3S_Model_Mantle/Tutorial052_Assets/ToolkitTutorial052.ipynb)** ([docs page](https://github.com/3SConsult/sir3stoolkit/blob/main/docs/source/examples.rst#L149-L157)) How to build the same kind of element DataFrame more generically, without listing properties
-  by hand. — `generate_element_dataframe`.
-- **[053](https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/docs/source/tutorials/SIR3S_Model_Mantle/Tutorial053_Assets/ToolkitTutorial053.ipynb)** ([docs page](https://github.com/3SConsult/sir3stoolkit/blob/main/docs/source/examples.rst#L158-L166)) How to build a DataFrame that isn't per-element-type - a longitudinal section along a path, or
-  all edges (pipes/valves/...) at once. — `generate_edge_dataframe`,
-  `generate_longitudinal_section_dataframes`.
-- **[054](https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/docs/source/tutorials/SIR3S_Model_Mantle/Tutorial054_Assets/ToolkitTutorial054.ipynb)** ([docs page](https://github.com/3SConsult/sir3stoolkit/blob/main/docs/source/examples.rst#L167-L175)) How to view, create, edit and delete rows of a time-varying table (e.g. a measured-variable/
-  Sollwert table) via a DataFrame. — `insert_dataframe_into_time_table`,
-  `get_dataframes_from_time_table_type`.
-- **[055](https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/docs/source/tutorials/SIR3S_Model_Mantle/Tutorial055_Assets/ToolkitTutorial055.ipynb)** ([docs page](https://github.com/3SConsult/sir3stoolkit/blob/main/docs/source/examples.rst#L176-L184)) How to run the same model multiple times with different valve positions/operational-status
-  data and compare the results. — `generate_edge_dataframe`, `generate_element_dataframe`,
-  `plot_node_layer`, `plot_pipe_layer`.
-- **[056](https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/docs/source/tutorials/SIR3S_Model_Mantle/Tutorial056_Assets/ToolkitTutorial056.ipynb)** ([docs page](https://github.com/3SConsult/sir3stoolkit/blob/main/docs/source/examples.rst#L185-L193)) How to look up standard nominal-diameter (DN) tables as a DataFrame. —
-  `get_dataframes_from_nominal_diameter_tables`.
-- **[057](https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/docs/source/tutorials/SIR3S_Model_Mantle/Tutorial057_Assets/ToolkitTutorial057.ipynb)** ([docs page](https://github.com/3SConsult/sir3stoolkit/blob/main/docs/source/examples.rst#L194-L202)) How to read results quickly straight from the result files (bulk=True) instead of one API call per
-  value, incl. the interior-point formats (str/multiindex) and merging them with model data, and how to read
-  the time-curve result file of a model with two output factors. — `generate_element_results_dataframe`
-  (`bulk`, `vec_format`, `output_factor`, `include_name_and_end_nodes`), `get_result_file_properties`,
-  `merge_model_data_and_results`,
-  `add_interior_points_to_start_end_sequence`, `convert_rows_to_single_tuple_row`.
-- **[061](https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/docs/source/tutorials/SIR3S_Model_Mantle/Tutorial061_Assets/ToolkitTutorial061.ipynb)** ([docs page](https://github.com/3SConsult/sir3stoolkit/blob/main/docs/source/examples.rst#L203-L211)) How to export a model as a networkx graph, for graph-based analysis. — `SIR_3S_to_nx_graph`,
-  `add_properties_to_graph`.
-- **[062](https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/docs/source/tutorials/SIR3S_Model_Mantle/Tutorial062_Assets/ToolkitTutorial062.ipynb)** ([docs page](https://github.com/3SConsult/sir3stoolkit/blob/main/docs/source/examples.rst#L212-L220)) How to export a model as a pandapipes network, e.g. to cross-check against SIR 3S's own
-  results. — `SIR_3S_to_pandapipes`.
-- **[071](https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/docs/source/tutorials/SIR3S_Model_Mantle/Tutorial071_Assets/ToolkitTutorial071.ipynb)** ([docs page](https://github.com/3SConsult/sir3stoolkit/blob/main/docs/source/examples.rst#L221-L229)) How to plot a result property's value over time for one or more elements. — `plot_time_curves`.
-- **[072](https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/docs/source/tutorials/SIR3S_Model_Mantle/Tutorial072_Assets/ToolkitTutorial072.ipynb)** ([docs page](https://github.com/3SConsult/sir3stoolkit/blob/main/docs/source/examples.rst#L230-L238)) WORK IN PROGRESS - how to plot values along a longitudinal section (a path through the
-  network). — `generate_longitudinal_section_dataframes`, `add_interior_points_as_multiindex`.
-- **[073](https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/docs/source/tutorials/SIR3S_Model_Mantle/Tutorial073_Assets/ToolkitTutorial073.ipynb)** ([docs page](https://github.com/3SConsult/sir3stoolkit/blob/main/docs/source/examples.rst#L239-L247)) How to plot a network-wide color-coded map of a result property (a network color depiction).
-  — `plot_node_layer`, `plot_pipe_layer`.
-- **[081](https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/docs/source/tutorials/SIR3S_Model_Mantle/Tutorial081_Assets/ToolkitTutorial081.ipynb)** ([docs page](https://github.com/3SConsult/sir3stoolkit/blob/main/docs/source/examples.rst#L248-L255)) How to add, remove, or wholesale replace a group's elements. — `get_tks_of_group_elements`,
-  `remove_elements_from_group`, `add_elements_to_group`, `add_element_types_to_tk_list`,
-  `set_group_elements`.
+- **Core (`SIR3S_Model/`)**: 000 import/initialize, SirGraf path, DLL version · 001 create/open a
+  model · 002 read/change element data by tk · 003 run a calculation, read results over time · 004
+  transactions/edit sessions · 005 add and connect elements · 006 tables (e.g. characteristic curves)
+  · 007 groups · 008 hydraulic profile, log file, raising vs. logging errors, console output, SIR DB
+  popups · 009 model validation · 010 calculation settings, working directory, calc XML file.
+- **Mantle (`SIR3S_Model_Mantle/`)**: 050 initialize mantle · 051 element DataFrames property by
+  property, incl. results, and looking up an element type in the object type reference · 052 element DataFrames generically · 053 edge and longitudinal-section
+  DataFrames · 054 time tables via DataFrames · 055 runs with different valve positions, compare
+  results · 056 nominal-diameter (DN) tables · 057 fast bulk results from the result files · 061
+  networkx export · 062 pandapipes export · 071 time-curve plots · 072 longitudinal-section plots
+  (work in progress) · 073 network color map of a result property · 081 group elements.
 
 ## Known gotchas (durable, not tied to a specific bug/version)
 
@@ -191,7 +117,8 @@ number/scope or the operation it teaches changes.
   to suppress these (see Tutorial008); note this also means missing out on deeper error messages, so
   it's not recommended for normal interactive use. If you should provide Code for the user to run, do not use this option unless explicitly stated by user or pop up issues arise. This is mainly useful if you should open the model while the user has the model open in his own UI.
 - **Errors while initializing the toolkit can come from an outdated `Sir3S_Toolkit.dll`** in the
-  SirGraf directory (some sir3stoolkit versions need it replaced, see "Checking for updates" below) -
+  SirGraf directory (some sir3stoolkit versions need it replaced, see
+  [`ai/updates-and-issues.md`](ai/updates-and-issues.md)) -
   e.g. `wrapper.SIR3S_Model()` failing with "Could not find .NET enum ...", or newer methods missing
   on the toolkit object. Before debugging further, check the `Initialize_Toolkit()` log: it warns if the
   DLL's file version differs from the one the installed sir3stoolkit ships with
@@ -244,53 +171,13 @@ number/scope or the operation it teaches changes.
     ([#26](https://github.com/3SConsult/sir3stoolkit/issues/26)).
   - Node and edge tks in the graph are `int64`, not `str` as everywhere else.
 
-## Checking for updates
+## Making this guide findable in the user's project
 
-If relevant to what the user's asking (they mention updating, or ask if they're current) - not
-something to check unconditionally every time - compare the installed version against the latest on
-PyPI and tell them if they differ:
-
-- Installed: `importlib.metadata.version("sir3stoolkit")`.
-- Latest: https://pypi.org/pypi/sir3stoolkit/json (`info.version`) - needs network access; without it,
-  just point the user at https://pypi.org/project/sir3stoolkit/ instead of guessing.
-
-If they differ, check `docs/source/releases.rst`'s version-overview table
-(https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/docs/source/releases.rst) for whether
-upgrading also needs a manual `Sir3S_Toolkit.dll` replacement in the SirGraf directory. The table's
-`dll changed + file version` column is a per-version delta, not cumulative - OR that column across
-*every* version strictly between the installed and target version, not just the target's own row
-(e.g. 90.15.19 -> 90.15.21 needs a DLL update because .20 says "Yes", even though the logic can't
-stop at just checking .21's row).
-From 90.15.26 on, `Sir3S_Toolkit.dll` carries a file version (90.15.26: `90.15.10.0`; all earlier DLLs
-report `1.0.0.0`), and that column also states it. So the DLL actually installed can be checked
-directly instead of inferred: `wrapper.Get_Toolkit_Dll_File_Version()` returns the file version of the
-DLL in the SirGraf directory (or of any DLL path passed); `Initialize_Toolkit()` logs it and warns if it
-differs from the DLL shipped with the installed sir3stoolkit version (`lib/<version>/` in the package).
-If that warning appears, the DLL needs replacing (or sir3stoolkit upgrading) before trusting results.
-A new mantle dependency being required isn't reliably flagged in the changelog text - instead of
-parsing prose for it, just try the actual import; a missing one raises a clear, actionable combined
-`ImportError` naming what to `pip install` (see the dependency gotcha above).
-
-This is also worth doing unprompted, not just when asked about updates: if behavior contradicts a
-tutorial or docstring and looks like a genuine bug rather than misuse, check the installed version
-against `releases.rst`/the issues (same mechanics as above) before concluding it's user error - recent
-point releases have fixed real result-correctness bugs, not just added features.
-
-## Current known issues / roadmap
-
-https://github.com/3SConsult/sir3stoolkit/issues to browse - but that's GitHub's rendered UI, not
-reliably fetchable/parseable. If you have network access, use the REST API instead for clean
-structured data (title, body, state, labels, comment count) without needing to parse a rendered page:
-https://api.github.com/repos/3SConsult/sir3stoolkit/issues?state=open&per_page=100 (no auth needed,
-public repo; add `state=all` to include closed/historical ones, or `per_page`/pagination for more than
-100). Useful for "is this a known gap" context, not a substitute for the docstring on the specific
-function you're calling.
-
-If you're debugging something for the user and would normally check this but can't (no network,
-rate-limited - unauthenticated GitHub API calls are capped at 60/hour per IP, easy to hit), say so
-explicitly rather than silently skipping the check or guessing - the user can then check the page
-themselves if it matters for what they're debugging. If rate-limited, don't loop-retry - it's an
-hourly cap, retrying within the same session won't help.
+AI assistants working in a project that merely *uses* sir3stoolkit don't load this file on their own
+(`Initialize_Toolkit()` logs its path when run by an AI assistant). If the user wants their future AI
+sessions to read it before writing any code, suggest `python -m sir3stoolkit ai-setup` (run in their
+project folder): it adds a short pointer to the project's `AGENTS.md` (and `CLAUDE.md`, if there is
+one). Don't run it unasked - it edits the user's project files.
 
 ## Contributing to sir3stoolkit itself
 
