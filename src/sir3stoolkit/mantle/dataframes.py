@@ -1374,6 +1374,9 @@ class SIR3S_Model_Dataframes(SIR3S_Model_MX):
                   (e.g. ["SIR3S_Model.AddNewPipe"], ["SIR3S_View.AddNewHouse"]); [] if none is known
                 - row_type (tables) / table_type (table rows): the matching row/table element type
                 - insertable_in: network types the element type can be inserted into
+                - number_of_end_nodes: how many end nodes GetEndNodes() returns for the element type
+                  (1 bypass elements, 2 connecting elements, 4 heat exchangers, 0 for types without end nodes,
+                  None where unknown) - the same in every network type
                 - properties: property name -> value type (e.g. {"DN": "String", ...})
                 - result_properties: result property name -> {"description", "unit"} (German, None where unknown)
                 Empty dict if the element type isn't in the reference.
@@ -1651,6 +1654,17 @@ class SIR3S_Model_Dataframes(SIR3S_Model_MX):
         return model_data_props
 
     def __is_get_endnodes_applicable(self, element_type):
+        """
+        Whether GetEndNodes() applies to the element type: looked up in the object type reference
+        (number_of_end_nodes > 0). Only element types without a number there (e.g. added in a newer SIR 3S
+        version) are probed in the open model, by inserting and deleting a dummy element.
+        """
+        entry = _load_object_type_reference()["object_types"].get(getattr(element_type, "name", element_type))
+        if entry and entry.get("number_of_end_nodes") is not None:
+            return entry["number_of_end_nodes"] > 0
+        return self.__probe_get_endnodes_applicable(element_type)
+
+    def __probe_get_endnodes_applicable(self, element_type):
         element_type_net = self.to_dotnet_enum(element_type)
         dummy, _insert_error = self.toolkit.InsertElement(
             element_type_net,

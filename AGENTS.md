@@ -73,7 +73,8 @@ The same reference ships with the package and can be queried per element type, w
 (`"ROHR"`), `category` (connecting element, bypass element, table, signal model element, ... or
 `"unknown"`), `create_with` (only methods shown to create a real instance of the type, e.g.
 `["SIR3S_Model.AddNewPipe"]`, `["SIR3S_View.AddNewHouse"]` - `[]` means none is known, not that
-`InsertElement` works), `insertable_in` (network types), `properties` (name → value type) and
+`InsertElement` works), `insertable_in` (network types), `number_of_end_nodes` (what `GetEndNodes` returns:
+1 bypass, 2 connecting, 4 heat exchanger, 0 none - the same in every network type), `properties` (name → value type) and
 `result_properties` (name → German `description`/`unit`). To query across all element types, read the
 JSON itself (`{"notice": [...], "object_types": {...}}`, keyed by `ObjectTypes` member name):
 `mantle/object_type_reference.json` in the installed package, or
