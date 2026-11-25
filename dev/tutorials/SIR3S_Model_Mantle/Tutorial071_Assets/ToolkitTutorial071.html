@@ -103,7 +103,7 @@
 <section id="SIR-3S-Installation">
 <h1>SIR 3S Installation<a class="headerlink" href="#SIR-3S-Installation" title="Link to this heading"></a></h1>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>SIR3S_SIRGRAF_DIR = r"C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2" #change to local path
@@ -130,7 +130,7 @@
 </div>
 </div>
 <p>The wrapper package has to be initialized with reference to a SIR 3S (SirGraf) installation.</p>
-<div class="nbinput nblast docutils container">
+<div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
@@ -138,10 +138,21 @@
 </pre></div>
 </div>
 </div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+[2026-11-25 16:27:08,441] INFO in sir3stoolkit.core.wrapper: [Initialization] Using provided SirGraf path: C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2
+[2026-11-25 16:27:08,441] INFO in sir3stoolkit.core.wrapper: [Initialization] Using provided SirGraf path: C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2
+[2026-11-25 16:27:08,470] INFO in sir3stoolkit.core.wrapper: [Initialization] Initializing toolkit with SirGraf path: C:\3S\SIR 3S\SirGraf-90-15-00-24_Quebec-Upd2
+[2026-11-25 16:27:08,592] INFO in sir3stoolkit.core.wrapper: [Initialization] Sir3S_Toolkit.dll file version 90.15.11.0 (matches this sir3stoolkit version).
+</pre></div></div>
+</div>
 <section id="Additional-imports">
 <h2>Additional imports<a class="headerlink" href="#Additional-imports" title="Link to this heading"></a></h2>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
@@ -154,7 +165,7 @@
 <section id="Initialization">
 <h1>Initialization<a class="headerlink" href="#Initialization" title="Link to this heading"></a></h1>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s = mantle.SIR3S_Model_Mantle()
@@ -164,24 +175,26 @@
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="output_area docutils container">
+<div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-Initialization complete
+[2026-11-25 16:27:08,753] INFO in sir3stoolkit.core.wrapper: [Model Class Initialization] Initialization complete
 </pre></div></div>
 </div>
 </section>
 <section id="Open-Model">
 <h1>Open Model<a class="headerlink" href="#Open-Model" title="Link to this heading"></a></h1>
+<p>The tutorial uses <em>Network 3</em>, a fictional district heating network shared by the mantle tutorials: a heat plant (in its own container “Heizwerk”), about 180 consumers, a ring road and two longitudinal sections, calculated over one day. It is built from scratch with the SIR 3S Toolkit by <a class="reference external" href="https://github.com/3SConsult/sir3stoolkit/blob/main/docs/source/networks/Network3.py">Network3.py</a>; <code class="docutils literal notranslate"><span class="pre">Network3.db3</span></code> is included in the tutorial’s ZIP archive.</p>
+<p>Its elements have unique ID references (IDREFERENZ), e.g. <code class="docutils literal notranslate"><span class="pre">VL-HS-01</span></code> for the first supply pipe of the main street. They are used below to look up tks with <a class="reference external" href="https://3sconsult.github.io/sir3stoolkit/references/sir3stoolkit.core.html#sir3stoolkit.core.wrapper.SIR3S_Model.GetTkFromIDReference">GetTkFromIDReference()</a> - the tks themselves differ between builds of the model.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dbFilePath=r"Toolkit_Tutorial71_Model.db3"
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dbFilePath=r"Network3.db3"
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.OpenModel(dbName=dbFilePath,
@@ -197,27 +210,35 @@ Initialization complete
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="output_area docutils container">
+<div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-Model is open for further operation
+[2026-11-25 16:27:13,921] INFO in sir3stoolkit.core.wrapper: Model is open for further operation
 </pre></div></div>
 </div>
 </section>
 <section id="Calculate-Model">
 <h1>Calculate Model<a class="headerlink" href="#Calculate-Model" title="Link to this heading"></a></h1>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>#s3s.ExecCalculation(True)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s3s.ExecCalculation(True) # To ensure result data
 </pre></div>
 </div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+[2026-11-25 16:27:20,106] INFO in sir3stoolkit.core.wrapper: Model Calculation is complete
+</pre></div></div>
 </div>
 </section>
 <section id="Obtain-Data">
 <h1>Obtain Data<a class="headerlink" href="#Obtain-Data" title="Link to this heading"></a></h1>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>object_types = [item for item in dir(s3s.ObjectTypes) if not (item.startswith('__') and item.endswith('__'))]
@@ -236,15 +257,16 @@ print(object_types)
 <section id="Nodes">
 <h2>Nodes<a class="headerlink" href="#Nodes" title="Link to this heading"></a></h2>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>nodes_tks = ["5471942051669438823", "5166327497394449628", "5667818255300782920", "5262999985134416180"]
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># supply and return of the heat plant and of the hospital (the end of the main street)
+nodes_tks = [s3s.GetTkFromIDReference(id_ref, s3s.ObjectTypes.Node) for id_ref in ["V-HW", "R-HW", "V-H-KRANKENHAUS", "R-H-KRANKENHAUS"]]
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_nodes_results = s3s.generate_element_results_dataframe(element_type=s3s.ObjectTypes.Node
@@ -260,31 +282,35 @@ print(object_types)
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2026-03-03 15:50:42,578] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Node
-[2026-03-03 15:50:42,581] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] No timestamps were given. Checking available simulation timestamps (SIR3S_Model.GetTimeStamps()[0]).
-[2026-03-03 15:50:42,692] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 601 simulation timestamp(s) are available.
-[2026-03-03 15:50:42,815] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 601 valid timestamp(s) will be used.
-[2026-03-03 15:50:42,824] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 635 element(s) of element type ObjectTypes.Node.
-[2026-03-03 15:50:42,824] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 4 tks remain after filtering for given tks.
-[2026-03-03 15:50:42,852] INFO in sir3stoolkit.mantle.dataframes: [results] Using 1 result properties.
-[2026-03-03 15:50:43,037] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
-[2026-03-03 15:50:46,540] INFO in sir3stoolkit.mantle.dataframes: [results] 0 fully NaN columns dropped.
-[2026-03-03 15:50:46,552] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (601, 4)
+[2026-11-25 16:27:20,177] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Node
+[2026-11-25 16:27:20,619] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] No timestamps were given. Checking available simulation timestamps (SIR3S_Model.GetTimeStamps()[0]).
+[2026-11-25 16:27:20,623] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 13 simulation timestamp(s) are available.
+[2026-11-25 16:27:20,624] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Using 13 timestamps: [&#39;2026-01-15 00:00:00.000 +01:00&#39;, &#39;2026-01-15 02:00:00.000 +01:00&#39;, &#39;2026-01-15 04:00:00.000 +01:00&#39;, &#39;2026-01-15 06:00:00.000 +01:00&#39;, &#39;2026-01-15 08:00:00.000 +01:00&#39;, &#39;2026-01-15 10:00:00.000 +01:00&#39;, &#39;2026-01-15 12:00:00.000 +01:00&#39;, &#39;2026-01-15 14:00:00.000 +01:00&#39;, &#39;2026-01-15 16:00:00.000 +01:00&#39;, &#39;2026-01-15 18:00:00.000 +01:00&#39;, &#39;2026-01-15 20:00:00.000 +01:00&#39;, &#39;2026-01-15 22:00:00.000 +01:00&#39;, &#39;2026-01-16 00:00:00.000 +01:00&#39;]
+[2026-11-25 16:27:20,632] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 592 element(s) of element type ObjectTypes.Node.
+[2026-11-25 16:27:20,634] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 4 tks remain after filtering for given tks.
+[2026-11-25 16:27:20,679] INFO in sir3stoolkit.mantle.dataframes: [results] Using 1 result properties.
+[2026-11-25 16:27:20,683] INFO in sir3stoolkit.mantle.dataframes: [results] 13 timestamp(s), 4 element(s), 1 property resolved (0.5 s).
+[2026-11-25 16:27:20,686] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values... (bulk=False)
+[2026-11-25 16:27:20,790] INFO in sir3stoolkit.mantle.dataframes: [results] 52 value(s) retrieved via GetResultfortimestamp() (0.1 s).
+[2026-11-25 16:27:20,809] INFO in sir3stoolkit.mantle.dataframes: [results] 0 fully NaN columns dropped.
+[2026-11-25 16:27:20,809] INFO in sir3stoolkit.mantle.dataframes: [results] DataFrame assembled (0.0 s).
+[2026-11-25 16:27:20,843] INFO in sir3stoolkit.mantle.dataframes: [results] Names/end nodes of 4 element(s) looked up (0.0 s).
+[2026-11-25 16:27:20,849] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (13, 4) (0.7 s in total)
 </pre></div></div>
 </div>
 </section>
 <section id="Vents">
 <h2>Vents<a class="headerlink" href="#Vents" title="Link to this heading"></a></h2>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>vent_tks = ["5303247238968995258"]
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>vent_tks = [s3s.GetTkFromIDReference("KLAPPE-HW", s3s.ObjectTypes.FlapValve)] # non-return valve behind the network pumps
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_vent_results = s3s.generate_element_results_dataframe(element_type=s3s.ObjectTypes.FlapValve
@@ -300,20 +326,24 @@ print(object_types)
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2026-03-03 15:50:46,588] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.FlapValve
-[2026-03-03 15:50:46,590] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] No timestamps were given. Checking available simulation timestamps (SIR3S_Model.GetTimeStamps()[0]).
-[2026-03-03 15:50:46,690] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 601 simulation timestamp(s) are available.
-[2026-03-03 15:50:46,807] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 601 valid timestamp(s) will be used.
-[2026-03-03 15:50:46,811] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 4 element(s) of element type ObjectTypes.FlapValve.
-[2026-03-03 15:50:46,811] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 1 tks remain after filtering for given tks.
-[2026-03-03 15:50:46,815] INFO in sir3stoolkit.mantle.dataframes: [results] Using 2 result properties.
-[2026-03-03 15:50:47,364] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
-[2026-03-03 15:50:49,159] INFO in sir3stoolkit.mantle.dataframes: [results] 0 fully NaN columns dropped.
-[2026-03-03 15:50:49,185] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (601, 2)
+[2026-11-25 16:27:20,895] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.FlapValve
+[2026-11-25 16:27:21,192] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] No timestamps were given. Checking available simulation timestamps (SIR3S_Model.GetTimeStamps()[0]).
+[2026-11-25 16:27:21,195] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 13 simulation timestamp(s) are available.
+[2026-11-25 16:27:21,200] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Using 13 timestamps: [&#39;2026-01-15 00:00:00.000 +01:00&#39;, &#39;2026-01-15 02:00:00.000 +01:00&#39;, &#39;2026-01-15 04:00:00.000 +01:00&#39;, &#39;2026-01-15 06:00:00.000 +01:00&#39;, &#39;2026-01-15 08:00:00.000 +01:00&#39;, &#39;2026-01-15 10:00:00.000 +01:00&#39;, &#39;2026-01-15 12:00:00.000 +01:00&#39;, &#39;2026-01-15 14:00:00.000 +01:00&#39;, &#39;2026-01-15 16:00:00.000 +01:00&#39;, &#39;2026-01-15 18:00:00.000 +01:00&#39;, &#39;2026-01-15 20:00:00.000 +01:00&#39;, &#39;2026-01-15 22:00:00.000 +01:00&#39;, &#39;2026-01-16 00:00:00.000 +01:00&#39;]
+[2026-11-25 16:27:21,203] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 1 element(s) of element type ObjectTypes.FlapValve.
+[2026-11-25 16:27:21,207] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 1 tks remain after filtering for given tks.
+[2026-11-25 16:27:21,211] INFO in sir3stoolkit.mantle.dataframes: [results] Using 2 result properties.
+[2026-11-25 16:27:21,211] INFO in sir3stoolkit.mantle.dataframes: [results] 13 timestamp(s), 1 element(s), 2 properties resolved (0.3 s).
+[2026-11-25 16:27:21,211] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values... (bulk=False)
+[2026-11-25 16:27:21,301] INFO in sir3stoolkit.mantle.dataframes: [results] 26 value(s) retrieved via GetResultfortimestamp() (0.1 s).
+[2026-11-25 16:27:21,302] INFO in sir3stoolkit.mantle.dataframes: [results] 0 fully NaN columns dropped.
+[2026-11-25 16:27:21,319] INFO in sir3stoolkit.mantle.dataframes: [results] DataFrame assembled (0.0 s).
+[2026-11-25 16:27:21,326] INFO in sir3stoolkit.mantle.dataframes: [results] Names/end nodes of 1 element(s) looked up (0.0 s).
+[2026-11-25 16:27:21,336] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (13, 2) (0.4 s in total)
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_vent_results.head(3)
@@ -321,7 +351,7 @@ print(object_types)
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -347,15 +377,15 @@ print(object_types)
   <thead>
     <tr>
       <th>tk</th>
-      <th colspan="2" halign="left">5303247238968995258</th>
+      <th colspan="2" halign="left">4902425580532552737</th>
     </tr>
     <tr>
       <th>name</th>
-      <th colspan="2" halign="left">Klappe K0013 K0014</th>
+      <th colspan="2" halign="left">Klappe R-HW-P R-HW-K</th>
     </tr>
     <tr>
       <th>end_nodes</th>
-      <th colspan="2" halign="left">('5154852831768145370', '5018980228933582263', '-1', '-1')</th>
+      <th colspan="2" halign="left">('5756931290248494597', '5450735918140770069', '-1', '-1')</th>
     </tr>
     <tr>
       <th>property</th>
@@ -370,19 +400,19 @@ print(object_types)
   </thead>
   <tbody>
     <tr>
-      <th>2020-01-28 15:45:01.000 +01:00</th>
-      <td>56.41736</td>
-      <td>18.35320</td>
+      <th>2026-01-15 00:00:00.000 +01:00</th>
+      <td>26.459579</td>
+      <td>98.099777</td>
     </tr>
     <tr>
-      <th>2020-01-28 15:45:01.100 +01:00</th>
-      <td>56.40917</td>
-      <td>18.35296</td>
+      <th>2026-01-15 02:00:00.000 +01:00</th>
+      <td>24.348660</td>
+      <td>90.988617</td>
     </tr>
     <tr>
-      <th>2020-01-28 15:45:01.200 +01:00</th>
-      <td>56.40861</td>
-      <td>18.35280</td>
+      <th>2026-01-15 04:00:00.000 +01:00</th>
+      <td>27.474970</td>
+      <td>100.526802</td>
     </tr>
   </tbody>
 </table>
@@ -392,15 +422,15 @@ print(object_types)
 <section id="Valves">
 <h2>Valves<a class="headerlink" href="#Valves" title="Link to this heading"></a></h2>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>valves_tks = ["5430537691154258843"]
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>valves_tks = [s3s.GetTkFromIDReference("A-VL-KAS", s3s.ObjectTypes.Valve)] # shut-off valve Kastanienallee south, supply
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_valves_results = s3s.generate_element_results_dataframe(element_type=s3s.ObjectTypes.Valve
@@ -416,20 +446,24 @@ print(object_types)
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-[2026-03-03 15:50:49,252] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Valve
-[2026-03-03 15:50:49,256] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] No timestamps were given. Checking available simulation timestamps (SIR3S_Model.GetTimeStamps()[0]).
-[2026-03-03 15:50:49,340] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 601 simulation timestamp(s) are available.
-[2026-03-03 15:50:49,428] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 601 valid timestamp(s) will be used.
-[2026-03-03 15:50:49,429] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 9 element(s) of element type ObjectTypes.Valve.
-[2026-03-03 15:50:49,432] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 1 tks remain after filtering for given tks.
-[2026-03-03 15:50:49,434] INFO in sir3stoolkit.mantle.dataframes: [results] Using 1 result properties.
-[2026-03-03 15:50:49,487] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values...
-[2026-03-03 15:50:51,019] INFO in sir3stoolkit.mantle.dataframes: [results] 0 fully NaN columns dropped.
-[2026-03-03 15:50:51,025] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (601, 1)
+[2026-11-25 16:27:21,473] INFO in sir3stoolkit.mantle.dataframes: [results] Generating results dataframe for element type: ObjectTypes.Valve
+[2026-11-25 16:27:21,682] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] No timestamps were given. Checking available simulation timestamps (SIR3S_Model.GetTimeStamps()[0]).
+[2026-11-25 16:27:21,682] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] 13 simulation timestamp(s) are available.
+[2026-11-25 16:27:21,682] INFO in sir3stoolkit.mantle.dataframes: [Resolving Timestamps] Using 13 timestamps: [&#39;2026-01-15 00:00:00.000 +01:00&#39;, &#39;2026-01-15 02:00:00.000 +01:00&#39;, &#39;2026-01-15 04:00:00.000 +01:00&#39;, &#39;2026-01-15 06:00:00.000 +01:00&#39;, &#39;2026-01-15 08:00:00.000 +01:00&#39;, &#39;2026-01-15 10:00:00.000 +01:00&#39;, &#39;2026-01-15 12:00:00.000 +01:00&#39;, &#39;2026-01-15 14:00:00.000 +01:00&#39;, &#39;2026-01-15 16:00:00.000 +01:00&#39;, &#39;2026-01-15 18:00:00.000 +01:00&#39;, &#39;2026-01-15 20:00:00.000 +01:00&#39;, &#39;2026-01-15 22:00:00.000 +01:00&#39;, &#39;2026-01-16 00:00:00.000 +01:00&#39;]
+[2026-11-25 16:27:21,682] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] Retrieved 24 element(s) of element type ObjectTypes.Valve.
+[2026-11-25 16:27:21,691] INFO in sir3stoolkit.mantle.dataframes: [Resolving tks] 1 tks remain after filtering for given tks.
+[2026-11-25 16:27:21,691] INFO in sir3stoolkit.mantle.dataframes: [results] Using 1 result properties.
+[2026-11-25 16:27:21,698] INFO in sir3stoolkit.mantle.dataframes: [results] 13 timestamp(s), 1 element(s), 1 property resolved (0.2 s).
+[2026-11-25 16:27:21,698] INFO in sir3stoolkit.mantle.dataframes: [results] Retrieving result values... (bulk=False)
+[2026-11-25 16:27:21,761] INFO in sir3stoolkit.mantle.dataframes: [results] 13 value(s) retrieved via GetResultfortimestamp() (0.1 s).
+[2026-11-25 16:27:21,771] INFO in sir3stoolkit.mantle.dataframes: [results] 0 fully NaN columns dropped.
+[2026-11-25 16:27:21,777] INFO in sir3stoolkit.mantle.dataframes: [results] DataFrame assembled (0.0 s).
+[2026-11-25 16:27:21,777] INFO in sir3stoolkit.mantle.dataframes: [results] Names/end nodes of 1 element(s) looked up (0.0 s).
+[2026-11-25 16:27:21,786] INFO in sir3stoolkit.mantle.dataframes: [results] Done. Shape: (13, 1) (0.3 s in total)
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_valves_results.head(3)
@@ -437,7 +471,7 @@ print(object_types)
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -463,15 +497,15 @@ print(object_types)
   <thead>
     <tr>
       <th>tk</th>
-      <th>5430537691154258843</th>
+      <th>4966030677445777085</th>
     </tr>
     <tr>
       <th>name</th>
-      <th>Ventil K0011 PST_out</th>
+      <th>Ventil V-KAS-A0 V-KAS-A1</th>
     </tr>
     <tr>
       <th>end_nodes</th>
-      <th>('5471942051669438823', '5355079936656060238', '-1', '-1')</th>
+      <th>('4766920490009518044', '5539861108537060317', '-1', '-1')</th>
     </tr>
     <tr>
       <th>property</th>
@@ -484,16 +518,16 @@ print(object_types)
   </thead>
   <tbody>
     <tr>
-      <th>2020-01-28 15:45:01.000 +01:00</th>
-      <td>36.70272</td>
+      <th>2026-01-15 00:00:00.000 +01:00</th>
+      <td>9.068021</td>
     </tr>
     <tr>
-      <th>2020-01-28 15:45:01.100 +01:00</th>
-      <td>36.70224</td>
+      <th>2026-01-15 02:00:00.000 +01:00</th>
+      <td>8.425672</td>
     </tr>
     <tr>
-      <th>2020-01-28 15:45:01.200 +01:00</th>
-      <td>36.70192</td>
+      <th>2026-01-15 04:00:00.000 +01:00</th>
+      <td>9.328013</td>
     </tr>
   </tbody>
 </table>
@@ -503,7 +537,7 @@ print(object_types)
 <section id="Concat">
 <h2>Concat<a class="headerlink" href="#Concat" title="Link to this heading"></a></h2>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_results = pd.concat([df_nodes_results, df_vent_results, df_valves_results], axis=1, join="inner")
@@ -511,7 +545,7 @@ print(object_types)
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_results.head(3)
@@ -519,7 +553,7 @@ print(object_types)
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -545,21 +579,21 @@ print(object_types)
   <thead>
     <tr>
       <th>tk</th>
-      <th>5471942051669438823</th>
-      <th>5166327497394449628</th>
-      <th>5667818255300782920</th>
-      <th>5262999985134416180</th>
-      <th colspan="2" halign="left">5303247238968995258</th>
-      <th>5430537691154258843</th>
+      <th>4942640643723972374</th>
+      <th>5652926479743870945</th>
+      <th>5088746048196633749</th>
+      <th>5667917176928082313</th>
+      <th colspan="2" halign="left">4902425580532552737</th>
+      <th>4966030677445777085</th>
     </tr>
     <tr>
       <th>name</th>
-      <th>K0011</th>
-      <th>5143521_i</th>
-      <th>791393_3_k</th>
-      <th>1629686_0_i</th>
-      <th colspan="2" halign="left">Klappe K0013 K0014</th>
-      <th>Ventil K0011 PST_out</th>
+      <th>V-HW</th>
+      <th>R-HW</th>
+      <th>V-H-KRANKENH</th>
+      <th>R-H-KRANKENH</th>
+      <th colspan="2" halign="left">Klappe R-HW-P R-HW-K</th>
+      <th>Ventil V-KAS-A0 V-KAS-A1</th>
     </tr>
     <tr>
       <th>end_nodes</th>
@@ -567,8 +601,8 @@ print(object_types)
       <th>No end nodes on element type</th>
       <th>No end nodes on element type</th>
       <th>No end nodes on element type</th>
-      <th colspan="2" halign="left">('5154852831768145370', '5018980228933582263', '-1', '-1')</th>
-      <th>('5471942051669438823', '5355079936656060238', '-1', '-1')</th>
+      <th colspan="2" halign="left">('5756931290248494597', '5450735918140770069', '-1', '-1')</th>
+      <th>('4766920490009518044', '5539861108537060317', '-1', '-1')</th>
     </tr>
     <tr>
       <th>property</th>
@@ -593,34 +627,34 @@ print(object_types)
   </thead>
   <tbody>
     <tr>
-      <th>2020-01-28 15:45:01.000 +01:00</th>
-      <td>10.59964</td>
-      <td>8.320659</td>
-      <td>6.477164</td>
-      <td>0.881641</td>
-      <td>56.41736</td>
-      <td>18.35320</td>
-      <td>36.70272</td>
+      <th>2026-01-15 00:00:00.000 +01:00</th>
+      <td>7.703956</td>
+      <td>4.0</td>
+      <td>5.937380</td>
+      <td>2.738959</td>
+      <td>26.459579</td>
+      <td>98.099777</td>
+      <td>9.068021</td>
     </tr>
     <tr>
-      <th>2020-01-28 15:45:01.100 +01:00</th>
-      <td>10.59981</td>
-      <td>8.320658</td>
-      <td>6.477123</td>
-      <td>0.881641</td>
-      <td>56.40917</td>
-      <td>18.35296</td>
-      <td>36.70224</td>
+      <th>2026-01-15 02:00:00.000 +01:00</th>
+      <td>7.713698</td>
+      <td>4.0</td>
+      <td>5.974027</td>
+      <td>2.711926</td>
+      <td>24.348660</td>
+      <td>90.988617</td>
+      <td>8.425672</td>
     </tr>
     <tr>
-      <th>2020-01-28 15:45:01.200 +01:00</th>
-      <td>10.59993</td>
-      <td>8.320656</td>
-      <td>6.477080</td>
-      <td>0.881639</td>
-      <td>56.40861</td>
-      <td>18.35280</td>
-      <td>36.70192</td>
+      <th>2026-01-15 04:00:00.000 +01:00</th>
+      <td>7.700174</td>
+      <td>4.0</td>
+      <td>5.903639</td>
+      <td>2.769024</td>
+      <td>27.474970</td>
+      <td>100.526802</td>
+      <td>9.328013</td>
     </tr>
   </tbody>
 </table>
@@ -631,7 +665,7 @@ print(object_types)
 <section id="Plot">
 <h1>Plot<a class="headerlink" href="#Plot" title="Link to this heading"></a></h1>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_results.head(3)
@@ -639,7 +673,7 @@ print(object_types)
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -665,21 +699,21 @@ print(object_types)
   <thead>
     <tr>
       <th>tk</th>
-      <th>5471942051669438823</th>
-      <th>5166327497394449628</th>
-      <th>5667818255300782920</th>
-      <th>5262999985134416180</th>
-      <th colspan="2" halign="left">5303247238968995258</th>
-      <th>5430537691154258843</th>
+      <th>4942640643723972374</th>
+      <th>5652926479743870945</th>
+      <th>5088746048196633749</th>
+      <th>5667917176928082313</th>
+      <th colspan="2" halign="left">4902425580532552737</th>
+      <th>4966030677445777085</th>
     </tr>
     <tr>
       <th>name</th>
-      <th>K0011</th>
-      <th>5143521_i</th>
-      <th>791393_3_k</th>
-      <th>1629686_0_i</th>
-      <th colspan="2" halign="left">Klappe K0013 K0014</th>
-      <th>Ventil K0011 PST_out</th>
+      <th>V-HW</th>
+      <th>R-HW</th>
+      <th>V-H-KRANKENH</th>
+      <th>R-H-KRANKENH</th>
+      <th colspan="2" halign="left">Klappe R-HW-P R-HW-K</th>
+      <th>Ventil V-KAS-A0 V-KAS-A1</th>
     </tr>
     <tr>
       <th>end_nodes</th>
@@ -687,8 +721,8 @@ print(object_types)
       <th>No end nodes on element type</th>
       <th>No end nodes on element type</th>
       <th>No end nodes on element type</th>
-      <th colspan="2" halign="left">('5154852831768145370', '5018980228933582263', '-1', '-1')</th>
-      <th>('5471942051669438823', '5355079936656060238', '-1', '-1')</th>
+      <th colspan="2" halign="left">('5756931290248494597', '5450735918140770069', '-1', '-1')</th>
+      <th>('4766920490009518044', '5539861108537060317', '-1', '-1')</th>
     </tr>
     <tr>
       <th>property</th>
@@ -713,58 +747,58 @@ print(object_types)
   </thead>
   <tbody>
     <tr>
-      <th>2020-01-28 15:45:01.000 +01:00</th>
-      <td>10.59964</td>
-      <td>8.320659</td>
-      <td>6.477164</td>
-      <td>0.881641</td>
-      <td>56.41736</td>
-      <td>18.35320</td>
-      <td>36.70272</td>
+      <th>2026-01-15 00:00:00.000 +01:00</th>
+      <td>7.703956</td>
+      <td>4.0</td>
+      <td>5.937380</td>
+      <td>2.738959</td>
+      <td>26.459579</td>
+      <td>98.099777</td>
+      <td>9.068021</td>
     </tr>
     <tr>
-      <th>2020-01-28 15:45:01.100 +01:00</th>
-      <td>10.59981</td>
-      <td>8.320658</td>
-      <td>6.477123</td>
-      <td>0.881641</td>
-      <td>56.40917</td>
-      <td>18.35296</td>
-      <td>36.70224</td>
+      <th>2026-01-15 02:00:00.000 +01:00</th>
+      <td>7.713698</td>
+      <td>4.0</td>
+      <td>5.974027</td>
+      <td>2.711926</td>
+      <td>24.348660</td>
+      <td>90.988617</td>
+      <td>8.425672</td>
     </tr>
     <tr>
-      <th>2020-01-28 15:45:01.200 +01:00</th>
-      <td>10.59993</td>
-      <td>8.320656</td>
-      <td>6.477080</td>
-      <td>0.881639</td>
-      <td>56.40861</td>
-      <td>18.35280</td>
-      <td>36.70192</td>
+      <th>2026-01-15 04:00:00.000 +01:00</th>
+      <td>7.700174</td>
+      <td>4.0</td>
+      <td>5.903639</td>
+      <td>2.769024</td>
+      <td>27.474970</td>
+      <td>100.526802</td>
+      <td>9.328013</td>
     </tr>
   </tbody>
 </table>
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fig, axes, used = s3s.plot_time_curves(
     df=df_results,
-    start="2020-01-28 15:45:01.000 +01:00",
-    end="2020-01-28 15:46:00.000 +01:00",
+    start="2026-01-15 00:00:00.000 +01:00",
+    end="2026-01-16 00:00:00.000 +01:00",
     properties=["PH", "QM", "PHI"],
-    axis_labels=["PH bar", "QM m³/h", "RSK %"],
-    ylims=[(0, 12), (0, 40), (0, 60)],
+    axis_labels=["PH bar", "QM t/h", "PHI %"],
+    ylims=[(0, 10), (0, 200), (0, 120)],
     tks_per_property=[
-        ["5471942051669438823", "5166327497394449628", "5667818255300782920", "5262999985134416180"],
-        ["5303247238968995258", "5430537691154258843"],
-        ["5303247238968995258"],
+        nodes_tks,
+        vent_tks + valves_tks,
+        vent_tks,
     ],
 
-    y_label_ticks=[7, 9, 13],
-    y_grid_ticks=13,
+    y_label_ticks=[6, 5, 7],
+    y_grid_ticks=11,
     x_label_ticks=7,
     x_grid_ticks=13,
 
