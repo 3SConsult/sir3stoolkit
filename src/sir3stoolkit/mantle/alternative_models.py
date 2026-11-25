@@ -12,12 +12,18 @@ Without the installed package: https://raw.githubusercontent.com/3SConsult/sir3s
 """
 
 from enum import Enum
-from typing import List, Optional
+from typing import TYPE_CHECKING, List, Optional
 
 from sir3stoolkit.dependency_check import require_packages
-require_packages(__name__, "pandapipes", "pandas", "shapely", "networkx")
+require_packages(__name__, "pandas", "shapely", "networkx")
 
-import pandapipes as pp
+# pandapipes is imported in SIR_3S_to_pandapipes() only: importing it loads pandapipes.plotting, which
+# replaces matplotlib's RendererBase.new_gc globally (its GraphicsContext has the str 'round' as _capstyle
+# instead of a CapStyle) - SVG export then fails with "AttributeError: 'str' object has no attribute 'name'"
+# and PNG lines get round caps, in every process that merely imports sir3stoolkit.mantle.
+if TYPE_CHECKING:
+    import pandapipes as pp
+
 from shapely import wkt
 from shapely.geometry.base import BaseGeometry
 import networkx as nx
@@ -32,7 +38,7 @@ class SIR3S_Model_Alternative_Models(SIR3S_Model_Dataframes):
     """
     This class is supposed to extend the Dataframes class that extends the general SIR3S_Model class with the possibility of using alternative District Heating models such as pandapipes.
     """
-    def SIR_3S_to_pandapipes(self) -> pp.pandapipesNet:
+    def SIR_3S_to_pandapipes(self) -> "pp.pandapipesNet":
         """
         Converts the currently open SIR 3S network into a pandapipes network.
 
@@ -47,7 +53,14 @@ class SIR3S_Model_Alternative_Models(SIR3S_Model_Dataframes):
             - Junctions with model data and result values (pressure, temperature, flow).
             - Pipes with geometry and physical parameters.
             - External grids (sources) and sinks based on node type and flow direction.
+
+        Note: pandapipes is imported on the first call, not with sir3stoolkit.mantle. Importing it replaces
+        matplotlib's RendererBase.new_gc for the rest of the process (pandapipes.plotting), which breaks SVG
+        export of matplotlib figures and gives lines round caps.
         """
+        require_packages(__name__, "pandapipes")
+        import pandapipes as pp
+
         net = pp.create_empty_network(fluid="water")
 
         # --- Nodes/Junctions ---

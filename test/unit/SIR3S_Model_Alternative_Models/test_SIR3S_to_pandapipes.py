@@ -1,3 +1,4 @@
+import sys
 from types import SimpleNamespace
 
 import pandas as pd
@@ -76,7 +77,9 @@ class FakePP:
 
 def test_sir3s_to_pandapipes_builds_network_elements(monkeypatch, s3s_model_alternative_models_instance):
     fake_pp = FakePP()
-    monkeypatch.setattr(alternative_models_module, "pp", fake_pp)
+    # SIR_3S_to_pandapipes() imports pandapipes itself (not at module level, see alternative_models.py)
+    monkeypatch.setitem(sys.modules, "pandapipes", fake_pp)
+    monkeypatch.setattr(alternative_models_module, "require_packages", lambda *args: None)
 
     s3s_model_alternative_models_instance.ObjectTypes = DummyObjectTypes()
     s3s_model_alternative_models_instance.GetTimeStamps = lambda: (["TS1"], "STAT", "TS1", "TS1")

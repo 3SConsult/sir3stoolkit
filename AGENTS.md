@@ -133,8 +133,9 @@ Topics, to match against the user's goal - the functions each tutorial uses are 
   parameter is a **float** (e.g. `100.0`) — different underlying .NET signatures despite the
   similar-sounding param.
 - If an optional third-party dependency (e.g. `pyarrow`, `geopandas`, `shapely`, `pandapipes`) is
-  missing, importing the relevant mantle module raises one combined, actionable `ImportError` naming
-  what to `pip install` — read that message rather than debugging the underlying traceback.
+  missing, importing the relevant mantle module (for `pandapipes`: calling `SIR_3S_to_pandapipes()`)
+  raises one combined, actionable `ImportError` naming what to `pip install` — read that message rather
+  than debugging the underlying traceback.
 - SetValue always takes Value as str regardless of the underlying field's type.
 - Property names: core `GetValue` ignores case (`"FkCont"` and `"Fkcont"` both work), but mantle
   functions match the names in `properties=[...]` exactly and leave out unknown ones with a warning
