@@ -32,7 +32,8 @@ Sections: [Quick facts](#quick-facts) · [Architecture](#architecture) ·
   `from sir3stoolkit.mantle import SIR3S_Model_Mantle` does not work - `sir3stoolkit.mantle` only
   exposes its submodules. The tutorials often instantiate a single mantle class instead (e.g.
   `SIR3S_Model_Dataframes` from `sir3stoolkit.mantle.dataframes`, `SIR3S_Model_Alternative_Models` from
-  `sir3stoolkit.mantle.alternative_models`) - that works too; `SIR3S_Model_Mantle` combines all of them.
+  `sir3stoolkit.mantle.alternative_models`) - that works too, and loads only that module and its
+  dependencies (the mantle submodules are loaded on first access); `SIR3S_Model_Mantle` combines all of them.
 - **Core returns strings**: e.g. `GetValue` returns `(value, type name)`, both `str`. tks are always
   `str` (exception: `SIR_3S_to_nx_graph()` casts them to `int64`, see Known gotchas).
 - **Mantle functions mostly log errors and return an empty DataFrame/graph** instead of raising - check
