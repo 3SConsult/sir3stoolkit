@@ -413,7 +413,7 @@ shipped with the installed sir3stoolkit version.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>dllPath</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – Path to a Sir3S_Toolkit.dll, or to a directory containing one. Default: the
 Sir3S_Toolkit.dll in the SirGraf directory - the one Initialize_Toolkit() was called with, or,
-before that, the one it would resolve (host application, config.local.txt, config.txt).</p>
+before that, the one it would resolve (host application, path stored with Write_SirGraf_Config_Path()).</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The file version as “major.minor.build.revision”, e.g. “90.15.10.0”, or None if no
@@ -434,10 +434,11 @@ provided by this package.</p>
 <p>Path resolution order:
 1. Use <code class="docutils literal notranslate"><span class="pre">basePath</span></code> when it is provided and not empty.
 2. Otherwise, if Toolkit is used in SIR Graf console, use its directory.
-3. Otherwise, try <code class="docutils literal notranslate"><span class="pre">config.local.txt</span></code> in the package root directory</p>
+3. Otherwise, the path stored with <code class="docutils literal notranslate"><span class="pre">Write_SirGraf_Config_Path()</span></code> (<code class="docutils literal notranslate"><span class="pre">Read_SirGraf_Config_Path()</span></code>):</p>
 <blockquote>
-<div><p>(<code class="docutils literal notranslate"><span class="pre">sir3stoolkit/config.local.txt</span></code>), then <code class="docutils literal notranslate"><span class="pre">config.txt</span></code> in the same
-location, and read the first non-empty, non-comment line.
+<div><p><code class="docutils literal notranslate"><span class="pre">config.local.txt</span></code> in the package folder (developer override), then the per-user file
+<code class="docutils literal notranslate"><span class="pre">%LOCALAPPDATA%\sir3stoolkit\config.txt</span></code>, which is kept when sir3stoolkit is updated, then
+<code class="docutils literal notranslate"><span class="pre">config.txt</span></code> in the package folder (shipped preset to the default SirGraf installation folder).
 Format: C:/3S/SIR 3S/SirGraf-90-15-00-24_Quebec-Upd2</p>
 </div></blockquote>
 <p>When run by an AI coding agent’s tool call (see <code class="docutils literal notranslate"><span class="pre">sir3stoolkit.ai_guide.is_ai_agent()</span></code>), it first logs
@@ -465,19 +466,18 @@ files do not provide a valid SirGraf path.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="sir3stoolkit.core.wrapper.Read_SirGraf_Config_Path">
 <span class="sig-prename descclassname"><span class="pre">sir3stoolkit.core.wrapper.</span></span><span class="sig-name descname"><span class="pre">Read_SirGraf_Config_Path</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/core/wrapper.html#Read_SirGraf_Config_Path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.wrapper.Read_SirGraf_Config_Path" title="Link to this definition"></a></dt>
-<dd><p>Read the SirGraf directory path configured in the package’s config file.</p>
-<p>Reads the first non-empty, non-comment line from <code class="docutils literal notranslate"><span class="pre">config.txt</span></code> in the
-package root directory (<code class="docutils literal notranslate"><span class="pre">sir3stoolkit/config.txt</span></code>). If
-<code class="docutils literal notranslate"><span class="pre">config.local.txt</span></code> is also present in that directory (developer
-override), it is checked first and takes precedence.</p>
+<dd><p>Read the SirGraf directory path stored with <code class="docutils literal notranslate"><span class="pre">Write_SirGraf_Config_Path()</span></code>.</p>
+<p>Reads the first non-empty, non-comment line of the first config file that has one (see
+<code class="docutils literal notranslate"><span class="pre">sir3stoolkit.sirgraf_config</span></code>): <code class="docutils literal notranslate"><span class="pre">config.local.txt</span></code> in the package folder (developer override),
+then the per-user file <code class="docutils literal notranslate"><span class="pre">%LOCALAPPDATA%\sir3stoolkit\config.txt</span></code>, which is kept when sir3stoolkit
+is updated, then <code class="docutils literal notranslate"><span class="pre">config.txt</span></code> in the package folder (shipped preset to the default SirGraf
+installation folder; replaced by every update).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Raises<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>FileNotFoundError</strong> – If the configured path does not exist or is
-not a directory.</p>
+<dd class="field-odd"><p><strong>FileNotFoundError</strong> – If the stored path does not exist or is not a directory.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The configured SirGraf directory path, or <code class="docutils literal notranslate"><span class="pre">None</span></code> if no
-config file exists or contains a usable path.</p>
+<dd class="field-even"><p>The stored SirGraf directory path, or <code class="docutils literal notranslate"><span class="pre">None</span></code> if none is stored.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Optional[str]</p>
@@ -3922,20 +3922,24 @@ them itself.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="sir3stoolkit.core.wrapper.Write_SirGraf_Config_Path">
 <span class="sig-prename descclassname"><span class="pre">sir3stoolkit.core.wrapper.</span></span><span class="sig-name descname"><span class="pre">Write_SirGraf_Config_Path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">basePath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/core/wrapper.html#Write_SirGraf_Config_Path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.core.wrapper.Write_SirGraf_Config_Path" title="Link to this definition"></a></dt>
-<dd><p>Write the SirGraf directory path to the package’s config file.</p>
-<p>The path is validated to exist and then written to <code class="docutils literal notranslate"><span class="pre">config.txt</span></code> in
-the package root directory (<code class="docutils literal notranslate"><span class="pre">sir3stoolkit/config.txt</span></code>), normalized to
-forward slashes (e.g. <code class="docutils literal notranslate"><span class="pre">C:/3S/SIR</span> <span class="pre">3S/SirGraf-90-15-00-24_Quebec-Upd2</span></code>)
-to avoid backslash-related issues seen in the host application. If
-<code class="docutils literal notranslate"><span class="pre">config.local.txt</span></code> is already present in that directory (developer
-override), the path is written there instead.</p>
+<dd><p>Store the SirGraf directory path, so <code class="docutils literal notranslate"><span class="pre">Initialize_Toolkit()</span></code> works without one.</p>
+<p>The path is validated to exist and then written, normalized to forward slashes (e.g.
+<code class="docutils literal notranslate"><span class="pre">C:/3S/SIR</span> <span class="pre">3S/SirGraf-90-15-00-24_Quebec-Upd2</span></code>), to the per-user file
+<code class="docutils literal notranslate"><span class="pre">%LOCALAPPDATA%\sir3stoolkit\config.txt</span></code>: it is kept when sir3stoolkit is updated or reinstalled
+and applies to every Python environment of the Windows user on this computer. Only if that file cannot
+be written, the path is written to <code class="docutils literal notranslate"><span class="pre">config.txt</span></code> in the package folder (with a warning: the next update
+replaces it). If the developer override <code class="docutils literal notranslate"><span class="pre">config.local.txt</span></code> exists in the package folder, the path is
+written there instead. (Up to version 90.15.26 it was always written to <code class="docutils literal notranslate"><span class="pre">config.txt</span></code> in the package.)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>basePath</strong> (<em>str</em>) – Full path to the SirGraf directory to persist.</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>FileNotFoundError</strong> – If <code class="docutils literal notranslate"><span class="pre">basePath</span></code> does not exist or is not a
-directory.</p>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>FileNotFoundError</strong> – If <code class="docutils literal notranslate"><span class="pre">basePath</span></code> does not exist or is not a directory.</p></li>
+<li><p><a class="reference internal" href="#sir3stoolkit.core.wrapper.SIR3S_ToolkitError" title="sir3stoolkit.core.wrapper.SIR3S_ToolkitError"><strong>SIR3S_ToolkitError</strong></a> – If no config file can be written - pass the path to <code class="docutils literal notranslate"><span class="pre">Initialize_Toolkit()</span></code>
+then (outside SirGraf; inside SirGraf the error is only logged, see <code class="docutils literal notranslate"><span class="pre">Set_Raise_On_Error()</span></code>).</p></li>
+</ul>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>None</p>

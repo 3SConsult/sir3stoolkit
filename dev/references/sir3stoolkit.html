@@ -637,8 +637,264 @@ match their PyPI/pip distribution name - true for every package sir3stoolkit’s
 </dd></dl>
 
 </section>
-<section id="sir3stoolkit-tutorials-module">
-<h2>sir3stoolkit.tutorials module<a class="headerlink" href="#sir3stoolkit-tutorials-module" title="Link to this heading"></a></h2>
+<section id="module-sir3stoolkit.sirgraf_config">
+<span id="sir3stoolkit-sirgraf-config-module"></span><h2>sir3stoolkit.sirgraf_config module<a class="headerlink" href="#module-sir3stoolkit.sirgraf_config" title="Link to this heading"></a></h2>
+<p>Where sir3stoolkit stores the SirGraf folder, so that <code class="docutils literal notranslate"><span class="pre">wrapper.Initialize_Toolkit()</span></code> works without a path.</p>
+<p><code class="docutils literal notranslate"><span class="pre">wrapper.Write_SirGraf_Config_Path()</span></code> stores it in a per-user file outside the package,
+<code class="docutils literal notranslate"><span class="pre">%LOCALAPPDATA%\sir3stoolkit\config.txt</span></code> - it is kept when sir3stoolkit is updated or reinstalled
+and applies to every Python environment of the Windows user on this computer. Only if that file cannot be
+written, the path is written to <code class="docutils literal notranslate"><span class="pre">config.txt</span></code> in the package folder, which every update replaces. (Up to
+version 90.15.26 the path was always written there.)</p>
+<p>Files read, first usable one wins (first non-empty line that is no <code class="docutils literal notranslate"><span class="pre">#</span></code> comment):</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">config.local.txt</span></code> in the package folder - developer override for editable installs (git-ignored).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">%LOCALAPPDATA%\sir3stoolkit\config.txt</span></code> - the per-user file.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">config.txt</span></code> in the package folder - shipped with the package, preset to the default SirGraf
+installation folder.</p></li>
+</ol>
+<p>Plain Python, no .NET: also used where the .NET-based wrapper is not loaded (<code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">sir3stoolkit</span> <span class="pre">tutorials</span></code>).</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="sir3stoolkit.sirgraf_config.get_config_files">
+<span class="sig-prename descclassname"><span class="pre">sir3stoolkit.sirgraf_config.</span></span><span class="sig-name descname"><span class="pre">get_config_files</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/sirgraf_config.html#get_config_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.sirgraf_config.get_config_files" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The config files in the order they are read: developer override, per-user file, package file.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list[Path]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sir3stoolkit.sirgraf_config.get_developer_config_file">
+<span class="sig-prename descclassname"><span class="pre">sir3stoolkit.sirgraf_config.</span></span><span class="sig-name descname"><span class="pre">get_developer_config_file</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Path</span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/sirgraf_config.html#get_developer_config_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.sirgraf_config.get_developer_config_file" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">config.local.txt</span></code> in the package folder (developer override, read first).</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Path</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sir3stoolkit.sirgraf_config.get_package_config_file">
+<span class="sig-prename descclassname"><span class="pre">sir3stoolkit.sirgraf_config.</span></span><span class="sig-name descname"><span class="pre">get_package_config_file</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Path</span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/sirgraf_config.html#get_package_config_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.sirgraf_config.get_package_config_file" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">config.txt</span></code> in the package folder (shipped with the package, read last; replaced by every update).</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Path</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sir3stoolkit.sirgraf_config.get_user_config_file">
+<span class="sig-prename descclassname"><span class="pre">sir3stoolkit.sirgraf_config.</span></span><span class="sig-name descname"><span class="pre">get_user_config_file</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Path</span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/sirgraf_config.html#get_user_config_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.sirgraf_config.get_user_config_file" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The per-user config file: <code class="docutils literal notranslate"><span class="pre">%LOCALAPPDATA%\sir3stoolkit\config.txt</span></code> (machine-specific, like
+the SirGraf installation; without LOCALAPPDATA: <code class="docutils literal notranslate"><span class="pre">~/AppData/Local/sir3stoolkit/config.txt</span></code>).</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Path</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sir3stoolkit.sirgraf_config.read_configured_path">
+<span class="sig-prename descclassname"><span class="pre">sir3stoolkit.sirgraf_config.</span></span><span class="sig-name descname"><span class="pre">read_configured_path</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Path</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/sirgraf_config.html#read_configured_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.sirgraf_config.read_configured_path" title="Link to this definition"></a></dt>
+<dd><p>Reads the stored SirGraf folder (not checked for existence).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>(path, config file it was read from), or (None, None) if none is stored.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sir3stoolkit.sirgraf_config.read_path_from_file">
+<span class="sig-prename descclassname"><span class="pre">sir3stoolkit.sirgraf_config.</span></span><span class="sig-name descname"><span class="pre">read_path_from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/sirgraf_config.html#read_path_from_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.sirgraf_config.read_path_from_file" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config_file</strong> (<em>Path</em>) – A config file.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Its first non-empty line that is no <code class="docutils literal notranslate"><span class="pre">#</span></code> comment, or None (also if the file cannot be read).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str, optional</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sir3stoolkit.sirgraf_config.write_configured_path">
+<span class="sig-prename descclassname"><span class="pre">sir3stoolkit.sirgraf_config.</span></span><span class="sig-name descname"><span class="pre">write_configured_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Path</span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/sirgraf_config.html#write_configured_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.sirgraf_config.write_configured_path" title="Link to this definition"></a></dt>
+<dd><p>Stores the SirGraf folder (normalized to forward slashes): in <code class="docutils literal notranslate"><span class="pre">config.local.txt</span></code> if that developer
+override exists, otherwise in the per-user file (its folder is created if missing) - and only if that
+cannot be written, in <code class="docutils literal notranslate"><span class="pre">config.txt</span></code> in the package folder.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – The SirGraf folder.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The config file written.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Path</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>OSError</strong> – if no config file can be written.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-sir3stoolkit.tutorials">
+<span id="sir3stoolkit-tutorials-module"></span><h2>sir3stoolkit.tutorials module<a class="headerlink" href="#module-sir3stoolkit.tutorials" title="Link to this heading"></a></h2>
+<p>Downloads the tutorials of sir3stoolkit - the notebooks and the SIR 3S models they use - into a local
+folder: <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">sir3stoolkit</span> <span class="pre">tutorials</span> <span class="pre">[folder]</span></code> (see <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">sir3stoolkit</span> <span class="pre">tutorials</span> <span class="pre">-h</span></code>).</p>
+<p>The tutorials of each version are attached as zip archives to its GitHub release (tag <code class="docutils literal notranslate"><span class="pre">v&lt;version&gt;</span></code>),
+by .github/workflows/release.yml on the same trigger as the upload to PyPI. By default the tutorials of
+the installed version are downloaded, so they match its functions.</p>
+<p>The archives are unpacked with the folder layout of the repository (<code class="docutils literal notranslate"><span class="pre">SIR3S_Model/TutorialNNN_Assets</span></code>,
+<code class="docutils literal notranslate"><span class="pre">SIR3S_Model_Mantle/TutorialNNN_Assets</span></code>): each tutorial folder holds the notebook, the models it opens
+and their (empty) working directory folders. The tutorials change their models and write calculation
+results next to them, so they are meant to be run from that folder - not from the installed package.</p>
+<p>If a SirGraf folder is configured (<code class="docutils literal notranslate"><span class="pre">wrapper.Write_SirGraf_Config_Path()</span></code>, see Tutorial 0), it is
+written into the <code class="docutils literal notranslate"><span class="pre">SIR3S_SIRGRAF_DIR</span> <span class="pre">=</span> <span class="pre">r&quot;...&quot;</span></code> line of the unpacked notebooks.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="sir3stoolkit.tutorials.download_tutorials">
+<span class="sig-prename descclassname"><span class="pre">sir3stoolkit.tutorials.</span></span><span class="sig-name descname"><span class="pre">download_tutorials</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'sir3stoolkit_tutorials'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">groups</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">('core',</span> <span class="pre">'mantle')</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sirgraf_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/tutorials.html#download_tutorials"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.tutorials.download_tutorials" title="Link to this definition"></a></dt>
+<dd><p>Downloads the tutorials (notebooks and the models they use) of a sir3stoolkit version from its
+GitHub release and unpacks them into target_dir: <code class="docutils literal notranslate"><span class="pre">&lt;target_dir&gt;/SIR3S_Model/TutorialNNN_Assets</span></code>
+(core, tutorials 0-49) and <code class="docutils literal notranslate"><span class="pre">&lt;target_dir&gt;/SIR3S_Model_Mantle/TutorialNNN_Assets</span></code> (mantle, 50-99).
+Command line: <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">sir3stoolkit</span> <span class="pre">tutorials</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>target_dir</strong> (<em>str</em><em> | </em><em>Path</em>) – Folder to unpack into (created if missing). Default: “sir3stoolkit_tutorials”.</p></li>
+<li><p><strong>groups</strong> (<em>sequence</em><em> of </em><em>str</em>) – Tutorial groups to download: “core” and/or “mantle”. Default: both.</p></li>
+<li><p><strong>version</strong> (<em>str</em><em>, </em><em>optional</em>) – sir3stoolkit version whose tutorials to download, e.g. “90.15.27”. Default: the installed
+version - the tutorials then match its functions.</p></li>
+<li><p><strong>overwrite</strong> (<em>bool</em>) – Replace files that already exist. Default False: keep them.</p></li>
+<li><p><strong>sirgraf_dir</strong> (<em>str</em><em>, </em><em>optional</em>) – SirGraf folder to set in the <code class="docutils literal notranslate"><span class="pre">SIR3S_SIRGRAF_DIR</span></code> line of the unpacked notebooks.
+Default None: the configured one (get_configured_sirgraf_dir()), if any; “” leaves the notebooks unchanged.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>{“written”: [paths], “kept”: [existing paths not replaced], “sirgraf_dir_set”: [notebooks
+whose SIR3S_SIRGRAF_DIR was set]}</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – unknown group, unreleased version, or no tutorials published for the version.</p></li>
+<li><p><strong>ConnectionError</strong> – if the download fails.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sir3stoolkit.tutorials.extract_tutorials">
+<span class="sig-prename descclassname"><span class="pre">sir3stoolkit.tutorials.</span></span><span class="sig-name descname"><span class="pre">extract_tutorials</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">archive</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sirgraf_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/tutorials.html#extract_tutorials"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.tutorials.extract_tutorials" title="Link to this definition"></a></dt>
+<dd><p>Unpacks a tutorial archive into target_dir.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>archive</strong> (<em>bytes</em><em> | </em><em>str</em><em> | </em><em>Path</em>) – The zip archive: its content (bytes) or its path.</p></li>
+<li><p><strong>target_dir</strong> (<em>str</em><em> | </em><em>Path</em>) – Folder to unpack into (created if missing).</p></li>
+<li><p><strong>overwrite</strong> (<em>bool</em>) – Replace files that already exist. Default False: keep them - the tutorials change
+their models, and you may have changed the notebooks.</p></li>
+<li><p><strong>sirgraf_dir</strong> (<em>str</em><em>, </em><em>optional</em>) – SirGraf folder to set in the <code class="docutils literal notranslate"><span class="pre">SIR3S_SIRGRAF_DIR</span></code> line of the unpacked notebooks.
+Default None: leave the notebooks unchanged.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>{“written”: [paths], “kept”: [existing paths not replaced], “sirgraf_dir_set”: [notebooks
+whose SIR3S_SIRGRAF_DIR was set]}</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – if an entry of the archive points outside target_dir (nothing is written then).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sir3stoolkit.tutorials.get_configured_sirgraf_dir">
+<span class="sig-prename descclassname"><span class="pre">sir3stoolkit.tutorials.</span></span><span class="sig-name descname"><span class="pre">get_configured_sirgraf_dir</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/tutorials.html#get_configured_sirgraf_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.tutorials.get_configured_sirgraf_dir" title="Link to this definition"></a></dt>
+<dd><p>Returns the SirGraf folder stored with <code class="docutils literal notranslate"><span class="pre">wrapper.Write_SirGraf_Config_Path()</span></code>, if it exists - the same
+one <code class="docutils literal notranslate"><span class="pre">wrapper.Read_SirGraf_Config_Path()</span></code> returns (see <code class="docutils literal notranslate"><span class="pre">sir3stoolkit.sirgraf_config</span></code>), read without
+loading the .NET-based wrapper.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The stored SirGraf folder, or None if none is stored or the folder does not exist.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str, optional</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sir3stoolkit.tutorials.get_tutorials_url">
+<span class="sig-prename descclassname"><span class="pre">sir3stoolkit.tutorials.</span></span><span class="sig-name descname"><span class="pre">get_tutorials_url</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/tutorials.html#get_tutorials_url"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.tutorials.get_tutorials_url" title="Link to this definition"></a></dt>
+<dd><p>Returns the download URL of the tutorial archive of a group and version.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>group</strong> (<em>str</em>) – “core” (tutorials 0-49, SIR3S_Model) or “mantle” (tutorials 50-99, SIR3S_Model_Mantle).</p></li>
+<li><p><strong>version</strong> (<em>str</em><em>, </em><em>optional</em>) – sir3stoolkit version, e.g. “90.15.27”. Default: the installed version.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>URL of the zip archive attached to the GitHub release <code class="docutils literal notranslate"><span class="pre">v&lt;version&gt;</span></code>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – if group is unknown, or the version is not a released one (e.g. a development
+version of a repository checkout) - pass the version of a release then.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sir3stoolkit.tutorials.set_sirgraf_dir_in_notebook">
+<span class="sig-prename descclassname"><span class="pre">sir3stoolkit.tutorials.</span></span><span class="sig-name descname"><span class="pre">set_sirgraf_dir_in_notebook</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">notebook</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sirgraf_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">bytes</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/tutorials.html#set_sirgraf_dir_in_notebook"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.tutorials.set_sirgraf_dir_in_notebook" title="Link to this definition"></a></dt>
+<dd><p>Sets the SirGraf folder in the <code class="docutils literal notranslate"><span class="pre">SIR3S_SIRGRAF_DIR</span> <span class="pre">=</span> <span class="pre">r&quot;...&quot;</span></code> line of a tutorial notebook.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>notebook</strong> (<em>bytes</em>) – The notebook file content (.ipynb).</p></li>
+<li><p><strong>sirgraf_dir</strong> (<em>str</em>) – The SirGraf folder.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>(notebook content, whether a line was changed) - unchanged if it is no valid notebook</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple[bytes, bool]</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 <section id="module-sir3stoolkit">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-sir3stoolkit" title="Link to this heading"></a></h2>

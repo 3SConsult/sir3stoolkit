@@ -14,10 +14,10 @@ Welcome to the Developers page! This section provides resources and instructions
 Editable Install Local Configuration
 ------------------------------------
 
-When working with an editable install (``pip install -e .``), avoid editing the shared file ``src/sir3stoolkit/config.txt`` for your local SirGraf path. Instead, use the local override file ``src/sir3stoolkit/config.local.txt``.
+``Write_SirGraf_Config_Path()`` stores the SirGraf path in a per-user file outside the package, ``%LOCALAPPDATA%\sir3stoolkit\config.txt`` (see ``sir3stoolkit.sirgraf_config``) - it is the same for every environment of your Windows user. To use another path in an editable install (``pip install -e .``), e.g. for a SirGraf version you test against, use the local override file ``src/sir3stoolkit/config.local.txt``.
 
-- ``config.local.txt`` is read before ``config.txt`` by ``Initialize_Toolkit()``.
-- ``config.local.txt`` is ignored by Git (see ``.gitignore``), so each developer can keep an individual local path without creating merge conflicts.
+- ``config.local.txt`` is read before the per-user file and the shipped ``src/sir3stoolkit/config.txt`` (the default for users, keep it unchanged) by ``Initialize_Toolkit()``, and ``Write_SirGraf_Config_Path()`` writes to it if it exists.
+- ``config.local.txt`` is ignored by Git (see ``.gitignore``) and not packed into the package, so each developer can keep an individual local path without creating merge conflicts.
 
 Create ``src/sir3stoolkit/config.local.txt`` with one line containing your local SirGraf directory, for example:
 
