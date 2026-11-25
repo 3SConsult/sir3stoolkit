@@ -221,8 +221,15 @@ We currently use the following workflows:
      - Push of a tag ``v<version>``, or a manual run with ``main`` or an existing tag
      - Checks that the tag matches the version in ``pyproject.toml`` and that its commit is on ``main``, builds the package and publishes it to
        **TestPyPI** and **PyPI** using ``twine``, then builds the documentation from the tag and deploys it to the root of the ``gh-pages``
-       branch: https://3sconsult.github.io/sir3stoolkit/ (with a "Released version" banner; ``dev/`` is kept). A manual run only deploys the
-       documentation, it does not publish - see :ref:`release-label`.
+       branch: https://3sconsult.github.io/sir3stoolkit/ (with a "Released version" banner; ``dev/`` is kept), and attaches the tutorial
+       archives (``docs/source/tutorials/prepare_tutorials.py``) to the GitHub release ``v<version>``, from where
+       ``python -m sir3stoolkit tutorials`` downloads them. A manual run only deploys the documentation, it does not publish - see
+       :ref:`release-label`.
+   * - ``.github/workflows/test-release.yml``
+     - Manual run
+     - Test release before the real one: builds the package as ``<version>.dev<run number>`` (e.g. 90.15.27.dev3), publishes it to
+       **TestPyPI** only and, optionally, attaches the tutorial archives to a GitHub pre-release ``v<version>.dev<run number>`` - see
+       :ref:`release-label`.
    * - ``.github/workflows/test-sync-agents-md.yml``
      - Pull request changing ``AGENTS.md``, ``ai/``, a tutorial notebook or the ``sync-agents-md`` action, or a manual run
      - Tests that the ``sync-agents-md`` action copies the guide for AI assistants (repository-root ``AGENTS.md`` and ``ai/``) into the
@@ -394,10 +401,10 @@ Release a New Version
 There are two versions of the documentation:
 
 * https://3sconsult.github.io/sir3stoolkit/ - the **release documentation**, matching the current version on PyPI. Only changed by a release
-  (or a documentation hotfix, see step 10).
+  (or a documentation hotfix, see step 12).
 * https://3sconsult.github.io/sir3stoolkit/dev/ - the **development documentation**, updated on every push to ``main``.
 
-A new version is released to PyPI and gets its release documentation by tagging a commit on ``main`` with its version (steps 7-9):
+A new version is released to PyPI and gets its release documentation by tagging a commit on ``main`` with its version (steps 8-11):
 
 1. **Run tests:** Before releasing a new version, ensure that all tests pass. Run the test suite using ``pytest`` as described in :ref:`running-tests-label`.
 
@@ -411,15 +418,23 @@ A new version is released to PyPI and gets its release documentation by tagging 
 
 6. **Update Version Number:** In `sir3stoolkit/pyproject.toml` update the version number
 
-7. **Commit to GitHub**: Commit and push to ``main``. For convenience use the version number as commit message. This alone does not release anything - it only updates the development documentation.
+7. **Prepare the tutorials (if tutorials, their models or Network 3 changed):** The release workflow packs the tutorials as committed - with their saved outputs - and cannot run SIR 3S itself. So locally (needs SIR 3S):
 
-8. **Tag the release commit:** Tag that commit with ``v`` + the version number and push the tag. A tag is only a label on an existing commit - it is not committed, and pushing it pushes no commits:
+   - If ``docs/source/networks/Network3.py`` changed, rebuild Network 3: ``python docs/source/tutorials/prepare_tutorials.py --rebuild`` (new tks; the tutorials look elements up by their ID references).
+   - Execute the changed tutorial notebooks so their outputs are current, then restore the committed models (``git checkout -- <file>``) - running a tutorial changes its model file.
+   - A tutorial that opens a new file must list it in ``FILES`` in ``prepare_tutorials.py`` and as exception in ``.gitignore`` (models are git-ignored otherwise; ``test/unit/test_prepare_tutorials.py`` checks both). Never commit other files from the tutorial folders - they may hold confidential models.
+
+8. **Commit to GitHub**: Commit and push to ``main``. For convenience use the version number as commit message. This alone does not release anything - it only updates the development documentation.
+
+9. **Test release (optional):** GitHub Actions tab -> *Test release* -> *Run workflow*. It publishes ``<version>.dev<run number>`` to TestPyPI only and attaches the tutorials to a GitHub pre-release. Install it in a fresh virtual environment, e.g. ``pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ sir3stoolkit==90.15.27.dev3``, and test it (e.g. ``python -m sir3stoolkit tutorials``). Afterwards delete the pre-release: ``gh release delete v90.15.27.dev3 --cleanup-tag``.
+
+10. **Tag the release commit:** Tag that commit with ``v`` + the version number and push the tag. A tag is only a label on an existing commit - it is not committed, and pushing it pushes no commits:
 
    .. code-block:: bash
 
       git tag v90.15.27
       git push origin v90.15.27
 
-9. **Automatic release:** The pushed tag triggers the ``release.yml`` workflow (GitHub Actions tab). It checks that the tag matches the version in ``pyproject.toml`` and that its commit is on ``main``, publishes the new version to TestPyPI and PyPI and, only if that worked, deploys the release documentation. If a check fails, nothing is published.
+11. **Automatic release:** The pushed tag triggers the ``release.yml`` workflow (GitHub Actions tab). It checks that the tag matches the version in ``pyproject.toml`` and that its commit is on ``main``, publishes the new version to TestPyPI and PyPI and, only if that worked, deploys the release documentation and attaches the tutorial archives to the GitHub release ``v<version>``. If a check fails, nothing is published.
 
-10. **Documentation hotfixes after the release (optional):** Fix the documentation on ``main`` and push - the fix first appears in the development documentation. To take it over into the release documentation, start the release workflow manually: GitHub Actions tab -> *Release* -> *Run workflow* with ``ref`` = ``main``. This only deploys the documentation, nothing is published to PyPI. It is refused if ``src/`` or ``pyproject.toml`` changed since the release tag, since the release documentation would then describe unreleased code - make a new release instead.
+12. **Documentation hotfixes after the release (optional):** Fix the documentation on ``main`` and push - the fix first appears in the development documentation. To take it over into the release documentation, start the release workflow manually: GitHub Actions tab -> *Release* -> *Run workflow* with ``ref`` = ``main``. This only deploys the documentation, nothing is published to PyPI. It is refused if ``src/`` or ``pyproject.toml`` changed since the release tag, since the release documentation would then describe unreleased code - make a new release instead.
