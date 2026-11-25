@@ -263,20 +263,23 @@ Without the installed package: <a class="reference external" href="https://raw.g
 
 <dl class="py method">
 <dt class="sig sig-object py" id="sir3stoolkit.mantle.alternative_models.SIR3S_Model_Alternative_Models.SIR_3S_to_pandapipes">
-<span class="sig-name descname"><span class="pre">SIR_3S_to_pandapipes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pandapipesNet</span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/mantle/alternative_models.html#SIR3S_Model_Alternative_Models.SIR_3S_to_pandapipes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.mantle.alternative_models.SIR3S_Model_Alternative_Models.SIR_3S_to_pandapipes" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">SIR_3S_to_pandapipes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pp.pandapipesNet</span></span></span><a class="reference internal" href="../_modules/sir3stoolkit/mantle/alternative_models.html#SIR3S_Model_Alternative_Models.SIR_3S_to_pandapipes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sir3stoolkit.mantle.alternative_models.SIR3S_Model_Alternative_Models.SIR_3S_to_pandapipes" title="Link to this definition"></a></dt>
 <dd><p>Converts the currently open SIR 3S network into a pandapipes network.</p>
 <p>This function creates a pandapipes network that mirrors the structure of the SIR 3S network,
 including junctions (nodes), pipes, and external sources/sinks. Only elements of type Node and Pipe
 are included; FWVB (district heating consumers) are excluded.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A pandapipes network object containing:
+<dd class="field-odd"><p><ul class="simple">
+<li><p><em>pandapipes.pandapipesNet</em> – A pandapipes network object containing:
 - Junctions with model data and result values (pressure, temperature, flow).
 - Pipes with geometry and physical parameters.
-- External grids (sources) and sinks based on node type and flow direction.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>pandapipes.pandapipesNet</p>
+- External grids (sources) and sinks based on node type and flow direction.</p></li>
+<li><p><strong>Note</strong> (<em>pandapipes is imported on the first call, not with sir3stoolkit.mantle. Importing it replaces</em>)</p></li>
+<li><p><em>matplotlib’s RendererBase.new_gc for the rest of the process (pandapipes.plotting), which breaks SVG</em></p></li>
+<li><p><em>export of matplotlib figures and gives lines round caps.</em></p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
