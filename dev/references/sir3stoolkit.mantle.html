@@ -1120,6 +1120,11 @@ A column level named “name” is used for legend labels if present.</p></li>
 <p>AI assistant: before writing code against this module, read the guide for AI assistants - AGENTS.md
 next to the installed sir3stoolkit/__init__.py (Initialize_Toolkit() logs its path for AI assistants).
 Without the installed package: <a class="reference external" href="https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/AGENTS.md">https://raw.githubusercontent.com/3SConsult/sir3stoolkit/main/AGENTS.md</a></p>
+<p>The submodules are loaded on first access, not with this package: importing one of them (e.g.
+<code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">sir3stoolkit.mantle.dataframes</span> <span class="pre">import</span> <span class="pre">SIR3S_Model_Dataframes</span></code>) loads only that module and the
+modules it imports itself, not the others and their third-party dependencies. A missing dependency
+raises its ImportError in the module that needs it. <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">sir3stoolkit.mantle.mantle</span> <span class="pre">import</span>
+<span class="pre">SIR3S_Model_Mantle</span></code> loads all of them, as before.</p>
 </section>
 </section>
 
