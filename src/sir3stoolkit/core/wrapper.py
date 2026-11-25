@@ -29,7 +29,7 @@ import System
 from System.Diagnostics import FileVersionInfo
 from System.Reflection import Assembly
 
-from sir3stoolkit import ai_guide
+from sir3stoolkit import ai_guide, sirgraf_config
 from sir3stoolkit.logging_utils import emit_message, get_logger, get_process_executable_path, is_host_process
 
 logger = get_logger(__name__)
@@ -179,17 +179,20 @@ def create_dotnet_enum(name: str, dotnet_enum: str, assembly_ext: str):
 # Init
 
 def _read_base_path_from_config(config_file: Path) -> Optional[str]:
-    try:
-        with config_file.open("r", encoding="utf-8") as f:
-            for raw_line in f:
-                line = raw_line.strip()
-                if line and not line.startswith("#"):
-                    return line
-    except OSError as ex:
-        _log_message(f"[Initialization] Failed to read config file '{config_file}': {ex}", level="warning")
+    resolved = sirgraf_config.read_path_from_file(config_file)
+    if resolved is None:
+        _log_message(f"[Initialization] Config file '{config_file}' does not contain a usable path.", level="warning")
+    return resolved
 
-    _log_message(f"[Initialization] Config file '{config_file}' does not contain a usable path.", level="warning")
-    return None
+
+def _missing_sirgraf_path_message() -> str:
+    return (
+        "No SirGraf directory given and none stored. Pass it, e.g. "
+        "wrapper.Initialize_Toolkit(r\"C:\\3S\\SIR 3S\\SirGraf-90-15-00-24_Quebec-Upd2\"), or store it once with "
+        f"wrapper.Write_SirGraf_Config_Path(r\"...\") - it is stored in {sirgraf_config.get_user_config_file()} and kept "
+        "when sir3stoolkit is updated. (Up to version 90.15.26 the path was stored inside the package, where every "
+        "update replaced it - if you stored it with such a version, store it once more.)"
+    )
 
 
 def _read_base_path_from_host_app() -> Optional[str]:
@@ -228,50 +231,23 @@ def _resolve_base_path(basePath: Optional[str]) -> Optional[str]:
             )
         return resolved_from_host
 
-    package_root = Path(__file__).resolve().parents[1]
-    config_files = [
-        package_root / "config.local.txt",
-        package_root / "config.txt",
-    ]
-
-    for config_file in config_files:
-        if not config_file.exists():
-            continue
-
-        resolved = _read_base_path_from_config(config_file)
-        if resolved is not None:
-            if not Path(resolved).is_dir():
-                raise FileNotFoundError(f"[Initialization] SirGraf path from config does not exist or is not a directory: {resolved}")
-            _log_message(f"[Initialization] Using SirGraf path from config '{config_file}': {resolved}", level="info")
-            return resolved
-
-    _log_message(
-        f"[Initialization] No config files found at '{config_files[0]}' or '{config_files[1]}'.",
-        level="info"
-    )
-    return None
+    return Read_SirGraf_Config_Path()
 
 
 def Read_SirGraf_Config_Path() -> Optional[str]:
-    """Read the SirGraf directory path configured in the package's config file.
+    """Read the SirGraf directory path stored with ``Write_SirGraf_Config_Path()``.
 
-    Reads the first non-empty, non-comment line from ``config.txt`` in the
-    package root directory (``sir3stoolkit/config.txt``). If
-    ``config.local.txt`` is also present in that directory (developer
-    override), it is checked first and takes precedence.
+    Reads the first non-empty, non-comment line of the first config file that has one (see
+    ``sir3stoolkit.sirgraf_config``): ``config.local.txt`` in the package folder (developer override),
+    then the per-user file ``%LOCALAPPDATA%\\sir3stoolkit\\config.txt``, which is kept when sir3stoolkit
+    is updated, then ``config.txt`` in the package folder (shipped preset to the default SirGraf
+    installation folder; replaced by every update).
 
-    :raises FileNotFoundError: If the configured path does not exist or is
-        not a directory.
-    :return: The configured SirGraf directory path, or ``None`` if no
-        config file exists or contains a usable path.
+    :raises FileNotFoundError: If the stored path does not exist or is not a directory.
+    :return: The stored SirGraf directory path, or ``None`` if none is stored.
     :rtype: Optional[str]
     """
-    package_root = Path(__file__).resolve().parents[1]
-    config_files = [
-        package_root / "config.local.txt",
-        package_root / "config.txt",
-    ]
-
+    config_files = sirgraf_config.get_config_files()
     for config_file in config_files:
         if not config_file.exists():
             continue
@@ -279,31 +255,35 @@ def Read_SirGraf_Config_Path() -> Optional[str]:
         resolved = _read_base_path_from_config(config_file)
         if resolved is not None:
             if not Path(resolved).is_dir():
-                raise FileNotFoundError(f"[Initialization] SirGraf path from config does not exist or is not a directory: {resolved}")
-            _log_message(f"[Initialization] Using SirGraf path from config '{config_file}': '{resolved}'", level="info")
+                raise FileNotFoundError(
+                    f"[Initialization] SirGraf path from config '{config_file}' does not exist or is not a directory: "
+                    f"{resolved} - pass your SirGraf directory to Initialize_Toolkit(), or store it once with "
+                    f"Write_SirGraf_Config_Path() (stored in {sirgraf_config.get_user_config_file()}, kept when "
+                    f"sir3stoolkit is updated).")
+            _log_message(f"[Initialization] Using SirGraf path from config '{config_file}': {resolved}", level="info")
             return resolved
 
-    _log_message(
-        f"[Initialization] No config files found at '{config_files[0]}' or '{config_files[1]}'.",
-        level="info"
-    )
+    _log_message(f"[Initialization] No SirGraf path stored (looked in: {', '.join(str(f) for f in config_files)}).",
+                 level="info")
     return None
 
 
 def Write_SirGraf_Config_Path(basePath: str) -> None:
-    """Write the SirGraf directory path to the package's config file.
+    """Store the SirGraf directory path, so ``Initialize_Toolkit()`` works without one.
 
-    The path is validated to exist and then written to ``config.txt`` in
-    the package root directory (``sir3stoolkit/config.txt``), normalized to
-    forward slashes (e.g. ``C:/3S/SIR 3S/SirGraf-90-15-00-24_Quebec-Upd2``)
-    to avoid backslash-related issues seen in the host application. If
-    ``config.local.txt`` is already present in that directory (developer
-    override), the path is written there instead.
+    The path is validated to exist and then written, normalized to forward slashes (e.g.
+    ``C:/3S/SIR 3S/SirGraf-90-15-00-24_Quebec-Upd2``), to the per-user file
+    ``%LOCALAPPDATA%\\sir3stoolkit\\config.txt``: it is kept when sir3stoolkit is updated or reinstalled
+    and applies to every Python environment of the Windows user on this computer. Only if that file cannot
+    be written, the path is written to ``config.txt`` in the package folder (with a warning: the next update
+    replaces it). If the developer override ``config.local.txt`` exists in the package folder, the path is
+    written there instead. (Up to version 90.15.26 it was always written to ``config.txt`` in the package.)
 
     :param basePath: Full path to the SirGraf directory to persist.
     :type basePath: str
-    :raises FileNotFoundError: If ``basePath`` does not exist or is not a
-        directory.
+    :raises FileNotFoundError: If ``basePath`` does not exist or is not a directory.
+    :raises SIR3S_ToolkitError: If no config file can be written - pass the path to ``Initialize_Toolkit()``
+        then (outside SirGraf; inside SirGraf the error is only logged, see ``Set_Raise_On_Error()``).
     :return: None
     :rtype: None
     """
@@ -311,15 +291,19 @@ def Write_SirGraf_Config_Path(basePath: str) -> None:
     if not Path(resolved).is_dir():
         raise FileNotFoundError(f"[Initialization] Provided SirGraf path does not exist or is not a directory: {resolved}")
 
-    normalized = Path(resolved).as_posix()
-
-    package_root = Path(__file__).resolve().parents[1]
-    config_local_file = package_root / "config.local.txt"
-    config_file = package_root / "config.txt"
-    target_config_file = config_local_file if config_local_file.exists() else config_file
-
-    target_config_file.write_text(normalized + "\n", encoding="utf-8")
-    _log_message(f"[Initialization] Wrote SirGraf path to config file '{target_config_file}': '{normalized}'", level="info")
+    try:
+        target_config_file = sirgraf_config.write_configured_path(resolved)
+    except OSError as ex:
+        _log_message(f"[Initialization] Could not store the SirGraf path, neither in "
+                     f"'{sirgraf_config.get_user_config_file()}' nor in '{sirgraf_config.get_package_config_file()}': "
+                     f"{ex}. Pass it to Initialize_Toolkit() instead.", level="error")
+        return
+    _log_message(f"[Initialization] Wrote SirGraf path to config file '{target_config_file}': "
+                 f"'{Path(resolved).as_posix()}'", level="info")
+    if target_config_file == sirgraf_config.get_package_config_file():
+        _log_message(f"[Initialization] '{sirgraf_config.get_user_config_file()}' could not be written - the SirGraf "
+                     f"path was stored in the package instead, which the next sir3stoolkit update replaces.",
+                     level="warning")
 
 
 _TOOLKIT_DLL_NAME = "Sir3S_Toolkit.dll"
@@ -349,7 +333,7 @@ def Get_Toolkit_Dll_File_Version(dllPath: Optional[str] = None) -> Optional[str]
 
     :param dllPath: Path to a Sir3S_Toolkit.dll, or to a directory containing one. Default: the
         Sir3S_Toolkit.dll in the SirGraf directory - the one Initialize_Toolkit() was called with, or,
-        before that, the one it would resolve (host application, config.local.txt, config.txt).
+        before that, the one it would resolve (host application, path stored with Write_SirGraf_Config_Path()).
     :type dllPath: Optional[str]
     :return: The file version as "major.minor.build.revision", e.g. "90.15.10.0", or None if no
         Sir3S_Toolkit.dll was found.
@@ -407,9 +391,10 @@ def Initialize_Toolkit(basePath: Optional[str] = None):
     Path resolution order:
     1. Use ``basePath`` when it is provided and not empty.
     2. Otherwise, if Toolkit is used in SIR Graf console, use its directory.
-    3. Otherwise, try ``config.local.txt`` in the package root directory
-       (``sir3stoolkit/config.local.txt``), then ``config.txt`` in the same
-       location, and read the first non-empty, non-comment line.
+    3. Otherwise, the path stored with ``Write_SirGraf_Config_Path()`` (``Read_SirGraf_Config_Path()``):
+       ``config.local.txt`` in the package folder (developer override), then the per-user file
+       ``%LOCALAPPDATA%\\sir3stoolkit\\config.txt``, which is kept when sir3stoolkit is updated, then
+       ``config.txt`` in the package folder (shipped preset to the default SirGraf installation folder).
        Format: C:/3S/SIR 3S/SirGraf-90-15-00-24_Quebec-Upd2
 
     When run by an AI coding agent's tool call (see ``sir3stoolkit.ai_guide.is_ai_agent()``), it first logs
@@ -432,7 +417,7 @@ def Initialize_Toolkit(basePath: Optional[str] = None):
     resolved_base_path = _resolve_base_path(basePath)
 
     if resolved_base_path is None:
-        error_msg = "SirGraf directory is empty and no valid path could be resolved from basePath, host app, config.local.txt, or config.txt."
+        error_msg = _missing_sirgraf_path_message()
         _log_message(f"[Initialization] {error_msg}", level="error")
         raise RuntimeError(error_msg)
 

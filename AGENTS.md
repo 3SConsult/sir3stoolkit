@@ -94,7 +94,8 @@ them).
 `ai/tutorials/ToolkitTutorialNNN.md` (e.g. `ai/tutorials/ToolkitTutorial057.md`; markdown and code cells,
 outputs left out) - of exactly the installed version, no download needed. Read these** instead of
 fetching the notebooks. (A repository checkout has only the notebooks, see
-[`ai/tutorials.md`](ai/tutorials.md).)
+[`ai/tutorials.md`](ai/tutorials.md).) To *run* a tutorial, the user needs the notebook and its models:
+`python -m sir3stoolkit tutorials <folder>` downloads those of the installed version (from its GitHub release).
 
 Topics, to match against the user's goal - the functions each tutorial uses are in
 [`ai/tutorials.md`](ai/tutorials.md):

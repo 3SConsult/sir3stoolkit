@@ -229,6 +229,17 @@ Command line: ``python -m sir3stoolkit ai-setup``, see :ref:`ai-assistants-label
 - :func:`sir3stoolkit.ai_guide.get_ai_hint`
 - :func:`sir3stoolkit.ai_guide.log_ai_hint_once`
 
+Tutorial Download Functions
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Command line: ``python -m sir3stoolkit tutorials``, see :ref:`tutorials-download-label`.
+
+- :func:`sir3stoolkit.tutorials.download_tutorials`
+- :func:`sir3stoolkit.tutorials.get_tutorials_url`
+- :func:`sir3stoolkit.tutorials.extract_tutorials`
+- :func:`sir3stoolkit.tutorials.get_configured_sirgraf_dir`
+- :func:`sir3stoolkit.tutorials.set_sirgraf_dir_in_notebook`
+
 Utility Functions
 ^^^^^^^^^^^^^^^^^
 
@@ -237,6 +248,12 @@ Utility Functions
 - :func:`sir3stoolkit.logging_utils.get_process_executable_path`
 - :func:`sir3stoolkit.logging_utils.get_process_executable_name`
 - :func:`sir3stoolkit.logging_utils.emit_message`
+- :func:`sir3stoolkit.sirgraf_config.get_user_config_file`
+- :func:`sir3stoolkit.sirgraf_config.get_developer_config_file`
+- :func:`sir3stoolkit.sirgraf_config.get_config_files`
+- :func:`sir3stoolkit.sirgraf_config.read_configured_path`
+- :func:`sir3stoolkit.sirgraf_config.write_configured_path`
+- :func:`sir3stoolkit.sirgraf_config.read_path_from_file`
 
 Core
 ----
@@ -277,10 +294,23 @@ AI Assistants
    :undoc-members:
    :show-inheritance:
 
+Tutorial Download
+-----------------
+
+.. automodule:: sir3stoolkit.tutorials
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Utilities
 ---------
 
 .. automodule:: sir3stoolkit.logging_utils
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: sir3stoolkit.sirgraf_config
    :members:
    :undoc-members:
    :show-inheritance:

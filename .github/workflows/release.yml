@@ -6,6 +6,9 @@ name: Release
 #   3. docs    - build the docs from the tag and deploy them to https://3sconsult.github.io/sir3stoolkit/
 #                (gh-pages root; the development docs in dev/ are kept). Only runs if publishing worked,
 #                so the release docs are never ahead of PyPI.
+#   4. tutorials - pack the tutorial archives (docs/source/tutorials/prepare_tutorials.py, from the committed
+#                notebooks and models) and attach them to the GitHub release v<version>, from where
+#                ``python -m sir3stoolkit tutorials`` downloads them. Only runs if publishing worked.
 #
 # Manual run (Actions tab -> Release -> Run workflow): verify + docs only, never uploads to PyPI.
 #   ref = main     - documentation hotfix right after a release: deploys the docs fixed on main as
@@ -126,6 +129,40 @@ jobs:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.MF3S_PYPI_TOKEN }}
         run: twine upload --repository-url https://upload.pypi.org/legacy/ dist/*
+
+  tutorials:
+    needs: [verify, publish]
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the tagged commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.verify.outputs.sha }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      # The notebooks and the models they open are committed (models as .gitignore exceptions). SIR 3S is
+      # not available here: nothing is built or executed, the notebooks are packed as committed (with
+      # their outputs) - build Network 3 and execute the notebooks locally before tagging.
+      - name: Pack the tutorial archives
+        run: python docs/source/tutorials/prepare_tutorials.py --no-build --zip-dir tutorial_archives
+
+      - name: Attach them to the GitHub release v<version>
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          TAG: v${{ needs.verify.outputs.version }}
+        run: |
+          if gh release view "$TAG" > /dev/null 2>&1; then
+            gh release upload "$TAG" tutorial_archives/*.zip --clobber
+          else
+            gh release create "$TAG" tutorial_archives/*.zip --verify-tag --title "sir3stoolkit ${TAG#v}" \
+              --notes "Tutorials of sir3stoolkit ${TAG#v} (notebooks and the SIR 3S models they use). Download them with: python -m sir3stoolkit tutorials. Release notes: https://3sconsult.github.io/sir3stoolkit/releases.html"
+          fi
 
   docs:
     needs: [verify, publish]
