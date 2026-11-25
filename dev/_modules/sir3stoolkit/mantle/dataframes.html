@@ -1503,6 +1503,9 @@
 <span class="sd">                  (e.g. ["SIR3S_Model.AddNewPipe"], ["SIR3S_View.AddNewHouse"]); [] if none is known</span>
 <span class="sd">                - row_type (tables) / table_type (table rows): the matching row/table element type</span>
 <span class="sd">                - insertable_in: network types the element type can be inserted into</span>
+<span class="sd">                - number_of_end_nodes: how many end nodes GetEndNodes() returns for the element type</span>
+<span class="sd">                  (1 bypass elements, 2 connecting elements, 4 heat exchangers, 0 for types without end nodes,</span>
+<span class="sd">                  None where unknown) - the same in every network type</span>
 <span class="sd">                - properties: property name -&gt; value type (e.g. {"DN": "String", ...})</span>
 <span class="sd">                - result_properties: result property name -&gt; {"description", "unit"} (German, None where unknown)</span>
 <span class="sd">                Empty dict if the element type isn't in the reference.</span>
@@ -1787,6 +1790,17 @@
         <span class="k">return</span> <span class="n">model_data_props</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">__is_get_endnodes_applicable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element_type</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Whether GetEndNodes() applies to the element type: looked up in the object type reference</span>
+<span class="sd">        (number_of_end_nodes &gt; 0). Only element types without a number there (e.g. added in a newer SIR 3S</span>
+<span class="sd">        version) are probed in the open model, by inserting and deleting a dummy element.</span>
+<span class="sd">        """</span>
+        <span class="n">entry</span> <span class="o">=</span> <span class="n">_load_object_type_reference</span><span class="p">()[</span><span class="s2">"object_types"</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">element_type</span><span class="p">,</span> <span class="s2">"name"</span><span class="p">,</span> <span class="n">element_type</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">entry</span> <span class="ow">and</span> <span class="n">entry</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"number_of_end_nodes"</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">entry</span><span class="p">[</span><span class="s2">"number_of_end_nodes"</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__probe_get_endnodes_applicable</span><span class="p">(</span><span class="n">element_type</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">__probe_get_endnodes_applicable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element_type</span><span class="p">):</span>
         <span class="n">element_type_net</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dotnet_enum</span><span class="p">(</span><span class="n">element_type</span><span class="p">)</span>
         <span class="n">dummy</span><span class="p">,</span> <span class="n">_insert_error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolkit</span><span class="o">.</span><span class="n">InsertElement</span><span class="p">(</span>
             <span class="n">element_type_net</span><span class="p">,</span>
