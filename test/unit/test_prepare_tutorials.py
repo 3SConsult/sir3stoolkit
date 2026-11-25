@@ -1,5 +1,7 @@
 """Checks docs/source/tutorials/prepare_tutorials.py, which packs the tutorial archives of each release."""
 import importlib.util
+import shutil
+import subprocess
 from pathlib import Path
 
 import pytest
@@ -23,16 +25,27 @@ def committed_model_files(prep):
         group = "SIR3S_Model" if int(nr) < 50 else "SIR3S_Model_Mantle"
         for entry in entries:
             source = entry if isinstance(entry, str) else entry[1]
-            if source.lower().endswith(".db3") and source != "Network3.db3":
+            if source != "Network3.db3":
                 paths.add(f"docs/source/tutorials/{group}/Tutorial{nr}_Assets/{source}")
     return paths
 
 
 def test_gitignore_exceptions_match_the_packed_models(prep):
-    # the models are committed as exceptions to *.db3, listed one by one - never more than FILES packs
+    # the models are committed as exceptions to *.db3/*.XML, listed one by one - never more than FILES packs
     lines = (ROOT / ".gitignore").read_text(encoding="utf-8").splitlines()
-    exceptions = {line[1:] for line in lines if line.startswith("!") and line.lower().endswith(".db3")}
+    exceptions = {line[1:] for line in lines if line.startswith("!docs/source/")}
     assert exceptions == committed_model_files(prep)
+
+
+def test_packed_model_files_are_not_git_ignored(prep):
+    # a packed file that git ignores is missing in the release workflow's checkout (e.g. *.XML matches
+    # .xml with core.ignorecase on Windows)
+    git = shutil.which("git")
+    if git is None or not (ROOT / ".git").exists():
+        pytest.skip("no git checkout")
+    paths = sorted(committed_model_files(prep))
+    result = subprocess.run([git, "check-ignore", "--no-index", *paths], cwd=ROOT, capture_output=True, text=True)
+    assert result.stdout.split() == [], f"git ignores packed file(s): {result.stdout.split()}"
 
 
 def test_every_tutorial_is_listed(prep):
